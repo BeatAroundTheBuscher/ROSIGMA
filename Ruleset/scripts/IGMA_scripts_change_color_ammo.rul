@@ -1,0 +1,54 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: int
+      ITEM_AMMO_COLOR: int
+      ITEM_AMMO_SHADE: int
+  scripts:
+    # copy from other script. The other script turned the affected color to gray instead of keeping it.
+    recolorItemSprite:
+      #*** Handles recoloring weapons that change color based on ammo loaded ***
+      - offset: 11
+        code: |
+          var ptr BattleItem ammoItem;
+          var ptr RuleItem weaponRuleset;
+          var ptr RuleItem ammoRuleset;
+          var int weaponColor;
+          var int color;
+          var int ammoColor;
+
+          item.getRuleItem weaponRuleset;
+          weaponRuleset.getTag weaponColor Tag.ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY;
+          if eq weaponColor 0;
+
+            return new_pixel;
+
+          end;
+
+          get_color color new_pixel;
+
+          item.getAmmoItem ammoItem;
+          ammoItem.getRuleItem ammoRuleset;
+          ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_COLOR;
+
+          if eq color weaponColor;
+
+            if neq 0 ammoColor;
+
+              set_color new_pixel ammoColor;
+              ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_SHADE;
+              add ammoColor shade;
+
+            else;
+
+            # keep the color and don't turn it into gray
+            # set_color new_pixel 0;
+              set ammoColor shade;
+
+            end;
+
+            add_shade new_pixel ammoColor;
+
+          end;
+
+          return new_pixel;

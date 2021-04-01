@@ -1,0 +1,803 @@
+armors:
+  - type: STR_SLAANESH_DEMONPRINCESSARMOR     #Demon Princess
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    antiCamouflageAtDay: 15
+    antiCamouflageAtDark: 15
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 180
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 20
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 12
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 150
+      ARMOR_ENERGY_SHIELD_DECAY: 75
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    bleedImmune: true
+    specialWeapon: ALIEN_PSI_WEAPON
+    spriteSheet: DEMONPRINCESS.PCK
+    spriteInv: ADaemonPrincessS.SPK
+    customArmorPreviewIndex: [73, 74, 75]
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    allowInv: true
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - SLAANSUP_CORPSE1
+      - SLAANSUP_CORPSE2
+      - SLAANSUP_CORPSE3
+      - SLAANSUP_CORPSE4
+    stats:
+       tu: 20
+       stamina: 40
+       health: 50
+       bravery: 20 #always multiples of 10
+       reactions: 10
+       firing: 10
+       throwing: 10
+       strength: 30
+       psiStrength: 30
+       psiSkill: 0
+       melee: 10
+    frontArmor: 140
+    sideArmor: 140
+    rearArmor: 100
+    underArmor: 100
+    drawingRoutine: 20
+    constantAnimation: false
+    movementType: 1
+    size: 2
+    moveSound: 828
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.7 #FLAMES
+      - 0.5 #HE
+      - 0.9 #LASCANON
+      - 0.8 #PLASMA
+      - 0.8 #STUN
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
+      - STR_POWER_SWORD_SUP
+      - STR_HEALS
+    loftempsSet: [ 92, 89, 90, 91 ]
+  
+  - type: STR_SLAANCELESTIAN_ARMOR    #SLAANESH CELESTIAN
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 80
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 15
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 12
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
+      ARMOR_ENERGY_SHIELD_DECAY: 66
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    spriteSheet: XCOM_57.PCK
+    spriteInv: ACelestianS.SPK
+    customArmorPreviewIndex: 69
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_ADEPTAS_SLAANCEL_CORPSE
+    stats:
+       tu: 10
+       stamina: 10
+       health: 15
+       bravery: 20 #always multiples of 10
+       reactions: 15
+       firing: 5
+       throwing: 10
+       strength: 10
+       psiStrength: 30
+       psiSkill: 0
+       melee: 10
+    frontArmor: 130
+    sideArmor: 100
+    rearArmor: 80
+    underArmor: 70
+    movementType: 1
+    specialWeapon: AUX_SEDUCE
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 0.8 #AP
+      - 0.7 #FLAMES
+      - 0.7 #HE
+      - 0.8 #LASCANON
+      - 0.9 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.7 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.9 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+  - type: STR_ADEPTAS_SLAANESH      #ADEPTAS SLAANESH ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 20
+    frontArmor: 100
+    sideArmor: 90
+    rearArmor: 80
+    underArmor: 60
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.6 #FLAMES
+      - 0.9 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.1 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 0.8 #MELTA
+
+  - type: STR_SLAANCHOSEN_ASS    #SLAANESHI CHOSEN ASSASSIN Good armor
+    camouflageAtDay: -18 # you need to be 12 tiles closer than max vision range to see this unit in the light
+    camouflageAtDark: -14 # you need to be 6 tiles closer than max vision range (at night!) to see this unit in the dark
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 10
+    meleeDodge: 
+      reactions: 0.3
+    spriteSheet: XCOM_64SLCALLIDUS.PCK
+    spriteInv: AAssChosenS.SPK
+    customArmorPreviewIndex: 65
+    corpseBattle:
+      - STR_SLAANCHOSEN_ASS_CORPSE
+    stats:
+       tu: 30
+       stamina: 30
+       health: 10
+       bravery: 20 #always multiples of 10
+       reactions: 30
+       firing: 0
+       throwing: 0
+       strength: 10
+       psiStrength: 50
+       psiSkill: 0
+       melee: 15
+    frontArmor: 50
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 10
+    specialWeapon: AUX_SEDUCE
+    damageModifier:
+      - 1.0 #NONE
+      - 1.0 #AP
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.5 #LASCANNON
+      - 0.6 #PLASMA
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 1.1 #ACID
+      - 1.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.7 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+  - type: STR_ADEPTAS_SLAANASSASSINARMOR    #SLAANESHI ASSASIN and FemCultists
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    camouflageAtDay: -16 # you need to be 14 tiles closer than max vision range to see this unit in the light
+    camouflageAtDark: -12 # you need to be 8 tiles closer than max vision range (at night!) to see this unit in the dark
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    spriteSheet: XCOM_59.PCK
+    spriteInv: AAssassinS.SPK
+    customArmorPreviewIndex: 65
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_SLAAN_ASS_CORPSE
+    meleeDodge: 
+      reactions: 0.2
+    stats:
+       tu: 20
+       stamina: 20
+       health: 10
+       bravery: 0 #always multiples of 10
+       reactions: 10
+       firing: 0
+       throwing: 0
+       strength: 5
+       psiStrength: 0
+       psiSkill: 0
+       melee: 10
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 20
+    underArmor: 10
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    damageModifier:
+      - 1.0 #NONE
+      - 1.1 #AP
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.5 #LASCANNON
+      - 0.8 #PLASMA
+      - 0.8 #STUN
+      - 0.9 #MELEE
+      - 1.1 #ACID
+      - 1.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.7 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+  - type: STR_SLAAN_DEVOTED_SUIT    #SLAANESHI DEVOTED 
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    camouflageAtDay: -14 # you need to be 16 tiles closer than max vision range to see this unit in the light
+    camouflageAtDark: -8 # you need to be 12 tiles closer than max vision range (at night!) to see this unit in the dark
+    visibilityAtDay: 32
+    visibilityAtDark: 25
+    spriteSheet: XCOM_59.PCK
+    spriteInv: ADevotedS.SPK
+    customArmorPreviewIndex: 65
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_SLAAN_DEVOTED_CORPSE
+    stats:
+       tu: 10
+       stamina: 10
+       health: 10
+       bravery: 0 #always multiples of 10
+       reactions: 5
+       firing: 0
+       throwing: 0
+       strength: 5
+       psiStrength: 0
+       psiSkill: 0
+       melee: 10
+    frontArmor: 20
+    sideArmor: 10
+    rearArmor: 50
+    underArmor: 10
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    damageModifier:
+      - 1.0 #NONE
+      - 1.1 #AP
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.5 #LASCANNON
+      - 0.8 #PLASMA
+      - 0.8 #STUN
+      - 0.9 #MELEE
+      - 1.1 #ACID
+      - 1.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.7 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+  - type: STR_CHAOS_SERAPHIM    #ADEPTAS Chaos Slaanesh Seraphim Furies
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    spriteSheet: XCOM_55.PCK
+    spriteInv: ASeraphimS.SPK
+    customArmorPreviewIndex: 64
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 12
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_CHAOS_SERAPHIM_CORPSE
+    stats:
+       tu: 10
+       stamina: 10
+       health: 10
+       bravery: 0 #always multiples of 10
+       reactions: 10
+       firing: 10
+       throwing: 5
+       strength: 20
+       psiStrength: 10
+       psiSkill: 0
+       melee: 15
+    frontArmor: 100
+    sideArmor: 90
+    rearArmor: 60
+    underArmor: 70
+    movementType: 1
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 0.9 #LASCANON
+      - 0.9 #PLASMA
+      - 0.8 #STUN
+      - 1.0 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+  - type: STR_SLAANESH_CANTUSArmor     #ADEPTAS NOVICE CANTUS PATTERN now in Slaanesh flavor
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 30
+    visibilityAtDark: 20
+    spriteSheet: XCOM_68SlaanCantus.PCK
+    spriteInv: ACantusS.SPK
+    corpseBattle:
+      - STR_ADEPTASNC_CORPSE
+    stats:
+       tu: 10
+       stamina: 10
+       health: 0
+       bravery: 10 #always multiples of 10
+       reactions: 5
+       firing: 5
+       throwing: 5
+       strength: 5
+       psiStrength: 10
+       psiSkill: 0
+       melee: 5
+    frontArmor: 80
+    sideArmor: 65
+    rearArmor: 35
+    underArmor: 35
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 0.8 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.2 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+
+  - type: STR_SLAANESH_NOVICEHABIT     #ADEPTAS NOVICE HABIT but corrupted by Slaanesh and the power of pink
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 30
+    visibilityAtDark: 20
+    spriteSheet: XCOM_67NoviceC.PCK
+    spriteInv: ANoviceS.SPK
+    corpseBattle:
+      - STR_ADEPTASN_CORPSE
+    stats:
+       tu: 15
+       stamina: 5
+       health: 0
+       bravery: 0 #always multiples of 10
+       reactions: 5
+       firing: 5
+       throwing: 5
+       strength: 5
+       psiStrength: 0
+       psiSkill: 0
+       melee: 0
+    frontArmor: 60
+    sideArmor: 50
+    rearArmor: 30
+    underArmor: 20
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 0.8 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.2 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_ADEPTAS_NOVICE
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+
+  - type: STR_SLAANESH_PALATINE_ARMOR    #ADEPTAS Slaaneshi Palatine
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 60
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 12
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
+      ARMOR_ENERGY_SHIELD_DECAY: 66
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    spriteSheet: SLAANESHPALATINE.PCK 
+    spriteInv: SlaaneshPalatine.SPK
+    customArmorPreviewIndex: 61
+    corpseBattle:
+      - STR_SLAANESH_SISTERPALATINE_CORPSE
+    stats:
+       tu: 20
+       stamina: 20
+       firing: 0
+       health: 0
+       bravery: 20 #always multiples of 10
+       reactions: 20
+       throwing: 0
+       strength: 0
+       psiStrength: 10
+       psiSkill: 0
+       melee: 15
+    frontArmor: 140
+    sideArmor: 120
+    rearArmor: 90
+    underArmor: 70
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.1 #AP
+      - 0.7 #FLAMES
+      - 0.8 #HE
+      - 0.7 #LASCANON
+      - 0.8 #PLASMA
+      - 1.1 #STUN
+      - 1.0 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+
+  - type: STR_ADEPTAS_SLAANDOM    #ADEPTAS Slaaneshi Elite Dom Armor
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 60
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 12
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
+      ARMOR_ENERGY_SHIELD_DECAY: 66
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    spriteSheet: XCOM_61.PCK
+    spriteInv: ADomS.SPK
+    customArmorPreviewIndex: 61
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 12
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_ADEPTAS_SLAANDOM_CORPSE
+    stats:
+       tu: 20
+       stamina: 20
+       firing: 0
+       health: 0
+       bravery: 20 #always multiples of 10
+       reactions: 20
+       throwing: 0
+       strength: 0
+       psiStrength: 10
+       psiSkill: 0
+       melee: 15
+    frontArmor: 140
+    sideArmor: 120
+    rearArmor: 90
+    underArmor: 70
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.1 #AP
+      - 0.7 #FLAMES
+      - 0.8 #HE
+      - 0.7 #LASCANON
+      - 0.8 #PLASMA
+      - 1.1 #STUN
+      - 1.0 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+  - type: STR_ADEPTAS_ARMORPURPLE    #ADEPTAS PURPLE Slaaneshi Armor
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 30
+    visibilityAtDark: 20
+    spriteSheet: XCOM_53.PCK
+    spriteInv: APurpleS.SPK
+    corpseBattle:
+      - STR_ADEPTAS_SLAANPURPLE_CORPSE
+    frontArmor: 120
+    sideArmor: 100
+    rearArmor: 75
+    underArmor: 70
+    specialWeapon: AUX_SEDUCE_WEAK
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.7 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [ 3 ]
+  - type: STR_SLAAN_ADEPTAS_CORRUPTED_ARMOR     #ADEPTAS Fallen
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    spriteSheet: FALLENSLAAN.PCK
+    spriteInv: AFallenS.SPK
+    customArmorPreviewIndex: 60
+    spriteHairGroup: 9
+    spriteHairColor: [245, 245, 245, 245, 245, 245, 245, 245, 245, 245, 245, 245, 245, 245] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_ADEPTASZ_CORPSE
+    frontArmor: 80
+    sideArmor: 55
+    rearArmor: 30
+    underArmor: 30
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.1 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+    specialWeapon: AUX_SEDUCE_MEDIUM
+    loftempsSet: [ 3 ]
+
+  - type: MUTON_ARMORSLAANESH                                     #SLAANESH REGULAR
+    visibilityAtDay: 32
+    visibilityAtDark: 22
+    frontArmor: 120
+    sideArmor: 90
+    rearArmor: 80
+    underArmor: 70
+    damageModifier: #CHAOS ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.1 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+
+  - type: MUTON_ARMORHAVOCS #HAVOC                                #SLAANESH
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    frontArmor: 110
+    sideArmor: 90
+    rearArmor: 80
+    underArmor: 70
+    damageModifier: #CHAOS ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.1 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+
+  - type: STR_SLAANGOR_GOR_ARMORMEDIUM      #SLAANESH REGULAR
+    visibilityAtDay: 30
+    visibilityAtDark: 22
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: SLAANGOR.PCK 
+    spriteInv: SlaangorInv.SPK
+    allowInv: true
+    corpseBattle:
+      - STR_SLAANGOR_CORPSE 
+    frontArmor: 45
+    sideArmor: 40
+    rearArmor: 20
+    underArmor: 45
+    #specialWeapon: aux_seduceslaangor #Slaangor goat noises
+    drawingRoutine: 0 
+    damageModifier: #BEASTMEN ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.1 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.0 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+    loftempsSet: [ 3 ]
+  - type: STR_SLAANGOR_UNGOR_ARMORLIGHT                                  #SLAANESH REGULAR
+    visibilityAtDay: 35
+    visibilityAtDark: 20
+    spriteSheet: SLAANUNGOR.PCK 
+    spriteInv: SlaanUngorInv.SPK
+    allowInv: true
+    corpseBattle:
+      - STR_SLAANUNGOR_CORPSE 
+    frontArmor: 30
+    sideArmor: 25
+    rearArmor: 20
+    underArmor: 30
+    drawingRoutine: 0 
+    damageModifier: #BEASTMEN ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 1.1 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.0 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+    loftempsSet: [ 3 ]
+  - type: STR_SLAANGOR_BRAY_ARMORLIGHT                               #SLAANESH REGULAR
+    visibilityAtDay: 30
+    visibilityAtDark: 22
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: SLAANBRAY.PCK
+    spriteInv: SLAANGORBRAYINV.SPK
+    allowInv: true
+    corpseBattle:
+      - STR_SLAANBRAYGOR_CORPSE 
+    frontArmor: 20
+    sideArmor: 15
+    rearArmor: 10
+    underArmor: 20
+    #specialWeapon: aux_seduceslaangor #Slaangor goat noises
+    drawingRoutine: 0 #Muton?
+    damageModifier: #CHAOS ARMOR
+      - 1.0 #none
+      - 1.1 #AP
+      - 1.3 #FLAMES
+      - 1.1 #HE
+      - 1.1 #LASCANON
+      - 1.1 #PLASMA
+      - 1.1 #STUN
+      - 1.2 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+    loftempsSet: [ 3 ]
+  - type: STR_SLAANESH_ANOINTED_ARMOR
+    visibilityAtDay: 35
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 10
+    spriteSheet: SLAANESH_ANOINTED_BASIC.PCK
+    spriteInv: SLAANANOINTEDINV.SPK
+    allowInv: true
+    drawingRoutine: 6
+    corpseBattle:
+      - STR_SLAANANOINTED_CORPSE
+    frontArmor: 135
+    sideArmor: 110
+    rearArmor: 90
+    underArmor: 120
+    moveSound: 0
+    damageModifier: #CHAOS ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.9 #FLAMES
+      - 0.8 #HE
+      - 1.0 #LASCANON
+      - 1.0 #PLASMA
+      - 0.8 #STUN
+      - 1.2 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+    loftempsSet: [ 3 ]
+
+  - type: STR_SLAANGOR_ARMOR    #SLAANGOR ARMOR
+    visibilityAtDay: 32
+    visibilityAtDark: 22
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: CHRYS.PCK #Swap to new
+    spriteInv: CHD #Swap to New
+    allowInv: true
+    corpseBattle:
+      - STR_CHRYSSALID_CORPSE #Swap to new
+    frontArmor: 60
+    sideArmor: 45
+    rearArmor: 20
+    underArmor: 50
+    drawingRoutine: 0 #Normal Human? Check vs that Werewolf 
+    damageModifier: #NAKED
+      - 1.0
+      - 1.1 #AP
+      - 1.3 #FLAMES
+      - 0.7 #HE
+      - 1.0 #LAS
+      - 0.9 #PLASMA
+      - 0.7 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 3 ]
+    specialWeapon: AUX_SEDUCE #no?
+    #builtInWeapons:
+      #- STR_SLAANGOR_CLAW

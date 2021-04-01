@@ -1,0 +1,29 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_DOESNT_HURT_USER: int
+
+  scripts:
+    damageUnit: 
+      - offset: 22 
+        code: |
+          var ptr RuleItem ruleItem;
+          var int doesntHurtUser;
+
+          damaging_item.getRuleItem ruleItem; 
+          ruleItem.getTag doesntHurtUser Tag.ITEM_DOESNT_HURT_USER;
+
+          # don't damage itself when melee AoE'ing
+          if and eq unit attacker eq doesntHurtUser 1;
+            set to_health 0;
+            set to_armor 0;
+            set to_stun 0;
+            set to_time 0;
+            set to_energy 0;
+            set to_morale 0;
+            set to_wound 0;
+            set to_transform 0;
+            set to_mana 0;
+          end;
+
+          return;

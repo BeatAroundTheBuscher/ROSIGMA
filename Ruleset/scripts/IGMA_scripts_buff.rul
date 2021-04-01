@@ -1,0 +1,208 @@
+# https://www.ufopaedia.org/index.php/Script_(OpenXcom)
+
+# https://openxcom.org/forum/index.php/topic,7974.msg124338.html#msg124338
+
+
+# possible interesting APIs
+# limit_lower
+
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_BLESS_MELEE_ACCURACY: int
+      ITEM_BLESS_FIRING_ACCURACY: int
+    RuleSoldier:
+      SOLDIER_IS_LONE_WOLF: int 
+    BattleUnit:
+      SOLDIER_BLESS_CURRENT_MELEE_BONUS: int
+      SOLDIER_BLESS_CURRENT_FIRING_BONUS: int
+
+
+      
+
+
+  scripts:
+    hitUnit: # damageUnit:
+      # doesn't consider fatal wounds, but eh
+      - offset: 20
+        code: |
+          var int bufferBravery;
+          var int blessPower;
+          var int bonusBlessPower;
+          var int temp;
+
+          var ptr RuleItem rule;
+          var int isWeaponBlessMeleeAccuracy;
+          var int isWeaponBlessFiringAccuracy;
+
+          var ptr RuleSoldier targetSoldier;
+          var int isTargetLoneWolf;
+          var int unitFaction;
+
+          var ptr RuleArmor targetArmor;
+          var int armorFiringBonus;
+          var int armorMeleeBonus;
+
+          var int currentHealth;
+          var int maxHealth;
+
+          var int currentBlessBonus;
+          var ptr GeoscapeSoldier geoUnit;
+
+          unit.getFaction unitFaction;
+          if neq unitFaction 0;
+            return power part side;
+          end;
+
+          unit.getGeoscapeSoldier geoUnit;
+          if eq geoUnit null; # sanity check whether the unit actually exists in geoscape or not (turrets)
+            return power part side;
+          end;
+
+          unit.getRuleSoldier targetSoldier;
+          targetSoldier.getTag isTargetLoneWolf Tag.SOLDIER_IS_LONE_WOLF;
+          if neq isTargetLoneWolf 0; # don't bother with lone wolves
+            return power part side;
+          end;
+
+          damaging_item.getRuleItem rule;
+          rule.getTag isWeaponBlessMeleeAccuracy Tag.ITEM_BLESS_MELEE_ACCURACY;
+          rule.getTag isWeaponBlessFiringAccuracy Tag.ITEM_BLESS_FIRING_ACCURACY; # bit mask may make more sense once more crop up
+
+          if and eq isWeaponBlessMeleeAccuracy 0 eq isWeaponBlessFiringAccuracy 0; # stop here if not a valid item
+            return power part side;
+          end;
+
+          unit.getRuleArmor targetArmor;
+          targetArmor.Stats.getFiring armorFiringBonus;
+          targetArmor.Stats.getMelee armorMeleeBonus;
+          
+          unit.getHealth currentHealth;
+          unit.getHealthMax maxHealth;
+
+          attacker.Stats.getBravery bufferBravery;
+          set blessPower 0; # 10;
+          set bonusBlessPower 1;
+          muldiv bonusBlessPower bufferBravery 5;
+          add blessPower bonusBlessPower;
+
+          if eq isWeaponBlessMeleeAccuracy 1;
+            unit.getTag currentBlessBonus Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS;
+
+            if gt blessPower currentBlessBonus;
+              unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS blessPower;
+              
+              geoUnit.Stats.getMelee temp;
+              add temp blessPower;
+              add temp armorMeleeBonus;
+
+              muldiv temp currentHealth maxHealth;
+              unit.Stats.setMelee temp;
+            end;
+          end;
+          if eq isWeaponBlessFiringAccuracy 1;
+            unit.getTag currentBlessBonus Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS;
+            if gt blessPower currentBlessBonus;
+              unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS blessPower;
+
+              geoUnit.Stats.getFiring temp;
+              add temp blessPower;
+              add temp armorFiringBonus;
+
+              muldiv temp currentHealth maxHealth;
+              unit.Stats.setFiring temp;
+            end;
+          end;
+          
+
+          return power part side;
+
+    newTurnUnit:
+      # doesn't consider fatal wounds, but eh
+      - offset: 20
+        code: |
+          var int currentMeleeBlessBonus;
+          var int currentFiringBlessBonus;
+          var int temp;
+          var int unitFaction;
+          var ptr GeoscapeSoldier geoUnit; 
+
+          var ptr RuleArmor targetArmor;
+          var int armorFiringBonus;
+          var int armorMeleeBonus;
+
+          var int currentHealth;
+          var int maxHealth;
+
+          var int dissipationFactor;
+          set dissipationFactor 5;
+          
+          # Only run this at the beginning of the player's turn
+          if neq 0 side;
+            return;
+          end;
+
+          unit.getFaction unitFaction;
+
+          if neq unitFaction 0;
+            return;
+          end;
+
+          unit.getTag currentMeleeBlessBonus Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS;
+          unit.getTag currentFiringBlessBonus Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS;
+          if and eq currentMeleeBlessBonus 0 eq currentFiringBlessBonus 0;
+            return; # nothing to do
+          end;
+
+          unit.getGeoscapeSoldier geoUnit;
+          if eq geoUnit null; # sanity check whether the unit actually exists in geoscape or not (turrets)
+            return;
+          end;
+
+          if gt currentMeleeBlessBonus dissipationFactor;
+            sub currentMeleeBlessBonus dissipationFactor;
+          else;
+            set currentMeleeBlessBonus 0;
+          end;
+          unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS currentMeleeBlessBonus;
+
+          unit.getRuleArmor targetArmor;
+          targetArmor.Stats.getFiring armorFiringBonus;
+          targetArmor.Stats.getMelee armorMeleeBonus;
+
+          unit.getHealth currentHealth;
+          unit.getHealthMax maxHealth;
+
+          geoUnit.Stats.getMelee temp; # this way disallows another script to debuff, so be aware
+          add temp currentMeleeBlessBonus;
+          add temp armorMeleeBonus;
+          muldiv temp currentHealth maxHealth;
+          unit.Stats.setMelee temp;
+          
+          if gt currentFiringBlessBonus dissipationFactor;
+            sub currentFiringBlessBonus dissipationFactor;
+          else;
+            set currentFiringBlessBonus 0;
+          end;
+          unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS currentFiringBlessBonus;
+
+          geoUnit.Stats.getFiring temp; # this way disallows another script to debuff, so be aware
+          add temp currentFiringBlessBonus;
+          add temp armorFiringBonus;
+          muldiv temp currentHealth maxHealth;
+          unit.Stats.setFiring temp;
+          
+
+          return;
+
+
+#    newTurnItem:
+#      - offset: 20
+#        code: |
+#          debug_log "item" item;
+#          return;
+
+#set t initialValue;
+#unit.reduceByResistance t 7;
+#set finalValue t;

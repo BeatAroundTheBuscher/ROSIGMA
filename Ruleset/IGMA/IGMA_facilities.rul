@@ -1,0 +1,69 @@
+facilities:
+  - type: STR_OUTPOST_TEMP_STORAGE
+    requiresBaseFunc: [OUTP_UPGRADE]
+    maxAllowedPerBase: 1
+    spriteShape: {mod: 40k, index: 0}
+    spriteFacility: 740
+    buildCost: 150000
+    buildTime: 5
+    monthlyCost: 9000000
+    personnel: 50
+    storage: 100
+    mapName: XBASE_57
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_HYPER_WAVE_DECODER
+    listOrder: 801
+
+
+
+  - type: STR_OUTPOST_GUARD
+    canBeBuiltOver: true
+    provideBaseFunc: [OUTP_UPGRADE]
+    maxAllowedPerBase: 1
+    refundValue: 500000
+
+  - type: STR_OUTPOST_GUARD_HYPER
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_HYPER_WAVE_DECODER
+    requiresBaseFunc: [OUTP]
+    provideBaseFunc: [OUTP_UPGRADE]
+    connectorsDisabled: true
+    spriteShape: 700
+#    spriteFacility: 700
+    size: 4
+    buildCost: 1250000
+    crafts: 1
+    buildTime: 15 # 10
+    monthlyCost: 650000 # 600000 # 800000 is too much
+    personnel: 50
+    storage: 100
+    mapName: XBASE_60
+    storageTiles:
+            - [24, 6, 1]
+            - [25, 6, 1]
+            - [27, 6, 1]
+            - [22, 4, 1]
+            - [34, 10, 1]
+            - [28, 3, 1]
+            - [27, 3, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60] # probably not 60, you'll have to count the number of where XBASE_60 is in the terrain, starting from 0
+        size: [4, 4, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [4, 4, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: VOSS4X4 # needs a 40x40 map to match the outpost
+        blocks: [0]
+    listOrder: 800
+    # hyper
+    radarRange: 2759
+    radarChance: 100
+    hyper: true
+    buildOverFacilities:
+      - STR_OUTPOST_GUARD
