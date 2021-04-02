@@ -1,0 +1,68 @@
+armors:
+  - type: STR_GUARD_ARMORS_MOUNTED_LASCANNON_UC
+    tags:
+      HAS_EXTENDED_FRONT_SHIELD: 1
+
+  - type: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON_UC
+    tags:
+      HAS_EXTENDED_FRONT_SHIELD: 1
+
+  - type: STR_BULLGRYN_SLAB
+    tags:
+      HAS_EXTENDED_FRONT_SHIELD: 1
+
+
+
+
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_RECOIL: int
+      ITEM_HAS_BIPOD: int
+      ITEM_STRENGTH_REQUIREMENT: int
+    RuleArmor:
+      HAS_EXTENDED_FRONT_SHIELD: int
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+
+
+  scripts:
+    statsForNerdsArmor: 
+      - offset: 22 
+        code: |
+          var int temp1;
+          var int temp2;
+          rule.getTag temp1 Tag.HAS_EXTENDED_FRONT_SHIELD;
+          if gt temp1 0;
+            stats_state.addTextRow "Extended Front Side" "Yes";
+          end;
+
+          rule.getTag temp1 Tag.ARMOR_ENERGY_SHIELD_HP_PER_TURN;
+          rule.getTag temp2 Tag.ARMOR_ENERGY_SHIELD_DECAY;
+          muldiv temp1 100 temp2;
+
+          if gt temp1 0;
+            stats_state.addIntRow "Energy Shield" temp1;
+          end;
+
+
+          return;
+
+    statsForNerdsItem:
+      - offset: 22 
+        code: |
+          var int temp;
+          rule.getTag temp Tag.ITEM_RECOIL;
+          if gt temp 0;
+            stats_state.addIntRow "Recoil" temp;
+          end;
+          rule.getTag temp Tag.ITEM_HAS_BIPOD;
+          if gt temp 0;
+            stats_state.addTextRow "Bipod" "Yes";
+          end;
+          rule.getTag temp Tag.ITEM_STRENGTH_REQUIREMENT;
+          if gt temp 0;
+            stats_state.addIntRow "Strength required" temp;
+          end;
+          return;
