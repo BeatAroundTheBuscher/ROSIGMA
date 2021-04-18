@@ -57,13 +57,10 @@ armors:
     type: STR_GUARD_ARMORP_UC #DR10 GUARD PILOT
     visibilityAtDay: 40
     visibilityAtDark: 9
-    frontArmor: 20
-    sideArmor: 15
+    frontArmor: 15
+    sideArmor: 10
     rearArmor: 10
     underArmor: 10
-    stats:
-      firing: -15
-      reactions: -15
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -77,8 +74,14 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.0 #MELTA
+
+  - type: STR_GUARD_ARMORP_UC # only pilot things
+    stats:
+      firing: -15
+      reactions: -15
     units:
       - STR_PILOT_GUARD
+
 
   - type: GUARD_ARMOR # NPC
     refNode: *STR_GUARD_ARMOR_FLAK
@@ -201,10 +204,10 @@ armors:
   - &STR_GUARD_ARMOR_SENTINEL_CLOSED
     type: STR_GUARD_ARMORS_SENTINEL_AUTOCANNON_UC
     refNode: *STR_GUARD_ARMOR_SENTINEL_OPEN
-    frontArmor: 120
-    sideArmor: 110
+    frontArmor: 140
+    sideArmor: 120
     rearArmor: 100
-    underArmor: 130
+    underArmor: 120
 
   - type: STR_GUARD_ARMORS_SENTINEL_HEAVY_FLAMER_UC
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
@@ -328,17 +331,6 @@ armors:
       M9: ["", "M9", "", "", "Male", "", "", "", "Prop"]
       
 
-#*** Commissar outfits ***
-  - type: STR_COMMISSAR_UC
-    refNode: *STR_GUARD_ARMOR_FLAK
-    stats:
-       tu: 5
-       stamina: 10
-       bravery: 10
-
-  - type: STR_COMMISSAR_CARAPACE_UC
-    refNode: *STR_GUARD_ARMOR_CARAPACE
-
 #*** Guard officer armors ***
   - &STR_GUARD_ARMOR_FLAK_OFFICER
     type: STR_OFFICER_FLAK_ARMOR
@@ -369,10 +361,10 @@ armors:
     type: STR_STORMTROOPER_CARAPACE_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
-    frontArmor: 70
+    frontArmor: 80
     sideArmor: 60
     rearArmor: 40
-    underArmor: 30
+    underArmor: 40
     stats:
        firing: 10
        reactions: 10
@@ -399,6 +391,24 @@ armors:
   - type: STR_STORMTROOPER_CARAPACE_ARMOR_VOLLEYGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
 
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_HELLGUN
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_VOLLEYGUN
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
+  - type: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
+  - type: STR_STORMTROOPER_MEDIC_CARAPACE_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
+
   - &STR_GUARD_ARMOR_CARAPACE_SCION
     type: STR_SCION_CARAPACE_ARMOR
     visibilityAtDay: 40
@@ -408,8 +418,8 @@ armors:
     rearArmor: 50
     underArmor: 40
     stats:
-       firing: 20
-       reactions: 15
+       firing: 10
+       reactions: 10
        bravery: 10
     damageModifier: #GUARD ARMOR
       - 1.0 #none
@@ -431,6 +441,24 @@ armors:
   - type: STR_SCION_CARAPACE_ARMOR_VOLLEYGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
 
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLGUN
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR_VOLLEYGUN
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+
+  - type: STR_SCION_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+
+  - type: STR_SCION_MEDIC_CARAPACE_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    
   - &STR_GUARD_ARMOR_OGRYN
     type: STR_OGRYN_UC
     visibilityAtDay: 40
@@ -548,26 +576,7 @@ armors:
 #*** Sanctioned Psyker Armor ***
   - &STR_GUARD_ARMOR_PSYKER
     type: STR_PSYKER_ARMOR
-    visibilityAtDay: 40
-    visibilityAtDark: 9
-    frontArmor: 35
-    sideArmor: 25
-    rearArmor: 30
-    underArmor: 15
-    drawingRoutine: 0
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
+    refNode: *STR_GUARD_ARMOR_PILOT # essentially clothing
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       ARMOR_ENERGY_SHIELD_DECAY: 50 # = 50% so shield value is 40 * 100%/50%
@@ -594,6 +603,7 @@ armors:
 
 
   - type: STR_PENAL_ARMOR_BROWN_UC 
+    refNode: *STR_GUARD_ARMOR_PILOT
     visibilityAtDay: 40
     visibilityAtDark: 9
     spriteSheet: PENITENTS_BROWN.PCK
@@ -601,25 +611,8 @@ armors:
     corpseBattle:
       - STR_PENAL_CORPSE
     storeItem: STR_NONE
-    frontArmor: 20
-    sideArmor: 15
-    rearArmor: 10
-    underArmor: 10
     stats:
        bravery: -20 #always multiples of 10
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
     units:
       - STR_PENITENT_GUARD
     spriteFaceGroup: 6
@@ -658,3 +651,69 @@ armors:
 
 
 
+  - type: STR_GUARD_ARMORS_PRIEST_UC
+    refNode: *STR_GUARD_ARMOR_PILOT # essentially clothing
+
+
+  - type: STR_GUARD_KRIEG_ARMOR
+    refNode: *STR_GUARD_ARMOR_FLAK 
+    frontArmor: 20
+    sideArmor: 15
+    rearArmor: 10
+    underArmor: 10
+
+  - &STR_ELYSIAN_ARMOR
+    type: STR_ELYSIAN_JUMP_ARMOR
+    frontArmor: 50
+    sideArmor: 40
+    rearArmor: 30
+    underArmor: 30
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+
+  - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR
+    refNode: *STR_ELYSIAN_ARMOR
+
+  - type: STR_GUARD_IMPERIAL_ASSASSIN_UC #DR10 SPACE MARINE SUPORT
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 15
+    stats:
+       tu: 5
+       stamina: 15
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT # IMPACT for IG is used for buffing
+      - 1.0 #MELTA
+
+#*** Commissar outfits ***
+  - type: STR_COMMISSAR_UC
+    refNode: *STR_GUARD_ARMOR_FLAK
+    stats:
+       tu: 5
+       stamina: 10
+       bravery: 10
+
+  - type: STR_COMMISSAR_CARAPACE_UC
+    refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
