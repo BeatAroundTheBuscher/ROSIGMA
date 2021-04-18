@@ -251,31 +251,6 @@ armors:
       energy:
         energyRegen: 0.0
         flatHundred: 1.0
-    scripts:
-      hitUnit:
-        var int unitDirection;
-        var int attackerDirection;
-
-        if or eq attacker null eq side SIDE_UNDER;
-
-          return power part side;
-
-        end;
-
-        unit.getDirection unitDirection;
-        attacker.getDirection attackerDirection;
-        add attackerDirection 4;
-        mod attackerDirection 8;
-        sub unitDirection attackerDirection;
-        abs unitDirection;
-
-        if lt unitDirection 2;
-
-          set side SIDE_FRONT;
-
-        end;
-
-        return power part side;
     allowsKneeling: false
 
   - type: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON_UC
@@ -332,6 +307,31 @@ armors:
       M7: ["", "M7", "M7_Hair_Tight", "", "Male", "", "", "", "Prop"]
       M8: ["", "M8", "M8_Hair_Tight", "", "Male", "", "", "", "Prop"]
       M9: ["", "M9", "", "", "Male", "", "", "", "Prop"]
+    scripts: # others should already have this script
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
       
 
 #*** Guard officer armors ***
