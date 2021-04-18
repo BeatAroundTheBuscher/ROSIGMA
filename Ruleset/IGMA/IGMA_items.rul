@@ -1,3 +1,9 @@
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_AMMO_SKIP_BIGOBS: int
+
 items:
   - type: INV_NULL_2X3_BACKPACK
     weight: 0
@@ -52,6 +58,37 @@ items:
 
   - type: STR_SENTINELPD_MISSILE_LAUNCHER
     refNode: *STR_SENTINEL_MISSILE
+
+
+
+  - type: STR_SENTINEL_MISSILE_LAUNCHER
+    bigSprite: 216
+    scripts:
+      selectItemSprite:
+        var ptr BattleItem ammoItem;
+        var ptr RuleItem ammoRuleset;
+        var int skipBigobs;
+
+        item.getAmmoItem ammoItem;
+        ammoItem.getRuleItem ammoRuleset;
+        ammoRuleset.getTag skipBigobs Tag.ITEM_AMMO_SKIP_BIGOBS;
+
+        if and gt skipBigobs 0 eq blit_part blit_item_big;
+          add sprite_index skipBigobs;
+        end; 
+
+        return sprite_index;
+
+
+  - type: STR_SENTINEL_FRAG_MISSILES
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 1
+
+  - type: STR_SENTINEL_KRAKK_MISSILES
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 2
+
+
 
 
   - type: INV_NULL_SENTINEL_BACK_MISSILE
