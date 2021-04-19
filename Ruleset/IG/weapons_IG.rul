@@ -1,3 +1,12 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: int
+      ITEM_AMMO_SKIP_BIGOBS: int
+      ITEM_BLESS_MELEE_ACCURACY: int
+      ITEM_BLESS_FIRING_ACCURACY: int
+
+
 items:
   - type: STR_MOUNTED_LASCANNON # gets 150 % accuracy and 75 % TU costfor being mounted
     accuracySnap: 90 # was 60 # handheld has 60
@@ -90,3 +99,1268 @@ items:
       flatHundred: 1.0
     bulletSpeed: -10
     recover: false
+
+  - type: INV_NULL_2X3_BACKPACK
+    weight: 0
+    bigSprite: 250
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    defaultInventorySlot: STR_BACK_PACK
+    defaultInvSlotX: 0
+    defaultInvSlotY: 0
+    recover: false
+  
+  - type: STR_ELYSIAN_JUMP_ARMOR
+    size: 0.3
+    #listOrder: 20
+    #costBuy: 20000
+    costSell: 8000
+    transferTime: 10
+    listOrder: 7230
+
+  - type: STR_GUARD_IMPERIAL_ASSASSIN_CORPSE
+    name: STR_CORPSE
+    weight: 20
+    bigSprite: 210
+    floorSprite: 210
+    invWidth: 2
+    invHeight: 3
+    battleType: 11
+    armor: 20
+    recover: false
+
+  - type: STR_GUARD_KRIEG_CORPSE
+    name: STR_CORPSE
+    weight: 20
+    bigSprite: 215
+    floorSprite: 215
+    invWidth: 2
+    invHeight: 3
+    battleType: 11
+    armor: 20
+    recover: false
+
+  # no idea why there need to be two different weapons
+  - &STR_SENTINEL_MISSILE
+    type: STR_SENTINEL_MISSILE_LAUNCHER
+    compatibleAmmo:
+      - STR_SENTINEL_FRAG_MISSILES
+      - STR_SENTINEL_KRAKK_MISSILES
+      - STR_SENTINEL_INC_MISSILES
+      - STR_SENTINEL_FRAG_MISSILES_PD
+      - STR_SENTINEL_KRAKK_MISSILES_PD
+
+
+  - type: STR_SENTINELPD_MISSILE_LAUNCHER
+    refNode: *STR_SENTINEL_MISSILE
+
+
+
+  - type: STR_SENTINEL_MISSILE_LAUNCHER
+    bigSprite: 216
+    scripts:
+      selectItemSprite:
+        var ptr BattleItem ammoItem;
+        var ptr RuleItem ammoRuleset;
+        var int skipBigobs;
+
+        item.getAmmoItem ammoItem;
+        ammoItem.getRuleItem ammoRuleset;
+        ammoRuleset.getTag skipBigobs Tag.ITEM_AMMO_SKIP_BIGOBS;
+
+        if and gt skipBigobs 0 eq blit_part blit_item_big;
+          add sprite_index skipBigobs;
+        end; 
+
+        return sprite_index;
+
+
+  - type: STR_SENTINEL_FRAG_MISSILES
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 1
+
+  - type: STR_SENTINEL_KRAKK_MISSILES
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 2
+
+  - type: STR_SENTINEL_INC_MISSILES
+    categories: [STR_CAT_AUXILIARY]
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_MIDTIER
+    costBuy: 3600
+    costSell: 2840
+    size: 0.5
+    weight: 20
+    clipSize: 4
+    invWidth: 2
+    invHeight: 2
+    bigSprite: 229
+    floorSprite:  229
+    handSprite:  {mod: 40k, index: 816} 
+    hitSound: 0
+    hitAnimation: 0
+    power: 90
+    damageType: 2
+    damageAlter:
+      ToHealth: 2    
+    battleType: 2
+    blastRadius: 5
+    listOrder: 6840
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 3
+
+
+  - type: INV_NULL_SENTINEL_BACK_MISSILE
+    bigSprite: 220
+    invWidth: 3
+    invHeight: 1
+
+  - type: INV_NULL_1X2_BACKPACK
+    weight: 0
+    bigSprite: 208 # {mod: 40k, index: 824}
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    defaultInventorySlot: STR_BACK_PACK
+    defaultInvSlotX: 0
+    defaultInvSlotY: 1
+    recover: false
+
+  - type: STR_GUARD_ARMORS_SENTINEL_MULTILASER                #6800
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    size: 2
+    costBuy: 320000
+    costSell: 100000
+    transferTime: 50
+    listOrder: 6799
+
+  - type: STR_GUARD_ARMORS_SENTINEL_HEAVY_PLASMA                #6800
+    size: 2
+    costSell: 100000
+    listOrder: 6870
+
+
+
+  - type: STR_GUARD_OFFICER_BLESS
+    categories: [STR_CAT_SPELLS]
+    specialIconSprite: 200
+    explosionHitSound: [{mod: 40k, index: 1110}, {mod: 40k, index: 1111}, {mod: 40k, index: 1112}, {mod: 40k, index: 1113}, {mod: 40k, index: 1114}, {mod: 40k, index: 1115}, {mod: 40k, index: 1116}, {mod: 40k, index: 1117}, {mod: 40k, index: 1118}, {mod: 40k, index: 1119}, {mod: 40k, index: 1120}, {mod: 40k, index: 1121}]
+    hitAnimation: {mod: 40k, index: 96}
+    power: 0
+    damageBonus:
+      bravery: 0.2
+#      rank: [0.0, 2.5]
+    damageType: 6
+    damageAlter:
+      ResistType: 10
+      RandomType: 3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToMorale: -0.5
+      ToTime: 0.0
+      ToHealth: 0.0
+      ToWound: 0.0
+      ToArmor: 0.0
+      RadiusReduction: 0.0
+      FixRadius: 3
+    confAimed:
+      name: STR_GUARD_OFFICER_BLESS
+    costAimed:
+      time: 25
+      energy: 30
+    accuracyAimed: 100
+    accuracyMultiplier:
+      firing: 0.0
+      bravery: 2.2
+#      rank: [0.0, 2.0]      
+    maxRange: 12
+    bulletSpeed: 80
+    #powerRangeThreshold: 2 # considering this is not in the script yet..
+    #powerRangeReduction: 4.0
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    recover: false
+    flatRate: true
+    clipSize: -1
+    experienceTrainingMode: 19
+    #*** Melee bayonet
+    specialUseEmptyHand: true
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773} #{mod: 40k, index: 101}
+    meleeAnimation: {mod: 40k, index: 4} # 0
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+    tags:
+      ITEM_BLESS_FIRING_ACCURACY: 1
+      
+  - type: STR_GUARD_PRIEST_BLESS
+    categories: [STR_CAT_SPELLS]
+    specialIconSprite: {mod: 40k, index: 8}
+    explosionHitSound: [120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130]
+    hitAnimation: {mod: 40k, index: 96}
+    power: 0
+    damageBonus:
+      bravery: 0.2
+    damageType: 6
+    damageAlter:
+      ResistType: 10
+      RandomType: 3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToMorale: -0.5
+      ToTime: 0.0
+      ToHealth: 0.0
+      ToWound: 0.0
+      ToArmor: 0.0
+      RadiusReduction: 0.0
+      FixRadius: 3
+    confAimed:
+      name: STR_GUARD_PRIEST_BLESS
+    costAimed:
+      time: 25
+      energy: 30
+    accuracyAimed: 100
+    accuracyMultiplier:
+      firing: 0.0
+      bravery: 2.2
+    maxRange: 12
+    bulletSpeed: 80
+    #powerRangeThreshold: 2 # considering this is not in the script yet..
+    #powerRangeReduction: 4.0
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    recover: false
+    flatRate: true
+    clipSize: -1
+    experienceTrainingMode: 19
+    #*** Melee bayonet
+    specialUseEmptyHand: true
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773} #{mod: 40k, index: 101}
+    meleeAnimation: {mod: 40k, index: 4} # 0
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+    tags:
+      ITEM_BLESS_MELEE_ACCURACY: 1
+
+  - type: STR_LASGUN_ACCATRAN 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 150000
+    listOrder: 19101    
+
+  - type: STR_LASGUN_VOSS 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 150000
+    listOrder: 19102    
+    
+
+  - type: STR_LASGUN_VOSTROYA 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 150000
+    listOrder: 19103    
+
+  - type: STR_LASGUN_LUCIUS 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 150000
+    listOrder: 19104
+
+  - type: STR_PISTOLB 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19110    
+
+  - type: STR_PISTOLS 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19111    
+
+  - type: STR_PISTOLH 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19112  
+
+  - type: STR_PISTOL_CLIP_AP # Kraken Penetrator
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 7000
+    listOrder: 19120
+
+  - type: STR_PISTOL_CLIP_EX # Metal Storm Frag
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 7000
+    listOrder: 19121   
+
+  - type: STR_RIFLEB 
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19130 
+
+  - type: STR_RIFLEC
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19131 
+
+  - type: STR_RIFLED
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 300000
+    listOrder: 19132 
+
+  - type: STR_RIFLE_CLIP_AP # Kraken Penetrator
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 15000
+    listOrder: 19140
+
+  - type: STR_RIFLE_CLIP_EX # Metal Storm Frag
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 15000
+    listOrder: 19141
+
+
+  - type: STR_KRIEG_SHOVEL 
+    weight: 0
+    specialIconSprite: 201
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: 0
+    damageType: 7
+    power: 50 # was 40
+    damageBonus:
+      strength: 0.2
+      melee: 0.2
+    damageAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+    fixedWeapon: true
+    recover: false
+    battleType: 3
+    clipSize: -1
+    experienceTrainingMode: 13
+
+  - type: STR_GUARDSMEN_KRIEG_TOKEN
+    size: 0.1
+
+  - type: INV_NULL_SENTINEL_BACK_HEAVY_PLASMA
+    bigSprite: 223
+    invWidth: 3
+    invHeight: 3
+    weight: 0
+    fixedWeapon: true
+    recover: false
+    defaultInventorySlot: STR_BACK_PACK
+
+
+  - type: STR_AIRSTRIKE_VOX
+    categories: [STR_CAT_EQUIPMENT]
+    weight: 5
+    bigSprite: 240
+    fireSound: {mod: 40k, index: 491}   
+    bulletSpeed: -10
+    bulletSprite: {mod: 40k, index: 22} 
+    handSprite: 240
+    accuracyAimed: 200
+    tuAimed: 40
+    confAimed:
+      name: STR_SIGNAL_POSITION
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 1 
+    arcingShot: false # true
+    minRange: 5
+    dropoff: 0
+    recover: true
+    compatibleAmmo:
+      - STR_AIRSTRIKE_AMMO
+    listOrder: 23000
+    # courtesy to the multimod
+    tuLoad: 999
+    tuUnload: 999
+
+  - type: STR_AIRSTRIKE_AMMO
+    categories: [STR_CAT_EQUIPMENT]
+    size: 0.1
+#    costBuy: 20000
+    costSell: 7500
+    weight: 0
+    bigSprite: 241
+    floorSprite: {mod: 40k, index: 1013}
+    handSprite: {mod: 40k, index: 1104}
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    #explosionSpeed: 5
+    power: 150
+    damageType: 3
+    clipSize: 1
+    battleType: 2
+    armor: 30
+    listOrder: 23001
+    invWidth: 0 # don't show up
+    invHeight: 0 # only the ammo in the vox should be used and not reloaded
+    
+  - type: STR_EVISCERATOR_BUILTIN
+    categories: [STR_CAT_MELEE]
+    size: 0.2
+    costSell: 5500
+    weight: 25
+    bigSprite: {mod: 40k, index: 620}
+#    floorSprite: 610
+    handSprite: {mod: 40k, index: 168}
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 44} 
+    power: 100
+    damageAlter: #DA CHAIN
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+      ToWound: 0.3
+      ToEnergy: 0.5
+    damageType: 7
+    accuracyMelee: 70
+    tuMelee: 20
+    clipSize: -1
+    battleType: 3
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    experienceTrainingMode: 13
+    listOrder: 12410
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+
+  - type: STR_EXITUS_BUILTIN
+    size: 0.3
+#    costBuy: 18400
+#    costSell: 4800
+    weight: 15
+    bigSprite: 224
+#    floorSprite: 11
+    handSprite: 224
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 711}
+    compatibleAmmo:
+      - STR_EXITUS_AMMO
+      - STR_EXITUS_AMMO_HELLFIRE
+      - STR_EXITUS_AMMO_TURBOPENETRATOR
+      - STR_EXITUS_AMMO_SHELLBREAKER
+    accuracySnap: 80
+    accuracyAimed: 160
+    tuSnap: 40
+    tuAimed: 85
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    listOrder: 11940
+    bulletSpeed: 50
+    dropoff: 0
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+
+
+  - &STR_EXITUS_BULLETS
+    type: STR_EXITUS_AMMO
+    categories: [STR_CAT_SNIPER]
+    size: 0.1
+#    costBuy: 3000
+    costSell: 2250
+    weight: 2
+    bigSprite: 225
+    floorSprite: {mod: 40k, index: 12}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 150
+    damageAlter:
+      ToTile: 0.0
+      RandomType: 2
+      ArmorEffectiveness: 0.8
+    damageType: 1
+    clipSize: 2
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    listOrder: 11950
+    tags:
+      ITEM_AMMO_COLOR: 15
+
+  - type: STR_EXITUS_AMMO_HELLFIRE
+    refNode: *STR_EXITUS_BULLETS
+#    costBuy: 12000
+    costSell: 9000
+    bigSprite: 226
+    damageAlter: 
+#      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.8
+#      ToArmor: 0.1
+#      ToHealth: 1.0
+#      ToStun: 0.5
+    blastRadius: 1
+    damageType: 3
+    power: 150
+    listOrder: 11960
+    tags:
+      ITEM_AMMO_COLOR: 2
+
+  - type: STR_EXITUS_AMMO_TURBOPENETRATOR
+    refNode: *STR_EXITUS_BULLETS
+#    costBuy: 12000
+    costSell: 9000
+    bigSprite: 227
+    damageAlter: 
+      ToTile: 0.0
+      RandomType: 2
+      ArmorEffectiveness: 0.4
+    power: 150
+    listOrder: 11970
+    tags:
+      ITEM_AMMO_COLOR: 3
+
+  - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
+    refNode: *STR_EXITUS_BULLETS
+#    costBuy: 12000
+    costSell: 9000
+    bigSprite: 228
+    power: 150
+    damageAlter:
+      ToTile: 0.0
+      RandomType: 2
+      FireThreshold: 1000 # no fire
+      ArmorEffectiveness: 0.8
+    damageType: 2
+    listOrder: 11980
+    #hitAnimation: 26 # and other may need correct values
+    #hitAnimFrames: 10
+    tags:
+      ITEM_AMMO_COLOR: 8
+
+
+  - type: STR_GRENADE_LAUNCHER
+    compatibleAmmo:
+      - STR_FRAG_GRENADE_DRUM
+      - STR_KRAK_GRENADE_DRUM
+      - STR_INCENDIARY_GRENADE_DRUM
+      - STR_SMOKE_GRENADE_DRUM
+      - STR_PHOTON_GRENADE_DRUM
+
+  - &STR_GRENADE_DRUM
+    type: STR_SMOKE_GRENADE_DRUM
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_SMOKE
+    categories: [STR_CAT_ROCKETL]
+    size: 0.1
+    costBuy: 800
+    costSell: 600
+    weight: 5
+    bigSprite: 204
+    floorSprite: {mod: 40k, index: 1008}
+    handSprite: {mod: 40k, index: 1048}
+    #explosionHitSound: {mod: 40k, index: 792}
+    power: 60 # 60
+    damageType: 9 # Smoke
+    clipSize: 6
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    armor: 30
+    listOrder: 11890
+    blastRadius: 5
+
+  - type: STR_PHOTON_GRENADE_DRUM
+    refNode: *STR_GRENADE_DRUM
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_PHOTON_GRENADE_REQUISITION
+    bigSprite: 205
+    blastRadius: 3
+    power: 50
+    damageType: 6
+    damageAlter:
+      ArmorEffectiveness: 0.5
+      ToStun: 0.2
+      ToTime: 0.8
+      RadiusReduction: 5.0
+    listOrder: 11891
+
+  - type: STR_HEAVY_STUBBER_CLIP_MC
+    categories: [STR_CAT_AUTO]
+    size: 0.1
+#    costBuy: 600
+    costSell: 225
+    weight: 10
+    bigSprite: 201
+    floorSprite: {mod: 40k, index: 1004}
+    handSprite: {mod: 40k, index: 1032}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: -1
+    #explosionSpeed: 5
+    power: 60 # original 42
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.90
+    clipSize: 125
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 30
+    listOrder: 10771
+    tags:
+      ITEM_AMMO_COLOR: 1
+      ITEM_AMMO_SHADE: -3
+
+  - type: STR_HEAVY_STUBBER_CLIP
+    tags:
+      ITEM_AMMO_COLOR: 6
+
+
+
+# bring the range up to the IG Heavy Bolter; the stubber is already bad enough with 85% tu and low AP damage
+  - type: STR_HEAVY_STUBBER
+    autoRange: 24 # was 18
+    bigSprite: 212
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+    tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+
+# this is essentially the Arbites Heavy Stubber
+# hence the same graphic because I can't draw
+# not supposed to be bought but changed via manufacture
+  - type: STR_HEAVY_STUBBER_LIGHT
+    categories: [STR_CAT_AUTO]
+#    requiresBuy:
+#      - STR_GUARD_SUPORT
+    size: 0.3
+    dropoff: 5
+#    costBuy: 9000
+    costSell: 3750
+    weight: 15
+    bigSprite: 200 # 200 # {mod: 40k, index: 1130}
+    floorSprite: 200 # {mod: 40k, index: 1130}
+    handSprite: 200 # {mod: 40k, index: 1944}
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 25
+    fireSound: {mod: 40k, index: 4}
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+    accuracyAuto: 40
+    accuracySnap: 55
+    tuAuto: 45
+    tuSnap: 30
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 60
+    autoRange: 18 # was 15
+    snapRange: 18 # was 15
+    autoShots: 10
+    confSnap:
+      shots: 4
+    sprayWaypoints: 2
+    listOrder: 10761
+    tags:
+      ITEM_RECOIL: 30
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+
+  - type: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
+    size: 0.3
+    #listOrder: 20
+    #costBuy: 20000
+    costSell: 8000
+    transferTime: 10
+    listOrder: 7230
+
+  - type: STR_HELLPISTOL_BUILTIN
+    categories: [STR_CAT_LASGUN]
+    size: 0.1
+    dropoff: 5
+    costSell: 20295
+    weight: 5
+    bigSprite: 208 #{mod: 40k, index: 570}
+#    floorSprite: {mod: 40k, index: 570}
+    handSprite: 208 # {mod: 40k, index: 552} # {mod: 40k, index: 950}
+    bulletSprite: {mod: 40k, index: 13}
+    bulletSpeed: 50
+    fireSound: {mod: 40k, index: 740}
+    accuracySnap: 75
+    tuSnap: 25
+    snapRange: 18
+    battleType: 1
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10851
+    clipSize: -1
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    power: 75
+    damageType: 4
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.0
+    vaporColor: 2
+    vaporDensity: 8
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    tags:
+      ITEM_CHANGES_SPRITE_WITH_ARMOR: 1
+
+  - type: STR_HELLPISTOL
+    bigSprite: 211
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+  - type: STR_LASPISTOL_CLIP_HOTSHOT
+    tags:
+      ITEM_AMMO_COLOR: 2
+      ITEM_AMMO_SHADE: -3
+
+
+  - type: STR_MC_BOLTER_DEAZ
+    compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO
+      - STR_LIGHT_BOLTER_AMMO_PEN
+      - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_MC
+
+  - type: STR_MC_BOLTPISTOL_DEAZ
+    compatibleAmmo:
+      - STR_LIGHT_BOLTPISTOL_AMMO
+      - STR_LIGHT_BOLTPISTOL_AMMO_AP
+      - STR_LIGHT_BOLTPISTOL_AMMO_EX
+      - STR_LIGHT_BOLTPISTOL_AMMO_MC
+
+
+  - type: STR_BOLTER_LIGHT_ULTRA
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+    size: 0.3
+    requiresBuyBaseFunc: [TRADE]
+    dropoff: 5
+    costBuy: 250000
+    costSell: 2750
+    weight: 15
+    bigSprite: 202
+    floorSprite: {mod: 40k, index: 1}
+    handSprite: {mod: 40k, index: 752}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO
+      - STR_LIGHT_BOLTER_AMMO_PEN
+      - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_MC
+    accuracySnap: 80
+    accuracyAuto: 66
+    tuSnap: 25
+    tuAuto: 40
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoShots: 3
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+  - type: STR_BOLTPISTOL_LIGHT_ULTRA
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+    size: 0.2
+    requiresBuyBaseFunc: [TRADE]
+    dropoff: 5
+    costBuy: 250000
+    costSell: 1000
+    weight: 10
+    bigSprite: 203
+    floorSprite: {mod: 40k, index: 3}
+    handSprite: {mod: 40k, index: 1664}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_LIGHT_BOLTPISTOL_AMMO
+      - STR_LIGHT_BOLTPISTOL_AMMO_AP
+      - STR_LIGHT_BOLTPISTOL_AMMO_EX
+      - STR_LIGHT_BOLTPISTOL_AMMO_MC
+    accuracySnap: 75
+    tuSnap: 21
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 2
+    armor: 30
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19150
+    tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+
+  - &STR_LIGHT_BOLTER_CLIP_AP
+    type: STR_LIGHT_BOLTER_AMMO_PEN
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+    size: 0.1
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 12000
+    costSell: 300
+    weight: 3
+    bigSprite: {mod: 40k, index: 352}
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER AP+
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.0
+      ToArmor: 0.0
+      ToHealth: 1.0
+      ToStun: 0.5
+    explosionSpeed: 5
+    power: 50
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 1
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+  - type: STR_LIGHT_BOLTER_AMMO_EX
+    refNode: *STR_LIGHT_BOLTER_CLIP_AP
+    bigSprite: {mod: 40k, index: 348}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    blastRadius: 1
+    damageType: 3
+    listOrder: 19181
+    tags:
+      ITEM_AMMO_COLOR: 2
+
+  - &STR_LIGHT_BOLTPISTOL_CLIP_AP
+    type: STR_LIGHT_BOLTPISTOL_AMMO_AP    
+    refNode: *STR_LIGHT_BOLTER_CLIP_AP
+    costBuy: 6000
+    costSell: 200
+    weight: 2
+    bigSprite: {mod: 40k, index: 353}
+    floorSprite: {mod: 40k, index: 4}
+    clipSize: 10
+    listOrder: 19160
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+  - type: STR_LIGHT_BOLTPISTOL_AMMO_EX
+    refNode: *STR_LIGHT_BOLTPISTOL_CLIP_AP
+    bigSprite: {mod: 40k, index: 354}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    blastRadius: 1
+    damageType: 3
+    listOrder: 19161
+    tags:
+      ITEM_AMMO_COLOR: 2
+
+
+  - type: STR_MCLASER_RIFLE #LASGUN
+    bigSprite: 214
+    tuAuto: 33 # was 34
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 14
+
+  - type: STR_MCSHOTGUN 
+    compatibleAmmo:
+      - STR_SHOTGUN_SHELLS
+      - STR_SHOTGUN_SHELLS_MC
+
+# more meaty sound
+  - type: STR_OFFICERS_SWORD
+    meleeSound: {mod: 40k, index: 754} # was nothing
+    meleeHitSound: {mod: 40k, index: 773} # was 101
+    meleeAnimation: {mod: 40k, index: 4} # was 0
+
+# Worked together with Tal'Raziid
+  - type: STR_OFFICERS_CHAIN_SWORD
+    categories: [STR_CAT_MELEE]
+    size: 0.2
+    costSell: 3750
+    weight: 10
+    bigSprite: 232
+    floorSprite: 232
+    handSprite: 232
+    explosionHitSound: [{mod: 40k, index: 1110}, {mod: 40k, index: 1111}, {mod: 40k, index: 1112}, {mod: 40k, index: 1113}, {mod: 40k, index: 1114}, {mod: 40k, index: 1115}, {mod: 40k, index: 1116}, {mod: 40k, index: 1117}, {mod: 40k, index: 1118}, {mod: 40k, index: 1119}, {mod: 40k, index: 1120}, {mod: 40k, index: 1121}]
+    hitAnimation: {mod: 40k, index: 96}
+    power: 0
+    damageBonus:
+      bravery: 0.25
+      rank: [0.0, 2.5]
+    damageType: 6
+    damageAlter:
+      ResistType: 10
+      RandomType: 3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToMorale: -1.00
+      ToTime: -1.00
+      ToHealth: 0.0
+      ToWound: 0.0
+      RadiusReduction: 0.0
+      FixRadius: 3
+    confAimed:
+      name: STR_INSPIRE
+    costAimed:
+      time: 60
+      energy: 75
+      morale: 15
+    flatAimed:
+      time: true
+    accuracyAimed: 100
+    accuracyMultiplier:
+      firing: 0.0
+      bravery: 1.4
+      rank: [0.0, 2.0]
+    arcingShot: true
+    maxRange: 12
+    bulletSpeed: 80
+    experienceTrainingMode: 19
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 44}
+    meleePower: 80 # flat damage or does damageBonus for Inspire also count?
+    meleeType: 7
+    accuracyMelee: 100
+    meleeMultiplier:
+      flatHundred: 0.0
+      melee: 1.0 # accuracy 
+    tuMelee: 12
+    flatMelee: true
+    clipSize: -1
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 3
+    armor: 30
+    listOrder: 12960
+    tags:
+      ITEM_STRENGTH_REQUIREMENT: 20
+
+
+# Don't like how that 50% training mechanism works. I'd prefer if experience was halved instead of having a 50% chance to get training points. Might not matter much on average but it annoys me anyway.
+  - type: STR_AUTOGUN
+    experienceTrainingMode: 4
+
+  - type: STR_AUTOPISTOL
+    experienceTrainingMode: 4
+
+  - type: STR_FLAMETHROWER
+    arcingShot: true
+
+# more meaty sound
+  - type: STR_GUARD_PRIMER
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773}
+    meleeAnimation: {mod: 40k, index: 4}
+
+  - type: STR_BAYONET
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773}
+    meleeAnimation: {mod: 40k, index: 4}
+
+# Guard sentinel has lower damage; on the other hand it's mobile and doesn't need ammo
+  - type: STR_SLASCAN
+    power: 150 # was 100 # wanted 200 (see reason above for not)
+
+  - type: STR_LASER_RIFLE # blue one
+    tuAuto: 33 # was 34
+
+  - type: STR_LASER_RIFLEG #LASGUN GUARD
+    tuAuto: 33 # was 34
+
+  - type: STR_LASCARBINE
+    tuAuto: 33 # was 34
+
+  - type: STR_LASGUN_VOSS
+
+
+  - type: STR_LASGUN_TANITH
+    tuAuto: 33 # was 34
+
+  - type: STR_HELLGUN
+    tuAuto: 33 # was 34
+  
+  - type: STR_LASCANNON_TAUROS
+#    compatibleAmmo:
+#     - 
+#    clipSize: -1
+    accuracyAimed: 94
+    costAimed:
+      time: 2
+      energy: 100
+
+  - type: STR_GRENADE_LAUNCHER_TAUROS
+    ammo:
+      0:
+        compatibleAmmo: [ STR_FRAG_GRENADE_BELT_TAUROS ]
+      1:
+        compatibleAmmo: [ STR_KRAK_GRENADE_BELT_TAUROS ]
+      2:
+        compatibleAmmo: [ STR_INC_GRENADE_BELT_TAUROS ]
+
+    confAimed:
+      name: STR_FRAG_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 0           #with ammo slot is used by this attack. Defulat `0
+      shots: 1
+    confSnap:
+      name: STR_KRAK_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 1
+      shots: 1
+    confAuto:
+      name: STR_INC_SHOT_TAURUS  #name of attack in action menu.
+      shots: 1
+      ammoSlot: 2
+    accuracyAimed: 65
+    accuracySnap: 65
+    accuracyAuto: 65
+    costAimed:
+      time: 1
+      energy: 33
+    costSnap:
+      time: 1
+      energy: 33
+    costAuto:
+      time: 1
+      energy: 33
+    aimRange: 20
+    snapRange: 20
+    autoRange: 20
+
+  - type: STR_GRENADE_LAUNCHER_TAUROS_SMOKE
+    size: 1.0
+    dropoff: 5
+    weight: 85
+    bigSprite: {mod: 40k, index: 1083}
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 4}
+    ammo:
+      0:
+        compatibleAmmo: [ STR_SMOKE_GRENADE_BELT_TAUROS ]
+      1:
+        compatibleAmmo: [ STR_PHOTON_GRENADE_BELT_TAUROS ]
+    accuracyAimed: 65
+    accuracySnap: 65
+    costAimed:
+      time: 1
+      energy: 33
+    costSnap:
+      time: 1
+      energy: 33
+    confAimed:
+      name: STR_SMOKE_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 0
+      shots: 1
+    confSnap:
+      name: STR_PHOTON_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 1
+      shots: 1
+    aimRange: 20
+    snapRange: 20
+    flatUse:
+      time: true
+      energy: true
+    battleType: 1
+    arcingShot: true
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+
+
+  - type: STR_FRAG_GRENADE_BELT_TAUROS
+    clipSize: 8
+
+  - &STR_GRENADE_BELT_TAUROS
+    type: STR_KRAK_GRENADE_BELT_TAUROS
+    size: 0.3
+    weight: 15
+    bigSprite: {mod: 40k, index: 1082}
+    power: 80
+    damageType: 3
+    clipSize: 8
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    recover: false
+    blastRadius: 1
+
+  - type: STR_INC_GRENADE_BELT_TAUROS
+    refNode: *STR_GRENADE_BELT_TAUROS
+    power: 50
+    damageType: 2 # INC
+
+  - type: STR_SMOKE_GRENADE_BELT_TAUROS
+    refNode: *STR_GRENADE_BELT_TAUROS
+    #power: 100 # 60
+    power: 60
+    damageType: 9 # Smoke
+    #explosionHitSound: {mod: 40k, index: 792}
+    blastRadius: 5
+
+  - type: STR_PHOTON_GRENADE_BELT_TAUROS
+    refNode: *STR_GRENADE_BELT_TAUROS
+    power: 50
+    damageType: 6
+    damageAlter:
+      ArmorEffectiveness: 0.5
+      ToStun: 0.2
+      ToTime: 0.8
+      RadiusReduction: 5.0
+    blastRadius: 3
+
+
+  - type: STR_MULTI_LASER_SENTINEL 
+    size: 1.0
+    weight: 0
+    floorSprite: {mod: 40k, index: 0}
+    handSprite: {mod: 40k, index: 0}
+    bigSprite: 221 # {mod: 40k, index: 1081}
+    bulletSprite: {mod: 40k, index: 12}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    explosionSpeed: 5
+    power: 50
+    fireSound: {mod: 40k, index: 742}
+    accuracyAuto: 35
+    tuAuto: 40
+    autoRange: 20
+    autoShots: 5
+    sprayWaypoints: 2
+    dropoff: 5
+    clipSize: -1
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 100
+    damageType: 4
+    damageAlter: #DA LAS
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.0
+    recover: false
+    fixedWeapon: true
+
+
+  - type: STR_HEAVY_PLASMA_SENTINEL   #dread plasma                   2710
+    vaporColorSurface: 2
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    weight: 1
+    bigSprite: 222
+    floorSprite: {mod: 40k, index: 0}
+    handSprite: {mod: 40k, index: 0}
+    bulletSprite: {mod: 40k, index: 17}
+    fireSound: {mod: 40k, index: 18}
+    #hitSound: 19 #*** PLASMA rebalance
+    explosionHitSound: {mod: 40k, index: 690} #*** PLASMA rebalance
+    hitAnimation: {mod: 40k, index: 112} #100 #*** PLASMA rebalance
+    power: 140
+    damageType: 5
+    damageAlter: #DA PLASMA
+      #ToHealth: 0.9
+      #ToArmor: 0.1
+      FixRadius: 1 #*** PLASMA rebalance
+      ArmorEffectiveness: 0.75
+      ToArmor: 0.2
+      IgnoreDirection: false
+      RadiusReduction: 30.0
+    accuracySnap: 85
+    tuSnap: 30
+    snapRange: 24 #*** PLASMA rebalance
+    battleType: 1
+    fixedWeapon: true
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    listOrder: 2710

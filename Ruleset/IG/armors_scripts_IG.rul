@@ -1,0 +1,149 @@
+armors:
+  - &STR_ELYSIAN_ARMOR
+    type: STR_ELYSIAN_JUMP_ARMOR
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic,4322.msg75634.html#msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int floating;
+        var int isFemale;
+
+        var int numOfFrames;
+
+        unit.isWalking walking;
+        unit.isFloating floating;
+        unit.getGender isFemale;
+
+        set numOfFrames 6;
+    
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if and eq walking 0 eq floating 1;
+              
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+              if neq 0 isFemale;
+                # using isFemale differently for now;
+                set isFemale 8;
+                mul isFemale numOfFrames;
+                add sprite_index isFemale;
+              end;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;  
+
+  - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR
+    refNode: *STR_ELYSIAN_ARMOR
+
+  - type: STR_GUARD_ARMORS_MOUNTED_HEAVY_BOLTER_UC
+    scripts:
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+      # 0 las, 1 auto, 2 heavy bolter  
+      selectUnitSprite:
+        var int isFemale;
+        var int unitDirection;
+
+        add sprite_index 2; 
+        unit.getGender isFemale;
+
+        if neq 0 isFemale;
+
+          set sprite_offset 168;
+
+        else;
+
+          set sprite_offset 0;
+
+        end;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+  - &STR_CARAPACE_ARMOR_POWER_PACK_BLUE
+    type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLGUN
+    scripts:
+      selectUnitSprite:
+        var int isFemale;
+        var int unitDirection;
+
+        if eq blit_part blit_torso;
+
+          set sprite_index 288;
+          unit.getGender isFemale;
+
+          if neq 0 isFemale;
+
+            add sprite_offset 8;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+        return sprite_index;
+    tags:
+      ARMOR_BUILTIN_WEAPON_VARIANT: 1
+
+  
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR_VOLLEYGUN
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_BLUE
+
+
+  - type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_BLUE
+
+  - type: STR_SCION_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_BLUE
+
+  - &STR_CARAPACE_ARMOR_POWER_PACK_GREEN
+    type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_HELLGUN
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_BLUE
+    tags:
+      ARMOR_BUILTIN_WEAPON_VARIANT: 0
+
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_VOLLEYGUN
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_GREEN
+
+  - type: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_GREEN
+
+  - type: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
+    refNode: *STR_CARAPACE_ARMOR_POWER_PACK_GREEN
