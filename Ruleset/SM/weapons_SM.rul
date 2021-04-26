@@ -674,6 +674,24 @@ items:
     categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
     size: 0.2
     costSell: 15000
+    handSprite: 2840
+    scripts:
+     selectItemSprite: |
+
+        var int temp;
+        var int numOfFrames;
+        set numOfFrames 4;
+
+        if or eq blit_part blit_item_lefthand eq blit_part blit_item_righthand;
+
+            add temp anim_frame;
+            mod temp numOfFrames;
+            mul temp 8;
+            add sprite_index temp;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+        return sprite_index;
     weight: 20
     power: 140
     damageAlter:     #DA POWER
