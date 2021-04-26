@@ -960,7 +960,7 @@ items:
     strengthApplied: false
     listOrder: 13400
   - type: STR_ADEPTAS_POWER_AXE #         3009           DA POWER
-    categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
+    categories: [STR_CAT_MELEE]
     requires:
       - STR_ADEPTAS_MIDTIER
     size: 0.2
@@ -998,6 +998,59 @@ items:
     strengthApplied: false
     attraction: 8
     listOrder: 15200
+  - type: STR_ADEPTAS_ZWEIHANDER #              3008           DA POWER
+    categories: [STR_CAT_MELEE]
+    size: 0.3
+    costSell: 15000
+    weight: 55
+    bigSprite: 2217
+    floorSprite: 2092
+    handSprite: 2800
+    meleeAnimation: {mod: 40k, index: 4 }
+    meleeSound: {mod: 40k, index:  753 } #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index:  754 }  #744 Powerswrod hit
+    scripts:
+     selectItemSprite: |
+
+        var int temp;
+        var int numOfFrames;
+        set numOfFrames 4;
+
+        if or eq blit_part blit_item_lefthand eq blit_part blit_item_righthand;
+
+            add temp anim_frame;
+            mod temp numOfFrames;
+            mul temp 8;
+            add sprite_index temp;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+        return sprite_index;
+    power: 150
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      RandomType: 7 #TFTD [50% - 200%]
+      IgnoreSelfDestruct: false
+    damageType: 7
+    accuracyMelee: 80
+    twoHanded: true
+    oneHandedPenalty: 100
+    flatRate: true
+    tuMelee: 25
+    clipSize: -1
+    battleType: 3
+    invWidth: 2
+    invHeight: 3
+    attraction: 6
+    armor: 60
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    strengthApplied: true
+    listOrder: 13400
 
   - type:  STR_REDEEMER_SHOTGUN #  ADEPTAS BOOMSTICK      10601                   MC
     categories: [ STR_CAT_SHOTGUN, STR_ADEPTAS]
