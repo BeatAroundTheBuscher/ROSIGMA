@@ -1,0 +1,93 @@
+missionScripts:
+  # no Orkz as starting enemy
+  - delete: gameStartOrk
+
+  - type: gameStartCultist
+    executionOdds: 50
+
+  - type: gameStartTraitorGuard
+    executionOdds: 100 # either Cultists or Traitor Guard
+
+
+  # monthly missions
+  - &SPACEHULK_ORK_BASE
+    type: SPACEHULK_ORK_BASE_1
+    missionWeights:
+      0:
+        STR_ORK_BASE_SPACEHULK: 100
+    #useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    randomDelay: 20160 # Up to 2 weeks random delay
+    researchTriggers:
+      STR_SPACEHULK_ORK: true
+      STR_SPACEHULK_FIRST: false
+
+  - type: SPACEHULK_ORK_BASE_2
+    refNode: *SPACEHULK_ORK_BASE
+
+
+  - type: SPACEHULK_ORK_BASE_3
+    refNode: *SPACEHULK_ORK_BASE
+
+
+  # monthly missions
+  - type: MMArbites
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_ELDAR_ARTIFACT: 50
+        STR_ALIEN_ARTIFACT: 50
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+#         WAR_SITES: 100
+#    varName: hulk
+    useTable: false
+    firstMonth: 3
+    executionOdds: 100
+    startDelay: 10000
+    researchTriggers:
+      STR_ARBITES: true
+      STR_ADEPTAS: false
+
+  - type: MMAdeptas
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_ELDAR_ARTIFACT: 33
+        STR_ALIEN_ARTIFACT: 33
+        STR_ADEPTAS_WAR: 33
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+#         WAR_SITES: 100
+#    varName: hulk
+    useTable: false
+    firstMonth: 3
+    executionOdds: 100
+    startDelay: 10000
+    researchTriggers:
+      STR_ARBITES: false
+      STR_ADEPTAS: true
+
+  - type: MMElse # SM, CSM, IG
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_ELDAR_ARTIFACT: 33
+        STR_ALIEN_ARTIFACT: 33
+        STR_ALIEN_WAR: 33
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+#         WAR_SITES: 100
+#    varName: hulk
+    useTable: false
+    firstMonth: 3
+    executionOdds: 100
+    startDelay: 10000
+    researchTriggers:
+      STR_ARBITES: false
+      STR_ADEPTAS: false
+
