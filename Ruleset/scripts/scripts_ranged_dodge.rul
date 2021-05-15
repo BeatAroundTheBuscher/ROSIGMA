@@ -1,0 +1,68 @@
+## not a global one
+
+extended:
+  tags:
+    BattleUnit:
+      LAST_DODGE_FRAME: int
+    RuleArmor:
+      DODGE_CHANCE: int
+
+armors:
+  - &STR_DODGE_ARMOR
+    type: STR_SCOUT_UC 
+    tags:
+      DODGE_CHANCE: 50      
+    scripts:
+      hitUnit: | 
+        var int temp;
+        var int randomNumber;
+        var int dodgeChance;
+        var ptr RuleArmor targetArmor;
+        var ptr RuleItem damagingItem;
+        var ptr RuleDamageType damageType;
+        var int isAoE;
+
+        unit.getRuleArmor targetArmor;
+        targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
+
+        damaging_item.getRuleItem damagingItem;
+        damagingItem.getDamageType damageType;
+        damageType.isAreaOfEffect isAoE;
+
+        battle_game.randomRange randomNumber 1 100;
+        debug_log "randomNumber" randomNumber;
+        debug_log "dodgeChance" dodgeChance;
+
+        if gt isAoE 0;
+            set randomNumber 100; # always hit
+            debug_log "AoE";
+        else;
+            debug_log "no AoE";
+        end;
+
+        if gt randomNumber dodgeChance;
+          debug_log "hit";
+          return power part side;
+        end;
+
+        debug_log "miss";
+        battle_game.getAnimFrame temp;
+        unit.setTag Tag.LAST_DODGE_FRAME temp;
+        battle_game.flashMessage "DODGED";
+        return 0 part side;
+
+      recolorUnitSprite: |
+        var int temp;
+
+        # add sprite_index sprite_offset;
+          
+        unit.getTag temp Tag.LAST_DODGE_FRAME;
+        if gt temp 3;
+          sub temp anim_frame;
+          if gt temp -2; #only 3 frames after hit have changed color
+            set_color new_pixel COLOR_X1_BLUE1;
+          end;
+        end;
+        return new_pixel;
+
+

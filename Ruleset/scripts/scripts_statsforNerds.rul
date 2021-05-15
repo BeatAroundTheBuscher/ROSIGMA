@@ -25,6 +25,7 @@ extended:
       HAS_EXTENDED_FRONT_SHIELD: int
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
+      DODGE_CHANCE: int
 
 
   scripts:
@@ -33,6 +34,7 @@ extended:
         code: |
           var int temp1;
           var int temp2;
+
           rule.getTag temp1 Tag.HAS_EXTENDED_FRONT_SHIELD;
           if gt temp1 0;
             stats_state.addTextRow "Extended Front Side" "Yes";
@@ -40,12 +42,19 @@ extended:
 
           rule.getTag temp1 Tag.ARMOR_ENERGY_SHIELD_HP_PER_TURN;
           rule.getTag temp2 Tag.ARMOR_ENERGY_SHIELD_DECAY;
-          muldiv temp1 100 temp2;
+
+          if neq temp2 0;
+            muldiv temp1 100 temp2;
+          end;
 
           if gt temp1 0;
             stats_state.addIntRow "Energy Shield" temp1;
           end;
 
+          rule.getTag temp1 Tag.DODGE_CHANCE;
+          if gt temp1 0;
+            stats_state.addIntRow "Ranged Dodge Chance" temp1;
+          end;
 
           return;
 
