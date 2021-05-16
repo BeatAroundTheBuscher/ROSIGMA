@@ -147,3 +147,29 @@ armors:
 
   - type: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
     refNode: *STR_CARAPACE_ARMOR_POWER_PACK_GREEN
+
+  - type: STR_GUARD_ARMORSM
+    spriteSheet: GUARDSMAN_FLAK.PCK
+    scripts:
+      selectUnitSprite: | ## whiteshields
+        var int isFemale;
+        var int currentRank;
+        var int unitDirection;
+
+        unit.getRank currentRank;
+
+        if and eq currentRank 0 eq blit_part blit_torso;
+
+          set sprite_index 288;
+          unit.getGender isFemale;
+
+          if neq 0 isFemale;
+
+            add sprite_offset 8;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+        return sprite_index;
