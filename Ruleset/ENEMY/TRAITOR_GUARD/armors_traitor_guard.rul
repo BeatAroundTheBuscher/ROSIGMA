@@ -245,3 +245,30 @@ armors:
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.2 #MELTA
+
+  - type: STR_GUARD_TURRET
+    scripts:
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
