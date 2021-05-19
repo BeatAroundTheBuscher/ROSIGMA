@@ -1,0 +1,208 @@
+alienDeployments:
+  - type: STR_GUARD_TRAINING
+    enviroEffects: STR_GUARD_TRAINING_ENVIRONMENT
+    startingCondition: STR_GUARD_TRAINING_STARTING_CONDITION
+    turnLimit: 1    
+
+# press X in armor screen
+startingConditions:
+  - type: STR_GUARD_TRAINING_STARTING_CONDITION
+    allowedArmors:
+      - STR_GUARD_ARMORSM
+      - STR_GUARD_ARMORP_UC
+      - STR_PENAL_ARMOR_BROWN_UC
+      - STR_GUARD_IMPERIAL_ASSASSIN_UC
+      - STR_GUARD_ARMORS_PRIEST_UC
+      - STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR
+      - STR_SCION_OFFICER_CARAPACE_ARMOR
+      - STR_GUARD_KRIEG_ARMOR
+      - STR_STORMTROOPER_CARAPACE_ARMOR
+      - STR_OFFICER_FLAK_ARMOR
+      - STR_COMMISSAR_UC
+      - STR_SCION_CARAPACE_ARMOR
+      - STR_OGRYN_UC
+      - STR_PSYKER_ARMOR
+
+enviroEffects:
+  - type: STR_GUARD_TRAINING_ENVIRONMENT
+    armorTransformations:
+      STR_GUARD_ARMORSM: STR_GUARD_ARMOR_TRAIN
+      STR_GUARD_ARMORP_UC: STR_GUARD_ARMOR_TRAIN
+      STR_PENAL_ARMOR_BROWN_UC: STR_GUARD_ARMOR_TRAIN
+      STR_GUARD_IMPERIAL_ASSASSIN_UC: STR_GUARD_ARMOR_TRAIN
+      STR_GUARD_ARMORS_PRIEST_UC: STR_GUARD_ARMOR_TRAIN
+      STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_SCION_OFFICER_CARAPACE_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_GUARD_KRIEG_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_STORMTROOPER_CARAPACE_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_OFFICER_FLAK_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_COMMISSAR_UC: STR_GUARD_ARMOR_TRAIN
+      STR_SCION_CARAPACE_ARMOR: STR_GUARD_ARMOR_TRAIN
+      STR_OGRYN_UC: STR_GUARD_ARMOR_TRAIN
+      STR_PSYKER_ARMOR: STR_GUARD_ARMOR_TRAIN
+
+
+armors:
+  - type: STR_GUARD_ARMOR_TRAIN #DR10 SPACE MARINE SUPORT
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    spriteSheet: GUARD.PCK
+    spriteInv: CIV1
+    #spriteInv: MAN_31
+    customArmorPreviewIndex: 500
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    corpseBattle:
+      - STR_GUARD
+    storeItem: STR_NONE
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    scripts:
+      # https://www.ufopaedia.org/index.php/Experience
+      # max Training is 2-6 for primary
+      # max Training is always 10 for bravery
+
+      # max Training is 0-5 for TUs and Health
+      # max Training is 0-7 for Strength
+      # max Training is 0-6 for Stamina
+      # The overall formula is that you gain 0 to 2 points, 
+      # plus a tenth (rounded down) of the remaining increase possible
+
+      # random(0,2) + (Cap - Current)/10
+
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getTimeUnits statCap;
+        soldier.Stats.getTimeUnits statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setTimeUnits statCap;
+        else;
+          soldier.Stats.setTimeUnits statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getHealth statCap;
+        soldier.Stats.getHealth statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setHealth statCap;
+        else;
+          soldier.Stats.setHealth statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setStrength statCap;
+        else;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStamina statCap;
+        soldier.Stats.getStamina statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setStamina statCap;
+        else;
+          soldier.Stats.setStamina statCurrent;
+        end;
+
+
+        ruleSoldier.StatsCap.getReactions statCap;
+        soldier.Stats.getReactions statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setReactions statCap;
+        else;
+          soldier.Stats.setReactions statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getFiring statCap;
+        soldier.Stats.getFiring statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setFiring statCap;
+        else;
+          soldier.Stats.setFiring statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getMelee statCap;
+        soldier.Stats.getMelee statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setMelee statCap;
+        else;
+          soldier.Stats.setMelee statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getThrowing statCap;
+        soldier.Stats.getThrowing statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setThrowing statCap;
+        else;
+          soldier.Stats.setThrowing statCurrent;
+        end;        
+
+        ruleSoldier.StatsCap.getBravery statCap;
+        soldier.Stats.getBravery statCurrent;
+        add statCurrent 10;
+        if gt statCurrent statCap;
+          soldier.Stats.setBravery statCap;
+        else;
+          soldier.Stats.setBravery statCurrent;
+        end;   
+
+        return;
+
+
