@@ -1,0 +1,81 @@
+# items:
+#  - type: STR_LASGUN_CLIP
+#    tags:
+#      ITEM_IS_ENVELOPING: 1
+
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_IS_ENVELOPING: int
+
+
+
+      
+
+
+  scripts:
+    damageUnit: 
+      - offset: 21 # enveloping armor damage # consider extra hp damage for each side
+        code: |
+          var int selectedSide;
+          var int damageToArmor;
+          var int currentArmor;
+
+          var ptr RuleItem ruleItem;
+          var int isEnveloping;
+
+          # weapon_item.getRuleItem ruleItem; # this is the weapon
+          damaging_item.getRuleItem ruleItem; # this is the ammo
+          ruleItem.getTag isEnveloping Tag.ITEM_IS_ENVELOPING;
+
+          # debug_log "ruleItem" ruleItem;
+          # debug_log "isEnveloping" isEnveloping;
+
+          set to_armor 0;
+
+          if eq isEnveloping 1; 
+
+            set selectedSide SIDE_FRONT;
+            unit.getArmor currentArmor selectedSide;
+            sub currentArmor 10;
+            if lt currentArmor 0;
+              set currentArmor 0;
+            end;
+            unit.setArmor selectedSide currentArmor;
+
+            set selectedSide SIDE_LEFT;
+            unit.getArmor currentArmor selectedSide;
+            sub currentArmor 10;
+            if lt currentArmor 0;
+              set currentArmor 0;
+            end;
+            unit.setArmor selectedSide currentArmor;
+
+            set selectedSide SIDE_RIGHT;
+            unit.getArmor currentArmor selectedSide;
+            sub currentArmor 10;
+            if lt currentArmor 0;
+              set currentArmor 0;
+            end;
+            unit.setArmor selectedSide currentArmor;
+
+            set selectedSide SIDE_REAR;
+            unit.getArmor currentArmor selectedSide;
+            sub currentArmor 10;
+            if lt currentArmor 0;
+              set currentArmor 0;
+            end;
+            unit.setArmor selectedSide currentArmor;
+
+            set selectedSide SIDE_UNDER;
+            unit.getArmor currentArmor selectedSide;
+            sub currentArmor 10;
+            if lt currentArmor 0;
+              set currentArmor 0;
+            end;
+            unit.setArmor selectedSide currentArmor;                                                
+
+          end;
+         
+          return;
