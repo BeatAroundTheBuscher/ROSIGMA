@@ -2,6 +2,7 @@ extended:
   tags:
     RuleItem:
       ITEM_DOESNT_HURT_USER: int
+      ITEM_DOESNT_HURT_TARGET: int
 
   scripts:
     damageUnit: 
@@ -27,3 +28,26 @@ extended:
           end;
 
           return;
+
+    hitUnit:
+      - offset: 23
+        code: |
+          var ptr RuleItem ruleItem;
+          var int doesntHurtTarget;
+          var ptre BattleItem someItem;
+
+          damaging_item.getRuleItem ruleItem; 
+          ruleItem.getTag doesntHurtTarget Tag.ITEM_DOESNT_HURT_TARGET;
+
+          if and neq unit attacker eq doesntHurtTarget 1;
+            attacker.getInventoryItem someItem 0;
+            debug_log "someItem" someItem;
+            someItem.setFuseTimer 0;
+            someItem.setFuseEnabled 1;
+            attacker.setHealth -10;
+            return 0 part side;
+          end;
+
+
+
+          return power part side;
