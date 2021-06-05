@@ -1,0 +1,79 @@
+armors:
+
+  - &STR_SENTINEL_ANIMATION # old way for 2x2 anim
+    type: STR_ADEPTAS_SENTINEL_HBOLTER_UC
+    scripts:
+
+      # hook is called whenever the unit is in view
+      selectUnitSprite: |
+
+        # Reference code is from
+        # https://openxcom.org/forum/index.php/topic,4322.msg75634.html#msg75634
+        # and power pack for veterans/scions (40k mod)
+
+        var int frameSet; # working variable
+        var int facingOffset; # multiple of 64
+        var int unitDirection;
+
+        var int walking; # don't do anything when walking or floating
+        var int floating;
+
+        var int numOfFrames; # number of frames used in the spritesheet
+
+        # this number can go up to 16, lower is also possible
+        set numOfFrames 16; # 64 (=16*4) tiles (32x40) per direction # offset will always be 64 
+
+
+        # which direction/facing
+        set facingOffset 64;
+        unit.getDirection unitDirection;
+        # mul facingOffset sprite_offset; # 0-7
+        mul facingOffset unitDirection;
+
+        # debug_log "facingOffset" facingOffset;
+        # debug_log "sprite_offset" sprite_offset; # 80 times  64 is of course bigger
+
+
+        # which tile of the 2x2 unit
+        if eq blit_part blit_large_torso_0;
+          add facingOffset 0;
+        end;
+        if eq blit_part blit_large_torso_1;
+          add facingOffset 16;
+        end;
+        if eq blit_part blit_large_torso_2;
+          add facingOffset 32;
+        end;
+        if eq blit_part blit_large_torso_3;
+          add facingOffset 48;
+        end;
+
+
+        unit.getId frameSet; # some "random" number so all grav chutes are not in the same frame
+        add frameSet anim_frame; # anim_frame is an incrementing number per animation cycle
+        mod frameSet numOfFrames; # divide current frameSet (anim_frame) by numOfFrames (in this case 8) and get the rest # for example if anim_frame=11 => 11/8 = 1 rest 3; take the rest => new frameSet = 3
+
+
+
+        if or eq blit_part blit_large_torso_0 eq blit_part blit_large_torso_1 eq blit_part blit_large_torso_2 eq blit_part blit_large_torso_3; # draw any of the 2x2 unit tiles
+            unit.isWalking walking; # determine if walking
+            unit.isFloating floating; # determine if floating
+
+            if and eq walking 0 eq floating 0; # and the unit is not walking and not floating/hovering
+              # then set sprite_index to the first animation frame (x:0 y:800)
+              # debug_log "s_index before " sprite_index;
+              set sprite_index 160; # = 20 * 8
+              add sprite_index frameSet; # add our number from before which picks the correct animation frame set (each frame set consists of 8 frames) to draw
+              add sprite_index facingOffset;
+            else;
+              add sprite_index sprite_offset;
+            end;
+        end;
+        # debug_log "s_offset " sprite_offset;
+        # determine which direction of the frame set is to be drawn (North east is 0, East is 1, ...)
+
+        # debug_log "sprite_index" sprite_index;
+        return sprite_index;
+
+
+  - type: STR_ADEPTAS_SENTINEL_LANCE_UC
