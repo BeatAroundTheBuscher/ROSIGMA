@@ -1,0 +1,35 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_IS_FOR_BOMBER: int
+      ITEM_IS_BOMB: int
+
+  scripts:
+    hitUnit: 
+      - offset: 43 
+        code: |
+          var ptr RuleItem ruleItem;
+          var int temp;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
+
+          damaging_item.getRuleItem ruleItem; 
+          ruleItem.getTag temp Tag.ITEM_IS_FOR_BOMBER;
+
+          if eq temp 1;
+            attacker.getInventoryItem.size numInventoryItems;
+            debug_log "numInventoryItems" numInventoryItems;
+            loop var i numInventoryItems;
+              attacker.getInventoryItem someItem i;
+              someItem.getTag temp Tag.ITEM_IS_BOMB;
+              # attacker.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
+              if eq temp 1;
+                attacker.setTimeUnits 0;
+                someItem.setFuseTimer 0;
+                someItem.setFuseEnabled 1;
+                return 0 part side;
+              end;
+            end;
+          end;
+
+          return power part side;
