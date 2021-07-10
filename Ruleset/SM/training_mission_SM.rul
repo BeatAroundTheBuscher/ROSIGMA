@@ -1,0 +1,206 @@
+alienDeployments:
+  - type: STR_TRAIN_MISSION
+    enviroEffects: STR_SM_TRAINING_ENVIRONMENT
+    startingCondition: STR_SM_TRAINING_STARTING_CONDITION
+    turnLimit: 1    
+    chronoTrigger: 2
+
+# press X in armor screen
+startingConditions:
+  - type: STR_SM_TRAINING_STARTING_CONDITION
+    defaultArmor:
+      STR_SOLDIER:
+        STR_SM_ARMOR_TRAIN: 100
+      STR_SOLDIER_TERMINATOR:
+        STR_SM_ARMOR_TRAIN: 100
+      STR_SOLDIER_JOAN:
+        STR_SM_ARMOR_TRAIN: 100  
+    allowedArmors:
+    - STR_SCOUT_UC
+    - STR_JARMOR_UC
+    
+
+enviroEffects:
+  - type: STR_SM_TRAINING_ENVIRONMENT
+    armorTransformations:
+      STR_SCOUT_UC: STR_SM_ARMOR_TRAIN
+      STR_JARMOR_UC: STR_SM_ARMOR_TRAIN
+
+
+armors:
+  - type: STR_SM_ARMOR_TRAIN #DR10 SPACE MARINE SUPORT
+    visibilityAtDay: 55
+    visibilityAtDark: 45
+    spriteSheet: XCOM_0.PCK
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5
+    layersDefaultPrefix: 0
+    layersSpecificPrefix:
+      1: SCOUT
+      3: GOGGLES
+    layersDefinition:
+      M0: ["0", "ASCOUTM", "M0_FACE", "GOGGLES"]
+      M1: ["0", "ASCOUTM", "M1_FACE", "GOGGLES"]
+      M2: ["0", "ASCOUTMC", "M2_FACE", "GOGGLES"]
+      M3: ["0", "ASCOUTMB", "M3_FACE", "GOGGLES"]
+      M4: ["0", "ASCOUTM", "M4_FACE", "GOGGLES"]
+      M5: ["0", "ASCOUTM", "M5_FACE", "GOGGLES"]
+      F0: ["0", "ASCOUTF", "F0_FACE", "GOGGLES"]
+      F1: ["0", "ASCOUTF", "F1_FACE", "GOGGLES"]
+      F2: ["0", "ASCOUTFC", "F2_FACE", "GOGGLES"]
+      F3: ["0", "ASCOUTFB", "F3_FACE", "GOGGLES"]
+      F4: ["0", "ASCOUTF", "F4_FACE", "GOGGLES"]
+      F5: ["0", "ASCOUTF", "F5_FACE", "GOGGLES"]
+    corpseBattle:
+      - STR_SCOUT_CORPSE
+    storeItem: STR_TRANSFORMED_ARMOR
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    scripts:
+      # https://www.ufopaedia.org/index.php/Experience
+      # max Training is 2-6 for primary
+      # max Training is always 10 for bravery
+
+      # max Training is 0-5 for TUs and Health
+      # max Training is 0-7 for Strength
+      # max Training is 0-6 for Stamina
+      # The overall formula is that you gain 0 to 2 points, 
+      # plus a tenth (rounded down) of the remaining increase possible
+
+      # random(0,2) + (Cap - Current)/10
+
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getTimeUnits statCap;
+        soldier.Stats.getTimeUnits statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setTimeUnits statCap;
+        else;
+          soldier.Stats.setTimeUnits statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getHealth statCap;
+        soldier.Stats.getHealth statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setHealth statCap;
+        else;
+          soldier.Stats.setHealth statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setStrength statCap;
+        else;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStamina statCap;
+        soldier.Stats.getStamina statCurrent;
+        battle_game.randomRange randomNumber 0 2;
+        set temp statCap;
+        sub temp statCurrent;
+        div temp 10;
+        add statCurrent randomNumber;
+        add statCurrent temp;
+        if gt statCurrent statCap;
+          soldier.Stats.setStamina statCap;
+        else;
+          soldier.Stats.setStamina statCurrent;
+        end;
+
+
+        ruleSoldier.StatsCap.getReactions statCap;
+        soldier.Stats.getReactions statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setReactions statCap;
+        else;
+          soldier.Stats.setReactions statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getFiring statCap;
+        soldier.Stats.getFiring statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setFiring statCap;
+        else;
+          soldier.Stats.setFiring statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getMelee statCap;
+        soldier.Stats.getMelee statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setMelee statCap;
+        else;
+          soldier.Stats.setMelee statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getThrowing statCap;
+        soldier.Stats.getThrowing statCurrent;
+        battle_game.randomRange randomNumber 2 6;
+        add statCurrent randomNumber;
+        if gt statCurrent statCap;
+          soldier.Stats.setThrowing statCap;
+        else;
+          soldier.Stats.setThrowing statCurrent;
+        end;        
+
+        ruleSoldier.StatsCap.getBravery statCap;
+        soldier.Stats.getBravery statCurrent;
+        add statCurrent 10;
+        if gt statCurrent statCap;
+          soldier.Stats.setBravery statCap;
+        else;
+          soldier.Stats.setBravery statCurrent;
+        end;   
+
+        return;
+
+
