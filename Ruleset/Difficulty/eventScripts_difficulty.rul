@@ -1,0 +1,236 @@
+eventScripts:
+  - type: STR_EASY_MODE_FUNDING_SCRIPT
+    oneTimeRandomEvents: #only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
+      STR_EASY_BOON_FUNDS: 100
+    firstMonth: 0
+    lastMonth: 0
+    executionOdds: 100
+    researchTriggers:
+      STR_EASY_MODE_FUNDING_RESEARCH: true
+
+  - type: STR_EASY_MODE_FUNDING_CONTINUOUS_SCRIPT
+    eventWeights: #uncertain on the right syntax here, there´s just one event that should be triggered, and every month
+        0:
+          STR_EASY_BOON_FUNDING_CONTINUAL: 100
+    firstMonth: 0 #no last months, last entire game
+    executionOdds: 100
+    researchTriggers:
+      STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH: true
+
+  - type: STR_HARD_MODE_FUNDING_SCRIPT
+    oneTimeRandomEvents: #only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
+      STR_HARD_MALUS_FUNDS: 100
+    firstMonth: 0
+    lastMonth: 1
+    executionOdds: 100
+    researchTriggers:
+      STR_HARD_MODE_FUNDING_RESEARCH: true
+
+  - type: STR_HARD_MODE_FUNDING_CONTINUOUS_SCRIPT
+    oneTimeSequentialEvents: #triggers sequential event one time, once this is researched. Unsure if it will trigger one time, every month, if there is no lastMonth set? See above for alternative A.
+      - STR_HARD_MALUS_FUNDING_CONTINUAL
+    firstMonth: 0
+    executionOdds: 100
+    researchTriggers:
+      STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH: true
+
+
+### ADEPTS
+
+  - type: STR_NORMAL_MODE_ADEPTS_SCRIPT
+    oneTimeSequentialEvents:
+        - STR_NORMAL_MODE_ADEPTS1 #This event gives the player 15 adepts, -15x30k = -450k cash. 30k is the 40k cost per adept, 20k in Rosigma (easy).
+        - STR_NORMAL_MODE_ADEPTS2 #This event gives the player 25 adepts, -25x30k = -750k cash
+        - STR_NORMAL_MODE_ADEPTS3 #This event unlocks STR_HIRE_ADEPT_UNLOCK, - 250k cash (total event series malus to cash = 1,2 million, for 40 adepts)
+    firstMonth: 1
+    lastMonth: 6
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+      STR_MEDIUM_MODE_ADEPTS: true #this event script only fires if this is researched
+
+  - type: STR_HARD_MODE_ADEPTS_SCRIPT
+    oneTimeSequentialEvents:
+        - STR_HARD_MODE_ADEPTS1 #This event gives the player 10 adepts, -500k (10x50k) credits
+        - STR_HARD_MODE_ADEPTS2 #This event gives the player 15 adepts, -750k (15x50k) credits
+        - STR_HARD_MODE_ADEPTS3 #This event gives the player 20 adepts, -1m (20x50k) credits
+        - STR_HARD_MODE_ADEPTS4 #This event gives the player 20 adepts, -1m (20x50k) credits
+        - STR_HARD_MODE_ADEPTS5 #This event gives the player 20 adepts, -1m (20x50k) credits
+        - STR_HARD_MODE_ADEPTS6 #this event gives the player 25 adepts, -1,25m credits and unlocks STR_HIRE_ADEPT_UNLOCK. Total event chain cost = 5,5 million in the first 6 months, for +110 Adepts.
+    firstMonth: 1 #does this ensure one of these events, in order, trigger every month? Or does their "Timer" need to be set to a month worth of minutes
+    lastMonth: 7
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+      STR_HARD_MODE_ADEPTS: true #this event script only fires if this is researched
+
+
+#Spawn Unit Scripts
+#Spawn Arbites Scripts
+  - type: STR_BASIC_SPAWN_PENAL_SQUAD_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_PENAL_SQUAD: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_PENAL_SQUAD_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_PDF_SQUAD_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_PDF_SQUAD: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_PDF_SQUAD_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_ARBITES_JUDGES_SCRIPT
+    oneTimeRandomEvents:
+       STR_BASIC_SPAWN_ARBITES_JUDGES: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_ARBITES_JUDGES_RESEACH: true
+
+#Spawn Guard Scripts
+  - type: STR_BASIC_SPAWN_GUARD_VETERANS_SCRIPT
+    oneTimeRandomEvents:
+       STR_BASIC_SPAWN_GUARD_VETERANS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_GUARD_VETERANS_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_OGRYN_SCRIPT
+    oneTimeRandomEvents:
+       STR_BASIC_SPAWN_OGRYN: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_OGRYN_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_STORMTROOPERS_SCRIPT
+    oneTimeRandomEvents:
+       STR_BASIC_SPAWN_STORMTROOPERS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_STORMTROOPERS_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_SANCTIONED_PSYKER_SCRIPT
+    oneTimeRandomEvents:
+       STR_BASIC_SPAWN_SANCTIONED_PSYKER: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_SANCTIONED_PSYKER_RESEACH: true     
+
+  - type: STR_BASIC_FRATERIS_MILITIA_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_FRATERIS_MILITIA: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_FRATERIS_RESEARCH: true
+
+  - type: STR_BASIC_SPAWN_ADEPTAS_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_ADEPTAS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_ADEPTAS_RESEARCH: true
+
+  - type: STR_SPAWN_SERAPHIM_ADEPTAS_SCRIPT
+    oneTimeRandomEvents:
+      STR_SPAWN_SERAPHIM_ADEPTAS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_ADEPTAS_SERAPHIM_RESEACH: true
+
+  - type: STR_SPAWN_VETERAN_ADEPTAS_SCRIPT
+    oneTimeRandomEvents:
+      STR_SPAWN_VETERAN_ADEPTAS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_VETERAN_ADEPTAS_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_MARINE_SCOUTS_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_MARINE_SCOUTS: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_MARINE_SCOUTS_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_TACTICAL_MARINES_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_TACTICAL_MARINES: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_TACTICAL_MARINES_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_DEVASTATOR_MARINES_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_DEVASTATOR_MARINES: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_DEVASTATOR_MARINES_RESEACH: true
+
+  - type: STR_BASIC_SPAWN_ASSAULT_MARINES_SCRIPT
+    oneTimeRandomEvents:
+      STR_BASIC_SPAWN_ASSAULT_MARINES: 100
+    firstMonth: 0
+    lastMonth: 12
+    executionOdds: 100
+    minDifficulty: 0
+    maxDifficulty: 4
+    researchTriggers:
+       STR_BASIC_SPAWN_ASSAULT_MARINES_RESEACH: true

@@ -1,0 +1,171 @@
+research:
+#Research and events for the monthly reinforcement options
+#STR_EASY_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 10 PDF; 5 Judges]
+#STR_EASY_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 20 Guardsmen 4 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+#STR_EASY_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 8 Adeptas, 21 Adeptas Pilot]
+#STR_EASY_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 10 Guardsmen/Auxilliaries, 16 Scouts, 1/1/1/1 Tactical/Devastator/Assault Marine]
+
+#Normal mode is pretty similar to easy, but far less higher ranking troops. 
+#STR_NORMAL_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+#STR_NORMAL_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+#STR_NORMAL_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 2 Adeptas, 1 Adeptas Pilot]
+#STR_NORMAL_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 10 Scouts, 1 Tactical Marine]
+
+#Hard mode is clutch mode. Very good play with few losses expected. Might have to bring the chaff units like Militia as cannon fodder. 
+#STR_HARD_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+#STR_HARD_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+#STR_HARD_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 10 Novices, No Adeptas, No Adeptas Pilot]
+#STR_HARD_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 6 Scouts, No Tactical Marine]
+
+#Difficulty option research that can unlock factions while playing as other factions
+
+#Unlock Arbites for all
+  - name: STR_OPTION_ARBITES_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_ARBITES #this one is important
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_CRAFTADD
+      - STR_GUARD_AND_ARBITES #this one is important
+      - STR_HEAVY_WEAPONS_RESEARCH_REQ
+      - STR_LIGHT_BOLTERS
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH
+
+#Unlock Guard for all
+  - name: STR_OPTION_GUARD_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_RESEARCH_REQ
+      - STR_CRAFTADD
+      - STR_GUARD_AND_ARBITES #this one is important
+      - STR_GUARD_SUPORT #this one is important
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH
+
+#Unlock Adeptas for all
+  - name: STR_OPTION_ADEPTAS_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_ADEPTAS #this one is important
+      - STR_MOTION_SCANNER
+      - STR_MEDICAE_RESEARCH
+      - STR_LASER_WEAPONS
+      - STR_CRAFTADD
+      - STR_MARINES_AND_ADEPTAS #this one is important
+      - STR_LIGHT_BOLTERS
+      - STR_PHOSPHOR_GRENADE  
+      - STR_SMOKE
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH
+
+#Unlock Astartes for all
+  - name: STR_OPTION_ASTARTES_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_MARINES_STRATEGY #this one is important
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_CRAFTADD
+      - STR_MARINES_AND_ADEPTAS #this one is important
+      - STR_LIGHT_BOLTERS
+      - STR_SMOKE
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH
+
+
+
+#Difficulty options for the Adept Recruitment Limit System
+#More Adepts are given through oneTimeSequentialEvents and hireScientistsUnlockResearch unlocked at different tiers depending on difficulty (starting for easy, tier 3 for normal and tier 6 for hard)
+#Add to vars.rul hireScientistsUnlockResearch: STR_HIRE_ADEPT_UNLOCK, create STR_HIRE_ADEPT_UNLOCK as a research topic
+  - name: STR_HIRE_ADEPT_UNLOCK 
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_RESEARCH_REQ
+      - STR_CRAFTADD
+      - STR_GUARD_AND_ARBITES #this one is important
+      - STR_GUARD_SUPORT #this one is important
+    dependencies:
+      - STR_EASY_MODE_ADEPTS_UNLOCK 
+      - STR_NORMAL_MODE_ADEPTS_UNLOCK
+      - STR_HARD_MODE_ADEPTS_UNLOCK
+
+  - name: STR_EASY_MODE_ADEPTS #this one allows the player to recruit adepts right away, no events linked
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_HIRE_ADEPT_UNLOCK #This one unlocks Adepts for recruitment
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+
+#STR_NORMAL_MODE_ADEPTS_UNLOCK and STR_HARD_MODE_ADEPTS_UNLOCK are only granted through events
+#for NORMAL difficulty, access to hire adepts is granted after month 3 (oneTimeSequentialEvents STR_NORMAL_MODE_ADEPTS1-3)
+#for Hard difficulty, access to hire adepts is granted after month 6 (oneTimeSequentialEvents STR_HARD_MODE_ADEPTS1-6)
+
+  - name: STR_NORMAL_MODE_ADEPTS #this one allows the player to recruit adepts by event after 3 months
+    cost: 0
+    points: 0
+    #unlocks: #Not required?
+      #- STR_MEDIUM_MODE_ADEPTS_RESEARCH #this one triggers the sequential event chain 
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+
+
+
+  - name: STR_HARD_MODE_ADEPTS #this one allows the player to recruit adepts by event after 3 months
+    cost: 0
+    points: 0
+    unlocks:
+      - STR_HARD_MODE_ADEPTS_RESEARCH #this one triggers the sequential event chain
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+
+#One time unit spawn options, for when you want to have a squad of X faction with your other faction 
+#Spawn In Units belonging to various factions. Can have a Price included to make it "fair"?
+#These research topics can be found further down, along with scripts and events. Ready for testing?
+
+  - name: STR_SHOW_SPAWN_UNIT_OPTIONS_RESEARCH
+
+  - name: STR_BASIC_SPAWN_PENAL_SQUAD_RESEACH
+  - name: STR_BASIC_SPAWN_PDF_SQUAD_RESEACH
+  - name: STR_BASIC_SPAWN_ARBITES_JUDGES_RESEACH
+
+  - name: STR_BASIC_SPAWN_GUARD_VETERANS_RESEACH
+  - name: STR_BASIC_SPAWN_OGRYN_RESEACH
+  - name: STR_BASIC_SPAWN_STORMTROOPERS_RESEACH
+  - name: STR_BASIC_SPAWN_SANCTIONED_PSYKER_RESEACH
+
+  - name: STR_BASIC_SPAWN_ADEPTAS_RESEARCH
+  - name: STR_BASIC_SPAWN_FRATERIS_RESEARCH
+  - name: STR_BASIC_SPAWN_ADEPTAS_SERAPHIM_RESEACH
+  - name: STR_BASIC_SPAWN_VETERAN_ADEPTAS_RESEACH
+
+  - name: STR_BASIC_SPAWN_MARINE_SCOUTS_RESEARCH
+  - name: STR_BASIC_SPAWN_TACTICAL_MARINES_RESEARCH
+  - name: STR_BASIC_SPAWN_DEVASTATOR_MARINES_RESEARCH
+  - name: STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
+
+#Difficulty topics overview (ICGm just listing everything that needs a research topic and event scripting below, I´ve already coded up a bunch of it, scroll down)
+
+  - name: STR_DIFFICULTY_OPTIONS_RESEARCH #(This shows all main research options, each subtopic in turn will show more once researched -
+#unless we can come up with a smarter sorting option to not fuck up the research screen, each topic probably needs to start with the same type of words so its easy to see- 
+#-what is tech research and what is difficulty options)
+#One method is to hide difficulty options that are not of your faction (research topics require STR_ADEPTAS for example).
+
+  - name: STR_HARD_MODE_ADEPTS_RESEARCH
+  - name: STR_EASY_MODE_ADEPTS_UNLOCK
+  - name: STR_NORMAL_MODE_ADEPTS_UNLOCK
+  - name: STR_HARD_MODE_ADEPTS_UNLOCK
