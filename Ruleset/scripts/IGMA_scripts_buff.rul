@@ -40,13 +40,6 @@ extended:
           var int isTargetLoneWolf;
           var int unitFaction;
 
-          var ptr RuleArmor targetArmor;
-          var int armorFiringBonus;
-          var int armorMeleeBonus;
-
-          var int currentHealth;
-          var int maxHealth;
-
           var int currentBlessBonus;
           var ptr GeoscapeSoldier geoUnit;
 
@@ -74,13 +67,6 @@ extended:
             return power part side;
           end;
 
-          unit.getRuleArmor targetArmor;
-          targetArmor.Stats.getFiring armorFiringBonus;
-          targetArmor.Stats.getMelee armorMeleeBonus;
-          
-          unit.getHealth currentHealth;
-          unit.getHealthMax maxHealth;
-
           attacker.Stats.getBravery bufferBravery;
           set blessPower 0; # 10;
           set bonusBlessPower 1;
@@ -91,31 +77,27 @@ extended:
             unit.getTag currentBlessBonus Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS;
 
             if gt blessPower currentBlessBonus;
-              unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS blessPower;
-              
-              geoUnit.Stats.getMelee temp;
-              add temp blessPower;
-              add temp armorMeleeBonus;
+              set temp 0;
+              sub temp currentBlessBonus;
+              unit.Stats.addMelee temp;  
 
-              muldiv temp currentHealth maxHealth;
-              unit.Stats.setMelee temp;
+              unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS blessPower;
+              unit.Stats.addMelee blessPower;
             end;
           end;
           if eq isWeaponBlessFiringAccuracy 1;
             unit.getTag currentBlessBonus Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS;
+
             if gt blessPower currentBlessBonus;
+              set temp 0;
+              sub temp currentBlessBonus;
+              unit.Stats.addFiring temp; 
+
               unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS blessPower;
-
-              geoUnit.Stats.getFiring temp;
-              add temp blessPower;
-              add temp armorFiringBonus;
-
-              muldiv temp currentHealth maxHealth;
-              unit.Stats.setFiring temp;
+              unit.Stats.addFiring blessPower;
             end;
           end;
           
-
           return power part side;
 
     newTurnUnit:
@@ -127,13 +109,6 @@ extended:
           var int temp;
           var int unitFaction;
           var ptr GeoscapeSoldier geoUnit; 
-
-          var ptr RuleArmor targetArmor;
-          var int armorFiringBonus;
-          var int armorMeleeBonus;
-
-          var int currentHealth;
-          var int maxHealth;
 
           var int dissipationFactor;
           set dissipationFactor 5;
@@ -160,49 +135,30 @@ extended:
             return;
           end;
 
+          set temp 0;
+          sub temp currentMeleeBlessBonus;
+          unit.Stats.addMelee temp;
+
+          set temp 0;
+          sub temp currentFiringBlessBonus;
+          unit.Stats.addFiring temp;        
+
           if gt currentMeleeBlessBonus dissipationFactor;
             sub currentMeleeBlessBonus dissipationFactor;
           else;
             set currentMeleeBlessBonus 0;
           end;
+
           unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS currentMeleeBlessBonus;
-
-          unit.getRuleArmor targetArmor;
-          targetArmor.Stats.getFiring armorFiringBonus;
-          targetArmor.Stats.getMelee armorMeleeBonus;
-
-          unit.getHealth currentHealth;
-          unit.getHealthMax maxHealth;
-
-          geoUnit.Stats.getMelee temp; # this way disallows another script to debuff, so be aware
-          add temp currentMeleeBlessBonus;
-          add temp armorMeleeBonus;
-          muldiv temp currentHealth maxHealth;
-          unit.Stats.setMelee temp;
+          unit.Stats.addMelee currentMeleeBlessBonus;
           
           if gt currentFiringBlessBonus dissipationFactor;
             sub currentFiringBlessBonus dissipationFactor;
           else;
             set currentFiringBlessBonus 0;
           end;
-          unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS currentFiringBlessBonus;
 
-          geoUnit.Stats.getFiring temp; # this way disallows another script to debuff, so be aware
-          add temp currentFiringBlessBonus;
-          add temp armorFiringBonus;
-          muldiv temp currentHealth maxHealth;
-          unit.Stats.setFiring temp;
-          
+          unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS currentFiringBlessBonus;
+          unit.Stats.addFiring currentFiringBlessBonus;
 
           return;
-
-
-#    newTurnItem:
-#      - offset: 20
-#        code: |
-#          debug_log "item" item;
-#          return;
-
-#set t initialValue;
-#unit.reduceByResistance t 7;
-#set finalValue t;
