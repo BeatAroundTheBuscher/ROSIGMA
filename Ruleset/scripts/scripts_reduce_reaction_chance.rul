@@ -1,0 +1,84 @@
+# hooks
+# reactionUnitAction   # Runs when an unit performs an action that triggers reaction fire.
+# reactionUnitReaction # Runs when a unit sees another unit perform an action that triggers reaction fire.
+# reactionWeaponAction # Runs for the weapon that triggered reaction shots by firing.
+
+#items:
+#  - type: STR_MULTI_LASER
+#    tags:
+#      ITEM_REDUCED_ENEMY_REACTION_CHANCE_PERCENTAGE: 65
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_REDUCED_ENEMY_REACTION_CHANCE_PERCENTAGE: int
+
+
+  scripts:
+    reactionWeaponAction: 
+      - offset: 40 
+        code: |
+          var ptr BattleUnit friendlyUnit;
+          var int friendyReactionScore;
+          var int enemyReactionScore;
+
+          var ptr RuleItem ruleItem;
+          var int reactionChanceReduction;
+          var int temp;
+
+          weapon.getRuleItem ruleItem;
+          ruleItem.getTag reactionChanceReduction Tag.ITEM_REDUCED_ENEMY_REACTION_CHANCE_PERCENTAGE;
+
+          if eq reactionChanceReduction 0;
+            return reaction_chance;
+          end;
+
+          weapon.getOwner friendlyUnit;
+          # Doesn't work as of 2021-07-18 as it always returns 0
+          # friendlyUnit.getReactionScore friendyReactionScore;
+          # reaction_unit.getReactionScore enemyReactionScore;
+
+
+          friendlyUnit.Stats.getReactions friendyReactionScore;
+          friendlyUnit.getTimeUnits temp;
+          mul friendyReactionScore temp;
+          friendlyUnit.getTimeUnitsMax temp;
+          div friendyReactionScore temp;
+
+
+          reaction_unit.Stats.getReactions enemyReactionScore;
+          reaction_unit.getTimeUnits temp;
+          mul enemyReactionScore temp;
+          reaction_unit.getTimeUnitsMax temp;
+          div enemyReactionScore temp;
+
+
+          # seems like it works different than expected?
+          # I had expected that it reduces the reaction score, but instead it's an additional chance that starts with 100 %?
+          # set temp 100;
+          # sub temp reactionChanceReduction;
+          # mul temp reaction_chance;
+          # div temp 100;
+
+          # temp = enemyReactionScore * (100 - reactionChanceReduction) / 100
+          set temp 100;
+          sub temp reactionChanceReduction;
+          mul temp enemyReactionScore;
+          div temp 100;
+
+          # debug_log "reaction_unit" reaction_unit;
+          # debug_log "enemyReactionScore old" enemyReactionScore;
+          # debug_log "enemyReactionScore new" temp;
+          # debug_log "friendyReactionScore" friendyReactionScore;
+
+          if gt friendyReactionScore temp;
+            return 0;
+          end;
+
+
+          return reaction_chance; # always 100?
+
+
+
+
+          
