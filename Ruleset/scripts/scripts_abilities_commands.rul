@@ -1,0 +1,174 @@
+# Check Numbers
+# Fix Bayonets - Melee Accuracy increased by 20 % and Damage increased by 20 %
+# Blitzkrieg - Double Reaction Score = less enemy reactions but once they react they will spend all possible TUs
+# Hunker Down - Incoming Damage reduced by 20% (reduced by 50 % when kneeling)
+# Firing Line - TUs are partially returned for another volley (only work when hitting?)
+# Rally - Restore Morale if everything goes to shit (applied on next turn)
+
+extended:
+  tags:
+    BattleGame:
+      TURN_ACTIVE_COMMAND: int
+      CHOICE_ACTIVE_COMMAND: int
+    RuleSkill:
+      SKILL_ID: int
+
+
+  scripts:
+    skillUseUnit:
+    - offset: 1 
+      code: |
+        var int temp;
+        
+        skill.getTag temp Tag.SKILL_ID;
+        battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND temp;
+        debug_log "skill CHOICE_ACTIVE_COMMAND" temp;
+
+        battle_game.getTurn temp;
+        battle_game.setTag Tag.TURN_ACTIVE_COMMAND temp;
+        debug_log "skill TURN_ACTIVE_COMMAND" temp;
+
+        return;
+      
+    hitUnit: 
+      - offset: 10 # 1 - Fix Bayonets
+        code: |
+          var int temp;
+          var int temp2;
+
+          battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
+          debug_log "TURN_ACTIVE_COMMAND" temp;
+          battle_game.getTurn temp2;
+          if neq temp temp2;
+            return power part side;
+          end;
+
+          battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
+          debug_log "CHOICE_ACTIVE_COMMAND" temp;
+          if neq temp 1;
+            return power part side;
+          end;
+
+          if neq battle_action BA_HIT;
+            return power part side;
+          end;
+
+          debug_log "hitUnit:10 before power" power;
+          set temp power;
+          mul temp 6; # 20 % boost
+          div temp 5;
+
+          debug_log "hitUnit:10 after power" temp;
+          return temp part side;
+
+      - offset: 30 # 3 - Hunker Down 
+        code: |
+          var int temp;
+          var int temp2;
+
+          battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
+          battle_game.getTurn temp2;
+          if neq temp temp2;
+            return power part side;
+          end;
+
+          battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
+          if neq temp 3;
+            return power part side;
+          end;
+
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
+            return power part side;
+          end;
+
+          debug_log "hitUnit:30 before power" power;
+          set temp power;
+
+          unit.isKneeled temp2;
+          if eq temp2 1;
+            div temp 2;
+          else;
+            mul temp 4;
+            div temp 5;
+          end;
+          debug_log "hitUnit:30 after power" temp;
+
+          return temp part side;
+
+    tryMeleeAttackItem: # meleeMultiplierBonusStats would have been preferable not has no battle_game
+      - offset: 10  # 1 - Fix Bayonets
+        code: |
+          var int temp;
+          var int temp2;
+
+          battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
+          battle_game.getTurn temp2;
+          if neq temp temp2;
+            return melee_attack_success;
+          end;
+
+          battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
+          if neq temp 1;
+            return melee_attack_success;
+          end;
+
+          debug_log "tryMeleeAttackUnit: 10 before accuracy" melee_attack_success;
+          set temp attack_strength;
+          mul temp 6; # 20 % boost
+          div temp 5;
+          sub temp attack_strength; # difference
+
+          set temp2 melee_attack_success;
+          add temp2 temp;
+
+          debug_log "tryMeleeAttackUnit: 10 after accuracy" temp2;
+          return temp2;
+
+    reactionUnitAction: 
+      - offset: 20 # 2 - Blitzkrieg
+        code: |
+          var int friendyReactionScore;
+          var int enemyReactionScore;
+
+          var ptr RuleItem ruleItem;
+          var int reactionChanceReduction;
+          var int temp;
+          var int temp2;
+
+          battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
+          battle_game.getTurn temp2;
+          if neq temp temp2;
+            return reaction_chance;
+          end;
+
+          battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
+          if neq temp 2;
+            return reaction_chance;
+          end;
+
+
+          action_unit.Stats.getReactions friendyReactionScore;
+          action_unit.getTimeUnits temp;
+          mul friendyReactionScore temp;
+          action_unit.getTimeUnitsMax temp;
+          div friendyReactionScore temp;
+
+          mul friendyReactionScore 2;
+
+          reaction_unit.Stats.getReactions enemyReactionScore;
+          reaction_unit.getTimeUnits temp;
+          mul enemyReactionScore temp;
+          reaction_unit.getTimeUnitsMax temp;
+          div enemyReactionScore temp;
+
+          if gt friendyReactionScore enemyReactionScore;
+            return 0;
+          end;
+
+
+          return reaction_chance; # always 100?
+
+
+
+        
