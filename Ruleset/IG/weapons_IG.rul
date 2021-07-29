@@ -7,6 +7,8 @@ extended:
       ITEM_BLESS_FIRING_ACCURACY: int
       ITEM_DOES_KILL_USER: int
       ITEM_DOESNT_HURT_USER: int
+      ITEM_IS_VOX_DUMMY: int
+      ITEM_IS_VOX_WEAPON: int
 
 items:
   - type: STR_MOUNTED_LASCANNON # gets 150 % accuracy and 75 % TU costfor being mounted
@@ -117,8 +119,8 @@ items:
   - type: INV_NULL_2X3_BACKPACK
     weight: 0
     bigSprite: 250
-    invWidth: 1
-    invHeight: 2
+    invWidth: 2
+    invHeight: 3
     fixedWeapon: true
     defaultInventorySlot: STR_BACK_PACK
     defaultInvSlotX: 0
@@ -523,9 +525,11 @@ items:
     defaultInventorySlot: STR_BACK_PACK
 
 
-  - type: STR_AIRSTRIKE_VOX
+  - type: STR_AIRSTRIKE_VOX # backwards compatibility and inventory item
+    requires: 
+      - STR_GENERALLOCK # now an armor instead of an item
     categories: [STR_CAT_EQUIPMENT]
-    weight: 5
+    weight: 10
     bigSprite: 240
     fireSound: {mod: 40k, index: 491}   
     bulletSpeed: -10
@@ -535,6 +539,7 @@ items:
     tuAimed: 40
     confAimed:
       name: STR_SIGNAL_POSITION
+      spendPerShot: 999 # setAmmoQuantity can't be set to 0 as the item would disappear (sanity check)
     battleType: 1
     twoHanded: false
     invWidth: 1
@@ -550,6 +555,71 @@ items:
     tuLoad: 999
     tuUnload: 999
 
+  - type: INV_NULL_AIRSTRIKE_VOX_DUMMY
+    categories: [STR_CAT_EQUIPMENT]
+    weight: 5
+    bigSprite: 242
+    battleType: 1
+    invWidth: 3
+    invHeight: 3 
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_BACK_PACK
+    compatibleAmmo:
+      - STR_AIRSTRIKE_AMMO
+    # courtesy to the multimod
+    tuLoad: 999
+    tuUnload: 999
+    tags:
+      ITEM_IS_VOX_DUMMY: 1
+
+  - type: STR_AIRSTRIKE_VOX_SPECIAL
+    power: 200 # 150
+    damageAlter:
+      ToArmorPre: 0.15
+    damageType: 3
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 491}   
+    bulletSpeed: -10
+    bulletSprite: {mod: 40k, index: 22} 
+    accuracyAimed: 200
+    tuAimed: 40
+    battleType: 1
+    arcingShot: false # true
+    minRange: 5
+    dropoff: 0
+    recover: false
+    fixedWeapon: true
+    clipSize: 3 # 3 = unloaded, 2 = loaded, 1 = not used, 0 = fired
+    specialIconSprite: 10
+    confAimed:
+      name: STR_SIGNAL_POSITION
+      spendPerShot: 2 # setAmmoQuantity can't be set to 0 as the item would disappear (sanity check)
+    tags:
+      ITEM_IS_VOX_WEAPON: 1
+    experienceTrainingMode: 19
+    #*** Melee bayonet
+    specialUseEmptyHand: true
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773} #{mod: 40k, index: 101}
+    meleeAnimation: {mod: 40k, index: 4} # 0
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+
+
   - type: STR_AIRSTRIKE_AMMO
     categories: [STR_CAT_EQUIPMENT]
     size: 0.1
@@ -562,9 +632,11 @@ items:
     hitSound: {mod: 40k, index: 0}
     hitAnimation: {mod: 40k, index: 0}
     #explosionSpeed: 5
-    power: 150
+    power: 200 # 150
+    damageAlter:
+      ToArmorPre: 0.15
     damageType: 3
-    clipSize: 1
+    clipSize: 999 # 1
     battleType: 2
     armor: 30
     listOrder: 23001

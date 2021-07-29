@@ -1,0 +1,70 @@
+armors:
+  - type: STR_GUARD_ARMORSM
+    builtInWeapons:
+      - INV_NULL_AIRSTRIKE_VOX_DUMMY
+    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_IS_VOX_DUMMY: int
+      ITEM_IS_VOX_WEAPON: int
+
+  scripts:
+    newTurnUnit:
+      - offset: 20
+        code: |
+          var int temp;
+          var int numInventoryItems;
+
+          var ptr RuleItem rItem;
+
+          var ptre BattleItem tempItem;
+          var ptre BattleItem itemDummy;
+          var ptre BattleItem itemWeapon;
+
+          if neq turn 1;
+            return;
+          end;
+
+          if neq side FACTION_PLAYER;
+            return;
+          end;
+
+          unit.getSpecialItem itemWeapon 0;
+          itemWeapon.getRuleItem rItem;
+          rItem.getTag temp Tag.ITEM_IS_VOX_WEAPON;
+          if neq temp 1;
+            return;
+          end;
+
+          unit.getInventoryItem.size numInventoryItems;
+          loop var i numInventoryItems;
+            unit.getInventoryItem tempItem i;
+            tempItem.getRuleItem rItem;
+            rItem.getTag temp Tag.ITEM_IS_VOX_DUMMY;
+            if and eq temp 1 eq itemDummy null;
+              unit.getInventoryItem itemDummy i;
+            end;
+          end;
+
+          if or eq itemDummy null eq itemWeapon null;
+            debug_log "finish early - invalid state";
+          end;
+
+          itemWeapon.getAmmoQuantity temp;
+
+          if eq temp 3; # unloaded
+            itemWeapon.setAmmoQuantity 1;
+
+            itemDummy.getAmmoItem tempItem;
+            tempItem.getAmmoQuantity temp;
+            if eq temp 999; # 999 is obviously not a real value
+              debug_log "reloaded!";
+              tempItem.setAmmoQuantity 42; # ammo has been used to reload the real weapon
+              itemWeapon.setAmmoQuantity 2; # real weapon is loaded now
+            end;
+          end;
+
+          return;
+
