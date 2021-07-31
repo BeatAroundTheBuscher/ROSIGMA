@@ -1,0 +1,23 @@
+extended:
+  scripts:
+    damageUnit: 
+      - offset: 22 
+        code: |
+          var int temp;
+          var ptr RuleArmor armorRule;
+
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getSize temp;
+
+          if eq temp 2;
+            set to_time 0;
+            set to_energy 0;
+            set to_morale 0;
+          end;
+
+          return;

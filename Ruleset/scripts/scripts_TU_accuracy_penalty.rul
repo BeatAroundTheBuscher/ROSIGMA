@@ -1,0 +1,99 @@
+#items:
+#  - type: STR_RIFLEC
+#    kneelBonus: 100 # test only
+#    accuracyMultiplier: # required by ITEM_IS_HEAVY_WEAPON
+#     firing: 1.0
+#    tags:
+#      ITEM_IS_HEAVY_WEAPON: 1 
+#      ITEM_HAS_BIPOD: 1
+
+
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_RECOIL: int
+      ITEM_HAS_BIPOD: int
+      ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+
+  scripts:
+    accuracyMultiplierBonusStats: 
+      - offset: 31 
+        code: |
+          var int temp;
+          var int currentTU;
+          var int accuracyScore;
+          var int kneelingWithBipod;
+
+          var ptr RuleItem rItem;
+
+          weapon.getRuleItem rItem;
+          rItem.getTag temp Tag.ITEM_IS_HEAVY_WEAPON;
+          if eq temp 0;
+            return bonus; # final accuracy
+          end;
+
+          unit.isKneeled kneelingWithBipod; # 1 when kneeling
+          rItem.getTag temp Tag.ITEM_HAS_BIPOD;
+          if neq temp 1;
+            set kneelingWithBipod 0;
+          end;
+
+          unit.getTimeUnits currentTU; # absolute
+          unit.getTimeUnitsMax temp;
+          muldiv currentTU 100 temp; # relative
+          debug_log "currenTU %" currentTU;
+
+          set temp bonus; # starting bonus
+
+          if and gt currentTU 20 le currentTU 80;
+            add currentTU 20; # start with 100 (80 + 20) % bonus
+            muldiv bonus currentTU 100;
+            debug_log "Altered currenTU %" currentTU;
+            debug_log "20-80 bonus" bonus;
+            sub currentTU 20;
+          end;
+
+          if le currentTU 20;
+            muldiv bonus 40 100; # lower range is 40 (20 + 20)
+            debug_log "20 bonus" bonus;
+          end;
+
+
+          if eq kneelingWithBipod 1;
+            add bonus temp; # (current bonus + starting bonus) / 2
+            div bonus 2;
+            debug_log "kneel+bipod bonus";
+          end;
+          debug_log "battle_action" battle_action;
+          debug_log "current bonus" bonus;
+
+
+          return bonus; # final accuracy
+
+
+
+
+
+          # debug_log "unit accuracyScore" accuracyScore;
+
+          # todo consider battle_action auto, snap (halves penalty?), aimed (removed penalty?)
+          # can consider ammo too (f. ex. over charged)
+
+          # unit.Stats.getFiring accuracyScore;
+
+          # bonus does not consider aim mode (it was always 70 for a unit with 70 FACC)
+          # if eq battle_action BA_AIMEDSHOT; # 9
+          #  # rItem.getAccuracyAimed accuracyScore;
+          #  debug_log "aimed accuracyScore" bonus;
+          # end;
+
+          # if eq battle_action BA_SNAPSHOT; # 8
+          #   # rItem.getAccuracySnap accuracyScore;
+          #   debug_log "snap accuracyScore" bonus;
+          # end;
+
+          # if eq battle_action BA_AUTOSHOT; # 7
+          #   # rItem.getAccuracyAuto accuracyScore;
+          #   debug_log "auto accuracyScore" bonus;
+          # end;
