@@ -25,6 +25,8 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_STRENGTH_REQUIREMENT: int
+      ITEM_MAX_HEAT_LEVEL: int
+      ITEM_DISSIPATION_PER_TURN: int
     RuleArmor:
       HAS_EXTENDED_FRONT_SHIELD: int
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
@@ -68,14 +70,23 @@ extended:
           var int temp;
           rule.getTag temp Tag.ITEM_RECOIL;
           if gt temp 0;
-            stats_state.addIntRow "Recoil" temp;
+            stats_state.addIntRow "STR_RECOIL" temp;
           end;
           rule.getTag temp Tag.ITEM_HAS_BIPOD;
           if gt temp 0;
-            stats_state.addTextRow "Bipod" "Yes";
+            stats_state.addTextRow "STR_BIPOD" "STR_YES";
           end;
           rule.getTag temp Tag.ITEM_STRENGTH_REQUIREMENT;
           if gt temp 0;
-            stats_state.addIntRow "Strength required" temp;
+            stats_state.addIntRow "STR_STRENGTH_REQUIREMENT" temp;
           end;
+          rule.getTag temp Tag.ITEM_MAX_HEAT_LEVEL;
+          if gt temp 0;
+            stats_state.addIntRow "STR_MAX_HEAT_LEVEL" temp;
+          end;
+          rule.getTag temp Tag.ITEM_DISSIPATION_PER_TURN;
+          if gt temp 0;
+            stats_state.addIntRow "STR_HEAT_DISSIPATION_PER_TURN" temp;
+          end;
+
           return;
