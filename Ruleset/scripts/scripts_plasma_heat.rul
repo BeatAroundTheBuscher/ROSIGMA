@@ -147,23 +147,19 @@ extended:
               add currentHeat temp;
             end;
 
-            rItem.getTag temp Tag.ITEM_DISIPATION_PER_TURN;
-
-            if le currentHeat temp; # dissipate
-              set currentHeat 0;
-            else;
-              sub currentHeat temp; 
-            end;
-
             if gt currentHeat maxHeat;
-              set temp maxHeat;
-              sub temp currentHeat;
-
               ammoItem.setAmmoQuantity 1; # 0 isn't possible
               item.setFuseEnabled 1; # destroy weapon
               item.setFuseTimer 0;
 
               # item.getOwner bUnit; # maybe damage unit
+            else;
+              rItem.getTag temp Tag.ITEM_DISIPATION_PER_TURN;
+              if le currentHeat temp; # dissipate
+                set currentHeat 0;
+              else;
+                sub currentHeat temp; 
+              end;
             end;
 
             item.setTag Tag.ITEM_PREVIOUS_AMMO_COUNT currentAmmoCount;
@@ -173,7 +169,7 @@ extended:
           return;
           
 
-    accuracyMultiplierBonusStats: # dissipate/increase heat level
+    accuracyMultiplierBonusStats:
       - offset: 20 
         code: |
           var int temp;
