@@ -500,8 +500,7 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 3 ] 
 
-  - &STR_ELYSIAN_ARMOR # DAMAGE + STATS + DEFINITION
-    type: STR_BLACKSTONE_JUMP_ARMOR
+  - type: STR_BLACKSTONE_JUMP_ARMOR
     spriteSheet: blackstone_jumptrooperBS.PCK
     spriteInv: blackstone_jumptrooper_INV.SPK
     corpseBattle:
@@ -562,3 +561,47 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 3 ] 
     
+armors:
+  - type: STR_BLACKSTONE_JUMP_ARMOR
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic,4322.msg75634.html#msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int floating;
+        var int isFemale;
+
+        var int numOfFrames;
+
+        unit.isWalking walking;
+        unit.isFloating floating;
+        unit.getGender isFemale;
+
+        set numOfFrames 6;
+    
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if and eq walking 0 eq floating 1;
+              
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+              if neq 0 isFemale;
+                # using isFemale differently for now;
+                set isFemale 8;
+                mul isFemale numOfFrames;
+                add sprite_index isFemale;
+              end;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;  
