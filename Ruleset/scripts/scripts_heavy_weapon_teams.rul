@@ -43,11 +43,15 @@ extended:
         code: |
           var int deploy;
           var int bipod;
+          var int weight;
+          var int strength;
 
           weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
           unit.getTag deploy Tag.DEPLOYED;
+          weapon.getTotalWeight weight;
+          unit.Stats.getStrength strength;
 
-          if and eq bipod 1 eq deploy 0;
+          if and eq bipod 1 eq deploy 0 le strength weight;
             set bonus 0;
           end;
 
