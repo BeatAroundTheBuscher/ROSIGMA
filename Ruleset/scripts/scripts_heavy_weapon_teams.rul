@@ -1,0 +1,316 @@
+## Contributed by JuicyGiblets
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_HAS_BIPOD: int
+      ITEM_IS_TOOL: int
+    BattleUnit:
+      DEPLOYED: int
+      ITEM_IS_TOOL_XP: int
+    BattleGame:
+      LANDED_HIT: int
+
+  scripts:
+    tryMeleeAttackUnit:
+      - offset: 1
+        code: |
+          var ptr BattleItem right;
+          var int bipodright;
+          var ptr BattleItem left;
+          var int bipodleft;
+          var int bipod;
+          var int tools;
+
+          victim.getRightHandWeapon right;
+          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
+          victim.getLeftHandWeapon left;
+          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
+          if or eq bipodright 1 eq bipodleft 1;
+            set bipod 1;
+          end;
+
+          item.getTag tools Tag.ITEM_IS_TOOL;
+
+          if and neq bipod 1 eq tools 1;
+            set melee_attack_success 0;
+          end;
+
+          return melee_attack_success;
+
+    accuracyMultiplierBonusStats:
+      - offset: 1
+        code: |
+          var int deploy;
+          var int bipod;
+
+          weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
+          unit.getTag deploy Tag.DEPLOYED;
+
+          if and eq bipod 1 eq deploy 0;
+            set bonus 0;
+          end;
+
+          return bonus;
+
+    hitUnit:
+      - offset: 1
+        code: |
+          var ptr BattleItem right;
+          var int bipodright;
+          var ptr BattleItem left;
+          var int bipodleft;
+          var int bipod;
+          var int tools;
+          var int deploy;
+
+          unit.getTag deploy Tag.DEPLOYED;
+
+          unit.getRightHandWeapon right;
+          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
+          unit.getLeftHandWeapon left;
+          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
+          if or eq bipodright 1 eq bipodleft 1;
+            set bipod 1;
+          end;
+
+          weapon_item.getTag tools Tag.ITEM_IS_TOOL;
+
+          if and eq deploy 0 eq bipod 1 eq tools 1;
+            unit.getEnergy deploy;
+            unit.setTag Tag.DEPLOYED deploy;
+            unit.setEnergy 0;
+            set power 0;
+            attacker.setTag Tag.ITEM_IS_TOOL_XP 1;
+            return power part side;
+          end;
+
+          if and neq deploy 0 eq tools 1;
+            unit.setEnergy deploy;
+            unit.setTag Tag.DEPLOYED 0;
+            set power 0;
+            attacker.setTag Tag.ITEM_IS_TOOL_XP 1;
+            return power part side;
+          end;
+
+          return power part side;
+
+      - offset: 1
+        code: |
+          var int bipod;
+          var int deploy;
+          var int faction;
+
+          weapon_item.getTag bipod Tag.ITEM_HAS_BIPOD;
+          attacker.getTag deploy Tag.DEPLOYED;
+          unit.getFaction faction;
+
+          if and neq deploy 0 eq bipod 1 eq faction 1;
+            battle_game.setTag Tag.LANDED_HIT 1;
+          end;
+
+          return power part side;
+
+    healUnit:
+      - offset: 1
+        code: |
+          var int deployed;
+
+          target.getTag deployed Tag.DEPLOYED;
+
+          if neq deployed 0;
+            set energy_recovery 0;
+          end;
+
+          return;
+
+    newTurnUnit:
+      - offset: 1
+        code: |
+          var ptr BattleItem right;
+          var int bipodright;
+          var ptr BattleItem left;
+          var int bipodleft;
+          var int bipod;
+          var int deploy;
+          var int kneeling;
+          var int energyrecovered;
+          var int maxStat;
+          var int percentStatLost;
+
+          unit.isKneeled kneeling;
+
+          unit.getRightHandWeapon right;
+          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
+          unit.getLeftHandWeapon left;
+          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
+
+          if or eq bipodright 1 eq bipodleft 1;
+            set bipod 1;
+          end;
+
+          unit.getTag deploy Tag.DEPLOYED;
+
+          if and eq deploy 0 eq bipod 1 eq side 1 eq kneeling 1;
+            unit.getEnergy deploy;
+            unit.setTag Tag.DEPLOYED deploy;
+            unit.setEnergy 0;
+            return;
+          end;
+
+          if and neq deploy 0 eq side 1;
+            if or eq bipod 0 eq kneeling 0;
+              unit.setEnergy deploy;
+              unit.setTag Tag.DEPLOYED 0;
+              return;
+            end;
+          end;
+
+          if and neq deploy 0 eq side 0;
+            unit.getEnergy energyrecovered;
+            add deploy energyrecovered;
+            unit.setEnergy deploy;
+
+            unit.getTimeUnits percentStatLost;
+            unit.getTimeUnitsMax maxStat;
+            sub percentStatLost maxStat;
+            muldiv percentStatLost -100 maxStat;
+
+            if neq 0 kneeling;
+              div percentStatLost 2;
+            end;
+
+            unit.getEnergyMax maxStat;
+            sub percentStatLost 100;
+            mul percentStatLost -1;
+            muldiv maxStat percentStatLost 100;
+
+            unit.getEnergy percentStatLost;
+            limit_upper percentStatLost maxStat;
+            unit.setEnergy percentStatLost;
+
+            unit.setTag Tag.DEPLOYED percentStatLost;
+            unit.setEnergy 0;
+            return;
+          end;
+
+          return;
+
+    returnFromMissionUnit:
+      - offset: 1
+        code: |
+          var int statCurrent;
+          var int statCap;
+          var int randomNumber;
+          var int temp;
+          var ptr RuleSoldier ruleSoldier;
+          var int toolsXP;
+          var int landedhit;
+
+          unit.getTag toolsXP Tag.ITEM_IS_TOOL_XP;
+
+          battle_game.getTag landedhit Tag.LANDED_HIT;
+
+          if and eq toolsXP 1 eq landedhit 1;
+            soldier.getRuleSoldier ruleSoldier;
+
+            ruleSoldier.StatsCap.getTimeUnits statCap;
+            soldier.Stats.getTimeUnits statCurrent;
+            battle_game.randomRange randomNumber 0 2;
+            set temp statCap;
+            sub temp statCurrent;
+            div temp 10;
+            add statCurrent randomNumber;
+            add statCurrent temp;
+            if gt statCurrent statCap;
+              soldier.Stats.setTimeUnits statCap;
+            else;
+              soldier.Stats.setTimeUnits statCurrent;
+            end;
+
+            ruleSoldier.StatsCap.getHealth statCap;
+            soldier.Stats.getHealth statCurrent;
+            battle_game.randomRange randomNumber 0 2;
+            set temp statCap;
+            sub temp statCurrent;
+            div temp 10;
+            add statCurrent randomNumber;
+            add statCurrent temp;
+            if gt statCurrent statCap;
+              soldier.Stats.setHealth statCap;
+            else;
+              soldier.Stats.setHealth statCurrent;
+            end;
+
+            ruleSoldier.StatsCap.getStrength statCap;
+            soldier.Stats.getStrength statCurrent;
+            battle_game.randomRange randomNumber 0 2;
+            set temp statCap;
+            sub temp statCurrent;
+            div temp 10;
+            add statCurrent randomNumber;
+            add statCurrent temp;
+            if gt statCurrent statCap;
+              soldier.Stats.setStrength statCap;
+            else;
+              soldier.Stats.setStrength statCurrent;
+            end;
+
+            ruleSoldier.StatsCap.getStamina statCap;
+            soldier.Stats.getStamina statCurrent;
+            battle_game.randomRange randomNumber 0 2;
+            set temp statCap;
+            sub temp statCurrent;
+            div temp 10;
+            add statCurrent randomNumber;
+            add statCurrent temp;
+            if gt statCurrent statCap;
+              soldier.Stats.setStamina statCap;
+            else;
+              soldier.Stats.setStamina statCurrent;
+            end;
+
+          end;
+
+          return;
+
+
+
+items:
+
+  - type: STR_HEAVY_WEAPON_TOOLS
+    categories: [ STR_CAT_EQUIPMENT]
+    size: 0.2
+    costBuy: 500
+    costSell: 50
+    weight: 10
+    bigSprite: 280 # { mod: 40k, index: 23 }
+    floorSprite: 280 # { mod: 40k, index: 157 }
+    handSprite: 280 # { mod: 40k, index: 504 }
+    meleeSound: { mod: 40k, index: -1 }
+    meleeHitSound: { mod: 40k, index: 17 }
+    meleeMissAnimation: { mod: 40k, index: 68 }
+    meleeAnimation: { mod: 40k, index: 32 }
+    battleType: 3
+    twoHanded: false
+    invWidth: 2 # 1
+    invHeight: 3 # 2
+    listOrder: 12004
+    tuMelee: 60
+    accuracyMelee: 100
+    clipSize: -1
+    power: 1
+    damageAlter:
+      RandomType: 3
+    tags:
+      ITEM_IS_TOOL: 1
+    skillApplied: false
+    confMelee:
+      name: STR_TOOLS_MELEE
+
+
+
+
+
+
+
