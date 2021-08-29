@@ -101,7 +101,7 @@ extended:
           end;
 
           battle_game.setTag Tag.COMMAND_POINTS temp1;
-          debug_log "Remaining Command Points" temp1;
+          # debug_log "Remaining Command Points" temp1;
 
           if eq newCommand 1;
             battle_game.flashMessage "STR_FIX_BAYONETS";
@@ -114,10 +114,10 @@ extended:
           end;
 
           battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
-          debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
+          # debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
 
           battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
-          debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
+          # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
         else;
             battle_game.flashMessage "A command has been issued this turn already!";        
         end;          
@@ -131,14 +131,14 @@ extended:
           var int temp2;
 
           battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
-          debug_log "TURN_ACTIVE_COMMAND" temp;
+          # debug_log "TURN_ACTIVE_COMMAND" temp;
           battle_game.getTurn temp2;
           if neq temp temp2;
             return power part side;
           end;
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
-          debug_log "CHOICE_ACTIVE_COMMAND" temp;
+          # debug_log "CHOICE_ACTIVE_COMMAND" temp;
           if neq temp 1;
             return power part side;
           end;
@@ -147,12 +147,12 @@ extended:
             return power part side;
           end;
 
-          debug_log "hitUnit:10 before power" power;
+          # debug_log "hitUnit:10 before power" power;
           set temp power;
           mul temp 6; # 20 % boost
           div temp 5;
 
-          debug_log "hitUnit:10 after power" temp;
+          # debug_log "hitUnit:10 after power" temp;
           return temp part side;
 
       - offset: 30 # 3 - Hunker Down 
@@ -176,7 +176,7 @@ extended:
             return power part side;
           end;
 
-          debug_log "hitUnit:30 before power" power;
+          # debug_log "hitUnit:30 before power" power;
           set temp power;
 
           unit.isKneeled temp2;
@@ -186,7 +186,7 @@ extended:
             mul temp 4;
             div temp 5;
           end;
-          debug_log "hitUnit:30 after power" temp;
+          # debug_log "hitUnit:30 after power" temp;
 
           return temp part side;
 
@@ -207,7 +207,7 @@ extended:
             return melee_attack_success;
           end;
 
-          debug_log "tryMeleeAttackUnit: 10 before accuracy" melee_attack_success;
+          # debug_log "tryMeleeAttackUnit: 10 before accuracy" melee_attack_success;
           set temp attack_strength;
           mul temp 6; # 20 % boost
           div temp 5;
@@ -216,7 +216,7 @@ extended:
           set temp2 melee_attack_success;
           add temp2 temp;
 
-          debug_log "tryMeleeAttackUnit: 10 after accuracy" temp2;
+          # debug_log "tryMeleeAttackUnit: 10 after accuracy" temp2;
           return temp2;
 
     reactionUnitAction: 
@@ -261,8 +261,8 @@ extended:
           reaction_unit.getTimeUnitsMax temp;
           div enemyReactionScore temp;
 
-          debug_log "friendyReactionScore" friendyReactionScore;
-          debug_log "enemyReactionScore" enemyReactionScore;
+          # debug_log "friendyReactionScore" friendyReactionScore;
+          # debug_log "enemyReactionScore" enemyReactionScore;
 
           if gt friendyReactionScore enemyReactionScore;
             return 0;
@@ -275,53 +275,53 @@ extended:
 
       - offset: 21
         code: |
-          debug_log "reactionUnitAction";
-          #debug_log "action_target" action_target;
-          #debug_log "action_unit" action_unit;
-          #debug_log "arc_to_action_unit" arc_to_action_unit;
-          #debug_log "battle_action" battle_action;
-          #debug_log "distance" distance;
-          #debug_log "move" move;
-          #debug_log "reaction_battle_action" reaction_battle_action;
-          debug_log "reaction_chance" reaction_chance;
-          debug_log "reaction_unit" reaction_unit;
-          #debug_log "reaction_weapon" reaction_weapon;
-          #debug_log "weapon" weapon;
+          # debug_log "reactionUnitAction";
+          ## debug_log "action_target" action_target;
+          ## debug_log "action_unit" action_unit;
+          ## debug_log "arc_to_action_unit" arc_to_action_unit;
+          ## debug_log "battle_action" battle_action;
+          ## debug_log "distance" distance;
+          ## debug_log "move" move;
+          ## debug_log "reaction_battle_action" reaction_battle_action;
+          # debug_log "reaction_chance" reaction_chance;
+          # debug_log "reaction_unit" reaction_unit;
+          ## debug_log "reaction_weapon" reaction_weapon;
+          ## debug_log "weapon" weapon;
 
           return reaction_chance;
 
     reactionUnitReaction: 
       - offset: 21
         code: |
-          debug_log "reactionUnitReaction";
-          #debug_log "action_target" action_target;
-          #debug_log "action_unit" action_unit;
-          #debug_log "arc_to_action_unit" arc_to_action_unit;
-          #debug_log "battle_action" battle_action;
-          #debug_log "distance" distance;
-          #debug_log "move" move;
-          #debug_log "reaction_battle_action" reaction_battle_action;
-          debug_log "reaction_chance" reaction_chance;
-          debug_log "reaction_unit" reaction_unit;
-          #debug_log "reaction_weapon" reaction_weapon;
-          #debug_log "weapon" weapon;
+          # debug_log "reactionUnitReaction";
+          ## debug_log "action_target" action_target;
+          ## debug_log "action_unit" action_unit;
+          ## debug_log "arc_to_action_unit" arc_to_action_unit;
+          ## debug_log "battle_action" battle_action;
+          ## debug_log "distance" distance;
+          ## debug_log "move" move;
+          ## debug_log "reaction_battle_action" reaction_battle_action;
+          # debug_log "reaction_chance" reaction_chance;
+          # debug_log "reaction_unit" reaction_unit;
+          ## debug_log "reaction_weapon" reaction_weapon;
+          ## debug_log "weapon" weapon;
           return reaction_chance;
 
 
     reactionWeaponAction:
       - offset: 21
         code: |
-          debug_log "reactionWeaponAction";
-          #debug_log "action_target" action_target;
-          #debug_log "action_unit" action_unit;
-          #debug_log "arc_to_action_unit" arc_to_action_unit;
-          #debug_log "battle_action" battle_action;
-          #debug_log "distance" distance;
-          #debug_log "move" move;
-          #debug_log "reaction_battle_action" reaction_battle_action;
-          debug_log "reaction_chance" reaction_chance;
-          #debug_log "reaction_unit" reaction_unit;
-          #debug_log "reaction_weapon" reaction_weapon;
-          #debug_log "weapon" weapon;
+          # debug_log "reactionWeaponAction";
+          ## debug_log "action_target" action_target;
+          ## debug_log "action_unit" action_unit;
+          ## debug_log "arc_to_action_unit" arc_to_action_unit;
+          ## debug_log "battle_action" battle_action;
+          ## debug_log "distance" distance;
+          ## debug_log "move" move;
+          ## debug_log "reaction_battle_action" reaction_battle_action;
+          # debug_log "reaction_chance" reaction_chance;
+          ## debug_log "reaction_unit" reaction_unit;
+          ## debug_log "reaction_weapon" reaction_weapon;
+          ## debug_log "weapon" weapon;
           
           return reaction_chance;
