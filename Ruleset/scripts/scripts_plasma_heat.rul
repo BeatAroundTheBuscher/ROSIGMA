@@ -1,3 +1,54 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_HEAT_MAX_LEVEL: int
+      ITEM_HEAT_DISSIPATION_PER_TURN: int
+    BattleItem:
+      ITEM_HEAT_CURRENT_LEVEL: int
+      ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
+  scripts:
+    accuracyMultiplierBonusStats:
+      - offset: 20 
+        code: |
+          var int temp;
+          var int previousAmmoCount;
+          var int currentAmmoCount;
+
+          var int currentHeat;
+          var int maxHeat;
+          var ptr RuleItem rItem;
+          var ptr BattleItem ammoItem;
+
+          weapon.getRuleItem rItem;
+          rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+
+          if eq maxHeat 0;
+            return bonus;
+          end;
+
+          weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+          weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+
+          weapon.getAmmoItem ammoItem;
+          ammoItem.getAmmoQuantity currentAmmoCount;
+
+          if le currentAmmoCount previousAmmoCount;
+            sub previousAmmoCount currentAmmoCount;
+          end;
+
+          set temp maxHeat;
+          sub temp currentHeat;
+          sub temp previousAmmoCount;
+          
+          muldiv bonus temp maxHeat;
+
+          if lt bonus 0;
+            set bonus 0;
+          end;
+
+          return bonus;
+
+
 
 
 items:
@@ -5,20 +56,46 @@ items:
     type: STR_PLASMA_RIFLE_TERRAN
     bigSprite: 300
     tags:
-      ITEM_MAX_HEAT_LEVEL: 7
-      ITEM_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+
     tuUnload: 999 # DO NOT UNLOAD WEAPONS, THEY ARE LIKELY TO BE HOT
     isExplodingInHands: true # won't explode though as it's not a grenade
     isConsumable: true
+
     scripts:
+      createItem: | # Necessary for the beginning
+        item.setTag Tag.ITEM_HEAT_CURRENT_LEVEL -1; # don't affect inventory screen before mission
+        return;
+
       selectItemSprite: |
         var int currentHeat;
         var int maxHeat;
 
+        var int previousAmmoCount;
+        var int currentAmmoCount;
+
+        var ptr BattleItem ammoItem;
+
         if eq blit_part blit_item_big;
-          item.getTag maxHeat Tag.ITEM_MAX_HEAT_LEVEL;
-          item.getTag currentHeat Tag.ITEM_CURRENT_HEAT_LEVEL;
+          item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+          item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+          item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+
+          if lt currentHeat 0; # before mission
+            add sprite_index sprite_offset;
+            return sprite_index;
+          end;            
           
+          item.getAmmoItem ammoItem;
+          ammoItem.getAmmoQuantity currentAmmoCount;
+
+          if le currentAmmoCount previousAmmoCount;
+            sub previousAmmoCount currentAmmoCount;
+          end;
+
+          add currentHeat previousAmmoCount;
+
           if le currentHeat maxHeat;
             add sprite_index currentHeat;
           else;
@@ -35,9 +112,9 @@ items:
         var int temp;
 
         get_color color new_pixel;
-        if eq color 2;
-          item.isFuseEnabled temp;
-          if gt temp 0;
+        item.isFuseEnabled temp;
+        if gt temp 0; # todo refactor to max heat + 1
+          if eq color 2;
             set temp anim_frame;
             wavegen_tri temp 16 16 15;
             mul temp -1;
@@ -47,152 +124,154 @@ items:
         end;
         return new_pixel;
 
+      newTurnItem: | # dissipate/increase heat level
+        var int temp;
+        var int currentHeat;
+        var int maxHeat;
+
+        var int currentAmmoCount;
+        var int previousAmmoCount;
+
+        var ptr RuleItem rItem;
+        var ptre BattleItem ammoItem;
+        var ptre BattleUnit bUnit;
+
+        if neq side FACTION_PLAYER;
+          return;
+        end;
+
+        item.getRuleItem rItem;
+        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+
+        item.getAmmoItem ammoItem;
+        ammoItem.getAmmoQuantity currentAmmoCount;
+
+        if eq turn 1; # set up
+          item.setTag Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT currentAmmoCount;
+          item.setTag Tag.ITEM_HEAT_CURRENT_LEVEL 0;
+          return;
+        end;
+          
+        item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+        item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+
+        if le currentAmmoCount previousAmmoCount;
+          set temp previousAmmoCount;
+          sub temp currentAmmoCount; # delta heat
+          add currentHeat temp;
+        else;
+          add currentHeat previousAmmoCount;
+        end;
+
+        if gt currentHeat maxHeat;
+          ammoItem.setAmmoQuantity 1; # 0 isn't possible
+          item.setFuseEnabled 1; # destroy weapon
+          item.setFuseTimer 0;
+
+          # item.getOwner bUnit; # maybe damage unit
+        else;
+          rItem.getTag temp Tag.ITEM_HEAT_DISSIPATION_PER_TURN;
+          if le currentHeat temp; # dissipate
+            set currentHeat 0;
+          else;
+            sub currentHeat temp; 
+          end;
+        end;
+
+        item.setTag Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT currentAmmoCount;
+        item.setTag Tag.ITEM_HEAT_CURRENT_LEVEL currentHeat;
+
+        return;
+
+      accuracyMultiplierBonusStats: | # currently doesn't run due to a oxce bug?
+        var int temp;
+        var int previousAmmoCount;
+        var int currentAmmoCount;
+
+        var int currentHeat;
+        var int maxHeat;
+
+        var ptr RuleItem rItem;
+        var ptr BattleItem ammoItem;
+
+        debug_log "DEBUG plasma Heat accuracyMultiplierBonusStats";
+        weapon.getRuleItem rItem;
+        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+
+        weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+        weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+
+        weapon.getAmmoItem ammoItem;
+        ammoItem.getAmmoQuantity currentAmmoCount;
+
+        if le currentAmmoCount previousAmmoCount;
+          sub previousAmmoCount currentAmmoCount;
+        end;
+
+        set temp maxHeat;
+        sub temp currentHeat;
+        sub temp previousAmmoCount;
+        muldiv bonus temp maxHeat;
+
+        if lt bonus 0;
+          set bonus 0;
+        end;
+
+        debug_log "bonus" bonus;
+        return bonus;
+
+
   - type: STR_PLASMA_PISTOL_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 308
     tags:
-      ITEM_MAX_HEAT_LEVEL: 5
-      ITEM_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_MAX_LEVEL: 5
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
         
   - type: STR_HEAVY_PLASMA_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 314
     tags:
-      ITEM_MAX_HEAT_LEVEL: 6
-      ITEM_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_MAX_LEVEL: 6
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
 
   - type: STR_MCPLASMA_RIFLE
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 321
     tags:
-      ITEM_MAX_HEAT_LEVEL: 7
-      ITEM_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2
 
   - type: STR_MCPLASMA_PISTOL
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 329
     tags:
-      ITEM_MAX_HEAT_LEVEL: 5
-      ITEM_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_MAX_LEVEL: 5
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2
 
   - type: STR_HEAVY_PLASMA_MC
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 335
     tags:
-      ITEM_MAX_HEAT_LEVEL: 6
-      ITEM_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_MAX_LEVEL: 6
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2
 
 #  - type: STR_PLASMA_GUN_TWINCORE_DEKKER
 #    refNode: *STR_OVERHEATING_PLASMA
 #    bigSprite: 335
 #    tags:
-#      ITEM_MAX_HEAT_LEVEL: 6
-#      ITEM_DISSIPATION_PER_TURN: 2
+#      ITEM_HEAT_MAX_LEVEL: 6
+#      ITEM_HEAT_DISSIPATION_PER_TURN: 2
 
 
 
 
 
-extended:
-  tags:
-    RuleItem:
-      ITEM_MAX_HEAT_LEVEL: int
-      ITEM_DISSIPATION_PER_TURN: int
-    BattleItem:
-      ITEM_CURRENT_HEAT_LEVEL: int
-      ITEM_PREVIOUS_AMMO_COUNT: int
 
-  scripts:
 
-    createItem:
-      - offset: 20 # maybe neccessary for multi stage missions?
-        code: |
-          var int temp;
 
-          item.getTag temp Tag.ITEM_CURRENT_HEAT_LEVEL;
-          if neq temp 0;
-            item.setTag Tag.ITEM_CURRENT_HEAT_LEVEL 0;
-          end;
 
-          return;
 
-    newTurnItem: # dissipate/increase heat level
-      - offset: 20 
-        code: |
-          var int temp;
-          var int currentHeat;
-          var int maxHeat;
-          var int currentAmmoCount;
-          var int previousAmmoCount;
-          var ptr RuleItem rItem;
-          var ptre BattleItem ammoItem;
-          var ptre BattleUnit bUnit;
-
-          if neq side FACTION_PLAYER;
-            return;
-          end;
-
-          item.getRuleItem rItem;
-          rItem.getTag maxHeat Tag.ITEM_MAX_HEAT_LEVEL;
-          if neq maxHeat 0;
-            item.getTag currentHeat Tag.ITEM_CURRENT_HEAT_LEVEL;
-            item.getTag previousAmmoCount Tag.ITEM_PREVIOUS_AMMO_COUNT;
-
-            item.getAmmoItem ammoItem;
-            ammoItem.getAmmoQuantity currentAmmoCount;
-
-            if lt currentAmmoCount previousAmmoCount;
-              set temp previousAmmoCount;
-              sub temp currentAmmoCount; # delta heat
-              add currentHeat temp;
-            end;
-
-            if gt currentHeat maxHeat;
-              ammoItem.setAmmoQuantity 1; # 0 isn't possible
-              item.setFuseEnabled 1; # destroy weapon
-              item.setFuseTimer 0;
-
-              # item.getOwner bUnit; # maybe damage unit
-            else;
-              rItem.getTag temp Tag.ITEM_DISSIPATION_PER_TURN;
-              if le currentHeat temp; # dissipate
-                set currentHeat 0;
-              else;
-                sub currentHeat temp; 
-              end;
-            end;
-
-            item.setTag Tag.ITEM_PREVIOUS_AMMO_COUNT currentAmmoCount;
-            item.setTag Tag.ITEM_CURRENT_HEAT_LEVEL currentHeat;
-          end;
-
-          return;
           
 
-    accuracyMultiplierBonusStats:
-      - offset: 20 
-        code: |
-          var int temp;
-          var int currentHeat;
-          var int maxHeat;
-          var ptr RuleItem rItem;
-
-          weapon.getRuleItem rItem;
-          rItem.getTag maxHeat Tag.ITEM_MAX_HEAT_LEVEL;
-
-          if eq maxHeat 0;
-            return bonus;
-          end;
-
-          weapon.getTag currentHeat Tag.ITEM_CURRENT_HEAT_LEVEL;
-
-          set temp maxHeat;
-          sub temp currentHeat;
-          muldiv bonus temp maxHeat;
-
-          if lt bonus 0;
-            set bonus 0;
-          end;
-
-          return bonus;
 
