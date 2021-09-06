@@ -36,15 +36,13 @@ extended:
             sub previousAmmoCount currentAmmoCount;
           end;
 
-          set temp maxHeat;
-          sub temp currentHeat;
-          sub temp previousAmmoCount;
-          
-          muldiv bonus temp maxHeat;
+          # bonus - bonus * currentHeat / maxHeat / 2
+          set temp bonus;
+          add currentHeat previousAmmoCount; # delta
+          muldiv temp currentHeat maxHeat;
+          div temp 2;
 
-          if lt bonus 0;
-            set bonus 0;
-          end;
+          sub bonus temp;
 
           return bonus;
 
