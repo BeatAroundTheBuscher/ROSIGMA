@@ -38,8 +38,11 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_STRENGTH_REQUIREMENT: int
-      ITEM_MAX_HEAT_LEVEL: int
-      ITEM_DISSIPATION_PER_TURN: int
+      ITEM_HEAT_MAX_LEVEL: int
+      ITEM_HEAT_DISSIPATION_PER_TURN: int
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
     RuleArmor:
       HAS_EXTENDED_FRONT_SHIELD: int
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
@@ -93,11 +96,23 @@ extended:
           if gt temp 0;
             stats_state.addIntRow "STR_STRENGTH_REQUIREMENT" temp;
           end;
-          rule.getTag temp Tag.ITEM_MAX_HEAT_LEVEL;
+          rule.getTag temp Tag.ITEM_SNAP_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_AUTO_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AUTO_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_AIMED_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AIMED_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_HEAT_MAX_LEVEL;
           if gt temp 0;
             stats_state.addIntRow "STR_MAX_HEAT_LEVEL" temp;
           end;
-          rule.getTag temp Tag.ITEM_DISSIPATION_PER_TURN;
+          rule.getTag temp Tag.ITEM_HEAT_DISSIPATION_PER_TURN;
           if gt temp 0;
             stats_state.addIntRow "STR_HEAT_DISSIPATION_PER_TURN" temp;
           end;
