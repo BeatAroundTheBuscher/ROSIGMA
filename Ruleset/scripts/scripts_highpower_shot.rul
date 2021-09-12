@@ -1,0 +1,58 @@
+items: 
+  - type: STR_LASGUN_LUCIUS
+    confAuto:
+      shots: 1
+      spendPerShot: 4
+      name: STR_POWER_SHOT
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+    tags:
+      ITEM_AUTO_POWER_BONUS: 20      
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+  scripts:
+    hitUnit: # increase power if bonus exists for fire mode
+      - offset: 20
+        code: |
+          var int weaponPower;
+          var int powerBonus;
+          var ptr RuleItem rItem;
+          var ptr BattleItem ammoItem;
+
+          weapon_item.getRuleItem rItem;
+
+          if eq battle_action battle_action_snapshot;
+            rItem.getTag powerBonus Tag.ITEM_SNAP_POWER_BONUS;
+          end;
+
+          if eq battle_action battle_action_autoshoot;
+            rItem.getTag powerBonus Tag.ITEM_AUTO_POWER_BONUS;
+          end;
+
+          if eq battle_action battle_action_aimshoot;
+            rItem.getTag powerBonus Tag.ITEM_AIMED_POWER_BONUS;
+          end;
+
+          if eq powerBonus 0;
+            return power part side;
+          end;
+
+          weapon_item.getAmmoItem ammoItem;
+          ammoItem.getRuleItem rItem;
+          rItem.getPower weaponPower;
+
+          debug_log "Old Power" power;
+
+          muldiv powerBonus power weaponPower;
+          add power powerBonus;
+
+
+          debug_log "Bonus Power" powerBonus;
+          debug_log "New Power" power;
+
+          return power part side;
