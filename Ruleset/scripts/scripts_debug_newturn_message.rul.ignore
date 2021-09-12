@@ -1,0 +1,21 @@
+extended:
+  tags:
+    BattleGame:
+      CURRENT_TURN: int
+  scripts:
+    newTurnUnit:
+      - offset: 20
+        code: |
+          var int savedTurn;
+
+          battle_game.getTag savedTurn Tag.CURRENT_TURN;
+          if eq savedTurn turn;
+           return;
+          end;
+
+          set savedTurn turn;
+          battle_game.setTag Tag.CURRENT_TURN savedTurn ;
+          debug_log "###########";
+          debug_log "New Turn" savedTurn;
+          debug_log "###########";
+          return;
