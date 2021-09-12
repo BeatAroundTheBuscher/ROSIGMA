@@ -1,13 +1,13 @@
-items: 
-  - type: STR_LASGUN_LUCIUS
-    confAuto:
-      shots: 1
-      spendPerShot: 4
-      name: STR_POWER_SHOT
-    compatibleAmmo:
-      - STR_LASGUN_CLIP
-    tags:
-      ITEM_AUTO_POWER_BONUS: 20      
+#items: 
+#  - type: STR_LASGUN_LUCIUS
+#    confAuto:
+#      shots: 1
+#      spendPerShot: 4
+#      name: STR_POWER_SHOT
+#    compatibleAmmo:
+#      - STR_LASGUN_CLIP
+#    tags:
+#      ITEM_AUTO_POWER_BONUS: 20      
 
 extended:
   tags:
@@ -15,6 +15,7 @@ extended:
       ITEM_AUTO_POWER_BONUS: int
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
   scripts:
     hitUnit: # increase power if bonus exists for fire mode
       - offset: 20
@@ -36,6 +37,10 @@ extended:
 
           if eq battle_action battle_action_aimshoot;
             rItem.getTag powerBonus Tag.ITEM_AIMED_POWER_BONUS;
+          end;
+
+          if eq battle_action battle_action_hit;
+            rItem.getTag powerBonus Tag.ITEM_MELEE_POWER_BONUS;
           end;
 
           if eq powerBonus 0;
