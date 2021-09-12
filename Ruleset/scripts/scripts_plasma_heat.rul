@@ -1,3 +1,5 @@
+# https://openxcom.org/forum/index.php/topic,8704.msg133355.html#msg133355
+
 extended:
   tags:
     RuleItem:
@@ -7,47 +9,59 @@ extended:
       ITEM_HEAT_CURRENT_LEVEL: int
       ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
   scripts:
-    accuracyMultiplierBonusStats:
-      - offset: 20 
+    reactionUnitReaction: # do not react at max heat 
+      # but doesn't work perfectly yet as how value for getAmmoQuantity isn't being updated
+      # when shooting multiple times during one reactionUnitReaction
+      - offset: 20
         code: |
-          var int temp;
-          var int previousAmmoCount;
-          var int currentAmmoCount;
-
           var int currentHeat;
           var int maxHeat;
           var ptr RuleItem rItem;
+
+          var int previousAmmoCount;
+          var int currentAmmoCount;
           var ptr BattleItem ammoItem;
 
-          weapon.getRuleItem rItem;
+
+          reaction_weapon.getRuleItem rItem;
           rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
           if eq maxHeat 0;
-            return bonus;
+            return reaction_chance;
           end;
 
-          weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-          weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+          reaction_weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
 
-          weapon.getAmmoItem ammoItem;
+          # debug_log "currentHeat1" currentHeat;
+          # debug_log "maxHeat1" maxHeat;
+
+          reaction_weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+          reaction_weapon.getAmmoItem ammoItem;
           ammoItem.getAmmoQuantity currentAmmoCount;
+          
+          # debug_log "previousAmmoCount1" previousAmmoCount;
+          # debug_log "currentAmmoCount1" currentAmmoCount;
 
           if le currentAmmoCount previousAmmoCount;
-            sub previousAmmoCount currentAmmoCount;
+            sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
-          # bonus - bonus * currentHeat / maxHeat / 2
-          set temp bonus;
-          add currentHeat previousAmmoCount; # delta
-          muldiv temp currentHeat maxHeat;
-          div temp 2;
+          add currentHeat previousAmmoCount; 
 
-          sub bonus temp;
+          # debug_log "currentHeat2" currentHeat;
+          # debug_log "maxHeat2" maxHeat;
+          # debug_log "reaction_battle_action" reaction_battle_action;
+          # debug_log "reaction_weapon" reaction_weapon;
 
-          return bonus;
+          if ge currentHeat maxHeat;
+            # debug_log "reaction: No, too hot";
+            # debug_log "--------";
+            return 0;
+          end;
 
-
-
+          # debug_log "reaction: Yes";
+          # debug_log "--------";
+          return reaction_chance;
 
 items:
   - &STR_OVERHEATING_PLASMA
@@ -72,7 +86,6 @@ items:
 
         var int previousAmmoCount;
         var int currentAmmoCount;
-
         var ptr BattleItem ammoItem;
 
         if eq blit_part blit_item_big;
@@ -89,11 +102,10 @@ items:
           ammoItem.getAmmoQuantity currentAmmoCount;
 
           if le currentAmmoCount previousAmmoCount;
-            sub previousAmmoCount currentAmmoCount;
+            sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
-          add currentHeat previousAmmoCount;
-
+          add currentHeat previousAmmoCount; 
           if le currentHeat maxHeat;
             add sprite_index currentHeat;
           else;
@@ -109,10 +121,31 @@ items:
         var int color;
         var int temp;
 
+        var int currentHeat;
+        var int maxHeat;
+        var ptr RuleItem rItem;    
+
+        var int previousAmmoCount;
+        var int currentAmmoCount;    
+        var ptr BattleItem ammoItem;
+
+        item.getRuleItem rItem;
+        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;   
+        item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+
+        item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+        item.getAmmoItem ammoItem;
+        ammoItem.getAmmoQuantity currentAmmoCount;
+
+        if le currentAmmoCount previousAmmoCount;
+          sub previousAmmoCount currentAmmoCount; # delta ammo count
+        end;
+        add currentHeat previousAmmoCount; 
+
         get_color color new_pixel;
         item.isFuseEnabled temp;
-        if gt temp 0; # todo refactor to max heat + 1
-          if eq color 2;
+        if or gt temp 0 gt currentHeat maxHeat; # todo refactor to max heat + 1 or fuse enabled
+          if eq color 2; # red
             set temp anim_frame;
             wavegen_tri temp 16 16 15;
             mul temp -1;
@@ -158,13 +191,16 @@ items:
           sub temp currentAmmoCount; # delta heat
           add currentHeat temp;
         else;
-          add currentHeat previousAmmoCount;
+          add currentHeat previousAmmoCount; # shots fired before reload
         end;
+        # todo: what happens if soldier shoots, reloads and shoots again? Currently it should only add one heat? Do I even want to cover the second heat?
 
         if gt currentHeat maxHeat;
-          ammoItem.setAmmoQuantity 1; # 0 isn't possible
-          item.setFuseEnabled 1; # destroy weapon
-          item.setFuseTimer 0;
+          if neq currentAmmoCount 0;
+            ammoItem.setAmmoQuantity 1; # 0 isn't possible # todo add check if ammo is already 0 (ammoItem should be null?)
+            item.setFuseEnabled 1; # destroy weapon
+            item.setFuseTimer 0;
+          end;
 
           # item.getOwner bUnit; # maybe damage unit
         else;
@@ -181,43 +217,49 @@ items:
 
         return;
 
-      accuracyMultiplierBonusStats: | # currently doesn't run due to a oxce bug?
-        var int temp;
-        var int previousAmmoCount;
-        var int currentAmmoCount;
+    accuracyMultiplier: | 
+      var int temp;
+      var int previousAmmoCount;
+      var int currentAmmoCount;
 
-        var int currentHeat;
-        var int maxHeat;
+      var int currentHeat;
+      var int maxHeat;
+      var ptr RuleItem rItem;
+      var ptr BattleItem ammoItem;
 
-        var ptr RuleItem rItem;
-        var ptr BattleItem ammoItem;
+      # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181
+      # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
+      mul bonus 1000;
+      unit.firingBonusStats bonus 1000000 0 0 0;
+      if ge bonus 0; add bonus 500; else; sub bonus 500; end;
+      div bonus 1000;
 
-        debug_log "DEBUG plasma Heat accuracyMultiplierBonusStats";
-        weapon.getRuleItem rItem;
-        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+      weapon.getRuleItem rItem;
+      rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
-        weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-        weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
-
-        weapon.getAmmoItem ammoItem;
-        ammoItem.getAmmoQuantity currentAmmoCount;
-
-        if le currentAmmoCount previousAmmoCount;
-          sub previousAmmoCount currentAmmoCount;
-        end;
-
-        set temp maxHeat;
-        sub temp currentHeat;
-        sub temp previousAmmoCount;
-        muldiv bonus temp maxHeat;
-
-        if lt bonus 0;
-          set bonus 0;
-        end;
-
-        debug_log "bonus" bonus;
+      if eq maxHeat 0; # redundant check
         return bonus;
+      end;
 
+      weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+      weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+
+      weapon.getAmmoItem ammoItem;
+      ammoItem.getAmmoQuantity currentAmmoCount;
+
+      if le currentAmmoCount previousAmmoCount;
+        sub previousAmmoCount currentAmmoCount;
+      end;
+
+      # bonus - bonus * currentHeat / maxHeat / 2
+      set temp bonus;
+      add currentHeat previousAmmoCount; # delta
+      muldiv temp currentHeat maxHeat;
+      div temp 2;
+
+      sub bonus temp;
+
+      return bonus;
 
   - type: STR_PLASMA_PISTOL_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
