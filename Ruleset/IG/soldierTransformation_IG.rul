@@ -16,9 +16,8 @@ soldierTransformation:
       reactions: 10
       firing: 10
 
-
   - &STR_OFFICER_PROMOTION
-    name: STR_PROMOTE_OFFICER_VETERAN
+    name: STR_PROMOTE_VETERAN_OFFICER
     requires:
       - STR_REGIMENT_OFFICERS
       - STR_STORMTROOPER_REQUISITION
@@ -28,26 +27,20 @@ soldierTransformation:
     allowsLiveSoldiers: true
     allowsWoundedSoldiers: true
     allowedSoldierTypes:
-      - STR_GUARD_OFFICER
-    requiredItems:
-      STR_VETERAN_PROMOTION: 1
-    requiredMinStats:
-      tu: 60
-      stamina: 80
-      health: 35
-      bravery: 60
-      reactions: 50
-      firing: 80
-      melee: 55
-
-  - name: STR_PROMOTE_VETERAN_OFFICER
-    refNode: *STR_OFFICER_PROMOTION
-    allowedSoldierTypes:
       - STR_GUARD_VETERAN
     requiredItems:
       STR_OFFICER_COMMISSION: 1
     requiredMinStats: # any Veteran
       tu: 1
+
+  - name: STR_PROMOTE_OFFICER_VETERAN
+    refNode: *STR_OFFICER_PROMOTION
+    allowedSoldierTypes:
+      - STR_GUARD_OFFICER
+    requiredItems:
+      STR_VETERAN_PROMOTION: 1
+    requiredCommendations: 
+      STR_VETERAN_COMMENDATION: 0
 
   - name: STR_PROMOTE_SCION_OFFICER
     refNode: *STR_OFFICER_PROMOTION
@@ -55,10 +48,12 @@ soldierTransformation:
     producedSoldierArmor: STR_SCION_OFFICER_CARAPACE_ARMOR
     allowedSoldierTypes:
       - STR_STORMTROOPER
-    requiredItems:
-      STR_OFFICER_COMMISSION: 1
-    requiredMinStats: # any Scion
+
+  - name: STR_VETERAN_PROMOTION
+    requiredMinStats:
       tu: 1
+    requiredCommendations: 
+      STR_VETERAN_COMMENDATION: 0
 
   - name: STR_PARDON_PENITENT
     requires:
