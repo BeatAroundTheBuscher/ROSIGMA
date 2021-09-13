@@ -646,9 +646,11 @@ items:
     tuLoad: 999
     tuUnload: 999
 
-  - type: INV_NULL_AIRSTRIKE_VOX_DUMMY
+  - type: INV_NULL_AIRSTRIKE_VOX_DUMMY # dummy
     categories: [STR_CAT_EQUIPMENT]
-    accuracyAimed: 200
+    accuracyAimed: 150
+    accuracyMultiplier:
+      flatHundred: 1.0
     tuAimed: 40
     hidePower: false 
     weight: 10
@@ -667,17 +669,46 @@ items:
     tags:
       ITEM_IS_VOX_DUMMY: 1
 
-  - type: STR_AIRSTRIKE_VOX_SPECIAL
+  - type: STR_AIRSTRIKE_AMMO
+    categories: [STR_CAT_EQUIPMENT]
+    size: 0.1
+#    costBuy: 20000
+    costSell: 7500
+    weight: 0
+    bigSprite: 241
+    floorSprite: {mod: 40k, index: 1013}
+    handSprite: {mod: 40k, index: 1104}
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    #explosionSpeed: 5
+    clipSize: 999 # 1
+    battleType: 2
+    armor: 30
+    listOrder: 23001
+    invWidth: 1
+    invHeight: 1
+
+  # to prevent to edit the dummy weapon and to prevent being inconsistent
+  - &STR_AIRSTRIKE_WEAPON
+    type: STR_AIRSTRIKE_AMMO # dummy for codex
     power: 200 # 150
-    damageAlter:
-      ToArmorPre: 0.15
     damageType: 3
+    damageAlter:
+      ToArmorPre: 0.15 # default is 0
+      RadiusReduction: 5 # default is 10 # range is independent of RadiusReduction (= power / 20)
+      FireThreshold: 150
+
+  # the real weapon
+  - type: STR_AIRSTRIKE_VOX_SPECIAL
+    refNode: *STR_AIRSTRIKE_WEAPON
     hitSound: {mod: 40k, index: 0}
     hitAnimation: {mod: 40k, index: 0}
     fireSound: {mod: 40k, index: 491}   
     bulletSpeed: -10
     bulletSprite: {mod: 40k, index: 22} 
-    accuracyAimed: 200
+    accuracyAimed: 150
+    accuracyMultiplier:
+      flatHundred: 1.0
     tuAimed: 40
     battleType: 1
     arcingShot: false # true
@@ -712,30 +743,6 @@ items:
     tuMelee: 10
     flatMelee:
       time: true
-
-
-  - type: STR_AIRSTRIKE_AMMO
-    categories: [STR_CAT_EQUIPMENT]
-    size: 0.1
-#    costBuy: 20000
-    costSell: 7500
-    weight: 0
-    bigSprite: 241
-    floorSprite: {mod: 40k, index: 1013}
-    handSprite: {mod: 40k, index: 1104}
-    hitSound: {mod: 40k, index: 0}
-    hitAnimation: {mod: 40k, index: 0}
-    #explosionSpeed: 5
-    power: 200 # 150
-    damageAlter:
-      ToArmorPre: 0.15
-    damageType: 3
-    clipSize: 999 # 1
-    battleType: 2
-    armor: 30
-    listOrder: 23001
-    invWidth: 1
-    invHeight: 1
 
 
 
