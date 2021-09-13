@@ -42,31 +42,31 @@ extended:
           unit.getTimeUnits currentTU; # absolute
           unit.getTimeUnitsMax temp;
           muldiv currentTU 100 temp; # relative
-          debug_log "currenTU %" currentTU;
+          # debug_log "currenTU %" currentTU;
 
           set temp bonus; # starting bonus
 
           if and gt currentTU 20 le currentTU 80;
             add currentTU 20; # start with 100 (80 + 20) % bonus
             muldiv bonus currentTU 100;
-            debug_log "Altered currenTU %" currentTU;
-            debug_log "20-80 bonus" bonus;
+            # debug_log "Altered currenTU %" currentTU;
+            # debug_log "20-80 bonus" bonus;
             sub currentTU 20;
           end;
 
           if le currentTU 20;
             muldiv bonus 40 100; # lower range is 40 (20 + 20)
-            debug_log "20 bonus" bonus;
+            # debug_log "20 bonus" bonus;
           end;
 
 
           if eq kneelingWithBipod 1;
             add bonus temp; # (current bonus + starting bonus) / 2
             div bonus 2;
-            debug_log "kneel+bipod bonus";
+            # debug_log "kneel+bipod bonus";
           end;
-          debug_log "battle_action" battle_action;
-          debug_log "current bonus" bonus;
+          # debug_log "battle_action" battle_action;
+          # debug_log "current bonus" bonus;
 
 
           return bonus; # final accuracy
