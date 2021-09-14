@@ -1,0 +1,234 @@
+alienMissions:
+  #- delete: STR_ALIEN_RESEARCH
+  - delete: STR_ALIEN_HARVEST
+  - delete: STR_ALIEN_ABDUCTION
+  - delete: STR_ALIEN_INFILTRATION
+  - delete: STR_ALIEN_BASE
+  - delete: STR_ALIEN_TERROR
+  #- delete: STR_ALIEN_RETALIATION
+
+  - &STR_ALIEN_RESEARCH
+    type: STR_ALIEN_RESEARCH_SLAANESH
+    points: 0
+    objective: 0 # score
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 9000
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P2
+        timer: 7800
+      - ufo: STR_LARGE_SCOUT
+        count: 2
+        trajectory: P4
+        timer: 9000
+      - ufo: STR_HELLS
+        count: 1
+        trajectory: P4
+        timer: 9000
+
+  - &STR_ALIEN_HARVEST
+    type: STR_ALIEN_HARVEST_SLAANESH
+    points: 30
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 7800
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P2
+        timer: 7800
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P2
+        timer: 6000
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 7800
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 9000
+      - ufo: STR_HARVESTER
+        count: 1
+        trajectory: P4
+        timer: 3000
+      - ufo: STR_HARVESTER
+        count: 1
+        trajectory: P4
+        timer: 750
+      - ufo: STR_BATTLESHIP
+        count: 1
+        trajectory: P2
+        timer: 1500
+
+  - &STR_ALIEN_ABDUCTION
+    type: STR_ALIEN_ABDUCTION_SLAANESH
+    points: 50
+    raceWeights:
+      0:
+        STR_KHRONE: 100
+      1:
+        STR_KHRONE: 100
+      3:
+        STR_FLOATER: 10
+        STR_KHRONE: 90
+      5:
+        STR_FLOATER: 20
+        STR_MUTON: 10
+        STR_KHRONE: 70
+      7:
+        STR_FLOATER: 30
+        STR_MUTON: 20
+        STR_KHRONE: 50
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 15000
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P1
+        timer: 18000
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 9000
+      - ufo: STR_ABDUCTOR
+        count: 1
+        trajectory: P3
+        timer: 9000
+      - ufo: STR_ABDUCTOR
+        count: 2
+        trajectory: P4
+        timer: 60
+
+
+  - &STR_ALIEN_INFILTRATION
+    type: STR_ALIEN_INFILTRATION_SLAANESH
+    points: 150 #Pact score only awarded on month end
+    objective: 1
+    endlessInfiltration: false # default is true; if set to false, mission will end after the first pact/base
+    siteType: STR_ALIEN_BASE_ASSAULT
+    spawnZone: 4 #Mission zone for alien bases
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 9000
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P1
+        timer: 15000
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P6
+        timer: 13800
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P7
+        timer: 9000
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P7
+        timer: 9000
+      - ufo: STR_TERROR_SHIP
+        count: 1
+        trajectory: P7
+        timer: 16500
+      - ufo: STR_HELLS
+        count: 1
+        trajectory: P7
+        timer: 16500
+      - ufo: STR_BATTLESHIP
+        count: 1
+        trajectory: P7
+        timer: 16500
+
+  - &STR_ALIEN_BASE
+    type: STR_ALIEN_BASE_SLAANESH
+    points: 50
+    objective: 2
+    siteType: STR_ALIEN_BASE_ASSAULT
+    spawnZone: 4 #Mission zone for alien bases
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P1
+        timer: 13500
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P5
+        timer: 15000
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P5
+        timer: 9000
+      - ufo: STR_SUPPLY_SHIP
+        count: 2
+        trajectory: P5
+        timer: 9000
+      - ufo: STR_BATTLESHIP
+        count: 1
+        trajectory: P6
+        timer: 9000
+
+
+  - &STR_ALIEN_TERROR
+    type: STR_ALIEN_TERROR_SLAANESH
+    points: 10
+    objective: 3
+    spawnZone: 3 #Mission zone for terror missions
+    waves:
+      - ufo: STR_MEDIUM_SCOUT
+        count: 1
+        trajectory: P1
+        timer: 15000
+      - ufo: STR_LARGE_SCOUT
+        count: 1
+        trajectory: P1
+        timer: 9600
+      - ufo: STR_TERROR_SHIP
+        count: 1
+        trajectory: P0
+        timer: 12000
+      - ufo: STR_TERROR_SHIP
+        count: 1
+        trajectory: P7
+        timer: 9000
+        objective: true
+
+
+  - &STR_ALIEN_RETALIATION
+    type: STR_ALIEN_RETALIATION_SLAANESH
+    points: 0
+    objective: 4
+    spawnUfo: STR_BATTLESHIP # Spawned for the final retaliation run
+    waves:
+      - ufo: STR_SMALL_SCOUT
+        count: 1
+        trajectory: P8
+        timer: 3000
+      - ufo: STR_MEDIUM_SCOUT
+        count: 2
+        trajectory: P8
+        timer: 3000
+      - ufo: STR_LARGE_SCOUT
+        count: 3
+        trajectory: P8
+        timer: 3000
+      - ufo: STR_BATTLESHIP
+        count: 2
+        trajectory: P8
+        timer: 3000
+
+#  - &STR_ALIEN_SUPPLY
+#    type: STR_ALIEN_SUPPLY_SLAANESH
+#    points: 0
+#    objective: 5
+#    raceWeights: {} #Special case, race comes from base.
+
