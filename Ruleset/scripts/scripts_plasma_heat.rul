@@ -237,10 +237,6 @@ items:
       weapon.getRuleItem rItem;
       rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
-      if eq maxHeat 0; # redundant check
-        return bonus;
-      end;
-
       weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
       weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
@@ -254,6 +250,9 @@ items:
       # bonus - bonus * currentHeat / maxHeat / 2
       set temp bonus;
       add currentHeat previousAmmoCount; # delta
+      if gt currentHeat maxHeat;
+        set currentHeat maxHeat;
+      end;
       muldiv temp currentHeat maxHeat;
       div temp 2;
 
