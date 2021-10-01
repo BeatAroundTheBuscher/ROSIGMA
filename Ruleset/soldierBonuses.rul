@@ -1,0 +1,76 @@
+extended:
+  tags:
+    RuleSoldierBonus:
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: int
+      BONUS_ENERGY_SHIELD_DECAY: int
+      BONUS_BIONICS: int
+
+soldierTransformation:
+  - name: STR_AWARD_PERSONAL_SHIELD
+    forbiddenPreviousTransformations:
+      - STR_AWARD_PERSONAL_SHIELD
+    cost: 50000
+    requiredItems:
+      STR_ALIEN_HABITAT: 1
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    transferTime: 0
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    allowedSoldierTypes:
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARD_OFFICER
+      - STR_COMMISSAR
+      - STR_STORMTROOPER_OFFICER
+      - STR_PSYKER
+      - STR_GUARD_IMPERIAL_ASSASSIN
+      - STR_GUARD_PRIEST
+    soldierBonusType: STR_BONUS_PERSONAL_SHIELD
+
+
+  - name: STR_BIONICS_OPERATION
+    forbiddenPreviousTransformations:
+      - STR_BIONICS_OPERATION
+    cost: 100000
+    requiredItems:
+      STR_ALIEN_HABITAT: 1
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    transferTime: 720
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    allowedSoldierTypes:
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARD_OFFICER
+      - STR_COMMISSAR
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    soldierBonusType: STR_BONUS_BIONICS
+
+soldierBonuses:
+  - name: STR_BONUS_PERSONAL_SHIELD
+    tags: 
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 40
+      BONUS_ENERGY_SHIELD_DECAY: 50
+
+  - name: STR_BONUS_BIONICS
+    stats:
+      tu: 10
+      stamina: 10
+      health: 10
+      reactions: 5
+      melee: 5
+      strength: 10
+      firing: 5
+      throwing: 5
+    recovery:
+      energy:
+        flatOne: 1
+    tags:
+      BONUS_BIONICS: 1
+      # todo: add script that reduces woundrecovery when finish a mission
