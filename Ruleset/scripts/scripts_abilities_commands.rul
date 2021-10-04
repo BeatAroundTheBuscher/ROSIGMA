@@ -13,7 +13,7 @@ extended:
       COMMAND_POINTS: int
       NUMBER_SOLDIERS: int
     RuleSkill:
-      SKILL_ID: int
+      SKILL_COMMAND_ID: int
     RuleSoldier:
       SOLDIER_COMMAND_POINTS: int
 
@@ -62,24 +62,28 @@ extended:
         var int lastCommand;
         var int lastTurn;
         
-        skill.getTag newCommand Tag.SKILL_ID;
+        skill.getTag newCommand Tag.SKILL_COMMAND_ID;
+        if eq newCommand 0;
+          return;
+        end;
+
         battle_game.getTurn currentTurn;
 
         battle_game.getTag lastCommand Tag.CHOICE_ACTIVE_COMMAND;
         battle_game.getTag lastTurn Tag.TURN_ACTIVE_COMMAND;
 
-        if eq newCommand 0;
+        if eq newCommand 1;
           battle_game.getTag temp1 Tag.COMMAND_POINTS;
           battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
 
           if eq currentTurn lastTurn; # no commands issued this turn yet
-            if eq lastCommand 1;
+            if eq lastCommand 2;
               battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Fix Bayonets" temp1 temp2;
             end;
-            if eq lastCommand 2;
+            if eq lastCommand 3;
               battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Blitzkrieg" temp1 temp2;
             end;
-            if eq lastCommand 3;
+            if eq lastCommand 4;
               battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Hunker Down" temp1 temp2;
             end;
           else;
@@ -103,13 +107,13 @@ extended:
           battle_game.setTag Tag.COMMAND_POINTS temp1;
           # debug_log "Remaining Command Points" temp1;
 
-          if eq newCommand 1;
+          if eq newCommand 2;
             battle_game.flashMessage "STR_FIX_BAYONETS";
           end;
-          if eq newCommand 2;
+          if eq newCommand 3;
             battle_game.flashMessage "STR_BLITZKRIEG";
           end;
-          if eq newCommand 3;
+          if eq newCommand 4;
             battle_game.flashMessage "STR_HUNKER_DOWN";
           end;
 
