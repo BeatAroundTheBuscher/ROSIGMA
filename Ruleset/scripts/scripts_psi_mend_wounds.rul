@@ -1,0 +1,135 @@
+armors:
+  - type: STR_BIOMANCER
+    specialWeapon: STR_MEND_WOUNDS_SPELL
+    builtInWeapons:
+      - STR_BIOMANCER_STAFF
+      - STR_PSYKER_LIGHTNING_STRIKE
+#      - STR_HEALING_TOUCH
+
+items:
+  - type: STR_MEND_WOUNDS_SPELL
+    hidePower: true
+    weight: 0
+    battleType: 1 # wanted 9 but powerRangeReduction doesn't work because there is no projectile
+    hitSound: {mod: 40k, index: 743}
+    hitAnimation: {mod: 40k, index: 96}
+    tuAimed: 30
+    accuracyAimed: 100
+    flatAimed: true
+    accuracyMultiplier:
+      flatHundred: 1.0
+    # psiAttackName: STR_MEND_WOUNDS
+    # LOSRequired: true
+    damageType: 1 # this and power so it runs properly
+    power: 100
+    damageAlter: 
+      ResistType: 0 # SUPPORT
+      RandomType: 3
+      ToStun: 0
+      ToHealth: 0
+      ToArmor: 0
+      ToWound: 0
+      ToTile: 0
+      ToMorale: 0
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: {mod: 40k, index: 105}
+    specialUseEmptyHand: true
+    clipSize: -1
+    # targetMatrix: 5 # friendly + neutral
+    powerRangeThreshold: 1 # doesn't work for psi because there is no projectile
+    powerRangeReduction: 10
+    maxRange: 5
+    tags:
+      ITEM_MENDS_WOUNDS_DANGEROUSLY: 1
+
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_MENDS_WOUNDS_DANGEROUSLY: int
+
+  scripts:
+    hitUnit:
+      - offset: 1
+        code: |
+          var int temp;
+          var ptr RuleItem ruleItem;
+
+          weapon_item.getRuleItem ruleItem;
+          ruleItem.getTag temp Tag.ITEM_MENDS_WOUNDS_DANGEROUSLY;
+
+          if eq temp 0;
+            return power part side;
+          end;
+          
+          debug_log "mend wounds hitUnit";
+
+          debug_log "power" power;
+          debug_log "part" part;
+          debug_log "side" side;
+
+          return power part side;
+
+    damageUnit:
+      - offset: 1
+        code: |
+          var int temp;
+          var int randomNumber;
+          var int attackerBravery;
+          var int numWounds;
+          var int rulePower; 
+          var ptr RuleItem ruleItem;
+
+          weapon_item.getRuleItem ruleItem;
+          ruleItem.getTag temp Tag.ITEM_MENDS_WOUNDS_DANGEROUSLY;
+
+          if eq temp 0;
+            return;
+          end;
+
+          ruleItem.getPower rulePower;
+          attacker.Stats.getBravery attackerBravery;
+
+          # set chance to roll against
+          set temp 100;
+          muldiv temp orig_power rulePower; # distance
+          muldiv temp attackerBravery 110; # bravery # 110 is max
+
+          battle_game.randomRange randomNumber 1 100;
+
+          debug_log "randomNumber" randomNumber;
+
+          sub randomNumber temp;
+
+          loop var i 6;
+            # unit.getFatalwounds temp i; # getFatalwoundsTotal also exists
+            # add numWounds temp;            
+            unit.setFatalwounds i 0;
+          end;
+
+          unit.getFatalwoundsTotal numWounds;
+          add numWounds 1; # number of wounds + 1
+
+          if gt randomNumber 0; # (randomNumber - difficulty)/10*(fatalwounds+1)
+            div randomNumber 10;
+            add randomNumber 1;
+            mul randomNumber numWounds;
+            set to_health randomNumber;
+            mul randomNumber 10;
+            set to_morale randomNumber;
+          end;
+
+          # currPower is after armor
+          # orig_power is before armor
+
+
+
+          debug_log "mend wounds damageUnit";
+          debug_log "currPower" currPower;
+          debug_log "orig_power" orig_power;
+
+          debug_log "randomNumber" randomNumber;
+          debug_log "temp" temp;
+
+          return;
