@@ -5,6 +5,7 @@ extended:
     RuleItem:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
       ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
@@ -14,17 +15,15 @@ extended:
       # when shooting multiple times during one reactionUnitReaction
       - offset: 20
         code: |
+          var int temp;
           var int currentHeat;
           var int maxHeat;
-          var ptr RuleItem rItem;
 
           var int previousAmmoCount;
           var int currentAmmoCount;
           var ptr BattleItem ammoItem;
 
-
-          reaction_weapon.getRuleItem rItem;
-          rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+          reaction_weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
           if eq maxHeat 0;
             return reaction_chance;
@@ -45,6 +44,9 @@ extended:
           if le currentAmmoCount previousAmmoCount;
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
+
+          reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+          div previousAmmoCount temp;
 
           add currentHeat previousAmmoCount; 
 
@@ -70,6 +72,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
     tuUnload: 999 # DO NOT UNLOAD WEAPONS, THEY ARE LIKELY TO BE HOT
     isExplodingInHands: true # won't explode though as it's not a grenade
@@ -81,6 +84,7 @@ items:
         return;
 
       selectItemSprite: |
+        var int temp;
         var int currentHeat;
         var int maxHeat;
 
@@ -105,6 +109,9 @@ items:
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
+          item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+          div previousAmmoCount temp;
+
           add currentHeat previousAmmoCount; 
           if le currentHeat maxHeat;
             add sprite_index currentHeat;
@@ -123,14 +130,13 @@ items:
 
         var int currentHeat;
         var int maxHeat;
-        var ptr RuleItem rItem;    
+ 
 
         var int previousAmmoCount;
         var int currentAmmoCount;    
         var ptr BattleItem ammoItem;
 
-        item.getRuleItem rItem;
-        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;   
+        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;   
         item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
 
         item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
@@ -140,6 +146,10 @@ items:
         if le currentAmmoCount previousAmmoCount;
           sub previousAmmoCount currentAmmoCount; # delta ammo count
         end;
+
+        item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+        div previousAmmoCount temp;
+
         add currentHeat previousAmmoCount; 
 
         get_color color new_pixel;
@@ -163,7 +173,6 @@ items:
         var int currentAmmoCount;
         var int previousAmmoCount;
 
-        var ptr RuleItem rItem;
         var ptre BattleItem ammoItem;
         var ptre BattleUnit bUnit;
 
@@ -171,8 +180,7 @@ items:
           return;
         end;
 
-        item.getRuleItem rItem;
-        rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
         item.getAmmoItem ammoItem;
         ammoItem.getAmmoQuantity currentAmmoCount;
@@ -186,10 +194,13 @@ items:
         item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
         item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
-        if le currentAmmoCount previousAmmoCount;
-          set temp previousAmmoCount;
-          sub temp currentAmmoCount; # delta heat
-          add currentHeat temp;
+        if le currentAmmoCount previousAmmoCount; # not reloaded
+          sub previousAmmoCount currentAmmoCount; # delta ammo count
+
+          item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+          div previousAmmoCount temp; # delta heat
+
+          add currentHeat previousAmmoCount; 
         else;
           add currentHeat previousAmmoCount; # shots fired before reload
         end;
@@ -204,7 +215,7 @@ items:
 
           # item.getOwner bUnit; # maybe damage unit
         else;
-          rItem.getTag temp Tag.ITEM_HEAT_DISSIPATION_PER_TURN;
+          item.getTag temp Tag.ITEM_HEAT_DISSIPATION_PER_TURN;
           if le currentHeat temp; # dissipate
             set currentHeat 0;
           else;
@@ -224,7 +235,6 @@ items:
 
       var int currentHeat;
       var int maxHeat;
-      var ptr RuleItem rItem;
       var ptr BattleItem ammoItem;
 
       # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181
@@ -234,8 +244,7 @@ items:
       if ge bonus 0; add bonus 500; else; sub bonus 500; end;
       div bonus 1000;
 
-      weapon.getRuleItem rItem;
-      rItem.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+      weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
       weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
       weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
@@ -246,6 +255,9 @@ items:
       if le currentAmmoCount previousAmmoCount;
         sub previousAmmoCount currentAmmoCount;
       end;
+
+      weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+      div previousAmmoCount temp;
 
       # bonus - bonus * currentHeat / maxHeat / 2
       set temp bonus;
@@ -266,6 +278,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 5
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
         
   - type: STR_HEAVY_PLASMA_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
@@ -273,6 +286,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
   - type: STR_MCPLASMA_RIFLE
     refNode: *STR_OVERHEATING_PLASMA
@@ -280,6 +294,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
   - type: STR_MCPLASMA_PISTOL
     refNode: *STR_OVERHEATING_PLASMA
@@ -287,6 +302,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 5
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
   - type: STR_HEAVY_PLASMA_MC
     refNode: *STR_OVERHEATING_PLASMA
@@ -294,6 +310,7 @@ items:
     tags:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
 #  - type: STR_PLASMA_GUN_TWINCORE_DEKKER
 #    refNode: *STR_OVERHEATING_PLASMA
@@ -303,9 +320,13 @@ items:
 #      ITEM_HEAT_DISSIPATION_PER_TURN: 2
 
 
-
-
-
+  - type: STR_LASGUN_LUCIUS 
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 342
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 4
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4  
 
 
 
