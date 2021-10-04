@@ -1,0 +1,71 @@
+armors:
+  - type: STR_PERSONAL_ARMOR_UC
+    tags:
+      UNIT_EXTRA_DAMAGE_MORALE_MELEE: 40
+      UNIT_EXTRA_DAMAGE_MORALE_RANGED: 20
+      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: 200 # 100 / divisor
+extended:
+  tags:
+    RuleArmor: # would have prefered RuleUnit but there is not BattleUnit.getRuleUnit
+      UNIT_EXTRA_DAMAGE_MORALE_MELEE: int
+      UNIT_EXTRA_DAMAGE_MORALE_RANGED: int
+      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: int # 100 / divisor
+
+  scripts:
+    damageUnit:
+      - offset: 1 # extra Damage with Morale/Bravery as armor # Bravery acts as damageModifier, Morale as Armor
+        code: |   # extra Damage is independent of current power (may change in the future)
+          var int temp1;
+          var int temp2;
+          var int extraDamageMorale;
+          var int targetBraveryDamageModifier;
+          var int currentMorale;
+          var ptr RuleArmor attackerArmor;
+          
+
+          attacker.getRuleArmor attackerArmor;
+          attackerArmor.getTag temp1 Tag.UNIT_EXTRA_DAMAGE_MORALE_MELEE;
+          attackerArmor.getTag temp2 Tag.UNIT_EXTRA_DAMAGE_MORALE_RANGED;
+
+          if and eq temp1 0 eq temp2 0;
+            return;
+          end;
+
+          if or eq battle_action battle_action_hit eq battle_action battle_action_cqb;
+            set extraDamageMorale temp1;
+          end;
+
+          if or eq battle_action battle_action_snapshot eq battle_action battle_action_autoshoot eq battle_action battle_action_aimshoot;
+            set extraDamageMorale temp2;
+          end;
+          if neq extraDamageMorale 0;
+
+            # rend morale armor # but will not be accounted for the following yet
+            add to_morale extraDamageMorale; # this does apply the native damageModifier (same calculation as next step)
+
+            # damageModifier = extraDamage * (110 - bravery) / 100
+            unit.Stats.getBravery temp2;
+            set targetBraveryDamageModifier 110;
+            sub targetBraveryDamageModifier temp2;
+            muldiv extraDamageMorale targetBraveryDamageModifier 100;
+
+            # apply morale divisor
+            unit.getMorale currentMorale;
+            attackerArmor.getTag temp2 Tag.UNIT_EXTRA_DAMAGE_MORALE_DIVISOR;
+            muldiv currentMorale 100 temp2;
+
+            # overpower morale armor
+            sub extraDamageMorale currentMorale;
+            debug_log "Morale Armor sub damage armor" extraDamageMorale;
+
+            if gt extraDamageMorale 0;
+              add to_energy extraDamageMorale;
+              add to_health extraDamageMorale;
+            end;
+          end;
+
+          debug_log "Morale Armor to_morale" to_morale;
+          debug_log "Morale Armor to_energy" to_energy;
+          debug_log "Morale Armor to_health" to_health;
+
+          return;
