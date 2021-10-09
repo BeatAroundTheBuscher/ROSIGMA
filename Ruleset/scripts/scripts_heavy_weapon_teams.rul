@@ -6,13 +6,32 @@ extended:
       ITEM_HAS_BIPOD: int
       ITEM_IS_TOOL: int
     BattleUnit:
-      DEPLOYED: int
-      ITEM_IS_TOOL_XP: int
-    BattleGame:
-      LANDED_HIT: int
+      UNIT_ENERGY_BEFORE_DEPLOYED: int # used as bool and integer
+      UNIT_GOT_TOOL_XP: int
 
   scripts:
-    tryMeleeAttackUnit:
+    accuracyMultiplierBonusStats: # set accuracy depending on deployment status
+      - offset: 1
+        code: |
+          var int deploy;
+          var int bipod;
+          var int weight;
+          var int strength;
+
+          weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
+          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED; # if it's 0 then the unit hasn't deployed yet
+          weapon.getTotalWeight weight;
+          unit.Stats.getStrength strength;
+
+          
+          if and eq bipod 1 eq deploy 0 lt strength weight;
+            set bonus 0;
+          end;
+
+          # if bipod is deployed, or wielder has enough strength
+          return bonus;
+
+    tryMeleeAttackUnit: # toolkit can only hit target with bipod
       - offset: 1
         code: |
           var ptr BattleItem right;
@@ -36,91 +55,74 @@ extended:
             set melee_attack_success 0;
           end;
 
+          # valid tool item and target
           return melee_attack_success;
 
-    accuracyMultiplierBonusStats:
-      - offset: 1
-        code: |
-          var int deploy;
-          var int bipod;
-          var int weight;
-          var int strength;
-
-          weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
-          unit.getTag deploy Tag.DEPLOYED;
-          weapon.getTotalWeight weight;
-          unit.Stats.getStrength strength;
-
-          if and eq bipod 1 eq deploy 0 lt strength weight;
-            set bonus 0;
-          end;
-
-          return bonus;
-
     hitUnit:
-      - offset: 1
+      - offset: 1 # Deploy/Undeploy
         code: |
-          var ptr BattleItem right;
-          var int bipodright;
-          var ptr BattleItem left;
-          var int bipodleft;
-          var int bipod;
-          var int tools;
+          var ptr BattleItem weaponBipod;
+          var int temp;
           var int deploy;
+          var int weight;
 
-          unit.getTag deploy Tag.DEPLOYED;
-
-          unit.getRightHandWeapon right;
-          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
-          unit.getLeftHandWeapon left;
-          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
-          if or eq bipodright 1 eq bipodleft 1;
-            set bipod 1;
+          weapon_item.getTag temp Tag.ITEM_IS_TOOL;
+          if neq temp 1;
+            return power part side; # don't need to check for tools anymore
+          else;
+            set power 0; # tool isn't supposed to do any damage
           end;
 
-          weapon_item.getTag tools Tag.ITEM_IS_TOOL;
+          unit.getRightHandWeapon weaponBipod;
+          weaponBipod.getTag temp Tag.ITEM_HAS_BIPOD;
+          if eq temp 1;
+            weaponBipod.getTotalWeight weight;
+          end;
 
-          if and eq deploy 0 eq bipod 1 eq tools 1;
+          unit.getLeftHandWeapon weaponBipod;
+          weaponBipod.getTag temp Tag.ITEM_HAS_BIPOD;
+          if eq temp 1;
+            weaponBipod.getTotalWeight temp; # weight2
+          end;
+
+          if gt temp weight;
+            set weight temp;
+          end;
+
+          if eq weight 0;
+            return power part side; # no bipod weapon found
+          end;
+
+          unit.Stats.getStrength temp;
+
+          if ge temp weight;
+            # it's possible that something weird happens, when the weapon is swapped
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            return power part side; # unit is strong enough, doesn't need support
+          end;
+
+          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+          # unit.isKneeled temp; # it's not really necessary for the target to kneel first
+
+          if and eq deploy 0; #  eq temp 1;
             unit.getEnergy deploy;
-            unit.setTag Tag.DEPLOYED deploy;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED deploy;
             unit.setEnergy 0;
-            set power 0;
-            attacker.setTag Tag.ITEM_IS_TOOL_XP 1;
-            return power part side;
-          end;
-
-          if and neq deploy 0 eq tools 1;
+            attacker.setTag Tag.UNIT_GOT_TOOL_XP 1;
+          else; # undeploy
             unit.setEnergy deploy;
-            unit.setTag Tag.DEPLOYED 0;
-            set power 0;
-            attacker.setTag Tag.ITEM_IS_TOOL_XP 1;
-            return power part side;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
+            attacker.setTag Tag.UNIT_GOT_TOOL_XP 1;
           end;
 
           return power part side;
 
-      - offset: 1
-        code: |
-          var int bipod;
-          var int deploy;
-          var int faction;
-
-          weapon_item.getTag bipod Tag.ITEM_HAS_BIPOD;
-          attacker.getTag deploy Tag.DEPLOYED;
-          unit.getFaction faction;
-
-          if and neq deploy 0 eq bipod 1 eq faction 1;
-            battle_game.setTag Tag.LANDED_HIT 1;
-          end;
-
-          return power part side;
-
-    healUnit:
+    healUnit: # don't let deployed soldiers be stimmed up
       - offset: 1
         code: |
           var int deployed;
 
-          target.getTag deployed Tag.DEPLOYED;
+          target.getTag deployed Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
 
           if neq deployed 0;
             set energy_recovery 0;
@@ -131,50 +133,61 @@ extended:
     newTurnUnit:
       - offset: 1
         code: |
-          var ptr BattleItem right;
-          var int bipodright;
-          var ptr BattleItem left;
-          var int bipodleft;
-          var int bipod;
+          var ptr BattleItem weaponBipod;
+          var int temp;
           var int deploy;
-          var int kneeling;
+          var int weight;
+
+          # second half; could be in its own offset after this script
           var int energyrecovered;
           var int maxStat;
           var int percentStatLost;
 
-          unit.isKneeled kneeling;
-
-          unit.getRightHandWeapon right;
-          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
-          unit.getLeftHandWeapon left;
-          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
-
-          if or eq bipodright 1 eq bipodleft 1;
-            set bipod 1;
+          unit.getRightHandWeapon weaponBipod;
+          weaponBipod.getTag temp Tag.ITEM_HAS_BIPOD;
+          if eq temp 1;
+            weaponBipod.getTotalWeight weight;
           end;
 
-          unit.getTag deploy Tag.DEPLOYED;
+          unit.getLeftHandWeapon weaponBipod;
+          weaponBipod.getTag temp Tag.ITEM_HAS_BIPOD;
+          if eq temp 1;
+            weaponBipod.getTotalWeight temp; # weight2
+          end;
 
-          if and eq deploy 0 eq bipod 1 eq side 1 eq kneeling 1;
+          if gt temp weight;
+            set weight temp;
+          end;
+
+          unit.Stats.getStrength temp;
+
+          if ge temp weight;
+            # it's possible that something weird happens, when the weapon is swapped
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            return; # unit is strong enough, doesn't need support
+          end;
+
+          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+          unit.isKneeled temp;
+
+          # FACTION_HOSTILE is okay as this allows the soldier to react on enemies' turn
+          if and eq deploy 0 eq side FACTION_HOSTILE eq temp 1; # deploying # 'lt temp weight 0' is not neccessary
             unit.getEnergy deploy;
-            unit.setTag Tag.DEPLOYED deploy;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED deploy;
             unit.setEnergy 0;
-            return;
+          end;
+          if and neq deploy 0 eq side FACTION_HOSTILE neq temp 1;
+            unit.setEnergy deploy;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
           end;
 
-          if and neq deploy 0 eq side 1;
-            if or eq bipod 0 eq kneeling 0;
-              unit.setEnergy deploy;
-              unit.setTag Tag.DEPLOYED 0;
-              return;
-            end;
-          end;
-
-          if and neq deploy 0 eq side 0;
+          if and neq deploy 0 eq side FACTION_PLAYER; # energy recovery on player's turn # but only relevant on HWT use
             unit.getEnergy energyrecovered;
             add deploy energyrecovered;
-            unit.setEnergy deploy;
+            unit.setEnergy deploy; # add previous energy on top
 
+
+            # modified version of 40k newTurnUnit offset: 10
             unit.getTimeUnits percentStatLost;
             unit.getTimeUnitsMax maxStat;
             sub percentStatLost maxStat;
@@ -193,14 +206,13 @@ extended:
             limit_upper percentStatLost maxStat;
             unit.setEnergy percentStatLost;
 
-            unit.setTag Tag.DEPLOYED percentStatLost;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED percentStatLost;
             unit.setEnergy 0;
-            return;
           end;
 
           return;
 
-    returnFromMissionUnit:
+    returnFromMissionUnit: # rise secondary stats when supporting a soldier
       - offset: 1
         code: |
           var int statCurrent;
@@ -209,13 +221,10 @@ extended:
           var int temp;
           var ptr RuleSoldier ruleSoldier;
           var int toolsXP;
-          var int landedhit;
 
-          unit.getTag toolsXP Tag.ITEM_IS_TOOL_XP;
+          unit.getTag toolsXP Tag.UNIT_GOT_TOOL_XP;
 
-          battle_game.getTag landedhit Tag.LANDED_HIT;
-
-          if and eq toolsXP 1 eq landedhit 1;
+          if eq toolsXP 1;
             soldier.getRuleSoldier ruleSoldier;
 
             ruleSoldier.StatsCap.getTimeUnits statCap;

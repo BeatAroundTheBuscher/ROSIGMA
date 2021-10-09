@@ -55,7 +55,7 @@ extended:
           return;
 
 
-    applySolderBonus:
+    applySoldierBonuses:
       #*** Sets energy shields from unit armors at the beginning of the battlescape ***
       - offset: 11
         code: |
@@ -64,6 +64,7 @@ extended:
 
           soldier_bonus.getTag shieldAdded Tag.BONUS_ENERGY_SHIELD_HP_PER_TURN;
 
+          debug_log "shield Added: " shieldAdded;
           if eq shieldAdded 0;
 
             return;
@@ -74,7 +75,7 @@ extended:
 
           # new
           unit.setTag Tag.UNIT_BONUS_ENERGY_SHIELD_HP_PER_TURN shieldAdded;
-          unit.setTag Tag.BONUS_ENERGY_SHIELD_DECAY shieldDecay;
+          unit.setTag Tag.UNIT_BONUS_ENERGY_SHIELD_DECAY shieldDecay;
 
 
           # sets shield at max value (when flat addition = percent decay)
