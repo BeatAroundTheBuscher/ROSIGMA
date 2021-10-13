@@ -150,7 +150,8 @@ extended:
           var int temp;
           var int currentTU;
           var int accuracyScore;
-          var int kneelingWithBipod;
+          var int weaponWithBipod;
+          var int kneeling;
 
           var ptr RuleItem rItem;
 
@@ -160,11 +161,8 @@ extended:
             return bonus; # final accuracy
           end;
 
-          unit.isKneeled kneelingWithBipod; # 1 when kneeling
-          rItem.getTag temp Tag.ITEM_HAS_BIPOD;
-          if neq temp 1;
-            set kneelingWithBipod 0;
-          end;
+          unit.isKneeled kneeling; # 1 when kneeling
+          rItem.getTag weaponWithBipod Tag.ITEM_HAS_BIPOD;
 
           unit.getTimeUnits currentTU; # absolute
           unit.getTimeUnitsMax temp;
@@ -187,10 +185,16 @@ extended:
           end;
 
 
-          if eq kneelingWithBipod 1;
+          if and eq kneeling 1 eq weaponWithBipod 1;
+            add bonus temp; # (current bonus + starting bonus * 2) / 3
+            add bonus temp;
+            div bonus 3;
+            # debug_log "kneel+bipod bonus";
+          end;
+
+          if and eq kneeling 1 eq weaponWithBipod 0;
             add bonus temp; # (current bonus + starting bonus) / 2
             div bonus 2;
-            # debug_log "kneel+bipod bonus";
           end;
           # debug_log "battle_action" battle_action;
           # debug_log "current bonus" bonus;
