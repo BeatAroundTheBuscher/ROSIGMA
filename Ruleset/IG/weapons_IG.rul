@@ -1280,7 +1280,149 @@ items:
       ITEM_RECOIL: 25
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
+  - type: STR_BOLTER_LIGHT_SOLO
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    size: 0.3
+    requiresBuyBaseFunc: [TRADE] #could skip this requirement
+    dropoff: 5
+    costBuy: 30000 #Should be a fair bit pricier than both lasguns and heavy stubber, not a general purpose rifle unless bathing in cash
+    costSell: 10000
+    weight: 15
+    bigSprite: 285
+    floorSprite: 250
+    handSprite: 304
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo: #No EX or Mastercraft rounds
+      - STR_LIGHT_BOLTER_AMMO_SHORT #Short magazines, drawback
+      - STR_LIGHT_BOLTER_AMMO_SHORT_PEN  #Midtier ammo upgrade
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 105 #battle rifle but no scope
+    tuSnap: 25
+    #tuAuto: 40
+    tuAimed: 50
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 2 #maybe give the basic solo some rapid shots vs the DMR version to keep it useful aside for price?
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
+  - type: STR_BOLTER_LIGHT_SOLO_DMR
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_IMPERIAL_GUARD_MIDTIER
+    size: 0.3
+    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
+    dropoff: 5
+    costBuy: 50000 #Scoped version more expensive
+    costSell: 15000
+    weight: 16 #scoped version slightly heavier than non scope
+    bigSprite: 286
+    floorSprite: 251
+    handSprite: 312
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO_SHORT
+      - STR_LIGHT_BOLTER_AMMO_SHORT_PEN  #Midtier ammo upgrade
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 115 #battle rifle scoped
+    tuSnap: 30 #Scoped version worse at snap shots
+    #tuAuto: 40
+    tuAimed: 45 #Scoped version slightly faster to aim
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 3
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIAL_GUARD_OPERATIONS #so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    size: 0.1
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 2000 #Intention is costly ammo vs lasguns
+    costSell: 300
+    weight: 2 #weight less
+    bigSprite: 287
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    explosionSpeed: 5
+    power: 50
+    damageType: 1
+    clipSize: 10
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT_PEN
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIAL_GUARD_MIDTIER #midtier upgrade, so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    size: 0.1
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 7000 #costs less due to 10 rounds less
+    costSell: 300
+    weight: 2 #weight less
+    bigSprite: 288
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER AP+
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.0
+      ToArmor: 0.0
+      ToHealth: 1.0
+      ToStun: 0.5
+    explosionSpeed: 5
+    power: 50
+    damageType: 1
+    clipSize: 10
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 1
+      
   - &STR_LIGHT_BOLTER_CLIP_AP
     type: STR_LIGHT_BOLTER_AMMO_PEN
     categories: [STR_CAT_BOLTER]
