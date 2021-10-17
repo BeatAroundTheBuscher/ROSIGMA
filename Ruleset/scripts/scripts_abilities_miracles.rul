@@ -141,11 +141,12 @@ extended:
 
         battle_game.getTag temp2 Tag.MIRACLE_POINTS;
         add temp2 temp1; # temp1 is negative
-        sub temp2 1;
+        add temp2 temp1; # cost = 2 * HP to save
+        sub temp2 10; # cost for getting above 0 HP # 10 = 5 * 2
 
         if and le temp1 0 gt temp2 0;
           add to_health temp1; # temp1 is negative
-          sub to_health 1;
+          sub to_health 5; # get above 0 HP
           battle_game.setTag Tag.MIRACLE_POINTS temp2;
           battle_game.getTurn temp2;
           battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
