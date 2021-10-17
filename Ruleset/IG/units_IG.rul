@@ -108,7 +108,8 @@ units:
       - - STR_ELECTRO_FLARE_HOLOGRAM
       - - STR_ELECTRO_FLARE_HOLOGRAM
 
-
+# doesn't do anything as they are summoned
+# and summoned units are unloaded before debriefing
   - type: STR_CHIMERA_TURRET
     value: 20
   - type: STR_TAUROX_TURRET
@@ -119,3 +120,33 @@ units:
     value: 20
   - type: STR_LEMONRUSS
     value: 30
+
+  - &STR_GUARD_FLAK_NPC
+    type: MALE_CIVILIAN
+    stats:
+      tu: 50 # was 35
+      firing: 50 # was 30
+    builtInWeaponSets:
+      - - STR_LASER_RIFLEG
+        - STR_LASGUN_CLIP
+        - STR_LASGUN_CLIP
+        - STR_GRENADE
+      - - STR_LASER_RIFLEG
+        - STR_LASGUN_CLIP
+        - STR_LASGUN_CLIP
+        - STR_GRENADE
+      - - STR_LASER_RIFLEG
+        - STR_LASGUN_CLIP
+        - STR_LASGUN_CLIP
+        - STR_KRAK_GRENADE
+   
+  - type: FEMALE_CIVILIAN
+    refNode: *STR_GUARD_FLAK_NPC
+
+  - &STR_GUARD_CARAPACE_NPC
+    type: STR_HEAVY_GUARDSMAN_MALE
+    stats:
+      tu: 50 # was 35
+
+  - type: STR_HEAVY_GUARDSMAN_FEMALE
+    refNode: *STR_GUARD_CARAPACE_NPC
