@@ -60,40 +60,7 @@ extended:
 
 
   scripts:
-    createUnit: # inital points
-    - offset: 1 
-      code: |
-        var int temp;
-        var int rank;
-        var int commandPoints;
-        var ptr RuleSoldier rSoldier;
-
-        unit.getFaction temp;
-        if neq temp FACTION_PLAYER;
-          return;
-        end;
-
-        unit.getRuleSoldier rSoldier;
-
-        if eq rSoldier null;
-          return;
-        end;
-
-        unit.getRank rank;
-        add rank 1;
-        rSoldier.getTag commandPoints Tag.SOLDIER_MIRACLE_POINTS;
-        mul commandPoints rank;
-        battle_game.getTag temp Tag.MIRACLE_POINTS;
-        add temp commandPoints;
-        battle_game.setTag Tag.MIRACLE_POINTS temp;
-
-        battle_game.getTag temp Tag.NUMBER_SOLDIERS;
-        add temp 1;
-        battle_game.setTag Tag.NUMBER_SOLDIERS temp;
-
-        return;
-
-    damageUnit:
+    damageUnit: # get Miracle Points per HP
     - offset: 1
       code: |
         var int temp;
@@ -103,7 +70,7 @@ extended:
         unit.getRuleSoldier rSoldier;
         rSoldier.getTag temp Tag.SOLDIER_IS_SOB;
 
-        if eq temp 0;
+        if eq temp 0; # this script shouldn't run anyway, so that illogical choice is fine
           return;
         end;
 
@@ -132,10 +99,20 @@ extended:
         var int temp1;
         var int temp2;
 
-        unit.getFaction temp1;
-        if neq temp1 FACTION_PLAYER;
+        var ptr RuleSoldier rSoldier;
+
+        unit.getRuleSoldier rSoldier;
+        rSoldier.getTag temp1 Tag.SOLDIER_IS_SOB;
+
+        if eq temp1 0;
           return;
         end;
+
+        # not needed anymore due to the above check (hostiles can't be soldiers)
+        # unit.getFaction temp1;
+        # if neq temp1 FACTION_PLAYER;
+        #   return;
+        # end;
 
         battle_game.getTag temp1 Tag.TURN_SPIRIT_OF_MARTYR;
         battle_game.getTurn temp2;
