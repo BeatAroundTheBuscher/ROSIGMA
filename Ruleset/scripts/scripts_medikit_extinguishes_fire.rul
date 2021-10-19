@@ -1,0 +1,20 @@
+extended:
+  scripts:
+    healUnit:
+      - offset: 20
+        code: |
+          var int temp;
+
+          target.getFire temp;
+
+          if eq temp 0;
+            return;
+          end;
+
+          target.getFatalwoundsTotal temp;
+
+          if and eq medikit_action_type medikit_action_heal eq temp 0;
+            target.setFire 0;
+          end;
+
+          return;
