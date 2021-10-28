@@ -1,0 +1,52 @@
+armors:
+  - &STR_TENACIOUS_NECRONS
+    type: STR_NECRON_WARRIOR_ARMOR
+    painImmune: false
+    scripts:
+      damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
+
+
+        var int toHealth;
+        var int toStun;
+
+        set to_stun to_health;
+        div to_health 5; # 10;
+
+        return;
+
+
+        
+      newTurnUnit: | # reduce stunlevel by 5 instead of 1 per turn
+
+        var int currentStun;
+        var int stunRecovery;
+
+        if neq side 1;
+          return;
+        end;
+
+        set stunRecovery 5; # 10;
+
+        unit.getStun currentStun;
+
+        if gt currentStun stunRecovery;
+          sub currentStun stunRecovery;
+        else;
+          set currentStun 0;
+        end;
+        
+        unit.setStun currentStun;
+        return;
+
+  - type: STR_NECRON_LYCHGUARD_ARMOR
+    refNode: *STR_TENACIOUS_NECRONS
+
+  - type: STR_NECRON_IMORTAL_ARMOR
+    refNode: *STR_TENACIOUS_NECRONS
+
+  - type: STR_NECRON_DEATHMARK_ARMOR
+    refNode: *STR_TENACIOUS_NECRONS
+
+# 2x2 units cannot wake up
+#  - type: STR_DESTROYER_ARMOR 
+#    refNode: *STR_TENACIOUS_NECRONS

@@ -13,6 +13,7 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_IS_TOOL: int
 
 items:
   - type: STR_MOUNTED_LASCANNON # gets 150 % accuracy and 75 % TU costfor being mounted
@@ -24,8 +25,8 @@ items:
       ITEM_SNAP_POWER_BONUS: 50
       ITEM_AIMED_POWER_BONUS: 50
 
-  - type: STR_LASCANNON_CLIP_SMALL
-    power: 150 # was 200
+#  - type: STR_LASCANNON_CLIP_SMALL
+#    power: 150 # was 200
     
 
   - type: STR_AUTOCANNON_GUARD # gets 150 % accuracy and 75 % TU costfor being mounted
@@ -77,9 +78,9 @@ items:
     costSell: 100000
     transferTime: 50
     listOrder: 6910
-    requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_HEAVY_WEAPONS_IG
+#    requiresBuy:
+#      - STR_IMPERIAL_GUARD_OPERATIONS
+#      - STR_HEAVY_WEAPONS_IG
 
   - type: STR_GUARD_ARMORS_MOUNTED_LASCANNON
     costBuy: 360000
@@ -97,11 +98,29 @@ items:
       - STR_HEAVY_WEAPONS_IG
       - STR_AUTOCANNON_GUARD
 
+  - type: STR_GUARD_ARMORS_SENTINEL_MULTILASER                #6800
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_BASIC_SENTINEL
+    size: 2
+    costBuy: 320000
+    costSell: 100000
+    transferTime: 50
+    listOrder: 6799
+
+
   - type: STR_SENTINEL_ARMOR                #6800
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_LASCAN
-      - STR_GUARD_SUPORT
+      - STR_BASIC_SENTINEL
+
+  - type: STR_GUARD_ARMORS_SENTINEL_MISSILE
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_BASIC_SENTINEL
+
 
 
 
@@ -178,14 +197,28 @@ items:
     type: STR_GUARD_SQUAT_CORPSE
     name: STR_CORPSE
     weight: 20
-    bigSprite: 233
-    floorSprite: 233
+    bigSprite: 290
+    floorSprite: 290
     invWidth: 2
     invHeight: 3
     battleType: 11
     armor: 20
     recover: true
     recoverCorpse: false
+
+  - &STR_BEASTGUARD_CORPSE
+    type: STR_BEASTGUARD_CORPSE
+    name: STR_CORPSE
+    weight: 20
+    bigSprite: 294
+    floorSprite: 294
+    invWidth: 2
+    invHeight: 3
+    battleType: 11
+    armor: 20
+    recover: true
+    recoverCorpse: false
+    
 
 
   # no idea why there need to be two different weapons
@@ -226,26 +259,37 @@ items:
   - type: STR_SENTINEL_FRAG_MISSILES
     tags:
       ITEM_AMMO_SKIP_BIGOBS: 1
+    requiresBuy:
+      - STR_BASIC_SENTINEL
+      - STR_IMPERIAL_GUARD_MIDTIER
+
 
   - type: STR_SENTINEL_KRAKK_MISSILES
-    damageType: 1 # AP instead of HE
+    requiresBuy:
+      - STR_BASIC_SENTINEL
+      - STR_IMPERIAL_GUARD_MIDTIER
+    # damageType: 1 # AP instead of HE
     damageAlter:
+      ResistType: 1
       ArmorEffectiveness: 0.80
-      RandomType: 2 # side effect of other damageType
-      FixRadius: 1
+      # RandomType: 2 # side effect of other damageType
+      FixRadius: 1  
     tags:
       ITEM_AMMO_SKIP_BIGOBS: 2
 
+
   - type: STR_SENTINEL_KRAKK_MISSILES_PD
-    damageType: 1 # AP instead of HE
+    # damageType: 1 # AP instead of HE
     damageAlter:
+      ResistType: 1
       ArmorEffectiveness: 0.80
-      RandomType: 2 # side effect of other damageType
+      # RandomType: 2 # side effect of other damageType
       FixRadius: 1
 
   - type: STR_SENTINEL_INC_MISSILES
     categories: [STR_CAT_AUXILIARY]
     requiresBuy:
+      - STR_BASIC_SENTINEL
       - STR_IMPERIAL_GUARD_MIDTIER
     costBuy: 3600
     costSell: 2840
@@ -262,10 +306,17 @@ items:
     power: 90
     damageType: 2
     damageAlter:
-      ToHealth: 2    
+      ToHealth: 2   
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2
+      ArmorEffectiveness: 1
+      ToArmor: 0.1
     battleType: 2
     blastRadius: 5
     listOrder: 6840
+    # blastRadius: 7 # was 5; sure about turning it to 7?
     tags:
       ITEM_AMMO_SKIP_BIGOBS: 3
 
@@ -286,16 +337,7 @@ items:
     defaultInvSlotY: 1
     recover: false
 
-  - type: STR_GUARD_ARMORS_SENTINEL_MULTILASER                #6800
-    requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_GUARD_SUPORT
 
-    size: 2
-    costBuy: 320000
-    costSell: 100000
-    transferTime: 50
-    listOrder: 6799
 
   - type: STR_GUARD_ARMORS_SENTINEL_HEAVY_PLASMA                #6800
     size: 2
@@ -502,6 +544,7 @@ items:
       - STR_LASER_WEAPONS
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_KRIEG_GUARDSMEN
     requiresBuyBaseFunc: [TRADE]
     costBuy: 250000
     costSell: 6000
@@ -580,22 +623,6 @@ items:
       - STR_LASGUN_CLIP_HOTSHOT
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 14
-
-  - type: STR_HELLGUN
-    tuAuto: 33 # was 34
-    meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
-    meleePower: 50 # was 40
-#    fixedWeapon: false
-#    defaultInventorySlot: STR_RIGHT_HAND
-#    supportedInventorySections: 
-#      - STR_RIGHT_HAND
-#      - STR_LEFT_HAND
-#      - STR_BACK_PACK
-#      - STR_BELT
-#      - STR_RIGHT_LEG
-#      - STR_LEFT_LEG
-
 
   - type: STR_PISTOLB 
     requiresBuyBaseFunc: [TRADE]
@@ -836,7 +863,7 @@ items:
       ToWound: 0.3
       ToEnergy: 0.5
     damageType: 7
-    accuracyMelee: 70
+    accuracyMelee: 90 # was 70 # priest needs some help here
     tuMelee: 20
     clipSize: -1
     battleType: 3
@@ -853,6 +880,7 @@ items:
     recover: false
     fixedWeapon: true
     fixedWeaponShow: true
+    defaultInventorySlot: STR_LEFT_HAND
 
   - type: STR_EXITUS_BUILTIN
     size: 0.3
@@ -904,7 +932,7 @@ items:
     power: 150
     damageAlter:
       ToTile: 0.0
-      RandomType: 2
+      RandomType: 7
       ArmorEffectiveness: 0.8
     damageType: 1
     clipSize: 2
@@ -915,7 +943,7 @@ items:
     tags:
       ITEM_AMMO_COLOR: 15
 
-  - type: STR_EXITUS_AMMO_HELLFIRE
+  - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
 #    costBuy: 12000
     costSell: 9000
@@ -923,6 +951,7 @@ items:
     damageAlter: 
 #      ToArmorPre: 0.05
       ArmorEffectiveness: 0.8
+      RandomType: 7
 #      ToArmor: 0.1
 #      ToHealth: 1.0
 #      ToStun: 0.5
@@ -940,7 +969,7 @@ items:
     bigSprite: 227
     damageAlter: 
       ToTile: 0.0
-      RandomType: 2
+      RandomType: 7
       ArmorEffectiveness: 0.4
     power: 150
     listOrder: 11970
@@ -955,7 +984,7 @@ items:
     power: 150
     damageAlter:
       ToTile: 0.0
-      RandomType: 2
+      RandomType: 7
       FireThreshold: 1000 # no fire
       ArmorEffectiveness: 0.8
       FixRadius: 0
@@ -979,7 +1008,8 @@ items:
   - &STR_GRENADE_DRUM
     type: STR_SMOKE_GRENADE_DRUM
     requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
+#      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GUARD_AND_ARBITES
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
     categories: [STR_CAT_ROCKETL]
@@ -1064,6 +1094,8 @@ items:
     tags:
       ITEM_RECOIL: 30
       ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
 
 
 # this is essentially the Arbites Heavy Stubber
@@ -1140,13 +1172,13 @@ items:
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
     power: 75
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ArmorEffectiveness: 0.75
-      ToHealth: 1.0
-      ToArmor: 0.0
-      ToStun: 0.0
+#    damageType: 4
+#    damageAlter:
+#      ToArmorPre: 0.3
+#      ArmorEffectiveness: 0.75
+#      ToHealth: 1.0
+#      ToArmor: 0.0
+#      ToStun: 0.0
     vaporColor: 2
     vaporDensity: 8
     recover: false
@@ -1160,10 +1192,7 @@ items:
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
-  - type: STR_LASPISTOL_CLIP_HOTSHOT
-    tags:
-      ITEM_AMMO_COLOR: 2
-      ITEM_AMMO_SHADE: -3
+
 
 
   - type: STR_MC_BOLTER_DEAZ
@@ -1250,9 +1279,151 @@ items:
     listOrder: 19150
     tags:
       ITEM_RECOIL: 25
-      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
 
+  - type: STR_BOLTER_LIGHT_SOLO
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    size: 0.3
+#    requiresBuyBaseFunc: [TRADE] #could skip this requirement
+    dropoff: 5
+    costBuy: 30000 #Should be a fair bit pricier than both lasguns and heavy stubber, not a general purpose rifle unless bathing in cash
+    costSell: 10000
+    weight: 15
+    bigSprite: 285
+    floorSprite: 250
+    handSprite: 304
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo: #No EX or Mastercraft rounds
+      - STR_LIGHT_BOLTER_AMMO_SHORT #Short magazines, drawback
+      - STR_LIGHT_BOLTER_AMMO_SHORT_PEN  #Midtier ammo upgrade
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 105 #battle rifle but no scope
+    tuSnap: 25
+    #tuAuto: 40
+    tuAimed: 50
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 2 #maybe give the basic solo some rapid shots vs the DMR version to keep it useful aside for price?
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
 
+  - type: STR_BOLTER_LIGHT_SOLO_DMR
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_IMPERIAL_GUARD_MIDTIER
+    size: 0.3
+#    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
+    dropoff: 5
+    costBuy: 50000 #Scoped version more expensive
+    costSell: 15000
+    weight: 16 #scoped version slightly heavier than non scope
+    bigSprite: 286
+    floorSprite: 251
+    handSprite: 312
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO_SHORT
+      - STR_LIGHT_BOLTER_AMMO_SHORT_PEN  #Midtier ammo upgrade
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 115 #battle rifle scoped
+    tuSnap: 30 #Scoped version worse at snap shots
+    #tuAuto: 40
+    tuAimed: 45 #Scoped version slightly faster to aim
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 3
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_IMPERIAL_GUARD_OPERATIONS #so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    size: 0.1
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 2000 #Intention is costly ammo vs lasguns
+    costSell: 300
+    weight: 2 #weight less
+    bigSprite: 287
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.8 # 0.9
+      ToArmor: 0.2 # 0.1
+      ToHealth: 1.0
+      ToStun: 0.6 # 0.5
+    explosionSpeed: 5
+    power: 60 # 50
+    damageType: 1
+    clipSize: 10
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 1
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 5
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT_PEN
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_IMPERIAL_GUARD_MIDTIER #midtier upgrade, so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    size: 0.1
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 7000 #costs less due to 10 rounds less
+    costSell: 300
+    weight: 2 #weight less
+    bigSprite: 288
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER AP+
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.0
+      ToArmor: 0.0
+      ToHealth: 1.0
+      ToStun: 0.5
+    explosionSpeed: 5
+    power: 50
+    damageType: 1
+    clipSize: 10
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 1
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 1
+      
   - &STR_LIGHT_BOLTER_CLIP_AP
     type: STR_LIGHT_BOLTER_AMMO_PEN
     categories: [STR_CAT_BOLTER]
@@ -1275,7 +1446,7 @@ items:
       ToHealth: 1.0
       ToStun: 0.5
     explosionSpeed: 5
-    power: 50
+    power: 60 # 50
     damageType: 1
     clipSize: 20
     battleType: 2
@@ -1543,18 +1714,30 @@ items:
     weight: 15
     bigSprite: {mod: 40k, index: 1082}
     power: 80
-    damageType: 3
     clipSize: 8
     battleType: 2
     invWidth: 1
     invHeight: 3
     recover: false
-    blastRadius: 1
+    damageType: 3
+    # damageType: 1 # AP instead of HE
+    damageAlter:
+      ResistType: 1
+      ArmorEffectiveness: 0.80
+      # RandomType: 2 # side effect of other damageType
+      FixRadius: 1
 
   - type: STR_INC_GRENADE_BELT_TAUROS
     refNode: *STR_GRENADE_BELT_TAUROS
     power: 50
     damageType: 2 # INC
+    damageAlter:
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2
+      ArmorEffectiveness: 1
+      ToArmor: 0.1
 
   - type: STR_SMOKE_GRENADE_BELT_TAUROS
     refNode: *STR_GRENADE_BELT_TAUROS
@@ -1644,28 +1827,31 @@ items:
     listOrder: 2710
 
 
-  - type: STR_COMMISSAR_CLAW_BUILTIN
+  - type: STR_COMMISSAR_CLAW_BUILTIN # based on STR_CLAWS
     categories: [STR_CAT_MELEE]
     size: 0.2
     costSell: 5500
-    weight: 25
+    weight: 15
     bigSprite: 248
 #    floorSprite: 610
     handSprite: 248
-    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
-    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
-    meleeAnimation: {mod: 40k, index: 44} 
-    power: 100
-    damageAlter: #DA CHAIN
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      ToWound: 0.3
-      ToEnergy: 0.5
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 754}
+    meleeAnimation: {mod: 40k, index: 12} 
+    power: 65
     damageType: 7
-    accuracyMelee: 70
-    tuMelee: 20
+    damageBonus:
+      strength: 0.3
+      melee: 0.5
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+    accuracyMelee: 80
+    tuMelee: 10
+    flatRate: true
     clipSize: -1
+    strengthApplied: false
     battleType: 3
 #    twoHanded: true
     invWidth: 2
@@ -1675,7 +1861,7 @@ items:
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
-    experienceTrainingMode: 13
+    # experienceTrainingMode: 13
     listOrder: 12410
     recover: false
     fixedWeapon: true
@@ -1706,10 +1892,11 @@ items:
   - type: STR_KRAK_GRENADE_DRUM
     costBuy: 10000
     costSell: 8000
-    damageType: 1 # AP instead of HE
+    # damageType: 1 # AP instead of HE
     damageAlter:
+      ResistType: 1
       ArmorEffectiveness: 0.80
-      RandomType: 2 # side effect of other damageType
+      # RandomType: 2 # side effect of other damageType
       FixRadius: 1
 
   - type: STR_FRAG_GRENADE_DRUM
@@ -1719,6 +1906,13 @@ items:
   - type: STR_INCENDIARY_GRENADE_DRUM
     costBuy: 6000
     costSell: 4800
+    damageAlter:
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2
+      ArmorEffectiveness: 1
+      ToArmor: 0.1
 
   - type: STR_GUARDP_CORPSE
     recover: true
@@ -1752,10 +1946,11 @@ items:
       ITEM_DOESNT_HURT_USER: 1
 
   - type: STR_DISPOSABLE_LAUNCHER_KRAK
-    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     size: 0.4
     requires:
-     - STR_IMPERIAL_GUARD_OPERATIONS
+     - STR_GUARD_AND_ARBITES
+#     - STR_IMPERIAL_GUARD_OPERATIONS
      - STR_HEAVY_WEAPONS_IG 
     dropoff: 5
     costBuy: 10000
@@ -1772,14 +1967,20 @@ items:
     hitSound: {mod: 40k, index: 0}
     hitAnimation: {mod: 40k, index: 0 }
     power: 120
-    damageType: 1
-    damageAlter: #DA ROKKIT
-      ToArmorPre: 0.2
-      ArmorEffectiveness: 0.6
-      ToHealth: 0.3
-      ToStun: 0.3
+#    damageType: 1
+#    damageAlter: #DA ROKKIT
+#      ToArmorPre: 0.2
+#      ArmorEffectiveness: 0.6
+#      ToHealth: 0.3
+#      ToStun: 0.3
+    damageType: 3
+    # damageType: 1 # AP instead of HE
+    damageAlter:
+      ResistType: 1
+      ArmorEffectiveness: 0.80
+      # RandomType: 2 # side effect of other damageType
+      FixRadius: 1
     clipSize: 1
-    blastRadius: 1
     twoHanded: false
     blockBothHands: true
     oneHandedPenalty: 25
@@ -1875,15 +2076,90 @@ items:
       RadiusReduction: 5.0
 
 
+  - type: STR_STORMTROOPER_CORPSE_GEO
+    name: STR_STORMTROOPER_CORPSE
+    recover: true # without this, corpseGeo doesn't work
+    weight: 30
+    bigSprite: { mod: 40k, index: 1331 }
+    floorSprite: { mod: 40k, index: 1331 }
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    battleType: 11
+
+  - type: STR_GUARDH_CORPSE_GEO
+    name: STR_GUARD_CORPSE
+    recover: true # without this, corpseGeo doesn't work
+    weight: 30
+    bigSprite: { mod: 40k, index: 383 }
+    floorSprite: { mod: 40k, index: 50 }
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    battleType: 11
+
+  - type: STR_GUARD_CORPSE_GEO
+    name: STR_GUARD_CORPSE
+    recover: true # without this, corpseGeo doesn't work
+    weight: 30
+    bigSprite: { mod: 40k, index: 249 }
+    floorSprite: { mod: 40k, index: 50 }
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    battleType: 11
+
   - type: STR_HELLGUN_BASE_INVENTORY
+    battleType: 0
+    size: 0.5
+    costSell: 5000
+    recover: true
+    recoverCorpse: true
+    listOrder: 100
+    bigSprite: 280 # { mod: 40k, index: 23 }
+    floorSprite: 280 # { mod: 40k, index: 157 }
+    handSprite: 280 # { mod: 40k, index: 504 }
+    weight: 4
+    invWidth: 2
+    invHeight: 2
+
+
   - type: STR_HELLPISTOL_BASE_INVENTORY
+    battleType: 0
+    size: 0.5
+    costSell: 4000
+    recover: true
+    recoverCorpse: true
+    listOrder: 100
+    bigSprite: 280 # { mod: 40k, index: 23 }
+    floorSprite: 280 # { mod: 40k, index: 157 }
+    handSprite: 280 # { mod: 40k, index: 504 }
+    weight: 4
+    invWidth: 2
+    invHeight: 2
+
+
   - type: STR_VOLLEYGUN_BASE_INVENTORY
+    battleType: 0
+    size: 0.5
+    costSell: 6000
+    recover: true
+    recoverCorpse: true
+    listOrder: 100
+    bigSprite: 280 # { mod: 40k, index: 23 }
+    floorSprite: 280 # { mod: 40k, index: 157 }
+    handSprite: 280 # { mod: 40k, index: 504 }
+    weight: 4
+    invWidth: 2
+    invHeight: 2
+
 
   - type: STR_HEAVY_WEAPON_TOOLS
     hidePower: true
     categories: [ STR_CAT_EQUIPMENT]
     requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GUARD_AND_ARBITES
+#      - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.2
     costBuy: 500
     costSell: 50
@@ -1915,7 +2191,48 @@ items:
   - type: STR_TELEPATH_STAFF # Nothing should mind control
     costMindControl:
       time: 0
+    defaultInventorySlot: STR_LEFT_HAND
 
+  - type: STR_PSYKER_STAFF
+    defaultInventorySlot: STR_LEFT_HAND
+
+  - type: STR_TELEKINE_STAFF
+    defaultInventorySlot: STR_LEFT_HAND
+
+  - type: STR_PYROMANCER_STAFF
+    defaultInventorySlot: STR_LEFT_HAND
+
+  - delete: STR_BIOMANCER_STAFF
+
+  - type: STR_BIOMANCER_STAFF
+    defaultInventorySlot: STR_LEFT_HAND
+    invWidth: 2
+    invHeight: 3
+    bigSprite: {mod: 40k, index: 1101}
+    handSprite: {mod: 40k, index: 1800}
+    bulletSpeed: 30
+    weight: 5
+    costSnap:
+      time: 35
+      energy: 15
+      morale: 5
+    accuracySnap: 100
+    accuracyMultiplier:
+      firing: 0.0
+      psiStrength: 0.5
+      psiSkill: 0.5
+    dropoff: 5
+    confSnap:
+      ammoSlot: 0
+      name: STR_PSYKER_LIGHTNING_STRIKE
+    compatibleAmmo:
+      - STR_PSYKER_LIGHTNING_STRIKE
+    clipSize: -1
+    battleType: 1
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    experienceTrainingMode: 28
 
   - type: STR_HEAVY_STUBBER_KRIEG #Lucius Pattern Heavy Stubber 14.5mm
     categories: [STR_CAT_AUTO]
@@ -1923,15 +2240,16 @@ items:
       ITEM_RECOIL: 40
       ITEM_HAS_BIPOD: 1
     requiresBuy:
-        - STR_GUARD_SUPORT
+        - STR_GUARD_AND_ARBITES
+#        - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.3
     weight: 30 #light heavy stubber is 15, HB is 40, heavy plasma is 35, Rippergun is 50
     dropoff: 5
     costBuy: 150000 #same as other special IG guns, but can be changed, should be lower priced than their heavy bolter
     costSell: 3000
     bigSprite: 235
-    floorSprite: 234
-    handSprite: 232
+    floorSprite: 235
+    handSprite: 288
     bulletSprite: {mod: 40k, index: 2}
     bulletSpeed: 33
     fireSound: 2137
@@ -1949,13 +2267,16 @@ items:
     armor: 60
     autoRange: 18 # was 15, is 24 for the lighter handheld Heavy Stubber. accuracy drop off begins sooner for this weapon so it doesn´t compete with snipers
     snapRange: 18 # was 15
-    autoShots: 10
+    autoShots: 3 # was 10
     confSnap:
       shots: 1
     sprayWaypoints: 2
     listOrder: 10765
 
   - type: STR_HEAVY_STUBBER_CLIP_KRIEG
+    requiresBuy:
+        - STR_GUARD_AND_ARBITES
+#        - STR_IMPERIAL_GUARD_OPERATIONS
     categories: [STR_CAT_AUTO]
     size: 0.1
     costBuy: 2500 #expensive special AP rounds, could maybe be manufactured for 1 adam per magazine
@@ -1975,9 +2296,143 @@ items:
     explosionSpeed: 5
     power: 60 #matches pure of light bolter, but worse vs health
     damageType: 1
-    clipSize: 7 #low ammo capacity
+    clipSize: 10 #low ammo capacity
     battleType: 2
     armor: 30
     invWidth: 2 #make it chunky, see bigOB, does not fit in belt slots inventory
     invHeight: 2
     listOrder: 10766
+
+
+  # from rebalance mod
+  - type: STR_LASPISTOL_CLIP
+    damageType: 1 # AP instead of LAS
+    damageAlter: #DA LAS
+      ToArmorPre: 0.2 # was 0.15
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0 # hardly makes a difference
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+  #- type: STR_LASPISTOL_CLIPB
+
+  - type: STR_LASPISTOL_CLIP_HOTSHOT
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.2 # was 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+    tags:
+      ITEM_AMMO_COLOR: 2
+      ITEM_AMMO_SHADE: -3
+
+  - type: STR_LASGUN_CLIP
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.2 # was 0.15
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+  #- type: STR_LASGUN_CLIPB
+
+  - type: STR_LASGUN_CLIP_HOTSHOT
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.2 # was 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+  # Hellguns get to keep ToArmorPre: 0.3 (Veteran/Scion bonus)
+  - type: STR_HELLPISTOL_BUILTIN
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+  - type: STR_HELLGUN
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+    tuAuto: 33 # was 34
+    meleeAlter:
+      RandomType: 7 # 50-200 # was 0 (50-150)
+    meleePower: 50 # was 40
+
+  - type: STR_HOTSHOT_VOLLEY_GUN
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+  - type: STR_GUARD_ARMORS_MEDIC
+    requiresBuy:
+      - STR_GUARDSMEN
+
+  - type: STR_MEDIC_CARAPACE_ARMOR
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_GUARDSMEN
+
+#  - type: STR_COMMISSAR_CARAPACE
+#    requiresBuy:
+#      - STR_IMPERIAL_GUARD_MIDTIER
+
+# By Firaa
+# https://openxcom.org/forum/index.php/topic,7443.0.html
+  - type: STR_CHAINSWORD_GUARD
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_MIDTIER_PREREQ
+    categories: [STR_CAT_MELEE]
+    size: 0.2
+    costBuy: 4000
+    costSell: 2000
+    weight: 10
+    bigSprite: 295
+    floorSprite: 295
+    handSprite: 320
+    meleeSound: { mod: 40k, index: 753 }
+    meleeHitSound: { mod: 40k, index: 709 }
+    meleeAnimation: { mod: 40k, index: 44 }
+    power: 75 # was 78
+    damageAlter:
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+      ToWound: 0.3
+      ToEnergy: 0.5 
+    damageType: 7
+    accuracyMelee: 100
+    tuMelee: 15
+    clipSize: -1
+    battleType: 3
+    invWidth: 1
+    invHeight: 3
+    armor: 20
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    experienceTrainingMode: 13
+    listOrder: 12360

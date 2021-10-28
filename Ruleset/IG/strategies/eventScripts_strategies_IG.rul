@@ -1,0 +1,30 @@
+eventScripts:
+  - &STR_RECRUITS_START
+    type: STR_RECRUITS_START_NORMAL_STRATEGY_IG
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_NORMAL_STRATEGY_IG
+    firstMonth: 0
+    lastMonth: 0
+    executionOdds: 100
+    researchTriggers:
+       STR_IMPERIAL_GUARD_OPERATIONS: true
+
+  - type: STR_RECRUITS_START_ELITE_STRATEGY_IG
+    refNode: *STR_RECRUITS_START
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_ELITE_STRATEGY_IG
+
+  - type: STR_RECRUITS_START_ABHUMAN_STRATEGY_IG
+    refNode: *STR_RECRUITS_START
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_ABHUMAN_STRATEGY_IG
+
+  - type: STR_MONTHLY_SCIONS_IG
+    eventWeights:
+      0:
+        STR_SCIONS_IG: 100
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_ELITE_STRATEGY_IG: true
+    minScore: 1000 # successful war effort

@@ -1,0 +1,323 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+
+items:
+  - type: STR_NIGHTLORD_HORROR
+    categories: [STR_CAT_SPELLS]
+    specialIconSprite: 200 # any for now
+    explosionHitSound: [{mod: 40k, index: 1110}, {mod: 40k, index: 1111}, {mod: 40k, index: 1112}, {mod: 40k, index: 1113}, {mod: 40k, index: 1114}, {mod: 40k, index: 1115}, {mod: 40k, index: 1116}, {mod: 40k, index: 1117}, {mod: 40k, index: 1118}, {mod: 40k, index: 1119}, {mod: 40k, index: 1120}, {mod: 40k, index: 1121}]
+    # replace HitSound with something fitting like a scream? what does the lore say?
+    hitAnimation: {mod: 40k, index: 96}
+    power: 50 
+    damageType: 3 # doesn't really matter but HE is a good preset
+    damageAlter:
+      RadiusReduction: 0.0
+      FixRadius: 3
+      ToArmorPre: 0.0
+      ToArmor: 0.0
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToTime: 0.0
+      ToEnergy: 0.0
+      ToItem: 0.0
+      ToTile: 0.0
+      ToMorale: 1.0
+    tuAimed: 50 # should probably not react
+    accuracyAimed: 200
+    maxRange: 12
+    bulletSpeed: 80
+    battleType: 1
+    fixedWeapon: true
+    recover: false
+    clipSize: -1
+
+#Tzeentch Las weapons
+  - type: STR_TZEENTCH_LASPISTOL #Nihilis Pattern High Tech laspistol
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    size: 0.2
+    dropoff: 5 #low drop off, precise
+    requires:
+      - STR_ALIENS_ONLY
+    costSell: 700
+    weight: 3 #lightweight materials
+    bigSprite: 2940
+    floorSprite: 2940
+    handSprite: 2900
+    bulletSprite: 12
+    fireSound: 2261
+    accuracySnap: 75 #high
+    accuracyAimed: 95 #high
+    tuSnap: 28
+    tuAimed: 60
+    snapRange: 16
+    aimRange: 20
+    maxRange: 30
+    damageBonus:
+      flatHundred: 0.1 #10% damage bonus over the normal laspistol
+    confSnap:
+      shots: 1
+      spendPerShot: 1.66 #higher baseline power consumption, 12 shots per clip
+    confAimed:
+      shots: 1
+      spendPerShot: 3 #higher consumption
+      name: STR_POWER_SHOT
+    compatibleAmmo:
+      - STR_LASPISTOL_CLIP
+      - STR_LASPISTOL_CLIP_HOTSHOT
+      - STR_LASGUN_CLIP_HOTSHOT_CHAOS #very heretical pistol config
+    tags:
+      ITEM_SNAP_POWER_BONUS: 10
+      ITEM_AIMED_POWER_BONUS: 20
+    battleType: 1
+    twoHanded: false #Pistol
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 50
+    listOrder: 11056   
+
+  - type: STR_TZEENTCH_LASGUN #Nihilis Pattern High Tech lasgun
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    size: 0.2
+    dropoff: 4 #low drop off, precise
+    requires:
+      - STR_ALIENS_ONLY
+    costSell: 1000
+    weight: 10 #lightweight materials
+    bigSprite: 2941
+    floorSprite: 2941
+    handSprite: 2910
+    bulletSprite: 12
+    fireSound: 2261
+    accuracyAuto: 70 #high
+    accuracySnap: 85 #high
+    accuracyAimed: 110 #high
+    tuAuto: 42
+    tuSnap: 28
+    tuAimed: 66
+    autoRange: 16 #drop off begins sooner due to power shot
+    snapRange: 18
+    aimRange: 24
+    maxRange: 30
+    damageBonus:
+      flatHundred: 0.1 #10% damage bonus over the normal lasgun
+    confSnap:
+      shots: 1
+      spendPerShot: 1.66 #higher baseline power consumption, 12 shots per clip
+    confAuto:
+      shots: 2 #double tap
+      spendPerShot: 1.66
+      name: STR_BURST_SNAP_SHOT
+    confAimed:
+      shots: 1
+      spendPerShot: 3 #higher consumption
+      name: STR_POWER_SHOT
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT_CHAOS
+    tags:
+      ITEM_SNAP_POWER_BONUS: 10
+      ITEM_AUTO_POWER_BONUS: 10    
+      ITEM_AIMED_POWER_BONUS: 20
+    battleType: 1
+    twoHanded: false #compact carbine, enough to use single handed
+    invWidth: 1
+    invHeight: 3
+    bulletSpeed: 50
+    listOrder: 11056
+
+
+#Tzeentch Plasma
+  - type: STR_PLASMA_PISTOL_TZEENTCH #                       11210
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_CHAOS]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_PLASMA_PISTOL
+    size: 0.1
+    dropoff: 5
+    costSell: 5000
+    weight: 3
+    bigSprite: 2946
+    floorSprite: 2946
+    handSprite: 2960
+    bulletSprite: 11
+    fireSound: {mod: 40k, index: 18 }
+    damageBonus:
+      flatHundred: 0.1 #10% damage bonus
+    compatibleAmmo:
+      - STR_PLASMA_PISTOL_CLIP
+    accuracySnap: 75 #more accuracte
+    accuracyAimed: 95 #tzeentch scope aim mode
+    tuSnap: 35 #+5, slightly worse at snap and reaction fire
+    tuAimed: 60
+    snapRange: 16 #+2 vs Slaanesh Plasma Pistol
+    aimRange: 20
+    battleType: 1
+    invWidth: 1
+    invHeight: 2
+    recoveryPoints: 3
+    armor: 45
+    listOrder: 11210
+    
+#Tzeentch Bolter weapons Inferno etc     
+  - type: STR_BOLTPISTOL_TZEENTCH  #TZEENTCH BOLTER PISTOL SCOPED  10140
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    size: 0.2
+    dropoff: 5
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_LIGHT_BOLTERS
+    costSell: 1000
+    weight: 15
+    bigSprite: 2943
+    floorSprite: 2943
+    handSprite: 2930
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 707} 
+    compatibleAmmo:
+      - STR_PISTOL_CLIP
+      - STR_TZ_LIGHT_BOLTER_AMMO_R
+    accuracySnap: 70
+    tuSnap: 25 #slightly higher
+    snapRange: 14
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 2
+    armor: 30
+    bulletSpeed: 30
+    attraction: 5
+    listOrder: 10140
+
+
+  - type: STR_TZEENTCH_BOLTER_LIGHT_SOLO #Light Inferno Bolter
+    categories: [STR_CAT_BOLTER]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_LIGHT_BOLTERS
+    size: 0.3
+    dropoff: 4
+    weight: 15
+    bigSprite: 2944
+    floorSprite: 2944
+    handSprite: 2940
+    bulletSprite: {mod: 40k, index: 6} #change
+    fireSound: {mod: 40k, index: 707} 
+    compatibleAmmo: #No EX or Mastercraft rounds
+      - STR_LIGHT_BOLTER_AMMO_SHORT #Short magazines, drawback
+      - STR_TZ_LIGHT_BOLTER_AMMO_R
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 105 #battle rifle but no scope
+    tuSnap: 25
+    #tuAuto: 40
+    tuAimed: 50
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 1
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+  - type: STR_TZEENTCH_BOLTER_LIGHT_SOLO_SCOPED
+    categories: [STR_CAT_BOLTER]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.3
+    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
+    dropoff: 4
+    costBuy: 50000 #Scoped version more expensive
+    costSell: 15000
+    weight: 16 #scoped version slightly heavier than non scope
+    bigSprite: 2945
+    floorSprite: 2945
+    handSprite: 2950
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO_SHORT
+      - STR_TZ_LIGHT_BOLTER_AMMO_R 
+    accuracySnap: 85 #5 points more accurate vs light ULTRA
+    #accuracyAuto: 66 #No autoshot functionality
+    accuracyAimed: 115 #battle rifle scoped
+    tuSnap: 30 #Scoped version worse at snap shots
+    #tuAuto: 40
+    tuAimed: 45 #Scoped version slightly faster to aim
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    #autoShots: 3
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 20 #slightly lower recoil due to single shot and human sized
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+#Bolter Ammo types
+  - type: STR_RIFLE_CLIP_R #          10460                      ToStun
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 250
+    weight: 3
+    damageAlter: #DA BOLTER TZZ
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.7 #give Rubric rounds a armor pen bonus for magic bolts
+      ToArmor: 0.1
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
+      ToStun: 0.5
+      ToMorale: 0.5
+    explosionSpeed: 5
+    power: 70 #buff, chaos hellguns have 80-90 power
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10460
+    
+  - type: STR_TZ_LIGHT_BOLTER_AMMO_R #          10460                      ToStun
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 150
+    weight: 2
+    bigSprite: 2949
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter: #DA BOLTER TZZ
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.7 #more armor pen, magic
+      ToArmor: 0.1
+      ToHealth: 0.9 #10% less
+      ToStun: 0.5
+      ToMorale: 0.5
+    explosionSpeed: 5
+    power: 60 #buff, chaos hellguns have 80-90 power
+    damageType: 1 #change to plasma or melta for INFERNO properties? 
+    clipSize: 20
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10460
+    

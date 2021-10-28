@@ -1,0 +1,93 @@
+## taken from 40k base mod and adapted for soldierBonus
+## not changing how shields work, only adding another way to add to them
+extended:
+  tags:
+    RuleSoldierBonus:
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: int
+      BONUS_ENERGY_SHIELD_DECAY: int
+    BattleUnit:
+      UNIT_ENERGY_SHIELD_HP: int
+      UNIT_ENERGY_SHIELD_DECAY: int
+      UNIT_BONUS_ENERGY_SHIELD_HP_PER_TURN: int
+      UNIT_BONUS_ENERGY_SHIELD_DECAY: int
+  scripts:
+    newTurnUnit:
+
+      - offset: 13
+        code: |
+          var int shieldHP;
+          var int shieldDecay;
+          var int shieldAdded;
+
+          # Make sure this doesn't run an extra third time if there's a neutral side
+          if eq side 2;
+            return;
+          end;
+
+          # Check armor first for decay parameter
+          unit.getTag shieldDecay Tag.UNIT_BONUS_ENERGY_SHIELD_DECAY;
+
+          # Next comes decay set by an item
+          if eq shieldDecay 0;
+
+            unit.getTag shieldDecay Tag.UNIT_ENERGY_SHIELD_DECAY;
+
+          end;
+
+          # Apply the decay, treating it like the percent lost per turn
+          unit.getTag shieldHP Tag.UNIT_ENERGY_SHIELD_HP;
+          sub shieldDecay 100;
+          mul shieldDecay -1;
+          muldiv shieldHP shieldDecay 100;
+
+          # Now add the per-turn amount from armor, to be balanced by decay parameter
+          unit.getTag shieldAdded Tag.UNIT_BONUS_ENERGY_SHIELD_HP_PER_TURN;
+          add shieldHP shieldAdded;
+
+          if eq shieldHP 0;
+
+            unit.setTag Tag.UNIT_ENERGY_SHIELD_DECAY 0;
+
+          end;
+
+          unit.setTag Tag.UNIT_ENERGY_SHIELD_HP shieldHP;
+
+          return;
+
+
+    applySoldierBonuses:
+      #*** Sets energy shields from unit armors at the beginning of the battlescape ***
+      - offset: 11
+        code: |
+          var int shieldAdded;
+          var int shieldDecay;
+
+          soldier_bonus.getTag shieldAdded Tag.BONUS_ENERGY_SHIELD_HP_PER_TURN;
+
+          debug_log "shield Added: " shieldAdded;
+          if eq shieldAdded 0;
+
+            return;
+
+          end;
+
+          soldier_bonus.getTag shieldDecay Tag.BONUS_ENERGY_SHIELD_DECAY;
+
+          # new
+          unit.setTag Tag.UNIT_BONUS_ENERGY_SHIELD_HP_PER_TURN shieldAdded;
+          unit.setTag Tag.UNIT_BONUS_ENERGY_SHIELD_DECAY shieldDecay;
+
+
+          # sets shield at max value (when flat addition = percent decay)
+          if neq 0 shieldDecay;
+
+            muldiv shieldAdded 100 shieldDecay;
+
+          end;
+
+          unit.setTag Tag.UNIT_ENERGY_SHIELD_HP shieldAdded;
+
+
+
+          return;
+
