@@ -334,28 +334,3 @@ armors:
 
   - type: STR_ENFORCER_SIGNAL_ARMOR_UC
     refNode: *STR_GUARD_VOX_CASTER
-
-  - &STR_CAS_ARMOR
-    type: STR_CAS_MISSILE_POD_ARMOR
-    scripts:
-      newTurnUnit: |
-        var int temp;
-        var int numInventoryItems;
-        var ptre BattleItem someItem;
-
-        if and eq turn 1 eq side FACTION_PLAYER;
-          unit.getInventoryItem.size numInventoryItems;
-          loop var i numInventoryItems;
-            unit.getInventoryItem someItem i;
-            someItem.getTag temp Tag.ITEM_IS_BOMB;
-            if eq temp 1;
-              someItem.setFuseTimer 1; # should probably become a variable part
-              someItem.setFuseEnabled 1;
-              return;
-            end;
-          end;
-        end;
-        return;
-
-  - type: STR_CAS_CANNON_ARMOR
-    refNode: *STR_CAS_ARMOR 
