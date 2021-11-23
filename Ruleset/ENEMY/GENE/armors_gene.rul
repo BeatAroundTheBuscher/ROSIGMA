@@ -52,6 +52,7 @@ armors:
     loftempsSet: [ 2 ]
     builtInWeapons:
       - STR_GENE_WEAPON
+      - STR_GSC_AUTOINJECTOR_WEAPON
   - type: GENE_ARMOR2
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -80,7 +81,7 @@ armors:
     loftempsSet: [ 2 ]
     builtInWeapons:
       - STR_GENE_WEAPON
-      - TYRANID_SPIT
+      - STR_GSC_AUTOINJECTOR_WEAPON
   - type: GENE_ARMOR3 #DR4
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -109,8 +110,7 @@ armors:
     loftempsSet: [ 2 ]
     builtInWeapons:
       - STR_GENE_WEAPON
-      - TYRANID_SPIT
-            #Monk ARMOR
+      - STR_GSC_AUTOINJECTOR_WEAPON
 
 #Armor GSC		
   - type: GSC_CIVILIAN_F0_ARMOR
@@ -430,7 +430,9 @@ armors:
   - type: STR_GSC_JUDGEF_ARMOR #GSC JUDGE F
     visibilityAtDay: 35
     visibilityAtDark: 30
-	#anticamo
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 20
     spriteSheet: GSC_JUDGE_BS.PCK 
     spriteInv: GSC_INFECTED_JUDGE_FEMALE_INV.SPK 
     corpseBattle:
@@ -457,7 +459,9 @@ armors:
   - type: STR_GSC_JUDGEM_ARMOR #GSC JUDGE M
     visibilityAtDay: 35
     visibilityAtDark: 30
-	#anticamo
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 20
     spriteSheet: GSC_JUDGE_BS.PCK
     spriteInv: GSC_INFECTED_JUDGE_MALE_INV.SPK 
     corpseBattle:
@@ -492,7 +496,9 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
     visibilityAtDay: 35
     visibilityAtDark: 30
-    #anticamo
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 30
     spriteSheet: GSC_ARBITOR_BS.PCK 
     spriteInv: GSC_ARBITOR_INV.SPK 
     corpseBattle:
@@ -529,7 +535,9 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
     visibilityAtDay: 35
     visibilityAtDark: 30
-    #anticamo
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 30
     spriteSheet: GSC_WARDEN_BS.PCK 
     spriteInv: GSC_WARDEN_INV.SPK
     corpseBattle:
@@ -559,6 +567,9 @@ armors:
   - type: STR_GSC_JUDGE_BIKE_ARMOR      #BIKE
     visibilityAtDay: 40
     visibilityAtDark: 30
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 30
     spriteSheet: GSC_JUDGE_BIKE_BS.PCK 
     spriteInv: GSC_JUDGE_BIKE_INV.SPK 
     corpseGeo: STR_GSC_JUDGE_CORPSE
@@ -817,7 +828,493 @@ armors:
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
     drawingRoutine: 0 
+    specialWeapon: STR_GSC_AUTOINJECTOR_WEAPON
 
+  - type: STR_GSC_OGRYN_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 30 #darkvision boost from Infection
+    spriteSheet: GSC_OGRYN_BS.PCK
+    spriteInv: GSC_INFECTED_OGRYN_INV.SPK
+    corpseBattle:
+      - STR_GSC_OGRYN_ORANGE_CORPSE
+    frontArmor: 30 #FLAK+ Guard AI
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 20
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 0.9 #MELEE #Tough Ogryn
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 10
+    specialWeapon: STR_OGRYN_UNARMED
+    psiDefence:
+      psiStrength: 1.0
+      moraleCurrent: 1.0
+    recovery:
+      morale:
+        flatOne: 2.0
+		
+  - type: STR_GSC_OGRYN_ORANGE_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 30 #darkvision boost from Infection
+    spriteSheet: GSC_OGRYN2_BS.PCK
+    spriteInv: GSC_INFECTED_OGRYN2_ORANGE_INV.SPK
+    corpseBattle:
+      - STR_GSC_OGRYN_ORANGE_CORPSE
+    frontArmor: 30 #FLAK+ Guard AI
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 20
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 0.9 #MELEE #Tough Ogryn
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 10
+    specialWeapon: STR_OGRYN_UNARMED
+    psiDefence:
+      psiStrength: 1.0
+      moraleCurrent: 1.0
+    recovery:
+      morale:
+        flatOne: 2.0
+		
+  - type: STR_GSC_GUARD_FLAK_ARMOR_FEMALE 
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    spriteSheet: GSC_GUARD_BS.PCK
+    spriteInv: GSC_INFECTED_GUARDFLAK_FEMALE_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_FLAK_CORPSE
+    frontArmor: 40 #FLAK+ Guard AI
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 10
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_GUARD_FLAK_ARMOR_MALE 
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    spriteSheet: GSC_GUARD_BS.PCK
+    spriteInv: GSC_INFECTED_GUARDFLAK_MALE_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_FLAK_CORPSE
+    frontArmor: 40 #FLAK+ Guard AI
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 10
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_GUARD_FLAK_ARMOR_FEMALE 
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    spriteSheet: GSC_GUARD_BS.PCK
+    spriteInv: GSC_INFECTED_GUARDFLAK_FEMALE_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_FLAK_CORPSE
+    frontArmor: 40 #FLAK+ Guard AI
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 10
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_KRIEG_ARMOR 
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    spriteSheet: GUARDSMAN_KRIEG.PCK
+    spriteInv: GSC_INFECTED_KRIEG_INV.SPK
+    corpseBattle:
+      - STR_GUARD_KRIEG_CORPSE
+    frontArmor: 40 #FLAK+ Guard AI
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 10
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_GUARD_MEDIC_ARMOR  #female infector
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    spriteSheet: GSC_GUARD_MEDIC_BS.PCK
+    spriteInv: GSC_INFECTED_GUARD_MEDIC_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_FLAK_CORPSE
+    #corpseGeo: STR_ALIEN_SURGERY
+    frontArmor: 50 #Reinforced flak+
+    sideArmor: 40
+    rearArmor: 20
+    underArmor: 10
+    damageModifier: #PDF ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+    specialWeapon: STR_GSC_AUTOINJECTOR_WEAPON
+	
+  - type: STR_GSC_GUARD_CARAPACE_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_GUARD_CARAPACE_BS.PCK
+    spriteInv: GSC_INFECTED_STORMTROOPER_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_CARAPACE_CORPSE
+    frontArmor: 70 #Carapace Guard AI
+    sideArmor: 60
+    rearArmor: 35
+    underArmor: 20
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_GUARD_CARAPACE_MEDIC_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_GUARD_CARAPACE_BS.PCK
+    spriteInv: GSC_STORMTROOPER_MEDIC_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_CARAPACE_CORPSE
+    frontArmor: 80 #Carapace+ Guard AI
+    sideArmor: 70
+    rearArmor: 35
+    underArmor: 20
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 	
+    specialWeapon: STR_GSC_AUTOINJECTOR_WEAPON
+	
+  - type: STR_GSC_GUARD_SCION_ARMOR
+    visibilityAtDay: 35
+    visibilityAtDark: 30 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 20
+    spriteSheet: GSC_SCION_BS.PCK
+    spriteInv: GSC_INFECTED_STORMTROOPER_INV.SPK #update later
+    corpseBattle:
+      - STR_GSC_SCION_CORPSE
+    frontArmor: 90 #Carapace+ Guard AI
+    sideArmor: 80
+    rearArmor: 50
+    underArmor: 40
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0
+	
+  - type: STR_GSC_TANITH_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_TANITH_BS.PCK
+    spriteInv: GSC_INFECTED_TANITH_SCOUT_INV.SPK
+    corpseBattle:
+      - STR_GSC_TANITH_CORPSE
+    frontArmor: 30 #Camo Armor
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 10
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 		
+    
+  - type: STR_GSC_GUARD_FLAK_ARMOR_OFFICER
+    visibilityAtDay: 35 #officer
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_OFFICER_FLAK_BS.PCK
+    spriteInv: GSC_FLAK_OFFICERF_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_FLAK_CORPSE
+    frontArmor: 50 #FLAK+ Guard Officer AI
+    sideArmor: 40
+    rearArmor: 25
+    underArmor: 15
+    damageModifier: #PDF ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+  - type: STR_GSC_GUARD_CARAPACE_ARMOR_OFFICER
+    visibilityAtDay: 35 #officer
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 20
+    spriteSheet: GSC_OFFICER_CARAPACE_BS.PCK
+    spriteInv: GSC_CARA_OFFICER_INV.SPK
+    corpseBattle:
+      - STR_GSC_GUARD_CARAPACE_CORPSE
+    frontArmor: 80 #CARAPACE Guard Officer AI
+    sideArmor: 70
+    rearArmor: 45
+    underArmor: 30
+    damageModifier: #PDF ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 1.0 #FLAMES
+      - 0.9 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+
+  - type: STR_GSC_COMMISSAR_ARMOR
+    visibilityAtDay: 35 #officer
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_COMMISSAR_BS.PCK
+    spriteInv: GSC_INFECTED_COMMISSAR_FEMALE.SPK
+    corpseBattle:
+      - STR_GSC_COMMISSAR_CORPSE
+    frontArmor: 50 #FLAK+ Guard Officer AI
+    sideArmor: 40
+    rearArmor: 25
+    underArmor: 15
+    damageModifier: #PDF ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.2 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+  - type: STR_GSC_COMMISSAR_CARAPACE_ARMOR
+    visibilityAtDay: 35 #officer
+    visibilityAtDark: 25 #darkvision boost from Infection
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 20
+    spriteSheet: GSC_COMMISSAR_CARA_BS.PCK
+    spriteInv: GSC_INFECTED_COMMISSARCARA_FEMALE.SPK
+    corpseBattle:
+      - STR_GSC_COMMISSAR_CORPSE
+    frontArmor: 80 #CARAPACE Guard Officer AI
+    sideArmor: 70
+    rearArmor: 45
+    underArmor: 30
+    damageModifier: #PDF ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 1.0 #FLAMES
+      - 0.9 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.9 #STUN #GSC RESISTANCE
+      - 1.1 #MELEE
+      - 0.9 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0 
+	
+  - type: STR_GSC_PSYKER_ARMOR
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 10
+    spriteSheet: GSC_PSYKER_BS.PCK
+    spriteInv: GSC_INFECTED_PSYKER_INV.SPK
+    corpseBattle:
+      - STR_GSC_PSYKER_CORPSE
+    frontArmor: 20
+    sideArmor: 18
+    rearArmor: 16
+    underArmor: 12
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_MIND_READ
+    builtInWeapons:
+      - STR_TELEPATH_STAFF
+	  - STR_PSYKER_STUN_STRIKE
+    recovery:
+      energy:
+        energyRegen: 1.5
+        psiSkill: 0.2
+      morale:
+        flatOne: 1.0
+        psiSkill: 0.035
+	
   - type: STR_GSC_MEDICAE_ARMOR #female infector
     visibilityAtDay: 30
     visibilityAtDark: 25 #darkvision boost from Infection
@@ -845,3 +1342,4 @@ armors:
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
     drawingRoutine: 0 
+    specialWeapon: STR_GSC_AUTOINJECTOR_WEAPON
