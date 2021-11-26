@@ -51,6 +51,20 @@ research:
 #*** components ***
 
 #*** early weaponry ***
+
+
+  - name: STR_STANDARD_SMALL_ARMS_RESEARCH
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_STANDARD_SMALL_ARMS_RESEARCH_REQ
+  - name: STR_STANDARD_SMALL_ARMS_RESEARCH_REQ
+    cost: 0
+    points: 0  
+    dependencies:
+      - STR_GENERIC_HEAVY_STUBBER
+      - STR_PUMP_SHOTGUN
+      - STR_SMG_STUB_GUN
   - name: STR_HEAVY_WEAPONS_RESEARCH 
     cost: 0
     points: 0
@@ -107,6 +121,26 @@ research:
       - STR_TZEENTCH
       - STR_SLAANESH
 
+
+  #Generic weapons
+  - name: STR_GENERIC_HEAVY_STUBBER
+    cost: 25
+    points: 15
+    needItem: true
+  - name: STR_PUMP_SHOTGUN
+    cost: 25
+    points: 15
+    needItem: true
+  - name: STR_SMG_STUB_GUN
+    cost: 25
+    points: 15
+    needItem: true
+  - name: STR_STUB_GUN_AMMO_LONG
+    cost: 25
+    points: 15
+    needItem: true
+    
+    
   # marines
 
 
@@ -940,8 +974,20 @@ research:
     dependencies:
       - STR_GRAVGUN_NURGLE
       - STR_NURGLE_KOMBIBOLTER_GRAV
-    
-    
+
+  - name: STR_WEBBER
+    cost: 500
+    points: 20
+    dependencies:
+      - STR_IMPERIAL_WEBBER_DEP1
+  - name: STR_IMPERIAL_WEBBER_DEP1
+    requires:
+      - STR_ADEPTAS
+    dependencies:
+      - STR_GSC_HEAVY_WEBBER
+      - STR_GSC_WEBBER_PISTOL
+      - STR_SLAAN_CONSTRICTOR_WEBBER
+
   - name: STR_HARMONIC_MELTAGUN 
     cost: 400
     points: 20
@@ -2104,6 +2150,506 @@ research:
     points: 10
     needItem: true
 
+
+#GSC Research
+  - name: STR_GSC_INITIAL_DISCOVERY #1A basic fluff ufopedia unlock for GSC
+    cost: 100
+    points: 15
+    needItem: false
+    unlocks:
+     - STR_ORDO_XENOS_INVESTIGATION
+    dependencies:
+     - STR_GSC_INTERROGATION_DEP1
+
+  - name: STR_GSC_INTERROGATION_DEP1
+    #requires:
+    dependencies: #fill in with basic GSC cult members
+      - STR_GSC_CIVILIAN_F0
+      - STR_GSC_CIVILIAN_F1
+      - STR_GSC_CIVILIAN_M0
+      - STR_GSC_CIVILIAN_M1
+      - STR_GSC_SPACER_FEMALE
+      - STR_GSC_SPACER_MALE
+      - STR_GSC_PENETANTE_FEMALE
+      - STR_GSC_PENETANTE_LEEROY
+      - STR_GSC_ENFORCER_MEDIC
+ 
+  - name: STR_GSC_DISCOVERY_INFECTION #1B
+    requires:
+     - STR_GSC_INITIAL_DISCOVERY
+     
+  - name: STR_GSC_CULT_INITIAL_REPORT_ORIGINS #2A
+    requires:
+     - STR_GSC_INITIAL_DISCOVERY
+     
+  - name: STR_ORDO_XENOS_INVESTIGATION #3A some sort of event chain hook to find their secret lair
+    requires:
+     - STR_GSC_CULT_INITIAL_REPORT_ORIGINS
+      
+  - name: STR_GSC_XENO_INFECTION_TEST_RESULTS #2B
+    requires:
+     - STR_GSC_DISCOVERY_INFECTION  
+   
+  - name: STR_GSC_MEANS_OF_INFECTION #3B Fluff for Infection mechanics
+    cost: 100
+    points: 15
+    needItem: false
+    unlocks:
+     - STR_ORDO_XENOS_INVESTIGATION
+    dependencies:
+     - STR_GSC_INTERROGATION_DEP1
+     
+   #STR_GSC_CULT_FURTHER_LEADS #4A
+   #STR_GSC_XENO_HYBRIDS #4B
+   #STR_GSC_CULT_THE_TRUE_THREAT #5A
+   #STR_GSX_XENO_GENESTEALER_LIFECYCLE #5B
+     
+  - name: STR_GSC_CIVILIAN_F0
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_GSC_INTERROGATION_DEP1
+  - name: STR_GSC_CIVILIAN_F0_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_CIVILIAN_F1
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_GSC_INTERROGATION_DEP1
+  - name: STR_GSC_CIVILIAN_F1_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_CIVILIAN_M0
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_GSC_INTERROGATION_DEP1
+  - name: STR_GSC_CIVILIAN_M0_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_CIVILIAN_M1
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_GSC_INTERROGATION_DEP1
+  - name: STR_GSC_CIVILIAN_M1_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_SPACER_FEMALE
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_SPACER_MALE
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_CIVILIAN_SPACER_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_PENETANTE_FEMALE
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PENETANTE_LEEROY
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PENETANTE_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+
+  - name: STR_GSC_JUDGE_BIKE
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_SENTINEL
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ARMORED_CAR
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ENFORCER_HEAVY
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ENFORCER_SHIELD
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ENFORCER_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_ENFORCER_MEDIC
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ENFORCER_MEDIC_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_JUDGEF
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_JUDGEM
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_JUDGE_CORPSE 
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_ARBITOR
+    cost: 125
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ARBITOR_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_WARDEN
+    cost: 200
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_WARDEN_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_PDF_SOLDIER
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PDF_GUNNER
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PDF_MEDIC
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PDF_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+
+  - name: STR_GSC_ARMORED_CAR
+    cost: 50
+    points: 10
+    needItem: true  
+  - name: STR_GSC_KRIEG_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_KRIEG_MALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_TANITH_MALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_TANITH_FEMALE
+    cost: 50
+    points: 10
+    needItem: true  
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_OGRYN
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+     - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_OGRYN_ORANGE
+    cost: 50
+    points: 10
+    needItem: true  
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_FLAK_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+     - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_FLAK_MALE
+    cost: 50
+    points: 10
+    needItem: true    
+    unlocks:
+     - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_MEDIC_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_MEDIC_MALE
+    cost: 50
+    points: 10
+    needItem: true    
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_FLAK_OFFICER_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_FLAK_OFFICER_MALE
+    cost: 50
+    points: 10
+    needItem: true   
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_MALE
+    cost: 50
+    points: 10
+    needItem: true   
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_MEDIC_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_MEDIC_MALE
+    cost: 50
+    points: 10
+    needItem: true 
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_OFFICER_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_CARAPACE_OFFICER_MALE
+    cost: 50
+    points: 10
+    needItem: true    
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_SCION_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+     - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_GUARD_SCION_MALE
+    cost: 50
+    points: 10
+    needItem: true  
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PSYKER_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PSYKER_MALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_COMMISSAR_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_COMMISSAR_MALE
+    cost: 50
+    points: 10
+    needItem: true     
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_COMMISSAR_CARAPACE_FEMALE
+    cost: 50
+    points: 10
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_COMMISSAR_CARAPACE_MALE
+    cost: 50
+    points: 10
+    needItem: true      
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_OGRYN_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_OGRYN_ORANGE_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_TANITH_CORPSE
+    cost: 50
+    points: 10
+    needItem: true  
+  - name: STR_GSC_GUARD_FLAK_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GUARD_KRIEG_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_GUARD_CARAPACE_CORPSE
+    cost: 50
+    points: 10
+    needItem: true   
+  - name: STR_GSC_SCION_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_PSYKER_CORPSE
+    cost: 50
+    points: 10
+    needItem: true    
+  - name: STR_GSC_COMMISSAR_CORPSE
+    cost: 50
+    points: 10
+    needItem: true     
+    
+  - name: STR_GSC_PDF_MEDIC
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_PDF_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+    
+  - name: STR_GSC_MEDICAE
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_MEDICAE_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_INFECTED_REPENTIA
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_REPENTIA_CORPSE
+    cost: 50
+    points: 10
+    needItem: true
+  - name: STR_GSC_INFECTED_ADEPTAS
+    cost: 100
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+  - name: STR_GSC_ADEPTAS_CORPSE
+    cost: 50
+    points: 10
+    needItem: true   
+
+  - name: STR_GSC_HEAVY_WEBBER
+    cost: 100
+    points: 15
+    needItem: true
+  - name: STR_HEAVY_WEBBER_AMMO 
+    cost: 50
+    points: 15
+    needItem: true
+  - name: STR_GSC_WEBBER_PISTOL
+    cost: 100
+    points: 15
+    needItem: true
+  - name: STR_PISTOL_WEBBER_AMMO
+    cost: 50
+    points: 15
+    needItem: true
+  - name: STR_STUN_SHELLS
+    cost: 50
+    points: 15
+    needItem: true
+  - name: STR_STUN_GAS_SHELLS
+    cost: 50
+    points: 15
+    needItem: true
+    
 #ORK Interrogation (Needed for Ufopedia hooks)
 #  - name: STR_ORK_ARDESTBOY
 #    cost: 192
