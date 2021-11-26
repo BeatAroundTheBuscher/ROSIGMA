@@ -1,0 +1,141 @@
+missionScripts:
+  - &STR_COMMON_MISSION
+    type: repeatingLightWaveFirst
+    executionOdds: 100
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_LIGHT: 100
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 100
+        STR_ARCTIC: 50
+        STR_ANTARCTICA: 50
+        STR_SOUTH_AMERICA: 100
+        STR_EUROPE: 100
+        STR_NORTH_AFRICA: 100
+        STR_SOUTHERN_AFRICA: 100
+        STR_CENTRAL_ASIA: 100
+        STR_SOUTH_EAST_ASIA: 100
+        STR_SIBERIA: 100
+        STR_AUSTRALASIA: 100
+#        STR_PACIFIC
+#        STR_NORTH_ATLANTIC
+#        STR_SOUTH_ATLANTIC
+#        STR_INDIAN_OCEAN
+
+    useTable: false
+    startDelay: 3000
+
+
+  - type: repeatingHeavyWaveSecond
+    refNode: *STR_COMMON_MISSION
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HEAVY: 100
+
+    startDelay: 21600 # 10-20 days
+
+
+  - type: repeatingLightWaveSecond
+    executionOdds: 100
+    refNode: *STR_COMMON_MISSION
+    firstMonth: 5
+
+
+  - type: repeatingHeavyWaveSecond
+    refNode: *STR_COMMON_MISSION
+    firstMonth: 5
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HEAVY: 100
+
+    startDelay: 21600 # 10-20 days
+
+
+  - type: repeatingSpecialWave
+    firstMonth: 2
+    refNode: *STR_COMMON_MISSION
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HEAVY: 100
+    startDelay: 21600 # 10-20 days
+
+  - type: repeatingTerrorWave
+    firstMonth: 1
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 100
+        STR_ARCTIC: 50
+        STR_ANTARCTICA: 50
+        STR_SOUTH_AMERICA: 100
+        STR_EUROPE: 100
+        STR_NORTH_AFRICA: 100
+        STR_SOUTHERN_AFRICA: 100
+        STR_CENTRAL_ASIA: 100
+        STR_SOUTH_EAST_ASIA: 100
+        STR_SIBERIA: 100
+        STR_AUSTRALASIA: 100
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR: 100
+    startDelay: 5000 # 10-20 days
+
+
+  - type: starterWaveLight
+    refNode: *STR_COMMON_MISSION
+    firstMonth: 0
+    lastMonth: 0
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_LIGHT: 100
+    startDelay: 3000
+    targetBaseOdds: 100 # start where the player placed their base
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#  example                       # the type/name is used for overwriting or deleting purposes.
+#    firstMonth: 0                       # months this command runs on, 0 runs on startup of a new game (default 0)
+#    lastMonth: 0                        # don't run after this month. in this context we mean "run once". -1 denotes no limit (default -1)
+#    label: 1                            # label, used for conditionals (default 0)
+#    conditionals: [1, -2]               # conditional list, just like mapscripts (default none)
+#    missionWeights:                     # the type of mission to spawn (omit to pick one from the mission table) (default none)
+#      0:                                # these are split into monthly chunks, and can contain multiple entries,
+#        STR_ALIEN_RESEARCH: 20          # including weighted odds, but there is a caveat here:
+#        STR_ALIEN_ABDUCTION: 30         # you cannot mix and match missions with mission site objectives (ie: terror) with regular missions,
+#        STR_ALIEN_CROP_CIRCLES: 30      # they are generated too differently. using executionOdds and conditionals instead can achieve
+#        STR_CATTLE_MUTILATION: 20       # exactly the same thing. similarly, terror missions should not appear in regional mission weights (regions.rul)
+#    executionOdds: 100                  # % chances of this command executing (default 100)
+#    targetBaseOdds: 75                  # % chances of this mission targeting a region containing an xcom base instead of random (default 0)
+#    startDelay: 120                     # number of minutes to delay the start of the mission (rounded down to the nearest 30, 0 to use the wave timer from the mission itself) (default 0)
+#    raceWeights:                        # can override established monthly race weights here if desired (default empty)
+#      0:
+#        STR_SECTOID: 100                # in this case we want a sectoid mission, so they get 100%
+#    regionWeights:                      # again, this can override the defined mission region weights (default empty)
+#      0:                                # this won't come into play here unless the mission doesn't target an xcom base, as described above.
+#        STR_SAMPLE_REGION1: 20          # IF OMITTED:
+#        STR_SAMPLE_REGION2: 30          # for a terror type mission, all regions that meet the criteria will be weighed equally.
+#        STR_SAMPLE_REGION3: 50          # for regular missions the normal regional distribution weights will be applied.
+#    minDifficulty: 0                    # this command only applies to difficulty levels of this or above (default 0)
+#    researchTriggers:                   # a list of research topics that can influence the execution of this mission (default empty)
+#      STR_THE_MARTIAN_SOLUTION: true    # in this case, the mission would only run if the player has the martian solution
+#      STR_CYDONIA_OR_BUST: false        # and does NOT have Cydonia or bust
+#    maxRuns: 12                         # this mission type can only execute this number of times, -1 for infinite (default -1)
+#    avoidRepeats: 12                    # this means "store an array of the 12 previous coordinates, and don't use them again" (default 0)
+#    varName: researching                # this is an internal variable name, used for tracking maxruns and avoidRepeats (default none)
+#    useTable: false                     # check this mission type appears in the mission tables, and remove it if it does? (default true)
