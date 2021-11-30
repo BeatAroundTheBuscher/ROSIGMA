@@ -4786,3 +4786,488 @@ alienDeployments:
     length: 60
     height: 9
     missionBountyItem: STR_TERROR_SHIP_DATA
+
+#GSC Missions
+  - type: STR_GSC_CIVILIAN_TERROR #GS rounding up civilians
+    briefing:
+      title: STR_CIV_TERROR_TITLE #TERROR MISSION 
+      palette: 4
+      desc: STR_CIV_TERROR_DESCRIPTION #Civilian area terrorized
+      music: gmstory2
+      showCraft: true
+      showTarget: false
+      background: BACK169.SCR
+    data:
+      - alienRank: 1 #leader
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 0 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 3 #medic
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 6 #Extra Infectors
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 8 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    civiliansByType:
+      STR_CIVILIAN_F0: 3
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 4
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 3
+      STR_CLOAKED_WOMAN2: 2
+      STR_CIVILIAN_M1: 4
+      STR_MONK1: 3
+      STR_MONK2: 2  
+    width: 50
+    length: 50
+    height: 9
+    terrains:
+      - CITY
+      - RIG
+      - INDUSTRIALURBANDIO
+    script: CITY_RIOT
+    alert: STR_ALIENS_TERRORISE
+    alertBackground: GSCCIVILIANSBG.SCR 
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      palette: 2
+      desc: STR_GSC_TERROR_BRIEFING #CIVILIAN LOCKDOWN / ROUND UP
+      title: STR_GSC_TERROR_MISSION #CIVILIAN DISTURBANCE
+    markerName: STR_TERROR_SITE
+    duration: [14, 28]
+    despawnPenalty: 500
+    
+  - type: STR_GSC_PRECINCT_START
+    markerIcon: 34 #same as space hulk artifact site - could use that tyranid icon
+    terrains:
+      - CITY
+      - RIG
+    script: CITY_RIOT
+    alienBase: true
+    #objectiveType: 100 # not used until we have the tiles for it
+    objectiveComplete: [STR_GSC_BASE_DESTROYED, 750]
+    #objectivePopup: STR_ORK_CONTROL_CENTER_DESTROYED # not used until we have an objectiveType
+    data:
+      - alienRank: 0 #COMMANDER
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 100
+      - alienRank: 1 #leader
+        lowQty: 1
+        highQty: 1
+        dQty: 3
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2 #engineer heavy
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 3 #medic
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 8 #Extra Infectors
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 4 #navigator
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 4 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 5 #soldier
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 14 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    civiliansByType:
+      STR_CIVILIAN_F0: 3
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 2
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 3
+      STR_CLOAKED_WOMAN2: 2
+      STR_CIVILIAN_M1: 2
+      STR_MONK1: 2
+      STR_MONK2: 2  
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_GSC_BASE_ASSAULT
+      textOffset: -16
+      background: GSCCIVILIANSBG.SCR
+      showTarget: false
+      desc: STR_GSC_BASE_ASSAULT_BRIEFING
+    missionBountyItem: STR_ALIEN_HABITAT #replace with kill tokens?
+    markerName: STR_GSC_BASE
+    genMission: #what missions this base generates
+      #*** Game start base creation ***
+      STR_GSC_PRECINCT_BASE_NEW: 70
+      STR_GSC_RETALIATION: 5
+      STR_DESERTER_HIDEOUT_GSC: 25
+      #ARBITES INFILTRATION
+      #PDF INFILTRATION
+      #ADEPTAS SHRINE INFILTRATION
+      #STR_ORK_BASE_FROM_EXISTING: 30
+      #*** Normal tier 4 missions ***
+      #STR_ORK_WAGGON_PATROL_SMALL: 35
+      #STR_ORK_WAGGON_PATROL_MEDIUM: 20
+      #STR_ORK_WAGGON_PATROL_LARGE: 5
+      #STR_ORK_AIR_PATROL: 20
+      #STR_ORK_WAAAGH: 20
+    genMissionFreq: 4 #18
+    baseDetectionRange: 500            # base radar range, in nautical miles
+    baseDetectionChance: 25            # base radar chance (once every 10 minutes), in percent
+    #huntMissionMaxFrequency: 1800       # generate hunt mission max every 300 minutes (= 5 hours)
+    #huntMissionWeights:                # which hunt mission to generate, based on months passed and weights
+      #0:
+        #STR_ORK_AIR_PATROL: 100
+    alienBaseUpgrades:
+      0:
+        STR_GSC_PRECINCT_START: 100
+      6:
+        STR_GSC_PRECINCT_5: 100
+    width: 60 #vast city feel
+    length: 60 #vast city feel
+    height: 7
+    
+  - type: STR_GSC_PRECINCT_1 #LEVEL 1 Precinct
+    randomRace: [STR_GSC_ARBITES_PRECINCT]
+    markerIcon: 34
+    terrains:
+      - CITY
+      - RIG
+    script: CITY_RIOT
+    alienBase: true
+    #objectiveType: 100 # not used until we have the tiles for it
+    objectiveComplete: [STR_GSC_BASE_DESTROYED, 250]
+    #objectivePopup: STR_ORK_CONTROL_CENTER_DESTROYED # not used until we have an objectiveType
+    data:
+      - alienRank: 1 #leader
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2 #engineer heavy
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 0 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 3 #medic
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #Extra Infectors
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 4 #navigator
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 1 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 5 #soldier
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 14 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 1 #1
+        highQty: 1 #3
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 1 #1
+        highQty: 1 #3
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    civiliansByType:
+      STR_CIVILIAN_F0: 3
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 2
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 3
+      STR_CLOAKED_WOMAN2: 2
+      STR_CIVILIAN_M1: 2
+      STR_MONK1: 2
+      STR_MONK2: 2  
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_GSC_BASE_ASSAULT
+      textOffset: -16
+      background: GSCCIVILIANSBG.SCR
+      showTarget: false
+      desc: STR_GSC_BASE_ASSAULT_BRIEFING
+    missionBountyItem: STR_ALIEN_HABITAT #replace with kill tokens?
+    markerName: STR_GSC_BASE
+    genMission: #no new base building or retaliations until its upgraded
+      #STR_ORK_WAGGON_PATROL_SMALL: 75
+      #STR_ORK_WAGGON_PATROL_MEDIUM: 25
+      #ARBITES INFILTRATION
+      STR_DESERTER_HIDEOUT_GSC: 100 #10-25 intended once more conversion missions are done
+      #PDF INFILTRATION
+      #ADEPTAS SHRINE INFILTRATION
+    genMissionFreq: 1 # average of ~0.6/month
+    alienBaseUpgrades:
+      0:
+        STR_GSC_PRECINCT_1: 100
+      3:
+        STR_GSC_PRECINCT_3: 100
+      6:
+        STR_GSC_PRECINCT_5: 100
+    width: 50
+    length: 50
+    height: 7
+
+  - type: STR_GSC_PRECINCT_3 #LEVEL 3 Precinct
+    randomRace: [STR_GSC_ARBITES_PRECINCT, STR_GSC_ENFORCERS_ROUNDUP]
+    markerIcon: 34
+    terrains:
+      - CITY
+      - RIG
+    script: CITY_RIOT
+    alienBase: true
+    #objectiveType: 100 # not used until we have the tiles for it
+    objectiveComplete: [STR_GSC_BASE_DESTROYED, 500]
+    #objectivePopup: STR_ORK_CONTROL_CENTER_DESTROYED # not used until we have an objectiveType
+    data:
+      - alienRank: 1 #leader
+        lowQty: 1
+        highQty: 1
+        dQty: 3
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2 #engineer heavy
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 3 #medic
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 6 #Extra Infectors
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 4 #navigator
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 3 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 5 #soldier
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 14 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 1 #1
+        highQty: 1 #3
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 1 #1
+        highQty: 1 #3
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    civiliansByType:
+      STR_CIVILIAN_F0: 3
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 2
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 3
+      STR_CLOAKED_WOMAN2: 2
+      STR_CIVILIAN_M1: 2
+      STR_MONK1: 2
+      STR_MONK2: 2  
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_GSC_BASE_ASSAULT
+      textOffset: -16
+      background: GSCCIVILIANSBG.SCR
+      showTarget: false
+      desc: STR_GSC_BASE_ASSAULT_BRIEFING
+    missionBountyItem: STR_ALIEN_HABITAT #replace with kill tokens?
+    markerName: STR_GSC_BASE
+    genMission: #no new base building or retaliations until its upgraded
+      STR_GSC_PRECINCT_BASE_NEW: 45
+      STR_DESERTER_HIDEOUT_GSC: 50
+      STR_GSC_RETALIATION: 5
+      #ARBITES INFILTRATION
+      #PDF INFILTRATION
+      #ADEPTAS SHRINE INFILTRATION
+    genMissionFreq: 4 # average of ~2/month
+    baseDetectionRange: 300            # base radar range, in nautical miles
+    baseDetectionChance: 15           # base radar chance (once every 10 minutes), in percent
+    #huntMissionMaxFrequency: 1800       # generate hunt mission max every 300 minutes (= 5 hours)
+    #huntMissionWeights:                # which hunt mission to generate, based on months passed and weights
+      #0:
+        #STR_ORK_AIR_PATROL: 100
+    alienBaseUpgrades:
+      0:
+        STR_GSC_PRECINCT_3: 100
+      3:
+        STR_GSC_PRECINCT_5: 100
+    width: 50
+    length: 50
+    height: 7
+
+  - type: STR_GSC_PRECINCT_5 #LEVEL 5 Precinct
+    randomRace: [STR_GSC_ARBITES_PRECINCT]
+    markerIcon: 34
+    terrains:
+      - CITY
+      - RIG
+    script: CITY_RIOT
+    alienBase: true
+    #objectiveType: 100 # not used until we have the tiles for it
+    objectiveComplete: [STR_GSC_BASE_DESTROYED, 1000]
+    #objectivePopup: STR_ORK_CONTROL_CENTER_DESTROYED # not used until we have an objectiveType
+    data:
+      - alienRank: 0 #COMMANDER
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 100
+      - alienRank: 1 #leader
+        lowQty: 2
+        highQty: 2
+        dQty: 3
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2 #engineer heavy
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 3 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 3 #medic
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 9 #Extra Infectors
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 4 #navigator
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 5 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 5 #soldier
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 18 #1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 3
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 3
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets 
+    civiliansByType:
+      STR_CIVILIAN_F0: 3
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 2
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 3
+      STR_CLOAKED_WOMAN2: 2
+      STR_CIVILIAN_M1: 2
+      STR_MONK1: 2
+      STR_MONK2: 2  
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_GSC_BASE_ASSAULT
+      textOffset: -16
+      background: GSCCIVILIANSBG.SCR
+      showTarget: false
+      desc: STR_GSC_BASE_ASSAULT_BRIEFING
+    missionBountyItem: STR_ALIEN_HABITAT #replace with kill tokens?
+    markerName: STR_GSC_BASE
+      STR_GSC_PRECINCT_BASE_NEW: 50
+      STR_GSC_RETALIATION: 10
+      STR_HIJACKED_TRANSPORT_GSC: 20 #infiltration mission
+      STR_DESERTER_HIDEOUT_GSC: 25 #conversion mission
+      #ARBITES INFILTRATION
+      #PDF INFILTRATION
+      #ADEPTAS SHRINE INFILTRATION
+    genMissionFreq: 8 
+    baseDetectionRange: 600            # base radar range, in nautical miles
+    baseDetectionChance: 33            # base radar chance (once every 10 minutes), in percent
+    #huntMissionMaxFrequency: 1800       # generate hunt mission max every 300 minutes (= 5 hours)
+    #huntMissionWeights:                # which hunt mission to generate, based on months passed and weights
+      #0:
+        #STR_ORK_AIR_PATROL: 100
+    width: 60
+    length: 60
+    height: 7
+    
+    #Add GSC Convoy patrol
+    #More GSC Conversion Missions targeting varied environments (unlikely to show in normal missions) and Imperial Factions
+    #Add GSC Infiltration using GSC Convoy vehicles.
+    #Add GSC Hunt Airborne ufo?
+    
