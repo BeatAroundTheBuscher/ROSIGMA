@@ -1,6 +1,39 @@
 missionScripts:
   - type: recurringTerror
     executionOdds: 80
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR: 10
+        STR_CIVILIAN_TERROR: 90
+      3: 
+        STR_ALIEN_TERROR: 33
+        STR_CIVILIAN_TERROR: 67
+      6: 
+        STR_ALIEN_TERROR: 50
+        STR_CIVILIAN_TERROR: 50
+
+  - type: GSC_SPACE_HULK_ARRIVAL_SCRIPT
+    executionOdds: 50 #50% per month
+    firstMonth: 0
+    lastMonth: 4
+    startDelay: 16000
+    #maxRuns: 1 #crashy
+    missionWeights:
+      0:
+        STR_SPACE_HULK_GSC: 100 #space hulk
+        
+  - type: recurringGSCTerror
+    executionOdds: 33 #33% chance per month or a mission every three months
+    missionWeights:
+      0:
+        STR_GSC_CIVILIAN_TERROR_MISSION: 100
+      1:         
+        STR_GSC_CIVILIAN_TERROR_MISSION: 100
+      3: 
+        STR_GSC_CIVILIAN_TERROR_MISSION: 100
+      6: 
+        STR_GSC_CIVILIAN_TERROR_MISSION: 100 #could make late game ones have NPCs with death grenades that spawn disguised hybrids
+
 
   - type: deserterHideout
     firstMonth: 0
@@ -21,9 +54,21 @@ missionScripts:
 
   - type: gameStartCultist
     executionOdds: 50
+    firstMonth: 2
+    lastMonth: 2
 
   - type: gameStartTraitorGuard
     executionOdds: 100 # either Cultists or Traitor Guard
+    firstMonth: 2
+    lastMonth: 2
+
+  - type: gameStart # initial mission in player region
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH: 100
+    lastMonth: 0
+    targetBaseOdds: 100
+    startDelay: 3000
 
 
   - &SPACEHULK_ORK_BASE
