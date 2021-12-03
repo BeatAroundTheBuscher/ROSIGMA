@@ -754,25 +754,66 @@ items:
     listOrder: 13310
 #---Tatical------------------------------------------------------      dropoff: 5
   - type: STR_SHOTGUN #                               10600
-    categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
-    size: 0.2
-    costBuy: 10000
-    costSell: 5000
-    weight: 7
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS
+      - STR_STUN_SHELLS 
+      - STR_STUN_GAS_SHELLS 
     accuracySnap: 75
     accuracyAimed: 95
     tuSnap: 20
     tuAimed: 35
-    battleType: 1
-    twoHanded: true
-    invWidth: 1
-    invHeight: 3
-    listOrder: 10600
-    aimRange: 10
-    snapRange: 8
-    dropoff: 5
+
+  - type: STR_STUN_SHELLS #                        10710
+    categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
+    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
+    shotgunSpread: 25
+    size: 0.1
+    costBuy: 1500
+    costSell: 150
+    weight: 3
+    bigSprite: {mod: 40k, index: 236} #make new with alt color 
+    floorSprite: {mod: 40k, index: 119}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 40 #40 for normal shotgun shells 
+    damageAlter: #DA SHOTGUN
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.7
+      ToHealth: 0.1
+      ToStun: 0.4
+      ToEnergy: 1.0
+      ToTime: 1.0
+    damageType: 5 #plasma energy shock 
+    clipSize: 8
+    battleType: 2
+    listOrder: 10710
+
+  - type: STR_STUN_GAS_SHELLS #                        10710
+    categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
+    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
+    shotgunSpread: 25
+    size: 0.1
+    costBuy: 1500
+    costSell: 150
+    weight: 3
+    bigSprite: {mod: 40k, index: 236} #make new with alt color 
+    floorSprite: {mod: 40k, index: 119}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: 832 #blight rocket
+    hitAnimation: 1020 #pink skull splosion
+    power: 30 #40 for normal shotgun shells 
+    damageAlter: #DA SHOTGUN
+      ArmorEffectiveness: 0.6
+      ToHealth: 0.1
+      ToStun: 0.5
+      ToEnergy: 1.5
+      ToTime: 1.5
+    damageType: 9 #acid stun gas smoke bypasses 
+    blastRadius: 3
+    clipSize: 8
+    battleType: 2
+    listOrder: 10710
 
   - type: STR_SHOTGUN_SHELLS #                        10710
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
