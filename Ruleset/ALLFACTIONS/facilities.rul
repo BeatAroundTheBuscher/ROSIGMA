@@ -1,3 +1,138 @@
 facilities:
   - type: STR_POWERG
     monthlyCost: -300000 # from -150000
+
+  - type: STR_OUTPOST_TEMP_STORAGE
+    requiresBaseFunc: [OUTP_UPGRADE]
+    maxAllowedPerBase: 1
+    spriteShape: {mod: 40k, index: 0}
+    spriteFacility: 740
+    buildCost: 150000
+    buildTime: 5
+    monthlyCost: 9000000
+    personnel: 50
+    storage: 100
+    mapName: XBASE_57
+    requires:
+      - STR_HYPER_WAVE_DECODER
+    listOrder: 801
+
+  - &STR_OUTPOST_NORMAL
+    type: STR_OUTPOST_GUARD
+    canBeBuiltOver: true
+    provideBaseFunc: [OUTP_UPGRADE]
+    maxAllowedPerBase: 1
+    refundValue: 500000
+
+  - type: STR_OUTPOST # Arbites
+    refNode: *STR_OUTPOST_NORMAL
+
+  - type: STR_OUTPOST_ADEPTAS
+    refNode: *STR_OUTPOST_NORMAL
+
+  - type: STR_OUTPOST_MARINES
+    refNode: *STR_OUTPOST_NORMAL
+
+
+  - &STR_OUTPOST_DECODER
+    type: STR_OUTPOST_GUARD_HYPER
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_HYPER_WAVE_DECODER
+    requiresBaseFunc: [OUTP]
+    provideBaseFunc: [OUTP_UPGRADE]
+    connectorsDisabled: true
+    spriteShape: 700
+#    spriteFacility: 700
+    size: 4
+    buildCost: 1250000
+    crafts: 1
+    buildTime: 15 # 10
+    monthlyCost: 650000 # 600000 # 800000 is too much
+    personnel: 50
+    storage: 100
+    mapName: XBASE_60
+    storageTiles:
+            - [24, 6, 1]
+            - [25, 6, 1]
+            - [27, 6, 1]
+            - [22, 4, 1]
+            - [34, 10, 1]
+            - [28, 3, 1]
+            - [27, 3, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60]
+        size: [4, 4, 1]
+      - type: ceiling
+        size: [4, 4, 3]
+        terrain: VOSS4X4
+        blocks: [0]
+    listOrder: 800
+    # hyper
+    radarRange: 2759
+    radarChance: 100
+    hyper: true
+    buildOverFacilities: # shouldn't matter, so might be the same for all
+      - STR_OUTPOST_GUARD
+      - STR_OUTPOST
+      - STR_OUTPOST_ADEPTAS
+      - STR_OUTPOST_MARINES
+
+  - type: STR_OUTPOST_ARBITES_HYPER
+    refNode: *STR_OUTPOST_DECODER
+    requires:
+      - STR_ARBITES
+      - STR_HYPER_WAVE_DECODER
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60]
+        size: [4, 4, 1]
+      - type: ceiling
+        size: [4, 4, 3]
+        terrain: VULTURE4X4
+        blocks: [0]
+
+  - type: STR_OUTPOST_MARINES_HYPER
+    refNode: *STR_OUTPOST_DECODER
+    requires:
+      - STR_MARINES_STRATEGY
+      - STR_HYPER_WAVE_DECODER
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60]
+        size: [4, 4, 1]
+      - type: ceiling
+        size: [4, 4, 3]
+        terrain: STORMT4X4
+        blocks: [0]
+
+  - type: STR_OUTPOST_ADEPTAS_HYPER
+    refNode: *STR_OUTPOST_DECODER
+    requires:
+      - STR_ADEPTAS
+      - STR_HYPER_WAVE_DECODER
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60]
+        size: [4, 4, 1]
+      - type: ceiling
+        size: [4, 4, 3]
+        terrain: ARVUS4X4
+        blocks: [0]

@@ -999,12 +999,30 @@ items:
 
 
   - type: STR_GRENADE_LAUNCHER
+    bigSprite: 257
     compatibleAmmo:
       - STR_FRAG_GRENADE_DRUM
       - STR_KRAK_GRENADE_DRUM
       - STR_INCENDIARY_GRENADE_DRUM
       - STR_SMOKE_GRENADE_DRUM
       - STR_PHOTON_GRENADE_DRUM
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+
+  - type: STR_FRAG_GRENADE_DRUM
+    bigSprite: 258
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+  - type: STR_KRAK_GRENADE_DRUM
+    bigSprite: 259
+    tags:
+      ITEM_AMMO_COLOR: 7
+
+  - type: STR_INCENDIARY_GRENADE_DRUM
+    bigSprite: 260
+    tags:
+      ITEM_AMMO_COLOR: 2
 
   - &STR_GRENADE_DRUM
     type: STR_SMOKE_GRENADE_DRUM
@@ -1018,7 +1036,6 @@ items:
     costBuy: 7500
     costSell: 6000
     weight: 5
-    bigSprite: 204
     floorSprite: {mod: 40k, index: 1008}
     handSprite: {mod: 40k, index: 1048}
     #explosionHitSound: {mod: 40k, index: 792}
@@ -1032,6 +1049,9 @@ items:
     armor: 30
     listOrder: 11890
     blastRadius: 5
+    bigSprite: 261
+    tags:
+      ITEM_AMMO_COLOR: 5
 
   - type: STR_PHOTON_GRENADE_DRUM
     refNode: *STR_GRENADE_DRUM
@@ -1041,7 +1061,6 @@ items:
       - STR_HEAVY_WEAPONS_IG
     costBuy: 6000
     costSell: 4800
-    bigSprite: 205
     blastRadius: 3
     power: 50
     damageType: 6
@@ -1051,6 +1070,9 @@ items:
       ToTime: 0.8
       RadiusReduction: 5.0
     listOrder: 11891
+    bigSprite: 262
+    tags:
+      ITEM_AMMO_COLOR: 3
 
   - type: STR_HEAVY_STUBBER_CLIP_MC
     categories: [STR_CAT_AUTO]
@@ -1089,6 +1111,7 @@ items:
   - type: STR_HEAVY_STUBBER
     autoRange: 24 # was 18
     bigSprite: 212
+    handSprite: 328
     compatibleAmmo:
       - STR_HEAVY_STUBBER_CLIP
       - STR_HEAVY_STUBBER_CLIP_MC
@@ -1519,6 +1542,15 @@ items:
       morale: 15
     flatAimed:
       time: false # was true
+    meleeType: 5
+    meleePower: 90
+    meleeAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+    tags:
+      ITEM_STRENGTH_REQUIREMENT: 30
+
 
 
 # Worked together with Tal'Raziid
@@ -1568,7 +1600,7 @@ items:
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 709} #709 chainhit
     meleeAnimation: {mod: 40k, index: 44}
-    meleePower: 80 # flat damage or does damageBonus for Inspire also count?
+    meleePower: 80 
     meleeType: 7
     accuracyMelee: 100
     meleeMultiplier:
@@ -2445,3 +2477,116 @@ items:
       flatHundred: 0.0
     experienceTrainingMode: 13
     listOrder: 12360
+
+  - type: STR_CAS_MISSILE_POD_SPAWNER
+    spawnUnit: STR_CAS_MISSILE_POD_MOUNT
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_CAS_CANNON_SPAWNER
+    spawnUnit: STR_CAS_CANNON_MOUNT
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_CAS_MISSILE_POD
+    dropoff: 5
+    bigSprite: 265
+#    floorSprite: 256
+#    handSprite: 256
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    accuracySnap: 45
+    flatRate: true
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0 }
+    power: 150
+    damageType: 3
+    clipSize: 2
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    recover: false
+    costSnap:
+     time: 1
+     energy: 5
+
+
+  - type: STR_CAS_CANNON
+    dropoff: 5
+    bigSprite: 266
+#    floorSprite: 256
+#    handSprite: 256
+    tuAuto: 1
+    flatRate: true
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0 }
+    invWidth: 1
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2138
+    accuracyAuto: 80
+    bulletSpeed: 60
+    autoRange: 14
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.95
+      ToArmor: 0.05
+      ToHealth: 1.0
+      ToStun: 0.5
+    explosionSpeed: 5
+    power: 80
+    autoShots: 9
+    clipSize: 400
+    recover: false
+    costAuto:
+     time: 1
+     energy: 5
+
+  - type: STR_GRAVDROP_DEPLOY_CHARGE
+    damageAlter:
+      FixRadius: 2
+      RandomType: 3
+      ResistType: 10
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToItem: 0.0
+      ToTile: 250.0 # was 240
+      RadiusReduction: 0.0
+
+  - type: STR_CAS_LEAVE_CHARGE
+    power: 10
+    weight: 999
+    hitAnimation: 136 #XDROP 160 ?
+    explosionHitSound: 866
+    damageType: 3
+    damageAlter:
+      FixRadius: 6
+      RandomType: 3
+      ResistType: 10
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToItem: 0.0
+      ToTile: 230.0
+      RadiusReduction: 0.0
+      TileDamageMethod: 2
+      FireThreshold: 10000
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    armor: 255
+    recover: false
+    hiddenOnMinimap: true

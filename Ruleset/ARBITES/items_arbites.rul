@@ -1,0 +1,150 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: int
+
+# https://warhammer40k.fandom.com/wiki/Heavy_Stubber#Heavy_Stubber_Ammunition
+
+#    Amputator Shells - Filled with explosive micro-shrapnel, these bullets are designed to shear flesh and shatter bone, causing limbs to be blown away.
+#    Bleeder Rounds - This ammunition is treated with toxins to prevent coagulation and keep wounds bleeding freely. These shells are designed to burst on penetration and spread the anti-coagulants quickly.
+#    Expander Rounds - Vicious and outlawed on some worlds, these dense shells are designed to shred open after impact, creating huge exit wounds.
+#    Man-Stopper Bullets - These densely tipped bullets are designed to punch through armour.
+#    Tracer Rounds - Tracer rounds are anointed with a pyrotechnic alchemical compound during construction, so that they burn brightly and visibly in flight and allow for aiming corrections on further weapons fire. Tracer rounds are usually interspersed with regular ammo, with every fourth or fifth round being a tracer. As a side effect of its luminescence, a tracer round can ignite highly combustible materials, and so certain precautions should be observed when firing them.
+
+items:
+  - &STR_STUBBERS
+    type: STR_STUB_GUN
+    bigSprite: 1001
+    compatibleAmmo:
+      - STR_STUB_GUN_AMMO
+      - STR_STUB_GUN_AMMO_AP
+      - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_HP
+      - STR_STUB_GUN_AMMO_INC
+    requiresBuy:
+      - STR_ARBITES
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 14
+      ITEM_HAS_RANDOMIZED_SPRITES: 0
+
+
+  - type: STR_STUB_RIFLE
+    refNode: *STR_STUBBERS
+    bigSprite: 1000
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 14
+
+  - &STR_STUBBERS_AMMO
+    type: STR_STUB_GUN_AMMO
+    categories: [STR_CAT_AUTO]
+    size: 0.1
+    costBuy: 150
+    costSell: 50
+    weight: 2
+    bigSprite: 1002
+    floorSprite: {mod: 40k, index: 1118}
+    handSprite: {mod: 40k, index: 1896}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter:
+      ToArmorPre: 0.05
+    explosionSpeed: 5
+    power: 42
+    damageType: 1
+    clipSize: 8
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    armor: 30
+    attraction: 1
+    requiresBuy:
+      - STR_ARBITES
+    tags:
+      ITEM_AMMO_COLOR: 0
+
+  - type: STR_STUB_GUN_AMMO_AP
+    refNode: *STR_STUBBERS_AMMO
+    bigSprite: 1003
+    damageAlter: 
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.0
+      ToArmor: 0.0
+      ToHealth: 1.0
+      ToStun: 0.5
+    listOrder: 10716
+    tags:
+      ITEM_AMMO_COLOR: 3
+
+  - type: STR_STUB_GUN_AMMO_WOUND
+    refNode: *STR_STUBBERS_AMMO
+    bigSprite: 1004
+    damageAlter: 
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0
+      ToArmor: 0
+      ToHealth: 0.2
+      ToStun: 0
+      ToWound: 0.2
+      RandomWound: false
+    listOrder: 10717
+    tags:
+      ITEM_AMMO_COLOR: 2
+
+  - type: STR_STUB_GUN_AMMO_HP
+    refNode: *STR_STUBBERS_AMMO
+    bigSprite: 1005
+    damageAlter:
+      ToArmorPre: 0.05
+      ToHealth: 2.0
+    listOrder: 10718
+    tags:
+      ITEM_AMMO_COLOR: 8
+
+  - type: STR_STUB_GUN_AMMO_INC
+    refNode: *STR_STUBBERS_AMMO
+    bigSprite: 1006
+    damageAlter:
+      ToArmorPre: 0.05
+      ResistType: 2 # inc
+      FireThreshold: 1
+      ToTile: 0
+    listOrder: 10719
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+
+#  - type: STR_STUB_GUN_CHAOS
+#  - type: STR_STUB_RIFLE_CHAOS
+
+
+
+
+
+  - type: STR_CMAS
+    requiresBuy: 
+      - STR_GENERALLOCK
+
+  - type: STR_JUDGE_BIKE_ARMOR
+    requiresBuy:
+      - STR_GENERALLOCK
+
+  - type: INV_NULL_SENTINELPD_BACK_MISSILE
+    bigSprite: 1007
+    invWidth: 3
+    invHeight: 1
+
+  - type: STR_SENTINEL_FRAG_MISSILES_PD
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 1
+
+  - type: STR_SENTINEL_KRAKK_MISSILES_PD
+    tags:
+      ITEM_AMMO_SKIP_BIGOBS: 2
+
+  - type: STR_SENTINELPD_ARMOR
+    requiresBuy:
+      - STR_ARBITES
+      - STR_LASCAN
+
+  - type: AUX_SHIELDPD
+    defaultInventorySlot: STR_LEFT_HAND

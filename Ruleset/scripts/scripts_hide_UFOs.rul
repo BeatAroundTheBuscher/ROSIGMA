@@ -1,0 +1,29 @@
+#enum UfoDetection : int
+#{
+#        DETECTION_NONE = 0x00,
+#        DETECTION_RADAR = 0x01,
+#        DETECTION_HYPERWAVE = 0x03,
+#};
+
+# for missions that turn into a mission site
+
+alienMissions:
+  - type: STR_RESCUE_PDF_VALKYRIE
+    siteType: STR_VALKYRIE_CRASHED
+
+
+ufos:
+  - &STR_UNDETECTABLE_UFO
+    type: STR_VALKYRIE_CRASHED # may not work yet
+    scripts:
+      detectUfoFromBase: |
+        return 0 0; # detection_type detection_chance
+      detectUfoFromCraft: |
+        return 0 0;
+
+
+  - type: STR_GUARD_OUTPOST_DEFENSE_UFO
+    refNode: *STR_UNDETECTABLE_UFO
+
+  - type: STR_SUPPORT_PDF_ASSAULT_UFO
+    refNode: *STR_UNDETECTABLE_UFO

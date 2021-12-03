@@ -1,0 +1,140 @@
+# adapted version of the kill traitor script
+# have to set the TAG to 0 for everyone so the old script doesn't run
+# unfortunately there is no way to delete scripts
+
+soldiers:
+  - type: STR_GUARDSM
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_GUARD_VETERAN
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_GUARD_OFFICER
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_STORMTROOPER
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_OGRYN
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_PSYKER
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_ADEPTAS
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_CANONESS
+    tags:
+      SOLDIER_CAN_BE_TRAITOR: 0
+
+  - type: STR_COMMISSAR
+    tags:
+      SOLDIER_CAN_EXECUTE_TRAITORS: 1
+
+  - type: STR_LORD_COMMISSAR
+    tags:
+      SOLDIER_CAN_EXECUTE_TRAITORS: 1
+
+  - type: STR_LORD_COMMISSAR_YARRICK
+    tags:
+      SOLDIER_CAN_EXECUTE_TRAITORS: 1
+
+
+
+extended:
+  tags:
+    BattleGame:
+#*** Tags for traitor script ***
+      GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR: int
+      GAME_RETURN_MORALE_TURN: int
+
+    RuleSoldier:
+#*** Tags for traitor script ***
+      SOLDIER_CAN_EXECUTE_TRAITORS: int
+      SOLDIER_CAN_BE_TRAITOR: int
+      SOLDIER_COMMAND_POINTS: int
+
+
+  scripts:
+    damageUnit:
+      #*** Handles execution of friendlies for morale ***
+      - offset: 11
+        code: |
+          var ptr RuleSoldier attackingSoldier;
+          var ptr RuleSoldier executedSoldier;
+          var int soldierValue;
+          var int attackerIsExecutor;
+          var int faction;
+          var int temp;
+          var int turn;
+
+          attacker.getRuleSoldier attackingSoldier;
+          attackingSoldier.getTag attackerIsExecutor Tag.SOLDIER_CAN_EXECUTE_TRAITORS;
+
+          unit.getHealth temp; # check if the unit is actually killed
+          battle_game.getTurnSide faction;
+
+          debug_log "temp" temp;
+          debug_log "to_health" to_health;
+          debug_log "attackerIsExecutor" attackerIsExecutor;
+          debug_log "faction" faction;
+
+          if or lt to_health temp eq 0 attackerIsExecutor neq 0 faction;
+            debug_log "No Execution";
+            return;
+          end;
+
+          # Executing Penitents and Ogryns (or any non IG unit) does not grant morale
+          unit.getRuleSoldier executedSoldier;
+          executedSoldier.getTag soldierValue Tag.SOLDIER_COMMAND_POINTS; 
+
+          # unit.getHealth soldierValue; # don't use health but command points as base modifier
+          unit.getRank temp; # 0-5
+          add temp 1;
+          mul soldierValue temp;
+          mul soldierValue 10; # Executing Guardsmen will provide 15-60 (depending on rank) * (Commissar Bravery/100) Morale
+          # The result above is reduced by (100 - bravery)/bravery # low bravery will benefit the most (scared shitless)
+
+          # taken from the newTurnUnit
+          # unit.reduceByBravery traitorValue;
+          # unit.getMorale temp;
+          # add traitorValue temp;
+          # unit.setMorale traitorValue;
+
+
+          if and gt soldierValue 0 neq damaging_type 0 neq damaging_type 6 neq damaging_type 9 neq damaging_type 10;
+            # shouldn't kill a Sentinel by accident
+            # set power 9999; # This should be enough over the threshold
+
+            attacker.Stats.getBravery attackerIsExecutor;
+            muldiv soldierValue attackerIsExecutor 100; # return morale equal to modified commissar bravery
+
+            battle_game.getTurn turn; #  newTurnUnit:  if and neq null soldierRuleset lt turn traitorValue eq side 0;
+            add turn 2; # + 1 for next turn + 1 for coming over lt (Turn 11 < turnValue 12)
+
+            battle_game.getTag temp Tag.GAME_RETURN_MORALE_TURN;
+            if neq temp turn;
+              debug_log "First Execution this turn";         
+              battle_game.setTag Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR soldierValue;            
+              battle_game.setTag Tag.GAME_RETURN_MORALE_TURN turn;
+            else;
+              debug_log "Another Execution this turn";
+              battle_game.getTag temp Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR;
+              add temp soldierValue;
+              battle_game.setTag Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR soldierValue;
+            end;
+          end;
+
+          return;
+
+
+
+
