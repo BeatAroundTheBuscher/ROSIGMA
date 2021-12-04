@@ -555,8 +555,8 @@ items:
     bigSprite: 238
     floorSprite: {mod: 40k, index: 1024}
     handSprite: {mod: 40k, index: 1192}
-    bulletSprite: 12
-    fireSound: 741
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 741}
     accuracyAuto: 60
     accuracySnap: 70
     accuracyAimed: 80
@@ -567,8 +567,6 @@ items:
     snapRange: 18
     aimRange: 18
     maxRange: 26
-    damageBonus:
-      flatHundred: 0.1 #10% damage bonus over the normal lasgun
     confSnap:
       shots: 1
       spendPerShot: 2 ##higher baseline power consumption, 15 shots per clip
@@ -580,11 +578,21 @@ items:
       shots: 1
       spendPerShot: 10 #higher consumption, only 3 shots per clip
       name: STR_POWER_SHOT_2
-    compatibleAmmo:
-      - STR_LASGUN_CLIP
+    clipSize: -1
+    power: 60 
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.2 # was 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
     tags:
-      ITEM_SNAP_POWER_BONUS: 10
-      ITEM_AUTO_POWER_BONUS: 15  
+      ITEM_AUTO_POWER_BONUS: 10  
       ITEM_AIMED_POWER_BONUS: 20
     battleType: 1
     twoHanded: true
@@ -610,6 +618,8 @@ items:
     tuMelee: 14
     flatMelee:
       time: true
+    fixedWeapon: true
+    fixedWeaponShow: true
 
   - type: STR_LASGUN_TANITH
     tuAuto: 33 # was 34
@@ -2608,3 +2618,12 @@ items:
     armor: 255
     recover: false
     hiddenOnMinimap: true
+
+  - type: INV_NULL_GRENADIER_BACKPACK
+    weight: 0
+    invWidth: 3
+    invHeight: 3
+    bigSprite: 296
+    defaultInventorySlot: STR_BACK_PACK
+    fixedWeapon: true
+    recover: false
