@@ -82,13 +82,7 @@ extended:
           unit.getHealth temp; # check if the unit is actually killed
           battle_game.getTurnSide faction;
 
-          debug_log "temp" temp;
-          debug_log "to_health" to_health;
-          debug_log "attackerIsExecutor" attackerIsExecutor;
-          debug_log "faction" faction;
-
           if or lt to_health temp eq 0 attackerIsExecutor neq 0 faction;
-            debug_log "No Execution";
             return;
           end;
 
@@ -122,14 +116,12 @@ extended:
 
             battle_game.getTag temp Tag.GAME_RETURN_MORALE_TURN;
             if neq temp turn;
-              debug_log "First Execution this turn";         
               battle_game.setTag Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR soldierValue;            
               battle_game.setTag Tag.GAME_RETURN_MORALE_TURN turn;
             else;
-              debug_log "Another Execution this turn";
               battle_game.getTag temp Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR;
               add temp soldierValue;
-              battle_game.setTag Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR soldierValue;
+              battle_game.setTag Tag.GAME_RETURN_MORALE_FROM_EXECUTED_TRAITOR temp;
             end;
           end;
 
