@@ -1,0 +1,60 @@
+extended:
+  tags:
+    BattleUnit:
+      SOLDIER_IS_FANATIC: int # Priest Fanaticism ability
+
+  scripts:
+    damageUnit:
+      - offset: 1
+        code: |
+          var int isFanatic;
+
+          unit.getTag isFanatic Tag.SOLDIER_IS_FANATIC;
+
+          if and eq isFanatic 1 gt to_transform 0; # half attack power when being touched naughtically 
+            debug_log "to_transform" to_transform;
+            set to_transform 0;
+            div to_health 2;
+            div to_armor 2;
+            div to_stun 2;
+            div to_time 2;
+            div to_energy 2;
+            div to_morale 2;
+            div to_wound 2;
+            div to_mana 2;
+          end;
+
+          return;
+
+    newTurnUnit: # Remove Fanatism after one turn
+      - offset: 1
+        code: |
+          var int isFanatic;
+
+          unit.getTag isFanatic Tag.SOLDIER_IS_FANATIC;
+
+          if and eq isFanatic 1 eq side FACTION_PLAYER;
+            unit.setTag Tag.SOLDIER_IS_FANATIC 0;
+          end;
+
+          return;
+
+    tryPsiAttackUnit:
+      - offset: 1
+        code: |
+          var int isFanatic;
+
+          victim.getTag isFanatic Tag.SOLDIER_IS_FANATIC;
+
+          if eq isFanatic 1;
+            div psi_attack_success 2;
+          end;
+
+          return psi_attack_success;
+
+#    tryPsiAttackItem:
+#      - offset: 1
+#        code: |
+#          return psi_attack_success;
+    
+    
