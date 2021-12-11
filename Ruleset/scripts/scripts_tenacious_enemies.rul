@@ -20,22 +20,28 @@ armors:
 
         var int currentStun;
         var int stunRecovery;
+        var int currentHealth;
 
         if neq side 1;
           return;
         end;
 
-        set stunRecovery 5; # 10;
+        set stunRecovery 10;
 
         unit.getStun currentStun;
+        unit.getHealth currentHealth;
 
         if gt currentStun stunRecovery;
           sub currentStun stunRecovery;
         else;
           set currentStun 0;
         end;
-        
-        unit.setStun currentStun;
+
+        if lt currentStun currentHealth; # wakes up
+          unit.setStun 0;
+        else;
+          unit.setStun currentStun;
+        end;
         return;
 
   - type: STR_NECRON_LYCHGUARD_ARMOR
@@ -50,3 +56,22 @@ armors:
 # 2x2 units cannot wake up
 #  - type: STR_DESTROYER_ARMOR 
 #    refNode: *STR_TENACIOUS_NECRONS
+
+items:
+  - type: STR_NECRON_WARRIOR
+    liveAlien: false
+
+  - type: STR_NECRON_IMORTAL
+    liveAlien: false
+
+  - type: STR_NECRON_DEATHMARK
+    liveAlien: false
+
+  - type: STR_NECRON_LYCHGUARD
+    liveAlien: false
+
+
+
+
+
+#STR_NECRON_DESTROYER
