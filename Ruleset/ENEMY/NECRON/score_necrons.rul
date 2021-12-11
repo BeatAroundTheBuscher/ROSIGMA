@@ -1,0 +1,106 @@
+# Problem: Because Necrons are stunned and not killed, they end up as a live Alien recovery
+#
+# This means that the value score on the unit is not used. The live Alien recovery is always 10,
+# unless there is a research topic. When a research topic for that unit exists 
+# (or the one it gets transformed to by using liveAlien: ) then the applied score is double of unit
+# (before transformation).
+# Therefore follows that truly killed Necrons (HP <= 0) will always be half the real value, 
+# which of course can be compensated by the score you get from the corpses
+
+units:
+  - type: STR_NECRON_WARRIOR  
+    liveAlien: STR_NECRON_WARRIOR_CORPSE # Yes, you can set a battleType: 11 for a liveAlien transformation
+#    liveAlien: STR_NECRON_DISABLED
+    value: 15 # 30 for live recovery
+
+  - type: STR_NECRON_IMORTAL
+    liveAlien: STR_NECRON_IMORTAL_CORPSE
+#    liveAlien: STR_NECRON_DISABLED
+    value: 20
+
+  - type: STR_NECRON_DEATHMARK
+    liveAlien: STR_NECRON_DEATHMARK_CORPSE
+#    liveAlien: STR_NECRON_DISABLED
+    value: 20
+
+  - type: STR_NECRON_LYCHGUARD
+    liveAlien: STR_NECRON_LYCHGUARD_CORPSE
+#    liveAlien: STR_NECRON_DISABLED
+    value: 30
+
+# this was attempt with a meta live alien unit
+
+#  - type: STR_NECRON_DISABLED
+#    race: STR_NECRON
+#    rank: STR_LIVE_SOLDIER
+#    stats:
+#      tu: 1
+#      stamina: 1
+#      health: 1
+#      bravery: 10
+#      reactions: 1
+#      firing: 1
+#      throwing: 1
+#      strength: 1
+#      psiStrength: 1
+#      psiSkill: 0
+#      melee: 1
+#    armor: STR_NECRON_WARRIOR_ARMOR
+#    standHeight: 1 # if it spawns, it's going to be nearly invisible
+#    kneelHeight: 1
+#    value: 30 # shouldn't matter
+#    deathSound: [289, 290, 291]
+#    intelligence: 6
+#    aggression: 1
+#    spotter: 2
+#    energyRecovery: 1
+
+
+items:
+#  - type: STR_NECRON_DISABLED                                #25000
+#    liveAlien: false # don't put it into alien containment
+#    size: 0.1
+#    recover: true
+#    costSell: 30000
+#    listOrder: 25000
+
+  - type: STR_NECRON_WARRIOR_CORPSE
+    recoveryPoints: 15
+
+  - type: STR_NECRON_IMORTAL_CORPSE  
+    recoveryPoints: 20
+
+  - type: STR_NECRON_DEATHMARK_CORPSE
+    recoveryPoints: 20
+
+  - type: STR_NECRON_LYCHGUARD_CORPSE
+    recoveryPoints: 30
+
+research: # don't allow research for those. Scoring only
+  - name: STR_NECRON_WARRIOR
+    cost: 0
+    points: 0
+    needItem: true
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NECRON_IMORTAL
+    cost: 0
+    points: 0
+    needItem: true
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NECRON_DEATHMARK
+    cost: 0
+    points: 0
+    needItem: true
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NECRON_LYCHGUARD
+    cost: 0
+    points: 0
+    needItem: true
+    dependencies:
+      - STR_GENERALLOCK
