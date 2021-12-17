@@ -1,3 +1,12 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+
+
 # Lasguns and Lascannons
 items:
 ## Pistols
@@ -207,18 +216,34 @@ items:
     snapRange: 16
     aimRange: 18
 
-    accuracyAuto: 66
-    accuracySnap: 85
+    accuracyAuto: 50 # was 60 # Hellgun has 66
+    accuracySnap: 65 # was 70 # Hellgun has 85
     accuracyAimed: 0
     tuAuto: 40
     tuSnap: 25
     tuAimed: 60
+
+    power: 65 # was 75  
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+
+    confSnap:
+      shots: 3 # was 2
+    confAuto:
+      shots: 7 # was 4
 
   - type: STR_HEAVY_LASGUN_LUCIUS_XIV
     dropoff: 4
     autoRange: 16 # Power shot
     snapRange: 16
     aimRange: 16 # Power shot
+    maxRange: 26
 
     accuracyAuto: 60
     accuracySnap: 70
@@ -226,6 +251,31 @@ items:
     tuAuto: 50
     tuSnap: 33
     tuAimed: 66
+
+    confSnap:
+      shots: 1
+      spendPerShot: 2 ##higher baseline power consumption, 15 shots per clip
+    confAuto:
+      shots: 1
+      spendPerShot: 5 #higher consumption, only 6 shots per clip
+      name: STR_POWER_SHOT
+    confAimed:
+      shots: 1
+      spendPerShot: 10 #higher consumption, only 3 shots per clip
+      name: STR_POWER_SHOT_2    
+
+    power: 60 
+    damageType: 1 # AP instead of LAS
+    damageAlter:
+      ToArmorPre: 0.2 # was 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # was 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+    tags:
+      ITEM_AUTO_POWER_BONUS: 10  
+      ITEM_AIMED_POWER_BONUS: 20
 
 ## Heavy Weapons
 
@@ -339,10 +389,17 @@ items:
     tuAuto: 40
     tuAimed: 70
 
-  - type: STR_MOUNTED_LASCANNON
+  - type: STR_MOUNTED_LASCANNON # gets 150 % accuracy and 75 % TU costfor being mounted
     dropoff: 3
     snapRange: 28
     aimRange: 37
+    accuracySnap: 90 # was 60 # handheld has 60
+    accuracyAimed: 140 # was 94 # handheld has 105
+    tuSnap: 40 # was 55 # handheld has 55
+    tuAimed: 70 # was 90 # handheld has 90
+    tags:
+      ITEM_SNAP_POWER_BONUS: 50
+      ITEM_AIMED_POWER_BONUS: 50
 
   - type: STR_MULTI_LASER
     dropoff: 3
