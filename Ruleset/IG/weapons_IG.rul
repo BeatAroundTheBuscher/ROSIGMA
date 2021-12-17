@@ -202,22 +202,11 @@ items:
 
 
   # no idea why there need to be two different weapons
-  - &STR_SENTINEL_MISSILE
-    type: STR_SENTINEL_MISSILE_LAUNCHER
+  - type: STR_SENTINEL_MISSILE_LAUNCHER
     compatibleAmmo:
       - STR_SENTINEL_FRAG_MISSILES
       - STR_SENTINEL_KRAKK_MISSILES
       - STR_SENTINEL_INC_MISSILES
-      - STR_SENTINEL_FRAG_MISSILES_PD
-      - STR_SENTINEL_KRAKK_MISSILES_PD
-
-
-  - type: STR_SENTINELPD_MISSILE_LAUNCHER
-    refNode: *STR_SENTINEL_MISSILE
-
-
-
-  - type: STR_SENTINEL_MISSILE_LAUNCHER
     bigSprite: 216
     scripts:
       selectItemSprite:
@@ -240,37 +229,23 @@ items:
     tags:
       ITEM_AMMO_SKIP_BIGOBS: 1
     requiresBuy:
-      - STR_BASIC_SENTINEL
-      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_BASIC_SENTINEL_MISSILE
 
 
   - type: STR_SENTINEL_KRAKK_MISSILES
     requiresBuy:
-      - STR_BASIC_SENTINEL
-      - STR_IMPERIAL_GUARD_MIDTIER
-    # damageType: 1 # AP instead of HE
-    damageAlter:
-      ResistType: 1
-      ArmorEffectiveness: 0.80
-      # RandomType: 2 # side effect of other damageType
-      FixRadius: 1  
+      - STR_BASIC_SENTINEL_MISSILE
+
     tags:
       ITEM_AMMO_SKIP_BIGOBS: 2
 
 
-  - type: STR_SENTINEL_KRAKK_MISSILES_PD
-    # damageType: 1 # AP instead of HE
-    damageAlter:
-      ResistType: 1
-      ArmorEffectiveness: 0.80
-      # RandomType: 2 # side effect of other damageType
-      FixRadius: 1
+
 
   - type: STR_SENTINEL_INC_MISSILES
     categories: [STR_CAT_AUXILIARY]
     requiresBuy:
-      - STR_BASIC_SENTINEL
-      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_BASIC_SENTINEL_MISSILE
     costBuy: 3600
     costSell: 2840
     size: 0.5
@@ -479,7 +454,6 @@ items:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_LASGUN_VOSS # no bayonet
-    tuAuto: 33 # was 34
     requiresBuyBaseFunc: [TRADE]
     costBuy: 150000
     listOrder: 19102    
@@ -554,13 +528,11 @@ items:
     fixedWeaponShow: true
 
   - type: STR_LASGUN_TANITH
-    tuAuto: 33 # was 34
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_MCLASER_RIFLE #LASGUN
     bigSprite: 214
-    tuAuto: 33 # was 34
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
     compatibleAmmo:
@@ -2209,27 +2181,7 @@ items:
       ToWound: 0.0 # added this
     clipSize: 30
 
-  # Hellguns get to keep ToArmorPre: 0.3 (Veteran/Scion bonus)
-  - type: STR_HELLPISTOL_BUILTIN
-    damageType: 1 # AP instead of LAS
-    damageAlter:
-      ToArmorPre: 0.3
-      ArmorEffectiveness: 0.75
-      ToHealth: 1.0
-      ToArmor: 0.1 # was 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
-
   - type: STR_HELLGUN
-    damageType: 1 # AP instead of LAS
-    damageAlter:
-      ToArmorPre: 0.3
-      ArmorEffectiveness: 0.75
-      ToHealth: 1.0
-      ToArmor: 0.1 # was 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
-    tuAuto: 33 # was 34
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
     meleePower: 50 # was 40
