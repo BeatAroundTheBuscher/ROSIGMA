@@ -2501,3 +2501,202 @@ items:
     invHeight: 2
     recover: false
     listOrder: 12020
+
+  - type: STR_VALKIA_SHIELD ## Equip to the right hand to reduce damage
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
+    size: 0.2
+    scripts:
+      selectItemSprite: |
+
+        var int temp;
+        var int numOfFrames;
+        set numOfFrames 4;
+
+        if or eq blit_part blit_item_lefthand eq blit_part blit_item_righthand;
+
+            add temp anim_frame;
+            mod temp numOfFrames;
+            mul temp 8;
+            add sprite_index temp;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+        return sprite_index;
+    costSell: 15000
+    weight: 15
+    bigSprite: 2329
+    floorSprite: 2083
+    handSprite: 2470
+    clipSize: -1
+    hidePower: true
+    supportedInventorySections:
+      - STR_LEFT_HAND
+      - STR_GROUND
+    power: 90
+    damageType: 7
+    accuracyMelee: 110
+    tuMelee: 20
+    battleType: 3
+    damageAlter: #DA DAEMON OMNOM
+      RandomType: 0
+      ToArmorPre: 0.6
+      ToEnergy: 1.5
+      ToWound: 0.1
+    twoHanded: false
+    recover: false
+    skillApplied: true
+    strengthApplied: false
+    isConsumable: false
+    fixedWeapon: false
+    invWidth: 2
+    invHeight: 3
+    armor: 80
+    attraction: 1
+    listOrder: 12999
+
+  - type: STR_SONIC_CANON #                        11790
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_HEAVY_PLASMA
+    size: 0.3
+    dropoff: 5 # chaos
+    costSell: 45800
+    weight: 40
+    clipSize: -1
+    power: 30
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 2.0
+      ArmorEffectiveness: 0.2
+      RandomType: 2 #TFTD [50% - 150%]
+    accuracySnap: 75
+    tuSnap: 30
+    battleType: 1
+    twoHanded: true
+    bulletSpeed: 80
+    invWidth: 2
+    invHeight: 3
+    recoveryPoints: 5
+    armor: 50
+    listOrder: 11790
+
+  - type: STR_SONIC_GRENADE  #4010
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_ALIEN_GRENADE
+    size: 0.1
+    costSell: 250
+    weight: 3
+    bigSprite: 2313
+    floorSprite: 2420
+    handSprite: 2390
+    explosionHitSound: 2118 #Sonichit
+    hitAnimation: 96 #XSOUND
+    power: 20
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.5
+      ToStun: 2.0
+      ArmorEffectiveness: 0.3
+      RandomType: 2 #TFTD [50% - 150%]
+    battleType: 4
+    recoveryPoints: 1
+    invWidth: 1
+    invHeight: 2
+    blastRadius: 3
+    listOrder: 15300
+    throwRange: 16
+
+
+
+  - type: STR_SONICKOMBI_CHARGE
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 150
+    weight: 3
+    bigSprite: 2317
+    floorSprite: {mod: 40k, index: 2 }
+    handSprite: {mod: 40k, index: 464 }
+    fireSound: {mod: 40k, index: 861}
+    explosionHitSound: {mod: 40k, index: 863} #Sound
+    bulletSprite: 11
+    hitAnimation: 96 #XSOUND
+    power: 15
+    damageAlter: #sonic
+      ToHealth: 2.0
+      ArmorEffectiveness: 0.4
+      ToMorale: 2.0
+      ToStun: 2.0
+      ToEnergy: 2.0
+      RandomType: 2 #TFTD [50% - 150%]
+    bulletSpeed: 80
+    clipSize: -1
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10460
+
+  - type: STR_SONIC_MISSILE_PACK #                         12160
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.2
+    costSell: 2500
+    weight: 6
+    bigSprite: 2326
+    floorSprite: 2431
+    handSprite: 448
+    power: 30
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.2
+      ToWound: 0.1
+      ToStun: 2.0
+      ToMorale: 1.5
+      ArmorEffectiveness: 0.3
+      RandomType: 2 #TFTD [50% - 150%]
+    clipSize: 6
+    battleType: 2
+    invWidth: 2
+    invHeight: 2
+    blastRadius: 4
+    hitSound: 2124 #soniccharge
+    explosionHitSound: 2118 #sonic
+    hitAnimation: {mod: 40k, index: 96}
+    listOrder: 12152
+
+  - type: STR_DAEMONETTE_MISSILE_PACK            #Deamonette spawner
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 7500
+    weight: 1
+    bigSprite: 2327
+    floorSprite: 2429
+    handSprite: 448
+    clipSize: 3
+    specialChance: 66 #66% chance of summoning a daemonette per missile
+    power: 50
+    damageAlter:
+      ToMorale: 1.5
+      ToEnergy: 1.5
+      ToStun: 0.5
+      ToHealth: 0.1
+    damageType: 7
+    battleType: 4
+    blastRadius: 3
+    spawnUnit: STR_CHRYSSALID_TERRORIST
+    spawnUnitFaction: -1
+    invWidth: 2
+    invHeight: 2
+    recover: false
+    hitSound: 2123 #sizzlebamf
+    explosionHitSound: [832, 2119]  #splat+daemonettelaughter
+    hitAnimation: 1020
+    listOrder: 12152
