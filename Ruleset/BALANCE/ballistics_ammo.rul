@@ -418,7 +418,6 @@ items:
       ToHealth: 1.0
       ToStun: 0.5
 
-
   - type: STR_STUB_GUN_AMMO_WOUND
     refNode: *STR_STUBBERS_AMMO
     damageAlter: 
@@ -443,3 +442,46 @@ items:
       ResistType: 2 # inc
       FireThreshold: 1
       ToTile: 0
+
+  - &STR_EXITUS_BULLETS
+    type: STR_EXITUS_AMMO
+    power: 150
+    damageAlter:
+      ToTile: 0.0
+      RandomType: 7
+      ArmorEffectiveness: 0.8
+    damageType: 1
+    clipSize: 2
+
+  - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
+    refNode: *STR_EXITUS_BULLETS
+    damageAlter: 
+#      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.8
+      RandomType: 7
+#      ToArmor: 0.1
+#      ToHealth: 1.0
+#      ToStun: 0.5
+    blastRadius: 1
+    damageType: 3
+    power: 150
+
+  - type: STR_EXITUS_AMMO_TURBOPENETRATOR
+    refNode: *STR_EXITUS_BULLETS
+    damageAlter: 
+      ToTile: 0.0
+      RandomType: 7
+      ArmorEffectiveness: 0.4
+    power: 150
+
+  - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
+    refNode: *STR_EXITUS_BULLETS
+    power: 150
+    damageAlter:
+      ToTile: 0.0
+      RandomType: 7
+      FireThreshold: 1000 # no fire
+      ArmorEffectiveness: 0.8
+      FixRadius: 0
+      IgnoreDirection: false
+    damageType: 2
