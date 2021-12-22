@@ -1,0 +1,40 @@
+extended:
+  tags:
+    BattleUnit:
+      UNIT_STUN_LEVEL_NEXT_TURN: int
+
+  scripts:
+    damageUnit: # collect this turn's TU damage
+      - offset: 99 # high offset so it runs last # can't be 100 or greater (will create error)
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_STUN_LEVEL_NEXT_TURN;
+          add temp to_time;
+          unit.setTag Tag.UNIT_STUN_LEVEL_NEXT_TURN temp;
+
+          return;
+
+    newTurnUnit: # carry TU damage to next turn
+      - offset: 99 # doesn't really matter
+        code: |
+          var int currentTUs;
+          var int temp;
+
+          if neq side FACTION_PLAYER;
+            return;
+          end;
+
+          unit.getTag temp Tag.UNIT_STUN_LEVEL_NEXT_TURN;
+          unit.getTimeUnits currentTUs; # other scripts may have reduced TUs already
+
+          div temp 2; # half TU damage for next turn; you can still empty the entire TU bar
+          sub currentTUs temp;
+
+          unit.setTimeUnits currentTUs;
+          unit.setTag Tag.UNIT_STUN_LEVEL_NEXT_TURN 0; # reset
+
+          # debug_log "unit" unit;
+          # debug_log "setting TUs to" currentTUs;
+
+          return;
