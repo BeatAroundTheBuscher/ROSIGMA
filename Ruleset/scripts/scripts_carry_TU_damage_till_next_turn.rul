@@ -1,22 +1,30 @@
 extended:
   tags:
     BattleUnit:
-      UNIT_STUN_LEVEL_NEXT_TURN: int
+      UNIT_TU_DRAIN_NEXT_TURN: int
 
   scripts:
     damageUnit: # collect this turn's TU damage
-      - offset: 99 # high offset so it runs last # can't be 100 or greater (will create error)
+      - offset: 70 # high offset so it runs last # can't be 100 or greater (will create error)
         code: |
+          var int tuDrainNextTurn;
           var int temp;
 
-          unit.getTag temp Tag.UNIT_STUN_LEVEL_NEXT_TURN;
-          add temp to_time;
-          unit.setTag Tag.UNIT_STUN_LEVEL_NEXT_TURN temp;
+          if gt to_time 0; # TU buffing shouldn't compensate
+            unit.getTag tuDrainNextTurn Tag.UNIT_TU_DRAIN_NEXT_TURN;
+
+            set temp to_time; # half TU damage for next turn; you can still empty the entire TU bar
+            div temp 2; # 50/100
+
+            add tuDrainNextTurn to_time;
+            unit.setTag Tag.UNIT_TU_DRAIN_NEXT_TURN tuDrainNextTurn;
+            debug_log "Current Drain" tuDrainNextTurn;
+          end;
 
           return;
 
     newTurnUnit: # carry TU damage to next turn
-      - offset: 99 # doesn't really matter
+      - offset: 70 
         code: |
           var int currentTUs;
           var int temp;
@@ -25,16 +33,78 @@ extended:
             return;
           end;
 
-          unit.getTag temp Tag.UNIT_STUN_LEVEL_NEXT_TURN;
+          unit.getTag temp Tag.UNIT_TU_DRAIN_NEXT_TURN;
           unit.getTimeUnits currentTUs; # other scripts may have reduced TUs already
 
-          div temp 2; # half TU damage for next turn; you can still empty the entire TU bar
           sub currentTUs temp;
 
           unit.setTimeUnits currentTUs;
-          unit.setTag Tag.UNIT_STUN_LEVEL_NEXT_TURN 0; # reset
-
-          # debug_log "unit" unit;
-          # debug_log "setting TUs to" currentTUs;
+          unit.setTag Tag.UNIT_TU_DRAIN_NEXT_TURN 0; # reset
 
           return;
+
+    recolorUnitSprite: # stunlocked for next turn
+      - offset: 70 # doesn't really matter
+        code: |
+          var int frame;
+          var int frameLength;
+          var int recolorPeriod;
+          var int desync;
+          var int color;
+          var int newShade;
+
+          var int maxTUs;
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_TU_DRAIN_NEXT_TURN;
+          unit.getTimeUnitsMax maxTUs; 
+
+          if lt temp maxTUs; # if not stunlocked
+            return new_pixel;
+          end;
+
+          # taken from traitor script
+          # Check to make sure this unit isn't set to be recolored by a hit first
+          unit.getTag frame Tag.UNIT_RECOLOR_START_FRAME;
+          unit.getTag frameLength Tag.UNIT_RECOLOR_FRAME_LENGTH;
+
+          if neq frame 0;
+
+            set temp anim_frame;
+            sub temp frame;
+
+            if lt temp frameLength;
+
+              return new_pixel;
+
+            end;
+
+          end;
+
+          set recolorPeriod 32;
+          set frameLength 4;
+
+          unit.getTag desync Tag.UNIT_RECOLOR_DESYNC;
+          set frame anim_frame;
+          add frame desync;
+          mod frame recolorPeriod;
+
+          sub frame frameLength;
+          sub frame 1;
+
+          set color COLOR_X1_SILVER;
+
+          set temp frameLength;
+          sub temp frame;
+          mul temp 2; # a parameter that creates a nice flash animation
+          get_shade newShade new_pixel;
+          sub newShade temp;
+
+          if and gt newShade 3 lt newShade 16;
+
+            set_shade new_pixel newShade;
+            set_color new_pixel color;
+          end;
+
+
+          return new_pixel;
