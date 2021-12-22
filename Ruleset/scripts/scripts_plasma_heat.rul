@@ -22,6 +22,7 @@ extended:
           var int previousAmmoCount;
           var int currentAmmoCount;
           var ptr BattleItem ammoItem;
+          var ptr RuleItem rItem;
 
           reaction_weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
@@ -30,41 +31,24 @@ extended:
           end;
 
           reaction_weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-
-          # debug_log "currentHeat1" currentHeat;
-          # debug_log "maxHeat1" maxHeat;
-
           reaction_weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
           reaction_weapon.getAmmoItem ammoItem;
           ammoItem.getAmmoQuantity currentAmmoCount;
           
-          # debug_log "previousAmmoCount1" previousAmmoCount;
-          # debug_log "currentAmmoCount1" currentAmmoCount;
-          # debug_log "reaction_count" reaction_count;
-
           if le currentAmmoCount previousAmmoCount;
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
           reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+          add previousAmmoCount reaction_count;
           div previousAmmoCount temp;
 
           add currentHeat previousAmmoCount; 
-          add currentHeat reaction_count; # heat level after shot
-
-          # debug_log "currentHeat2" currentHeat;
-          # debug_log "maxHeat2" maxHeat;
-          # debug_log "reaction_battle_action" reaction_battle_action;
-          # debug_log "reaction_weapon" reaction_weapon;
 
           if gt currentHeat maxHeat;
-            # debug_log "reaction: No, too hot";
-            # ebug_log "--------";
             return 0;
           end;
 
-          # debug_log "reaction: Yes";
-          # debug_log "--------";
           return reaction_chance;
 
 items:
@@ -324,21 +308,13 @@ items:
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
-#  - type: STR_PLASMA_GUN_TWINCORE_DEKKER
-#    refNode: *STR_OVERHEATING_PLASMA
-#    bigSprite: 335
-#    tags:
-#      ITEM_HEAT_MAX_LEVEL: 6
-#      ITEM_HEAT_DISSIPATION_PER_TURN: 2
-
-
-#  - type: STR_LASGUN_LUCIUS 
-#    refNode: *STR_OVERHEATING_PLASMA
-#    bigSprite: 342
-#    tags:
-#      ITEM_HEAT_MAX_LEVEL: 4
-#      ITEM_HEAT_DISSIPATION_PER_TURN: 1
-#      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4  
+  - type: STR_HEAVY_LASGUN_LUCIUS_XIV 
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 342
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4  
 
 
 
