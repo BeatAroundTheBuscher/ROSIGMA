@@ -40,6 +40,7 @@ extended:
           
           # debug_log "previousAmmoCount1" previousAmmoCount;
           # debug_log "currentAmmoCount1" currentAmmoCount;
+          # debug_log "reaction_count" reaction_count;
 
           if le currentAmmoCount previousAmmoCount;
             sub previousAmmoCount currentAmmoCount; # delta ammo count
@@ -49,15 +50,16 @@ extended:
           div previousAmmoCount temp;
 
           add currentHeat previousAmmoCount; 
+          add currentHeat reaction_count; # heat level after shot
 
           # debug_log "currentHeat2" currentHeat;
           # debug_log "maxHeat2" maxHeat;
           # debug_log "reaction_battle_action" reaction_battle_action;
           # debug_log "reaction_weapon" reaction_weapon;
 
-          if ge currentHeat maxHeat;
+          if gt currentHeat maxHeat;
             # debug_log "reaction: No, too hot";
-            # debug_log "--------";
+            # ebug_log "--------";
             return 0;
           end;
 
@@ -143,7 +145,7 @@ items:
 
         battle_game.getTurn temp;
         if eq temp 0;
-          return;
+          return new_pixel;
         end;
 
         item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;   
