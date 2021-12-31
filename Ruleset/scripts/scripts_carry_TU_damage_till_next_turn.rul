@@ -29,7 +29,9 @@ extended:
           var int currentTUs;
           var int temp;
 
-          if neq side FACTION_PLAYER;
+          unit.getFaction temp;
+
+          if neq side temp; # not unit's new turn
             return;
           end;
 
@@ -38,7 +40,7 @@ extended:
 
           sub currentTUs temp;
 
-          unit.setTimeUnits currentTUs;
+          unit.setTimeUnits currentTUs; # game does sanity check
           unit.setTag Tag.UNIT_TU_DRAIN_NEXT_TURN 0; # reset
 
           return;
