@@ -1215,14 +1215,34 @@ armors:
       morale:
         flatHundred: 1
     units:
-      - STR_GUARDSM_KRIEG
+      - STR_GUARD_KRIEG_GRENADIER
 
   - type: STR_GUARD_KRIEG_GRENADIER_ARMOR_LUCIUS
     refNode: *STR_KRIEG_VETERAN
-    storeItem: STR_NONE
+    storeItem: STR_GUARD_KRIEG_GRENADIER_LUCIUS
     builtInWeapons:
       - STR_HEAVY_LASGUN_LUCIUS_XIV
       - INV_NULL_GRENADIER_BACKPACK
+    scripts:
+      selectUnitSprite:
+        var int isFemale;
+        var int unitDirection;
+
+        if eq blit_part blit_torso;
+
+          set sprite_index 288;
+          unit.getGender isFemale;
+
+          if neq 0 isFemale;
+
+            add sprite_offset 8;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+        return sprite_index;
 
 
 
