@@ -51,7 +51,8 @@ missionScripts:
     useTable: false
 
 
-  - type: deserterHideout
+  - &STR_DESERTER_HIDEOUT
+    type: deserterHideout
     firstMonth: 0
     lastMonth: 10
     missionWeights:
@@ -64,6 +65,18 @@ missionScripts:
     useTable: false
     executionOdds: 30
     startDelay: 5000
+    researchTriggers:
+      STR_MARINES_STRATEGY: false
+
+  - type: deserterHideoutHard
+    refNode: *STR_DESERTER_HIDEOUT
+    missionWeights:
+      0:
+        STR_DESERTER_HIDEOUT_HARD: 100
+    researchTriggers:
+      STR_MARINES_STRATEGY: true # marines only
+
+
 
   # no Orkz as starting enemy
   - delete: gameStartOrk
