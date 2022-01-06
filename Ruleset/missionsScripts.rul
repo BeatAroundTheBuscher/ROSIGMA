@@ -5,6 +5,8 @@ missionScripts:
       0:
         STR_CIVILIAN_TERROR: 70
         STR_CIVILIAN_TERROR_GSC: 30
+    researchTriggers:
+      STR_CHAMBERMILITANT: false
 
   - type: recurringTerror
     executionOdds: 80
@@ -25,6 +27,8 @@ missionScripts:
         STR_ALIEN_TERROR_TZEENTCH: 25
         STR_CIVILIAN_TERROR: 50
         STR_CIVILIAN_TERROR_GSC: 50
+    researchTriggers:
+      STR_CHAMBERMILITANT: false # GK shouldn't get Guardsmen from Terror missions
 
   - type: GSC_SPACE_HULK_ARRIVAL_SCRIPT
     executionOdds: 50 #50% per month
@@ -159,7 +163,8 @@ missionScripts:
       STR_GSC_ARBITES_SPAWNED: false 
       
   # monthly missions
-  - type: MMArbites
+  - &STR_MONTHLY_MISSIONS
+    type: MMArbites
     missionWeights:
       # 0 is just for safety
       0:
@@ -179,44 +184,41 @@ missionScripts:
       STR_ADEPTAS: false
 
   - type: MMAdeptas
+    refNode: *STR_MONTHLY_MISSIONS
     missionWeights:
       # 0 is just for safety
       0:
         STR_ELDAR_ARTIFACT: 33
         STR_ALIEN_ARTIFACT: 33
         STR_ADEPTAS_WAR: 33
-    regionWeights:
-      0:
-         REGION_HULK_SITES: 100
-#         WAR_SITES: 100
-#    varName: hulk
-    useTable: false
-    firstMonth: 4
-    executionOdds: 100
-    startDelay: 10000
     researchTriggers:
       STR_ARBITES: false
       STR_ADEPTAS: true
 
-  - type: MMElse # SM, CSM, IG
+  - type: MMElse # SM, CSM, IG, GK
+    refNode: *STR_MONTHLY_MISSIONS
     missionWeights:
       # 0 is just for safety
       0:
         STR_ELDAR_ARTIFACT: 33
         STR_ALIEN_ARTIFACT: 33
         STR_ALIEN_WAR: 33
-    regionWeights:
-      0:
-         REGION_HULK_SITES: 100
-#         WAR_SITES: 100
-#    varName: hulk
-    useTable: false
-    firstMonth: 4
-    executionOdds: 100
-    startDelay: 10000
     researchTriggers:
       STR_ARBITES: false
       STR_ADEPTAS: false
+
+  - type: MMEarlyGK
+    refNode: *STR_MONTHLY_MISSIONS
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_ELDAR_ARTIFACT: 33
+        STR_ALIEN_ARTIFACT: 33
+        STR_ALIEN_WAR: 33
+    firstMonth: 0
+    lastMonth: 3
+    researchTriggers:
+      STR_CHAMBERMILITANT: true
 
   - type: alienAirSuperiorityLight
     missionWeights:
