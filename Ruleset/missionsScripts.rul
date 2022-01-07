@@ -82,29 +82,6 @@ missionScripts:
 
 
 
-  # no Orkz as starting enemy
-  - delete: gameStartOrk
-
-  - type: gameStartCultist
-    executionOdds: 50
-    firstMonth: 2
-    lastMonth: 2
-
-  - type: gameStartTraitorGuard
-    executionOdds: 100 # either Cultists or Traitor Guard
-    firstMonth: 2
-    lastMonth: 2
-
-  - type: gameStart # initial mission in player region
-    missionWeights:
-      0:
-        STR_ALIEN_RESEARCH: 50
-        STR_ALIEN_RESEARCH_TZEENTCH: 50
-    lastMonth: 0
-    targetBaseOdds: 100
-    startDelay: 3000
-
-
   - &SPACEHULK_ORK_BASE
     type: SPACEHULK_ORK_BASE_1
     missionWeights:
@@ -250,3 +227,85 @@ missionScripts:
     useTable: false
     varName: testerRevenge
     maxRuns: 1
+
+
+  - &STR_NORMAL_MISSION_TABLE
+    type: warpStorm
+    missionWeights:
+      0: # equal distribution for now
+        STR_ALIEN_RESEARCH: 50
+        STR_ALIEN_RESEARCH_TZEENTCH: 50
+        STR_ALIEN_HARVEST: 50
+        STR_ALIEN_HARVEST_TZEENTCH: 50
+        STR_ALIEN_ABDUCTION: 50
+        STR_ALIEN_ABDUCTION_TZEENTCH: 50
+        STR_ALIEN_INFILTRATION: 50
+        STR_ALIEN_INFILTRATION_TZEENTCH: 50
+        STR_ALIEN_BASE: 100
+    researchTriggers:
+      STR_HARDER_MISSIONS: false
+
+  - type: warpStormBuilding
+    refNode: *STR_NORMAL_MISSION_TABLE
+
+  - type: warpStormRaging
+    refNode: *STR_NORMAL_MISSION_TABLE
+
+  - &STR_HARD_MISSION_TABLE
+    type: warpStormHard
+    missionWeights:
+      0: # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 100
+#        STR_ALIEN_RESEARCH_TZEENTCH: 50
+        STR_ALIEN_HARVEST_HARD: 100
+#        STR_ALIEN_HARVEST_TZEENTCH: 50
+        STR_ALIEN_ABDUCTION_HARD: 100
+#        STR_ALIEN_ABDUCTION_TZEENTCH: 50
+        STR_ALIEN_INFILTRATION_HARD: 100
+#        STR_ALIEN_INFILTRATION_TZEENTCH: 50
+        STR_ALIEN_BASE: 100
+    firstMonth: 1
+    useTable: true
+    researchTriggers:
+      STR_HARDER_MISSIONS: true
+
+  - type: warpStormBuildingHard
+    refNode: *STR_HARD_MISSION_TABLE
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+    useTable: true
+
+  - type: warpStormRagingHard
+    refNode: *STR_HARD_MISSION_TABLE
+    firstMonth: 6
+    useTable: true
+
+  # no Orkz as starting enemy
+  - delete: gameStartOrk
+
+  - type: gameStartCultist
+    executionOdds: 50
+    firstMonth: 2
+    lastMonth: 2
+
+  - type: gameStartTraitorGuard
+    executionOdds: 100 # either Cultists or Traitor Guard
+    firstMonth: 2
+    lastMonth: 2
+
+  - &STR_START_MISSION
+    type: gameStart # initial mission in player region
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH: 50
+        STR_ALIEN_RESEARCH_TZEENTCH: 50
+    lastMonth: 0
+    targetBaseOdds: 100
+    startDelay: 3000
+
+  - type: gameStartHard
+    refNode: *STR_START_MISSION
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HARD: 100
