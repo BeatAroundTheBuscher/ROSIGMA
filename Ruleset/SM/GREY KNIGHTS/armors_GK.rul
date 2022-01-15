@@ -26,6 +26,8 @@ armors:
     sideArmor: 140
     rearArmor: 100
     underArmor: 100
+    stats:
+      strength: 20
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -42,13 +44,33 @@ armors:
     loftempsSet: [ 5 ]
 
   - type: STR_GK_TAC_LV2_UC
+    stats:
+      strength: 40
     refNode: *STR_GK_TAC
   - type: STR_GK_TAC_LV3_UC
+    spriteSheet: GKTACLV3_MC_SB.PCK
+    stats:
+      strength: 60
+    builtInWeapons:
+      - STR_GK_HB_MC
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
     refNode: *STR_GK_TAC
   - type: STR_GK_TAC_LV4_UC
+    stats:
+      strength: 80
     refNode: *STR_GK_TAC
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 12
   - type: STR_GK_TAC_LV5_UC
+    stats:
+      strength: 100
     refNode: *STR_GK_TAC
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
+      ARMOR_ENERGY_SHIELD_DECAY: 13
 
   - &STR_GK_LIB
     type: STR_GK_LIB_LV1_UC
@@ -97,3 +119,69 @@ armors:
        throwing: 0
        strength: 0
        melee: 0
+    units:
+      - STR_GK_LV3
+
+  - &STR_GK_CHP
+    type: STR_GK_CHP_LVL2_UC
+    refNode: *STR_GK_TAC
+    selectUnitMale:     [{mod: 40k, index: 1256}, {mod: 40k, index: 1257}, {mod: 40k, index: 1258}, {mod: 40k, index: 1259}, {mod: 40k, index: 1260}]
+    selectUnitFemale:   [{mod: 40k, index: 1256}, {mod: 40k, index: 1257}, {mod: 40k, index: 1258}, {mod: 40k, index: 1259}, {mod: 40k, index: 1260}]
+    startMovingMale:    [{mod: 40k, index: 1251}, {mod: 40k, index: 1252}, {mod: 40k, index: 1253}, {mod: 40k, index: 1254}, {mod: 40k, index: 1255}]
+    startMovingFemale:  [{mod: 40k, index: 1251}, {mod: 40k, index: 1252}, {mod: 40k, index: 1253}, {mod: 40k, index: 1254}, {mod: 40k, index: 1255}]
+    selectWeaponMale:   [{mod: 40k, index: 1246}, {mod: 40k, index: 1247}, {mod: 40k, index: 1248}, {mod: 40k, index: 1249}, {mod: 40k, index: 1250}]
+    selectWeaponFemale: [{mod: 40k, index: 1246}, {mod: 40k, index: 1247}, {mod: 40k, index: 1248}, {mod: 40k, index: 1249}, {mod: 40k, index: 1250}]
+    annoyedMale:        [{mod: 40k, index: 1261}, {mod: 40k, index: 1262}, {mod: 40k, index: 1263}, {mod: 40k, index: 1264}, {mod: 40k, index: 1265}]
+    annoyedFemale:      [{mod: 40k, index: 1261}, {mod: 40k, index: 1262}, {mod: 40k, index: 1263}, {mod: 40k, index: 1264}, {mod: 40k, index: 1265}]
+    deathMale:     [{mod: 40k, index: 380}, {mod: 40k, index: 381}, {mod: 40k, index: 382}, {mod: 40k, index: 383}, {mod: 40k, index: 384}]
+    deathFemale:   [{mod: 40k, index: 380}, {mod: 40k, index: 381}, {mod: 40k, index: 382}, {mod: 40k, index: 383}, {mod: 40k, index: 384}]
+    spriteSheet: GKCHP.PCK
+    ufopediaType: STR_GK_CHP_UC
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    zombiImmune: true
+    corpseBattle:
+      - STR_GK_CHP_CORPSE
+    storeItem: STR_GK_CHP_ARMOR
+    corpseGeo: STR_FALLEN_CORPSE
+    stats:
+       tu: 10
+       stamina: 10
+       health: 20
+       bravery: 10
+       reactions: -10
+       firing: 0
+       throwing: 0
+       strength: 0
+       melee: 0
+    forcedTorso: 1
+    units:
+      - STR_GK_LV4
+    builtInWeapons:
+      - STR_GK_HB_MC
+      - AUX_CROZIUS
+      - INV_NULL_3X3
+    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 12
+
+
+  - type: STR_GK_CHP_LVL3_UC
+    refNode: *STR_GK_CHP
+    stats:
+       tu: 10
+       stamina: 10
+       health: 20
+       bravery: 20
+       reactions: -10
+       firing: 0
+       throwing: 0
+       strength: 0
+       melee: 0
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
+      ARMOR_ENERGY_SHIELD_DECAY: 13
+    units:
+      - STR_GK_LV5
+      
