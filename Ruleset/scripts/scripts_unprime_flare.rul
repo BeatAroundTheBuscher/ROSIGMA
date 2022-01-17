@@ -1,0 +1,186 @@
+items:
+  - type: STR_ELECTRO_FLARE
+    fuseTriggerEvents:
+      defaultBehavior: true
+    scripts: 
+      createItem: |
+        # item.setFuseEnabled 1;
+        # item.setFuseTimer 0;
+        return;
+       
+
+
+      newTurnItem: | # flare shuts off next turn
+        item.setFuseEnabled 0;
+        # item.setFuseTimer 0;
+
+        return;
+
+  - &STR_MY_FLARE
+    type: STR_ELECTRO_FLARE_MY
+    categories: [ STR_CAT_EQUIPMENT]
+    size: 0.1
+    costBuy: 60
+    costSell: 40
+    weight: 3
+    bigSprite: {mod: 40k, index: 55}
+    floorSprite: 201
+    power: 50
+    battleType: 10
+#    costPrime:
+#      time: 15
+#    primeActionName: STR_PRIME_FLARE
+#    fuseType: -2
+    armor: 90
+    listOrder: 14100
+    scripts: 
+      createItem: |
+        item.setFuseEnabled 1;
+        item.setFuseTimer 0;
+        return;
+    defaultInventorySlot: STR_LEFT_HAND 
+    # fixedWeapon: true
+    isExplodingInHands: true
+    hiddenOnMinimap: true
+
+  - type: STR_ELECTRO_FLARE_MY_FIXED
+    refNode: *STR_MY_FLARE
+    fixedWeapon: true    
+
+  - type: STR_FRAG_GRENADE_DRUM
+    power: 1
+    damageType: 1
+    damageAlter:
+      FixRadius: 0
+    spawnUnit: STR_SERVITOR
+    spawnUnitFaction: 2
+    hitAnimation: -1
+    clipSize: -1
+    bulletSpeed: 500
+    hitSound: -1
+
+
+  - type: STR_SERVITOR_CORPSE_MY
+    name: STR_CORPSE
+    weight: 15
+    bigSprite: {mod: 40k, index: 328}
+    floorSprite: 201
+    invWidth: 0
+    invHeight: 0
+    armor: 26
+    battleType: 11
+    recover: false
+    hiddenOnMinimap: true
+
+  - type: STR_GRENADE_LAUNCHER
+    confSnap:
+      shots: 2
+    # fireSound: -1
+
+
+
+# STR_ELECTRO_FLARE_HOLOGRAM
+
+units:
+  - type: STR_SERVITOR
+    moraleLossWhenKilled: 0
+    deathSound: -1
+
+  - type: STR_CHIMERA_TURRET
+    builtInWeaponSets:   
+      - - STR_GRENADE_LAUNCHER
+        - STR_FRAG_GRENADE_DRUM
+      - - STR_GRENADE_LAUNCHER
+        - STR_FRAG_GRENADE_DRUM
+      - - STR_GRENADE_LAUNCHER
+        - STR_FRAG_GRENADE_DRUM
+
+armors:
+
+
+  - type: SERVITOR_ARMOR_UC 
+    standHeight: 1
+    kneelHeight: 1
+    loftempsSet: [1]
+    deathFrames: 1
+    corpseBattle:
+      - STR_SERVITOR_CORPSE_MY  
+    builtInWeapons:   
+      - STR_ELECTRO_FLARE_MY_FIXED
+      - STR_ELECTRO_FLARE_MY
+    tags:
+      ARMOR_IS_INVISIBLE: 1
+    #n camouflageAtDay: -200
+    # camouflageAtDark: -200
+    scripts:
+      createUnit: |
+        var ptr RuleUnit myRuleUnit;
+
+        debug_log "CU: hello world";
+        # rules.getRuleUnit myRuleUnit "MALE_CIVILIAN";
+        # unit.setSpawnUnit myRuleUnit;
+        # unit.setSpawnUnitInstantRespawn 1; # makes unit 100 % visible
+        unit.setHealth 0;
+        return;
+      
+
+  - type: GUARD_ARMOR
+    camouflageAtDay: -200
+    camouflageAtDark: -200
+    scripts:
+      createUnit: |
+        unit.setHealth 0;
+        return;
+
+      visibilityUnit: | # this is used by the viewer not by the viewee
+        debug_log "Local current_visibility" current_visibility;
+        # debug_log "visibility_mode" visibility_mode;
+
+        return 0 visibility_mode;
+
+    tags:
+      ARMOR_IS_INVISIBLE: 1
+
+
+extended:
+  tags:
+    RuleArmor:
+      ARMOR_IS_INVISIBLE: int
+
+
+  scripts:
+    visibilityUnit: 
+      - offset: 22 # hide unit
+        code: |
+          var ptr RuleArmor myRuleArmor;
+          var int temp;
+
+          target_unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_IS_INVISIBLE;
+
+          debug_log "Invisible armor" temp;
+
+          if eq temp 1;
+            return 0 visibility_mode;
+          end;
+
+          return current_visibility visibility_mode;
+
+    createUnit:
+      - offset: 22 # hide unit
+        code: |
+          var ptr RuleArmor myRuleArmor;
+          var int temp;
+
+          unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_IS_INVISIBLE;
+
+          if eq temp 1;
+            battle_game.tryConcealUnit unit temp;
+            unit.setTurnsSinceSpotted 255;
+          debug_log "conceal success" temp; # temp is a return value variable
+          end;
+
+
+
+          return;
