@@ -78,16 +78,16 @@ extended:
 
           if eq currentTurn lastTurn; # no commands issued this turn yet
             if eq lastCommand 2;
-              battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Fix Bayonets" temp1 temp2;
+              battle_game.flashLongMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Fix Bayonets" temp1 temp2;
             end;
             if eq lastCommand 3;
-              battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Blitzkrieg" temp1 temp2;
+              battle_game.flashLongMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Blitzkrieg" temp1 temp2;
             end;
             if eq lastCommand 4;
-              battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Hunker Down" temp1 temp2;
+              battle_game.flashLongMessage "Remaining Command Points: {0} - Soldiers {1} Current Command: Hunker Down" temp1 temp2;
             end;
           else;
-            battle_game.flashMessage "Remaining Command Points: {0} - Soldiers {1} Currently no Command" temp1 temp2;
+            battle_game.flashLongMessage "Remaining Command Points: {0} - Soldiers {1} Currently no Command" temp1 temp2;
           end;
 
           return;
@@ -100,7 +100,7 @@ extended:
           sub temp1 temp2;
           if lt temp1 0;
             battle_game.getTag temp1 Tag.COMMAND_POINTS;
-            battle_game.flashMessage "Not enough Command Points. Current Command Points {0} - Cost {1}" temp1 temp2;
+            battle_game.flashLongMessage "Not enough Command Points. Current Command Points {0} - Cost {1}" temp1 temp2;
             return;            
           end;
 
@@ -108,13 +108,13 @@ extended:
           # debug_log "Remaining Command Points" temp1;
 
           if eq newCommand 2;
-            battle_game.flashMessage "STR_FIX_BAYONETS";
+            battle_game.flashLongMessage "STR_FIX_BAYONETS";
           end;
           if eq newCommand 3;
-            battle_game.flashMessage "STR_BLITZKRIEG";
+            battle_game.flashLongMessage "STR_BLITZKRIEG";
           end;
           if eq newCommand 4;
-            battle_game.flashMessage "STR_HUNKER_DOWN";
+            battle_game.flashLongMessage "STR_HUNKER_DOWN";
           end;
 
           battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
@@ -123,7 +123,7 @@ extended:
           battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
           # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
         else;
-            battle_game.flashMessage "A command has been issued this turn already!";        
+            battle_game.flashLongMessage "A command has been issued this turn already!";        
         end;          
         
         return;
