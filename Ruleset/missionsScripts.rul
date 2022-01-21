@@ -1,11 +1,10 @@
 missionScripts:
   - type: firstMonthTerror
-    lastMonth: 0
     missionWeights:
       0:
         STR_CIVILIAN_TERROR: 70
         STR_CIVILIAN_TERROR_GSC: 30
-    researchTriggers:
+    researchTriggers: !add
       STR_CHAMBERMILITANT: false
 
   - type: recurringTerror
@@ -27,8 +26,24 @@ missionScripts:
         STR_ALIEN_TERROR_TZEENTCH: 25
         STR_CIVILIAN_TERROR: 50
         STR_CIVILIAN_TERROR_GSC: 50
-    researchTriggers:
+    researchTriggers: !add
       STR_CHAMBERMILITANT: false # GK shouldn't get Guardsmen from Terror missions
+      STR_HARDER_MISSIONS: false
+
+  - type: recurringTerrorHard
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR_HARD: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: false
+      STR_HARDER_MISSIONS: true
+      STR_CHAMBERMILITANT: false
+      STR_ARBITES: false
+    useTable: false
+    startDelay: 150
+    
 
   - type: GSC_SPACE_HULK_ARRIVAL_SCRIPT
     executionOdds: 50 #50% per month
@@ -263,19 +278,7 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: true
 
-  - type: recurringTerrorHard
-    executionOdds: 80
-    firstMonth: 1
-    missionWeights:
-      0:
-        STR_ALIEN_TERROR_HARD: 100
-        #STR_ALIEN_TERROR: 100
-    researchTriggers:
-      STR_ALIENS_ONLY: false
-      STR_HARDER_MISSIONS: true #?
-    useTable: false
-    startDelay: 150
-    
+
   - type: warpStormBuildingHard
     refNode: *STR_HARD_MISSION_TABLE
     firstMonth: 3
