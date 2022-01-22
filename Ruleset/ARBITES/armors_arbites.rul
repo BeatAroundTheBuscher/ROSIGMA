@@ -1,25 +1,4 @@
 armors:
-  - type: STR_PENAL_ARMOR_UC
-    specialWeapon: STR_EXPLOSIVE_COLLAR
-    # ufopediaType: STR_PENAL_ARMOR_BROWN_UC
-    frontArmor: 15
-    sideArmor: 10
-    rearArmor: 10
-    underArmor: 10
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
-
   - &STR_GUARD_ARMOR_FLAK_DAMAGE
     type: STR_GUARDPD_ARMOR_UC #DR10 SPACE MARINE SUPORT
     visibilityAtDay: 40
@@ -46,22 +25,27 @@ armors:
     refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
     #storeItem: STR_GUARDPD_MEDIC_ARMOR
 
-  - type: STR_ENFORCER_SIGNALFALSE_ARMOR_UC # indoors
-    storeItem: STR_TRANSFORMED_ARMOR
-    builtInWeapons:
-      - INV_NULL_BACK_SIGNAL
+  - type: STR_PENAL_ARMOR_UC
+    refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
+    specialWeapon: STR_EXPLOSIVE_COLLAR
+    frontArmor: 15
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 10
 
-  - &STR_GUARD_ARMOR_SENTINEL_OPEN # DAMAGE + STATS
+  - &STR_GUARD_ARMOR_SENTINEL_CLOSED # DAMAGE + STATS
     type: STR_SENTINELPD_ARMOR_UC
 #    ufopediaType: STR_SENTINEL_ARMOR_UC
     visibilityAtDay: 60
     visibilityAtDark: 60
+    antiCamouflageAtDay: 8
+    antiCamouflageAtDark: 8
     heatVision: 50
     instantWoundRecovery: true
-    frontArmor: 120
-    sideArmor: 100
-    rearArmor: 80
-    underArmor: 100
+    frontArmor: 140
+    sideArmor: 120
+    rearArmor: 100
+    underArmor: 120
     damageModifier:
       - 1.0 #none
       - 1.0 #AP
@@ -82,7 +66,7 @@ armors:
 
 
   - type: STR_SENTINELPD_ARMOR_MISSILE_UC
-    refNode: *STR_GUARD_ARMOR_SENTINEL_OPEN
+    refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
 #    ufopediaType: STR_GUARD_ARMORS_SENTINEL_MISSILE_UC
     builtInWeapons:
       - STR_SENTINEL_MISSILE_LAUNCHER
@@ -98,6 +82,8 @@ armors:
     type: STR_ENFORCER_ARMOR_UC
     visibilityAtDay: 40
     visibilityAtDark: 20 # was 9
+    antiCamouflageAtDay: 2
+    antiCamouflageAtDark: 2
     frontArmor: 60 # was 40
     sideArmor: 50 # was 40
     rearArmor: 40 # was 40
@@ -133,6 +119,12 @@ armors:
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
 
+  - type: STR_ENFORCER_SIGNALFALSE_ARMOR_UC # indoors
+    refNode: *STR_ENFORCER_ARMOR
+    storeItem: STR_TRANSFORMED_ARMOR
+    builtInWeapons:
+      - INV_NULL_BACK_SIGNAL
+
   - type: STR_ENFORCER_SIGNALFALSE_ARMOR_UC #DR10 ARBITES SUPORT
     refNode: *STR_ENFORCER_ARMOR
 
@@ -153,6 +145,8 @@ armors:
     type: STR_JUDGE_ARMOR_UC #JUDGE
     visibilityAtDay: 40 # was 60
     visibilityAtDark: 30 # was 60
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
     frontArmor: 70 # was 50
     sideArmor: 60 # was 50
     rearArmor: 50 # was 40
@@ -182,6 +176,8 @@ armors:
     underArmor: 60 # was 50
 
   - type: STR_CMAS_ARMOR
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
     allowInv: true
     builtInWeapons:
       - STR_CMAS
