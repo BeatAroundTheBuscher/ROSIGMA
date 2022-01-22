@@ -2,31 +2,19 @@ items:
 
 ## Pistol
 
-  - type: STR_PISTOL_CLIP #              10210                    ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    costBuy: 450
-    costSell: 250
-    weight: 2
+  - &STR_BOLTER_AMMO
+    type: STR_PISTOL_CLIP # done
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
       ArmorEffectiveness: 0.9
       ToArmor: 0.1
       ToHealth: 1.0
       ToStun: 0.5
-    explosionSpeed: 5
-    power: 60
+    power: 65
     damageType: 1
-    clipSize: 10
-    battleType: 2
-    armor: 30
-    attraction: 1
-    listOrder: 10210
-  - type: STR_PISTOL_CLIP_EX #           2001       EXPLOSIVE    ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    costSell: 250
-    weight: 2
+
+  - &STR_BOLTER_AMMO_METAL_STORM
+    type: STR_PISTOL_CLIP_EX # done
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
       ArmorEffectiveness: 1.0
@@ -34,160 +22,117 @@ items:
       ToHealth: 1.2
       ToStun: 0.5
     blastRadius: 1
-    power: 60
+    power: 65
     damageType: 3
-    clipSize: 10
-    battleType: 2
-    armor: 30
-    attraction: 1
-    listOrder: 10230
-  - type: STR_PISTOL_CLIP_AP #           2001       AP++++++++   ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    costSell: 250
-    weight: 2
+
+  - &STR_BOLTER_AMMO_KRAKEN
+    type: STR_PISTOL_CLIP_AP # done
     damageAlter: #DA BOLTER AP+
       ArmorEffectiveness: 0.5
       ToArmorPre: 0.0
       ToArmor: 0.0
       ToHealth: 1.0
       ToStun: 0.5
-    explosionSpeed: 5
-    power: 60
+    power: 65
     damageType: 1
-    clipSize: 10
-    battleType: 2
-    armor: 30
-    attraction: 1
-    listOrder: 10240
-  - type: STR_PISTOL_CLIP_MC #        10220     MCA               ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    weight: 2
+
+  - &STR_BOLTER_AMMO_MC
+    type: STR_PISTOL_CLIP_MC # done
     damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.1 # was 0.05
+      ArmorEffectiveness: 0.8 # was 0.9
       ToArmor: 0.1
       ToHealth: 1.0
       ToStun: 0.5
-    explosionSpeed: 5
-    power: 80
+    power: 75
     damageType: 1
-    clipSize: 10
-    battleType: 2
-    armor: 30
-    attraction: 1
-    listOrder: 10220
+
+  - type: STR_LIGHT_BOLTPISTOL_AMMO # done
+    refNode: *STR_BOLTER_AMMO
+    power: 55
+
+  - type: STR_LIGHT_BOLTPISTOL_AMMO_MC # done
+    refNode: *STR_BOLTER_AMMO_MC
+    power: 65
+
+  - type: STR_LIGHT_BOLTPISTOL_AMMO_AP # done    
+    refNode: *STR_BOLTER_AMMO_KRAKEN
+    power: 55
+
+  - type: STR_LIGHT_BOLTPISTOL_AMMO_EX # done
+    refNode: *STR_BOLTER_AMMO_METAL_STORM
+    power: 55
 
 ## Rifle
 
-  - type: STR_RIFLE_CLIP #            10410                      ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    costBuy: 300
-    costSell: 150
-    weight: 3
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-    explosionSpeed: 5
-    power: 65
-    damageType: 1
-    clipSize: 20
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10410
-  - type: STR_RIFLE_CLIP_MC #         10420     MCA              ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    size: 0.1
-    costSell: 150
-    weight: 3
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.1
-      ArmorEffectiveness: 0.85 
-      ToArmor: 0.2
-      ToHealth: 1.0
-      ToStun: 0.5
-    explosionSpeed: 5
-    power: 85
-    damageType: 1
-    clipSize: 30
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10420
-  - type: STR_RIFLE_CLIP_EX #         10430     EXPLOSIVE        ToStun
-    power: 65
+  - type: STR_RIFLE_CLIP # done
+    refNode: *STR_BOLTER_AMMO
+    power: 70
+
+  - type: STR_RIFLE_CLIP_MC # done
+    refNode: *STR_BOLTER_AMMO_MC
+    power: 80
+
+  - type: STR_RIFLE_CLIP_EX # done
+    refNode: *STR_BOLTER_AMMO_METAL_STORM
+    power: 70
     
-  - type: STR_RIFLE_CLIP_AP #         10440     AP++++++++       ToStun
-    power: 65
+  - type: STR_RIFLE_CLIP_AP # done
+    refNode: *STR_BOLTER_AMMO_KRAKEN
+    power: 70
 
-  - type: STR_LIGHT_BOLTER_AMMO
-    categories: [STR_CAT_BOLTER]
-    requiresBuy:
-      - STR_LIGHT_BOLTERS
-    size: 0.1
-    costBuy: 300
-    costSell: 150
-    weight: 2
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.03
-      ArmorEffectiveness: 0.85
-      ToArmor: 0.2
-      ToHealth: 0.95
-      ToStun: 0.6
-    explosionSpeed: 5
+
+  - type: STR_LIGHT_BOLTER_AMMO # done
+    refNode: *STR_BOLTER_AMMO
     power: 60
-    damageType: 1
-    clipSize: 30
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10295
+
+  - type: STR_LIGHT_BOLTER_AMMO_MC # done
+    refNode: *STR_BOLTER_AMMO_MC
+    power: 70
+
+  - type: STR_LIGHT_BOLTER_AMMO_PEN # done
+    refNode: *STR_BOLTER_AMMO_KRAKEN
+    power: 60
+
+  - type: STR_LIGHT_BOLTER_AMMO_EX # done
+    refNode: *STR_BOLTER_AMMO_METAL_STORM
+    power: 60
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT # done
+    refNode: *STR_BOLTER_AMMO
+    power: 60
+
+  - type: STR_LIGHT_BOLTER_AMMO_SHORT_PEN # done
+    refNode: *STR_BOLTER_AMMO_KRAKEN
+    power: 60
 
 
-
-
-
-  - type: STR_LIGHT_BOLTER_AMMO_MC
-    categories: [STR_CAT_BOLTER]
-    size: 0.1
-    #costBuy: 300
-    #costSell: 150
-    weight: 2
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
+  - &STR_STORMBOLTER_AMMO
+    type: STR_HB_CLIP # done
+    power: 80 # was 90
+    damageAlter: #DA BOLTER  DOUBLE SHOT
+      RandomType: 0 # was 6
+      ToArmorPre: 0.1
       ArmorEffectiveness: 0.8
-      ToArmor: 0.2
-      ToHealth: 1.0
-      ToStun: 0.7
-    explosionSpeed: 5
-    power: 75
-    damageType: 1
-    clipSize: 40
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10296
+      ToArmor: 0.1 # was 0.2
+      ToHealth: 1.0 # was 2.0
+      ToStun: 0.5 # was 1.0
+    shotgunSpread: 1 # 1/100; hit together
+    shotgunBehavior: 1 # new behaviour
+    shotgunPellets: 2
 
-  - type: STR_LIGHT_BOLTPISTOL_SERAPHIM_AMMO
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-    power: 40
-    damageType: 1
+  - type: STR_HB_CLIP_MC
+    refNode: *STR_STORMBOLTER_AMMO # done
+    power: 90 # was 110 # wanted 100 # codex can't show 3 digits + 2 symbols
+
+  - type: STR_STORMBOLTER_CLIP # done # Adeptas 
+    refNode: *STR_STORMBOLTER_AMMO
+    power: 70
     clipSize: 20
+
+  - type: STR_LIGHT_BOLTPISTOL_SERAPHIM_AMMO # done
+    refNode: *STR_BOLTER_AMMO
+    power: 40
 
   - type: STR_LIGHT_BOLTPISTOL_PENITENCE_AMMO
     damageAlter: #DA BOLTER
@@ -199,7 +144,6 @@ items:
       ToStun: 0.3
     power: 40
     damageType: 7
-    clipSize: 15
     shotgunPellets: 5
 
   - type: STR_LIGHT_BOLTER_AMMO_AP #Elohim ammo
@@ -209,9 +153,8 @@ items:
       ToArmor: 0.3
       ToHealth: 0.9
       ToStun: 0.6
-    power: 70
+    power: 60 # was 70
     damageType: 1
-    clipSize: 15
 
   - type: STR_CANTUS_BOLTER_AMMO #Ammo for the Cantus light bolter
     damageAlter: #DA BOLTER LIGHT
@@ -363,43 +306,7 @@ items:
       ToStun: 0.3
 
 
-  - type: STR_LIGHT_BOLTPISTOL_AMMO
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-    explosionSpeed: 5
-    power: 50
-    damageType: 1
-    clipSize: 10
 
-  - type: STR_LIGHT_BOLTPISTOL_AMMO_MC
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-    power: 70
-    damageType: 1
-    clipSize: 15
-
-  - type: STR_STORMBOLTER_CLIP                                                           #13120              ToStun
-    damageAlter: #DA BOLTER  DOUBLE SHOT
-      RandomType: 6
-      ToArmorPre: 0.1
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.2
-      ToHealth: 2.0
-      ToStun: 1.0
-    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
-    shotgunSpread: 80
-    shotgunPellets: 2
-    power: 70
-    damageType: 1
-    clipSize: 40
 
   - &STR_STUBBERS_AMMO
     type: STR_STUB_GUN_AMMO
@@ -488,23 +395,6 @@ items:
     damageType: 2
 
 
-  - &STR_STORMBOLTER_AMMO
-    type: STR_HB_CLIP
-    power: 80 # was 90
-    damageAlter: #DA BOLTER  DOUBLE SHOT
-      RandomType: 0 # was 6
-      ToArmorPre: 0.1
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1 # was 0.2
-      ToHealth: 1.0 # was 2.0
-      ToStun: 0.5 # was 1.0
-    shotgunSpread: 1 # 1/100; hit together
-    shotgunBehavior: 1 # new behaviour
-    shotgunPellets: 2
-
-  - type: STR_HB_CLIP_MC
-    refNode: *STR_STORMBOLTER_AMMO
-    power: 95 # was 110 # wanted 100 # codex can't show 3 digits + 2 symbols
 
 
 ## Vehicle
