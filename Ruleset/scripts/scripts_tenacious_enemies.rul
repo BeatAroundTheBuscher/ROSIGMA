@@ -4,19 +4,22 @@ armors:
     painImmune: false
     scripts:
       damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
+        var int temp;
+        var ptr RuleArmor targetArmor;
 
+        unit.getRuleArmor targetArmor;
+        targetArmor.getSize temp;
 
-        var int toHealth;
-        var int toStun;
-
-        set to_stun to_health;
+        if eq temp 1; # don't stun 2x2 as they can't get up
+          set to_stun to_health;
+        end;
         div to_health 5; # 10;
 
         return;
 
 
         
-      newTurnUnit: | # reduce stunlevel by 5 instead of 1 per turn
+      newTurnUnit: | # reduce stunlevel by a greater value than 1 per turn
 
         var int currentStun;
         var int stunRecovery;
@@ -51,4 +54,7 @@ armors:
     refNode: *STR_TENACIOUS_NECRONS
 
   - type: STR_NECRON_DEATHMARK_ARMOR
+    refNode: *STR_TENACIOUS_NECRONS
+
+  - type: STR_DESTROYER_ARMOR
     refNode: *STR_TENACIOUS_NECRONS
