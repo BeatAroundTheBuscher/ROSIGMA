@@ -2788,8 +2788,10 @@ alienDeployments:
     objectiveComplete: [STR_ALIEN_BASE_CONTROL_DESTROYED, 500]
     objectivePopup: STR_CONTROL_CENTER_DESTROYED
     missionBountyItem: STR_CHAOS_BASE_DATA
-    
-  - type: STR_BASE_DEFENSE                            # RANK0 # RANK1 STR_INSIDE_ENVIRO
+
+  - &STR_DEFENSE    
+    type: STR_BASE_DEFENSE
+    isHidden: true # crashes in New Battle anyway
     data:
       - alienRank: 5
         lowQty: 10 #4
@@ -6905,3 +6907,43 @@ alienDeployments:
 
   - type: STR_ORKBASE5
     height: 8
+
+  - type: STR_BASE_DEFENSE_NEW_BATTLE
+    isHidden: false
+    refNode: *STR_DEFENSE
+    width: 60
+    length: 60
+    height: 4
+    terrains:
+      - XBASE
+    shade: 5
+    briefing:
+      palette: 0
+      background: BACK01.SCR
+      music: GMENBASE
+      desc: STR_BASE_DEFENSE_BRIEFING
+      title: STR_BASE_DEFENSE
+    script: BASE_DEFENSE_NEW_BATTLE
+
+  - type: STR_OUTPOST_DEFENSE_NEW_BATTLE
+    isHidden: false
+    refNode: *STR_DEFENSE
+    width: 60
+    length: 60
+    height: 4
+    shade: 5
+    briefing:
+      palette: 0
+      background: BACK01.SCR
+      music: GMENBASE
+      desc: STR_BASE_DEFENSE_BRIEFING
+      title: STR_BASE_DEFENSE
+    script: OUTPOST_DEFENSE_NEW_BATTLE
+    terrains:
+      - XBASE_FILL
+      - XBASE_FILL_TROP
+      - XBASE_FILL_GRASS
+      - XBASE_FILL_SAND
+      - XBASE_FILL_SNOW
+      - XBASE_FILL_MUD
+      - XBASE_FILL_ROCK
