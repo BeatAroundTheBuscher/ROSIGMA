@@ -990,20 +990,36 @@ items:
     fixedWeapon: true
     recover: false
     flatRate: false
-
-
-  - type: STR_NURGLE_BOOM #BLIGHT Suicide zombie         
-    # size: 0.1
-    # weight: 4
-    # bulletSprite: {mod: 40k, index: 22}
-    # fireSound: {mod: 40k, index: 491}
-    # bigSprite: {mod: 40k, index: 19}
-    # floorSprite: {mod: 40k, index: 19}
-    # handSprite: {mod: 40k, index: 336}
-    explosionHitSound: 2416 # Full boomer explosion noise {mod: 40k, index: 832 } blight rocket SFX
+    
+  - type: STR_NURGLE_BOOM_DUMMY
+    specialUseEmptyHand: true
+    fixedWeapon: true
+    recover: false
+    meleeSound: 2413 #roar activation noise
+    meleeHitSound: { mod: 40k, index: 0 }
+    power: 200 # for the AI to pick this
+    meleeAnimation: { mod: 40k, index: 0 }
+    damageType: 7
+    accuracyMelee: 200
+    tuMelee: 1
+    clipSize: -1
+    battleType: 3
+    meleeMultiplier:
+      melee: 0.0
+      flatHundred: 1.0
+    flatRate: true
+    tags:
+      ITEM_IS_FOR_BOMBER: 1
+  - type: STR_NURGLE_BOOM #blight
+    bulletSprite: {mod: 40k, index: 22}
+    fireSound: 2415 #boom explosion
+    bigSprite: {mod: 40k, index: 19}
+    floorSprite: {mod: 40k, index: 19}
+    handSprite: {mod: 40k, index: 336}
     hitAnimation: 1030 #128 green from X1.pck
     power: 100
-    damageType: 8 #acid
+    blastRadius: 7
+    damageType: 8
     damageAlter: #DA SPIT
       RandomType: 2 #TFTD [50% - 150%]
       ToArmorPre: 0.5
@@ -1014,23 +1030,13 @@ items:
       ToMorale: 0.4
       ToTime: 0.2
       ArmorEffectiveness: 0.7
-    battleType: 1
-    blastRadius: 6
-    listOrder: 13600
-    maxRange: 1
-    fixedWeapon: true
-    specialUseEmptyHand: false # no accidential blowups
-    specialIconSprite: 202 #the boom button
-    clipSize: 1
-    confAimed:
-      name: STR_NURGLE_BOOM 
-    costAimed:
-      time: 1
-    accuracyAimed: 100
-    accuracyMultiplier:
-      firing: 0.0
-      flatHundred: 1.0
-    bulletSpeed: -10
+    battleType: 4 # grenade
     recover: false
+    tuPrime: 999
+    fixedWeapon: true
+    isExplodingInHands: true
+    hiddenOnMinimap: true
+    defaultInventorySlot: STR_BELT
     tags:
-      ITEM_DOES_KILL_USER: 1
+      ITEM_IS_BOMB: 1
+      
