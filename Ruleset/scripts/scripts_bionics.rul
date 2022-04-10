@@ -1,0 +1,40 @@
+extended:
+  tags:
+    RuleSoldierBonus:
+      BONUS_BIONICS: int
+    BattleUnit:
+      UNIT_BIONICS: int
+
+  scripts:
+    applySoldierBonuses: # apply tag
+      - offset: 10
+        code: |
+          var int temp;
+
+          soldier_bonus.getTag temp Tag.BONUS_BIONICS;
+
+          if eq temp 1;
+            # debug_log "soldier_bonus" soldier_bonus;
+            unit.setTag Tag.UNIT_BIONICS 1;
+          end;
+
+          return;
+
+    returnFromMissionUnit: # scripts_40k.rul returnFromMissionUnit: offset: 10
+      #*** Reduces wound times for certain soldier types ***
+      - offset: 10
+        code: |
+          var int hasBionics;
+
+          unit.getTag hasBionics Tag.UNIT_BIONICS;
+          # debug_log "recovery_time old" recovery_time;
+
+          if and eq hasBionics 1 neq 0 recovery_time;
+
+            div recovery_time 2; # constants for now
+
+          end;
+
+          # debug_log "recovery_time new" recovery_time;
+
+          return;
