@@ -912,7 +912,7 @@ items:
   - type: STR_BOLTER_LIGHT_LMG #ACCATRAN AIRBORNE LIGHT BOLTER W BIPOD
     categories: [STR_CAT_BOLTER]
     requiresBuy:
-      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_LIGHT_BOLTERS_LOWTIER
       - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.3
     costBuy: 50000 #more expensive than the Solo light bolters
@@ -925,8 +925,8 @@ items:
     bulletSpeed: 40
     fireSound: 2137
     compatibleAmmo:
-      - STR_LIGHT_BOLTER_AMMO_SHORT #make a higher ammo capacity version of the solo bolter rounds? 30-40 rounds?
-      - STR_LIGHT_BOLTER_AMMO_SHORT_PEN #make a higher ammo capacity version of the solo bolter rounds? 30-40 rounds?
+      - STR_LIGHT_BOLTER_AMMO_BELT
+      - STR_LIGHT_BOLTER_AMMO_BELT_PEN #midtier upgrade, costly
     battleType: 1
     kneelBonus: 110
     twoHanded: true
@@ -941,6 +941,7 @@ items:
     tags:
       ITEM_RECOIL: 40 #offset by bipod
       ITEM_HAS_BIPOD: 1   
+      #ITEM_AMMO_SHADE: -3
       
   - type: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
     size: 0.3
@@ -1198,6 +1199,45 @@ items:
     costBuy: 7000 #costs less due to 10 rounds less
     costSell: 300
     bigSprite: 288
+    listOrder: 19181
+    tags:
+      ITEM_AMMO_COLOR: 1
+
+
+  - &STR_LIGHT_BOLTER_AMMO_BELT_ACCATRAN
+    type: STR_LIGHT_BOLTER_AMMO_BELT
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_IMPERIAL_GUARD_OPERATIONS #so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    size: 0.1
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 10000 #Intention is costly ammo vs lasguns
+    costSell: 600
+    weight: 5 #weight more
+    bigSprite: {mod: 40k, index: 1004}
+    floorSprite: {mod: 40k, index: 1004}
+    handSprite: {mod: 40k, index: 1032}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    explosionSpeed: 5
+    clipSize: 40 #added ammo capacity
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 3
+    listOrder: 19180
+    tags:
+      ITEM_AMMO_COLOR: 6
+
+  - type: STR_LIGHT_BOLTER_AMMO_BELT_PEN
+    refNode: *STR_LIGHT_BOLTER_AMMO_BELT_ACCATRAN
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_IMPERIAL_GUARD_MIDTIER #midtier upgrade, so this ammo doesn´t show up for factions that do not have the SOLO bolter
+    costBuy: 30000 #costly ammo
+    costSell: 5000
+    bigSprite: 201 #MC Heavy stubber belt
     listOrder: 19181
     tags:
       ITEM_AMMO_COLOR: 1
