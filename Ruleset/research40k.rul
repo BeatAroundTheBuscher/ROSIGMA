@@ -76,6 +76,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_CHAOS_PATH
 
   - name: STR_NURGLE_CULTIST_LIGHT
     cost: 50
@@ -122,6 +123,7 @@ research:
       - STR_INTERROGATION_COMPLETED
       - STR_LEADER_PLUS
       - STR_THREAT_ONE
+      - STR_CHAOS_PATH
       
 
   - name: STR_GREEN_ROBE_CORPSE
@@ -1334,8 +1336,7 @@ research:
 #---MISSIONS------------------------------------------------------
 
 #---CHAOS-----------------------------------------------------
-
-  - name: STR_CHAOS_PATH #CHAOS PATH
+  - name: STR_CHAOS_PATH #CHAOS PATH Could use new Sisters adepted entry
     cost: 1000
     points: -1000
     getOneFree:
@@ -1343,6 +1344,7 @@ research:
     dependencies:
       - STR_MARINES_STRATEGY
       - STR_PLASMA_PISTOL
+      - STR_PLASMA_PISTOL_TZEENTCH 
       - STR_PLASMA_RIFLE
       - STR_HEAVY_PLASMA
       - STR_ALIEN_ORIGINS
@@ -1353,9 +1355,70 @@ research:
       - STR_CHB
       - STR_CASSC
 
+  - name: STR_ALIEN_ORIGINS
+    cost: 500
+    points: 100
+    unlocks: 
+      - STR_CHAOS_PATH #new way to get access to this research without being MARINES
+
+  - name: STR_CHAOS_CROZIUS
+    cost: 500
+    points: 100
+    unlocks: 
+      - STR_CHAOS_PATH #new way to get access to this research without being MARINES
+
+  - name: STR_CONVERT_TO_CHAOS_RESEARCH
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+
+  - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+  
+  - name: STR_NURGLE_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+
+  - name: STR_NURGLE_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_NURGLE_OPTIONS
+    disables:
+      - STR_TZEENTCH_PATH
+      - STR_KHORNE_PATH
+      - STR_SLAANESH_PATH
+
+  - name: STR_NURGLE_ADEPTAS_HIRE_RESEARCH
+    cost: 250
+    points: 100
+    dependencies:
+      - STR_NURGLE_PATH
+      
+  - name: STR_TZEENTCH_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+      
+  - name: STR_TZEENTCH_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_TZEENTCH_OPTIONS   
+    disables:
+      - STR_NURGLE_PATH
+      - STR_KHORNE_PATH
+      - STR_SLAANESH_PATH
       
   - name: STR_CHAOS_MARINE_HIRE_RESEARCH
-    cost: 0
+    cost: 1000
     points: 0
     dependencies:
       - STR_CHAOS_PATH 
@@ -1376,7 +1439,6 @@ research:
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_ELDAR_SEER  #live interrogation
-
 
   - name: STR_ELDAR_SEER
     cost: 192
@@ -1414,23 +1476,58 @@ research:
       - STR_CHAPTER_PURITY 
       - STR_PSI_LAB
       - STR_LIBRARY
-  - name: STR_CHAOS_PATH #CHAOS PATH Could use new Sisters adepted entry
-    cost: 1000
-    points: -1000
-    dependencies:
-      - STR_MARINES_STRATEGY
-      - STR_PLASMA_PISTOL
-      - STR_PLASMA_PISTOL_TZEENTCH 
-      - STR_PLASMA_RIFLE
-      - STR_HEAVY_PLASMA
-      - STR_ALIEN_ORIGINS
-      - STR_BOLTPISTOL_CHAOS
-      - STR_BOLTERC
-      - STR_CHAOS_CROZIUS
-      - STR_AXE
-      - STR_CHB
-      - STR_CASSC
+      
 
+  - name: STR_TZEENTCH_ADEPTAS_HIRE_RESEARCH
+    cost: 250
+    points: 100
+    dependencies:
+      - STR_TZEENTCH_PATH
+    
+  - name: STR_KHORNE_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+      
+  - name: STR_KHORNE_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_KHORNE_OPTIONS
+    disables:
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+      - STR_SLAANESH_PATH
+
+  - name: STR_KHORNE_ADEPTAS_HIRE_RESEARCH
+    cost: 250
+    points: 100
+    dependencies:
+      - STR_KHORNE_PATH
+      
+  - name: STR_SLAANESH_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+      
+  - name: STR_SLAANESH_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_SLAANESH_OPTIONS
+    disables:
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+      - STR_KHORNE_PATH
+
+  - name: STR_SLAANESH_ADEPTAS_HIRE_RESEARCH
+    cost: 250
+    points: 100
+    dependencies:
+      - STR_SLAANESH_PATH
+   
 #---CORPSES AND FOES------------------------------------------------------
 #ChaosSisters Interrogation (Needed for Ufopedia hooks)
 
@@ -1918,6 +2015,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_CHAOS_PATH
   - name: STR_SLAANGOR_BULLGOR
     cost: 192
     points: 50
@@ -1973,6 +2071,8 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_CHAOS_PATH
   - name: STR_SLAANESH_ANOINTED_MISSILE
     cost: 192
     points: 50
@@ -1980,6 +2080,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_CHAOS_PATH
 
   - name: STR_SLAANANOINTED_CORPSE
     cost: 50
@@ -2099,6 +2200,7 @@ research:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
       - STR_LEADER_PLUS
+      - STR_CHAOS_PATH
       
 #Alpha Legion
   - name: STR_ALPHA_SOLDIER 
@@ -2567,6 +2669,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_CHAOS_PATH
   - name: STR_TZEENTCH_CULT_WITCH_CORPSE
     cost: 50
     points: 25
@@ -2581,6 +2684,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_CHAOS_PATH
   - name: STR_TZEENTCH_CULT_LEADER_ASSASSIN
     cost: 150
     points: 50
@@ -2594,6 +2698,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_CHAOS_PATH
   - name: STR_TZEENTCH_CULT_LEADER_CORPSE
     cost: 50
     points: 25
