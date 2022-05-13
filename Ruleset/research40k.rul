@@ -1381,13 +1381,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
-
-  - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-    cost: 500
-    points: 100
-    dependencies:
-      - STR_CONVERT_TO_CHAOS_RESEARCH
-  
+      
   - name: STR_NURGLE_OPTIONS
     cost: 500
     points: 100
@@ -1403,12 +1397,6 @@ research:
       - STR_TZEENTCH_PATH
       - STR_KHORNE_PATH
       - STR_SLAANESH_PATH
-
-  - name: STR_NURGLE_ADEPTAS_HIRE_RESEARCH
-    cost: 250
-    points: 100
-    dependencies:
-      - STR_NURGLE_PATH
       
   - name: STR_TZEENTCH_OPTIONS
     cost: 500
@@ -1425,13 +1413,45 @@ research:
       - STR_NURGLE_PATH
       - STR_KHORNE_PATH
       - STR_SLAANESH_PATH
+
+  - name: STR_KHORNE_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+      
+  - name: STR_KHORNE_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_KHORNE_OPTIONS
+    disables:
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+      - STR_SLAANESH_PATH
+
+  - name: STR_SLAANESH_OPTIONS
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CHAOS_PATH
+      
+  - name: STR_SLAANESH_PATH
+    cost: 1000
+    points: 100
+    dependencies:
+      - STR_SLAANESH_OPTIONS
+    disables:
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+      - STR_KHORNE_PATH
       
   - name: STR_CHAOS_MARINE_HIRE_RESEARCH
     cost: 1000
     points: 0
     dependencies:
-      - STR_CHAOS_PATH 
-
+      - STR_CHAOS_PATH
+       
   - name: STR_NECRONTECH_RESEARCH #grant access to Necron Weapons
     cost: 2000
     points: -250
@@ -1481,62 +1501,65 @@ research:
       - STR_CHAOS_PATH
       - STR_PSI_LAB
       - STR_LIBRARY
+    getOneFree:
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+    unlocks:
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
     disables:
       - STR_CHAPTER_PURITY 
       - STR_PSI_LAB
       - STR_LIBRARY
-      
 
+  - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH #can be researched right away after going chaos path adeptas
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+      - STR_ADEPTAS
+      - STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH
+
+  - name: STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH #for non ADEPTAS chaos path factions to unlock hiring them later
+    cost: 1000
+    points: 150
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+      - STR_NURGLE_OPTIONS
+      - STR_TZEENTCH_OPTIONS
+      - STR_SLAANESH_OPTIONS
+      - STR_KHORNE_OPTIONS
+      - STR_ALIENS_ONLY
+    unlocks: 
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
+      
   - name: STR_TZEENTCH_ADEPTAS_HIRE_RESEARCH
     cost: 250
     points: 100
     dependencies:
       - STR_TZEENTCH_PATH
-    
-  - name: STR_KHORNE_OPTIONS
-    cost: 500
-    points: 100
-    dependencies:
-      - STR_CHAOS_PATH
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
       
-  - name: STR_KHORNE_PATH
-    cost: 1000
-    points: 100
-    dependencies:
-      - STR_KHORNE_OPTIONS
-    disables:
-      - STR_NURGLE_PATH
-      - STR_TZEENTCH_PATH
-      - STR_SLAANESH_PATH
-
   - name: STR_KHORNE_ADEPTAS_HIRE_RESEARCH
     cost: 250
     points: 100
     dependencies:
       - STR_KHORNE_PATH
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
       
-  - name: STR_SLAANESH_OPTIONS
-    cost: 500
-    points: 100
-    dependencies:
-      - STR_CHAOS_PATH
-      
-  - name: STR_SLAANESH_PATH
-    cost: 1000
-    points: 100
-    dependencies:
-      - STR_SLAANESH_OPTIONS
-    disables:
-      - STR_NURGLE_PATH
-      - STR_TZEENTCH_PATH
-      - STR_KHORNE_PATH
-
   - name: STR_SLAANESH_ADEPTAS_HIRE_RESEARCH
     cost: 250
     points: 100
     dependencies:
       - STR_SLAANESH_PATH
-   
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
+
+  - name: STR_NURGLE_ADEPTAS_HIRE_RESEARCH
+    cost: 250
+    points: 100
+    dependencies:
+      - STR_NURGLE_PATH
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
+      
 #---CORPSES AND FOES------------------------------------------------------
 #ChaosSisters Interrogation (Needed for Ufopedia hooks)
 
