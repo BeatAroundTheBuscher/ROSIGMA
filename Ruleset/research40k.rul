@@ -1339,8 +1339,6 @@ research:
   - name: STR_CHAOS_PATH #CHAOS PATH Could use new Sisters adepted entry
     cost: 1000
     points: -1000
-    getOneFree:
-      - STR_CHAOS_MARINE_HIRE_RESEARCH
     dependencies:
       - STR_MARINES_STRATEGY
       - STR_PLASMA_PISTOL
@@ -1356,7 +1354,43 @@ research:
       - STR_CASSC
     unlocks:
       - STR_CONVINCE_CHAOS_RESEARCH
+      
+  - name: STR_CHAMBER_CHAOS_PATH
+    cost: 150
+    points: 0
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+    unlocks: 
+      - STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
 
+  - name: STR_MARINE_CHAOS_PATH
+    cost: 150
+    points: 0
+    dependencies:
+      - STR_MARINES_STRATEGY
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+    unlocks: 
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+ 
+  - name: STR_CHAOS_SISTERS_CSM_ACCESS_LATER
+    cost: 1500
+    points: 0
+    dependencies:
+      - STR_ALIENS_ONLY2
+      - STR_UFO_CONSTRUCTION #Ceramite Tier
+    unlocks: 
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      
+  - name: STR_CHAOS_MARINE_HIRE_RESEARCH
+    cost: 1000
+    points: 0
+    dependencies:
+      - STR_CHAMBER_CHAOS_PATH #Was this STR_CHAOS_PATH, now split to give CHAMBER and MARINES this right away, but not Chaos Sisters path
+      - STR_MARINE_CHAOS_PATH #marine chaos path
+      - STR_CHAOS_SISTERS_CSM_ACCESS_LATER #Ceramite Tier
+      
   - name: STR_ALIEN_ORIGINS
     cost: 500
     points: 100
@@ -1445,12 +1479,6 @@ research:
       - STR_NURGLE_PATH
       - STR_TZEENTCH_PATH
       - STR_KHORNE_PATH
-      
-  - name: STR_CHAOS_MARINE_HIRE_RESEARCH
-    cost: 1000
-    points: 0
-    dependencies:
-      - STR_CHAOS_PATH
        
   - name: STR_NECRONTECH_RESEARCH #grant access to Necron Weapons
     cost: 2000
@@ -1506,8 +1534,6 @@ research:
       - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
     disables:
       - STR_CHAPTER_PURITY 
-      - STR_PSI_LAB
-      - STR_LIBRARY
 
   - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH #can be researched right away after going chaos path adeptas
     cost: 500
