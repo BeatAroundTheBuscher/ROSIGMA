@@ -1,0 +1,18 @@
+extended:
+  scripts:
+    createUnit:
+      - offset: 2
+        code: |
+          var int temp;
+
+          # might mess with spawner grenades but seems to be handled differently anyhow
+          # test done with the Daemonette Missle Pack created 0 TU units instead of 25 %
+          if gt turn 0; # is reinforcement of any side 
+            unit.getTimeUnitsMax temp;
+            muldiv temp 25 100;
+            unit.setTimeUnits temp;
+            debug_log "unit: " unit;
+            debug_log "set time units to " temp;
+          end;
+
+          return;
