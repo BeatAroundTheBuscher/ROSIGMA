@@ -16,11 +16,61 @@ extended:
       ITEM_IS_TOOL: int
 
 items:
+
+  - type: STR_HAND_MULTILASER #Black Version, for Power Armors.
+    categories: [STR_CAT_AUTO]
+    size: 0.2
+    dropoff: 5 #worse than Hotshot Volleygun
+    requiresBuy:
+      - STR_CHAMBERMILITANT
+      - STR_MT_GK #Midtier Inquisition #Guard gets a manufacturing option
+    costBuy: 1000000 #more than double initial cost vs rotor cannon, but no ammo cost
+    costSell: 150000
+    weight: 40 #similar to heavy bolter guard
+    bigSprite: 910 #multilaser black
+    floorSprite: 904 #rotorcannon black for now
+    handSprite: 384 #rotorcannon black for now
+    bulletSprite: {mod: 40k, index: 12}
+    bulletSpeed: 50
+    fireSound: {mod: 40k, index: 741}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 60
+    accuracySnap: 60 # 40k 70 
+    accuracyAuto: 45 # -5 vs volleygun, +5 vs rotorcannon
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAuto: 70
+    tuAimed: 0
+    autoShots: 10 #-5 vs Rotorcannon, +3 vs volleygun
+    autoRange: 10 #Hellgun +1
+    snapRange: 16
+    aimRange: 0
+    clipSize: -1 #infinite ammo is a boon vs rotorcannon
+    power: 60 #-5 vs Hotshot volleygun, higher ROF instead
+    damageType: 1 # AP instead of LAS
+    damageAlter: #Hotshot
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    sprayWaypoints: 2
+    listOrder: 10761
+      
   - type: STR_ROTOR_CANNON
     categories: [STR_CAT_AUTO]
 #    requiresBuy:
 #      - STR_ROTOR_CANNON_RESEARCH #research topic unlocks manufacturing
     size: 0.5
+    dropoff: 5
 #    costBuy: 200000
     costSell: 50000
     weight: 40 #similar to heavy bolter guard
@@ -70,6 +120,7 @@ items:
 #    requiresBuy:
 #      - STR_ROTOR_CANNON_KOMBI #research topic unlocks manufacturing
     size: 0.5
+    dropoff: 5
 #    costBuy: 300000
     costSell: 50000
     weight: 45 #similar to heavy bolter guard + grenade launcher
@@ -133,12 +184,134 @@ items:
       ITEM_RECOIL: 45
       ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
 
+  - type: STR_ROTOR_CANNON_BLACK #Imperial
+    categories: [STR_CAT_AUTO]
+    size: 0.2
+    dropoff: 5
+    requiresBuy:
+      - STR_CHAMBERMILITANT
+    #recoveryTransformations:
+      #STR_ROTOR_CANNON: [1] #Doesn´t work for player weapons as they don´t transform back
+    costBuy: 300000
+    costSell: 50000
+    weight: 40 #similar to heavy bolter guard
+    bigSprite: 908 
+    floorSprite: 904
+    handSprite: 384
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 50
+    fireSound: 2421 #minigun.wav
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+      - STR_ROTOR_CANNON_AMMO #backpack
+      - STR_ROTOR_CANNON_KRAKEN_AMMO #backpack
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 60
+    accuracySnap: 0
+    tuSnap: 0
+    tuAuto: 70
+    accuracyAuto: 40
+    tuAimed: 85 #bullet hose mode
+    accuracyAimed: 33
+    tuLoad: 30 #hassle to reload, flat number
+    autoShots: 15
+    snapRange: 0
+    autoRange: 18
+    aimRange: 16
+    confAuto:
+      spendPerShot: 2    
+    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    confAimed:
+      shots: 25
+      spendPerShot: 2
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    sprayWaypoints: 2
+    listOrder: 10761
+    tags:
+      ITEM_RECOIL: 45
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+  - type: STR_ROTOR_CANNON_KOMBI_BLACK #Imperial version
+    categories: [STR_CAT_AUTO]
+    requiresBuy:
+      - STR_CHAMBERMILITANT
+      - STR_MT_GK #Midtier Inquisition
+    size: 0.5
+    dropoff: 5
+    costBuy: 400000
+    costSell: 50000
+    weight: 45 #similar to heavy bolter guard + grenade launcher
+    bigSprite: 909
+    floorSprite: 904
+    handSprite: 392
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 50
+    fireSound: 2422 #minigun2.wav
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+      - STR_ROTOR_CANNON_AMMO #backpack
+      - STR_ROTOR_CANNON_KRAKEN_AMMO #backpack
+      - STR_ROTOR_KOMBI_BUCKSHOT40 #Ripper shot equivalent
+      - STR_ROTOR_KOMBI_SLUG40 #Heavy Bolt equivalent single shot
+      - STR_INCENDIARY_GRENADE40 #manufactured for guard
+      - STR_MELTA_GRENADE40 #manufactured for guard
+    ammo:
+     0:
+      compatibleAmmo: [STR_HEAVY_STUBBER_CLIP, STR_HEAVY_STUBBER_CLIP_MC, STR_ROTOR_CANNON_AMMO, STR_ROTOR_CANNON_KRAKEN_AMMO]
+     1:
+      compatibleAmmo: [STR_ROTOR_KOMBI_BUCKSHOT40, STR_ROTOR_KOMBI_SLUG40, STR_INCENDIARY_GRENADE40, STR_MELTA_GRENADE40]
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 60
+    accuracySnap: 50 #underslung, hard to aim
+    tuSnap: 45 #underslung, not great for reaction fire
+    tuAuto: 70
+    accuracyAuto: 40
+    tuAimed: 85 #bullet hose mode
+    accuracyAimed: 33
+    tuLoad: 30 #hassle to reload, flat number
+    snapRange: 15
+    autoRange: 18
+    aimRange: 16
+    tuLoad: 66 #hassle to reload
+    confSnap:
+      shots: 1
+      ammoSlot: 1 #direct fire grenades and shotty
+      arcing: false
+      tuLoad: 15 #easier to reload than main gun, flat number
+    confAuto:
+      shots: 15
+      spendPerShot: 2    
+      ammoSlot: 0
+      arcing: false
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    confAimed:
+      shots: 25
+      spendPerShot: 2    
+      ammoSlot: 0
+      arcing: false
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    sprayWaypoints: 3
+    listOrder: 10761
+    tags:
+      ITEM_RECOIL: 45
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+      
   - type: STR_ROTOR_CANNON_AMMO
     categories: [STR_CAT_AUTO]
     size: 0.1
-    #requiresBuy: 
-     #- STR_ROTOR_CANNON_RESEARCH
-    #costBuy: 10000
+    requiresBuy: 
+     - STR_CHAMBERMILITANT
+    costBuy: 10000
     costSell: 2000
     weight: 20 ##double heavy stubber belt
     bigSprite: 902
@@ -165,9 +338,9 @@ items:
   - type: STR_ROTOR_CANNON_KRAKEN_AMMO
     categories: [STR_CAT_AUTO]
     size: 0.1
-    #requiresBuy: 
-     #- STR_ROTOR_CANNON_RESEARCH
-    #costBuy: 30000
+    requiresBuy: 
+     - STR_MT_GK #midtier Inquisition
+    costBuy: 30000
     costSell: 5000
     weight: 20 #double heavy stubber belt
     bigSprite: 903
