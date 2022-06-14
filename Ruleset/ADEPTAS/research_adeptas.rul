@@ -14,15 +14,223 @@ research:
     unlocks: !remove 
       - STR_HOSPITALLER
 
-  - name: STR_BLACKSTONE_JUMPTROOPER   
-    cost: 75
-    points: 50
-    needItem: true
+  - name: STR_NOVICE_STRATEGY_ADEPTAS
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    lookup: STR_CHOSEN_ADEPTAS
     unlocks:
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
+      - STR_CRAFTADD
+      - STR_ADEPTAS_NOVICE_RESEARCH
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR_RESEARCH
+      - STR_TRAINING_BOLTERS_ADEPTAS #Starts with Autoguns only
+      - STR_ADEPTAS_FRATERIS_MILITIA_RESEARCH #recruitment
+      #- STR_GUARDSMEN #STR_NOVICE_RECRUITMENT, should pull out novices and repentia soldier types dependent on their own research topics
+      #- STR_CHIMERA_IG #Rhino option?
+      #- STR_VALKYRIE_GRAV_DROP_IG #Blackstar, no drop pods out the gate for the Novice start
+      #- STR_PILOT_GUARDSMEN #Adeptas Pilots, should be dependent on their own research for unlocks like this
+      - STR_NOT_ELITE_STRATEGY_ADEPTAS
+      - STR_NOT_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOT_NORMAL_STRATEGY_ADEPTAS
+    disables:
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+
+  - name: STR_ADEPTAS_MIDTIER_NOVICE #Mostly the same as Adeptas normal strategy, the two branches merge here aside for recruitment.
+    dependencies:
+      - STR_NOVICE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER
+    unlocks:
+      - STR_FAITHFUL_ARMORY
+      - STR_HEAVY_LASER #Meltagun
+      - STR_ADEPTAS_ARMOR
+      - STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS #has to research it
+      #- #Adeptas Blackstar? Rhino options?
+      # Cantus light bolter unlock?
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      #- Veteran Frateris?
+      
+  - name: STR_NORMAL_STRATEGY_ADEPTAS
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    lookup: STR_CHOSEN_ADEPTAS
+    getOneFree:
+      - STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS
+      - STR_TRAINING_BOLTERS_ADEPTAS
+    unlocks:
+      - STR_MOTION_SCANNER
+      - STR_ADEPTAS_NOVICE_RESEARCH
+      - STR_SMOKE
+      - STR_CRAFTADD
+      - STR_FAITHFUL_ARMORY
+      - STR_ADEPTAS_ARMOR
+      - STR_ADEPTAS_SOB_MOBILIZATION #contains adeptas recruitment
+      - STR_TRAINING_BOLTERS_ADEPTAS
+      - STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS
+      - STR_ADEPTAS_FRATERIS_MILITIA_RESEARCH #recruitment
+      - STR_ADEPTAS_SUPERIOR_RESEARCH
+      #- STR_PENITENT_GUARD #Replace with Repentia tech, or have that be just dependent on getting to Adeptas tier?
+      #- STR_BASIC_SENTINEL #Adeptas Sentinel
+      #- STR_CHIMERA_IG #Rhino option?
+      #- STR_VALKYRIE_GRAV_DROP_IG #Blackstar, no drop pods out the gate for the Novice start
+      - STR_NOT_ELITE_STRATEGY_ADEPTAS
+      - STR_NOT_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOT_NOVICE_STRATEGY_ADEPTAS
+    disables:
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOVICE_STRATEGY_ADEPTAS
+
+  - name: STR_ADEPTAS_MIDTIER_NORMAL
+    dependencies:
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER
+    getOneFree:
+      - STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS
+    unlocks:
+      - STR_HARDER_MISSIONS
+      - STR_HFLAMERR
+      - STR_HEAVY_LASER #Meltagun
+      - STR_ADEPTAS_ARMORS
+      - STR_HOSPITALLER #hospitaller armor tech
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR_RESEARCH
+      - STR_ADEPTAS_REPENTIA_SUPERIOR_RESEARCH
+      #- #Adeptas drop pods, Blackstar
+      #- #Honorguard/Dominions?
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      #- Veteran Frateris?
+      #- Basic Adeptas Sentinel?
+
+  - name: STR_CERAMITE_TIER_ADEPTAS
+    dependencies:
+      - STR_ADEPTAS_MIDTIER_NORMAL
+      - STR_UFO_CONSTRUCTION
+    unlocks: 
+      - STR_ADEPTAS_ARMORB #leads to DCA armor and DCA promotion once researched
+      - STR_STORMBOLTER_DEAZ
+      - STR_GALGALIM_ASSCANNON
+      - STR_BOLTER_DOMINION  
+      - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ
+      
+  - name: STR_ELITE_STRATEGY_ADEPTAS
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    lookup: STR_CHOSEN_ADEPTAS
+    unlocks:
+      - STR_HARDER_MISSIONS
+      - STR_MOTION_SCANNER
+      - STR_HEAVY_LASER #Meltagun
+      - STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS
+      - STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS #?
+      - STR_FAITHFUL_ARMORY
+      - STR_ADEPTAS_ARMOR
+      - STR_ADEPTAS_ARMORS
+      - STR_ADEPTAS_SOB_MOBILIZATION #? Might change if limited recrutiment strategy
+      - STR_HOSPITALLER #hispitaller armor tech
+      #- STR_STORMTROOPER_REQUISITION #Dominion Recruitment?
+      - STR_ADEPTAS_SUPERIOR_RESEARCH
+      #- STR_TAUROX_IG # Blackstar / Start with the Adeptas Armor Convoy
+     # - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE # Drop Pods
+      - STR_NOT_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOT_NOVICE_STRATEGY_ADEPTAS
+      - STR_NOT_NORMAL_STRATEGY_ADEPTAS
+    disables:
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOVICE_STRATEGY_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+
+  - name: STR_MIDTIER_ELITE_ADEPTAS
+    dependencies:
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER
+    unlocks:
+      - STR_STORMBOLTER_DEAZ #early unlock 
+      - STR_GALGALIM_ASSCANNON #early unlock
+      - STR_BOLTER_DOMINION  #early unlock
+      - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ #early unlock
+
+  - name: STR_REPENTIA_STRATEGY_ADEPTAS
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    lookup: STR_CHOSEN_ADEPTAS
+    unlocks:
+      - STR_SMOKE
+      - STR_CRAFTADD
+      - STR_ADEPTAS_REPENTIA #direct recruitment
+      - STR_ADEPTAS_REPENTIA_SUPERIOR_RESEARCH #Repentia Superior research
+      - STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS
+      - STR_ADEPTAS_FRATERIS_MILITIA_RESEARCH 
+      #- STR_CHIMERA_LIGHT_IG #Repentia transport options?
+      #STR_ADEPTAS_SOB_MOBILIZATION cannot get this due to dependency on Faithful armor (which they dont get either)
+      - STR_NOT_NORMAL_STRATEGY_ADEPTAS
+      - STR_NOT_ELITE_STRATEGY_ADEPTAS
+      - STR_NOT_NOVICE_STRATEGY_ADEPTAS
+    disables:
+      - STR_NOVICE_STRATEGY_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+
+  - name: STR_MIDTIER_REPENTIA
+    dependencies:
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER
+    unlocks:
+      - STR_ADEPTAS_ARMORB #leads to DCA armor and DCA promotion once researched
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+
+  - name: STR_CERAMITE_TIER_REPENTIA
+    dependencies:
+      - STR_MIDTIER_REPENTIA
+      - STR_UFO_CONSTRUCTION
+    unlocks: 
+      - STR_HARDER_MISSIONS
+      - STR_HEAVY_LASER #Meltagun
+
+#SOLDIER types
+  - name: STR_ADEPTAS_FRATERIS_MILITIA_RESEARCH #To recruit Frateris, needs to add it as a requirement to the soldier
+    cost: 0
+    points: 10
+    dependencies: #elite strategy excluded
+      - STR_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_NOVICE_STRATEGY_ADEPTAS
+#Veteran version could be limited for certain strategies
+
+  - name: STR_ADEPTAS_NOVICE_RESEARCH #To recruit Novices, needs to add it as a requirement to the soldier
+    cost: 0
+    points: 10
+    dependencies: #elite strategy excluded
+      - STR_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_NOVICE_STRATEGY_ADEPTAS
+#Novice Recruitment
+
+  - name: STR_ADEPTAS_SUPERIOR_RESEARCH
+    cost: 500
+    points: 20
+    dependencies:
+      - STR_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER_NOVICE
+
+  - name: STR_ADEPTAS_ARMOR_SUPERIOR_RESEARCH #Armor research topic for manufacturing of Novitiate Superior Armor Variant
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER_NOVICE
       
   - name: STR_MEDICAE_RESEARCH # adeptas medic
     cost: 300
@@ -39,40 +247,74 @@ research:
       - STR_ADEPTAS_MIDTIER
       - STR_MEDICAE_RESEARCH 
 
-#  - name: STR_NOVITIATE_INDUCTION
-#    cost: 180
-#    points: 20
-#    dependencies:
-#      - STR_ADEPTAS_ARMOR
-#  - name: STR_SISTERSUPERIOR_HONOR
-#    cost: 180
-#    points: 20
-#    dependencies:
-#      - STR_ADEPTAS_ARMOR
-
   - name: STR_ADEPTAS_REPENTIA_SUPERIOR_RESEARCH #Recruitment Tech for Repentia Superior Variant. Can also be used to restrict promotion/soldierTransform.
-    cost: 200
+    cost: 500
     points: 20
     dependencies:
-      - STR_ADEPTAS #could be restricted to Repentia Strategy Later
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+    unlocks:
+      - STR_ADEPTAS_ARMOR_REPSUPERIOR_RESEARCH
 
   - name: STR_ADEPTAS_ARMOR_REPSUPERIOR_RESEARCH #Armor research topic for manufacturing of Novitiate Superior Armor Variant
-    cost: 200
+    cost: 400
     points: 20
     dependencies:
-      - STR_ADEPTAS
+      - STR_REPENTIA_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_REPENTIA_SUPERIOR_RESEARCH
+    requires:
+      - STR_ALIEN_ALLOYS
+      - STR_MIDTIER_PREREQ
       
   - name: STR_ADEPTAS_NOVITIATE_SUPERIOR_RESEARCH #Recruitment Tech for Novitiate Superior Variant. Can also be used to restrict promotion/soldierTransform.
-    cost: 200
+    cost: 500
     points: 20
     dependencies:
-      - STR_ADEPTAS #could be restricted to Novice Strategy Later
+      - STR_NOVICE_STRATEGY_ADEPTAS
+    unlocks:
+      - STR_ADEPTAS_ARMOR_NOVSUPERIOR_RESEARCH
       
   - name: STR_ADEPTAS_ARMOR_NOVSUPERIOR_RESEARCH #Armor research topic for manufacturing of Novitiate Superior Armor Variant
-    cost: 200
+    cost: 400
     points: 20
     dependencies:
+      - STR_NOVICE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR_RESEARCH
+    requires:
+      - STR_ALIEN_ALLOYS
+      - STR_MIDTIER_PREREQ
+
+  - name: STR_TRAINING_BOLTERS_ADEPTAS #used to unlock Cantus Bolter
+    cost: 200
+    points: 15
+    dependencies:
+      - STR_NOVICE_STRATEGY_ADEPTAS
+
+  - name: STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS #used to unlock deaz bolter
+    cost: 250
+    points: 15
+    dependencies:
       - STR_ADEPTAS
+      - STR_FAITHFUL_ARMORY
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER_NOVICE
+    unlocks:
+      - STR_LIGHT_BOLTERS
+
+  - name: STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS #used to unlock deaz bolter
+    cost: 400
+    points: 15
+    dependencies:
+      - STR_ADEPTAS
+      - STR_FAITHFUL_ARMORY
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER_NOVICE
+    unlocks:      
+      - STR_BOLTER_HELLSPITE #Note add STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS to requires buy
+      - STR_BOLTER_MEPHISTO #Note add STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS to requires buy
+      - STR_ADEPTAS_BOLTGUN_JOVE #Note add STR_LIGHT_BOLTERS_MIDTIER_ADEPTAS to requires buy
+
 
   - name: STR_PHOSPHOR_GRENADE  
     cost: 50
@@ -116,7 +358,9 @@ research:
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_THREAT_ONE
-      - STR_ADEPTAS
+      - STR_NORMAL_STRATEGY_ADEPTAS
+      - STR_ELITE_STRATEGY_ADEPTAS
+      - STR_ADEPTAS_MIDTIER_NOVICE
   - name: STR_ADEPTAS_ARMORB
     cost: 180
     points: 20
