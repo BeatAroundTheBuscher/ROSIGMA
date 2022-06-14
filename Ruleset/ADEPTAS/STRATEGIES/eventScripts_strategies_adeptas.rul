@@ -1,0 +1,80 @@
+eventScripts:
+  - &STR_RECRUITS_ADEPTAS_START
+    type: STR_RECRUITS_NOVICE_STRATEGY_ADEPTAS
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_NOVICE_STRATEGY_ADEPTAS
+      - STR_RECRUITS_NOVITIATE_SUPERIOR_STRATEGY_ADEPTAS #will this trigger from onetimesequentialevents in the first month?
+    firstMonth: 0
+    lastMonth: 0
+    executionOdds: 100
+    researchTriggers:
+       STR_ADEPTAS: true
+
+  - type: STR_RECRUITS_NORMAL_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_NORMAL_STRATEGY_ADEPTAS
+
+  - type: STR_RECRUITS_REPENTIA_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_REPENTIA_STRATEGY_ADEPTAS
+      - STR_RECRUITS_REPENTIA_SUPERIOR_STRATEGY_ADEPTAS
+
+  - type: STR_RECRUITS_ELITE_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START
+    oneTimeSequentialEvents:
+      - STR_RECRUITS_ELITE_STRATEGY_ADEPTAS
+      - STR_RECRUITS_ELITE_STRATEGY_ADEPTAS
+
+
+  - type: STR_MONTHLY_FRATERIS_ADEPTAS_SCRIPT
+    eventWeights:
+      0:
+        STR_BASIC_SPAWN_FRATERIS_MILITIA_VETERAN: 100
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_ADEPTAS: true
+    minScore: 1000 # successful war effort
+
+  - type: STR_MONTHLY_MEDICAE_ADEPTAS_SCRIPT
+    eventWeights:
+      0:
+        STR_REINFORCEMENTS_ADEPTAS_WANDERING_MEDICAE: 100
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_NOVICE_STRATEGY_ADEPTAS: true
+    minScore: 1500 # successful war effort
+
+  - type: STR_MONTHLY_ELOHIM_ADEPTAS_SCRIPT
+    eventWeights:
+      0:
+        STR_SPAWN_VETERAN_ADEPTAS: 100
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_NORMAL_STRATEGY_ADEPTAS: true
+    minScore: 1500 # successful war effort
+
+  - type: STR_MONTHLY_REPENTIA_ADEPTAS_SCRIPT
+    eventWeights:
+      0:
+        STR_BASIC_SPAWN_SISTER_REPENTIA: 66
+        STR_REINFORCEMENTS_DCA_LONE: 33
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_REPENTIA_STRATEGY_ADEPTAS: true
+    minScore: 1400 # successful war effort
+
+  - type: STR_MONTHLY_DOMINIONS_ADEPTAS_SCRIPT
+    eventWeights:
+      0:
+        STR_SPAWN_VETERAN_ADEPTAS: 100
+    firstMonth: 1
+    executionOdds: 100
+    researchTriggers:
+       STR_ELITE_STRATEGY_ADEPTAS: true
+    minScore: 2500 # successful war effort

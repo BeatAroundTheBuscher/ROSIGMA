@@ -1,0 +1,179 @@
+research:
+  - name: STR_NOT_NOVICE_STRATEGY_ADEPTAS
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NOT_NORMAL_STRATEGY_ADEPTAS
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NOT_ELITE_STRATEGY_ADEPTAS
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_NOT_REPENTIA_STRATEGY_ADEPTAS
+    dependencies:
+      - STR_GENERALLOCK
+
+events:  
+  - &STR_RECRUITS_ADEPTAS_START_EVENT
+    name: STR_RECRUITS_NOVICE_STRATEGY_ADEPTAS
+    description: STR_RECRUITS_NOVICE_STRATEGY_ADEPTAS_DESCRIPTION
+    background: SistersReinforcement.SCR
+    spawnedPersons: 12
+    spawnedPersonType: STR_ADEPTAS_NOVICE
+    timer: 780
+    timerRandom: 0
+    researchList: [STR_NOVICE_STRATEGY_ADEPTAS]
+    interruptResearch: STR_NOT_NOVICE_STRATEGY_ADEPTAS
+    everyMultiItemList: 
+      STR_ARVUS_LIGHTER_TOKEN: 1
+      STR_ADEPTAS_MEDICAE_ARMORSTORE: 2
+      STR_AUTOGUN_ADEPTAS_SCOPED: 4
+      STR_AUTOGUN_ADEPTAS: 10
+      STR_BOLTER_CANTUS: 4
+      STR_CANTUS_BOLTER_AMMO: 12
+      STR_FLAMETHROWER: 2
+      STR_FLAMETHROWER_CLIP: 6
+
+  - name: STR_RECRUITS_NOVITIATE_SUPERIOR_STRATEGY_ADEPTAS
+    description: STR_RECRUITS_NOVICE_STRATEGY_SUPERIOR_DESCRIPTION
+    background: CanonessBG2.SCR
+    spawnedPersons: 2
+    spawnedPersonType: STR_ADEPTAS_NOVITIATE_SUPERIOR
+    timer: 780
+    timerRandom: 0
+    everyMultiItemList: 
+      STR_ADEPTAS_ARMOR_NOVSUPERIOR_STOREITEM: 2
+      STR_NEURAL_WHIP: 2
+      STR_BOLTPISTOL_DEAZ: 2
+      STR_LIGHT_BOLTPISTOL_AMMO: 8
+
+events:
+  - name: STR_RECRUITS_NORMAL_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START_EVENT
+    description: STR_RECRUITS_NORMAL_STRATEGY_ADEPTAS_DESCRIPTION
+    background: SistersReinforcement.SCR
+    spawnedPersons: 10
+    spawnedPersonType: STR_ADEPTAS
+    timer: 780
+    timerRandom: 0
+    researchList: [STR_NORMAL_STRATEGY_ADEPTAS]
+    interruptResearch: STR_NOT_NORMAL_STRATEGY_ADEPTAS
+    everyMultiItemList: 
+      STR_CORVUS_TOKEN: 1 
+      STR_ADEPTAS_ARMOR_ELOHIM: 4
+      STR_ADEPTAS_ARMOR_RETRIBUTOR: 2 
+      STR_ADEPTAS_ARMORS: 2
+      STR_ADEPTAS_MEDICAE_ARMORSTORE: 2
+      STR_ADEPTAS_ARMORA: 1
+      STR_ADEPTAS_SENTINEL_HBOLTER: 1
+      STR_BOLTPISTOL_DEAZ: 2
+      STR_LIGHT_BOLTPISTOL_AMMO: 6
+      STR_BOLTPISTOL_SERAPHIM: 4
+      STR_LIGHT_BOLTPISTOL_SERAPHIM_AMMO: 8
+      STR_HEAVY_LASER: 2
+      STR_MELTA_AMMO: 6
+      STR_BOLTER_DEAZ: 8
+      STR_LIGHT_BOLTER_AMMO: 16
+      STR_FLAMETHROWER: 2
+      STR_FLAMETHROWER_CLIP: 6
+      STR_AUTO_CANNON_RETRIBUTOR: 2
+      STR_AC_AP_ADEPTAS_AMMO: 8
+      STR_AC_INC_ADEPTAS_AMMO: 4
+      
+  - name: STR_RECRUITS_REPENTIA_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START_EVENT
+    description: STR_RECRUITS_REPENTIA_STRATEGY_ADEPTAS_DESCRIPTION
+    background: REPENTIASQUADBG.SCR
+    spawnedPersons: 14
+    spawnedPersonType: STR_ADEPTAS_REPENTIA
+    timer: 810
+    interruptResearch: STR_NOT_REPENTIA_STRATEGY_ADEPTAS
+    everyMultiItemList: 
+      STR_ADEPTAS_CHIMERA_TOKEN: 1
+      STR_EVISCERATOR: 12
+      STR_KNIF: 8
+      STR_ADEPTAS_ARMORB: 1
+      STR_PENITENT_ARMOR: 1
+
+  - name: STR_RECRUITS_REPENTIA_SUPERIOR_STRATEGY_ADEPTAS
+    description: STR_RECRUITS_REPENTIA_STRATEGY_SUPERIOR_DESCRIPTION
+    background: CanonessBG2.SCR 
+    spawnedPersons: 2
+    spawnedPersonType: STR_ADEPTAS_REPENTIA_SUPERIOR
+    timer: 780
+    timerRandom: 0
+    everyMultiItemList: 
+      STR_ADEPTAS_ARMOR_REPSUPERIOR_STOREITEM: 2
+      STR_NEURAL_WHIP: 4
+      STR_BOLTPISTOL_DEAZ: 2
+      STR_LIGHT_BOLTPISTOL_AMMO: 8
+
+  - name: STR_RECRUITS_ELITE_STRATEGY_ADEPTAS
+    refNode: *STR_RECRUITS_ADEPTAS_START_EVENT
+    description: STR_RECRUITS_ELITE_STRATEGY_ADEPTAS_DESCRIPTION
+    background: SoBPrayerBG.SCR
+    spawnedPersons: 8
+    spawnedPersonType: STR_ADEPTAS
+    spawnedSoldier: # When "hiring" a soldier, you can (optionally) specify overrides for any of the soldier's attributes. Uses the same syntax as the saved games. Cannot override soldier's ID. 
+      rank: 2
+      currentStats:
+        tu: 60
+        stamina: 70
+        health: 40
+        bravery: 75
+        reactions: 55
+        firing: 55
+        throwing: 60
+        strength: 35
+        psiStrength: 80
+        psiSkill: 50
+        melee: 70
+    timer: 810
+    interruptResearch: STR_NOT_ELITE_STRATEGY
+    everyMultiItemList: 
+      STR_ADEPTAS_DROP_POD_TOKEN: 1
+      STR_ADEPTAS_ARMORA: 2
+      STR_ADEPTAS_ARMOR_HONOR: 4 
+      STR_ADEPTAS_ARMORD: 2
+      STR_ADEPTAS_ARMOR_SUPERIOR: 1
+      STR_ADEPTAS_ARMORCEL: 1
+      STR_ADEPTAS_ARMORS: 2
+      STR_ADEPTAS_SENTINEL_LANCE: 1
+      STR_BOLTPISTOL_DEAZ: 2
+      STR_LIGHT_BOLTPISTOL_AMMO: 6
+      STR_HAND_FLAMETHROWER: 2
+      STR_HAND_FLAMETHROWER_CLIP: 6
+      STR_BOLTER_ELOHIM: 2
+      STR_LIGHT_BOLTER_AMMO: 16
+      STR_BOLTER_HELLSPITE: 2
+      STR_INCENDIARY_GRENADE40: 4
+      STR_MELTA_GRENADE40: 2
+      STR_PENITENCE_GRENADE40: 2
+      STR_BOLTER_MEPHISTO: 2
+      STR_LIGHT_BOLTER_AMMO_INF: 8
+      STR_LIGHT_FLAMETHROWER_CLIP: 6
+      STR_ADEPTAS_BOLTGUN_JOVE: 4
+      STR_RIFLE_CLIP: 8
+      STR_RIFLE_CLIP_AP: 4
+      STR_SNIPER_ARCHE: 1
+      STR_LIGHT_BOLTER_AMMO_AP: 4
+      STR_AUTO_CANNON_RETRIBUTOR: 2
+      STR_AC_AP_ADEPTAS_AMMO: 8
+      STR_LASCAN_MALTHUS: 1
+      STR_LASCANNON_CLIP_MALTHUS: 4
+
+  - name: STR_RECRUITS_ELITE_SUPERIOR_STRATEGY_ADEPTAS
+    description: STR_RECRUITS_ELITE_STRATEGY_SUPERIOR_DESCRIPTION
+    background: CanonessBG2.SCR 
+    spawnedPersons: 2
+    spawnedPersonType: STR_ADEPTAS_SUPERIOR
+    timer: 780
+    timerRandom: 0
+    everyMultiItemList: 
+      STR_ADEPTAS_ARMOR_SUPERIOR: 2
+      STR_POWER_SWORD: 2
+      STR_NEURAL_WHIP: 2
+      STR_BOLTPISTOL_DEAZ: 2
+      STR_LIGHT_BOLTPISTOL_AMMO: 8
