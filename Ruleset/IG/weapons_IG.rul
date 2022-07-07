@@ -1246,11 +1246,12 @@ items:
     bulletSprite: {mod: 40k, index: 0}
     fireSound:  {mod: 40k, index: 4}
     compatibleAmmo:
-      - STR_FRAG_GRENADE_DRUM #replace with real ammo
-      - STR_KRAK_GRENADE_DRUM #replace with real ammo
-      - STR_INCENDIARY_GRENADE_DRUM #replace with real ammo
-      - STR_SMOKE_GRENADE_DRUM #replace with real ammo
-      - STR_PHOTON_GRENADE_DRUM #replace with real ammo
+      - STR_MORTAR_AMMO_HE
+      - STR_MORTAR_AMMO_KRAK
+      - STR_MORTAR_AMMO_PHOSPHOR
+      - STR_MORTAR_AMMO_SMOKE
+      - STR_MORTAR_AMMO_ILLUMINATION
+      - STR_MORTAR_AMMO_PHOTON
     accuracyAimed: 50
     tuLoad: 30 #a bit of work to reload
     tuAimed: 33 #two grenades per turn+some turn adjustment, or reload cost?
@@ -1267,7 +1268,154 @@ items:
     listOrder: 11851
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
-      
+
+
+  - type: STR_MORTAR_AMMO_HE
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 3000
+    costSell: 500
+    weight: 6
+    bigSprite:  {mod: 40k, index: 1006} #update with new
+    floorSprite:  {mod: 40k, index: 1006} #update with new
+    handSprite:  {mod: 40k, index: 1048} #update with new
+    power: 100 
+    damageType: 3
+    damageAlter:
+      ResistType: 1
+      ToTime: 0.2
+      ToHealth: 1.0
+      ArmorEffectiveness: 1.1 #shrapnel
+      FixRadius: 4 #1 for hand grenade version
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    listOrder: 11852
+    
+  - type: STR_MORTAR_AMMO_KRAK
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 10000
+    costSell: 2000
+    weight: 7
+    bigSprite:  {mod: 40k, index: 1007} #update with new
+    floorSprite:  {mod: 40k, index: 1007} #update with new
+    handSprite:  {mod: 40k, index: 1048} #update with new
+    power: 120 #handheld 40mm is 80 power
+    damageType: 1 #AP
+    damageAlter:
+      ToHealth: 0.8
+      ResistType: 1
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.80
+      FixRadius: 2 #1 for hand grenade version
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    powerForAnimation: 5 # 5 / 5 = 1
+    listOrder: 11852
+    
+  - type: STR_MORTAR_AMMO_PHOSPHOR
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 3000
+    costSell: 500
+    weight: 5
+    bigSprite:  {mod: 40k, index: 1006} #update with new
+    floorSprite:  {mod: 40k, index: 1006} #update with new
+    handSprite:  {mod: 40k, index: 1048} #update with new
+    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
+    hitAnimation: {mod: 40k, index: 104 } #XSmoke
+    power: 100 
+    damageType: 8 #Acid burns
+    damageAlter:
+      ToMorale: 0.25
+      ToWound: 0.06
+      ToHealth: 0.4
+      FireThreshold: 40
+      FixRadius: 6 #5 for hand grenade version
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    listOrder: 11852
+    
+  - type: STR_MORTAR_AMMO_SMOKE
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 10000
+    costSell: 1000
+    weight: 5
+    bigSprite: 2025 #update with new
+    floorSprite: 2051 #update with new
+    handSprite: 2020 #update with new
+    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
+    hitAnimation: {mod: 40k, index: 104 } #XSmoke
+    power: 80 
+    damageType: 9 #smoke
+    damageAlter:
+      FixRadius: 7 #5 for hand grenade version
+    blastRadius: 7
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    listOrder: 11852
+
+  - type: STR_MORTAR_AMMO_ILLUMINATION
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 1000
+    costSell: 100
+    weight: 2
+    bigSprite: 2025 #update with new
+    floorSprite: 2051 #update with new
+    handSprite: 2020 #update with new
+    power: 20 
+    damageType: 2 #incendiary
+    damageAlter:
+      FixRadius: 3 
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    listOrder: 11852
+
+  - type: STR_MORTAR_AMMO_PHOTON
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 1000
+    costSell: 100
+    weight: 2
+    bigSprite: 2025 #update with new
+    floorSprite: 2051 #update with new
+    handSprite: 2020 #update with new
+    #damageType: 2 #incendiary
+    power: 50
+    damageAlter:
+      ArmorEffectiveness: 0.5
+      ToStun: 0.4 # was 0.2
+      ToTime: 0.8
+      RadiusReduction: 5.0
+    clipSize: 1 
+    battleType: 2
+    invWidth: 3
+    invHeight: 1
+    listOrder: 11852
+  
+  
   - type: STR_GRENADE_LAUNCHER
     bigSprite: 257
     compatibleAmmo:
