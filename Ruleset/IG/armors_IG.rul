@@ -1771,6 +1771,8 @@ armors:
 
 
   - type: STR_TAUROX_TURRET_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 30
     heatVision: 20
     frontArmor: 130 # was 100
     sideArmor: 130 # was 100
@@ -1779,6 +1781,8 @@ armors:
 
 
   - type: STR_TAUROS_TURRET_ARMOR
+    visibilityAtDay: 50
+    visibilityAtDark: 30
     heatVision: 20
     frontArmor: 100
     sideArmor: 100
@@ -1787,6 +1791,8 @@ armors:
 
 
   - type: STR_TAUROS_SMALL_TURRET_ARMOR
+    visibilityAtDay: 50
+    visibilityAtDark: 30
     heatVision: 20
     frontArmor: 100
     sideArmor: 100
@@ -1795,6 +1801,8 @@ armors:
 
 
   - type: LEMONRUSS_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 45
     heatVision: 60
     frontArmor: 180 # was 150
     sideArmor: 180 # was 150
@@ -1802,6 +1810,8 @@ armors:
     underArmor: 150
 
   - type: LEMONRUSS_ARMORB
+    visibilityAtDay: 60
+    visibilityAtDark: 45
     heatVision: 60
     frontArmor: 180 # was 150
     sideArmor: 180 # was 150
@@ -2069,7 +2079,7 @@ armors:
       - DREAD_CORPSE3
       - DREAD_CORPSE4
     visibilityAtDay: 60
-    visibilityAtDark: 60
+    visibilityAtDark: 30
     heatVision: 30 #chimera+
     frontArmor: 160 # was 130
     sideArmor: 160 # was 130
@@ -2092,7 +2102,83 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 92, 89, 90, 91 ]
     drawingRoutine: 3
-    
+
+  - type: STR_CHIMERA_TWIN_HB_TURRET_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 30
+    heatVision: 30 #chimera+
+    frontArmor: 160 # was 130
+    sideArmor: 160 # was 130
+    rearArmor: 160 # was 130
+    underArmor: 150
+    spriteSheet: GRYPHONNEIV_TURRET_BS.PCK #twin HB
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    spriteInv: CHIMPD.SPK #doesnt show up
+    corpseGeo:  STR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_CHIMERA_TURRET_CORPSE_1
+      - STR_CHIMERA_TURRET_CORPSE_2
+      - STR_CHIMERA_TURRET_CORPSE_3
+      - STR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 3
+    movementType: 1
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    scripts:
+      selectUnitSprite:
+        var int temp;
+
+        unit.isCollapsing temp;
+
+        if eq temp 0;
+
+          unit.isAiming temp;
+
+          if or eq blit_part blit_large_torso_0 eq blit_part blit_large_torso_1 eq blit_part blit_large_torso_2 eq blit_part blit_large_torso_3;
+
+            if neq 0 temp;
+
+              add sprite_offset 32;
+
+            end;
+
+          else or eq blit_part blit_large_propulsion_0 eq blit_part blit_large_propulsion_1 eq blit_part blit_large_propulsion_2 eq blit_part blit_large_propulsion_3;
+
+            set sprite_index 32;
+            set sprite_offset 0;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+
+        return sprite_index;
+        
 #CHAOS PLAYER GUARD ARMORS
   - type: STR_IRON_GUARD_ARMOR_PLAYER
     refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
