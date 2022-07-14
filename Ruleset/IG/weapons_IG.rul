@@ -16,6 +16,284 @@ extended:
       ITEM_IS_TOOL: int
 
 items:
+  - type: STR_HEAVY_STUBBER_ASSAULT #mid-tier, before rotor cannons
+    categories: [STR_CAT_AUTO]
+    dropoff: 4
+    size: 0.5
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 150000
+    costSell: 20000
+    weight: 45 
+    bigSprite: 254
+    floorSprite: 200 # {mod: 40k, index: 1130}
+    handSprite: 200 # {mod: 40k, index: 1944}
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 25
+    fireSound: {mod: 40k, index: 4}
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 60
+    autoRange: 15 # # + 3 for tuAuto > 50 %
+    snapRange: 17 #not ideal for snapfire
+    aimRange: 0
+    accuracyAuto: 35 #-5
+    accuracySnap: 50 #-5
+    accuracyAimed: 0
+    tuAuto: 50 #2x bursts
+    tuSnap: 30
+    tuAimed: 0
+    autoShots: 10 #2x autoshots per round if static, flexible. Rotor cannon is 25 aimed, but inflexible
+    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    confSnap:
+      shots: 5 #+1, twin barrels, 3x snap per turn
+    sprayWaypoints: 2
+    listOrder: 10761
+    tags:
+      ITEM_RECOIL: 45 #30 for basic bipod less one)
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+  - type: STR_STUBCANNON_GUARD
+    categories: [STR_CAT_BOLTER]
+    dropoff: 5
+    requiresBuy:
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    size: 0.2
+#    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
+    costBuy: 20000
+    costSell: 5000
+    weight: 20
+    bigSprite: 247
+    floorSprite: 252 #SOLO short
+    handSprite: 344 #SOLO short
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_ROTOR_KOMBI_BUCKSHOT40
+      - STR_ROTOR_KOMBI_SLUG40 #clipsize 3
+      - STR_INCENDIARY_GRENADE40
+      - STR_KRAK_GRENADE40
+      - STR_MELTA_GRENADE40
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoRange: 0
+    snapRange: 16
+    aimRange: 0
+    accuracyAuto: 0
+    accuracySnap: 40
+    accuracyAimed: 0
+    tuAuto: 0
+    tuSnap: 50
+    tuAimed: 0
+    autoShots: 1
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 35
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+
+  - type: STR_AUTOGUN_HIGHGRADE #sans underslung but with bayonetta
+    categories: [STR_CAT_AUTO]
+    dropoff: 4 #-1 HG
+    weight: 10 #+2 vs lasgun HG
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 15000 #-5000 vs as high grade lasgun, consider ammo cost
+    costSell: 1500   
+    bigSprite: 252
+    floorSprite: {mod: 40k, index: 1010}
+    handSprite: {mod: 40k, index: 1080}
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 4}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    invWidth: 1
+    invHeight: 3
+    bulletSpeed: 25
+    compatibleAmmo:
+      - STR_AUTOGUN_CLIP
+      #add MC AUTOGUN_CLIP/KRAKEN
+    snapRange: 15 #-2 vs HG lasgun, same as autogun
+    autoRange: 11 #+3, +1 vs high grade lasgun
+    aimRange: 0
+    accuracyAuto: 55 #-5 vs HG lasgun
+    accuracySnap: 70 #-5 vs HG lasgun
+    accuracyAimed: 0
+    tuSnap: 25
+    tuAuto: 33 #vs40 for normal autogun
+    tuAimed: 0
+    confSnap:
+      shots: 3
+    autoShots: 6 #+1
+    attraction: 1
+    #*** Melee bayonet
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: 0
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+      RandomType: 7 # 50-200
+    accuracyMelee: 100 #lower due to weight
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 14
+    flatMelee:
+      time: true
+    experienceTrainingMode: 4
+    listOrder: 10740
+    tags:
+      ITEM_RECOIL: 20
+
+  - type: STR_AUTOGUN_HIGHGRADE_UNDERSLUNG #40mm grenade launcher, no bayonetta
+    categories: [STR_CAT_AUTO]
+    weight: 20 #+12 vs lasgun HG
+    dropoff: 4 #-1 HG
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 20000 #same as high grade lasgun, ammo cost and weight trade off
+    costSell: 1500
+    bigSprite: 253
+    floorSprite: {mod: 40k, index: 1010}
+    handSprite: {mod: 40k, index: 1080}
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 4}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    invWidth: 1
+    invHeight: 3
+    bulletSpeed: 25
+    compatibleAmmo:
+      - STR_AUTOGUN_CLIP
+      #add MC AUTOGUN_CLIP/KRAKEN
+      - STR_INCENDIARY_GRENADE40
+      - STR_KRAK_GRENADE40
+      - STR_MELTA_GRENADE40
+      - STR_ROTOR_KOMBI_BUCKSHOT40
+      - STR_ROTOR_KOMBI_SLUG40 #clipsize 3
+    ammo:
+     0:
+      compatibleAmmo: [STR_AUTOGUN_CLIP] #add MC AUTOGUN_CLIP/KRAKEN
+     1:
+      compatibleAmmo: [STR_ROTOR_KOMBI_SLUG40, STR_ROTOR_KOMBI_BUCKSHOT40, STR_INCENDIARY_GRENADE40, STR_KRAK_GRENADE40, STR_MELTA_GRENADE40]
+    snapRange: 15 #-2 vs HG lasgun, same as autogun
+    autoRange: 11 #+3, +1 vs high grade lasgun
+    aimRange: 0
+    accuracyAuto: 55 #-5 vs HG lasgun
+    accuracySnap: 70 #-5 vs HG lasgun
+    accuracyAimed: 0 #use for grenade launcher
+    tuSnap: 25
+    tuAuto: 33 #vs40 for normal autogun
+    tuAimed: 0
+    confSnap:
+      shots: 3
+      ammoSlot: 0 #Stub rounds
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+    confAuto: #Bolter
+      ammoSlot: 0 #Stub rounds
+      name: STR_AUTOFIRE
+      arcing: false
+    confAimed: #Grenade launcher 40mm
+      ammoSlot: 1 #Grenades
+      name: STR_LAUNCH_GRENADE
+      shortName: STR_LAUNCH_GRENADE_SHORT
+      arcing: true
+    autoShots: 6 #+1
+    attraction: 1
+    experienceTrainingMode: 4
+    listOrder: 10740
+    tags:
+      ITEM_RECOIL: 20
+
+  - type: STR_HEAVY_SNIPER_RIFLEG # GUARD autocannon based sniper rifle
+    categories: [STR_CAT_AUTO]
+    dropoff: 3
+    weight: 50
+    size: 0.4
+    requiresBuy: 
+      - STR_UFO_CONSTRUCTION #ceramite tier
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 300000
+    costSell: 50000
+    bigSprite: 255
+    floorSprite: 2318 #ORK heavy sniper rifle placeholder
+    handSprite: 2250 #ORK heavy sniper rifle placeholder
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP #change to some sort of 3x autocannon clip
+    kneelBonus: 125
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    bulletSpeed: 50
+    autoRange: 0
+    snapRange: 0
+    aimRange: 33
+    accuracySnap: 0
+    accuracyAuto: 0
+    accuracyAimed: 90
+    tuAuto: 0
+    tuSnap: 0
+    tuAimed: 60
+    autoShots: 1
+    listOrder: 10775
+    tags:
+      ITEM_RECOIL: 50
+
+  - type: STR_KRAK_GRENADE40 #underslung grenade
+    categories: [ STR_CAT_GRENADES, STR_CAT_ADEPTAS]
+    size: 0.1
+    weight: 3
+    requiresBuy: 
+      - STR_MIDTIER_PREREQ
+    costBuy: 2500
+    costSell: 1000
+    bigSprite: 2057 #change
+    floorSprite: 2062 #change
+    handSprite: { mod: 40k, index: 352 } #Needs new
+    battleType: 2 #4 is Grenade, but these are not primed
+    power: 80 #melta40 is at 90
+    damageType: 3
+    powerForAnimation: 5 # 5 / 5 = 1
+    maxRange: 80 # ROSIGMA 1.06Beta2 12
+    damageAlter:
+      ResistType: 1
+      ArmorEffectiveness: 0.70
+      ToArmorPre: 0.15 #melta 0.2
+      # RandomType: 2 # side effect of other damageType
+      FixRadius: 1
+      ToStun: 0.2
+    clipSize: 3
+    blastRadius: 2
+    invWidth: 1 #smaller
+    invHeight: 1
+    listOrder: 10331
+
   - type: STR_HAND_MULTILASER #Black Version, for Power Armors.
     categories: [STR_CAT_AUTO]
     size: 0.2
