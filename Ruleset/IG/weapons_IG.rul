@@ -135,6 +135,49 @@ items:
       ITEM_RECOIL: 35
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
 
+
+  - type: STR_AUTOPISTOL_HIGHGRADE 
+    categories: [STR_CAT_AUTO]
+    dropoff: 6 #pistol
+    weight: 7 #quite heavy for a pistol
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 10000 
+    costSell: 1500   
+    bigSprite: 273
+    floorSprite: 224
+    handSprite: 590
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 4}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 25
+    compatibleAmmo:
+      - STR_AUTOGUN_CLIP
+      - STR_AUTOGUN_CLIP_DRUM
+      - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+    snapRange: 10 #-5 vs rifle version
+    autoRange: 6 #-5 vs rifle version
+    aimRange: 0
+    accuracyAuto: 35 #-20 vs rifle
+    accuracySnap: 60 #-10 vs rifle
+    accuracyAimed: 0
+    tuSnap: 20 #-5, pistol
+    tuAuto: 33 #
+    tuAimed: 0
+    confSnap:
+      shots: 3
+    autoShots: 6 #+1
+    attraction: 1
+    experienceTrainingMode: 4
+    listOrder: 10740
+    tags:
+      ITEM_RECOIL: 25 #pistol, more recoil
+      
   - type: STR_AUTOGUN_HIGHGRADE #sans underslung but with bayonetta
     categories: [STR_CAT_AUTO]
     dropoff: 4 #-1 HG
@@ -259,6 +302,51 @@ items:
     tags:
       ITEM_RECOIL: 20
 
+  - type: STR_LONG_RIFLE_GUARD # GUARD basic sniper rifle
+    categories: [STR_CAT_SNIPER]
+    dropoff: 4
+    weight: 20 #-10 weight vs marine sniper
+    size: 0.4
+    requiresBuy: 
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 35000 #cheaper than longlas
+    costSell: 5000
+    bigSprite: 278
+    floorSprite: 226
+    handSprite: 606
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 711}
+    compatibleAmmo: 
+      - STR_STUB_GUN_AMMO
+      - STR_STUB_GUN_AMMO_AP
+      - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_HP
+      - STR_STUB_GUN_AMMO_INC
+      - STR_HC_AP_AMMO
+      - STR_HC_HE_AMMO
+      - STR_HC_I_AMMO
+    kneelBonus: 150
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    bulletSpeed: 40
+    autoRange: 0
+    snapRange: 20
+    aimRange: 30
+    accuracySnap: 55
+    accuracyAimed: 110 #-10 vs Marine sniper
+    accuracyAuto: 0
+    tuAuto: 0
+    tuSnap: 40 #-5 vs Marine
+    tuAimed: 80 #-10 vs Marine
+    autoShots: 1
+    listOrder: 11900
+    tags:
+      ITEM_RECOIL: 20
+      
   - type: STR_HEAVY_SNIPER_RIFLEG # GUARD autocannon based sniper rifle
     categories: [STR_CAT_SNIPER]
     dropoff: 3
@@ -1208,6 +1296,9 @@ items:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_LONGLAS # Added higher energy drain for aimed shots
+    requiresBuy:
+      - STR_MIDTIER_PREREQ #long rifle now basic guarad sniper at start
+      - STR_IMPERIAL_GUARD_OPERATIONS
     costBuy: 75000 #28750
     confAimed:
       spendPerShot: 2
@@ -1263,6 +1354,61 @@ items:
     fixedWeapon: true
     fixedWeaponShow: true
 
+  - type: STR_SHOTLAS
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    size: 0.3
+    requiresBuyBaseFunc: [TRADE]
+    requiresBuy:
+      - STR_MIDTIER_PREREQ #long rifle now basic guarad sniper at start
+      - STR_IMPERIAL_GUARD_OPERATIONS    
+    costBuy: 250000 #mucho expensive
+    costSell: 25000
+    weight: 35 #heavy
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    bigSprite: 279
+    floorSprite: 227
+    handSprite: 614
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 741}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    invWidth: 1
+    invHeight: 3
+    clipSize: 0
+    bulletSpeed: 50
+    dropoff: 7 #inaccurate
+    powerRangeThreshold: 12 #beyond this, power drop off applies
+    powerRangeReduction: 10 #10 power lost per tile beyond 12
+    autoRange: 8 # BRRT
+    snapRange: 12
+    aimRange: 12 # POWER SHOT
+    accuracyAuto: 60 # reduced accuracy as the codex says
+    accuracySnap: 65
+    accuracyAimed: 50
+    tuAuto: 33
+    tuSnap: 33
+    tuAimed: 33
+    confSnap: 
+      shots: 2
+      spendPerShot: 2
+    confAuto:
+      shots: 5
+      spendPerShot: 3 
+    confAimed:
+      shots: 1
+      spendPerShot: 10 # depletes Hotshot cell in 2 salvoes
+      name: STR_POWER_SHOT_2    
+      shortName: STR_POWER_SHOT_2_COUNT
+    tags:
+      ITEM_SNAP_POWER_BONUS: 20
+      ITEM_AUTO_POWER_BONUS: 15 #brrt mode 
+      ITEM_AIMED_POWER_BONUS: 50
+    listOrder: 11056
+    
   - type: STR_LASGUN_TANITH
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
