@@ -66,6 +66,8 @@ items:
       - STR_SMALL_ROCKET
       - STR_LARGE_ROCKET
       - STR_INCENDIARY_ROCKET
+      - STR_HEAVY_ROCKET_HE
+      - STR_HEAVY_ROCKET_KRAK
       - STR_HEAVY_ROCKET #medium launcher+ exclusive, so not for Accatran
     accuracySnap: 55 #-5 vs marine
     accuracyAimed: 85 #-5 vs marine
@@ -81,15 +83,62 @@ items:
     invHeight: 3
     listOrder: 12100
 
-  - type: STR_HEAVY_ROCKET #Melta
+  - type: STR_HEAVY_ROCKET_HE #frag
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.3
+    power: 120
+    damageAlter:
+      ResistType: 3 #HE
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.10
+      FixRadius: 10
+    costBuy: 20000 #Expensive
+    costSell: 5000
+    weight: 15 #very heavy
+    bigSprite: 276
+    floorSprite: {mod: 40k, index: 16} 
+    handSprite: {mod: 40k, index: 448} 
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    hitAnimation: {mod: 40k, index: 0 } 
+    listOrder: 12158
+    
+  - type: STR_HEAVY_ROCKET_KRAK #KRAK
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     size: 0.3
     power: 140
+    powerForAnimation: 5 # 5 / 5 = 1 tile
+    damageAlter:
+      ResistType: 1 #AP
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.15
+      FixRadius: 1
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+    costBuy: 40000 #Expensive
+    costSell: 10000
+    weight: 15 #very heavy
+    bigSprite: 277
+    floorSprite: {mod: 40k, index: 17} 
+    handSprite: {mod: 40k, index: 448} 
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    hitAnimation: {mod: 40k, index: 0 } 
+    listOrder: 12159
+    
+  - type: STR_HEAVY_ROCKET #Melta
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.3
+    power: 150
     powerForAnimation: 25 # 25 / 5 = 5
     damageAlter:
       ResistType: 11 #melta
       ArmorEffectiveness: 0.90
-      ToArmorPre: 0.4 #melta
+      ToArmorPre: 0.5 #melta
       FixRadius: 3
     requiresBuy:
       - STR_HEAVY_LASER #meltagun
@@ -105,7 +154,7 @@ items:
     invWidth: 1
     invHeight: 3
     hitAnimation: {mod: 40k, index: 0 } 
-    listOrder: 12150
+    listOrder: 12160
     
   - type: STR_HEAVY_STUBBER_ASSAULT #mid-tier, before rotor cannons
     categories: [STR_CAT_AUTO]
