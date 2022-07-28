@@ -488,7 +488,52 @@ armors:
        reactions: -5 #heavy/bulky
     loftempsSet: [ 4 ] #big targets
     specialWeapon: STR_BAYONET
-    
+
+  - type: STR_BEASTGUARD_HEAVY_ARMOR_SLAB
+    visibilityAtDay: 35 #abhuman  malus
+    visibilityAtDark: 30 #abhuman bonus
+    antiCamouflageAtDay: 6 #´+1
+    antiCamouflageAtDark: 6 #+1
+    spriteSheet: GUARDBEASTMAN_HEAVY_BS.PCK
+    #spriteInv: BHA_33 #Handled through layering rul file
+    storeItem: STR_BEASTGUARD_HEAVY_ARMOR_SLAB 
+    customArmorPreviewIndex: 576 #could use an unique one
+    corpseBattle:
+      - STR_BEASTGUARD_CORPSE
+    frontArmor: 150 #+40, shield and armor
+    sideArmor: 105
+    rearArmor: 50 #Weakness
+    underArmor: 40 #+20 from carapace
+    weight: 10
+    stats:
+      bravery: 20 #+5
+      strength: -5 #-10
+      tu: -20
+      stamina: -30 
+      reactions: -15
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 0.9 #AP 10% Heavy Ceramite bonus
+      - 1.0 #FLAMES 10% shield bonus
+      - 0.8 #HE 20% Heavy Ceramite bonus
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA #10% bonus from shield
+      - 0.9 #STUN 10% BEASTMAN BONUS
+      - 0.9 #MELEE 10% BEASTMAN BONUS
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_GUARD_BEASTMAN
+    loftempsSet: [ 5 ] #better at getting shot
+    builtInWeapons:
+      - STR_SLAB_SHIELD
+    specialWeapon: STR_BAYONET
+    scripts:
+      hitUnit: *armorForcesHitsToFront
+      
 #IG Squats Zombie armors
   - type: STR_SQUAT_FLAK_ZOMBIE_MALE_ARMOR
     visibilityAtDay: 35 #abhuman squat malus
