@@ -18,13 +18,13 @@ extended:
 items:
   - type: STR_ACCATRAN_ROCKET_LAUNCHER
     categories: [ STR_CAT_ROCKETL]
-    size: 0.4
+    size: 0.3
     dropoff: 6 #Accatran lightweight
     requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    costBuy: 100000
-    costSell: 30000
-    weight: 35 #-15 weight, accatran airborne
+      - STR_GUARD_AND_ARBITES
+    costBuy: 75000 
+    costSell: 20000
+    weight: 30 #-20 weight, accatran airborne
     bigSprite: 244
     floorSprite: 222
     handSprite: 574
@@ -34,27 +34,141 @@ items:
       - STR_SMALL_ROCKET
       - STR_LARGE_ROCKET
       - STR_INCENDIARY_ROCKET
-    accuracySnap: 55
-    accuracyAimed: 85
+    accuracySnap: 50 #-10
+    accuracyAimed: 80 #-10
     tuSnap: 40 #accatran bonus
-    tuAimed: 85
+    tuAimed: 80 #-10
     autoRange: 0
-    snapRange: 21
-    aimRange: 30
+    snapRange: 16
+    aimRange: 25
     battleType: 1
+    armor: 200 #to avoid item pile destruction
     twoHanded: true
     blockBothHands: true
     invWidth: 2
     invHeight: 3
     listOrder: 12101
 
+  - type: STR_MISSILE_LAUNCHER_GUARD
+    categories: [ STR_CAT_ROCKETL]
+    size: 0.4
+    dropoff: 5
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 100000
+    costSell: 30000
+    weight: 45 #5 weight, guard vs marine
+    bigSprite: 268
+    floorSprite: 231
+    handSprite: 622
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    compatibleAmmo:
+      - STR_SMALL_ROCKET
+      - STR_LARGE_ROCKET
+      - STR_INCENDIARY_ROCKET
+      - STR_HEAVY_ROCKET_HE
+      - STR_HEAVY_ROCKET_KRAK
+      - STR_HEAVY_ROCKET #medium launcher+ exclusive, so not for Accatran
+    accuracySnap: 55 #-5 vs marine
+    accuracyAimed: 85 #-5 vs marine
+    tuSnap: 50 
+    tuAimed: 85 #-5 vs marine
+    autoRange: 0
+    snapRange: 20
+    aimRange: 32
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200 #to avoid item pile destruction
+    listOrder: 12100
+
+  - type: STR_HEAVY_ROCKET_HE #frag
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.3
+    power: 120
+    damageAlter:
+      ResistType: 3 #HE
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.10
+      FixRadius: 10
+      RandomType: 7 #50-200%
+    costBuy: 20000 #Expensive
+    costSell: 5000
+    weight: 15 #very heavy
+    bigSprite: 276
+    floorSprite: {mod: 40k, index: 16} 
+    handSprite: {mod: 40k, index: 448} 
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    hitAnimation: {mod: 40k, index: 0 } 
+    listOrder: 12158
+    
+  - type: STR_HEAVY_ROCKET_KRAK #KRAK
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.3
+    power: 140
+    powerForAnimation: 15 # 5 / 5 = 3 tiles
+    damageAlter:
+      ResistType: 1 #AP
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.15
+      FixRadius: 2
+      RandomType: 7 #50-200%
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+    costBuy: 40000 #Expensive
+    costSell: 10000
+    weight: 15 #very heavy
+    bigSprite: 277
+    floorSprite: {mod: 40k, index: 17} 
+    handSprite: {mod: 40k, index: 448} 
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    hitAnimation: {mod: 40k, index: 0 } 
+    listOrder: 12159
+    
+  - type: STR_HEAVY_ROCKET #Melta
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.3
+    power: 150
+    powerForAnimation: 25 # 25 / 5 = 5
+    damageAlter:
+      ResistType: 11 #melta
+      ArmorEffectiveness: 0.90
+      ToArmorPre: 0.5 #melta
+      FixRadius: 3
+      RandomType: 7 #50-200%
+    requiresBuy:
+      - STR_HEAVY_LASER #meltagun
+      - STR_MIDTIER_PREREQ
+    costBuy: 80000 #very expensive, 2x melta bomb
+    costSell: 10000
+    weight: 15 #very heavy
+    bigSprite: 275
+    floorSprite: {mod: 40k, index: 16} 
+    handSprite: {mod: 40k, index: 448} 
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 100 #to avoid item pile destruction
+    hitAnimation: {mod: 40k, index: 0 } 
+    listOrder: 12160
+    
   - type: STR_HEAVY_STUBBER_ASSAULT #mid-tier, before rotor cannons
     categories: [STR_CAT_AUTO]
     dropoff: 4
     size: 0.5
     requiresBuy:
       - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GUARD_AND_ARBITES
     costBuy: 150000
     costSell: 20000
     weight: 45 
@@ -72,7 +186,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     autoRange: 15 # # + 3 for tuAuto > 50 %
     snapRange: 17 #not ideal for snapfire
     aimRange: 0
@@ -97,7 +211,7 @@ items:
     dropoff: 5
     requiresBuy:
       - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GUARD_AND_ARBITES
     size: 0.2
     costBuy: 20000
     costSell: 5000
@@ -117,7 +231,7 @@ items:
     twoHanded: false
     invWidth: 1
     invHeight: 3
-    armor: 30
+    armor: 200
     autoRange: 0
     snapRange: 16
     aimRange: 0
@@ -174,6 +288,7 @@ items:
     autoShots: 6 #+1
     attraction: 1
     experienceTrainingMode: 4
+    armor: 200 #to avoid item pile destruction
     listOrder: 10740
     tags:
       ITEM_RECOIL: 25 #pistol, more recoil
@@ -234,6 +349,7 @@ items:
     flatMelee:
       time: true
     experienceTrainingMode: 4
+    armor: 200 #to avoid item pile destruction
     listOrder: 10740
     tags:
       ITEM_RECOIL: 20
@@ -299,6 +415,7 @@ items:
     attraction: 1
     experienceTrainingMode: 4
     listOrder: 10740
+    armor: 200 #to avoid item pile destruction
     tags:
       ITEM_RECOIL: 20
 
@@ -307,7 +424,8 @@ items:
     dropoff: 4
     weight: 20 #-10 weight vs marine sniper
     size: 0.4
-    requiresBuy: 
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
       - STR_IMPERIAL_GUARD_OPERATIONS
     costBuy: 35000 #cheaper than longlas
     costSell: 5000
@@ -331,7 +449,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 40
+    armor: 200
     bulletSpeed: 40
     autoRange: 0
     snapRange: 20
@@ -371,7 +489,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 40
+    armor: 200
     bulletSpeed: 50
     autoRange: 0
     snapRange: 0
@@ -496,7 +614,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     accuracySnap: 60 # 40k 70 
     accuracyAuto: 45 # -5 vs volleygun, +5 vs rotorcannon
     accuracyAimed: 0
@@ -549,7 +667,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     accuracySnap: 0
     tuSnap: 0
     tuAuto: 70
@@ -608,7 +726,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     accuracySnap: 50 #underslung, hard to aim
     tuSnap: 45 #underslung, not great for reaction fire
     tuAuto: 70
@@ -670,7 +788,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     accuracySnap: 0
     tuSnap: 0
     tuAuto: 70
@@ -730,7 +848,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     accuracySnap: 50 #underslung, hard to aim
     tuSnap: 45 #underslung, not great for reaction fire
     tuAuto: 70
@@ -788,7 +906,7 @@ items:
     battleType: 2
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 100
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
@@ -817,7 +935,7 @@ items:
     battleType: 2
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 150
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
@@ -842,13 +960,16 @@ items:
     shotgunBehavior: 1
     shotgunSpread: 35
     size: 0.3
-    power: 50
+    power: 60 #+10
     damageType: 1
     clipSize: 3
     battleType: 2
     shotgunPellets: 6
     damageAlter:
-      ToArmorPre: 0.02
+      ToArmorPre: 0.2 #armor rend
+      ArmorEffectiveness: 1.15 #armor is pretty effective
+      ToStun: 0.3
+      ToWound: 0.1
     listOrder: 10790 #might need reviewing, due to kombi weapon
     
   - type: STR_ROTOR_KOMBI_SLUG40
@@ -869,7 +990,7 @@ items:
     invWidth: 1 #smaller
     invHeight: 1
     size: 0.3
-    power: 80
+    power: 90 #hits like a truck
     damageType: 1
     clipSize: 3
     battleType: 2
@@ -1218,12 +1339,14 @@ items:
       ITEM_BLESS_MELEE_ACCURACY: 1
 
   - type: STR_LASER_RIFLE # blue one
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_LASER_RIFLEG #LASGUN GUARD
     weight: 8
     bigSprite: 207
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
       
@@ -1252,6 +1375,7 @@ items:
       - STR_LASGUN_CLIP_HOTSHOT
     clipSize: 0
     bulletSpeed: 50
+    armor: 200 #to avoid item pile destruction
     listOrder: 10911
     #*** Melee bayonet
     meleeHitSound: {mod: 40k, index: 101}
@@ -1273,25 +1397,29 @@ items:
       time: true
     
   - type: STR_LASCARBINE
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_LASGUN_ACCATRAN 
     requiresBuyBaseFunc: [TRADE]
     costBuy: 75000
-    listOrder: 19101    
+    listOrder: 19101   
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_LASGUN_VOSS # no bayonet
     requiresBuyBaseFunc: [TRADE]
     costBuy: 10000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19102    
     
   - type: STR_LASGUN_VOSTROYA 
     requiresBuyBaseFunc: [TRADE]
     costBuy: 150000
     listOrder: 19103    
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
@@ -1300,6 +1428,7 @@ items:
       - STR_MIDTIER_PREREQ #long rifle now basic guarad sniper at start
       - STR_IMPERIAL_GUARD_OPERATIONS
     costBuy: 75000 #28750
+    armor: 200 #to avoid item pile destruction
     confAimed:
       spendPerShot: 2
 
@@ -1307,6 +1436,7 @@ items:
     requiresBuyBaseFunc: [TRADE]
     costBuy: 100000
     listOrder: 19104
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
     compatibleAmmo:
@@ -1332,6 +1462,7 @@ items:
     invHeight: 3
     clipSize: -1
     bulletSpeed: 50
+    armor: 200 #to avoid item pile destruction
     listOrder: 11056
     #*** Melee bayonet
     meleeHitSound: {mod: 40k, index: 101}
@@ -1363,7 +1494,7 @@ items:
       - STR_IMPERIAL_GUARD_OPERATIONS    
     costBuy: 250000 #mucho expensive
     costSell: 25000
-    weight: 35 #heavy
+    weight: 30 #heavy
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
@@ -1371,7 +1502,7 @@ items:
     floorSprite: 227
     handSprite: 614
     bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 741}
+    fireSound: 2261
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
     battleType: 1
@@ -1403,6 +1534,7 @@ items:
       spendPerShot: 10 # depletes Hotshot cell in 2 salvoes
       name: STR_POWER_SHOT_2    
       shortName: STR_POWER_SHOT_2_COUNT
+    armor: 200 #to avoid item pile destruction
     tags:
       ITEM_SNAP_POWER_BONUS: 20
       ITEM_AUTO_POWER_BONUS: 15 #brrt mode 
@@ -1410,11 +1542,13 @@ items:
     listOrder: 11056
     
   - type: STR_LASGUN_TANITH
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
 
   - type: STR_MCLASER_RIFLE #LASGUN
     bigSprite: 214
+    armor: 200 #to avoid item pile destruction
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
     compatibleAmmo:
@@ -1425,52 +1559,62 @@ items:
 
   - type: STR_PISTOLB 
     requiresBuyBaseFunc: [TRADE]
-    costBuy: 300000
+    armor: 200 #to avoid item pile destruction
+    costBuy: 150000
     listOrder: 19110    
 
   - type: STR_PISTOLS 
     requiresBuyBaseFunc: [TRADE]
-    costBuy: 300000
+    costBuy: 150000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19111    
 
   - type: STR_PISTOLH 
     requiresBuyBaseFunc: [TRADE]
-    costBuy: 300000
+    costBuy: 150000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19112  
 
   - type: STR_PISTOL_CLIP_AP # Kraken Penetrator
     requiresBuyBaseFunc: [TRADE]
     costBuy: 7000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19120
 
   - type: STR_PISTOL_CLIP_EX # Metal Storm Frag
     requiresBuyBaseFunc: [TRADE]
     costBuy: 7000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19121   
 
   - type: STR_RIFLEB 
     requiresBuyBaseFunc: [TRADE]
-    costBuy: 300000
+    costBuy: 200000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19130 
 
   - type: STR_RIFLEC
     requiresBuyBaseFunc: [TRADE]
-    costBuy: 300000
+    costBuy: 200000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19131 
 
-#  - type: STR_RIFLED
+  - type: STR_RIFLED
 #    requiresBuyBaseFunc: [TRADE]
 #    costBuy: 300000
+    armor: 200 #to avoid item pile destruction 
 #    listOrder: 19132 
 
   - type: STR_RIFLE_CLIP_AP # Kraken Penetrator
     requiresBuyBaseFunc: [TRADE]
     costBuy: 15000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19140
 
   - type: STR_RIFLE_CLIP_EX # Metal Storm Frag
     requiresBuyBaseFunc: [TRADE]
     costBuy: 15000
+    armor: 200 #to avoid item pile destruction
     listOrder: 19141
 
   - type: STR_FELINIED_CLAWS #specialWeapon for Felinids
@@ -1543,6 +1687,7 @@ items:
       - STR_GENERALLOCK # now an armor instead of an item
     categories: [STR_CAT_EQUIPMENT]
     weight: 10
+    armor: 200 #to avoid item pile destruction
     bigSprite: 240
     fireSound: {mod: 40k, index: 491}   
     bulletSpeed: -10
@@ -1606,7 +1751,7 @@ items:
     #explosionSpeed: 5
     clipSize: 999 # 1
     battleType: 2
-    armor: 30
+    armor: 200
     listOrder: 23001
     invWidth: 1
     invHeight: 1
@@ -1767,20 +1912,20 @@ items:
       - STR_MORTAR_AMMO_SMOKE
       - STR_MORTAR_AMMO_ILLUMINATION
       - STR_MORTAR_AMMO_PHOTON
-    accuracyAimed: 50
+    accuracyAimed: 30 #was 50, reduced for the waypoint system
     tuLoad: 15 #a bit of work to reload
     tuAimed: 33 #two grenades per turn+some turn adjustment, or reload cost?
     autoRange: 0
     snapRange: 0 #no snap, to prevent reactions
     aimRange: 30 #Sniper range
     battleType: 1
-    arcingShot: true
-    waypoints: 1 #1 waypoint, loitering munitions to mimic mortar indirect fire
+    arcingShot: false
+    waypoints: 2 #1 waypoint, loitering munitions to mimic mortar indirect fire
     twoHanded: true
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 40
+    armor: 200
     listOrder: 11871
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
@@ -1790,7 +1935,7 @@ items:
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 3000
+    costBuy: 7500
     costSell: 500
     weight: 6
     bigSprite: 911
@@ -1803,7 +1948,7 @@ items:
       ToTime: 0.2
       ToHealth: 1.0
       ArmorEffectiveness: 1.1 #shrapnel
-      FixRadius: 4 #1 for hand grenade version
+      FixRadius: 3 #1 for hand grenade version
     clipSize: 1 
     battleType: 2
     invWidth: 1
@@ -1814,7 +1959,7 @@ items:
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 10000
+    costBuy: 20000
     costSell: 2000
     weight: 7
     bigSprite: 912
@@ -1878,8 +2023,8 @@ items:
     power: 80 
     damageType: 9 #smoke
     damageAlter:
-      FixRadius: 7 #5 for hand grenade version
-    blastRadius: 7
+      FixRadius: 6 #5 for hand grenade version
+    blastRadius: 6
     clipSize: 1 
     battleType: 2
     invWidth: 1
@@ -1912,7 +2057,7 @@ items:
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 1000
+    costBuy: 5000
     costSell: 100
     weight: 2
     bigSprite: 916
@@ -1937,6 +2082,7 @@ items:
   
   - type: STR_GRENADE_LAUNCHER
     bigSprite: 257
+    armor: 200 #to avoid item pile destruction
     compatibleAmmo:
       - STR_FRAG_GRENADE_DRUM
       - STR_KRAK_GRENADE_DRUM
@@ -2032,7 +2178,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
-    armor: 30
+    armor: 100
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
@@ -2049,6 +2195,7 @@ items:
     autoRange: 24 # was 18
     bigSprite: 212
     handSprite: 328
+    armor: 200 #to avoid item pile destruction
     followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     compatibleAmmo:
       - STR_HEAVY_STUBBER_CLIP
@@ -2085,7 +2232,7 @@ items:
     followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     confSnap:
       shots: 4
     sprayWaypoints: 2
@@ -2098,7 +2245,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.3
     costBuy: 75000 #more expensive than the Solo light bolters
     costSell: 10000
@@ -2118,7 +2264,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     sprayWaypoints: 2
     autoShots: 5
     attraction: 1
@@ -2180,7 +2326,8 @@ items:
     categories: [STR_CAT_SHOTGUN]
     size: 0.1
     requiresBuy:
-      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_MIDTIER_PREREQ
+      - STR_GUARD_AND_ARBITES
     costBuy: 15000
     costSell: 5000
     weight: 5
@@ -2202,17 +2349,18 @@ items:
     tuSnap: 20
     confSnap:
       shots: 1
-      name: STR_BURST_SNAP_SHOT
     accuracyAuto: 25
     tuAuto: 34
     confAuto:
       shots: 2
       name: STR_BURST_SNAP_SHOT
     recover: true
+    armor: 200 #to avoid item pile destruction
     tags:
       ITEM_RECOIL: 20
 
   - type: STR_MC_BOLTER_DEAZ
+    armor: 200 #to avoid item pile destruction
     compatibleAmmo:
       - STR_LIGHT_BOLTER_AMMO
       - STR_LIGHT_BOLTER_AMMO_PEN
@@ -2220,6 +2368,7 @@ items:
       - STR_LIGHT_BOLTER_AMMO_MC
 
   - type: STR_MC_BOLTPISTOL_DEAZ
+    armor: 200 #to avoid item pile destruction
     compatibleAmmo:
       - STR_LIGHT_BOLTPISTOL_AMMO
       - STR_LIGHT_BOLTPISTOL_AMMO_AP
@@ -2251,7 +2400,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     autoShots: 4
     bulletSpeed: 30
     attraction: 1
@@ -2319,7 +2468,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     autoShots: 4
     bulletSpeed: 30
     attraction: 1
@@ -2351,7 +2500,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     autoShots: 3
     bulletSpeed: 30
     attraction: 1
@@ -2383,7 +2532,7 @@ items:
     twoHanded: false
     invWidth: 2
     invHeight: 2
-    armor: 30
+    armor: 200
     bulletSpeed: 30
     attraction: 1
     listOrder: 19150
@@ -2395,7 +2544,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_LOWTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.3
 #    requiresBuyBaseFunc: [TRADE] #could skip this requirement
     costBuy: 30000 #Should be a fair bit pricier than both lasguns and heavy stubber, not a general purpose rifle unless bathing in cash
@@ -2413,7 +2561,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     #autoShots: 2 #maybe give the basic solo some rapid shots vs the DMR version to keep it useful aside for price?
     bulletSpeed: 30
     attraction: 1
@@ -2426,7 +2574,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_IMPERIAL_GUARD_MIDTIER
     size: 0.3
 #    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
@@ -2445,7 +2592,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     #autoShots: 3
     bulletSpeed: 30
     attraction: 1
@@ -2458,7 +2605,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_LOWTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS
     size: 0.3
 #    requiresBuyBaseFunc: [TRADE] #Could skip this, but consider if SCOPES require something fancy to get
     costBuy: 20000
@@ -2476,7 +2622,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     #autoShots: 3
     bulletSpeed: 30
     attraction: 1
@@ -2525,7 +2671,7 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     bulletSpeed: 30
     attraction: 1
     listOrder: 19171
@@ -2538,7 +2684,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_LOWTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS #so this ammo doesn´t show up for factions that do not have the SOLO bolter
     size: 0.1
 #    requiresBuyBaseFunc: [TRADE]
     costBuy: 2000 #Intention is costly ammo vs lasguns
@@ -2552,7 +2697,7 @@ items:
     explosionSpeed: 5
     clipSize: 10
     battleType: 2
-    armor: 30
+    armor: 100
     invWidth: 1
     invHeight: 1
     listOrder: 19180
@@ -2563,7 +2708,7 @@ items:
     refNode: *STR_BOLTER_AMMO_SOLO
     requiresBuy:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_MIDTIER #midtier upgrade, so this ammo doesn´t show up for factions that do not have the SOLO bolter
+      - STR_MIDTIER_PREREQ
     costBuy: 7000 #costs less due to 10 rounds less
     costSell: 300
     bigSprite: 288
@@ -2577,7 +2722,6 @@ items:
     categories: [STR_CAT_BOLTER]
     requiresBuy:
       - STR_LIGHT_BOLTERS_LOWTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS #so this ammo doesn´t show up for factions that do not have the SOLO bolter
     size: 0.1
 #    requiresBuyBaseFunc: [TRADE]
     costBuy: 10000 #Intention is costly ammo vs lasguns
@@ -2591,7 +2735,7 @@ items:
     explosionSpeed: 5
     clipSize: 40 #added ammo capacity
     battleType: 2
-    armor: 30
+    armor: 100
     invWidth: 1
     invHeight: 3
     listOrder: 19180
@@ -2602,7 +2746,7 @@ items:
     refNode: *STR_LIGHT_BOLTER_AMMO_BELT_ACCATRAN
     requiresBuy:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_MIDTIER #midtier upgrade, so this ammo doesn´t show up for factions that do not have the SOLO bolter
+      - STR_MIDTIER_PREREQ
     costBuy: 30000 #costly ammo
     costSell: 5000
     bigSprite: 907
@@ -2628,7 +2772,7 @@ items:
     explosionSpeed: 5
     clipSize: 20
     battleType: 2
-    armor: 30
+    armor: 100
     invWidth: 1
     invHeight: 2
     listOrder: 19180
@@ -2671,6 +2815,7 @@ items:
     meleeHitSound: {mod: 40k, index: 773} # was 101
     meleeAnimation: {mod: 40k, index: 4} # was 0
     hidePower: true
+    armor: 200 #to avoid item pile destruction
     costAimed: # lowered cost
       time: 80 # was 60 but now % instead of flat
       energy: 60 # was 75
@@ -2756,7 +2901,7 @@ items:
     twoHanded: false
     invWidth: 1
     invHeight: 3
-    armor: 30
+    armor: 200
     listOrder: 12960
     tags:
       ITEM_STRENGTH_REQUIREMENT: 20
@@ -2764,12 +2909,15 @@ items:
 
 # Don't like how that 50% training mechanism works. I'd prefer if experience was halved instead of having a 50% chance to get training points. Might not matter much on average but it annoys me anyway.
   - type: STR_AUTOGUN
+    armor: 200  
     experienceTrainingMode: 4
 
   - type: STR_AUTOPISTOL
+    armor: 200
     experienceTrainingMode: 4
 
   - type: STR_FLAMETHROWER
+    armor: 200
     arcingShot: true
 
 # more meaty sound
@@ -2977,7 +3125,7 @@ items:
 #    twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 20
+    armor: 200
     skillApplied: true
     meleeMultiplier:
       melee: 1.0
@@ -3004,7 +3152,7 @@ items:
     floorSprite: 249
     invWidth: 2
     invHeight: 3
-    armor: 26
+    armor: 200
 
   - type: STR_SENTINEL_MULTIMELTA
     vaporColorSurface: {mod: 40k, index: 1}
@@ -3081,11 +3229,59 @@ items:
     twoHanded: false
     blockBothHands: true
     oneHandedPenalty: 25
+    armor: 200
     invWidth: 1
     invHeight: 3
     listOrder: 12179
 
-    
+  - type: STR_FLECHETTE_PISTOL   #Delaque ceramite tier pistol
+    categories: [STR_CAT_AUTO]
+    weight: 5
+    size: 0.1
+    dropoff: 5 #accurate
+    requiresBuy:
+      - STR_UFO_CONSTRUCTION
+      - STR_GUARD_AND_ARBITES
+    requiresBuyBaseFunc: [TRADE] #Delaque
+    costBuy: 200000  #pricy end game pistol
+    costSell: 30000   
+    bigSprite: 274
+    floorSprite: 225
+    handSprite: 598
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 4}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 25
+    compatibleAmmo:
+      - STR_AUTOSTUB_AMMO_VOLONIUM
+      - STR_AUTOSTUB_AMMO
+      - STR_STUB_GUN_AMMO
+      - STR_STUB_GUN_AMMO_LONG #Extended mag, lower velocity, used by the STR_SMG_STUB_GUN
+      - STR_STUB_GUN_AMMO_AP
+      - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_HP
+      - STR_STUB_GUN_AMMO_INC
+    snapRange: 11 #long range snap fire for a pistol
+    autoRange: 7
+    aimRange: 0
+    accuracyAuto: 60
+    accuracySnap: 75 #high snapfire accuracy
+    accuracyAimed: 0
+    tuSnap: 20 #-5, pistol
+    tuAuto: 33 
+    tuAimed: 0
+    confSnap:
+      shots: 2
+    autoShots: 4
+    attraction: 1
+    experienceTrainingMode: 4
+    armor: 200
+    listOrder: 10713
+      
   - type: INV_NULL_BACK_SIGNAL
     weight: 10
     battleType: 11
@@ -3243,18 +3439,22 @@ items:
     tags:
       ITEM_IS_TOOL: 1
     skillApplied: false
+    armor: 200
     confMelee:
       name: STR_TOOLS_MELEE
 
   - type: STR_TELEPATH_STAFF # Nothing should mind control
+    armor: 200
     costMindControl:
       time: 0
     defaultInventorySlot: STR_LEFT_HAND
 
   - type: STR_PSYKER_STAFF
+    armor: 200
     defaultInventorySlot: STR_LEFT_HAND
 
   - type: STR_TELEKINE_STAFF
+    armor: 200
     maxRange: 15
     accuracySnap: 75 #was 100
     costSnap:
@@ -3283,11 +3483,13 @@ items:
     clipSize: -1
 
   - type: STR_PYROMANCER_STAFF
+    armor: 200
     defaultInventorySlot: STR_LEFT_HAND
 
   - delete: STR_BIOMANCER_STAFF
 
   - type: STR_BIOMANCER_STAFF
+    armor: 200
     defaultInventorySlot: STR_LEFT_HAND
     invWidth: 2
     invHeight: 3
@@ -3335,7 +3537,7 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
+    armor: 200
     sprayWaypoints: 2
     listOrder: 10765
 
@@ -3364,13 +3566,14 @@ items:
     damageType: 1
     clipSize: 10 #low ammo capacity
     battleType: 2
-    armor: 30
+    armor: 100
     invWidth: 2 #make it chunky, see bigOB, does not fit in belt slots inventory
     invHeight: 2
     listOrder: 10766
 
 
   - type: STR_HELLGUN
+    armor: 200
     meleeAlter:
       RandomType: 7 # 50-200 # was 0 (50-150)
     meleePower: 50 # was 40
@@ -3425,7 +3628,7 @@ items:
     battleType: 3
     invWidth: 1
     invHeight: 3
-    armor: 20
+    armor: 200
     skillApplied: true
     meleeMultiplier:
       melee: 1.0
@@ -3447,6 +3650,13 @@ items:
     invHeight: 0
     battleType: 4
 
+  - type: STR_VALK_CANNON_SPAWNER #weapons IG rul/spawner items
+    spawnUnit: STR_VALK_CANNON_MOUNT
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    
   - type: STR_CAS_MISSILE_POD
     bigSprite: 265
 #    floorSprite: 256
@@ -3473,7 +3683,7 @@ items:
     battleType: 1
     hitSound: {mod: 40k, index: 0}
     hitAnimation: {mod: 40k, index: 26 }
-    invWidth: 1
+    invWidth: 2
     invHeight: 3
     fixedWeapon: true
     fixedWeaponShow: false
