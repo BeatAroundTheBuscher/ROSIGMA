@@ -1,0 +1,239 @@
+items:
+
+  - type: STR_JUMP_PACK
+    medikitType: 1
+    medikitActionName: STR_ACTIVATE_FLIGHT
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: 205
+    tags:
+      ActivateFlight: 1
+
+  - type: STR_JUMP_BAYONET
+    medikitType: 1
+    medikitActionName: STR_ACTIVATE_FLIGHT
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: 205
+    tags:
+      ActivateFlight: 1
+    #*** Melee bayonet
+    meleeHitSound: 101
+    meleeAnimation: 0
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+    clipSize: -1
+
+  - type: STR_JUMP_CLAWS
+    medikitType: 1
+    medikitActionName: STR_ACTIVATE_FLIGHT
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: 205
+    tags:
+      ActivateFlight: 1
+    #*** Melee bayonet
+    meleeHitSound: 2420 #slashhit
+    meleeAnimation: 12 #claws white
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.95
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 8
+    flatMelee:
+      time: true
+    clipSize: -1
+
+armors:
+  - type: STR_CHAOS_RAPTOR_ARMOR #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+  - type: STR_ASS_ARMOR_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+  - type: STR_ASS_ARMOR_HONOR_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 2
+      MaxCoolDown: 1
+  - type: STR_MKX_INC_LV1_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+  - type: STR_MKX_INC_LV2_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 2
+      MaxCoolDown: 2
+  - type: STR_MKX_INC_LV3_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 2
+      MaxCoolDown: 1
+  - type: STR_MKX_INC_LV4_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 4
+      MaxCoolDown: 2
+  - type: STR_MKX_INC_LV5_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 5
+      MaxCoolDown: 1
+  - type: STR_ADEPTAS_ARMORS_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+  - type: STR_ADEPTAS_ARMORCEL_UC #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_PACK
+    tags:
+      MaxFlight: 2
+      MaxCoolDown: 1
+  - type: STR_ELYSIAN_JUMP_ARMOR #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_BAYONET
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+  - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_BAYONET
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 2
+  - type: STR_FELINID_JUMP_ARMOR #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_CLAWS
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+extended:
+  tags:
+    BattleUnit:
+      FlightTime: int
+      CooldownTime: int
+    RuleArmor:
+      MaxFlight: int
+      MaxCoolDown: int
+    RuleItem:
+      ActivateFlight: int
+  scripts:
+
+    newTurnUnit:
+    - offset: 1
+      code: |
+        var int maxFlight;
+        var int maxCooldown;
+        var int flightTime;
+        var int cooldownTime;
+        var int duration;
+        var int faction;
+        var int factionturn;
+
+        unit.getFaction faction;
+        battle_game.getTurnSide factionturn;
+
+        unit.getTag maxFlight Tag.MaxFlight;
+        unit.getTag maxCooldown Tag.MaxCoolDown;
+        unit.getTag flightTime Tag.FlightTime;
+        unit.getTag cooldownTime Tag.CooldownTime;
+
+        if and eq faction FACTION_PLAYER eq factionturn FACTION_PLAYER;
+          if gt flightTime 0;
+            if and ge turn flightTime;
+              unit.setMovementType movement_type_walk;
+            end;
+          end;
+        end;
+        return;
+
+    healUnit:
+
+    - offset: 1
+      code: |
+        var int activateFlight;
+        var int maxFlight;
+        var int maxCooldown;
+        var int flightTime;
+        var int cooldownTime;
+        var int turn;
+        var int duration;
+
+        item.getTag activateFlight Tag.ActivateFlight;
+        if eq activateFlight 1;
+          battle_game.getTurn turn;
+          actor.getTag maxFlight Tag.MaxFlight;
+          actor.getTag maxCooldown Tag.MaxCoolDown;
+          actor.getTag flightTime Tag.FlightTime;
+          actor.getTag cooldownTime Tag.CooldownTime;
+          if lt turn flightTime;
+            set duration flightTime;
+            sub duration turn;
+            battle_game.flashMessage "Flight Duration Left: {0}" duration;
+            return;
+          end;
+          if lt turn cooldownTime;
+            set duration cooldownTime;
+            sub duration turn;
+            battle_game.flashMessage "Cooldown Duration Left: {0}" duration;
+            return;
+          end;
+
+          actor.setMovementType movement_type_fly;
+          set cooldownTime turn;
+          add cooldownTime maxCooldown;
+          add cooldownTime maxFlight;
+          actor.setTag Tag.CooldownTime cooldownTime;
+          set flightTime turn;
+          add flightTime maxFlight;
+          actor.setTag Tag.FlightTime flightTime;
+
+        end;
+        return;
