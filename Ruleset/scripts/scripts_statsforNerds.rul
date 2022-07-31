@@ -49,11 +49,13 @@ extended:
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
+      GravPercentage: int
     RuleArmor:
       HAS_EXTENDED_FRONT_SHIELD: int
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
       DODGE_CHANCE: int
+      FLIGHT_DODGE_CHANCE: int
       MaxFlight: int
       MaxCoolDown: int
 
@@ -92,6 +94,10 @@ extended:
           rule.getTag temp1 Tag.DODGE_CHANCE;
           if gt temp1 0;
             stats_state.addIntRow "Ranged Dodge Chance" temp1;
+          end;
+          rule.getTag temp1 Tag.FLIGHT_DODGE_CHANCE;
+          if gt temp1 0;
+            stats_state.addIntRow "Ranged Dodge Chance In Flight" temp1;
           end;
 
           return;
@@ -139,6 +145,10 @@ extended:
           rule.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           if gt temp 0;
             stats_state.addIntRow "STR_HEAT_AMMO_SPENT_FOR_INCREASE" temp;
+          end;
+          rule.getTag temp Tag.GravPercentage;
+          if gt temp 0;
+            stats_state.addIntRow "STR_GRAVPERCENTAGE" temp;
           end;
           
 

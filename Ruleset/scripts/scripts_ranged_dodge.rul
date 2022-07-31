@@ -6,17 +6,21 @@ extended:
       LAST_DODGE_FRAME: int
     RuleArmor:
       DODGE_CHANCE: int
+      FLIGHT_DODGE_CHANCE: int
 
 armors:
   - &STR_DODGE_ARMOR
     type: STR_ADEPTAS_CALLIDUS_SUIT 
     tags:
-      DODGE_CHANCE: 50      
+      DODGE_CHANCE: 50 
+      FLIGHT_DODGE_CHANCE: 0
     scripts:
       hitUnit: | 
         var int temp;
         var int randomNumber;
         var int dodgeChance;
+        var int flightDodgeChance;
+        var int flying;
         var ptr RuleArmor targetArmor;
         var ptr RuleItem damagingItem;
         var ptr RuleDamageType damageType;
@@ -24,6 +28,14 @@ armors:
 
         unit.getRuleArmor targetArmor;
         targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
+        targetArmor.getTag flightDodgeChance Tag.FLIGHT_DODGE_CHANCE;
+
+        if gt flightDodgeChance 0;
+          unit.isFlying flying;
+          if eq flying 1;
+            set dodgeChance flightDodgeChance;
+          end;
+        end;
 
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
@@ -70,6 +82,7 @@ armors:
     refNode: *STR_DODGE_ARMOR #50% chance
     tags:
       DODGE_CHANCE: 40
+
 
   - type: STR_ADEPTAS_ARMORB_UC
     refNode: *STR_DODGE_ARMOR #50% chance
@@ -128,6 +141,7 @@ armors:
       DODGE_CHANCE: 15
       
 #ELDAR
+
   - type: STR_ELDAR_ARMOR 
     refNode: *STR_DODGE_ARMOR 
     tags:

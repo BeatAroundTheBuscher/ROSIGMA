@@ -1,0 +1,66 @@
+items:
+  - type: STR_STUN_BOMB
+    tags:
+      GravPercentage: 3
+  - type: STR_GRAVGUN_MC
+    tags:
+      GravPercentage: 4
+  - type: AUX_CENTURION_GRAVGUN
+    tags:
+      GravPercentage: 3
+
+  - type: STR_GRAVGUN_AOE_AMMO
+    tags:
+      GravPercentage: 3
+  - type: STR_GRAVGUN_AOE_AMMO_SHOTGUN
+    tags:
+      GravPercentage: 3
+  - type: STR_GRAVPISTOL_AMMO
+    tags:
+      GravPercentage: 2
+  - type: STR_GRAVCANNON_AMMO
+    tags:
+      GravPercentage: 3
+extended:
+  tags:
+    RuleItem:
+      GravPercentage: int # can be on ammo or weapon, weapon overwrites ammo
+
+  scripts:
+    damageUnit:
+      - offset: 1
+        code: |
+          var int temp;
+          var int armor;
+          var int percentage;
+          var int weaponpercentage;
+          var int ammopercentage;
+          var ptre BattleItem ammo;
+
+          damaging_item.getAmmoItem ammo;
+
+          ammo.getTag ammopercentage Tag.GravPercentage;
+          damaging_item.getTag weaponpercentage Tag.GravPercentage;
+          if gt ammopercentage 0;
+            set percentage ammopercentage;
+          end;
+          if gt weaponpercentage 0; # if both ammo and weapon have tag, weapon overwrites
+            set percentage weaponpercentage;
+          end;
+
+          if gt percentage 0;
+            unit.getArmor temp SIDE_FRONT;
+            add armor temp;
+            unit.getArmor temp SIDE_LEFT;
+            add armor temp;
+            unit.getArmor temp SIDE_FRONT;
+            add armor temp;
+            unit.getArmor temp SIDE_REAR;
+            add armor temp;
+            unit.getArmor temp SIDE_RIGHT;
+            add armor temp;
+            muldiv armor percentage 100;
+            add to_health armor;
+          end;
+          return;
+
