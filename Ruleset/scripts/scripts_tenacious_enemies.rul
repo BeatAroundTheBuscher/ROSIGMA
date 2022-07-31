@@ -1,6 +1,5 @@
 armors:
-  - &STR_TENACIOUS_NECRONS
-    type: STR_NECRON_WARRIOR_ARMOR
+  - type: STR_NECRON_WARRIOR_ARMOR
     painImmune: false
     scripts:
       damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
@@ -13,7 +12,7 @@ armors:
         if eq temp 1; # don't stun 2x2 as they can't get up
           set to_stun to_health;
         end;
-        div to_health 5; # 10;
+        div to_health 2; # 10;
 
         return;
 
@@ -48,13 +47,145 @@ armors:
         return;
 
   - type: STR_NECRON_LYCHGUARD_ARMOR
-    refNode: *STR_TENACIOUS_NECRONS
+    painImmune: false
+    scripts:
+      damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
+        var int temp;
+        var ptr RuleArmor targetArmor;
+
+        unit.getRuleArmor targetArmor;
+        targetArmor.getSize temp;
+
+        if eq temp 1; # don't stun 2x2 as they can't get up
+          set to_stun to_health;
+        end;
+        div to_health 3; # 10;
+
+        return;
+
+
+        
+      newTurnUnit: | # reduce stunlevel by a greater value than 1 per turn
+
+        var int currentStun;
+        var int stunRecovery;
+        var int currentHealth;
+
+        if neq side 1;
+          return;
+        end;
+
+        set stunRecovery 10;
+
+        unit.getStun currentStun;
+        unit.getHealth currentHealth;
+
+        if gt currentStun stunRecovery;
+          sub currentStun stunRecovery;
+        else;
+          set currentStun 0;
+        end;
+
+        if lt currentStun currentHealth; # wakes up
+          unit.setStun 0;
+        else;
+          unit.setStun currentStun;
+        end;
+        return;
 
   - type: STR_NECRON_IMORTAL_ARMOR
-    refNode: *STR_TENACIOUS_NECRONS
+    painImmune: false
+    scripts:
+      damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
+        var int temp;
+        var ptr RuleArmor targetArmor;
+
+        unit.getRuleArmor targetArmor;
+        targetArmor.getSize temp;
+
+        if eq temp 1; # don't stun 2x2 as they can't get up
+          set to_stun to_health;
+        end;
+        div to_health 3; # 10;
+
+        return;
+
+
+        
+      newTurnUnit: | # reduce stunlevel by a greater value than 1 per turn
+
+        var int currentStun;
+        var int stunRecovery;
+        var int currentHealth;
+
+        if neq side 1;
+          return;
+        end;
+
+        set stunRecovery 10;
+
+        unit.getStun currentStun;
+        unit.getHealth currentHealth;
+
+        if gt currentStun stunRecovery;
+          sub currentStun stunRecovery;
+        else;
+          set currentStun 0;
+        end;
+
+        if lt currentStun currentHealth; # wakes up
+          unit.setStun 0;
+        else;
+          unit.setStun currentStun;
+        end;
+        return;
 
   - type: STR_NECRON_DEATHMARK_ARMOR
-    refNode: *STR_TENACIOUS_NECRONS
+    painImmune: false
+    scripts:
+      damageUnit: | # take HP damage as stun damage. Actual damage is only a fifth
+        var int temp;
+        var ptr RuleArmor targetArmor;
+
+        unit.getRuleArmor targetArmor;
+        targetArmor.getSize temp;
+
+        if eq temp 1; # don't stun 2x2 as they can't get up
+          set to_stun to_health;
+        end;
+        div to_health 2; # 10;
+
+        return;
+
+
+        
+      newTurnUnit: | # reduce stunlevel by a greater value than 1 per turn
+
+        var int currentStun;
+        var int stunRecovery;
+        var int currentHealth;
+
+        if neq side 1;
+          return;
+        end;
+
+        set stunRecovery 10;
+
+        unit.getStun currentStun;
+        unit.getHealth currentHealth;
+
+        if gt currentStun stunRecovery;
+          sub currentStun stunRecovery;
+        else;
+          set currentStun 0;
+        end;
+
+        if lt currentStun currentHealth; # wakes up
+          unit.setStun 0;
+        else;
+          unit.setStun currentStun;
+        end;
+        return;
 
   - type: STR_DESTROYER_ARMOR
     scripts:
