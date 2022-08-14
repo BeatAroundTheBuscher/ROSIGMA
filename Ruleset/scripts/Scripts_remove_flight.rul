@@ -1,0 +1,53 @@
+items:
+    - type: STR_HEAVY_WEBBER_AMMO
+      tags:
+        RemovesFlight: 1
+    - type: STR_PISTOL_WEBBER_AMMO
+      tags:
+        RemovesFlight: 1
+    - type: STR_CONSTRICTOR_WEBBER_AMMO
+      tags:
+        RemovesFlight: 1
+    - type: STR_WEBBER_AMMO
+      tags:
+        RemovesFlight: 1
+
+extended:
+    tags:
+        RuleItem:
+          RemovesFlight: int
+        BattleUnit:
+          FlightTime: int
+          CooldownTime: int
+        RuleArmor:
+          MaxFlight: int
+          MaxCoolDown: int
+    scripts:
+        hitUnit:
+        - offset: 50
+          code: |
+            var int flying;
+            var int flighttime;
+            var int removesflight;
+            var int turn;
+            var int maxCooldown;
+            var int cooldownTime;
+            var ptr BattleItem ammoptr;
+            
+            set removesflight 1;
+            weapon_item.getAmmoItem ammoptr;
+            ammoptr.getTag removesflight Tag.RemovesFlight;
+            debug_log removesflight;
+            if or eq removesflight 1 ge power 200;
+              unit.getTag flighttime Tag.FlightTime;
+              if gt flighttime 0;
+                  battle_game.getTurn turn;
+                  unit.setTag Tag.FlightTime turn;
+                  unit.getTag maxCooldown Tag.MaxCoolDown;
+                  set cooldownTime turn;
+                  add cooldownTime maxCooldown;
+                  unit.setTag Tag.CooldownTime cooldownTime;
+              end;
+              unit.setMovementType 0;
+            end;
+            return power part side;
