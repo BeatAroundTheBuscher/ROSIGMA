@@ -4,11 +4,37 @@ extended:
       - offset: 1
         code: |
           var int health;
+          var int difference;
+          var int check;
+          var int multiplier;
 
+          if eq damaging_type 2;
+            set check 1;
+            set multiplier 3; 
+          end;
+          if eq damaging_type 3;
+            set check 1;
+            set multiplier 2; 
+          end;          
+          if eq damaging_type 5;
+            set check 1;
+            set multiplier 2; 
+          end;
           if eq damaging_type 11;
+            set check 1;
+            set multiplier 4; 
+          end;
+
+          if eq check 1;
             unit.getHealth health;
             if gt to_health health;
-              unit.setHealthWithOverkill -999;
+
+              set difference to_health;
+              sub difference health;
+              mul difference multiplier;
+              mul difference -1;
+              #debug_log difference;
+              unit.setHealthWithOverkill difference;
             end;
           end;
           return;
