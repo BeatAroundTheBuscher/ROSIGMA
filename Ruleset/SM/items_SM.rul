@@ -471,7 +471,7 @@ items:
   - type: STR_HALLEBARD
     refNode: *STR_POWER_MELEE_WEAPON
     armor: 200
-    fireSound: 753 #clawswipe
+    fireSound: { mod: 40k, index: 753 }
     explosionHitSound: { mod: 40k, index: 101} #stabhit
     hitAnimation: 2040 #Bloodgush sprite, X1.pck for ranged attacks, was 1070 #AOEMELEEGENE.png
     hitAnimFrames: 8
@@ -529,9 +529,9 @@ items:
     recover: false
     fixedWeapon: true
     #*** Melee
-    meleeSound: 753 #753 Powersword miss
-    meleeHitSound: 709 #709 chainhit
-    meleeAnimation: 44
+    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
+    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
+    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
     meleeType: 7
     meleePower: 50
     accuracyMelee: 70
@@ -550,7 +550,6 @@ items:
     tuMelee: 15
     flatMelee:
       time: true
-
 
   - type: AUX_MEDI_KIT_MC      #AUX MEDI KIT - Mastercrafted Narthecium for Level 5/Captain GK Apothecary Armor
     size: 0.1
@@ -575,9 +574,9 @@ items:
     recover: false
     fixedWeapon: true
     #*** Melee
-    meleeSound: 753 #753 Powerswrod miss
-    meleeHitSound: 709 #709 chainhit
-    meleeAnimation: 44
+    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
+    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
+    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
     meleeType: 7
     meleePower: 50
     accuracyMelee: 90 #Improved accuracy from Mastercrafting
@@ -597,6 +596,66 @@ items:
     flatMelee:
       time: true
 
+  - type: AUX_PROBE_ADVANCED                                                 #TOME
+    #psiAttackName: STR_ANALYZE #string id of psi-amp attack name in the pop-up menu. Required to enable special attack.
+    weight: 0
+    hitSound: 37
+    battleType: 8
+    LOSRequired: true
+    tuUse: 1 #more TU efficient than the basic Techmarine suite
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: 5
+    specialUseEmptyHand: true
+    #*** Melee
+    tags:
+      ITEM_REPAIRS_ARMOR: 1
+    confMelee:
+      name: STR_REPAIR
+    meleeSound: { mod: 40k, index: 698 }
+    meleeHitSound: { mod: 40k, index: 699 }
+    meleeAnimation: { mod: 40k, index: 32 }
+    meleeType: 0
+    meleePower: 60
+    accuracyMelee: 100
+    meleeBonus:
+      strength: 0.5
+    meleeAlter: #REPAIR
+      RandomType: 3
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToArmor: -1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomStun: false
+      ArmorEffectiveness: 0.0
+    meleeMultiplier:
+      melee: 0.9 #Slightly better multiplier than the basic Techmarine suite
+    costMelee:
+      time: 10 #more TU and energy efficient than the basic Techmarine suite
+      energy: 30
+
+  - type: AUX_CROZIUS                                               #Time to nerf this to sanity
+    costAimed:
+      time: 40
+      energy: 40
+      morale: 20
+    costSnap:
+      time: 20
+      energy: 40
+      morale: 20
+    damageAlter:
+      FireBlastCalc: true #aoe should scale with power
+      IgnoreOverKill: false
+      ToHealth: 3.0
+      ToTile: 0.3
+      ToItem: 0.3
+      ToMorale: 40.0
+      ArmorEffectiveness: 0
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+    damageBonus:
+      bravery: 0.5
+      psi: 0.02
 
   - type: STR_CLAWS
     refNode: *STR_POWER_MELEE_WEAPON
