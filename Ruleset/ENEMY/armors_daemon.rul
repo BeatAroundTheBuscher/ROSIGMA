@@ -10,6 +10,8 @@ armors:
     sideArmor: 50
     rearArmor: 30
     underArmor: 50
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain
     specialWeapon: AUX_DAEMON_FIREBALL
     damageModifier: #DAEMON ARMOR LARGE
       - 1.0 #none
@@ -30,23 +32,26 @@ armors:
     antiCamouflageAtDark: 6
     heatVision: 33
     psiVision: 6
-    frontArmor: 30
-    sideArmor: 30
-    rearArmor: 30
-    underArmor: 10
+    frontArmor: 60 #decently armored; Brass armor of Khorne
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 60
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain
     damageModifier: #DEAMON ARMOR
       - 1.0 #none
-      - 1.0 #AP
-      - 1.0 #FLAMES
-      - 1.0 #HE
+      - 0.7 #AP; Bloodletters more resilient to physical and fire damage.
+      - 0.7 #FLAMES
+      - 0.7 #HE
       - 1.0 #LASCANON
       - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
+      - 0.5 #STUN
+      - 0.5 #MELEE; Bloodletters are masters of melee combat, and are especially protected against it
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.0 #MELTA
+
   - type: STR_CELATID_ARMOR                            #Nurgle Deamon
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -55,23 +60,30 @@ armors:
     heatVision: 33
     psiVision: 10
     frontArmor: 20
-    sideArmor: 10
+    sideArmor: 15
     rearArmor: 10
     underArmor: 10
+    bleedImmune: true #Nurgle daemons don't bleed
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain; especially not Plaguebearers
+    recovery: #Plaguebearers regenerate health
+      health:
+        healthCurrent: 0.2
     damageModifier: #NURGLE ARMOR
-      - 0.9 #none
-      - 0.9 #AP
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.5 #AP Plaguebearers resist everything significantly but heat based weaponry; also helps compensate for their terrible armor
       - 1.5 #FLAMES
-      - 0.9 #HE
-      - 0.9 #LASCANON
-      - 0.9 #PLASMA
-      - 0.9 #STUN
-      - 0.9 #MELEE
+      - 0.5 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
       - 0.1 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.0 #MELTA
+      - 1.2 #MELTA
     loftempsSet: [ 4 ]
+
   - type: STR_CHRYSSALID_ARMOR     #DAEMONETTE
     spriteSheet: CH4.PCK
     spriteInv: DaemonetteINV.SPK
@@ -85,20 +97,22 @@ armors:
     sideArmor: 30
     rearArmor: 10
     underArmor: 5
+    zombiImmune: true #It's a daemon; can't zombify this. Daemonettes can feel and like pain so no pain immunity
     damageModifier: #NAKED
-      - 1.0
-      - 0.8
-      - 1.5
-      - 1.0
-      - 0.5
-      - 0.5
-      - 1.0
-      - 0.7
-      - 1.0
+      - 1.0 #none
+      - 0.8 #AP
+      - 1.5 #FLAMES
+      - 1.0 #HE
+      - 0.5 #LAS
+      - 0.5 #PLASMA
+      - 1.0 #STUN
+      - 0.7 #MELEE
+      - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 2 ]
+
   - type: STR_CHRYSSALID_ARMORSELENE     #DEMON HARPY
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -142,14 +156,15 @@ armors:
     heatVision: 33
     psiVision: 15
     spriteSheet: DIRE_DAEMONETTE_BS.PCK
-    spriteInv: DIRE_DAEMONETTE_INV.SPK 
+    spriteInv: DIRE_DAEMONETTE_INV.SPK
     allowInv: false
     corpseBattle:
-      - STR_DIRE_DAEMONETTE_CORPSE 
+      - STR_DIRE_DAEMONETTE_CORPSE
     frontArmor: 60
     sideArmor: 45
     rearArmor: 30
     underArmor: 15
+    zombiImmune: true #It's a daemon; can't zombify this. Daemonettes can feel and like pain so no pain immunity
     drawingRoutine: 4
     damageModifier: #NAKED
       - 1.0
@@ -166,7 +181,7 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 2 ]
     specialWeapon: AUX_SEDUCE
-      
+
   - type: STR_DEMI_DAEMONETTE_ARMOR     #DEMI ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -241,19 +256,21 @@ armors:
     sideArmor: 15
     rearArmor: 10
     underArmor: 5
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain
     damageModifier: #FLAMER
       - 1.0 #none
       - 1.0 #AP
-      - 0.0 #FLAMES
+      - 0.0 #FLAMES #flamer takes sharply reduced damage from heat based weapons
       - 1.0 #HE
-      - 1.0 #LASCANON
-      - 1.0 #PLASMA
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
       - 1.1 #STUN
       - 1.1 #MELEE
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.0 #MELTA
+      - 0.8 #MELTA
     builtInWeapons: []
 
   - type: STR_NEVERBORN_TERRORIST_ARMOR                        #Undivided Deamon
@@ -268,15 +285,17 @@ armors:
     allowInv: false
     spriteInv: NEVERBORN_INV.SPK
     corpseBattle:
-      - STR_NEVERBORN_CORPSE 
+      - STR_NEVERBORN_CORPSE
     frontArmor: 70
     sideArmor: 70
     rearArmor: 60
     underArmor: 60
     drawingRoutine: 4
     constantAnimation: false
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain
     damageModifier: #DEAMON ARMOR
-      - 0.7 #none
+      - 1.0 #untyped damage is supposed to be neutral
       - 0.3 #AP #strong vs AP
       - 2.0 #FLAMES
       - 0.7 #HE
