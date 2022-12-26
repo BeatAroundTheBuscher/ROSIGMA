@@ -1,3 +1,28 @@
+extended:
+  tags: # Remember to add tag definitions to same file as item/armor rulesets!
+    RuleItem:
+#vampiric on kill; weapons
+      TAG_HP_RETURNED_ON_KILL: int
+      TAG_ENERGY_RETURNED_ON_KILL: int
+      TAG_TIME_RETURNED_ON_KILL: int
+      TAG_MORALE_RETURNED_ON_KILL: int
+      TAG_STUN_RETURNED_ON_KILL: int
+#vampiric on damage; weapons
+      YTAG_DAMAGE_RETURNED_AS_HP: int
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: int
+      YTAG_DAMAGE_RETURNED_AS_TIME: int
+      YTAG_DAMAGE_RETURNED_AS_MORALE: int
+      YTAG_DAMAGE_RETURNED_AS_STUN: int
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: int
+#vampiric on damage; armors
+    RuleArmor:
+      YTAG_DAMAGE_RETURNED_AS_HP_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
+
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
@@ -289,13 +314,10 @@ items:
     damageType: 7
     clipSize: -1
 
-  - type: STR_SILACOID_WEAPON #Deamon Blade
-    power: 150
+  - type: STR_SILACOID_WEAPON #Bloodletter Hellblade
+    power: 50 #base damage lowered per Damage Alter and Damage Scaling; works out to about 162 after Damage Bonuses
     weight: 3
-    strengthApplied: false
     damageType: 7
-    damageAlter:
-      IgnoreSelfDestruct: false
     accuracyMelee: 100
     tuMelee: 15
     clipSize: -1
@@ -305,18 +327,11 @@ items:
     invHeight: 3
     recover: false
     flatRate: true
-  - type: STR_KHORNE_VALKIA_WEAPON #Deamon Spear
-    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
-    meleeHitSound: {mod: 40k, index: 754} #744 Powerswrod hit
-    power: 120
-    meleeAnimation: {mod: 40k, index: 4}
-    weight: 3
-    bigSprite: 2202
-    floorSprite: 2080
-    handSprite: 2172
-    strengthApplied: false
-    damageType: 7
-    damageAlter:
+    damageBonus:
+      strength: 0.2
+      melee: 0.6
+      psiStrength: 0.2 #profaned weapon
+    damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
       ToArmorPre: 0.2
       ToArmor: 0.2
@@ -325,6 +340,55 @@ items:
       ToWound: 0.4
       ToEnergy: 0.3
       ArmorEffectiveness: 0.6
+    tags: #Bloodletter Hellblade is vampiric, granting them power as they spill blood for Khorne
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 88 #regains 88 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
+
+  - type: STR_KHORNE_VALKIA_WEAPON #Deamon Spear
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 754} #744 Powerswrod hit
+    power: 40 #base damage lowered per Damage Alter and Damage Scaling
+    meleeAnimation: {mod: 40k, index: 4}
+    weight: 3
+    bigSprite: 2202
+    floorSprite: 2080
+    handSprite: 2172
+    strengthApplied: false
+    damageType: 7
+    damageBonus:
+      strength: 0.2
+      melee: 0.6
+      psiStrength: 0.2 #profaned weapon
+    damageAlter: #Khorne hellblade weapon
+      IgnoreSelfDestruct: false
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ToStun: 0.1
+      ToMorale: 0.2
+      ToWound: 0.4
+      ToEnergy: 0.3
+      ArmorEffectiveness: 0.6
+    tags: #Daemonspear is vampiric, granting power as its user spills blood for Khorne
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 88 #regains 88 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
     accuracyMelee: 100
     tuMelee: 15
     clipSize: -1
@@ -1499,6 +1563,32 @@ items:
     #ai.meleeHitCount: 1
 #    bigSprite: 372
 #    meleeSound: {mod: 40k, index: 833}
+    costMelee:
+      time: 10
+      energy: 2
+    flatRate: true
+    twoHanded: false
+    power: 50
+    damageBonus:
+      psiStrength: 0.25 #profaned
+      strength: 0.25
+      melee: 0.25
+      bravery: 0.25
+    damageAlter:  #uses Dire Daemonette stats downscaled
+      RandomType: 2
+      ArmorEffectiveness: 0.7
+      ToHealth: 0.6 #less damaging, but debuffs heavily; generally much less effective versus non-organics
+      ToMorale: 1.0
+      ToStun: 0.3
+      ToEnergy: 1.0
+      ToTime: 0.3
+      ToWound: 0.04
+    tags: #Innervated by 'corrupting' others
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 16
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 16
+      YTAG_DAMAGE_RETURNED_AS_STUN: 16
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
+    specialChance: 66 #high chance of corrupting
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_MARINE_ZOMBIE_TACTICAL_M, STR_JARMORH_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_JARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_LIB_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SIGNAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_PERSONAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SCOUT_UC: STR_MARINE_ZOMBIE_SCOUT_M, STR_SCOUTH_UC: STR_MARINE_ZOMBIE_SCOUT_M,
