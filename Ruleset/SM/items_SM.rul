@@ -2,6 +2,14 @@ extended:
   tags:
     RuleItem:
       ITEM_STRENGTH_REQUIREMENT: int
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+      ITEM_RECOIL: int
+      ITEM_HAS_BIPOD: int
+      ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+
 
 items:
   - type: AUX_DREAD_ASSC #dread ASSAULT CAN
@@ -691,7 +699,6 @@ items:
 #INQUISITION WEAPONS
   - type: STR_INQ_HELLGUN #Scoped and Bayonet, extra spicy Hellgun
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
-    size: 0.2
     dropoff: 4
 #    costBuy: 200000 #Only available through manufacture
     costSell: 0
@@ -738,7 +745,7 @@ items:
     meleeBonus:
       strength: 0.2
       melee: 0.2
-      devotion: 0.2 #consecrated weapon
+      psiSkill: 0.2 #consecrated weapon
     meleeAlter:
       ArmorEffectiveness: 0.9
       RandomType: 7  # 50-200 # was 0 (50-150)
@@ -765,6 +772,7 @@ items:
     vaporDensitySurface: 4
     vaporProbabilitySurface: 100
     bigSprite: {mod: 40k, index: 215}
+    handSprite: {mod: 40k, index: 200}
     bulletSprite: {mod: 40k, index: 5}
     fireSound: {mod: 40k, index: 706}
     accuracySnap: 70
@@ -772,7 +780,6 @@ items:
     tuSnap: 20
     tuAuto: 30
     battleType: 1
-    twoHanded: false
     arcingShot: true
     autoRange: 10 #longer than normal range
     snapRange: 12 #longer than normal range
@@ -810,6 +817,141 @@ items:
     twoHanded: true
     blockBothHands: true
     listOrder: 10763
+
+  - type: STR_INQ_LONGLAS #Inquisition Longlas
+    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
+    dropoff: 4 #scoped
+    weight: 10
+    fireSound: 2261 #chunky Nihilus sound
+    bigSprite: {mod: 40k, index: 1028}
+    handSprite: {mod: 40k, index: 1224}
+    hitSound: {mod: 40k, index: 19}
+    bulletSprite: {mod: 40k, index: 12}
+    bulletSpeed: 50
+    hitAnimation: {mod: 40k, index: 36}
+    accuracySnap: 50
+    accuracyAimed: 125
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    kneelBonus: 130 #sniper weapon gains additional accuracy from kneeling
+    snapRange: 24
+    tuSnap: 50
+    tuAimed: 75
+    confAimed: #Called Precision Shot to emphasize the added lethality
+      name: STR_PRECISION_SHOT
+    battleType: 1
+    power: 50
+    damageType: 4
+    damageBonus: #damage scales aggressively with accuracy due to being a precision sniper weapon
+      firing: [0.0, 0.0025]
+    damageAlter: #hellgun properties
+      RandomType: 6 #gaussian; consistent damage with the chance to critically hit/miss
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.0
+      ToWound: 0.0 # added this
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    listOrder: 10764
+    tags:
+      ITEM_AIMED_POWER_BONUS: 50 #Precision Shot Bonus
+      ITEM_IS_HEAVY_WEAPON: 1 #Sniper platform
+
+
+  - type: STR_INQ_PLASMA #Inquisition Dekker Twincore Plasma
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
+    weight: 20
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    handSprite: { mod: 40k, index: 80 }
+    hitSound: { mod: 40k, index: 19 }
+    hitAnimation: { mod: 40k, index: 100 } # 60 #*** PLASMA rebalance
+    fireSound: { mod: 40k, index: 18 }
+    invWidth: 2
+    invHeight: 3
+    dropoff: 5
+    autoRange: 12
+    snapRange: 21
+    aimRange: 21 #Maximal Shot
+    accuracyAuto: 60
+    accuracySnap: 70
+    accuracyAimed: 70 #Maximal Shot
+    tuAuto: 40
+    tuSnap: 33
+    tuAimed: 33 #Maximal Shot
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    confAimed: #Maximal Shot
+      name: STR_MAXIMAL_SHOT
+      spendPerShot: 4 #more powerful focused shot that creates more heat
+    battleType: 1
+    power: 110 #75 #*** PLASMA rebalance
+    damageType: 5
+    damageAlter: #DA PLASMA
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      ToArmorPre: 0.1
+      ToArmor: 0.2
+    clipSize: 200 #finite ammo because otherwise the overheat mechanics don't work
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    listOrder: 10765
+
+  - type: STR_INQ_MULTIMELTA #Inquisition Multimelta
+    categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
+    dropoff: 7
+    weight: 20
+    accuracySnap: 90
+    tuSnap: 45
+    confSnap:
+      shots: 2
+    snapRange: 16 #+2 over base
+    accuracyAuto: 60
+    tuAuto: 60
+    autoShots: 4 #gets autofire because Inquisition level tech
+    maxRange: 20
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    bigSprite: {mod: 40k, index: 248}
+    floorSprite: {mod: 40k, index: 132}
+    handSprite: {mod: 40k, index: 400}
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    power: 12
+    damageType: 11
+    damageAlter: #DA MELTA Double
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 16.0
+    clipSize: -1
+    listOrder: 10765
 
 #PLAYABLE CHAOS CORPSES AND STORE ITEMS
   - type: STR_ALPHA_LEGION_CORPSE_PLAYER

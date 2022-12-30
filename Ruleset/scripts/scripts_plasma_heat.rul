@@ -6,11 +6,15 @@ extended:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
       ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
   scripts:
-    reactionUnitReaction: # do not react at max heat 
+    reactionUnitReaction: # do not react at max heat
       # but doesn't work perfectly yet as how value for getAmmoQuantity isn't being updated
       # when shooting multiple times during one reactionUnitReaction
       - offset: 20
@@ -33,7 +37,7 @@ extended:
           reaction_weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
           reaction_weapon.getAmmoItem ammoItem;
           ammoItem.getAmmoQuantity currentAmmoCount;
-          
+
           if le currentAmmoCount previousAmmoCount;
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
@@ -42,7 +46,7 @@ extended:
           add previousAmmoCount reaction_count; # assumes that snap will always use one ammo per shot
           div previousAmmoCount temp;
 
-          add currentHeat previousAmmoCount; 
+          add currentHeat previousAmmoCount;
 
           if gt currentHeat maxHeat;
             return 0;
@@ -90,8 +94,8 @@ items:
           if lt currentHeat 0; # before mission
             add sprite_index sprite_offset;
             return sprite_index;
-          end;            
-          
+          end;
+
           item.getAmmoItem ammoItem;
           ammoItem.getAmmoQuantity currentAmmoCount;
 
@@ -102,7 +106,7 @@ items:
           item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           div previousAmmoCount temp;
 
-          add currentHeat previousAmmoCount; 
+          add currentHeat previousAmmoCount;
           if le currentHeat maxHeat;
             add sprite_index currentHeat;
           else;
@@ -113,17 +117,17 @@ items:
         add sprite_index sprite_offset;
         return sprite_index;
 
-      # https://openxcom.org/forum/index.php/topic,6758.msg107896.html#msg107896  
+      # https://openxcom.org/forum/index.php/topic,6758.msg107896.html#msg107896
       recolorItemSprite: |
         var int color;
         var int temp;
 
         var int currentHeat;
         var int maxHeat;
- 
+
 
         var int previousAmmoCount;
-        var int currentAmmoCount;    
+        var int currentAmmoCount;
         var ptr BattleItem ammoItem;
 
         battle_game.getTurn temp;
@@ -131,7 +135,7 @@ items:
           return new_pixel;
         end;
 
-        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;   
+        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
         item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
 
         item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
@@ -145,7 +149,7 @@ items:
         item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
         div previousAmmoCount temp;
 
-        add currentHeat previousAmmoCount; 
+        add currentHeat previousAmmoCount;
 
         get_color color new_pixel;
         item.isFuseEnabled temp;
@@ -185,7 +189,7 @@ items:
           item.setTag Tag.ITEM_HEAT_CURRENT_LEVEL 0;
           return;
         end;
-          
+
         item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
         item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
@@ -195,7 +199,7 @@ items:
           item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           div previousAmmoCount temp; # delta heat
 
-          add currentHeat previousAmmoCount; 
+          add currentHeat previousAmmoCount;
         else;
           add currentHeat previousAmmoCount; # shots fired before reload
         end;
@@ -214,7 +218,7 @@ items:
           if le currentHeat temp; # dissipate
             set currentHeat 0;
           else;
-            sub currentHeat temp; 
+            sub currentHeat temp;
           end;
         end;
 
@@ -223,7 +227,7 @@ items:
 
         return;
 
-    accuracyMultiplier: | 
+    accuracyMultiplier: |
       var int temp;
       var int previousAmmoCount;
       var int currentAmmoCount;
@@ -274,7 +278,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 5
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-        
+
   - type: STR_HEAVY_PLASMA_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 314
@@ -307,14 +311,30 @@ items:
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
-  - type: STR_HEAVY_LASGUN_LUCIUS_XIV 
+  - type: STR_HEAVY_LASGUN_LUCIUS_XIV
     refNode: *STR_OVERHEATING_PLASMA
     bigSprite: 342
     tags:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
-      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4  
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4
 
+  - type: STR_INQ_PLASMA #Inq Dekker Twincore Plasma
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 400
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_POWER_BONUS: 50 #Maximal Shot Bonus
+
+  - type: STR_PLASMA_GUN_TWINCORE_DEKKER #Dekker Twincore Plasma
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 400
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
 
 
@@ -328,6 +348,6 @@ items:
 #      return bonus;
 #      debug_log "local accuracyMultiplierBonusStats";
 #      return 0;
-          
+
 
 
