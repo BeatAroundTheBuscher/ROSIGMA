@@ -5,6 +5,29 @@ extended:
       ITEM_IS_FOR_BOMBER: int
       ITEM_IS_BOMB: int
 
+#vampiric on kill; weapons
+      TAG_HP_RETURNED_ON_KILL: int
+      TAG_ENERGY_RETURNED_ON_KILL: int
+      TAG_TIME_RETURNED_ON_KILL: int
+      TAG_MORALE_RETURNED_ON_KILL: int
+      TAG_STUN_RETURNED_ON_KILL: int
+#vampiric on damage; weapons
+      YTAG_DAMAGE_RETURNED_AS_HP: int
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: int
+      YTAG_DAMAGE_RETURNED_AS_TIME: int
+      YTAG_DAMAGE_RETURNED_AS_MORALE: int
+      YTAG_DAMAGE_RETURNED_AS_STUN: int
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: int
+#vampiric on damage; armors
+    RuleArmor:
+      YTAG_DAMAGE_RETURNED_AS_HP_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
+
+
 
 items:
   - type: STR_SCARE_GRENADE #Scare Gas Grenade, pink gas
@@ -2961,6 +2984,60 @@ items:
     power: 100
     damageAlter:
       RandomWound: false
+
+  - type: STR_KHORNE_BERSERKER_AXE #Khorne Berserker Axe
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.2
+    weight: 15
+    bigSprite: {mod: 40k, index: 267}
+    floorSprite: {mod: 40k, index: 150}
+    handSprite: {mod: 40k, index: 480}
+    meleeSound: {mod: 40k, index: 753} #753 Powersword miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 48}
+    power: 88
+    damageAlter: #DA CHAIN
+      RandomType: 6 #Gaussian damage
+      ToArmorPre: 0.4 #shreds armor
+      ToHealth: 0.9
+      ToWound: 0.4 #spills blood
+      ToMorale: 0.5 #demoralizing and painful
+      ToEnergy: 0.5
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+      RandomWound: false
+    damageBonus:
+      strength: 0.25
+      melee: 0.25
+    damageType: 7
+    accuracyMelee: 108
+    tuMelee: 15
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    recover: true
+    skillApplied: true
+    strengthApplied: false
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    fixedWeapon: true
+    tags: #Khorne Berserker Chainaxe is vampiric, granting them power as they spill blood for Khorne
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 8 #regains 8 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8 #regain 8% of damage dealt in HP; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
 
   - type: STR_CHAOS_CLAWS #                        DA POWER
     weight: 10
