@@ -77,79 +77,66 @@ items:
 
 armors:
   - type: STR_CHAOS_RAPTOR_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ASS_ARMOR_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ASS_ARMOR_HONOR_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV1_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV2_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 2
       MaxCoolDown: 2
   - type: STR_MKX_INC_LV3_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV4_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 4
       MaxCoolDown: 2
   - type: STR_MKX_INC_LV5_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 5
       MaxCoolDown: 1
   - type: STR_ADEPTAS_ARMORS_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ADEPTAS_ARMORCEL_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_ELYSIAN_JUMP_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_BAYONET
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_BAYONET
     tags:
       MaxFlight: 1
       MaxCoolDown: 2
   - type: STR_FELINID_JUMP_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_CLAWS
     tags:
       MaxFlight: 1
@@ -166,30 +153,52 @@ extended:
       ActivateFlight: int
   scripts:
 
+
+
+
     newTurnUnit:
     - offset: 1
       code: |
         var int maxFlight;
-        var int maxCooldown;
         var int flightTime;
-        var int cooldownTime;
-        var int duration;
         var int faction;
         var int factionturn;
+        var int currentTurn;
+
+        var int temp1;
+
+
+        unit.getTag maxFlight Tag.MaxFlight;
+
+        if eq maxFlight 0;
+          return;
+        end;
 
         unit.getFaction faction;
         battle_game.getTurnSide factionturn;
 
-        unit.getTag maxFlight Tag.MaxFlight;
-        unit.getTag maxCooldown Tag.MaxCoolDown;
+        battle_game.getTurn currentTurn;
         unit.getTag flightTime Tag.FlightTime;
-        unit.getTag cooldownTime Tag.CooldownTime;
+
+
+
 
         if and eq faction FACTION_PLAYER eq factionturn FACTION_PLAYER;
           if gt flightTime 0;
-            if and ge turn flightTime;
+            if ge turn flightTime;
               unit.setMovementType movement_type_walk;
             end;
+          end;
+          if eq currentTurn 1;
+            debug_log "unit:" unit;
+            unit.getMovementType temp1;
+            debug_log "MovementType before" temp1;
+            unit.setMovementType movement_type_walk;
+            unit.getMovementType temp1;
+            debug_log "MovementType after" temp1;
+            unit.getOriginalMovementType temp1;
+            debug_log "MovementType original" temp1;
+
           end;
         end;
         return;
@@ -216,13 +225,13 @@ extended:
           if lt turn flightTime;
             set duration flightTime;
             sub duration turn;
-            battle_game.flashMessage "Flight Duration Left: {0}" duration;
+            battle_game.flashMessage "STR_SCRIPT_FLIGHT_DURATION_LEFT" duration;
             return;
           end;
           if lt turn cooldownTime;
             set duration cooldownTime;
             sub duration turn;
-            battle_game.flashMessage "Cooldown Duration Left: {0}" duration;
+            battle_game.flashMessage "STR_SCRIPT_COOLDOWN_DURATION_LEFT" duration;
             return;
           end;
 
