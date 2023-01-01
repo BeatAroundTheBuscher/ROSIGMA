@@ -1,0 +1,250 @@
+# Requires Extended-7.0-ea2092bc5-2021-03-22
+# Updated for 7.5.8
+
+extraStrings:
+  - type: en-US
+    strings:
+      STR_PAIN_KILLER: "CURE"
+      STR_MEDI_KIT_QUANTITIES_LEFT: "Cure>{ALT}{0}{ALT}{NEWLINE}Stim>{ALT}{1}{ALT}{NEWLINE}Heal>{ALT}{2}"
+
+
+extended:
+  tags:
+    BattleUnit:
+      CURRENT_INFECTION_DAMAGE: int
+    RuleItem:
+      CAN_DO_INFECTION_DAMAGE: int
+    BattleGame:
+      RESEARCH_LEVEL_CURE: int
+
+  scripts:
+    returnFromMissionUnit: 
+      - offset: 22 # wrack unit
+        code: |
+          # intent is wrack the unit if researchLevel is 0 (-20 health, -10 everything else but psi)
+          # penalty is reduced by researchLevel; researchLevel is gained by researching specific topics
+
+          var int infectionDamage;
+          var int currentBravery; # bravery should not be reduced < 10
+          var int statsDamage;
+          var int researchLevel;
+           var int temp;
+
+          unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE; 
+          battle_game.getTag researchLevel Tag.RESEARCH_LEVEL_CURE;
+
+          set statsDamage -10;
+          if eq researchLevel 2;
+            div statsDamage 2;
+          end;
+          if eq researchLevel 3;
+            mul statsDamage 0;
+          end;
+
+          if gt infectionDamage 0;
+            soldier.Stats.getBravery currentBravery;
+            if and gt currentBravery 10 le statsDamage -10;
+              soldier.Stats.addBravery statsDamage;
+            end;
+            soldier.Stats.addFiring statsDamage;
+            soldier.Stats.addMelee statsDamage;
+            soldier.Stats.addReactions statsDamage;
+            soldier.Stats.addStamina statsDamage;
+            soldier.Stats.addStrength statsDamage;
+            soldier.Stats.addThrowing statsDamage;
+            soldier.Stats.addTimeUnits statsDamage;
+            mul statsDamage 2;
+            soldier.Stats.addHealth statsDamage;
+            mul recovery_time 2;
+          end;
+
+          return;
+
+    damageUnit: 
+      - offset: 22 # infect unit
+        code: |
+          var ptr RuleArmor armorRule;
+          var ptr RuleItem itemRule;
+          var int temp;
+          var int infectionDamage;
+
+          weapon_item.getRuleItem itemRule;
+          itemRule.getTag infectionDamage Tag.CAN_DO_INFECTION_DAMAGE;
+
+          if eq infectionDamage 0; # can't infect
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getSize temp;
+
+          if eq temp 2; # don't affect tanks
+            return;
+          end;
+
+          if gt to_health 0; # only if pierced
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE infectionDamage;
+          end;
+
+          return;
+
+
+      - offset: 23 # any damage killing the infected soldier creates a zombie # may include a check for incendiary
+        code: |
+          var int infectionDamage;
+          var int remainingHealth;
+          var ptr RuleUnit myRuleUnit;
+
+          unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE; 
+
+          if eq infectionDamage 0; # is not infected
+            return;
+          end;
+
+          unit.getHealth remainingHealth;
+          sub remainingHealth to_health;
+
+          if le remainingHealth 0; # gets killed by this attack
+            rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
+            unit.setSpawnUnit myRuleUnit;
+            unit.setSpawnUnitInstantRespawn 1;
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #untag
+          end;
+
+          return;
+
+
+    createItem: 
+      - offset: 22 # get research level (only once) # 1: research done, 2: one topic, 3: both topics
+        code: |
+          var ptr GeoscapeGame geoScape;
+          var ptr RuleResearch researchTopic;
+          var int researchLevel;
+          var int temp;
+
+
+          battle_game.getTag researchLevel Tag.RESEARCH_LEVEL_CURE;
+          if eq researchLevel 0;
+            set researchLevel 1; 
+            battle_game.getGeoscapeGame geoScape;
+
+            rules.getRuleResearch researchTopic "STR_CHRYSSALID_CORPSE";
+            geoScape.isResearched temp researchTopic;
+            if neq temp 0;
+              add researchLevel 1; 
+            end;
+
+            rules.getRuleResearch researchTopic "STR_CHRYSSALID_TERRORIST";
+            geoScape.isResearched temp researchTopic;
+            if neq temp 0;
+              add researchLevel 1;
+            end;
+
+            battle_game.setTag Tag.RESEARCH_LEVEL_CURE researchLevel;
+          end;
+          return;
+
+      - offset: 23 # set painkiller/cure quantity for medikits
+        code: |
+          var int researchLevel;
+          var int temp;
+          var ptr RuleResearch researchTopic;
+          
+          item.getPainKillerQuantity temp;
+          if eq temp 0;
+            return;
+          end;
+
+          battle_game.getTag researchLevel Tag.RESEARCH_LEVEL_CURE;
+          sub researchLevel 1; # either 0, 1, 2 as base
+          mul researchLevel 2; 
+          sub researchLevel 1; # may become a problem?
+         
+          item.setPainKillerQuantity researchLevel;
+
+          return;
+
+    newTurnUnit: 
+      - offset: 22 # damage per turn including zombification
+        code: |
+          var int infectionDamage;
+          var int remainingHealth;
+          var ptr RuleUnit myRuleUnit;
+
+          unit.getHealth remainingHealth;
+
+          if le remainingHealth 0; # dead unit
+            return;
+          end;
+
+          if neq side FACTION_PLAYER; # turn player
+            return;
+          end;
+
+          unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE; 
+
+          if eq infectionDamage 0;
+            return;
+          end;
+
+          sub remainingHealth infectionDamage;
+          if lt remainingHealth 1;
+            rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
+            unit.setSpawnUnit myRuleUnit;
+            unit.setSpawnUnitInstantRespawn 1;
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #untag
+            unit.setHealth remainingHealth; 
+            return;
+
+          end;
+          unit.setHealth remainingHealth; 
+
+          return;
+
+
+
+    recolorUnitSprite: 
+      - offset: 22 # change unit color to green so player knows who's infected
+        code: |
+          var int infectionDamage;
+
+          unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
+
+          if gt infectionDamage 0;
+            set_color new_pixel COLOR_X1_GREEN0;
+          end;
+
+          return new_pixel;
+
+
+    recolorItemSprite: 
+      - offset: 22 # change unit color to green so player knows who's infected
+        code: |
+          var int infectionDamage; # would be cool if I could get the offset so I could change specific pixels to show a number
+          var ptr BattleUnit myUnit;
+
+          if or eq blit_part blit_item_big eq blit_part blit_item_floor;
+            item.getBattleUnit myUnit;
+            if neq myUnit null;
+              myUnit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
+              if gt infectionDamage 0;
+                set_color new_pixel COLOR_X1_GREEN0;
+              end;
+            end;
+          end;
+          return new_pixel;
+
+    healUnit:
+      - offset: 22 # heal ailment with "painkillers" aka the Cure
+        code: |
+          if eq medikit_action_type medikit_action_painkiller;
+            target.setTag Tag.CURRENT_INFECTION_DAMAGE 0;
+            set painkiller_recovery 0; # not necessary but it's not a painkiller anymore
+          end;
+
+          return;
+
+
+
+
+
