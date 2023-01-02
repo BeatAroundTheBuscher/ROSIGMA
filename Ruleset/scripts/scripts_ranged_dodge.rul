@@ -1,3 +1,7 @@
+items:
+  - type: STR_GRAVDROP_DEPLOY_CHARGE
+    damageType: 10 # impact
+
 ## not a global one
 
 extended:
@@ -26,6 +30,33 @@ armors:
         var ptr RuleItem damagingItem;
         var ptr RuleDamageType damageType;
         var int isAoE;
+        var int currentStunLevel;
+        var int currentHealth;
+        var int unitDirection;
+        var int attackerDirection;
+
+        damaging_item.getRuleItem damagingItem;
+        damagingItem.getDamageType damageType;
+        damageType.getResistType temp;
+
+        # don't dodge when stunned
+        unit.getHealth currentHealth;
+        unit.getStun currentStunLevel;
+
+        if ge currentStunLevel currentHealth;
+          return power part side;
+        end;
+
+        # don't dodge on melee and psi
+        if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
+          return power part side;
+        end;
+
+        # don't dodge support skills
+        # terrain artillery shell (terror city map) do damageType 0
+        if or eq temp 0 eq temp 10; # Support or Impact (IG Support, non-IG drop deploy) damage type
+          return power part side;
+        end;
 
         unit.getRuleArmor targetArmor;
         targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
@@ -38,8 +69,6 @@ armors:
           end;
         end;
 
-        damaging_item.getRuleItem damagingItem;
-        damagingItem.getDamageType damageType;
         damageType.isAreaOfEffect isAoE;
 
         battle_game.randomRange randomNumber 1 100;
@@ -47,10 +76,21 @@ armors:
         # debug_log "dodgeChance" dodgeChance;
 
         if gt isAoE 0;
-            set randomNumber 100; # always hit
-            # debug_log "AoE";
-        else;
-            # debug_log "no AoE";
+            set randomNumber 200; # always hit # 200 > 100
+        end;
+
+
+        unit.getDirection unitDirection; # {0-7}
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4; # Offset for attacker so A+D "face the same direction"
+        mod attackerDirection 8; # (7+4) % 8 = 3 # in other words limit to {0-7}
+        sub unitDirection attackerDirection; # check if both face the same direction
+        abs unitDirection; # range should be outside of {-1, 0, +1} (extended front) to take effect
+
+        if or eq unitDirection 2 eq unitDirection 3; # extended side hit
+          muldiv dodgeChance 2 3; # multiply chance by 66 %
+        else eq unitDirection 4; # rear hit
+          muldiv dodgeChance 1 3; # multiply chance by 33 %
         end;
 
         if gt randomNumber dodgeChance;
@@ -81,138 +121,138 @@ armors:
 
 #ADEPTAS
   - type: STR_DEATHCULT_ASSASSIN_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
 
   - type: STR_ADEPTAS_ARMORB_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
 
   - type: STR_ASSASSINNEUTRAL_FEMSUIT
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
 
   - type: STR_ADEPTAS_ARMORR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
 
   - type: STR_ADEPTAS_ARMORR_FIXED_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
 
   - type: STR_ADEPTAS_ARMORS_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
   - type: STR_ADEPTAS_ARMORCEL_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 30
 
 #MARINES
   - type: STR_SCOUT_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
 
   - type: STR_SCOUTH_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_SCOUTHW_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_SCOUTHB_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_SCOUTHR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_SCOUTHY_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_SCOUTHG_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
 
   - type: STR_FLYING_SUIT_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
   - type: STR_ASS_ARMOR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
   - type: STR_ASS_ARMOR_HONOR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
 
   - type: STR_CHAOS_RAPTOR_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
 #GUARD
   - type: STR_ELYSIAN_JUMP_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
   - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
 
   - type: STR_FELINID_JUMP_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
 
   - type: STR_FELINIDGUARD_FLAK_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 0
   - type: STR_FELINIDGUARD_FLAK_ARMOR_MEDIC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 0
   - type: STR_FELINIDGUARD_CARAPACE_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
   - type: STR_FELINIDGUARD_MEDIC_CARAPACE_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
@@ -300,18 +340,18 @@ armors:
       DODGE_CHANCE: 15
 
   - type: STR_ELDAR_ARMOR2 #banshee
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
 
   - type: STR_ELDAR_ARMOR3  #Farseer
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
 
   - type: STR_ELDAR_FARSEER_ARMOR   #Player Farsser
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
 
 #INQUISITION/CHAMBER MILITANT
 
   - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_JUMPPACK
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
