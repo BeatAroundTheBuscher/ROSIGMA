@@ -1,3 +1,11 @@
+extended:
+  tags: # Remember to add tag definitions to same file as item/armor rulesets!
+    RuleItem:
+#infection system tags
+      INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+
 items:
 
   - type: STR_DIRE_DAEMONETTE_CLAWS
@@ -5,7 +13,7 @@ items:
     size: 0.2
     requires:
       - STR_ALIENS_ONLY
-    bigSprite: 2330 
+    bigSprite: 2330
     meleeSound: 2144
     meleeHitSound: 2143
     meleeAnimation: 4 #purple? or a version of webber hitAnimation: 160
@@ -132,7 +140,10 @@ items:
     invHeight: 3
     recover: false
     hiddenOnMinimap: true
-    
+    tags:
+      INFECTION_DAMAGE_PERCENT: 5 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+
   - type: STR_SLAANGOR_CLAW_GIMPIFY #For Ritualist, zombifies
     weight: 10
     size: 0.2
@@ -177,7 +188,11 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
-    
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+
+
   - type: STR_SLAANGOR_DOUBLECLAW #                        DA POWER
     weight: 10
     size: 0.2
@@ -221,7 +236,7 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
-    
+
   - type: STR_SLAANGOR_CLAW #                        DA POWER
     weight: 10
     size: 0.2
@@ -284,10 +299,10 @@ items:
     accuracyMelee: 115
     tuMelee: 12
     damageAlter: #SLAAN
-      RandomType: 2 #50-150% precision slaan 
+      RandomType: 2 #50-150% precision slaan
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
-      ToArmor: 0.1 
+      ToArmor: 0.1
       ToHealth: 0.5
       ToStun: 0.3
       ToWound: 0.4
@@ -328,7 +343,7 @@ items:
       RandomType: 2 #TFTD [50% - 150%]
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.25
-      ToArmor: 0.2 
+      ToArmor: 0.2
       ToHealth: 0.7
       ToStun: 0.3
       ToWound: 0.45
@@ -648,7 +663,7 @@ items:
     #costBuy: 3500
     costSell: 1000
     weight: 9
-    bigSprite: 2315 
+    bigSprite: 2315
     floorSprite: 2422
     handSprite: 2410
     bulletSprite: { mod: 40k, index: 20 }
@@ -658,7 +673,7 @@ items:
       - STR_AUTOGUN_SLAAN_CLIP
     accuracySnap: 60 #lower by 5
     tuSnap: 25 #lower by 7
-    confSnap: 
+    confSnap:
       shots: 4 #3 for normal chaos autogun
     snapRange: 12
     accuracyAuto: 43
@@ -702,8 +717,8 @@ items:
     costSell: 105
     weight: 3
     bigSprite: 2316
-    floorSprite: { mod: 40k, index: 2} 
-    handSprite: { mod: 40k, index: 464} 
+    floorSprite: { mod: 40k, index: 2}
+    handSprite: { mod: 40k, index: 464}
     hitSound: {mod: 40k, index: 22}
     hitAnimation: 26
     explosionSpeed: 5
@@ -804,7 +819,7 @@ items:
     invHeight: 3
     recoveryPoints: 4
     listOrder: 11805
-  - type: STR_CONSTRICTOR_WEBBER_AMMO 
+  - type: STR_CONSTRICTOR_WEBBER_AMMO
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
@@ -863,6 +878,9 @@ items:
     invHeight: 2
     listOrder: 15300
     throwRange: 16
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
 
   - type: STR_BOLTERSLAAN #BOLTER SLAANESH  10340
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
@@ -995,7 +1013,7 @@ items:
     costSell: 3000
     weight: 22
     bigSprite: 2321
-    floorSprite: 2425 
+    floorSprite: 2425
     handSprite: 2440
     bulletSprite: {mod: 40k, index: 6}
     fireSound: {mod: 40k, index: 707}
@@ -1060,7 +1078,7 @@ items:
     costSell: 5000
     weight: 25
     bigSprite: 2322
-    floorSprite: 2426 
+    floorSprite: 2426
     handSprite: 2450
     bulletSprite: {mod: 40k, index: 6}
     fireSound: {mod: 40k, index: 707}
@@ -1078,11 +1096,11 @@ items:
     confAuto: #Sonic
 
       ammoSlot: 1 #Sonic
-      name: STR_SONIC_FIRE 
+      name: STR_SONIC_FIRE
     accuracyAuto: 50
     autoRange: 7
     autoShots: 1 #Sonic
-    tuAuto: 33 
+    tuAuto: 33
     confSnap: #Double Shot
       ammoSlot: 0 #Bolter
       name: STR_BURST_SNAP_SHOT
@@ -1093,9 +1111,9 @@ items:
     tuSnap: 25
     confAimed: #AUtofire ersatz
       ammoSlot: 0 #Bolter ammo
-      name: STR_AUTOFIRE 
+      name: STR_AUTOFIRE
       shots: 3
-    tuAimed: 33 
+    tuAimed: 33
     aimRange: 12
     accuracyAimed: 60
     battleType: 1
@@ -1147,7 +1165,7 @@ items:
     weight: 3
     bigSprite: 2323
     floorSprite:  {mod: 40k, index: 2 }
-    handSprite: {mod: 40k, index: 464 } 
+    handSprite: {mod: 40k, index: 464 }
     hitSound: {mod: 40k, index: 708}
     hitAnimation: 26
     damageAlter: #DA LIGHT BOLTER SLAAN
@@ -1228,6 +1246,6 @@ items:
     invWidth: 2
     invHeight: 2
     blastRadius: 5
-    explosionHitSound: 2122 
+    explosionHitSound: 2122
     hitAnimation: 1020
     listOrder: 12152

@@ -7,6 +7,10 @@ extended:
       TAG_TIME_RETURNED_ON_KILL: int
       TAG_MORALE_RETURNED_ON_KILL: int
       TAG_STUN_RETURNED_ON_KILL: int
+#infection system tags
+      INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
 #vampiric on damage; weapons
       YTAG_DAMAGE_RETURNED_AS_HP: int
       YTAG_DAMAGE_RETURNED_AS_ENERGY: int
@@ -437,7 +441,10 @@ items:
     invHeight: 3
     recover: false
     flatRate: true
-    specialChance: 66 #high chance of zombifying its victims
+    tags:
+      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+    specialChance: 33 #high chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -782,6 +789,9 @@ items:
     clipSize: -1
     recover: false
     arcingShot: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
     specialChance: 10 #low chance of zombifying, adjusted for AoE
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -1144,7 +1154,10 @@ items:
     clipSize: -1
     recover: false
     hiddenOnMinimap: true
-    specialChance: 25 #low chance of zombifying
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+    specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -1589,7 +1602,9 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 16
       YTAG_DAMAGE_RETURNED_AS_STUN: 16
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
-    specialChance: 66 #high chance of corrupting
+      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+    specialChance: 33 #high chance of corrupting
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_MARINE_ZOMBIE_TACTICAL_M, STR_JARMORH_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_JARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_LIB_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SIGNAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_PERSONAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SCOUT_UC: STR_MARINE_ZOMBIE_SCOUT_M, STR_SCOUTH_UC: STR_MARINE_ZOMBIE_SCOUT_M,
@@ -1746,7 +1761,10 @@ items:
       RandomWound: false
     invWidth: 2
     invHeight: 3
-    specialChance: 66 #high chance of zombifying
+    tags:
+      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+    specialChance: 33 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2104,7 +2122,7 @@ items:
     invWidth: 2
     invHeight: 3
     clipSize: -1
-    specialChance: 25 #low chance of zombifying
+    specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2418,6 +2436,9 @@ items:
     }
     bulletSpeed: 15
     listOrder: 6940
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
 
   - type: STR_NURGLE_BOOM_DUMMY
     specialUseEmptyHand: true
@@ -2469,6 +2490,8 @@ items:
     defaultInventorySlot: STR_BELT
     tags:
       ITEM_IS_BOMB: 1
+    spawnUnit: STR_NURGLINGS
+    spawnUnitFaction: -1
     specialChance: 50 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -2781,3 +2804,6 @@ items:
       STR_DESERTER_SCOUT_FEMALE_ARMOR: STR_NURGLE_BOOMER,
       STR_DESERTER_GUARD_OFFICER_ARMOR: STR_NURGLE_BOOMER,
     }
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
