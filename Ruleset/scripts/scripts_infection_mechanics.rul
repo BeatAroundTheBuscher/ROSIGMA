@@ -79,6 +79,8 @@ extended:
           var int infectionDamage;
           var int infectionDamageFlat;
           var int infectionType; #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+          var int currentInfectionType; #the victim's current infection type if any
+          var int currentInfectionDamage; #the victim's current infection damage if any
           var int infectionPercentage; #what percentage of damage dealt accrues as infection
           var int infectionResist; #percentage of infection reduction; 100 = immunity
           var int infectionReduction; #flat amount infection damage is reduced by
@@ -101,9 +103,11 @@ extended:
 
           #we're not a 2x2, we've done damage and we're not immune to infection; it's time to set our other variables
           weapon_item.getRuleItem itemRule;
+          itemRule.getTag infectionType Tag.INFECTION_TYPE;
+          unit.getTag currentInfectionType Tag.CURRENT_INFECTION_TYPE;
+          unit.getTag currentInfectionDamage Tag.CURRENT_INFECTION_DAMAGE;
           itemRule.getTag infectionDamageFlat Tag.INFECTION_DAMAGE_FLAT;
           itemRule.getTag infectionPercentage Tag.INFECTION_DAMAGE_PERCENT;
-          itemRule.getTag infectionType Tag.INFECTION_TYPE;
           armorRule.getTag infectionReduction Tag.INFECTION_RESIST;
 
           #set the base amount of infection damage to equal infection damage flat
@@ -123,6 +127,17 @@ extended:
           mul infectionResist -1; #invert infectionResist
           mul infectionDamage infectionResist;
           div infectionDamage 100;
+
+          #cannot have multiple infection types; the infection with higher damage takes priority
+          if neq infectionType currentInfectionType;
+            if ge currentInfectionDamage infectionDamage; #if the old infection damage is equal to or greater than existing infection damage, abort.
+              return;
+            end;
+            set currentInfectionDamage 0; #zero out the existing infection damage as the new infection type is now overriding
+          end;
+
+          #add the existing infection damage to the new infection damage
+          add infectionDamage currentInfectionDamage;
 
           #now we actually apply the infection damage and type to the target unit
           if eq infectionDamage 0; # is not infected
