@@ -178,3 +178,88 @@ items:
   - type: STR_MCSHOTGUNPD
     armor: 200
     refNode: *STR_LAWBRINGER
+
+  - type: INV_NULL_SNIPER_VOX_DUMMY # dummy
+    categories: [STR_CAT_EQUIPMENT]
+    accuracyAimed: 150
+    accuracyMultiplier:
+      flatHundred: 1.0
+    tuAimed: 40
+    arcingShot: true
+    hidePower: false
+    weight: 10
+    bigSprite: {mod: 40k, index: 654} # 242
+    battleType: 1
+    invWidth: 3
+    invHeight: 3
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_BACK_PACK
+    compatibleAmmo:
+      - STR_SNIPER_VOX_AMMO
+    # courtesy to the multimod
+    tuLoad: 999
+    tuUnload: 999
+    tags:
+      ITEM_IS_VOX_DUMMY: 1
+
+  - type: STR_SNIPER_VOX_AMMO
+    categories: [STR_CAT_EQUIPMENT]
+    size: 0.1
+#    costBuy: 20000
+    costSell: 7500
+    weight: 0
+    bigSprite: 241
+    floorSprite: {mod: 40k, index: 1013}
+    handSprite: {mod: 40k, index: 1104}
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: 2190 # explosion animations = 8 frames
+    #explosionSpeed: 5
+    clipSize: 999 # 1
+    battleType: 2
+    armor: 200
+    listOrder: 23001
+    invWidth: 1
+    invHeight: 1
+
+  # to prevent to edit the dummy weapon and to prevent being inconsistent
+  - &STR_SNIPER_VOX_WEAPON
+    type: STR_SNIPER_VOX_AMMO # dummy for codex
+    power: 200 # airstrike
+    damageType: 3
+    damageAlter:
+      ToArmorPre: 0.15 # default is 0
+      FixRadius: 0
+      FireThreshold: 1500
+      ResistType: 1
+      ToTile: 0
+      ToItem: 0
+      IgnoreSelfDestruct: false
+
+
+  - type: STR_SNIPER_VOX_SPECIAL # the real weapon
+    refNode: *STR_SNIPER_VOX_WEAPON
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: 2200
+    fireSound: {mod: 40k, index: 711}
+    bulletSpeed: -10
+    bulletSprite: {mod: 40k, index: 22}
+    accuracyAimed: 150
+    accuracyMultiplier:
+      flatHundred: 1.0
+    tuAimed: 40
+    arcingShot: true # not sure on that
+    battleType: 1
+    minRange: 5
+    dropoff: 0
+    recover: false
+    fixedWeapon: true
+    clipSize: 9 # 9 % 2
+    # 3 = unloaded, 2 = loaded, 1 = not used, 0 = fired
+    specialIconSprite: 10
+    confAimed:
+      name: STR_SIGNAL_POSITION
+      spendPerShot: 2 # setAmmoQuantity can't be set to 0 as the item would disappear (sanity check)
+    tags:
+      ITEM_IS_VOX_WEAPON: 1
+    experienceTrainingMode: 19
