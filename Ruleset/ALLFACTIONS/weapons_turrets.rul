@@ -1,0 +1,475 @@
+items:
+  - &STR_TURRET_DEFAULT
+    type: AUX_BOLTER
+    costAuto:
+      energy: 5
+      time: 1
+    flatUse:
+      time: true
+      energy: true
+
+  - type: AUX_DOUBLE_STARCANNON
+    refNode: *STR_TURRET_DEFAULT
+
+  - type: STR_CAS_MISSILE_POD
+    costAimed:
+      time: 1
+      energy: 5
+    dropoff: 4
+    autoRange: 0
+    snapRange: 0
+    aimRange: 36
+    accuracyAuto: 0
+    accuracySnap: 0
+    accuracyAimed: 60
+    tuAuto: 0
+    tuSnap: 0
+    power: 150
+    damageType: 3
+    damageAlter:
+      ToArmorPre: 0.15 # default is 0
+      RadiusReduction: 5 # default is 10 # range is independent of RadiusReduction (= power / 20)
+      FireThreshold: 150
+      ToItem: 0 # CAS isn't allowed to destroy the Tauros Spawner
+    bigSprite: 265
+#    floorSprite: 256
+#    handSprite: 256
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0 }
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    recover: false
+    clipSize: 2
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+      ITEM_DOESNT_HURT_FRIENDS: 1
+
+  - type: STR_CAS_CANNON
+    refNode: *STR_TURRET_DEFAULT
+    dropoff: 4
+    autoRange: 18
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 80
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.95
+      ToArmor: 0.05
+      ToHealth: 1.0
+      ToStun: 0.5
+    power: 70
+    autoShots: 6
+    bigSprite: 266
+#    floorSprite: 256
+#    handSprite: 256
+    flatRate: true
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 26 }
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2138
+    bulletSpeed: 60
+    explosionSpeed: 5
+    recover: false
+    clipSize: 50
+
+  - type: STR_IMPULSOR_SHIELD_CW
+    costUse:
+      energy: 5
+      time: 1
+
+  - type: STR_STORMRAVEN_ADEPTAS_WEAPON
+    refNode: *STR_TURRET_DEFAULT
+    dropoff: 4
+    autoRange: 17
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 50
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    autoShots: 10
+  
+  - type: STR_STORMRAVEN_WEAPON
+    refNode: *STR_TURRET_DEFAULT
+  
+  - type: STR_STORMRAVENGK_WEAPON #STORMRAven TURRET
+    refNode: *STR_TURRET_DEFAULT
+
+  - type: STR_IMMOLATOR_HEAVY_FLAMER # Rhino Flamer
+    costAuto:
+      energy: 5
+      time: 1
+    dropoff: 4
+    autoRange: 15 # Mounted but considered as Vehicle in the model for range
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 50
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    maxRange: 20
+    autoShots: 4
+    arcingShot: true
+    damageAlter:
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2 #50-150% Flamer now respects armor values
+      FixRadius: 2
+      ToHealth: 1.5
+      ArmorEffectiveness: 1.0
+      ToMorale: 0.5
+
+  - type: STR_MORTAR
+    costAuto:
+      energy: 10
+      time: 1
+    dropoff: 4
+    autoRange: 18
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 60
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    clipSize: 12
+    autoShots: 3
+    accuracyMultiplier:
+      firing: 0.8
+      throwing: 0.8
+    power: 200
+    damageType: 3
+    arcingShot: true
+    minRange: 5
+
+  - type: STR_TAUROX_WEAPON
+    refNode: *STR_TURRET_DEFAULT
+    dropoff: 4
+    autoRange: 18
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 50
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    autoShots: 10
+    clipSize: -1
+
+  - &STR_MANTICORE_DEFAULT
+    type: STR_MANTICORE_R
+    costAimed:
+      energy: 5
+      time: 1
+    costSnap:
+      energy: 3
+      time: 1
+    dropoff: 4
+    autoRange: 0
+    snapRange: 27
+    aimRange: 36
+    accuracyAuto: 0
+    accuracySnap: 45
+    accuracyAimed: 110
+    tuAuto: 0
+  - type: STR_MANTICORE_L
+    refNode: *STR_MANTICORE_DEFAULT
+
+  - &STR_TARANTULA_HYPERIOS
+    type: STR_T_SEC
+    costAimed:
+      energy: 10
+      time: 1
+    accuracyAimed: 115
+    waypoints: 5
+    power: 125 # was 85
+    damageType: 3
+    clipSize: 4
+    blastRadius: 10
+  - type: STR_T_SEC2
+    refNode: *STR_TARANTULA_HYPERIOS
+
+  - type: STR_AUTOCANNON_CASTIGATOR
+    refNode: *STR_TURRET_DEFAULT
+    weight: 85
+    bigSprite: {mod: 40k, index: 640} #PD turret BIGOB
+    bulletSprite:  {mod: 40k, index: 6}
+    fireSound:  {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+    accuracyAuto: 65
+    accuracySnap: 0
+    accuracyAimed: 0
+    dropoff: 4 #ROSIGMA balance
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoRange: 24
+    snapRange: 0
+    aimRange: 0
+    autoShots: 6 #twin-linked
+    tuSnap: 0
+    tuAimed: 0
+    bulletSpeed: 50
+    fixedWeapon: true
+    recover: false
+
+  - type: STR_AUTOCANNON_TAUROX
+    refNode: *STR_TURRET_DEFAULT
+    dropoff: 4
+    autoRange: 18
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 50
+    accuracySnap: 0
+    accuracyAimed: 0
+    autoShots: 3
+    tuSnap: 0
+    tuAimed: 0
+
+  - type: AUX_BOLTERPD
+    costAuto:
+      energy: 5
+      time: 1
+    costSnap:
+      energy: 2
+      time: 1
+    costAimed:
+      energy: 3
+      time: 1
+
+  - type: STR_MULTI_LASER
+    refNode: *STR_TURRET_DEFAULT
+    dropoff: 3
+    autoRange: 19
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 35
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    autoShots: 10
+    power: 60
+    damageType: 1
+    #Not sure which one is the right one. there were two.
+    # damageAlter:
+    #   ToArmorPre: 0.3
+    #   ToHealth: 1.0
+    #   ToArmor: 0.1
+    #   ToStun: 0.0
+    #   ToWound: 0.0
+    damageAlter:
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+
+  - type: STR_LEMONRUSS_WEAPON
+    costAimed:
+      energy: 10
+      time: 1
+    costSnap:
+      energy: 5
+      time: 1
+    dropoff: 4
+    autoRange: 0
+    snapRange: 27
+    aimRange: 36
+    accuracyAuto: 0
+    accuracySnap: 60
+    accuracyAimed: 90
+    tuAuto: 0
+
+  - type: STR_LEMANRUSS_BOLTER
+    costAuto:
+      energy: 4
+      time: 1
+    costSnap:
+      energy: 2
+      time: 1
+    dropoff: 4
+    autoRange: 17
+    snapRange: 26
+    aimRange: 0
+    accuracyAuto: 50
+    accuracySnap: 75
+    accuracyAimed: 0
+    tuAimed: 0
+    power: 70
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    autoShots: 5
+
+  - type: STR_GORGON_HEAVY_FLAMER
+    refNode: *STR_TURRET_DEFAULT
+
+  # AUX_BOLTER is Razorback Turret
+  # Used for Emplacement and Arbites Chimera
+  - type: AUX_BOLTER
+    costAuto:
+      energy: 5
+      time: 1
+    flatUse:
+      time: true
+      energy: true
+    dropoff: 4
+    autoRange: 17
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 40
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    power: 70 # was 60
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    autoShots: 10
+
+  - type: STR_LASCANNON_TAUROS # done
+    dropoff: 3
+    autoRange: 0
+    snapRange: 28
+    aimRange: 37
+    accuracyAuto: 0
+    accuracySnap: 60
+    accuracyAimed: 94
+    tuAuto: 0
+#    tuSnap: 0
+#    tuAimed: 0
+    costSnap:
+      time: 1
+      energy: 5
+    costAimed:
+      time: 1
+      energy: 10
+    flatUse:
+      time: true
+      energy: true
+    power: 150 # 40k 100 # same as Sentinel
+    damageType: 4
+    damageAlter:
+      ToArmorPre: 0.3
+      ToHealth: 1.0
+      ToArmor: 0.1
+      ToStun: 0.0
+      ToWound: 0.0
+    compatibleAmmo: !remove
+     - STR_LASCAN_CLIP
+    clipSize: -1
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+
+  - type: STR_GRENADE_LAUNCHER_TAUROS # done
+    dropoff: 4
+    snapRange: 21
+    autoRange: 21 # same as snap
+    aimRange: 21 # same as snap
+    accuracyAimed: 65
+    accuracySnap: 65
+    accuracyAuto: 65
+    costAuto:
+      time: 1
+      energy: 3
+    costSnap:
+      time: 1
+      energy: 3
+    costAimed:
+      time: 1
+      energy: 3
+    flatUse:
+      time: true
+      energy: true
+    ammo:
+      0:
+        compatibleAmmo: [ STR_FRAG_GRENADE_BELT_TAUROS ]
+      1:
+        compatibleAmmo: [ STR_KRAK_GRENADE_BELT_TAUROS ]
+      2:
+        compatibleAmmo: [ STR_INC_GRENADE_BELT_TAUROS ]
+    confAimed:
+      name: STR_FRAG_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 0           #with ammo slot is used by this attack. Defulat `0
+      shots: 1
+    confSnap:
+      name: STR_KRAK_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 1
+      shots: 1
+    confAuto:
+      name: STR_INC_SHOT_TAURUS  #name of attack in action menu.
+      shots: 1
+      ammoSlot: 2
+
+  - type: STR_GRENADE_LAUNCHER_TAUROS_SMOKE
+    size: 1.0
+    weight: 85
+    bigSprite: {mod: 40k, index: 1083}
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 4}
+    ammo:
+      0:
+        compatibleAmmo: [ STR_SMOKE_GRENADE_BELT_TAUROS ]
+      1:
+        compatibleAmmo: [ STR_PHOTON_GRENADE_BELT_TAUROS ]
+    confAimed:
+      name: STR_SMOKE_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 0
+      shots: 1
+    confSnap:
+      name: STR_PHOTON_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 1
+      shots: 1
+    flatUse:
+      time: true
+      energy: true
+    battleType: 1
+    arcingShot: true
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    dropoff: 4
+    accuracyAuto: 0
+    accuracyAimed: 65
+    accuracySnap: 65
+    autoRange: 0 # same as snap
+    snapRange: 21
+    aimRange: 21 # same as snap
+    costAuto:
+      time: 0
+      energy: 0
+    costSnap:
+      time: 1
+      energy: 3
+    costAimed:
+      time: 1
+      energy: 3
