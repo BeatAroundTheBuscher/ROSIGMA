@@ -14,15 +14,59 @@ units:
 
   - type: STR_ELDAR_TURRET_P     #ELDAR TURRET       race: STR_ELDAR
     refNode: *STR_TURRET_DEFAULT
+    race: STR_ELDAR
+    stats:
+      health: 200
+      bravery: 100
+      reactions: 30
+      firing: 100
+      throwing: 0
+      strength: 90
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+    value: 25
+    intelligence: 4
+    specab: 1
+    aggression: 5
+    sniper: 50
+    spotter: 1
+    livingWeapon: true
+    capturable: false
 
-  - type: STR_CAS_MISSILE_POD_MOUNT #TARGET
-    refNode: *STR_TURRET_DEFAULT
+  - &STR_CAS_UNIT
+    type: STR_CAS_MISSILE_POD_MOUNT #TARGET
+    race: STR_CAS
+    stats:
+      tu: 100
+      stamina: 10
+      health: 50
+      bravery: 110
+      reactions: 50
+      firing: 100
+      throwing: 0
+      strength: 100
+      psiStrength: 200
+      psiSkill: 0
+      melee: 0
+    armor: STR_CAS_MISSILE_POD_ARMOR
+    standHeight: 16
+    kneelHeight: 16
+#    deathSound: 23
+    value: 0
+    intelligence: 1
+    aggression: 1
+    energyRecovery: 10
+    livingWeapon: true
+    moraleLossWhenKilled: 0
 
   - type: STR_CAS_CANNON_MOUNT #TARGET
-    refNode: *STR_TURRET_DEFAULT
+    refNode: *STR_CAS_UNIT
+    armor: STR_CAS_CANNON_ARMOR
 
   - type: STR_VALK_CANNON_MOUNT #UNIT IG rul
-    refNode: *STR_TURRET_DEFAULT
+    refNode: *STR_CAS_UNIT
+    armor: STR_VALK_CANNON_ARMOR
 
   - type: STR_IMPULSOR_SHIELD
     refNode: *STR_TURRET_DEFAULT
@@ -41,9 +85,13 @@ units:
 
   - type: STR_EXORCIST # Choir Tank
     refNode: *STR_TURRET_DEFAULT
+    race: STR_EXORCIST
+    value: 100 #was 500
 
   - type: STR_TTURRETPD # Taurox Turret
     refNode: *STR_TURRET_DEFAULT
+    stats:
+      firing: 60 # make it consistent
 
   - type: STR_WHIRLWINDPD # Whirlwind Turret
     refNode: *STR_TURRET_DEFAULT
@@ -56,12 +104,42 @@ units:
 
   - type: STR_CASTIGATOR_AC
     refNode: *STR_TURRET_DEFAULT
+    race: STR_CASTIGATOR_AC
+    stats:
+      health: 150 #higher
+      bravery: 110
+      reactions: 60 #lower
+      firing: 60
+      throwing: 0
+      strength: 60
+      psiStrength: 100
+      psiSkill: 0
+      melee: 0
+    armor: CASTIGATOR_AC_ARMOR
+    standHeight: 16
+    kneelHeight: 16
+    value: 100
+    deathSound: {mod: 40k, index: 23}
+    intelligence: 4
+    aggression: 7
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    builtInWeaponSets:
+      - - STR_AUTOCANNON_CASTIGATOR
+        - STR_AUTOCANNON_CLIP
+      - - STR_AUTOCANNON_CASTIGATOR
+        - STR_AUTOCANNON_CLIP
+      - - STR_AUTOCANNON_CASTIGATOR
+        - STR_AUTOCANNON_CLIP
 
   - type: STR_DAMOCLESPD
     refNode: *STR_TURRET_DEFAULT
 
   - type: STR_TAUROX_TURRET
     refNode: *STR_TURRET_DEFAULT
+    value: 20
+    standHeight: 24
 
   - type: STR_CHIMERAPD_TURRET
     refNode: *STR_TURRET_DEFAULT
@@ -71,15 +149,70 @@ units:
 
   - type: STR_CHIMERA_TURRET
     refNode: *STR_TURRET_DEFAULT
+    value: 20
 
   - type: STR_CHIMERA_TWIN_HB_TURRET
     refNode: *STR_TURRET_DEFAULT
+    race: STR_CHIMERA_TURRET
+    stats:
+      health: 100
+      bravery: 100
+      reactions: 30
+      firing: 100
+      throwing: 0
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+    armor: STR_CHIMERA_TWIN_HB_TURRET_ARMOR #STR_CHIMERA_PDH_ARMOR
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: { mod: 40k, index: 23 }
+    livingWeapon: true
+    builtInWeaponSets:
+      - - AUX_BOLTERPD
+      - - AUX_BOLTERPD
+      - - AUX_BOLTERPD
+    specab: 1
 
-  - type: STR_CHIMEDON_TURRET
+  - type: STR_CHIMEDON_TURRET #Chimera Battlecannon variant
     refNode: *STR_TURRET_DEFAULT
+    race: STR_CHIMEDON_TURRET #Add
+    stats:
+      health: 100 #leman rus has 200
+      bravery: 200
+      reactions: 60 #leman rus vanilla has 200
+      firing: 80 #leman rus has 120 vanilla
+      throwing: 0
+      strength: 90
+      psiStrength: 200
+      psiSkill: 0
+      melee: 0
+    armor: STR_CHIMEDON_ARMOR #LEMONRUSS_ARMOR
+    standHeight: 16
+    kneelHeight: 16
+    value: 300 #leman rus is 500
+    deathSound: { mod: 40k, index: 23 }
+    intelligence: 4
+    aggression: 7
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    specab: 1
+    builtInWeaponSets:
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
 
   - type: STR_LEMONRUSS
     refNode: *STR_TURRET_DEFAULT
+    stats:
+      reactions: 60
+      firing: 120
+    value: 30
 
   - type: STR_GORGON_HEAVY_FLAMER_FRONT_LEFT
     refNode: *STR_TURRET_DEFAULT
@@ -92,3 +225,36 @@ units:
 
   - type: STR_GORGON_HEAVY_FLAMER_BACK_RIGHT
     refNode: *STR_TURRET_DEFAULT
+
+  - type: STR_TAUROS_TURRET
+    refNode: *STR_TURRET_DEFAULT
+    value: 20
+
+  - type: STR_TAUROS_SMALL_TURRET
+    refNode: *STR_TURRET_DEFAULT
+    builtInWeaponSets:
+      - - STR_GRENADE_LAUNCHER_TAUROS
+        - STR_FRAG_GRENADE_BELT_TAUROS
+        - STR_KRAK_GRENADE_BELT_TAUROS
+        - STR_INC_GRENADE_BELT_TAUROS
+        - STR_GRENADE_LAUNCHER_TAUROS_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+      - - STR_GRENADE_LAUNCHER_TAUROS
+        - STR_FRAG_GRENADE_BELT_TAUROS
+        - STR_KRAK_GRENADE_BELT_TAUROS
+        - STR_INC_GRENADE_BELT_TAUROS
+        - STR_GRENADE_LAUNCHER_TAUROS_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+      - - STR_GRENADE_LAUNCHER_TAUROS
+        - STR_FRAG_GRENADE_BELT_TAUROS
+        - STR_KRAK_GRENADE_BELT_TAUROS
+        - STR_INC_GRENADE_BELT_TAUROS
+        - STR_GRENADE_LAUNCHER_TAUROS_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+    stats:
+      strength: 245 # 5 * 15 + 2 * 85
+    standHeight: 24
+    value: 20
