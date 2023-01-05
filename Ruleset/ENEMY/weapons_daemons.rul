@@ -1,6 +1,14 @@
 extended:
   tags: # Remember to add tag definitions to same file as item/armor rulesets!
     RuleItem:
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+#bomb/kamikazi scripts
+      ITEM_IS_FOR_BOMBER: int
+      ITEM_IS_BOMB: int
+      ITEM_IS_KAMIKAZI: int #does this blow up on death?
 #vampiric on kill; weapons
       TAG_HP_RETURNED_ON_KILL: int
       TAG_ENERGY_RETURNED_ON_KILL: int
@@ -26,6 +34,8 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
       YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
+#bomb/kamikazi scripts
+      ARMOR_IS_KAMIKAZI: int #do we check this unit for kamikazi bombs?
 
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
@@ -407,6 +417,7 @@ items:
     invHeight: 3
     recover: false
     flatRate: true
+
   - type: STR_NURGLE_WEAPON #Plaguebearer Plaguesword
     power: 100
     weight: 3
@@ -421,12 +432,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     accuracyMultiplier: #heavy melee weapon; relies on strength as well as skill
       melee: 0.7
       strength: 0.3
@@ -442,9 +448,9 @@ items:
     recover: false
     flatRate: true
     tags:
-      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
-    specialChance: 33 #high chance of zombifying its victims
+    specialChance: 20 #high chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -773,12 +779,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
       FixRadius: 3
     accuracySnap: 55
     tuSnap: 25
@@ -790,7 +791,7 @@ items:
     recover: false
     arcingShot: true
     tags:
-      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
     specialChance: 10 #low chance of zombifying, adjusted for AoE
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
@@ -1139,11 +1140,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     damageType: 8
     accuracyMelee: 80
     tuMelee: 7
@@ -1155,7 +1152,7 @@ items:
     recover: false
     hiddenOnMinimap: true
     tags:
-      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
     specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
@@ -1487,10 +1484,6 @@ items:
       RandomType: 2 #TFTD [50% - 150%]
       ToArmor: 0.3
       ToHealth: 0.3
-      ToEnergy: 0.5
-      ToStun: 0.2
-      ToWound: 0.05
-      ToMorale: 0.4
       ToTime: 0.2
       ArmorEffectiveness: 0.7
     damageType: 8
@@ -1505,6 +1498,9 @@ items:
     clipSize: -1
     recover: false
     arcingShot: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 75 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
 
   - type: STR_NEVERBORN_WEAPON #Deamon Shredder
     weight: 10
@@ -1602,9 +1598,9 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 16
       YTAG_DAMAGE_RETURNED_AS_STUN: 16
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
-      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
-    specialChance: 33 #high chance of corrupting
+    specialChance: 20 #high chance of corrupting
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_MARINE_ZOMBIE_TACTICAL_M, STR_JARMORH_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_JARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_LIB_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SIGNAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_PERSONAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SCOUT_UC: STR_MARINE_ZOMBIE_SCOUT_M, STR_SCOUTH_UC: STR_MARINE_ZOMBIE_SCOUT_M,
@@ -1754,17 +1750,13 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     invWidth: 2
     invHeight: 3
     tags:
-      INFECTION_DAMAGE_PERCENT: 33 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
-    specialChance: 33 #high chance of zombifying
+    specialChance: 20 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2105,12 +2097,8 @@ items:
       ArmorEffectiveness: 0.6 #low power but high penetration; doesn't corrode like most Nurgle plague weapons
       ToArmor: 0.05 #precision weapon; minimal armor damage
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
       ToTime: 0.5 #higher than normal TU depletion
-      ToStun: 0.3
       RandomType: 6 #gaussian
-      RandomWound: false
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
     damageBonus: #sniper weapon; power scales with accuracy
@@ -2122,6 +2110,10 @@ items:
     invWidth: 2
     invHeight: 3
     clipSize: -1
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+      ITEM_AIMED_POWER_BONUS: 30 #sniper weapon; aimed shots target vitals
     specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -2436,9 +2428,6 @@ items:
     }
     bulletSpeed: 15
     listOrder: 6940
-    tags:
-      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
 
   - type: STR_NURGLE_BOOM_DUMMY
     specialUseEmptyHand: true
@@ -2459,6 +2448,9 @@ items:
     flatRate: true
     tags:
       ITEM_IS_FOR_BOMBER: 1
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+
   - type: STR_NURGLE_BOOM #blight
     bulletSprite: {mod: 40k, index: 22}
     fireSound: 2415 #boom explosion
@@ -2475,23 +2467,21 @@ items:
       ToArmorPre: 0.5 #higher than normal plague weapons
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     battleType: 4 # grenade
     recover: false
     tuPrime: 999
-    fixedWeapon: true
+    fixedWeapon: false #has to be false so kamikazi tag and scripts work properly
     isExplodingInHands: true
     hiddenOnMinimap: true
     defaultInventorySlot: STR_BELT
-    tags:
-      ITEM_IS_BOMB: 1
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
+    tags:
+      ITEM_IS_BOMB: 1
+      ITEM_IS_KAMIKAZI: 1 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
     specialChance: 50 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -2804,6 +2794,3 @@ items:
       STR_DESERTER_SCOUT_FEMALE_ARMOR: STR_NURGLE_BOOMER,
       STR_DESERTER_GUARD_OFFICER_ARMOR: STR_NURGLE_BOOMER,
     }
-    tags:
-      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
