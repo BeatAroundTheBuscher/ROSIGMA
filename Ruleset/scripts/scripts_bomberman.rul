@@ -3,23 +3,26 @@ extended:
     RuleItem:
       ITEM_IS_FOR_BOMBER: int
       ITEM_IS_BOMB: int
+      ITEM_IS_KAMIKAZI: int #does this blow up on death?
+    RuleArmor:
+      ARMOR_IS_KAMIKAZI: int #do we check this unit for kamikazi bombs?
 
   scripts:
-    hitUnit: 
+    hitUnit:
       - new: ROSIGMA_hU_bomberman
-        offset: 43 
+        offset: 43
         code: |
           var ptr RuleItem ruleItem;
           var int temp;
           var ptre BattleItem someItem;
           var int numInventoryItems;
 
-          damaging_item.getRuleItem ruleItem; 
+          damaging_item.getRuleItem ruleItem;
           ruleItem.getTag temp Tag.ITEM_IS_FOR_BOMBER;
 
           if eq temp 1;
             attacker.getInventoryItem.size numInventoryItems;
-            # debug_log "numInventoryItems" numInventoryItems;
+            #debug_log "numInventoryItems" numInventoryItems;
             loop var i numInventoryItems;
               attacker.getInventoryItem someItem i;
               someItem.getTag temp Tag.ITEM_IS_BOMB;
@@ -34,3 +37,49 @@ extended:
           end;
 
           return power part side;
+
+    #blow up our bomb if we're killed
+    damageUnit:
+      - new: ROSIGMA_dU_bomberman_kamikazi
+        offset: 24
+        code: |
+          var ptr RuleItem ruleItem;
+          var int temp;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
+          var int remainingHealth;
+          var ptr RuleArmor armorRule;
+
+          #if our armor doesn't have the kamikazi tag, cancel out
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_IS_KAMIKAZI;
+          if neq temp 1;
+            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. No Kamikazi Armor Tag Detected";
+            return;
+          end;
+
+          unit.getHealth remainingHealth;
+          sub remainingHealth to_health;
+
+          #if we're not killed cancel out
+          if gt remainingHealth 0;
+            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. Target still alive." remainingHealth;
+            return;
+          end;
+
+          unit.getInventoryItem.size numInventoryItems;
+          #debug_log "numInventoryItems" numInventoryItems;
+          loop var i numInventoryItems;
+            unit.getInventoryItem someItem i;
+            someItem.getTag temp Tag.ITEM_IS_KAMIKAZI;
+            # unit.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
+            if eq temp 1;
+              unit.setTimeUnits 0;
+              someItem.setFuseTimer 0;
+              someItem.setFuseEnabled 1;
+              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Kamikazi Bomb Triggered. Item:" someItem;
+              return;
+            end;
+          end;
+          #debug_log "Bomberman Scripts; damageUnit, offset 24: Failed. No Kamikazi Bomb detected. Item:";
+          return;
