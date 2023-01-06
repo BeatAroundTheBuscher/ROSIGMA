@@ -9,9 +9,11 @@ extended:
     BattleUnit:
       LAST_DODGE_FRAME: int
       DODGED: int
+      UNIT_COUNTER_SUCCESSFUL_DODGES: int
     RuleArmor:
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
+      ARMOR_MAX_SUCCESSFUL_DODGES: int
 
 armors:
   - &STR_DODGE_ARMOR
@@ -34,10 +36,26 @@ armors:
         var int currentHealth;
         var int unitDirection;
         var int attackerDirection;
+        var int counterSuccessfulDodges;
+        var int maxSuccessfulDodges;
 
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
         damageType.getResistType temp;
+
+        unit.getRuleArmor targetArmor;
+        # don't dodge when counter has reached max;
+        unit.getTag counterSuccessfulDodges Tag.UNIT_COUNTER_SUCCESSFUL_DODGES;
+        targetArmor.getTag maxSuccessfulDodges Tag.ARMOR_MAX_SUCCESSFUL_DODGES;
+
+        # assume that setting it has been forgotten
+        if eq maxSuccessfulDodges 0; 
+          set maxSuccessfulDodges 1;
+        end;
+
+        if ge counterSuccessfulDodges maxSuccessfulDodges;
+          return power part side;
+        end;
 
         # don't dodge when stunned
         unit.getHealth currentHealth;
@@ -58,7 +76,6 @@ armors:
           return power part side;
         end;
 
-        unit.getRuleArmor targetArmor;
         targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
         targetArmor.getTag flightDodgeChance Tag.FLIGHT_DODGE_CHANCE;
 
@@ -102,6 +119,9 @@ armors:
         battle_game.getAnimFrame temp;
         unit.setTag Tag.LAST_DODGE_FRAME temp;
         unit.setTag Tag.DODGED 1;
+        add counterSuccessfulDodges 1;
+        unit.setTag Tag.UNIT_COUNTER_SUCCESSFUL_DODGES counterSuccessfulDodges;
+
         battle_game.flashMessage "DODGED";
         return 0 part side;
 
@@ -123,7 +143,7 @@ armors:
   - type: STR_DEATHCULT_ASSASSIN_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 40
+      DODGE_CHANCE: 100
 
   - type: STR_ADEPTAS_ARMORB_UC
     refNode: *STR_DODGE_ARMOR
