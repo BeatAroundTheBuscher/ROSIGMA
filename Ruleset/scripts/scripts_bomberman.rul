@@ -2,10 +2,11 @@ extended:
   tags:
     RuleItem:
       ITEM_IS_FOR_BOMBER: int
-      ITEM_IS_BOMB: int
-      ITEM_IS_KAMIKAZI: int #does this blow up on death?
+      ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
     RuleArmor:
-      ARMOR_IS_KAMIKAZI: int #do we check this unit for kamikazi bombs?
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
 
   scripts:
     hitUnit:
@@ -16,23 +17,36 @@ extended:
           var int temp;
           var ptre BattleItem someItem;
           var int numInventoryItems;
+          var int randomFuse;
 
           damaging_item.getRuleItem ruleItem;
           ruleItem.getTag temp Tag.ITEM_IS_FOR_BOMBER;
 
-          if eq temp 1;
-            attacker.getInventoryItem.size numInventoryItems;
-            #debug_log "numInventoryItems" numInventoryItems;
-            loop var i numInventoryItems;
-              attacker.getInventoryItem someItem i;
-              someItem.getTag temp Tag.ITEM_IS_BOMB;
-              # attacker.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
-              if eq temp 1;
-                attacker.setTimeUnits 0;
-                someItem.setFuseTimer 0;
-                someItem.setFuseEnabled 1;
-                return 0 part side;
+          if le temp 0; #if we don't have the tag, abort
+            #debug_log "Bomberman Scripts; hitUnit, offset 43: Aborted. No ITEM_IS_FOR_BOMBER Tag Detected";
+            return power part side;
+          end;
+
+          attacker.getInventoryItem.size numInventoryItems;
+          #debug_log "numInventoryItems" numInventoryItems;
+          loop var i numInventoryItems;
+            attacker.getInventoryItem someItem i;
+            someItem.getTag temp Tag.ITEM_IS_BOMB; #get the bomb timer
+            # attacker.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
+            if ge temp 1;
+              someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
+              if ge randomFuse 1;
+                battle_game.randomRange temp 0 randomFuse;
+                #debug_log "Bomberman Scripts; hitUnit, offset 43: Random fuse. Random fuse upper limit:" randomFuse;
+              else;
+                sub temp 1;
               end;
+              attacker.setTimeUnits 0;
+              someItem.setFuseTimer temp;
+              someItem.setFuseEnabled 1;
+              #debug_log "Bomberman Scripts; hitUnit, offset 43: Successful. Bomb Triggered. Bomb Item:" someItem;
+              #debug_log "Bomberman Scripts; hitUnit, offset 43: Successful. Bomb Fuse. Fuse Timer:" temp;
+              return 0 part side;
             end;
           end;
 
@@ -49,12 +63,13 @@ extended:
           var int numInventoryItems;
           var int remainingHealth;
           var ptr RuleArmor armorRule;
+          var int randomFuse;
 
           #if our armor doesn't have the kamikazi tag, cancel out
           unit.getRuleArmor armorRule;
-          armorRule.getTag temp Tag.ARMOR_IS_KAMIKAZI;
-          if neq temp 1;
-            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. No Kamikazi Armor Tag Detected";
+          armorRule.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; #we check the armor for this tag to avoid having to cycle through items every time we damage something
+          if le temp 0;
+            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. No ARMOR_IS_EXPLODE_ON_DEATH Tag Detected";
             return;
           end;
 
@@ -71,13 +86,21 @@ extended:
           #debug_log "numInventoryItems" numInventoryItems;
           loop var i numInventoryItems;
             unit.getInventoryItem someItem i;
-            someItem.getTag temp Tag.ITEM_IS_KAMIKAZI;
+            someItem.getTag temp Tag.ITEM_IS_BOMB_ON_DEATH; #get the bomb timer
             # unit.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
-            if eq temp 1;
+            if ge temp 1;
+              someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
+              if ge randomFuse 1;
+                battle_game.randomRange temp 0 randomFuse;
+                #debug_log "Bomberman Scripts; damageUnit, offset 24: Random fuse. Random fuse upper limit:" randomFuse;
+              else;
+                sub temp 1;
+              end;
               unit.setTimeUnits 0;
-              someItem.setFuseTimer 0;
+              someItem.setFuseTimer temp;
               someItem.setFuseEnabled 1;
-              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Kamikazi Bomb Triggered. Item:" someItem;
+              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Triggered. Bomb Item:" someItem;
+              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Fuse. Fuse Timer:" temp;
               return;
             end;
           end;

@@ -7,8 +7,9 @@ extended:
       ITEM_MELEE_POWER_BONUS: int
 #bomb/kamikazi scripts
       ITEM_IS_FOR_BOMBER: int
-      ITEM_IS_BOMB: int
-      ITEM_IS_KAMIKAZI: int #does this blow up on death?
+      ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
 #vampiric on kill; weapons
       TAG_HP_RETURNED_ON_KILL: int
       TAG_ENERGY_RETURNED_ON_KILL: int
@@ -35,7 +36,7 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
 #bomb/kamikazi scripts
-      ARMOR_IS_KAMIKAZI: int #do we check this unit for kamikazi bombs?
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
 
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
@@ -2479,7 +2480,7 @@ items:
     spawnUnitFaction: -1
     tags:
       ITEM_IS_BOMB: 1
-      ITEM_IS_KAMIKAZI: 1 #we blow this bomb up on death
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
     specialChance: 50 #high chance of zombifying
