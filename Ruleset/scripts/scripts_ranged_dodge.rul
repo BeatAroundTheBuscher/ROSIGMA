@@ -22,6 +22,15 @@ armors:
       DODGE_CHANCE: 50
       FLIGHT_DODGE_CHANCE: 0
     scripts:
+      newTurnUnit: |
+        var int unitFaction;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction; # don't reset on others' turns
+          unit.setTag Tag.UNIT_COUNTER_SUCCESSFUL_DODGES 0;
+        end;
+        return; 
+
       hitUnit: |
         var int temp;
         var int randomNumber;
