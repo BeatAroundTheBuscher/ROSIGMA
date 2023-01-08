@@ -14,6 +14,7 @@ extended:
     RuleArmor:
       INFECTION_RESIST: int #reduces infection damage by this as a %
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      INFECTION_RESIST_TYPE: int #bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
     BattleGame:
       RESEARCH_LEVEL_CURE: int
 
@@ -77,16 +78,17 @@ extended:
         code: |
           var ptr RuleArmor armorRule;
           var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
           var int temp;
-          var int infectionDamage;
-          var int infectionDamageFlat;
+          var int infectionDamage; #percent of damage the triggering attack inflicts
+          var int infectionDamageFlat; #flat amount of dmaage the triggering attack inflicts
           var int infectionType; #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
           var int currentInfectionType; #the victim's current infection type if any
           var int currentInfectionDamage; #the victim's current infection damage if any
           var int infectionPercentage; #what percentage of damage dealt accrues as infection
           var int infectionResist; #percentage of infection reduction; 100 = immunity
           var int infectionReduction; #flat amount infection damage is reduced by
-          var ptr BattleItem ammoItem;
+          var int infectionResistType; #bitmask; type types of infection the damaged unit resists: 0 = all, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
 
           unit.getRuleArmor armorRule;
           armorRule.getSize temp;
@@ -132,6 +134,7 @@ extended:
           unit.getTag currentInfectionType Tag.CURRENT_INFECTION_TYPE;
           unit.getTag currentInfectionDamage Tag.CURRENT_INFECTION_DAMAGE;
           armorRule.getTag infectionReduction Tag.INFECTION_RESIST;
+          armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE;
 
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, Unit:" unit;
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, infectionDamageFlat:" infectionDamageFlat;
@@ -141,19 +144,52 @@ extended:
           set infectionDamage infectionDamageFlat;
 
           #set the percentage of damage we deal as infection
-          mul infectionPercentage to_health;
-          div infectionPercentage 100;
+          muldiv infectionPercentage to_health 100;
           add infectionDamage infectionPercentage;
 
-          #subtract our infection reduction
-          sub infectionDamage infectionReduction;
-          limit_lower infectionDamage 0; #cannot go lower than 0
+          #if our infection is specific to a type, define that check if our infection resistance type applies
+          if gt infectionResistType 0;
+            set temp 0; #reset the temp var
+            #check Nurgle typing
+            if eq infectionType 1;
+              if or neq infectionResistType 1 neq infectionResistType 3 neq infectionResistType 5;
+                set temp 1; #this means we zero out infection resist and reduction at the end of this section
+                #debug_log "Infection Scripts; damageUnit, offset 22: Nurgle infection not resisted:" infectionResistType;
+              end;
+            end;
+            #check GSC typing
+            if and eq infectionType 2 neq temp 1;
+              if or neq infectionResistType 2 neq infectionResistType 3 neq infectionResistType 6;
+                set temp 1; #this means we zero out infection resist and reduction at the end of this section
+                #debug_log "Infection Scripts; damageUnit, offset 22: GSC infection not resisted:" infectionResistType;
+              end;
+            end;
+            #check Slaanesh typing
+            if and eq infectionType 3 neq temp 1;
+              if or neq infectionResistType 3 neq infectionResistType 5 neq infectionResistType 6;
+                set temp 1; #this means we zero out infection resist and reduction at the end of this section
+                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection not resisted:" infectionResistType;
+              end;
+            end;
+            #after checking our infection resist types, zero out infection resist/reduction if temp is true; i.e. we don't resist this particular infection type
+            if eq temp 1;
+              set infectionResist 0;
+              set infectionReduction 0;
+            end;
+          end;
 
-          #now apply infection resistance as a %
-          sub infectionResist 100; #invert infectionResist
-          mul infectionResist -1; #invert infectionResist
-          mul infectionDamage infectionResist;
-          div infectionDamage 100;
+          if gt infectionReduction 0; #only proceed if infectionReduction isn't null; subtract our infection reduction
+            sub infectionDamage infectionReduction;
+            limit_lower infectionDamage 0; #cannot go lower than 0
+          end;
+
+          if gt infectionResist 0; #only proceed if infectionResist isn't null; apply infection resistance as a %
+            limit_lower infectionResist 100; #cannot go lower than 0
+            limit_upper infectionResist 100; #cannot go higher than 100
+            sub infectionResist 100; #invert infectionResist
+            mul infectionResist -1; #invert infectionResist
+            muldiv infectionDamage infectionResist 100;
+          end;
 
           #cannot have multiple infection types; the infection with higher damage takes priority
           if and neq currentInfectionType 0 neq infectionType currentInfectionType;
