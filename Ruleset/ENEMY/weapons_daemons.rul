@@ -1134,14 +1134,15 @@ items:
     bigSprite:  {mod: 40k, index: 817}
     meleeSound: {mod: 40k, index: 48}
     meleeAnimation: {mod: 40k, index: 12}
-    strengthApplied: true
-    power: 50
+    power: 7 #low base power; has high strength scaling
     damageAlter: ## Plague-inflicting weapon
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.3
-      ToArmor: 0.3
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.4 #rends and erodes
+      ToArmor: 0.4
       ToHealth: 0.7
       ToTime: 0.2
+    damageBonus:
+      strength: 1.0 #brute force
     damageType: 8
     accuracyMelee: 80
     tuMelee: 7
@@ -1743,15 +1744,18 @@ items:
     battleType: 3
     damageType: 7
     clipSize: -1
-    power: 100
-    accuracyMelee: 75
+    power: 7 #low base damage due to scaling
+    accuracyMelee: 100 #it's a touch based weapon
     tuMelee: 5
-    damageAlter: #plague weapon
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.3
-      ToArmor: 0.3
+    damageAlter: ## Plague-inflicting weapon
+      ToArmorPre: 0.6 #armor is fully effective but the corroding touch quickly destroys it
       ToHealth: 0.7
       ToTime: 0.2
+    damageBonus: #touch based and magical; physical strength is irrelevant
+      psiStrength: 1.0
+    accuracyMultiplier: #touch based; being quick is just as important as martial skill for the purposes of hitting
+      reactions: 0.5
+      melee: 0.5
     invWidth: 2
     invHeight: 3
     tags:
@@ -2795,3 +2799,38 @@ items:
       STR_DESERTER_SCOUT_FEMALE_ARMOR: STR_NURGLE_BOOMER,
       STR_DESERTER_GUARD_OFFICER_ARMOR: STR_NURGLE_BOOMER,
     }
+
+  - type: STR_TZEENTCH_FIEND_CLAWS #For Tzeentch fiends
+    categories: [STR_CAT_MELEE]
+    size: 0.2
+    weight: 1
+    bigSprite:  {mod: 40k, index: 817}
+    meleeAnimation: {mod: 40k, index: 12} #claw swipe
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 754}
+    power: 59
+    damageAlter: #DA CHAIN
+      RandomType: 1 #Swingy damage
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease, but does not rip it apart
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.9
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+    damageBonus:
+      psiStrength: 0.25 #magical
+      melee: 0.25
+    damageType: 7
+    accuracyMelee: 100
+    meleeMultiplier: #light and fast weapon that utilizes reactions
+      melee: 0.75
+      reactions: 0.25
+    tuMelee: 15
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    recover: false
+    fixedWeapon: true
