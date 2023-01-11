@@ -1,19 +1,37 @@
 extended:
+  tags:
+    RuleArmor:
+      ARMOR_REINFORCEMENT_TU_PERCENT: int #this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
+
   scripts:
     createUnit:
       - new: ROSIGMA_cU_reinforcements_less_tus
         offset: 2
         code: |
+          var ptr RuleArmor armorRule;
           var int temp;
+          var int reinforcementTU;
 
           # might mess with spawner grenades but seems to be handled differently anyhow
-          # test done with the Daemonette Missle Pack created 0 TU units instead of 25 %
-          if gt turn 0; # is reinforcement of any side 
-            unit.getTimeUnitsMax temp;
-            muldiv temp 25 100;
-            unit.setTimeUnits temp;
-            # debug_log "unit: " unit;
-            # debug_log "set time units to " temp;
+          if le turn 0; #we don't care about Turn 0; abort.
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Turn 0. Aborting.";
+            return;
           end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag reinforcementTU Tag.ARMOR_REINFORCEMENT_TU_PERCENT;
+
+          if le reinforcementTU 0; #default to 25% of max TUs if this tag is unspecified
+            set reinforcementTU 25;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | No reinforcement TU tag detected. Defaulting to: " reinforcementTU;
+          else;
+            limit_upper reinforcementTU 100; #cannot exceed 100% of max TUs
+          end;
+
+          unit.getTimeUnitsMax temp;
+          muldiv temp reinforcementTU 100;
+          unit.setTimeUnits temp;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Unit: " unit;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Set time units to " temp;
 
           return;
