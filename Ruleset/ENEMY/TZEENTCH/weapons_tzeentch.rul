@@ -5,6 +5,10 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+    #Infection system vars
+      INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
 items:
   - type: STR_NIGHTLORD_HORROR
@@ -13,7 +17,7 @@ items:
     explosionHitSound: [{mod: 40k, index: 1110}, {mod: 40k, index: 1111}, {mod: 40k, index: 1112}, {mod: 40k, index: 1113}, {mod: 40k, index: 1114}, {mod: 40k, index: 1115}, {mod: 40k, index: 1116}, {mod: 40k, index: 1117}, {mod: 40k, index: 1118}, {mod: 40k, index: 1119}, {mod: 40k, index: 1120}, {mod: 40k, index: 1121}]
     # replace HitSound with something fitting like a scream? what does the lore say?
     hitAnimation: {mod: 40k, index: 96}
-    power: 50 
+    power: 50
     damageType: 3 # doesn't really matter but HE is a good preset
     damageAlter:
       RadiusReduction: 0.0
@@ -39,7 +43,7 @@ items:
 
 #Tzeentch Las weapons
   - type: STR_TZEENTCH_LASPISTOL #Nihilis Pattern High Tech laspistol
-    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
     dropoff: 5 #low drop off, precise
     requires:
@@ -79,10 +83,10 @@ items:
     invWidth: 1
     invHeight: 2
     bulletSpeed: 50
-    listOrder: 11056   
+    listOrder: 11056
 
   - type: STR_TZEENTCH_LASGUN #Nihilis Pattern High Tech lasgun
-    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
     dropoff: 4 #low drop off, precise
     requires:
@@ -122,7 +126,7 @@ items:
       - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     tags:
       ITEM_SNAP_POWER_BONUS: 10
-      ITEM_AUTO_POWER_BONUS: 10    
+      ITEM_AUTO_POWER_BONUS: 10
       ITEM_AIMED_POWER_BONUS: 20
     battleType: 1
     twoHanded: false #compact carbine, enough to use single handed
@@ -132,7 +136,7 @@ items:
     listOrder: 11056
 
   - type: STR_LONGLAS_TZEENTCH
-    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
+    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER, STR_CAT_TZEENTCH]
     size: 0.2
     dropoff: 4
     requires:
@@ -155,7 +159,7 @@ items:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     tags:
-      ITEM_SNAP_POWER_BONUS: 10 
+      ITEM_SNAP_POWER_BONUS: 10
       ITEM_AIMED_POWER_BONUS: 20
     battleType: 1
     twoHanded: true
@@ -163,10 +167,10 @@ items:
     invHeight: 3
     bulletSpeed: 50
     listOrder: 11056
-    
+
 #Tzeentch Plasma
   - type: STR_PLASMA_PISTOL_TZEENTCH #                       11210
-    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_CHAOS]
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_CHAOS, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
       - STR_PLASMA_PISTOL
@@ -197,7 +201,7 @@ items:
     listOrder: 11210
 
   - type: STR_TZ_PLASMA_GUN_TWINCORE #                 11600
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_TZEENTCH]
     size: 0.3
     dropoff: 5
     requires:
@@ -228,10 +232,10 @@ items:
     armor: 50
     attraction: 1
     listOrder: 11500
-    
-#Tzeentch Bolter weapons Inferno etc     
+
+#Tzeentch Bolter weapons Inferno etc
   - type: STR_BOLTPISTOL_TZEENTCH  #TZEENTCH BOLTER PISTOL SCOPED  10140
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
     dropoff: 5
     requires:
@@ -243,7 +247,7 @@ items:
     floorSprite: 2943
     handSprite: 2930
     bulletSprite: 6
-    fireSound: {mod: 40k, index: 707} 
+    fireSound: {mod: 40k, index: 707}
     compatibleAmmo:
       - STR_PISTOL_CLIP
       - STR_TZ_LIGHT_BOLTER_AMMO_R
@@ -261,7 +265,7 @@ items:
 
 
   - type: STR_TZEENTCH_BOLTER_LIGHT_SOLO #Light Inferno Bolter
-    categories: [STR_CAT_BOLTER]
+    categories: [STR_CAT_BOLTER, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
       - STR_LIGHT_BOLTERS
@@ -273,7 +277,7 @@ items:
     floorSprite: 2944
     handSprite: 2940
     bulletSprite: {mod: 40k, index: 6} #change
-    fireSound: {mod: 40k, index: 707} 
+    fireSound: {mod: 40k, index: 707}
     compatibleAmmo: #No EX or Mastercraft rounds
       - STR_LIGHT_BOLTER_AMMO_SHORT #Short magazines, drawback
       - STR_TZ_LIGHT_BOLTER_AMMO_R
@@ -297,7 +301,7 @@ items:
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
   - type: STR_TZEENTCH_BOLTER_LIGHT_SOLO_SCOPED
-    categories: [STR_CAT_BOLTER]
+    categories: [STR_CAT_BOLTER, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
@@ -313,7 +317,7 @@ items:
     fireSound: {mod: 40k, index: 707}
     compatibleAmmo:
       - STR_LIGHT_BOLTER_AMMO_SHORT
-      - STR_TZ_LIGHT_BOLTER_AMMO_R 
+      - STR_TZ_LIGHT_BOLTER_AMMO_R
     accuracySnap: 85 #5 points more accurate vs light ULTRA
     #accuracyAuto: 66 #No autoshot functionality
     accuracyAimed: 115 #battle rifle scoped
@@ -342,11 +346,14 @@ items:
     costSell: 250
     weight: 3
     damageAlter: #DA BOLTER TZZ
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.7 #give Rubric rounds a armor pen bonus for magic bolts
-      ToArmor: 0.1
+      RandomType: 1 #swingy random damage
+      ToArmorPre: 0.5 #melts armor on the way in
+      FireThreshold: 35 #can ignite
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.0 #does damage on the way in
       ToHealth: 0.8 #compensates a bit for the extra AP and power
-      ToStun: 0.5
+      ToWound: 0.05 #melta type injuries
+      RandomWound: false
       ToMorale: 0.5
     explosionSpeed: 5
     power: 70 #buff, chaos hellguns have 80-90 power
@@ -357,9 +364,9 @@ items:
     invWidth: 1
     invHeight: 2
     listOrder: 10460
-    
+
   - type: STR_TZ_LIGHT_BOLTER_AMMO_R #          10460                      ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
@@ -371,19 +378,21 @@ items:
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 26}
     damageAlter: #DA BOLTER TZZ
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.7 #more armor pen, magic
-      ToArmor: 0.1
-      ToHealth: 0.9 #10% less
-      ToStun: 0.5
+      RandomType: 1 #swingy random damage
+      ToArmorPre: 0.5 #melts armor on the way in
+      FireThreshold: 35 #can ignite
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.0 #does armor damage on the way in
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
+      ToWound: 0.05 #melta type injuries
+      RandomWound: false
       ToMorale: 0.5
     explosionSpeed: 5
     power: 60 #buff, chaos hellguns have 80-90 power
-    damageType: 1 #change to plasma or melta for INFERNO properties? 
+    damageType: 1 #change to plasma or melta for INFERNO properties?
     clipSize: 20
     battleType: 2
     armor: 30
     invWidth: 1
     invHeight: 2
     listOrder: 10460
-    

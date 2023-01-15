@@ -10,7 +10,7 @@ extended:
     RuleItem:
       INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
       INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     RuleArmor:
       INFECTION_RESIST: int #reduces infection damage by this as a %
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
@@ -82,7 +82,7 @@ extended:
           var int temp;
           var int infectionDamage; #percent of damage the triggering attack inflicts
           var int infectionDamageFlat; #flat amount of dmaage the triggering attack inflicts
-          var int infectionType; #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+          var int infectionType; #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
           var int currentInfectionType; #the victim's current infection type if any
           var int currentInfectionDamage; #the victim's current infection damage if any
           var int infectionPercentage; #what percentage of damage dealt accrues as infection
@@ -101,18 +101,75 @@ extended:
             return;
           end;
 
-          armorRule.getTag infectionResist Tag.INFECTION_RESIST; #if our infection resist is 100% we don't bother with the rest
-          if ge infectionResist 100;
+          armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE; #if our infection resist is 100% and applies to all infection types we're immune; abort
+          armorRule.getTag infectionResist Tag.INFECTION_RESIST;
+          if and ge infectionResist 100 le infectionResistType 0;
             return;
           end;
 
-          #we're not a 2x2, we've done damage and we're not immune to infection; it's time to set our other variables
+          #we're not a 2x2, we've done damage and we're not totally immune to infection; it's time to set our other variables
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
+          #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, Target:" unit;
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, Weapon:" itemRule;
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, Ammo:" ammoItem;
-
           ammoItem.getTag infectionType Tag.INFECTION_TYPE;
+          if le infectionType 0; #if we still have no infection type, check the weapon
+            weapon_item.getTag infectionType Tag.INFECTION_TYPE;
+            if le infectionType 0; #if we *still* have no infection type, cancel out
+              #debug_log "Infection Scripts; damageUnit, offset 22: No infection type detected; aborting.";
+              return;
+            end;
+          end;
+
+          #if our infection is specific to a type, define that check if our infection resistance type applies
+          if gt infectionResistType 0;
+            set temp 0; #reset the temp var
+            if eq infectionType 1; #check Nurgle typing
+              if or eq infectionResistType 1 eq infectionResistType 3 eq infectionResistType 5 eq infectionResistType 9;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Nurgle infection resisted:" infectionResistType;
+              else or eq infectionResistType 7 eq infectionResistType 11 eq infectionResistType 13;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Nurgle infection resisted:" infectionResistType;
+              end;
+            else eq infectionType 2; #check GSC typing
+              if or eq infectionResistType 2 eq infectionResistType 3 eq infectionResistType 6 eq infectionResistType 10;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: GSC infection resisted:" infectionResistType;
+              else or eq infectionResistType 7 eq infectionResistType 11 eq infectionResistType 14;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: GSC infection resisted:" infectionResistType;
+              end;
+            else eq infectionType 3; #check Slaanesh typing
+              if or eq infectionResistType 4 eq infectionResistType 5 eq infectionResistType 6 eq infectionResistType 12;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection resisted:" infectionResistType;
+              else or eq infectionResistType 7 eq infectionResistType 13 eq infectionResistType 14;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection resisted:" infectionResistType;
+              end;
+            else eq infectionType 4; #check Tzeentch typing
+              if or eq infectionResistType 8 eq infectionResistType 9 eq infectionResistType 10 eq infectionResistType 12;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection resisted:" infectionResistType;
+              else or  eq infectionResistType 11 eq infectionResistType 13 eq infectionResistType 14;
+                set temp 1;
+                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection resisted:" infectionResistType;
+              end;
+            end;
+            #after checking our infection resist types, zero out infection resist/reduction if temp is false; i.e. we don't resist this particular infection type
+            if neq temp 1;
+              set infectionResist 0;
+              set infectionReduction 0;
+            end;
+          end;
+
+          if ge infectionResist 100; #again, don't bother proceeding if we have 100% resistance to this infection type
+            #debug_log "Infection Scripts; damageUnit, offset 22: Immune to detected infection type; aborting.";
+            return;
+          end;
+
           ammoItem.getTag infectionDamageFlat Tag.INFECTION_DAMAGE_FLAT;
           ammoItem.getTag infectionPercentage Tag.INFECTION_DAMAGE_PERCENT;
 
@@ -123,20 +180,6 @@ extended:
           add infectionPercentage temp;
           limit_upper infectionPercentage 100; #for now, cap infection percent at 100%
 
-          if le infectionType 0; #if we still have no infection type, check the weapon
-            weapon_item.getTag infectionType Tag.INFECTION_TYPE;
-            if le infectionType 0; #if we still have no infection type, cancel out
-              #debug_log "Infection Scripts; damageUnit, offset 22: No infection type detected; aborting.";
-              return;
-            end;
-          end;
-
-          unit.getTag currentInfectionType Tag.CURRENT_INFECTION_TYPE;
-          unit.getTag currentInfectionDamage Tag.CURRENT_INFECTION_DAMAGE;
-          armorRule.getTag infectionReduction Tag.INFECTION_RESIST;
-          armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE;
-
-          #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, Unit:" unit;
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, infectionDamageFlat:" infectionDamageFlat;
           #debug_log "Infection Scripts; damageUnit, offset 22: Initialize, infectionPercentage:" infectionPercentage;
 
@@ -147,51 +190,24 @@ extended:
           muldiv infectionPercentage to_health 100;
           add infectionDamage infectionPercentage;
 
-          #if our infection is specific to a type, define that check if our infection resistance type applies
-          if gt infectionResistType 0;
-            set temp 0; #reset the temp var
-            #check Nurgle typing
-            if eq infectionType 1;
-              if or neq infectionResistType 1 neq infectionResistType 3 neq infectionResistType 5;
-                set temp 1; #this means we zero out infection resist and reduction at the end of this section
-                #debug_log "Infection Scripts; damageUnit, offset 22: Nurgle infection not resisted:" infectionResistType;
-              end;
-            end;
-            #check GSC typing
-            if and eq infectionType 2 neq temp 1;
-              if or neq infectionResistType 2 neq infectionResistType 3 neq infectionResistType 6;
-                set temp 1; #this means we zero out infection resist and reduction at the end of this section
-                #debug_log "Infection Scripts; damageUnit, offset 22: GSC infection not resisted:" infectionResistType;
-              end;
-            end;
-            #check Slaanesh typing
-            if and eq infectionType 3 neq temp 1;
-              if or neq infectionResistType 3 neq infectionResistType 5 neq infectionResistType 6;
-                set temp 1; #this means we zero out infection resist and reduction at the end of this section
-                #debug_log "Infection Scripts; damageUnit, offset 22: Slaanesh infection not resisted:" infectionResistType;
-              end;
-            end;
-            #after checking our infection resist types, zero out infection resist/reduction if temp is true; i.e. we don't resist this particular infection type
-            if eq temp 1;
-              set infectionResist 0;
-              set infectionReduction 0;
-            end;
-          end;
-
+          armorRule.getTag infectionReduction Tag.INFECTION_RESIST;
           if gt infectionReduction 0; #only proceed if infectionReduction isn't null; subtract our infection reduction
             sub infectionDamage infectionReduction;
             limit_lower infectionDamage 0; #cannot go lower than 0
           end;
 
           if gt infectionResist 0; #only proceed if infectionResist isn't null; apply infection resistance as a %
-            limit_lower infectionResist 100; #cannot go lower than 0
+            limit_lower infectionResist 0; #cannot go lower than 0
             limit_upper infectionResist 100; #cannot go higher than 100
             sub infectionResist 100; #invert infectionResist
             mul infectionResist -1; #invert infectionResist
             muldiv infectionDamage infectionResist 100;
           end;
 
-          #cannot have multiple infection types; the infection with higher damage takes priority
+          #cannot have multiple infection types; the infection with higher damage takes priority; set appropriate variables
+          unit.getTag currentInfectionType Tag.CURRENT_INFECTION_TYPE;
+          unit.getTag currentInfectionDamage Tag.CURRENT_INFECTION_DAMAGE;
+
           if and neq currentInfectionType 0 neq infectionType currentInfectionType;
             #debug_log "Infection Scripts; damageUnit, offset 22: InfectionType Mismatch; currentInfectionType:" currentInfectionType;
             #debug_log "Infection Scripts; damageUnit, offset 22: InfectionType Mismatch; infectionType:" infectionType;
@@ -236,51 +252,49 @@ extended:
 
           #set infection thresholds
           unit.getTag infectionType Tag.CURRENT_INFECTION_TYPE;
-          set INFECTION_LOW_THRESHOLD 10;
-          set INFECTION_MID_THRESHOLD 30;
-          set INFECTION_HIGH_THRESHOLD 60;
+          set INFECTION_LOW_THRESHOLD 20;
+          set INFECTION_MID_THRESHOLD 40;
+          set INFECTION_HIGH_THRESHOLD 80;
 
           unit.getHealth remainingHealth;
           sub remainingHealth to_health;
 
           if le remainingHealth 0; # gets killed by this attack
-            #if Nurgle
             #debug_log "Infection Scripts; damageUnit, offset 23: Fatal Damage Incurred; Remaining Health:" remainingHealth;
-            if eq infectionType 1;
-              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
-                rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
-              end;
-              if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
-                rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
-              end;
-              if and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Plaguebearer
-                rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
-              end;
-              if gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Midwife of Nurgle
-                rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
-              end;
+          if eq infectionType 1; #if Nurgle
+            if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+              rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
+            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
+              rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
+            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Plaguebearer
+              rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
+            else; #very high level infection; spawns Midwife of Nurgle
+              rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
             end;
+          else eq infectionType 2; #if GSC
+            rules.getRuleUnit myRuleUnit "STR_GSC_ZOMBIE"; #only basic zombies
+          else eq infectionType 3; #if Slaanesh
+            if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+              rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
+            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Lesser Daemonette
+              rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
+            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Daemonette
+              rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
+            else; #very high level infection; spawns Dire Daemonette
+              rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
+            end;
+          else eq infectionType 4; #if Tzeentch
+            if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+              rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+              rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+              rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
+            else; #very high level infection
+              rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
+            end;
+          end;
 
-            #if GSC
-            if eq infectionType 2;
-              rules.getRuleUnit myRuleUnit "STR_GSC_ZOMBIE"; #only basic zombies
-            end;
-
-            #if Slaanesh
-            if eq infectionType 3;
-              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
-                rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
-              end;
-              if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Lesser Daemonette
-                rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
-              end;
-              if and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Daemonette
-                rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
-              end;
-              if gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Dire Daemonette
-                rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
-              end;
-            end;
           #debug_log "Infection Scripts; damageUnit, offset 23: Spawn Unit:" myRuleUnit;
           unit.setSpawnUnit myRuleUnit;
           unit.setSpawnUnitInstantRespawn 1;
@@ -328,45 +342,43 @@ extended:
           sub remainingHealth infectionDamage;
           if le remainingHealth 0; # gets killed
 
-            set INFECTION_LOW_THRESHOLD 10;
-            set INFECTION_MID_THRESHOLD 30;
-            set INFECTION_HIGH_THRESHOLD 60;
+            set INFECTION_LOW_THRESHOLD 20;
+            set INFECTION_MID_THRESHOLD 40;
+            set INFECTION_HIGH_THRESHOLD 80;
 
             #debug_log "Infection Scripts; newTurnUnit, offset 22: Fatal Damage Incurred; Remaining Health:" remainingHealth;
             #if Nurgle
             if eq infectionType 1;
               if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
-              end;
-              if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
-              end;
-              if and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Plaguebearer
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Plaguebearer
                 rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
-              end;
-              if gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Midwife of Nurgle
+              else gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Midwife of Nurgle
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
               end;
-            end;
-
-            #if GSC
-            if eq infectionType 2;
+            else eq infectionType 2; #if GSC
               rules.getRuleUnit myRuleUnit "STR_GSC_ZOMBIE"; #only basic zombies
-            end;
-
-            #if Slaanesh
-            if eq infectionType 3;
+            else eq infectionType 3; #if Slaanesh
               if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
                 rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
-              end;
-              if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Lesser Daemonette
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Lesser Daemonette
                 rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
-              end;
-              if and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Daemonette
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Daemonette
                 rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
-              end;
-              if gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Dire Daemonette
+              else gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Dire Daemonette
                 rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
+              end;
+            else eq infectionType 4; #if Tzeentch
+              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
+              else and gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection
+                rules.getRuleUnit myRuleUnit "STR_PINK_HORROR";
               end;
             end;
 
@@ -442,12 +454,12 @@ extended:
           if gt infectionDamage 0;
             if eq infectionType 1;
               set_color new_pixel COLOR_X1_GREEN0; #Nurgle infection
-            end;
-            if eq infectionType 2;
+            else eq infectionType 2;
               set_color new_pixel COLOR_X1_PURPLE0; #GSC infection
-            end;
-            if eq infectionType 3;
+            else eq infectionType 3;
               set_color new_pixel COLOR_X1_PURPLE1; #Slaanesh infection
+            else eq infectionType 4;
+              set_color new_pixel COLOR_X1_BLUE1; #Tzeentch infection
             end;
           end;
 
@@ -470,12 +482,12 @@ extended:
               if gt infectionDamage 0;
                 if eq infectionType 1;
                   set_color new_pixel COLOR_X1_GREEN0; #Nurgle infection
-                end;
-                if eq infectionType 2;
+                else eq infectionType 2;
                   set_color new_pixel COLOR_X1_PURPLE0; #GSC infection
-                end;
-                if eq infectionType 3;
+                else eq infectionType 3;
                   set_color new_pixel COLOR_X1_PURPLE1; #Slaanesh infection
+                else eq infectionType 4;
+                  set_color new_pixel COLOR_X1_BLUE1; #Tzeentch infection
                 end;
               end;
             end;
