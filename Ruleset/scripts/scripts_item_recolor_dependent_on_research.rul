@@ -1,0 +1,48 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_SPRITE_COLOR: int
+      ITEM_NEW_COLOR: int
+
+items:
+  - &STR_ITEM_CHANGE_COLOR
+    type: STR_AUTOGUN
+    tags:
+      ITEM_SPRITE_COLOR: 4
+      ITEM_NEW_COLOR: 15
+    scripts:
+      recolorItemSprite: |
+        var ptr RuleItem weaponRuleset;
+        var int newWeaponColor;
+        var int oldWeaponColor;
+        var int color;
+        var int temp;
+        var ptr GeoscapeGame geoScape;
+        var ptr RuleResearch researchTopic;
+
+        battle_game.getGeoscapeGame geoScape;
+        rules.getRuleResearch researchTopic "STR_ARBITES";
+        geoScape.isResearched temp researchTopic;
+
+        if eq temp 1;
+
+          item.getRuleItem weaponRuleset;
+          weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_COLOR;
+          if neq newWeaponColor 0;
+            weaponRuleset.getTag oldWeaponColor Tag.ITEM_SPRITE_COLOR;
+            get_color color new_pixel;
+
+            if eq color oldWeaponColor;
+              set_color new_pixel newWeaponColor;
+            end;
+          end;
+        end;
+
+        return new_pixel;
+
+
+  - type: STR_AUTOPISTOL
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: STR_LASER_RIFLEG
+    refNode: *STR_ITEM_CHANGE_COLOR
