@@ -6,6 +6,8 @@ extended:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+      ARMOR_IS_EXPLODE_ON_DEATH: int #used for bomberman scripts
+
 
 armors:
 
@@ -533,6 +535,7 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 20
+    psiVision: 5 #daemonic psi sense
     spriteSheet: TZEENTCH_LESSER_DAEMON.PCK
     spriteInv: TZEENTCH_LESSER_DAEMON_INV.SPK
     corpseBattle:
@@ -545,18 +548,23 @@ armors:
     drawingRoutine: 0
     damageModifier: #TZ DAEMON ARMOR
       - 1.0 #none
-      - 1.2 #AP
-      - 1.0 #FLAMES
-      - 0.7 #HE
-      - 1.2 #LASCANON
-      - 1.2 #PLASMA
+      - 1.2 #AP; vulnerable to physical damage
+      - 0.5 #FLAMES; resistant to energy/heat
+      - 1.3 #HE; vulnerable to physical damage
+      - 0.6 #LASCANON; resistant to energy/heat
+      - 0.7 #PLASMA; resistant to energy/heat
       - 1.0 #STUN
-      - 1.4 #MELEE
+      - 1.4 #MELEE; vulnerable to physical damage
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.4 #MELTA
+      - 0.8 #MELTA; resistant to energy/heat
     loftempsSet: [ 3 ]
+    painImmune: true #daemon; pain immune
+    zombiImmune: true #daemon; zombie immune
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+
 
   - type: STR_TZCULTIST_FEM_ARMOR
     visibilityAtDay: 40
@@ -962,12 +970,10 @@ armors:
     loftempsSet: [ 3 ]
 
   - type: STR_PINKHORROR_ARMOR                               #SLAANESH REGULAR
-    tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
-      ARMOR_ENERGY_SHIELD_DECAY: 50
     visibilityAtDay: 40
     visibilityAtDark: 30
     heatVision: 30
+    psiVision: 5 #daemonic psi sense
     spriteSheet: pinkhorror_bs.PCK
     spriteInv: PINKHORROR_INV.SPK
     allowInv: false
@@ -978,27 +984,35 @@ armors:
     rearArmor: 15
     underArmor: 15
     drawingRoutine: 4
-    damageModifier: #DAEMON ARMOR
+    specialWeapon: STR_TZEENTCH_FIEND_CLAWS
+    damageModifier: #DAEMON ARMOR; Blue Horror resists physical, Pink Horror resists energy
       - 1.0 #none
-      - 0.9 #AP
-      - 1.2 #FLAMES
-      - 0.9 #HE
-      - 1.0 #LASCANON
-      - 1.0 #PLASMA
+      - 1.2 #AP
+      - 0.5 #FLAMES
+      - 1.2 #HE
+      - 0.6 #LASCANON
+      - 0.7 #PLASMA
       - 0.8 #STUN
       - 1.3 #MELEE
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.2 #MELTA
+      - 0.8 #MELTA
     loftempsSet: [ 3 ]
-  - type: STR_BLUEHORROR_ARMOR                               #SLAANESH REGULAR
+    painImmune: true #daemon; pain immune
+    zombiImmune: true #daemon; zombie immune
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       ARMOR_ENERGY_SHIELD_DECAY: 50
+      INFECTION_RESIST: 100 #infection immune
+      ARMOR_IS_EXPLODE_ON_DEATH: 1 #for triggering the Blue Horror on-death spawn grenades
+
+
+  - type: STR_BLUEHORROR_ARMOR                               #SLAANESH REGULAR
     visibilityAtDay: 40
     visibilityAtDark: 30
     heatVision: 30
+    psiVision: 5 #daemonic psi sense
     spriteSheet: bluehorror_bs.PCK
     spriteInv: BLUEHORROR_INV.SPK #create in extrasprites
     allowInv: false
@@ -1009,17 +1023,24 @@ armors:
     rearArmor: 15
     underArmor: 10
     drawingRoutine: 4
-    damageModifier: #DAEMON ARMOR
+    specialWeapon: STR_TZEENTCH_FIEND_CLAWS
+    damageModifier: #DAEMON ARMOR; Blue Horror resists physical, Pink Horror resists energy
       - 1.0 #none
-      - 0.9 #AP
-      - 1.2 #FLAMES
-      - 0.9 #HE
-      - 1.0 #LASCANON
-      - 1.0 #PLASMA
+      - 0.5 #AP
+      - 1.1 #FLAMES
+      - 0.6 #HE
+      - 1.2 #LASCANON
+      - 1.3 #PLASMA
       - 0.8 #STUN
-      - 1.3 #MELEE
+      - 0.7 #MELEE
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.2 #MELTA
+      - 1.4 #MELTA
     loftempsSet: [ 2 ] #Lore wise hard to hit due to magical shenanigans and writhing body
+    painImmune: true #daemon; pain immune
+    zombiImmune: true #daemon; zombie immune
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+      INFECTION_RESIST: 100 #infection immune

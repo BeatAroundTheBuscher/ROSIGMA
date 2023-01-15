@@ -4,6 +4,9 @@ extended:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      INFECTION_RESIST_TYPE: int #bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC
 
 armors:
   - type: STR_IRON_WARRIOR_ARMOR
@@ -107,7 +110,7 @@ armors:
     rearArmor: 95
     underArmor: 120
     specialWeapon: AUX_MORTAR #cyclone
-    moveSound: {mod: 40k, index: 700} 
+    moveSound: {mod: 40k, index: 700}
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -121,8 +124,8 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.1 #MELTA
-    loftempsSet: [ 5 ] 
-    
+    loftempsSet: [ 5 ]
+
   - type: STR_IRON_WARRIOR_WARSMITH_ARMOR
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 20
@@ -155,7 +158,7 @@ armors:
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
-    
+
   - type: OBLITERATOR_ARMOR #
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -181,7 +184,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 5 ]
-         
+
 
   - type: STR_MUTON_ARMOR0 #REGULAR
     visibilityAtDay: 40
@@ -527,7 +530,7 @@ armors:
       - 1.2 #MELTA
 
 
-  - type: STR_CHAOS_MARINE_LEADER_ARMOR 
+  - type: STR_CHAOS_MARINE_LEADER_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 30
@@ -553,7 +556,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 4 ]
-    
+
   - type: STR_BLACK_LEGION_CSM_ARMOR #ELITE TIER 5 CSM
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -582,7 +585,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 4 ]
-    
+
   - type: STR_CULTIST_SQUATS_ARMOR
     visibilityAtDay: 25
     visibilityAtDark: 23 #Darkvision
@@ -609,7 +612,7 @@ armors:
       - 0.0 #SMOKE
       - 0.5 #IMPACT
       - 1.1 #MELTA
-    loftempsSet: [ 3 ] 
+    loftempsSet: [ 3 ]
 
   - type: STR_CULTIST_SQUATS_ARMOR_LEADER
     visibilityAtDay: 25
@@ -637,7 +640,7 @@ armors:
       - 0.0 #SMOKE
       - 0.5 #IMPACT
       - 1.1 #MELTA
-    loftempsSet: [ 3 ] 
+    loftempsSet: [ 3 ]
 
   - type: STR_TRAITOR_SQUATS_ARMOR
     visibilityAtDay: 25
@@ -665,7 +668,7 @@ armors:
       - 0.0 #SMOKE
       - 0.5 #IMPACT
       - 1.1 #MELTA
-    loftempsSet: [ 3 ] 
+    loftempsSet: [ 3 ]
 
   - type: STR_CHAOS_SQUATS_ARMOR
     visibilityAtDay: 40
@@ -693,7 +696,7 @@ armors:
       - 0.0 #SMOKE
       - 0.5 #IMPACT
       - 1.1 #MELTA
-    loftempsSet: [ 3 ] 
+    loftempsSet: [ 3 ]
 
   - type: STR_CHAOS_SQUATS_ARMOR_HEAVY
     visibilityAtDay: 40
@@ -752,8 +755,8 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
-    loftempsSet: [ 4 ] 
-    
+    loftempsSet: [ 4 ]
+
   - type: STR_CHAOS_SQUATS_ARMOR_LEADER
     visibilityAtDay: 40
     visibilityAtDark: 25 #Darkvision
@@ -786,7 +789,7 @@ armors:
   - type: STR_ALPHA_ARMOR #REGULAR
     visibilityAtDay: 40
     visibilityAtDark: 32
-    camouflageAtDay: 10 
+    camouflageAtDay: 10
     camouflageAtDark: 5
     antiCamouflageAtDay: 15
     antiCamouflageAtDark: 10
@@ -816,11 +819,11 @@ armors:
       - 1.0 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 3 ] #stealth tech bonus
-    
+
   - type: STR_ALPHA_CORVUS_ARMOR #Beakie
     visibilityAtDay: 40
     visibilityAtDark: 32
-    camouflageAtDay: 10 
+    camouflageAtDay: 10
     camouflageAtDark: 5
     antiCamouflageAtDay: 15
     antiCamouflageAtDark: 10
@@ -849,7 +852,7 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.3 #MELTA
-    loftempsSet: [ 3 ] #stealth tech bonus  
+    loftempsSet: [ 3 ] #stealth tech bonus
 
   - type: STR_DEATHSKULL_ORK_KAP_ARMOR_ALPHA
     visibilityAtDay: 40
@@ -858,7 +861,7 @@ armors:
     spriteSheet: ALPHADEATHSKULL_KAPBOYZ_BS.PCK
     spriteInv: DEATHSKULL_KAPBOYZ_INV.SPK
     corpseBattle:
-      - STR_DEATHSKULL_ORK_KAP_CORPSE 
+      - STR_DEATHSKULL_ORK_KAP_CORPSE
     frontArmor: 20 #lower
     sideArmor: 20
     rearArmor: 10
@@ -877,7 +880,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    
+
   - type: STR_ALPHA_ARMOR_ULTRA #Ultramarine disguise
     visibilityAtDay: 40
     visibilityAtDark: 32
@@ -909,11 +912,11 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
-    loftempsSet: [ 4 ]    
+    loftempsSet: [ 4 ]
   - type: STR_ALPHA_SCOUT_ARMOR_ULTRA #Ultramarine scout disguise
     visibilityAtDay: 40
     visibilityAtDark: 30
-    camouflageAtDay: 10 
+    camouflageAtDay: 10
     camouflageAtDark: 5
     antiCamouflageAtDay: 20
     antiCamouflageAtDark: 10
@@ -977,7 +980,7 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 4 ]
 
-  - type: STR_ALPHA_DEV_ARMOR_ULTRA 
+  - type: STR_ALPHA_DEV_ARMOR_ULTRA
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 15
@@ -1046,7 +1049,7 @@ armors:
   - type: STR_ALPHA_ARMOR_DAEMONETTE     #SEDUCTRESS
     visibilityAtDay: 40
     visibilityAtDark: 30
-    camouflageAtDay: 12 
+    camouflageAtDay: 12
     camouflageAtDark: 5
     antiCamouflageAtDay: 15
     antiCamouflageAtDark: 10
@@ -1083,7 +1086,7 @@ armors:
       UNIT_IMMOBILIZED_UNTIL_MISSION_TIMER: 1
     visibilityAtDay: 40
     visibilityAtDark: 30
-    camouflageAtDay: 6 
+    camouflageAtDay: 6
     camouflageAtDark: 2
     antiCamouflageAtDay: 15
     antiCamouflageAtDark: 10
@@ -1114,7 +1117,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    
+
   - type: STR_NIGHTLORD_CSM_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30 #Nightlord bonus
@@ -1171,7 +1174,7 @@ armors:
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
-    
+
   - type: STR_NIGHTLORD_RAPTOR_ARMOR0
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -1222,7 +1225,7 @@ armors:
     underArmor: 70
     drawingRoutine: 0
     movementType: 1
-    #specialWeapon: STR_NIGHT_LORDS_PANIC 
+    #specialWeapon: STR_NIGHT_LORDS_PANIC
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.85 #AP
@@ -1240,11 +1243,11 @@ armors:
   - type: STR_NIGHTLORDS_WARPTALON_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
-    camouflageAtDay: 12 
+    camouflageAtDay: 12
     camouflageAtDark: 5
     antiCamouflageAtDay: -10
     antiCamouflageAtDark: -10
-    heatVision: 33    
+    heatVision: 33
     spriteSheet: warptalon_nightlord_bs.PCK
     spriteInv: warptalon_nightlord_inv.SPK
     corpseBattle:
@@ -1277,7 +1280,7 @@ armors:
     antiCamouflageAtDark: 10
     heatVision: 30
     spriteSheet: GREYK_ALPHA_TRANSFORMBS.PCK
-    spriteInv: GKINV.SPK 
+    spriteInv: GKINV.SPK
     corpseBattle:
       - STR_GREYK_CORPSE
     corpseGeo: STR_ALPHA_LEGION_CORPSE
@@ -1301,4 +1304,18 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
-    loftempsSet: [ 3 ]   
+    loftempsSet: [ 3 ]
+
+  - type: MUTON_ARMORTZEENTCH                                     #TZEENTCH REGULAR
+    painImmune: true #Rubric Marines are dust
+    bleedImmune: true #Rubric Marines are dust
+    zombiImmune: true #Rubric Marines are dust
+    tags:
+      INFECTION_RESIST: 100 #Rubric Marines are dust
+
+  - type: MUTON_ARMORHAVOCT #HAVOC                                #TZEENTCH
+    painImmune: true #Rubric Marines are dust
+    bleedImmune: true #Rubric Marines are dust
+    zombiImmune: true #Rubric Marines are dust
+    tags:
+      INFECTION_RESIST: 100 #Rubric Marines are dust
