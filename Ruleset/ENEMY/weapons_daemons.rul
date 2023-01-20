@@ -6,7 +6,6 @@ extended:
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
 #bomb/kamikazi scripts
-      ITEM_IS_FOR_BOMBER: int
       ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
@@ -37,6 +36,8 @@ extended:
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
 #bomb/kamikazi scripts
       ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
+      ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+
 
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
@@ -1408,6 +1409,7 @@ items:
     blastRadius: 1
     damageAlter: #DA SPIT
       RandomType: 2 #TFTD [50% - 150%]
+      ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.3
       ToTime: 0.2
@@ -2357,28 +2359,6 @@ items:
     }
     bulletSpeed: 15
     listOrder: 6940
-
-  - type: STR_NURGLE_BOOM_DUMMY
-    specialUseEmptyHand: true
-    fixedWeapon: true
-    recover: false
-    meleeSound: 2413 #roar activation noise
-    meleeHitSound: { mod: 40k, index: 0 }
-    power: 200 # for the AI to pick this
-    meleeAnimation: { mod: 40k, index: 0 }
-    damageType: 7
-    accuracyMelee: 200
-    tuMelee: 1
-    clipSize: -1
-    battleType: 3
-    meleeMultiplier:
-      melee: 0.0
-      flatHundred: 1.0
-    flatRate: true
-    tags:
-      ITEM_IS_FOR_BOMBER: 1
-      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_NURGLE_BOOM #blight
     bulletSprite: {mod: 40k, index: 22}
