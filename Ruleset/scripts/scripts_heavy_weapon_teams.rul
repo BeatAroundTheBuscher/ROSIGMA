@@ -6,7 +6,8 @@ extended:
       ITEM_HAS_BIPOD: int
       ITEM_IS_TOOL: int
     BattleUnit:
-      UNIT_ENERGY_BEFORE_DEPLOYED: int # used as bool and integer
+      UNIT_ENERGY_BEFORE_DEPLOYED: int
+      UNIT_IS_DEPLOYED: int
       UNIT_GOT_TOOL_XP: int
 
   scripts:
@@ -20,45 +21,43 @@ extended:
           var int strength;
 
           weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
-          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED; # if it's 0 then the unit hasn't deployed yet
+          unit.getTag deploy Tag.UNIT_IS_DEPLOYED; 
           weapon.getTotalWeight weight;
           unit.Stats.getStrength strength;
 
-          
+          # if bipod is not deployed and wielder has not enough strength
           if and eq bipod 1 eq deploy 0 lt strength weight;
             set bonus 0;
           end;
 
-          # if bipod is deployed, or wielder has enough strength
           return bonus;
 
     tryMeleeAttackUnit: # toolkit can only hit target with bipod
       - new: ROSIGMA_tMAU_heavy_weapons_team
         offset: 1
         code: |
-          var ptr BattleItem right;
-          var int bipodright;
-          var ptr BattleItem left;
-          var int bipodleft;
-          var int bipod;
-          var int tools;
+          var ptr BattleItem bipodItem;
+          var int temp;
 
-          victim.getRightHandWeapon right;
-          right.getTag bipodright Tag.ITEM_HAS_BIPOD;
-          victim.getLeftHandWeapon left;
-          left.getTag bipodleft Tag.ITEM_HAS_BIPOD;
-          if or eq bipodright 1 eq bipodleft 1;
-            set bipod 1;
+          item.getTag temp Tag.ITEM_IS_TOOL;
+          if eq temp 0;
+            return melee_attack_success; # no tool used
           end;
 
-          item.getTag tools Tag.ITEM_IS_TOOL;
+          victim.getRightHandWeapon bipodItem;
+          bipodItem.getTag temp Tag.ITEM_HAS_BIPOD;
 
-          if and neq bipod 1 eq tools 1;
-            set melee_attack_success 0;
+          if neq temp 1;
+            victim.getLeftHandWeapon bipodItem;  
+            bipodItem.getTag temp Tag.ITEM_HAS_BIPOD;
+          end;
+
+          if eq temp 0;
+            return 0; # tool used but no bipod to target
           end;
 
           # valid tool item and target
-          return melee_attack_success;
+          return 200; # always hit
 
     hitUnit:
       - new: ROSIGMA_hU_heavy_weapons_team
@@ -89,7 +88,7 @@ extended:
           end;
 
           if gt temp weight;
-            set weight temp;
+            set weight temp; # use greater weight if two bipod weapons are used
           end;
 
           if eq weight 0;
@@ -100,21 +99,25 @@ extended:
 
           if ge temp weight;
             # it's possible that something weird happens, when the weapon is swapped
-            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            unit.setTag Tag.UNIT_IS_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
             return power part side; # unit is strong enough, doesn't need support
           end;
 
-          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+          unit.getTag temp Tag.UNIT_IS_DEPLOYED;
           # unit.isKneeled temp; # it's not really necessary for the target to kneel first
 
-          if and eq deploy 0; #  eq temp 1;
-            unit.getEnergy deploy;
-            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED deploy;
-            unit.setEnergy 5;
+          if and eq temp 0; # if not deployed
+            unit.getEnergy temp;
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED temp; # save energy
+            unit.setTag Tag.UNIT_IS_DEPLOYED 1;
+            unit.setEnergy 0; # should be set to 5 (wiggle room) on newTurn only
             attacker.setTag Tag.UNIT_GOT_TOOL_XP 1;
           else; # undeploy
-            unit.setEnergy deploy;
+            unit.getTag temp Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+            unit.setEnergy temp;
             unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
+            unit.setTag Tag.UNIT_IS_DEPLOYED 0;
             attacker.setTag Tag.UNIT_GOT_TOOL_XP 1;
           end;
 
@@ -126,9 +129,9 @@ extended:
         code: |
           var int deployed;
 
-          target.getTag deployed Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+          target.getTag deployed Tag.UNIT_IS_DEPLOYED;
 
-          if neq deployed 0;
+          if eq deployed 1;
             set energy_recovery 0;
           end;
 
@@ -169,26 +172,27 @@ extended:
 
           if ge temp weight;
             # it's possible that something weird happens, when the weapon is swapped
-            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            unit.setTag Tag.UNIT_IS_DEPLOYED 0; # if weight is okay, unit doesn't have to be deployed
+            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
             return; # unit is strong enough, doesn't need support
           end;
 
-          unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
+          unit.getTag deploy Tag.UNIT_IS_DEPLOYED;
           unit.isKneeled temp;
 
           # FACTION_HOSTILE is okay as this allows the soldier to react on enemies' turn
           if and eq deploy 0 eq side FACTION_HOSTILE eq temp 1; # deploying # 'lt temp weight 0' is not neccessary
-            unit.getEnergy deploy;
-            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED deploy;
-            unit.setEnergy 0;
+            unit.setTag Tag.UNIT_IS_DEPLOYED 1;
           end;
-          if and neq deploy 0 eq side FACTION_HOSTILE neq temp 1;
-            unit.setEnergy deploy;
-            unit.setTag Tag.UNIT_ENERGY_BEFORE_DEPLOYED 0;
+          if and eq deploy 1 eq side FACTION_HOSTILE eq temp 0;
+            unit.setTag Tag.UNIT_IS_DEPLOYED 0;
           end;
 
-          if and neq deploy 0 eq side FACTION_PLAYER; # energy recovery on player's turn # but only relevant on HWT use
+          unit.getTag deploy Tag.UNIT_IS_DEPLOYED;
+
+          if and eq deploy 1 eq side FACTION_PLAYER; # energy recovery on player's turn # but only relevant on HWT use
             unit.getEnergy energyrecovered;
+            unit.getTag deploy Tag.UNIT_ENERGY_BEFORE_DEPLOYED;
             add deploy energyrecovered;
             unit.setEnergy deploy; # add previous energy on top
 
