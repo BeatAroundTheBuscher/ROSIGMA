@@ -1,4 +1,4 @@
-#items: 
+#items:
 #  - type: STR_LASGUN_LUCIUS
 #    confAuto:
 #      shots: 1
@@ -7,15 +7,20 @@
 #    compatibleAmmo:
 #      - STR_LASGUN_CLIP
 #    tags:
-#      ITEM_AUTO_POWER_BONUS: 20      
+#      ITEM_AUTO_POWER_BONUS: 20
 
 extended:
   tags:
     RuleItem:
-      ITEM_AUTO_POWER_BONUS: int
+      ITEM_AUTO_POWER_BONUS: int #percent bonus to damage equal to this amount for this fire mode
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
   scripts:
     hitUnit: # increase power if bonus exists for fire mode
       - new: ROSIGMA_hU_highpower_shot
@@ -23,6 +28,8 @@ extended:
         code: |
           var int weaponPower;
           var int powerBonus;
+          var int accuracyBonus;
+          var int temp;
           var ptr RuleItem rItem;
           var ptr BattleItem ammoItem;
 
@@ -30,35 +37,55 @@ extended:
 
           if eq battle_action battle_action_snapshot;
             rItem.getTag powerBonus Tag.ITEM_SNAP_POWER_BONUS;
+            rItem.getTag accuracyBonus Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_autoshoot;
             rItem.getTag powerBonus Tag.ITEM_AUTO_POWER_BONUS;
+            rItem.getTag accuracyBonus Tag.ITEM_AUTO_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_aimshoot;
             rItem.getTag powerBonus Tag.ITEM_AIMED_POWER_BONUS;
+            rItem.getTag accuracyBonus Tag.ITEM_AIMED_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_hit;
             rItem.getTag powerBonus Tag.ITEM_MELEE_POWER_BONUS;
           end;
 
-          if eq powerBonus 0;
+          if gt accuracyBonus 0; #if we're scaling the bonus with firing accuracy, we define the bonus here
+            attacker.Stats.getFiring powerBonus; #get attacker's firing accuracy
+            #debug_log "ROSIGMA_hU_highpower_shot: Attacker's accuracy bonus." powerBonus;
+            muldiv accuracyBonus powerBonus 100;
+            set powerBonus accuracyBonus;
+          end;
+
+          if eq powerBonus 0; #cancel out if our powerBonus is undefined
+            #debug_log "ROSIGMA_hU_highpower_shot: No power bonus detected; aborting.";
             return power part side;
           end;
 
-          weapon_item.getAmmoItem ammoItem;
-          ammoItem.getRuleItem rItem;
-          rItem.getPower weaponPower;
 
-          # debug_log "Old Power" power;
+          rItem.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE; #check whether we're using a percentile or flat bonus
+
+          if eq temp 0;
+            weapon_item.getAmmoItem ammoItem;
+            ammoItem.getRuleItem rItem;
+            rItem.getPower weaponPower; #this will be a defacto flat bonus to damage
+            #debug_log "ROSIGMA_hU_highpower_shot: Flat damage bonus.";
+          else;
+            set weaponPower 100; #this will be a percentile bonus to damage
+            #debug_log "ROSIGMA_hU_highpower_shot: Percentile damage bonus.";
+          end;
+
+          #debug_log "ROSIGMA_hU_highpower_shot: Old Power" power;
 
           muldiv powerBonus power weaponPower;
           add power powerBonus;
 
 
-          # debug_log "Bonus Power" powerBonus;
-          # debug_log "New Power" power;
+          #debug_log "ROSIGMA_hU_highpower_shot: Bonus Power" powerBonus;
+          #debug_log "ROSIGMA_hU_highpower_shot: New Power" power;
 
           return power part side;

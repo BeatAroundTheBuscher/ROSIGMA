@@ -23,6 +23,17 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_MORALE: int
       YTAG_DAMAGE_RETURNED_AS_STUN: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: int
+#aim mode damage bonuses
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
+
 
 items:
   - type: STR_SCARE_GRENADE #Scare Gas Grenade, pink gas
@@ -185,8 +196,6 @@ items:
     fireSound: {mod: 40k, index: 741}
     accuracySnap: 70
     accuracyAimed: 90
-    accuracyMultiplier:
-      firing: [0.5, 0.005]
     tuSnap: 35
     tuAimed: 65
     snapRange: 33
@@ -199,6 +208,12 @@ items:
     invHeight: 3
     bulletSpeed: 50
     listOrder: 11050
+    kneelBonus: 130
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_LASGUN_CLIP_HOTSHOT_CHAOS
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
@@ -3401,6 +3416,12 @@ items:
     invHeight: 3
     listOrder: 11905
     bulletSpeed: 50
+    kneelBonus: 150
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_CHAOS_ROCKET_LAUNCHER #                 12110
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
