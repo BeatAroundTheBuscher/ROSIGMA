@@ -6,6 +6,11 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
@@ -42,7 +47,6 @@ items:
       - STR_HEAVY_ROCKET_HE
       - STR_HEAVY_ROCKET_KRAK
       - STR_HEAVY_ROCKET
-
 
   - type: STR_PISTOL  #BOLTER PISTOL  10100
     armor: 200
@@ -109,6 +113,13 @@ items:
     armor: 200
     requiresBuy:
       - STR_MARINES_AND_INQUISITION
+    accuracyMultiplier: #sniper rifle accuracy
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_RECOIL: 25
+      ITEM_IS_HEAVY_WEAPON: 1 # infantry but not mounted/vehicle heavy weapons
 
   - type: STR_SHOTGUN
     weight: 10 #+3 from 7 vanilla, makes the low weight carbines more attractive.
@@ -130,12 +141,36 @@ items:
   - type: STR_HC_AP_AMMO #SNIPER AP                   11910
     costBuy: 4000 #far better than hotshot cells or AP Stub Rifle rounds, but half the clipsize so2x the cost
     costSell: 1000
+    damageAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.5 #Armor piercing; reduced health damage in exchange for armor piercing
+      ToHealth: 0.6 #Armor piercing; reduced health damage in exchange for armor piercing
+      ToArmor: 0.05 #minor armor damage on penetration
+      ToTile: 0.0
+
   - type: STR_HC_HE_AMMO #SNIPER HE                   11920
-    costBuy: 2000
-    costSell: 500
+    costBuy: 4000
+    costSell: 1000
+    damageAlter: #effectively a high powered bolter round
+      ToArmorPre: 0.1 # was 0.05
+      ArmorEffectiveness: 0.8 # was 0.9
+      ToArmor: 0.1
+      ToHealth: 1.15
+      ToStun: 0.5
+      FixRadius: 1
+      RandomType: 6
+
   - type: STR_HC_I_AMMO #SNIPER I                     11930
-    costBuy: 1000
-    costSell: 200
+    costBuy: 4000
+    costSell: 1000
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.05 #minor ablation
+      ArmorEffectiveness: 0.9 #minor pentration
+      FireThreshold: 0
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 0
 
   - type: STR_STUN_SHELLS
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
@@ -407,9 +442,6 @@ items:
       FixRadius: 0
       ArmorEffectiveness: 1
       ToArmor: 0.1
-
-  - type: STR_HC_I_AMMO #SNIPER I
-    refNode: *STR_INC_AMMO
 
   - type: STR_INCENDIARY_ROCKET
     refNode: *STR_INC_AMMO
@@ -727,8 +759,9 @@ items:
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     vaporColor: 2
     vaporDensity: 8
     meleeHitSound: {mod: 40k, index: 101}
@@ -843,8 +876,9 @@ items:
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     vaporColor: 2
     vaporDensity: 8
     invWidth: 2
@@ -857,7 +891,8 @@ items:
     blockBothHands: true
     listOrder: 10764
     tags:
-      ITEM_AIMED_POWER_BONUS: 50 #Precision Shot Bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #Precision Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_IS_HEAVY_WEAPON: 1 #Sniper platform
 
 
