@@ -1,3 +1,7 @@
+items:
+  - type: STR_GRAVDROP_DEPLOY_CHARGE
+    damageType: 10 # impact
+
 ## not a global one
 
 extended:
@@ -5,9 +9,11 @@ extended:
     BattleUnit:
       LAST_DODGE_FRAME: int
       DODGED: int
+      UNIT_COUNTER_SUCCESSFUL_DODGES: int
     RuleArmor:
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
+      ARMOR_MAX_SUCCESSFUL_DODGES: int
 
 armors:
   - &STR_DODGE_ARMOR
@@ -16,6 +22,15 @@ armors:
       DODGE_CHANCE: 50
       FLIGHT_DODGE_CHANCE: 0
     scripts:
+      newTurnUnit: |
+        var int unitFaction;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction; # don't reset on others' turns
+          unit.setTag Tag.UNIT_COUNTER_SUCCESSFUL_DODGES 0;
+        end;
+        return; 
+
       hitUnit: |
         var int temp;
         var int randomNumber;
@@ -26,8 +41,50 @@ armors:
         var ptr RuleItem damagingItem;
         var ptr RuleDamageType damageType;
         var int isAoE;
+        var int currentStunLevel;
+        var int currentHealth;
+        var int unitDirection;
+        var int attackerDirection;
+        var int counterSuccessfulDodges;
+        var int maxSuccessfulDodges;
+
+        damaging_item.getRuleItem damagingItem;
+        damagingItem.getDamageType damageType;
+        damageType.getResistType temp;
 
         unit.getRuleArmor targetArmor;
+        # don't dodge when counter has reached max;
+        unit.getTag counterSuccessfulDodges Tag.UNIT_COUNTER_SUCCESSFUL_DODGES;
+        targetArmor.getTag maxSuccessfulDodges Tag.ARMOR_MAX_SUCCESSFUL_DODGES;
+
+        # assume that setting it has been forgotten
+        if eq maxSuccessfulDodges 0; 
+          set maxSuccessfulDodges 1;
+        end;
+
+        if ge counterSuccessfulDodges maxSuccessfulDodges;
+          return power part side;
+        end;
+
+        # don't dodge when stunned
+        unit.getHealth currentHealth;
+        unit.getStun currentStunLevel;
+
+        if ge currentStunLevel currentHealth;
+          return power part side;
+        end;
+
+        # don't dodge on melee and psi
+        if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
+          return power part side;
+        end;
+
+        # don't dodge support skills
+        # terrain artillery shell (terror city map) do damageType 0
+        if or eq temp 0 eq temp 10; # Support or Impact (IG Support, non-IG drop deploy) damage type
+          return power part side;
+        end;
+
         targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
         targetArmor.getTag flightDodgeChance Tag.FLIGHT_DODGE_CHANCE;
 
@@ -38,8 +95,6 @@ armors:
           end;
         end;
 
-        damaging_item.getRuleItem damagingItem;
-        damagingItem.getDamageType damageType;
         damageType.isAreaOfEffect isAoE;
 
         battle_game.randomRange randomNumber 1 100;
@@ -47,10 +102,21 @@ armors:
         # debug_log "dodgeChance" dodgeChance;
 
         if gt isAoE 0;
-            set randomNumber 100; # always hit
-            # debug_log "AoE";
-        else;
-            # debug_log "no AoE";
+            set randomNumber 200; # always hit # 200 > 100
+        end;
+
+
+        unit.getDirection unitDirection; # {0-7}
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4; # Offset for attacker so A+D "face the same direction"
+        mod attackerDirection 8; # (7+4) % 8 = 3 # in other words limit to {0-7}
+        sub unitDirection attackerDirection; # check if both face the same direction
+        abs unitDirection; # range should be outside of {-1, 0, +1} (extended front) to take effect
+
+        if or eq unitDirection 2 eq unitDirection 3; # extended side hit
+          muldiv dodgeChance 2 3; # multiply chance by 66 %
+        else eq unitDirection 4; # rear hit
+          muldiv dodgeChance 1 3; # multiply chance by 33 %
         end;
 
         if gt randomNumber dodgeChance;
@@ -62,6 +128,9 @@ armors:
         battle_game.getAnimFrame temp;
         unit.setTag Tag.LAST_DODGE_FRAME temp;
         unit.setTag Tag.DODGED 1;
+        add counterSuccessfulDodges 1;
+        unit.setTag Tag.UNIT_COUNTER_SUCCESSFUL_DODGES counterSuccessfulDodges;
+
         battle_game.flashMessage "DODGED";
         return 0 part side;
 
@@ -81,545 +150,672 @@ armors:
 
 #ADEPTAS
   - type: STR_DEATHCULT_ASSASSIN_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
   - type: STR_ADEPTAS_ARMORB_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ASSASSINNEUTRAL_FEMSUIT
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ADEPTAS_ARMORR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ADEPTAS_ARMORR_FIXED_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ADEPTAS_ARMORS_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ADEPTAS_ARMORCEL_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 30
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
 #MARINES
   - type: STR_SCOUT_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_SCOUTH_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SCOUTHW_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SCOUTHB_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SCOUTHR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SCOUTHY_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SCOUTHG_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_FLYING_SUIT_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ASS_ARMOR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ASS_ARMOR_HONOR_UC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_CHAOS_RAPTOR_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #GUARD
   - type: STR_ELYSIAN_JUMP_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_FELINID_JUMP_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_FELINIDGUARD_FLAK_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1      
+      
   - type: STR_FELINIDGUARD_FLAK_ARMOR_MEDIC
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1  
+      
   - type: STR_FELINIDGUARD_CARAPACE_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1     
+      
   - type: STR_FELINIDGUARD_MEDIC_CARAPACE_ARMOR
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #ELDAR
 
   - type: STR_ELDAR_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ELDAR_ARMOR_M
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ELDAR_ARMOR_M_SHIELD
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ELDAR_ARMOR_F
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ELDAR_ARMOR_F_SHIELD
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ELDAR_ARMOR_FH
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ELDAR_ARMOR2_P #banshee
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
   - type: STR_ELDAR_ARMOR2_P_SHIELD  #banshee
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
   - type: STR_ELDAR_ARMOR3_P #seer player
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+      
   - type: STR_ELDAR_ARMOR3_P_SHIELD  #seer player
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+      
   - type: STR_ELDAR_ARMOR4_P #dire avenger
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ELDAR_ARMOR4_P_SHIELD  #dire avenger
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ELDAR_ARMOR5_P #Scorpion
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ELDAR_ARMOR5_P_SHIELD  #Scorpion
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ELDAR_ARMOR6_P #reaper
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ELDAR_ARMOR6_P_SHIELD  #reaper
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ELDAR_ARMOR2 #banshee
-    refNode: *STR_DODGE_ARMOR #50% chance
-
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
   - type: STR_ELDAR_ARMOR3  #Farseer
-    refNode: *STR_DODGE_ARMOR #50% chance
-
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
   - type: STR_ELDAR_FARSEER_ARMOR   #Player Farsser
-    refNode: *STR_DODGE_ARMOR #50% chance
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      
+#INQUISITION/CHAMBER MILITANT
 
-
+  - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_JUMPPACK
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 0
+      FLIGHT_DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #Slaanesh dodge
   - type: STR_SLAAN_DEVOTED_SUIT
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ADEPTAS_SLAANASSASSINARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_SLAANCHOSEN_ASS
     refNode: *STR_DODGE_ARMOR
-
+    tags:
+      DODGE_CHANCE: 33
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_ADEPTAS_SLAANESH
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ADEPTAS_SLAANESH_BLESSED_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SLAANCELESTIAN_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_SLAANGOR_FIENDGOR_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_SLAANGOR_BULLGOR_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_SLAANGOR_GOR_ARMORMEDIUM
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_CHRYSSALID_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_CHRYSSALID_ARMOR_DIRE
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_CHRYSSALID_ARMORSELENE
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_NEVERBORN_TERRORIST_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_CHAOS_SERAPHIM
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_HERETIC_SERAPHIM_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #Khorne
   - type: STR_SILACOID_ARMORT #blood letter
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_KHORNE_REVENGEANCE_SUIT
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_ADEPTAS_ARMOR_KHORNE_REPENTIA
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_KHORNE_REPENTIA_LIGHT
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_KHORNESISTER_VALKIA_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_KHORNE_VALKIA_ARMORSUPERIOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_KHORNE_VALKIA_ARMORBASIC
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_MUTON_ARMORB
     refNode: *STR_DODGE_ARMOR
     builtInWeapons: #built in special Khorne Berserker axe
       - STR_KHORNE_BERSERKER_AXE
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_KHORNE_VALKIA_ARMORRETRIBUTOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_CHAOS_PENETANTE_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_DESERTER_PSYKER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #Tzeentch
   - type: STR_ADEPTAS_TZEENTCHNASSASSINARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
   - type: STR_TZEENTCH_CULT_WITCH_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_TZEENTCH_CULT_LEADER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_TZEENTCH_CULT_LEADER_ASSASSIN_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_TZEENTCH_CULT_SUMMONER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_FLAMER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #Nurgle
   - type: STR_NURGLECHEM_SUIT
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_NURGLE_DAEMONETTE_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+      
 #Undivided
   - type: STR_NIGHTLORD_RAPTOR_ARMOR0
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_NIGHTLORD_RAPTOR_ARMOR2
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_NIGHTLORDS_WARPTALON_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_FLOATER_ARMOR0
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: FLOATER_ARMOR1
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: FLOATER_ARMOR2
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_WARPTALON_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ALPHA_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ALPHA_CORVUS_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #GSC
   - type: GENE_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: GENE_ARMOR2
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: GENE_ARMOR3
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      
   - type: STR_GSC_PENETANTE_ARMOR_FEMALE
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_PENETANTE_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_ENFORCER_MEDIC_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1      
+      
   - type: STR_GSC_PDF_MEDIC_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1      
+      
   - type: STR_GSC_GUARD_MEDIC_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_MEDICAE_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_PSYKER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_REPENTIA_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GSC_KELER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_SAB_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
 #ORKS
   - type: STR_WEIRDORK_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ORK_ARMORKommando
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_ORK_TANKBUSTA_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
-
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      
   - type: STR_GROTS_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      

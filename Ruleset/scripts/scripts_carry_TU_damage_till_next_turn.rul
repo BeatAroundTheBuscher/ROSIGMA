@@ -5,7 +5,8 @@ extended:
 
   scripts:
     damageUnit: # collect this turn's TU damage
-      - offset: 70 # high offset so it runs last # can't be 100 or greater (will create error)
+      - new: ROSIGMA_dU_drain_tu_next_turn
+        offset: 70 # high offset so it runs last # can't be 100 or greater (will create error)
         code: |
           var int tuDrainNextTurn;
           var int temp;
@@ -18,13 +19,14 @@ extended:
 
             add tuDrainNextTurn to_time;
             unit.setTag Tag.UNIT_TU_DRAIN_NEXT_TURN tuDrainNextTurn;
-            debug_log "Current Drain" tuDrainNextTurn;
+            #debug_log "Current Drain" tuDrainNextTurn;
           end;
 
           return;
 
     newTurnUnit: # carry TU damage to next turn
-      - offset: 70 
+      - new: ROSIGMA_nTU_drain_tu_next_turn
+        offset: 70
         code: |
           var int currentTUs;
           var int temp;
@@ -46,7 +48,8 @@ extended:
           return;
 
     recolorUnitSprite: # stunlocked for next turn
-      - offset: 70 # doesn't really matter
+      - new: ROSIGMA_rUS_drain_tu_next_turn
+        offset: 70 # doesn't really matter
         code: |
           var int frame;
           var int frameLength;
@@ -59,7 +62,7 @@ extended:
           var int temp;
 
           unit.getTag temp Tag.UNIT_TU_DRAIN_NEXT_TURN;
-          unit.getTimeUnitsMax maxTUs; 
+          unit.getTimeUnitsMax maxTUs;
 
           if lt temp maxTUs; # if not stunlocked
             return new_pixel;

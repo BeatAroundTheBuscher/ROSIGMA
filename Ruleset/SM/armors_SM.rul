@@ -1,3 +1,9 @@
+extended:
+  tags:
+    RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+
 armors:
   - type: RAZORBACK_ARMOR
     visibilityAtDay: 40
@@ -9,7 +15,7 @@ armors:
     sideArmor: 130
     rearArmor: 100
     underArmor: 140
- 
+
   - type: LTS_ARMOR #LEFT TURRET STORMTALON ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -37,7 +43,7 @@ armors:
     sideArmor: 110
     rearArmor: 80
     underArmor: 70
-    
+
   - &STR_MARINE_ARMOR
     type: STR_SIGNALFALSE_ARMOR_UC #HONOR
     visibilityAtDay: 40
@@ -141,7 +147,7 @@ armors:
        stamina: 20
        health: 10
        bravery: 20 #always multiples of 10
-       reactions: 0
+       reactions: 10
        firing: 10
        throwing: 0
        strength: 10
@@ -149,10 +155,10 @@ armors:
        psiSkill: 0
        melee: 15
     frontArmor: 135
-    sideArmor: 110
-    rearArmor: 80
+    sideArmor: 115
+    rearArmor: 85
     underArmor: 100
-    
+
   - type: STR_ASS_ARMOR_UC #ASSAULT
     refNode: *STR_MARINE_ARMOR
     stats:
@@ -242,17 +248,17 @@ armors:
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     stats:
-       tu: 25
-       stamina: 25
-       health: 20
-       bravery: 10 #always multiples of 10
-       reactions: 10
-       firing: 15
-       throwing: 10
-       strength: 20
-       psiStrength: 0
-       psiSkill: 0
-       melee: 15
+      tu: 25
+      stamina: 25
+      health: 20
+      bravery: 10 #always multiples of 10
+      reactions: 10
+      firing: 15
+      throwing: 10
+      strength: 20
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15
     frontArmor: 130
     sideArmor: 115
     rearArmor: 90
@@ -263,21 +269,23 @@ armors:
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 10
     stats:
-       tu: -10
-       stamina: 10
-       health: 20
-       bravery: 0 #always multiples of 10
-       reactions: -10
-       firing: -10
-       throwing: -10
-       strength: -10
-       psiStrength: 10
-       psiSkill: 0
-       melee: -10
+      tu: -10
+      stamina: 10
+      health: 20
+      bravery: 0 #always multiples of 10
+      reactions: -10
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 10
+      psiSkill: 0
+      melee: -10
     frontArmor: 125
     sideArmor: 105
     rearArmor: 80
     underArmor: 100
+    tags:
+      INFECTION_RESIST: 100 #infection immune
 
   - &STR_TERMINATOR_ARMOR
     type: STR_CAPTAIN_UC                    #TERMINATOR CAPTAIN ARMOR
@@ -303,7 +311,7 @@ armors:
     allowsKneeling: false
     loftempsSet: [ 5 ]
 
-  - type: STR_CAPTAIN_UC  
+  - type: STR_CAPTAIN_UC
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     stats:
@@ -619,7 +627,7 @@ armors:
 
   # buff
   - type: BIKE_ARMOR_UC
-    frontArmor: 130 
+    frontArmor: 130
     sideArmor: 115
     rearArmor: 85
     underArmor: 100
@@ -785,7 +793,8 @@ armors:
     loftempsSet: [ 4 ]
     builtInWeapons:
       - INV_NULL_3X3
-      
+    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+
   - type: STR_CHAOS_SERGEANT_ARMOR #SERGEANT
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -823,7 +832,8 @@ armors:
     loftempsSet: [ 4 ]
     builtInWeapons:
       - INV_NULL_3X3
-      
+    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+
   - type: STR_CHAOS_TERMINATOR_ARMOR #TER
     refNode: *STR_TERMINATOR_ARMOR
     visibilityAtDay: 40
@@ -964,7 +974,8 @@ armors:
     loftempsSet: [ 4 ]
     builtInWeapons:
       - INV_NULL_1X3
- 
+    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+
   - type: STR_CHAOS_BEHEMOTH_ARMOR       #CENT  BEHEMOTH ARMOR
     refNode: *STR_CENTURION_ARMOR
     #spriteSheet: CCENT.PCK
@@ -992,7 +1003,7 @@ armors:
       - STR_COMBILAS
       - STR_FIXED_SONIC_CANON
     specialWeapon: STR_DREAD_MELEE_WEAPON
-    
+
   - type: STR_CHAOS_SORC_ARMOR #SORCER
     refNode: *STR_MARINE_ARMOR
     visibilityAtDay: 40
@@ -1027,7 +1038,7 @@ armors:
     builtInWeapons:
       - INV_NULL_3X3
       - STR_PSI_AMP
-    
+
   - type: STR_CHAOS_LORD_ARMOR #LORD
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -1066,12 +1077,12 @@ armors:
       - STR_CHAOS_MARINE
     builtInWeapons:
       - INV_NULL_3X3
-      
+
   - type: STR_ALPHA_ARMOR_PLAYER #REGULAR
     refNode: *STR_MARINE_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 35 #+5
-    #camouflageAtDay: 10 
+    #camouflageAtDay: 10
     #camouflageAtDark: 5
     antiCamouflageAtDay: 10 #-5 for player, still very good
     antiCamouflageAtDark: 10
@@ -1146,10 +1157,10 @@ armors:
     specialWeapon: STR_UNARMED_GAUNTLET_PLUS
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
-      
+
   - type: STR_IRON_WARRIOR_ARMOR_PLAYER
     refNode: *STR_MARINE_ARMOR
-    visibilityAtDay: 40 
+    visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 4
@@ -1267,23 +1278,25 @@ armors:
     allowInv: true
     bleedImmune: true
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     instantWoundRecovery: true
     storeItem: MUTON_ARMORNURGLEA_PLAYER
     customArmorPreviewIndex: 142 #needs custom
     corpseBattle:
       - STR_NURGLES_CORPSE_PLAYER
     stats:
-       tu: 0 #-10
-       stamina: 40 #+20
-       health: 20 #+15
-       bravery: 15 #+5
-       reactions: 0 #-15
-       firing: 10 #
-       throwing: 10 #+5
-       strength: 25 #+5
-       psiStrength: 0
-       psiSkill: 0
-       melee: 15 #-5
+      tu: 0 #-10
+      stamina: 40 #+20
+      health: 20 #+15
+      bravery: 15 #+5
+      reactions: 0 #-15
+      firing: 10 #
+      throwing: 10 #+5
+      strength: 25 #+5
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15 #-5
     frontArmor: 130 #+10 Nurgle
     sideArmor: 120 #+5 nurgle
     rearArmor: 90 #+5 vs tactical
@@ -1348,22 +1361,24 @@ armors:
     instantWoundRecovery: true
     bleedImmune: true
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 50 #infection resistant
     storeItem: MUTON_ARMORTZEENTCH_PLAYER
     customArmorPreviewIndex: 142 #needs custom
     corpseBattle:
       - STR_TZEENTCH_CORPSE_PLAYER
     stats:
-       tu: -10 #-20 TZ
-       stamina: 40 #+20
-       health: -20 #-20 TZ
-       bravery: 25 #+15 TZ
-       reactions: -5 #-20 TZ
-       firing: 20 #+10 TZ
-       throwing: 10 #+5
-       strength: 20 #
-       psiStrength: 25 #+25 TZ
-       psiSkill: 20 #+20 TZ
-       melee: 10 #--10 TZ
+      tu: -10 #-20 TZ
+      stamina: 40 #+20
+      health: -20 #-20 TZ
+      bravery: 25 #+15 TZ
+      reactions: -5 #-20 TZ
+      firing: 20 #+10 TZ
+      throwing: 10 #+5
+      strength: 20 #
+      psiStrength: 25 #+25 TZ
+      psiSkill: 20 #+20 TZ
+      melee: 10 #--10 TZ
     frontArmor: 140 #+20 TZ
     sideArmor: 130 #+15 TZ
     rearArmor: 100 #+15 vs tactical
@@ -1415,4 +1430,4 @@ armors:
     units:
       - STR_CHAOS_MARINE_KHORNE
     builtInWeapons:
-      - INV_NULL_3X1_BACKPACK    
+      - INV_NULL_3X1_BACKPACK

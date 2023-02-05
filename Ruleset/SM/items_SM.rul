@@ -6,6 +6,11 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
@@ -42,14 +47,6 @@ items:
       - STR_HEAVY_ROCKET_HE
       - STR_HEAVY_ROCKET_KRAK
       - STR_HEAVY_ROCKET
-
-
-  - type: STR_PISTOL_CLIP #              10210
-    requiresBuy:
-      - STR_ADEPTAS_MARINES_AND_INQUISITION
-  - type: STR_RIFLE_CLIP
-    requiresBuy:
-      - STR_ADEPTAS_MARINES_AND_INQUISITION
 
   - type: STR_PISTOL  #BOLTER PISTOL  10100
     armor: 200
@@ -97,7 +94,6 @@ items:
     twoHanded: true
     invWidth: 2
     invHeight: 3
-    armor: 30
     autoShots: 3
     bulletSpeed: 30
     attraction: 1
@@ -117,6 +113,13 @@ items:
     armor: 200
     requiresBuy:
       - STR_MARINES_AND_INQUISITION
+    accuracyMultiplier: #sniper rifle accuracy
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_RECOIL: 25
+      ITEM_IS_HEAVY_WEAPON: 1 # infantry but not mounted/vehicle heavy weapons
 
   - type: STR_SHOTGUN
     weight: 10 #+3 from 7 vanilla, makes the low weight carbines more attractive.
@@ -138,12 +141,36 @@ items:
   - type: STR_HC_AP_AMMO #SNIPER AP                   11910
     costBuy: 4000 #far better than hotshot cells or AP Stub Rifle rounds, but half the clipsize so2x the cost
     costSell: 1000
+    damageAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.5 #Armor piercing; reduced health damage in exchange for armor piercing
+      ToHealth: 0.6 #Armor piercing; reduced health damage in exchange for armor piercing
+      ToArmor: 0.05 #minor armor damage on penetration
+      ToTile: 0.0
+
   - type: STR_HC_HE_AMMO #SNIPER HE                   11920
-    costBuy: 2000
-    costSell: 500
+    costBuy: 4000
+    costSell: 1000
+    damageAlter: #effectively a high powered bolter round
+      ToArmorPre: 0.1 # was 0.05
+      ArmorEffectiveness: 0.8 # was 0.9
+      ToArmor: 0.1
+      ToHealth: 1.15
+      ToStun: 0.5
+      FixRadius: 1
+      RandomType: 6
+
   - type: STR_HC_I_AMMO #SNIPER I                     11930
-    costBuy: 1000
-    costSell: 200
+    costBuy: 4000
+    costSell: 1000
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.05 #minor ablation
+      ArmorEffectiveness: 0.9 #minor pentration
+      FireThreshold: 0
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 0
 
   - type: STR_STUN_SHELLS
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
@@ -415,9 +442,6 @@ items:
       FixRadius: 0
       ArmorEffectiveness: 1
       ToArmor: 0.1
-
-  - type: STR_HC_I_AMMO #SNIPER I
-    refNode: *STR_INC_AMMO
 
   - type: STR_INCENDIARY_ROCKET
     refNode: *STR_INC_AMMO
@@ -717,7 +741,6 @@ items:
     blockBothHands: true
     invWidth: 2
     invHeight: 3
-    armor: 60
     tuSnap: 30 #+5 scoped malus
     tuAuto: 35 #+2 scoped malus, higher rate of fire
     accuracySnap: 85 #+5 scoped
@@ -736,8 +759,11 @@ items:
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+    vaporColor: 2
+    vaporDensity: 8
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
     meleeType: 7
@@ -850,8 +876,11 @@ items:
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+    vaporColor: 2
+    vaporDensity: 8
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -862,7 +891,8 @@ items:
     blockBothHands: true
     listOrder: 10764
     tags:
-      ITEM_AIMED_POWER_BONUS: 50 #Precision Shot Bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #Precision Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_IS_HEAVY_WEAPON: 1 #Sniper platform
 
 
@@ -952,6 +982,117 @@ items:
     powerRangeThreshold: 16.0
     clipSize: -1
     listOrder: 10765
+
+  - type: STR_INQ_MEDI_KIT
+    weight: 10
+    battleType: 6
+    painKiller: 30
+    heal: 30
+    stimulant: 30
+    woundRecovery: 1
+    healthRecovery: 3
+    stunRecovery: 4
+    energyRecovery: 10
+    tuUse: 10
+    experienceTrainingMode: 19
+    medikitTargetSelf: true
+    flatRate: true
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: {mod: 40k, index: 100}
+    #*** Melee bayonet
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: {mod: 40k, index: 0}
+    meleeType: 7
+    meleePower: 40
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 70
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 10
+    flatMelee:
+      time: true
+    clipSize: -1
+    listOrder: 10766
+
+  - type: STR_INQ_SHIELD
+    defaultInventorySlot: STR_LEFT_HAND
+    weight: 5
+    handSprite: 669
+    bigSprite: {mod: 40k, index: 651}
+    hitSound: 0
+    meleeAnimation: 0
+    power: 30
+    damageBonus:
+      strength: 0.4
+      melee: 0.1
+    damageAlter: #shield bash
+      ArmorEffectiveness: 0.9
+      ToHealth: 0.6
+      ToStun: 0.6
+      ToWound: 0.1
+    damageType: 7
+    accuracyMelee: 80 #clumsy
+    meleeMultiplier:
+      strength: 0.3
+      melee: 0.7
+    tuMelee: 20
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 12
+    fixedWeapon: true
+    recover: false
+    skillApplied: true
+    strengthApplied: false
+    fixedWeaponShow: true
+    attraction: 0
+    listOrder: 10767
+
+  - type: STR_INQ_HELLPISTOL
+    defaultInventorySlot: STR_RIGHT_HAND
+    categories: [STR_CAT_LASGUN]
+    size: 0.1
+    weight: 5
+    bigSprite: 208 #{mod: 40k, index: 570}
+    handSprite: 208 # {mod: 40k, index: 552} # {mod: 40k, index: 950}
+    bulletSprite: {mod: 40k, index: 13}
+    bulletSpeed: 50
+    fireSound: {mod: 40k, index: 740}
+    battleType: 1
+    invWidth: 1
+    invHeight: 2
+    clipSize: -1
+    dropoff: 5
+    snapRange: 15 #+2 range
+    accuracySnap: 80 #+10 vs base hellpistol
+    tuSnap: 20
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    power: 75
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.0
+    vaporColor: 2
+    vaporDensity: 8
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    listOrder: 10768
+    tags:
+      ITEM_CHANGES_SPRITE_WITH_ARMOR: 1
 
 #PLAYABLE CHAOS CORPSES AND STORE ITEMS
   - type: STR_ALPHA_LEGION_CORPSE_PLAYER
@@ -1108,3 +1249,58 @@ items:
     size: 0.8
   - type: STR_SUMMON_DAEMONS_RESEARCH #same deal
     size: 0.8
+
+#Tome/Banner nerfs
+
+  - type: STR_BANNER #             30600
+    # costBuy: 0 #cannot buy this; only make it at the cost of tokens
+    requiresBuy:
+      - STR_GENERALLOCK
+    damageBonus: #scales with bravery and devotion now
+      bravery: 0.6
+      psiSkill: 0.6
+    damageAlter:
+      RandomType: 3
+      RadiusEffectiveness: 0.3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.4 #increase the stun amount up from 0.1
+      ToMorale: -0.18
+      ToTime: -1.00
+
+  - type: STR_PATCHMORAL #SPEED                           9001
+    damageBonus:
+      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
+    costMelee:
+      stun: 5
+      morale: 10
+      time: 25
+      energy: 25
+
+  - type: STR_PATCHSMOKE #SPEED                           9001
+    damageBonus:
+      psi: 0.25 #this is magic/psychic power; bravery has nothing to do with it
+    costAimed:
+      time: 40
+      stun: 25
+      morale: 25
+      energy: 50
+
+
+  - type: STR_PATCHSPEED #SPEED                           9001
+    damageBonus:
+      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
+    damageAlter:
+      RandomType: 3
+      RadiusEffectiveness: 0.3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToHealth: 0.05 #time dilation is stressful and unnerving
+      ToWound: 0.00
+      RandomWound: false
+      ToMorale: 0.1 #time dilation is stressful and unnerving
+      ToTime: -1.00
+    costMelee:
+      time: 25
+      stun: 25
+      morale: 25
+      energy: 50

@@ -324,54 +324,6 @@ items:
       ToHealth: 1.0
       ToStun: 0.3
 
-  - type: STR_AUTOGUN_CLIP_DRUM_KRAKEN
-    categories: [STR_CAT_AUTO]
-    size: 0.1
-    requiresBuy:
-      - STR_UFO_CONSTRUCTION #ceramite tier
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    costSell: 500
-    weight: 6
-    bigSprite: 271
-    floorSprite: {mod: 40k, index: 1011} #needs new
-    handSprite: {mod: 40k, index: 1088}
-    hitSound: {mod: 40k, index: 22}
-    hitAnimation: {mod: 40k, index: 26}
-    explosionSpeed: 5
-    power: 60
-    damageType: 1
-    damageAlter:
-      ToArmorPre: 0.075
-      ArmorEffectiveness: 0.70
-    clipSize: 40
-    battleType: 2
-    armor: 30
-    listOrder: 10750
-
-  - type: STR_AUTOGUN_CLIP_DRUM
-    categories: [STR_CAT_AUTO]
-    size: 0.1
-    requiresBuy:
-      - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    costBuy: 1000
-    costSell: 105
-    weight: 5
-    bigSprite: 270
-    floorSprite: {mod: 40k, index: 1011} #needs new
-    handSprite: {mod: 40k, index: 1088}
-    hitSound: {mod: 40k, index: 22}
-    hitAnimation: {mod: 40k, index: 26}
-    explosionSpeed: 5
-    power: 50 #30 for normal autogun shots
-    damageType: 1
-    damageAlter:
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.85
-    clipSize: 40
-    battleType: 2
-    armor: 30
-    listOrder: 10750
 
   - &STR_STUBBERS_AMMO
     type: STR_STUB_GUN_AMMO
@@ -421,7 +373,8 @@ items:
     power: 150
     damageAlter:
       ToTile: 0.0
-      RandomType: 7
+      ToArmorPre: 0.1 #high velocity
+      RandomType: 6
       ArmorEffectiveness: 0.8
     damageType: 1
     clipSize: 2
@@ -429,11 +382,14 @@ items:
   - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
     damageAlter:
-#      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.8
-      RandomType: 7
-#      ToArmor: 0.1
-#      ToHealth: 1.0
+      ToArmorPre: 0.4 #acid melts armor
+      ArmorEffectiveness: 0.9
+      RandomType: 6
+      ToArmor: 0.2
+      ToHealth: 0.7
+      ToStun: 0.5 #painful
+      ToWound: 0.5 #acid and armor piercing needles cause lots of mortal wounds
+      ToMorale: 2.0 #painful
 #      ToStun: 0.5
     blastRadius: 1
     damageType: 3
@@ -442,9 +398,12 @@ items:
   - type: STR_EXITUS_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_BULLETS
     damageAlter:
-      ToTile: 0.0
-      RandomType: 7
-      ArmorEffectiveness: 0.4
+      ToTile: 1.0 #it'll destroy about anything it hits
+      RandomType: 6
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.4 #armor piercing
+      ToHealth: 0.7 #armor piercing
+      ToArmor: 0.5 #obliterates armor on penetration
     power: 150
 
   - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
@@ -452,8 +411,9 @@ items:
     power: 150
     damageAlter:
       ToTile: 0.0
-      RandomType: 7
+      RandomType: 6
       FireThreshold: 1000 # no fire
+      ToArmorPre: 0.1 #high velocity
       ArmorEffectiveness: 0.8
       FixRadius: 0
       IgnoreDirection: false

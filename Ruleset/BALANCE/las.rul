@@ -5,7 +5,14 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
 
+      ITEM_RECOIL: int
+      ITEM_HAS_BIPOD: int
+      ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
 
 # Lasguns and Lascannons
 
@@ -16,7 +23,8 @@ items:
 
 ## Pistols
 
-  - type: STR_LASER_PISTOL # done # Marine Support
+  - &STR_LASPISTOL
+    type: STR_LASER_PISTOL # done # Marine Support
     dropoff: 5
     autoRange: 0
     snapRange: 13
@@ -28,6 +36,9 @@ items:
     tuAuto: 0
     tuSnap: 21 # 40k 25
     tuAimed: 0
+
+#  - type: STR_LASER_PISTOLC
+#    refNode: *STR_LASPISTOL
 
 
   - type: STR_LASER_PISTOLG # done
@@ -71,7 +82,8 @@ items:
 
 ## Rifles
 
-  - type: STR_LASER_RIFLE # done # Marine Support
+  - &STR_LASGUN
+    type: STR_LASER_RIFLE # done # Marine Support
     dropoff: 4
     autoRange: 9
     snapRange: 16
@@ -84,7 +96,10 @@ items:
     tuSnap: 25
     tuAimed: 0
 
-  - type: STR_LASER_RIFLEG # done 
+#  - type: STR_LASER_RIFLEC
+#    refNode: *STR_LASGUN
+
+  - type: STR_LASER_RIFLEG # done
     dropoff: 4
     autoRange: 9
     snapRange: 16
@@ -109,7 +124,7 @@ items:
     tuAuto: 33 # 40k 34
     tuSnap: 25
     tuAimed: 0
-  
+
   - type: STR_LASGUN_ESCHER
     dropoff: 4 #slightly worse drop off than other DMR lasrifles
     autoRange: 0
@@ -121,7 +136,7 @@ items:
     tuAuto: 0
     tuSnap: 33 #2x snap shot, slightly higher TU cost
     tuAimed: 65 #slightly worse than Tanith longlas
-    
+
   - type: STR_LASCARBINE # done # Carbine # Make it different from Lasgun
     dropoff: 4
     autoRange: 0
@@ -167,7 +182,7 @@ items:
     accuracyAimed: 90 #-10 vs Longlas
     tuAuto: 33 # 40k 34
     tuSnap: 25
-    tuAimed: 60 
+    tuAimed: 60
 
   - type: STR_LASGUN_ACCATRAN # done # Carbine # more accurate # higher firing rate
     dropoff: 4
@@ -189,8 +204,8 @@ items:
   - type: STR_LASGUN_VOSTROYA # done # long barrel
     dropoff: 3 #-1
     autoRange: 13
-    snapRange: 22 
-    aimRange: 30 #make it a option vs longlas, slightly worse at the sniping role 
+    snapRange: 22
+    aimRange: 30 #make it a option vs longlas, slightly worse at the sniping role
 
     accuracyAuto: 50
     accuracySnap: 80
@@ -198,10 +213,10 @@ items:
     tuAuto: 40
     tuSnap: 30
     tuAimed: 65
-  
+
   - type: STR_LASGUN_LUCIUS # done # power shot
     dropoff: 4
-    autoRange: 0 
+    autoRange: 0
     snapRange: 16
     aimRange: 16 # Powershot
     accuracyAuto: 0 # 40k 50
@@ -217,7 +232,7 @@ items:
       shortName: STR_POWER_SHOT_COUNT
 
     tags:
-      ITEM_AIMED_POWER_BONUS: 20  
+      ITEM_AIMED_POWER_BONUS: 20
 
   - type: STR_MCLASER_RIFLE # done # MC
     dropoff: 4
@@ -243,7 +258,7 @@ items:
     accuracyAimed: 0
 
     tuAuto: 33 # 40k 34
-    tuSnap: 25 
+    tuSnap: 25
     tuAimed: 0
 
     power: 75
@@ -253,8 +268,9 @@ items:
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
   - type: STR_HOTSHOT_VOLLEY_GUN # done # Power Pack
     dropoff: 4
@@ -263,21 +279,22 @@ items:
     aimRange: 0
 
     accuracyAuto: 50 # 40k 60
-    accuracySnap: 60 # 40k 70 
+    accuracySnap: 60 # 40k 70
     accuracyAimed: 0
     tuAuto: 40
     tuSnap: 25
     tuAimed: 0
 
-    power: 65 # 40k 75  
+    power: 65 # 40k 75
     damageType: 1 # AP instead of LAS
     damageAlter:
       ToArmorPre: 0.3
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1 # 40k 0.0
-      ToStun: 0.0
-      ToWound: 0.0 # added this
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
     confSnap:
       shots: 3 # 40k 2
@@ -309,27 +326,28 @@ items:
     confAimed:
       shots: 1
       spendPerShot: 8 # + 2 heat
-      name: STR_POWER_SHOT_2    
+      name: STR_POWER_SHOT_2
       shortName: STR_POWER_SHOT_2_COUNT
 
     clipSize: 900 # shouldn't deplete
 
-    power: 65 
+    power: 65
     damageType: 1
     damageAlter:
       ToArmorPre: 0.3
       ArmorEffectiveness: 0.75
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     tags:
-      ITEM_AUTO_POWER_BONUS: 20  
+      ITEM_AUTO_POWER_BONUS: 20
       ITEM_AIMED_POWER_BONUS: 30
 
 ## Heavy Weapons
 
-  - type: STR_LASCAN # done # Marine Lascannon 
+  - type: STR_LASCAN # done # Marine Lascannon
     dropoff: 3
     autoRange: 0
     snapRange: 22
@@ -376,7 +394,8 @@ items:
 
 ## Snipers
 
-  - type: STR_LONGLAS # done
+  - type: STR_LONGLAS # done STR_CAT_SNIPER
+    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     dropoff: 2
     autoRange: 0
     snapRange: 22
@@ -389,10 +408,16 @@ items:
     tuSnap: 35
     tuAimed: 65
 
-    accuracyMultiplier:
-      firing: 1
+    accuracyMultiplier: #sniper rifle accuracy
+      firing: [0.5, 0.005]
 
-  - type: STR_LONGLAS_TANITH # done
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_LONGLAS_TANITH # done STR_CAT_SNIPER
+    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     dropoff: 2
     autoRange: 0
     snapRange: 22
@@ -405,8 +430,13 @@ items:
     tuSnap: 35
     tuAimed: 60
 
-    accuracyMultiplier:
-      firing: 1
+    accuracyMultiplier: #sniper rifle accuracy
+      firing: [0.5, 0.005]
+
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_IS_HEAVY_WEAPON: 1
 
 ## Vehicles (Sentinels, etc.)
 
@@ -426,12 +456,13 @@ items:
     autoShots: 5
     power: 60
     damageType: 1
-    damageAlter: 
+    damageAlter:
       ToArmorPre: 0.3
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
   - type: STR_SLASCAN # done # Sentinel
     dropoff: 3
@@ -452,10 +483,11 @@ items:
       ToArmorPre: 0.3
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
-  - type: STR_SLASCANPD # done # Arbites 
+  - type: STR_SLASCANPD # done # Arbites
     dropoff: 3
     autoRange: 0
     snapRange: 25
@@ -474,8 +506,9 @@ items:
       ToArmorPre: 0.3
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
   - type: AUX_HOVERTANK_LASER # done # player Dread
     dropoff: 3
@@ -498,8 +531,9 @@ items:
       ToArmorPre: 0.3
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
   - type: STR_HOVERTANK_LASER # done # not used
     dropoff: 3
@@ -522,40 +556,12 @@ items:
       ToArmorPre: 0.3
       ToHealth: 1.0
       ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
 
 
 ## Mounted (Chimera turrets and similar count as mounted)
-
-  - type: STR_LASCANNON_TAUROS # done
-    dropoff: 3
-    autoRange: 0
-    snapRange: 28
-    aimRange: 37
-
-    accuracyAuto: 0
-    accuracySnap: 60
-    accuracyAimed: 94
-
-    tuAuto: 0
-#    tuSnap: 0
-#    tuAimed: 0
-    costSnap:
-      time: 1
-      energy: 50
-    costAimed:
-      time: 2
-      energy: 100
-
-    power: 150 # 40k 100 # same as Sentinel
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0
 
   - type: STR_MOUNTED_LASCANNON # done
     dropoff: 3
@@ -571,29 +577,3 @@ items:
     tags:
       ITEM_SNAP_POWER_BONUS: 50
       ITEM_AIMED_POWER_BONUS: 50
-
-  - type: STR_MULTI_LASER # done
-    dropoff: 3
-    autoRange: 19
-    snapRange: 0
-    aimRange: 0
-
-    accuracyAuto: 35
-    accuracySnap: 0
-    accuracyAimed: 0
-#    tuAuto: 1
-    tuSnap: 0
-    tuAimed: 0
-    costAuto:
-      time: 1
-      energy: 50
-
-    autoShots: 10
-    power: 60
-    damageType: 1
-    damageAlter: 
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.0
-      ToWound: 0.0

@@ -1,0 +1,40 @@
+items:
+  - type: STR_LIBERATOR_AUTOSTUB_KELER
+    tags:
+      ITEM_AKIMBO: 1
+
+extended:
+  tags:
+    RuleItem:
+      ITEM_AKIMBO: int
+  scripts:
+    selectUnitSprite: # apply tag
+      - new: tester
+        offset: 10
+        code: |
+          var ptr BattleItem myItem;
+          var int myTag;
+          var int temp;
+
+          unit.getRightHandWeapon myItem;
+          myItem.getTag temp Tag.ITEM_AKIMBO;
+          add myTag temp; # b01
+
+          unit.getLeftHandWeapon myItem;
+          myItem.getTag temp Tag.ITEM_AKIMBO;
+          add myTag temp;
+          add myTag temp; # b10
+
+          if gt myTag 0;
+              debug_log "direction" sprite_offset;
+
+            if eq blit_part blit_rightarm;
+              debug_log "blit_rightarm" sprite_index;
+            end;
+
+            if eq blit_part blit_leftarm;
+              debug_log "blit_leftarm" sprite_index;
+            end;
+          end;
+
+          return sprite_index;  

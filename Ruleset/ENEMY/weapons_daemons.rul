@@ -1,12 +1,29 @@
 extended:
   tags: # Remember to add tag definitions to same file as item/armor rulesets!
     RuleItem:
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
+#bomb/kamikazi scripts
+      ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
 #vampiric on kill; weapons
       TAG_HP_RETURNED_ON_KILL: int
       TAG_ENERGY_RETURNED_ON_KILL: int
       TAG_TIME_RETURNED_ON_KILL: int
       TAG_MORALE_RETURNED_ON_KILL: int
       TAG_STUN_RETURNED_ON_KILL: int
+#infection system tags
+      INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 #vampiric on damage; weapons
       YTAG_DAMAGE_RETURNED_AS_HP: int
       YTAG_DAMAGE_RETURNED_AS_ENERGY: int
@@ -22,6 +39,10 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
       YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
+#bomb/kamikazi scripts
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
+      ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+
 
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
@@ -67,8 +88,9 @@ items:
     flatRate: true
     fixedWeapon: false
     recover: false
+
   - type: BLUE_HORROR_WEAPON  #Indigo Fire            #4006
-    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
     costSell: 6500
     weight: 1
@@ -80,8 +102,6 @@ items:
     explosionHitSound: { mod: 40k, index: 771 }
     hitAnimation: 2030 #Indigofireex
     powerForAnimation: 20
-    zombieUnit: STR_BLUE_HORROR_TERRORIST
-    specialChance: 20
     arcingShot: true
     accuracySnap: 40
     costSnap:
@@ -109,39 +129,13 @@ items:
     flatRate: true
     fixedWeapon: true
     recover: false
-    #*** Melee Claws
-    #bigSprite:  {mod: 40k, index: 817}
-    meleeSound: {mod: 40k, index: 48}
-    meleeAnimation: {mod: 40k, index: 12}
-    strengthApplied: false
-    meleeType: 7
-    meleePower: 50
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter:
-      RandomType: 2 #TFTD [50% - 150%]
-      ToArmorPre: 0.2
-      ToArmor: 0.1
-      ToHealth: 0.5
-      ToStun: 0.2
-      ToMorale: 0.5
-      ToWound: 0.05
-      ToEnergy: 1.0
-      ArmorEffectiveness: 0.6
-    accuracyMelee: 80
-    #zombieUnit: STR_TZEENTCH_WARP_THRALL #does having a melee zombieUnit work vs the ranged component? #no it doesn't
-    #specialChance: 33
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 14
-    flatMelee:
-      time: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
   - type: STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles            #4006
-    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
     costSell: 6500
     weight: 1
@@ -180,39 +174,13 @@ items:
     flatRate: true
     fixedWeapon: true
     recover: false
-    #*** Melee Claws
-    #bigSprite:  {mod: 40k, index: 817}
-    meleeSound: {mod: 40k, index: 48}
-    meleeAnimation: {mod: 40k, index: 12}
-    strengthApplied: false
-    meleeType: 7
-    meleePower: 50
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter:
-      RandomType: 2 #TFTD [50% - 150%]
-      ToArmorPre: 0.2
-      ToArmor: 0.1
-      ToHealth: 0.5
-      ToStun: 0.2
-      ToMorale: 0.5
-      ToWound: 0.05
-      ToEnergy: 1.0
-      ArmorEffectiveness: 0.6
-    accuracyMelee: 80
-    zombieUnit: STR_TZEENTCH_WARP_THRALL #does having a melee zombieUnit work vs the ranged component?
-    specialChance: 33
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 14
-    flatMelee:
-      time: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
   - type: STR_RED_FIRE  #RED FIRE Tzeentch magic         #4006
-    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     vaporColorSurface: {mod: 40k, index: 0}
     vaporDensitySurface: 4
     vaporProbabilitySurface: 100
@@ -254,35 +222,9 @@ items:
     flatRate: true
     fixedWeapon: true
     recover: false
-    #*** Melee Claws
-    #bigSprite:  {mod: 40k, index: 817}
-    meleeSound: {mod: 40k, index: 48}
-    meleeAnimation: {mod: 40k, index: 12}
-    strengthApplied: false
-    meleeType: 7
-    meleePower: 50
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter:
-      RandomType: 2 #TFTD [50% - 150%]
-      ToArmorPre: 0.2
-      ToArmor: 0.1
-      ToHealth: 0.5
-      ToStun: 0.2
-      ToMorale: 0.5
-      ToWound: 0.05
-      ToEnergy: 1.0
-      ArmorEffectiveness: 0.6
-    accuracyMelee: 80
-    zombieUnit: STR_TZEENTCH_WARP_THRALL #does having a melee zombieUnit work vs the ranged component?
-    specialChance: 33
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 14
-    flatMelee:
-      time: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
   - type: STR_GREEN_FIRE #Panic and Mindcontrol fire
@@ -312,6 +254,9 @@ items:
       ToArmor: 0.0
       ArmorEffectiveness: 0.0   #how effective armor is against this damage. Default `0.0` for smoke and stun, `1.0` rest.
     damageType: 7
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     clipSize: -1
 
   - type: STR_SILACOID_WEAPON #Bloodletter Hellblade
@@ -333,6 +278,7 @@ items:
       psiStrength: 0.2 #profaned weapon
     damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
+      FireThreshold: 0.0 #flaming weapon
       ToArmorPre: 0.2
       ToArmor: 0.2
       ToStun: 0.1
@@ -402,13 +348,12 @@ items:
     invHeight: 3
     recover: false
     flatRate: true
+
   - type: STR_NURGLE_WEAPON #Plaguebearer Plaguesword
     power: 100
     weight: 3
     strengthApplied: false
     damageType: 7
-    damageAlter:
-      IgnoreSelfDestruct: false
     accuracyMelee: 100
     tuMelee: 20 #attacks slowly for a melee weapon but has devastating effects
     damageAlter: ## Plague weapon
@@ -416,12 +361,8 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
+      IgnoreSelfDestruct: false
     accuracyMultiplier: #heavy melee weapon; relies on strength as well as skill
       melee: 0.7
       strength: 0.3
@@ -436,7 +377,10 @@ items:
     invHeight: 3
     recover: false
     flatRate: true
-    specialChance: 66 #high chance of zombifying its victims
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 20 #high chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -765,12 +709,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
       FixRadius: 3
     accuracySnap: 55
     tuSnap: 25
@@ -781,6 +720,9 @@ items:
     clipSize: -1
     recover: false
     arcingShot: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 10 #low chance of zombifying, adjusted for AoE
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -1121,18 +1063,15 @@ items:
     bigSprite:  {mod: 40k, index: 817}
     meleeSound: {mod: 40k, index: 48}
     meleeAnimation: {mod: 40k, index: 12}
-    strengthApplied: true
-    power: 50
+    power: 7 #low base power; has high strength scaling
     damageAlter: ## Plague-inflicting weapon
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.3
-      ToArmor: 0.3
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.4 #rends and erodes
+      ToArmor: 0.4
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
+    damageBonus:
+      strength: 1.0 #brute force
     damageType: 8
     accuracyMelee: 80
     tuMelee: 7
@@ -1143,7 +1082,10 @@ items:
     clipSize: -1
     recover: false
     hiddenOnMinimap: true
-    specialChance: 25 #low chance of zombifying
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -1471,12 +1413,9 @@ items:
     blastRadius: 1
     damageAlter: #DA SPIT
       RandomType: 2 #TFTD [50% - 150%]
+      ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.3
-      ToEnergy: 0.5
-      ToStun: 0.2
-      ToWound: 0.05
-      ToMorale: 0.4
       ToTime: 0.2
       ArmorEffectiveness: 0.7
     damageType: 8
@@ -1491,6 +1430,9 @@ items:
     clipSize: -1
     recover: false
     arcingShot: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 75 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_NEVERBORN_WEAPON #Deamon Shredder
     weight: 10
@@ -1588,7 +1530,9 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 16
       YTAG_DAMAGE_RETURNED_AS_STUN: 16
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
-    specialChance: 66 #high chance of corrupting
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 20 #high chance of corrupting
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_MARINE_ZOMBIE_TACTICAL_M, STR_JARMORH_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_JARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_LIB_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SIGNAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M,
       STR_PERSONAL_ARMOR_UC: STR_MARINE_ZOMBIE_TACTICAL_M, STR_SCOUT_UC: STR_MARINE_ZOMBIE_SCOUT_M, STR_SCOUTH_UC: STR_MARINE_ZOMBIE_SCOUT_M,
@@ -1730,22 +1674,24 @@ items:
     battleType: 3
     damageType: 7
     clipSize: -1
-    power: 100
-    accuracyMelee: 75
+    power: 7 #low base damage due to scaling
+    accuracyMelee: 100 #it's a touch based weapon
     tuMelee: 5
-    damageAlter: #plague weapon
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.3
-      ToArmor: 0.3
+    damageAlter: ## Plague-inflicting weapon
+      ToArmorPre: 0.6 #armor is fully effective but the corroding touch quickly destroys it
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
+    damageBonus: #touch based and magical; physical strength is irrelevant
+      psiStrength: 1.0
+    accuracyMultiplier: #touch based; being quick is just as important as martial skill for the purposes of hitting
+      reactions: 0.5
+      melee: 0.5
     invWidth: 2
     invHeight: 3
-    specialChance: 66 #high chance of zombifying
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 20 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2086,14 +2032,8 @@ items:
       ArmorEffectiveness: 0.6 #low power but high penetration; doesn't corrode like most Nurgle plague weapons
       ToArmor: 0.05 #precision weapon; minimal armor damage
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
       ToTime: 0.5 #higher than normal TU depletion
-      ToStun: 0.3
       RandomType: 6 #gaussian
-      RandomWound: false
-    accuracyMultiplier: #sniper rifle accuracy
-      firing: [0.5, 0.005]
     damageBonus: #sniper weapon; power scales with accuracy
       firing: 0.3
     battleType: 1
@@ -2103,7 +2043,15 @@ items:
     invWidth: 2
     invHeight: 3
     clipSize: -1
-    specialChance: 25 #low chance of zombifying
+    kneelBonus: 130
+    accuracyMultiplier: #sniper rifle accuracy
+      firing: [0.5, 0.005]
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #sniper weapon; aimed shots target vitals
+      ITEM_POWER_BONUS_PERCENTILE: 1
+    specialChance: 10 #low chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2418,25 +2366,6 @@ items:
     bulletSpeed: 15
     listOrder: 6940
 
-  - type: STR_NURGLE_BOOM_DUMMY
-    specialUseEmptyHand: true
-    fixedWeapon: true
-    recover: false
-    meleeSound: 2413 #roar activation noise
-    meleeHitSound: { mod: 40k, index: 0 }
-    power: 200 # for the AI to pick this
-    meleeAnimation: { mod: 40k, index: 0 }
-    damageType: 7
-    accuracyMelee: 200
-    tuMelee: 1
-    clipSize: -1
-    battleType: 3
-    meleeMultiplier:
-      melee: 0.0
-      flatHundred: 1.0
-    flatRate: true
-    tags:
-      ITEM_IS_FOR_BOMBER: 1
   - type: STR_NURGLE_BOOM #blight
     bulletSprite: {mod: 40k, index: 22}
     fireSound: 2415 #boom explosion
@@ -2453,21 +2382,23 @@ items:
       ToArmorPre: 0.5 #higher than normal plague weapons
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     battleType: 4 # grenade
     recover: false
-    tuPrime: 999
-    fixedWeapon: true
+    tuThrow: 999 #only to be thrown via scripts
+    tuPrime: 999 #only to be thrown via scripts
+    throwRange: 1 #not meant to be thrown
+    fixedWeapon: false #has to be false so kamikazi tag and scripts work properly
     isExplodingInHands: true
     hiddenOnMinimap: true
     defaultInventorySlot: STR_BELT
+    spawnUnit: STR_NURGLINGS
+    spawnUnitFaction: -1
     tags:
       ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 50 #high chance of zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -2780,3 +2711,292 @@ items:
       STR_DESERTER_SCOUT_FEMALE_ARMOR: STR_NURGLE_BOOMER,
       STR_DESERTER_GUARD_OFFICER_ARMOR: STR_NURGLE_BOOMER,
     }
+
+  - type: STR_TZEENTCH_FIEND_CLAWS #For Tzeentch fiends
+    categories: [STR_CAT_MELEE, STR_CAT_TZEENTCH]
+    size: 0.2
+    weight: 1
+    bigSprite:  {mod: 40k, index: 817}
+    meleeAnimation: {mod: 40k, index: 12} #claw swipe
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 754}
+    power: 59
+    damageAlter: #DA CHAIN
+      RandomType: 1 #Swingy damage
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease, but does not rip it apart
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.9
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+    damageBonus:
+      psiStrength: 0.25 #magical
+      melee: 0.25
+    damageType: 7
+    accuracyMelee: 100
+    meleeMultiplier: #light and fast weapon that utilizes reactions
+      melee: 0.75
+      reactions: 0.25
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    tuMelee: 15
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    recover: false
+    fixedWeapon: true
+
+  - type: STR_TZEENTCH_FLAMER_WEAPON_PINK #built in flamer
+    categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
+    weight: 0
+    vaporColorSurface: 15 #pink warpfire
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    bigSprite: {mod: 40k, index: 377}
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    hitSound: { mod: 40k, index: 12 }
+    hitAnimation: { mod: 40k, index: 88 } #XFIRE
+    accuracyAuto: 60
+    accuracySnap: 75
+    tuAuto: 33
+    tuSnap: 20
+    battleType: 1
+    twoHanded: false
+    arcingShot: true
+    confSnap:
+      shots: 2
+    autoRange: 9
+    snapRange: 12 #longer than normal range
+    maxRange: 15
+    dropoff: 5
+    invWidth: 2
+    invHeight: 3
+    autoShots: 6
+    power: 69
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ToArmorPre: 0.2
+      RandomArmorPre: true #random armor degradation
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.9
+      ToArmor: 0.0
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: true
+    clipSize: -1
+    bulletSpeed: 50
+    explosionSpeed: 10
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_LEFT_HAND
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_TZEENTCH_FLAMER_WEAPON_BLUE #built in melta
+    categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
+    weight: 0
+    bigSprite: {mod: 40k, index: 377}
+    floorSprite: {mod: 40k, index: 132}
+    handSprite: {mod: 40k, index: 400}
+    bulletSprite: {mod: 40k, index: 16}
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: 14 #blue warpfire
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    accuracySnap: 80
+    accuracyAimed: 100
+    tuSnap: 20
+    tuAimed: 33
+    battleType: 1
+    twoHanded: false
+    snapRange: 15
+    aimRange: 18
+    maxRange: 25
+    dropoff: 5
+    invWidth: 2
+    invHeight: 3
+    power: 9
+    damageType: 11
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      FireBlastCalc: false
+      ToArmorPre: 1.0
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.9
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreOverKill: true
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 50
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 18.0
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_RIGHT_HAND
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_TZEENTCH_GLIMMERING_WEAPON_SCATTER #built in long range shotgun melta
+    categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
+    weight: 0
+    bigSprite: {mod: 40k, index: 377}
+    floorSprite: {mod: 40k, index: 132}
+    handSprite: {mod: 40k, index: 400}
+    bulletSprite: {mod: 40k, index: 16}
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: 14 #blue warpfire
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    accuracySnap: 80
+    tuSnap: 30
+    confSnap:
+      shots: 2
+    battleType: 1
+    twoHanded: false
+    snapRange: 15
+    maxRange: 25
+    dropoff: 5
+    invWidth: 2
+    invHeight: 3
+    power: 9
+    damageType: 11
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 1.0
+      FireBlastCalc: false
+      FixRadius: 1
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.6 #damage is as spiritual as physical
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      ToTile: 6.0
+      ToWound: 0.05 #melta level wounds
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 9
+    shotgunSpread: 25
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 16.0
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_RIGHT_HAND
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE #built in close range rapid fire light plasma
+    categories: [ STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
+    weight: 0
+    bigSprite: {mod: 40k, index: 377}
+    floorSprite: {mod: 40k, index: 132}
+    handSprite: {mod: 40k, index: 400}
+    bulletSprite: {mod: 40k, index: 16}
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: 15 #pink warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 50
+    accuracySnap: 70
+    accuracyAuto: 50
+    tuSnap: 25
+    confSnap:
+      shots: 3
+    confAuto:
+      shots: 10
+    battleType: 1
+    twoHanded: false
+    autoRange: 9
+    snapRange: 12
+    maxRange: 15
+    dropoff: 5
+    invWidth: 2
+    invHeight: 3
+    power: 29
+    damageType: 5 #plasma
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 1.0
+      FireBlastCalc: false
+      FixRadius: 1
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.6 #damage is as spiritual as physical
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreOverKill: true
+    powerRangeReduction: 5.0
+    powerRangeThreshold: 13.0
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_LEFT_HAND
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+
+  - type: STR_PINK_HORROR_DEATH_GRENADE #Tzeentch Blue Horror spawner; meant to trigger when Pink Horror dies
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
+    bigSprite: 2912
+    floorSprite: 2914
+    hitAnimation: 2160 #WarpBurn
+    explosionHitSound: {mod: 40k, index: 771}
+    hitSound: {mod: 40k, index: 788}
+    power: 25
+    damageType: 2
+    damageAlter:
+      RandomType: 1
+      IgnoreOverKill: false
+      FireBlastCalc: false
+      FixRadius: 4
+      ToHealth: 0.1
+      ToTime: 0.5
+      ToEnergy: 2.0
+      ToMorale: 6.0
+      ArmorEffectiveness: 0.5
+    battleType: 4 # grenade
+    recover: false
+    tuThrow: 999 #only to be thrown via scripts
+    tuPrime: 999 #only to be thrown via scripts
+    throwRange: 1 #not meant to be thrown
+    armor: 30
+    fixedWeapon: false #has to be false so kamikazi tag and scripts work properly
+    isExplodingInHands: true
+    hiddenOnMinimap: true
+    defaultInventorySlot: STR_BELT
+    spawnUnit: STR_BLUE_HORROR_TERRORIST
+    spawnUnitFaction: -1
+    tags:
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch

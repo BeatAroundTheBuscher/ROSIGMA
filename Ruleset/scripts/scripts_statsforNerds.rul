@@ -35,6 +35,9 @@ armors:
     tags:
       HAS_EXTENDED_FRONT_SHIELD: 1
 
+  - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_MEDICAE
+    tags:
+      HAS_EXTENDED_FRONT_SHIELD: 1
 
 extended:
   tags:
@@ -48,6 +51,11 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
       GravPercentage: int
     RuleArmor:
@@ -61,8 +69,9 @@ extended:
 
 
   scripts:
-    statsForNerdsArmor: 
-      - offset: 22 
+    statsForNerdsArmor:
+      - new: ROSIGMA_sFNA_stats_for_nerds
+        offset: 22
         code: |
           var int temp1;
           var int temp2;
@@ -103,7 +112,8 @@ extended:
           return;
 
     statsForNerdsItem:
-      - offset: 22 
+      - new: ROSIGMA_sFNI_stats_for_nerds
+        offset: 22
         code: |
           var int temp;
           rule.getTag temp Tag.ITEM_RECOIL;
@@ -134,6 +144,22 @@ extended:
           if gt temp 0;
             stats_state.addIntRow "STR_MELEE_POWER_BONUS" temp;
           end;
+          rule.getTag temp Tag.ITEM_AIMED_ACCURACY_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AIMED_ACCURACY_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_ACCURACY_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_AUTO_ACCURACY_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AUTO_ACCURACY_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE;
+          if gt temp 0;
+            stats_state.addTextRow "STR_POWER_BONUS_PERCENTILE" "STR_YES";
+          end;
           rule.getTag temp Tag.ITEM_HEAT_MAX_LEVEL;
           if gt temp 0;
             stats_state.addIntRow "STR_MAX_HEAT_LEVEL" temp;
@@ -150,6 +176,6 @@ extended:
           if gt temp 0;
             stats_state.addIntRow "STR_GRAVPERCENTAGE" temp;
           end;
-          
+
 
           return;

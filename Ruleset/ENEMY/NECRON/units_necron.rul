@@ -1,3 +1,12 @@
+extended:
+  tags:
+    RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+
 units:
   - type: STR_NECRON_WARRIOR_REVIVES  #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -14,7 +23,7 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 65
-    armor: STR_NECRON_WARRIOR_ARMOR_REVIVES 
+    armor: STR_NECRON_WARRIOR_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
     value: 5
@@ -30,7 +39,7 @@ units:
       - - STR_GAUSS_FLAYER
       - - STR_GAUSS_FLAYER
       - - STR_GAUSS_FLAYER
-      
+
   - type: STR_NECRON_IMORTAL_REVIVES  #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
     rank: STR_LIVE_SOLDIER
@@ -46,7 +55,7 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 35
-    armor: STR_NECRON_IMORTAL_ARMOR_REVIVES 
+    armor: STR_NECRON_IMORTAL_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
     value: 5
@@ -62,7 +71,7 @@ units:
       - - STR_GAUSS_BLASTER
       - - STR_GAUSS_BLASTER
       - - STR_GAUSS_BLASTER
-      
+
   - type: STR_NECRON_DEATHMARK_REVIVES  #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
     rank: STR_LIVE_SOLDIER
@@ -78,7 +87,7 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 15
-    armor: STR_NECRON_DEATHMARK_ARMOR_REVIVES 
+    armor: STR_NECRON_DEATHMARK_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
     value: 5
@@ -95,7 +104,7 @@ units:
       - - STR_SYNAPTIC_DISINTEGRATOR
       - - STR_SYNAPTIC_DISINTEGRATOR
       - - STR_SYNAPTIC_DISINTEGRATOR
-      
+
   - type: STR_NECRON_LYCHGUARD_REVIVES #STR_NECRON_LYCHGUARD_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
     rank: STR_LIVE_COMMANDER
@@ -111,13 +120,13 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 75
-    armor: STR_NECRON_LYCHGUARD_ARMOR_REVIVES 
+    armor: STR_NECRON_LYCHGUARD_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
     value: 5
     deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
     intelligence: 6
-    spawnUnit: STR_NECRON_LYCHGUARD 
+    spawnUnit: STR_NECRON_LYCHGUARD
     canPanic: false
     canBeMindControlled: false
     aggression: 1
@@ -127,7 +136,7 @@ units:
       - - STR_HYPERPHASESWORD
       - - STR_HYPERPHASESWORD
       - - STR_HYPERPHASESWORD
-      
+
   - type: STR_NECRON_WARRIOR
     stats:
       health: 60 # was 100, easier to use overKill this way
@@ -161,7 +170,7 @@ units:
       - - STR_SYNAPTIC_DISINTEGRATOR
         - STR_KILLPOINT_TOKEN_10
 
-  - type: STR_NECRON_LYCHGUARD 
+  - type: STR_NECRON_LYCHGUARD
     stats:
       health: 200 # was 100
     builtInWeaponSets:
@@ -172,7 +181,7 @@ units:
       - - STR_HYPERPHASESWORD
         - STR_KILLPOINT_TOKEN_10
 
-  - type: STR_NECRON_DESTROYER 
+  - type: STR_NECRON_DESTROYER
     stats:
       health: 50 # effective HP 500 # tried 200 but was too much # was 100
 
@@ -183,7 +192,7 @@ armors:
     sideArmor: 70
     rearArmor: 40
     underArmor: 45
-    
+
   - type: STR_NECRON_WARRIOR_ARMOR_REVIVES      #NECRON WARRIOR
     visibilityAtDay: 40
     visibilityAtDark: 40
@@ -191,6 +200,8 @@ armors:
     fearImmune: true
     painImmune: true
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     spriteSheet: NECRONDR1_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON1.SPK
@@ -224,7 +235,7 @@ armors:
     sideArmor: 80
     rearArmor: 70
     underArmor: 70
-    
+
   - type: STR_NECRON_LYCHGUARD_ARMOR_REVIVES        #NECRON WARRIOR
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 80
@@ -233,13 +244,14 @@ armors:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 12
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      INFECTION_RESIST: 100 #infection immune
     visibilityAtDay: 40
     visibilityAtDark: 40
     bleedImmune: true
     fearImmune: true
     painImmune: true
     zombiImmune: true
-    spriteSheet: NECRONDR4_REVIVE.PCK 
+    spriteSheet: NECRONDR4_REVIVE.PCK
     deathFrames: 5
     spriteInv: NECRON4.SPK
     corpseBattle:
@@ -274,7 +286,7 @@ armors:
     rearArmor: 40
     underArmor: 45
     drawingRoutine: 0
-    
+
   - type: STR_NECRON_IMORTAL_ARMOR_REVIVES       #NECRON WARRIOR
     visibilityAtDay: 40
     visibilityAtDark: 40
@@ -282,6 +294,8 @@ armors:
     fearImmune: true
     painImmune: true
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     spriteSheet: NECRONDR2_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON2.SPK
@@ -311,7 +325,7 @@ armors:
 
   - type: STR_NECRON_DEATHMARK_ARMOR
     overKill: 0.4
-    
+
   - type: STR_NECRON_DEATHMARK_ARMOR_REVIVES      #NECRON WARRIOR
     visibilityAtDay: 60
     visibilityAtDark: 60
@@ -319,6 +333,8 @@ armors:
     fearImmune: true
     painImmune: true
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     spriteSheet: NECRONDR3_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON3.SPK

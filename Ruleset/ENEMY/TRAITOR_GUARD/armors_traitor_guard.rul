@@ -1,3 +1,13 @@
+extended:
+  tags:
+    RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
+      ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+
 armors:
   - type: STR_CHAOS_HERETEK_ARMOR
     visibilityAtDay: 40
@@ -57,13 +67,15 @@ armors:
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
-    specialWeapon: STR_EXPLOSIVE_COLLAR_DUMMY
-    
+    tags:
+      ARMOR_IS_EXPLODE_ON_DEATH: 1 #used for bomberman scripts
+      ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit
+
   - type: STR_DESERTER_SOLDIER_FEM_ARMOR
     visibilityAtDay: 30
     visibilityAtDark: 20
     spriteSheet: DeserterGuardFem.PCK
-    spriteInv: DeserterGuardFemINV.SPK 
+    spriteInv: DeserterGuardFemINV.SPK
     corpseBattle:
       - STR_DESERTER_SOLDIER_CORPSE
     frontArmor: 15
@@ -84,7 +96,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
- 
+
   - type: STR_IRON_GUARD_ARMOR
     visibilityAtDay: 30
     visibilityAtDark: 20
@@ -111,7 +123,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    
+
   - type: STR_DESERTER_SCOUT_FEMALE_ARMOR
     visibilityAtDay: 35
     visibilityAtDark: 20
@@ -147,7 +159,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    
+
   - type: STR_DESERTER_GUARD_BASIC_FLAKARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
@@ -203,7 +215,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    
+
   - type: STR_DESERTER_GUARD_OFFICER_ARMOR # worn by Leader + Commander
     visibilityAtDay: 30
     visibilityAtDark: 25 #night vision augmented
@@ -268,9 +280,6 @@ armors:
     builtInWeapons:
       - STR_PSYKER_STAFF
     recovery:
-      energy:
-        energyRegen: 1.0
-        psiSkill: 0.2
       morale:
         flatOne: 1.0
         psiSkill: 0.035
@@ -293,7 +302,9 @@ armors:
     drawingRoutine: 4 #havoc
     bleedImmune: true
     painImmune: true
-    zombiImmune: true 
+    zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     damageModifier: #CSERVITOR ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -325,7 +336,9 @@ armors:
     drawingRoutine: 4 #havoc
     bleedImmune: true
     painImmune: true
-    zombiImmune: true 
+    zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     damageModifier: #CSERVITOR ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -340,7 +353,7 @@ armors:
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
- 
+
   - type: STR_TRAITOR_CHIMERA_TURRET_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -348,6 +361,8 @@ armors:
     antiCamouflageAtDark: 6
     heatVision: 30 #% of smoke that is ignored by superior sensors
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -577,7 +592,7 @@ armors:
 
         return power part side;
 
-  - type: STR_TRAITORGUARD_OGRYN_ARMOR 
+  - type: STR_TRAITORGUARD_OGRYN_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 10
@@ -663,7 +678,7 @@ armors:
       - 0.0 #SMOKE
       - 0.8 #IMPACT
       - 1.2 #MELTA
-    loftempsSet: [ 3 ] 
+    loftempsSet: [ 3 ]
 
   - type: STR_BLACKSTONE_JUMP_ARMOR
     spriteSheet: blackstone_jumptrooperBS.PCK
@@ -710,7 +725,7 @@ armors:
         unit.getGender isFemale;
 
         set numOfFrames 6;
-    
+
 
         unit.getId temp;
 
@@ -721,7 +736,7 @@ armors:
 
         if eq blit_part blit_torso; # if torso to be drawn
             if and eq walking 0 eq floating 1;
-              
+
               set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
               add sprite_index temp;
               if neq 0 isFemale;
@@ -735,7 +750,7 @@ armors:
 
         add sprite_index sprite_offset; # add direction
 
-        return sprite_index;  
+        return sprite_index;
 
   - type: STR_BLACKSTONE_ARMOR_SNIPER
     visibilityAtDay: 40
@@ -744,7 +759,7 @@ armors:
     antiCamouflageAtDark: -10
     heatVision: 25
     spriteSheet: BLACKSTONE_ARMOR_SNIPER.PCK
-    spriteInv: BLACKSTONE_SNIPER_INV 
+    spriteInv: BLACKSTONE_SNIPER_INV
     corpseBattle:
       - STR_BLACKSTONE_STORMTROOPER_SNIPER_CORPSE
     frontArmor: 60
@@ -766,8 +781,8 @@ armors:
       - 0.0 #SMOKE
       - 0.8 #IMPACT
       - 1.2 #MELTA
-    loftempsSet: [ 3 ] 
-    
+    loftempsSet: [ 3 ]
+
     #Tzeentch Traitor Guard
   - type: STR_TZEENTCH_TRAITORGUARD_BASIC_ARMOR
     visibilityAtDay: 40
@@ -865,7 +880,7 @@ armors:
     antiCamouflageAtDark: 6
     heatVision: 10
     spriteSheet: tzeentchguardcloakBS.PCK
-    spriteInv: TZFSCOUT_INV.SPK 
+    spriteInv: TZFSCOUT_INV.SPK
     forcedTorso: 2
     corpseBattle:
       - STR_TZEENTCH_TRAITORGUARD_SCOUT_CORPSE

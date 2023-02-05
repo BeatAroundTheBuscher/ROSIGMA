@@ -1,3 +1,10 @@
+extended:
+  tags:
+    RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
 armors:
   - type: ORK_TURRET_ARMOR
     visibilityAtDay: 40
@@ -30,6 +37,8 @@ armors:
     visibilityAtDark: 20
     allowInv: false
     zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -136,8 +145,8 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 10 #tech
-    spriteSheet: Burnaboyz.PCK 
-    spriteInv: ORKBURNABOYZINV 
+    spriteSheet: Burnaboyz.PCK
+    spriteInv: ORKBURNABOYZINV
     corpseBattle:
       - STR_ORKBURNABOY_CORPSE
     frontArmor: 60
@@ -160,13 +169,13 @@ armors:
       - 0.6 #MELTA
     loftempsSet: [ 3 ]
   - type: STR_ORK_FLASHGITZ_ARMOR
-    visibilityAtDay: 40 
+    visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20 #tech
-    spriteSheet: ORKFlashgitz.PCK 
+    spriteSheet: ORKFlashgitz.PCK
     spriteInv: FlashgitzINV.SPK
     corpseBattle:
-      - STR_FLASHGITZ_CORPSE 
+      - STR_FLASHGITZ_CORPSE
     frontArmor: 80
     sideArmor: 70
     rearArmor: 45
@@ -218,9 +227,9 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 20
     spriteSheet: STORMBOYZ.PCK
-    spriteInv: ORKSTORMBOYZINV.SPK 
+    spriteInv: ORKSTORMBOYZINV.SPK
     corpseBattle:
-      - STR_ORK_STORMBOY_CORPSE 
+      - STR_ORK_STORMBOY_CORPSE
     frontArmor: 30
     sideArmor: 20
     rearArmor: 10
@@ -244,7 +253,7 @@ armors:
   - type: STR_ORK_BIKE_ARMOR            #ORK WARBIKE
     visibilityAtDay: 40
     visibilityAtDark: 20
-    spriteSheet: ORKBIKE.PCK 
+    spriteSheet: ORKBIKE.PCK
     allowInv: true #false?
     fearImmune: true
     bleedImmune: true
@@ -253,17 +262,17 @@ armors:
     spriteInv: ORKBIKEINV.SPK
     corpseGeo: STR_ORK_BIKE_CORPSE
     stats:
-       tu: 50
-       stamina: 50
-       firing: -10
-       health: 0
-       bravery: 0 #always multiples of 10
-       reactions: 0
-       throwing: 0
-       strength: 0
-       psiStrength: 0
-       psiSkill: 0
-       melee: 0
+      tu: 50
+      stamina: 50
+      firing: -10
+      health: 0
+      bravery: 0 #always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
     corpseBattle:
       - ORKBIKE_CORPSE1
       - ORKBIKE_CORPSE2
@@ -324,10 +333,10 @@ armors:
     camouflageAtDay: -18 # you need to be 12 tiles closer than max vision range to see this unit in the light
     camouflageAtDark: -12 # you need to be 8 tiles closer than max vision range (at night!) to see this unit in the dark
     heatVision: 20 #tech
-    spriteSheet: ORKtankhuntazbattlesprite.PCK 
+    spriteSheet: ORKtankhuntazbattlesprite.PCK
     spriteInv:  ORKTankhuntaz.SPK
     corpseBattle:
-      - STR_ORK_TANKBUSTAZ_CORPSE 
+      - STR_ORK_TANKBUSTAZ_CORPSE
     frontArmor: 45
     sideArmor: 35
     rearArmor: 15
@@ -405,9 +414,9 @@ armors:
     antiCamouflageAtDark: 10
     heatVision: 30 #tech
     spriteSheet: ORKKOMMANDO.PCK #Recolored version, Advanced Nobz in progress
-    spriteInv: ORKKOMMANDOLIGHTINV.SPK 
+    spriteInv: ORKKOMMANDOLIGHTINV.SPK
     corpseBattle:
-      - STR_ORKKOMMANDO_CORPSE 
+      - STR_ORKKOMMANDO_CORPSE
     frontArmor: 25
     sideArmor: 15
     rearArmor: 10
@@ -427,17 +436,17 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
-    meleeDodge: 
-      reactions: 0.2 
+    meleeDodge:
+      reactions: 0.2
   - type: STR_ORK_ARMORMEGA #Meganobz Mega Armour
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20 #tech
     spriteSheet: ORKDRMEGANOB.PCK
     spriteInv: MeganobINV.SPK
-    moveSound: {mod: 40k, index: 700} 
+    moveSound: {mod: 40k, index: 700}
     corpseBattle:
-      - STR_MEGANOB_CORPSE 
+      - STR_MEGANOB_CORPSE
     stats:
        tu: 20
        stamina: 30
@@ -475,9 +484,9 @@ armors:
     heatVision: 30 #smell
     spriteSheet: SQUIG.PCK
     spriteInv: MeganobINV.SPK
-    moveSound: {mod: 40k, index: 700} 
+    moveSound: {mod: 40k, index: 700}
     corpseBattle:
-      - STR_SQUIG_CORPSE 
+      - STR_SQUIG_CORPSE
     stats:
        tu: 20
        stamina: 30
@@ -522,7 +531,7 @@ armors:
         unit.isWalking walking;
 
         set numOfFrames 8;
-    
+
         unit.getId temp;
 
         add temp anim_frame;
@@ -542,10 +551,10 @@ armors:
     visibilityAtDay: 45
     visibilityAtDark: 20
     heatVision: 30 #antismoke vision, psyker based
-    spriteSheet: ORKWYRDBOY.PCK 
+    spriteSheet: ORKWYRDBOY.PCK
     spriteInv: ORKWYRDBOYINV.SPK
     corpseBattle:
-      - STR_ORKWEIRDBOY_CORPSE 
+      - STR_ORKWEIRDBOY_CORPSE
     frontArmor: 30
     sideArmor: 20
     rearArmor: 15
@@ -570,9 +579,9 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 30 #antismoke vision, tech based
-    spriteSheet: ORKWARBOSS.PCK 
+    spriteSheet: ORKWARBOSS.PCK
     spriteInv: WarbossINV.SPK
-    moveSound: {mod: 40k, index: 700} 
+    moveSound: {mod: 40k, index: 700}
     corpseGeo: STR_ORK_WARBOSS_CORPSE
     stats:
        tu: 20
@@ -590,7 +599,7 @@ armors:
       - ORKWARBOSS_CORPSE1
       - ORKWARBOSS_CORPSE2
       - ORKWARBOSS_CORPSE3
-      - ORKWARBOSS_CORPSE4    
+      - ORKWARBOSS_CORPSE4
     frontArmor: 170
     sideArmor: 150
     rearArmor: 120
@@ -663,10 +672,10 @@ armors:
   - type: STR_DEATHSKULL_ORK_BOY_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
-    spriteSheet: ORKDEATHSKULL_BOYZ_BS.PCK 
+    spriteSheet: ORKDEATHSKULL_BOYZ_BS.PCK
     spriteInv: DEATHSKULL_BOY_INV.SPK
     corpseBattle:
-      - STR_DEATHSKULL_ORK_BOY_CORPSE 
+      - STR_DEATHSKULL_ORK_BOY_CORPSE
     frontArmor: 30
     sideArmor: 20
     rearArmor: 15
@@ -690,10 +699,10 @@ armors:
   - type: STR_DEATHSKULL_ORK_KAP_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
-    spriteSheet: ORKDEATHSKULL_KAPBOYZ_BS.PCK 
+    spriteSheet: ORKDEATHSKULL_KAPBOYZ_BS.PCK
     spriteInv: DEATHSKULL_KAPBOYZ_INV.SPK
     corpseBattle:
-      - STR_DEATHSKULL_ORK_KAP_CORPSE 
+      - STR_DEATHSKULL_ORK_KAP_CORPSE
     frontArmor: 40
     sideArmor: 30
     rearArmor: 15
@@ -717,10 +726,10 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 10
-    spriteSheet: ORK2DEATHSKULLLOOTAS_BS.PCK 
+    spriteSheet: ORK2DEATHSKULLLOOTAS_BS.PCK
     spriteInv: DEATHSKULL_LOOTAS_INV.SPK
     corpseBattle:
-      - STR_DEATHSKULL_ORK_NOB_CORPSE 
+      - STR_DEATHSKULL_ORK_NOB_CORPSE
     frontArmor: 70
     sideArmor: 55
     rearArmor: 45
@@ -744,10 +753,10 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 10
-    spriteSheet: ORK3DEATHSKULLARDNOBZ_BS.PCK 
+    spriteSheet: ORK3DEATHSKULLARDNOBZ_BS.PCK
     spriteInv: DEATHSKULL_LOOTANOB_INV.SPK
     corpseBattle:
-      - STR_DEATHSKULL_ORK_ARDNOB_CORPSE 
+      - STR_DEATHSKULL_ORK_ARDNOB_CORPSE
     frontArmor: 100
     sideArmor: 70
     rearArmor: 55
@@ -776,9 +785,9 @@ armors:
     heatVision: 20 #tech
     spriteSheet: MEGANOB_DEATHSKULL_BS.PCK
     spriteInv: MEGANOB_DEATHSKULL_INV.SPK
-    moveSound: {mod: 40k, index: 700} 
+    moveSound: {mod: 40k, index: 700}
     corpseBattle:
-      - STR_DEATHSKULL_ORK_MEGANOB_CORPSE 
+      - STR_DEATHSKULL_ORK_MEGANOB_CORPSE
     stats:
        tu: 20
        stamina: 30

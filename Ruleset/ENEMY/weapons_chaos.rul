@@ -2,9 +2,14 @@
 extended:
   tags:
     RuleItem:
-      ITEM_IS_FOR_BOMBER: int
+#bomb/kamikazi scripts
       ITEM_IS_BOMB: int
-
+      ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death?
+      ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
+#infection system tags
+      INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 #vampiric on kill; weapons
       TAG_HP_RETURNED_ON_KILL: int
       TAG_ENERGY_RETURNED_ON_KILL: int
@@ -18,14 +23,15 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_MORALE: int
       YTAG_DAMAGE_RETURNED_AS_STUN: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: int
-#vampiric on damage; armors
-    RuleArmor:
-      YTAG_DAMAGE_RETURNED_AS_HP_BUFF: int
-      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: int
-      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: int
-      YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
-      YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
-      YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
+#aim mode damage bonuses
+      ITEM_AUTO_POWER_BONUS: int
+      ITEM_SNAP_POWER_BONUS: int
+      ITEM_AIMED_POWER_BONUS: int
+      ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
 
 
 
@@ -190,8 +196,6 @@ items:
     fireSound: {mod: 40k, index: 741}
     accuracySnap: 70
     accuracyAimed: 90
-    accuracyMultiplier:
-      firing: [0.5, 0.005]
     tuSnap: 35
     tuAimed: 65
     snapRange: 33
@@ -204,6 +208,12 @@ items:
     invHeight: 3
     bulletSpeed: 50
     listOrder: 11050
+    kneelBonus: 130
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_LASGUN_CLIP_HOTSHOT_CHAOS
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
@@ -1011,10 +1021,6 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
       RandomWound: false
     accuracyMelee: 110
@@ -1024,6 +1030,9 @@ items:
     tuMelee: 14
     flatMelee:
       time: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 5 #tiny chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
@@ -1355,12 +1364,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     meleeMultiplier: #heavy weapon; relies on strength as well as skill
       melee: 0.7
       strength: 0.3
@@ -1373,7 +1377,10 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 15253
-    specialChance: 50 #high chance of zombifying its victims
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 20 #high chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -1715,6 +1722,10 @@ items:
     bulletSpeed: 30
     attraction: 5
     listOrder: 10141
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_PISTOL_CLIP_BLIGHT #              10210                    ToStun
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     size: 0.1
@@ -1731,11 +1742,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     explosionSpeed: 5
     power: 50 #10 less than boltpistol)
     damageType: 1
@@ -1744,6 +1751,10 @@ items:
     armor: 30
     attraction: 1
     listOrder: 10142
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_BOLTERN_LIGHT #LIGHT BOLTER NURGLE CHAOS
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requires:
@@ -1774,6 +1785,10 @@ items:
     bulletSpeed: 50
     attraction: 1
     listOrder: 10350
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_BOLTERN_LIGHT_GRENADELAUNCHER #LIGHT BOLTER NURGLE CHAOS with grenade launcher
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requires:
@@ -1790,10 +1805,10 @@ items:
     compatibleAmmo:
       - STR_LIGHT_BOLTER_AMMO_NURGLE
     ammo:
-     0:
-      compatibleAmmo: [STR_LIGHT_BOLTER_AMMO_NURGLE]
-     1:
-      compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40]
+      0:
+        compatibleAmmo: [STR_LIGHT_BOLTER_AMMO_NURGLE]
+      1:
+        compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40]
     confAuto: #Bolter
       ammoSlot: 0 #Bolter
       name: STR_AUTOFIRE
@@ -1823,13 +1838,16 @@ items:
     bulletSpeed: 50
     attraction: 1
     listOrder: 10351
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_BLIGHT_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
     categories: [ STR_CAT_GRENADES, STR_CAT_NURGLE]
     size: 0.1
     weight: 3
     requiresBuy:
-     - STR_ALIENS_ONLY
+      - STR_ALIENS_ONLY
     requires:
       - STR_ALIENS_ONLY
     costSell: 250
@@ -1843,12 +1861,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 1.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     battleType: 2 #4 is Grenade, but these are not primed
     fuseType: -2
     spawnUnit: STR_NURGLINGS
@@ -1860,7 +1873,10 @@ items:
     clipSize: 3
     blastRadius: 3
     listOrder: 10352
-    specialChance: 10 #low chance of zombifying its victims, lower due to having AoE
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 5 #low chance of zombifying its victims, lower due to having AoE
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2204,6 +2220,9 @@ items:
     clipSize: 3
     blastRadius: 4
     listOrder: 10353
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_LIGHT_BOLTER_AMMO_NURGLE
     categories: [STR_CAT_BOLTER]
@@ -2222,12 +2241,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 1.0
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     explosionSpeed: 5
     power: 50
     damageType: 1
@@ -2237,6 +2251,11 @@ items:
     invWidth: 1
     invHeight: 2
     listOrder: 10295
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+
   - type: STR_BOLTERN #BOLTER NURGLE CHAOS   10350
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requires:
@@ -2267,6 +2286,9 @@ items:
     bulletSpeed: 50
     attraction: 1
     listOrder: 10350
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #Inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_HEAVY_BOLTER_CHAOSNURGLE     #CHAOS NURGLE HBOLTER ROSEMOD
     categories: [STR_CAT_BOLTER]
@@ -2306,11 +2328,15 @@ items:
     bulletSpeed: 75
     attraction: 8
     listOrder: 10529
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_AC_N_AMMO #HEAVYBOLTER Nurgle Ammo                 12030
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
     size: 0.1
     requires:
-     - STR_ALIENS_ONLY
+      - STR_ALIENS_ONLY
     costSell: 1180
     weight: 20
     bigSprite: 2600
@@ -2322,11 +2348,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     damageType: 8
     clipSize: 80
     battleType: 2
@@ -2335,6 +2357,9 @@ items:
     invHeight: 2
     autoShots: 6
     listOrder: 10530
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_NURGLE_ROCKET_LAUNCHER #                12120
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
@@ -2365,6 +2390,9 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12111
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_PLAGUE_SPEWER
     categories: [STR_CAT_TACTICAL, STR_CAT_CHAOS]
@@ -2431,12 +2459,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.5
-      ToWound: 1.0 #higher than normal plague weapons
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
       FixRadius: 3 #animation related+balance
     clipSize: 100
     vaporColorSurface: 12
@@ -2447,7 +2470,10 @@ items:
     invHeight: 1
     #bulletSpeed: 50
     #explosionSpeed: 10
-    specialChance: 33 #high chance of zombifying its victims; it spews plague, adjusted chance due to being AoE
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 10 #high chance of zombifying its victims; it spews plague, adjusted chance due to being AoE
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -2811,12 +2837,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     explosionSpeed: 5
     power: 55
     damageType: 1
@@ -2826,6 +2847,10 @@ items:
     invWidth: 1
     invHeight: 2
     listOrder: 10450
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_RIFLE_CLIP_R #          10460                      ToStun
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requires:
@@ -3016,7 +3041,7 @@ items:
     invWidth: 1
     invHeight: 3
     armor: 200
-    recover: true
+    recover: false
     skillApplied: true
     strengthApplied: false
     meleeMultiplier:
@@ -3244,8 +3269,6 @@ items:
     weight: 7
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS
-    accuracySnap: 66
-    accuracyAimed: 80
     tuSnap: 25
     tuAimed: 33
     battleType: 1
@@ -3253,9 +3276,6 @@ items:
     invWidth: 1
     invHeight: 3
     listOrder: 10605
-    aimRange: 12
-    snapRange: 9
-    dropoff: 5
 
   - type: STR_FLAMETHROWER_CHAOS #                     10505
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_CHAOS]
@@ -3281,8 +3301,9 @@ items:
     autoShots: 6
     attraction: 7
     listOrder: 10505
+
   - type: STR_FLAMETHROWERTZ #                        10510   TZEENTCH
-    categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_CHAOS]
+    categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_CHAOS, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
@@ -3305,6 +3326,9 @@ items:
     autoShots: 6
     attraction: 7
     listOrder: 10510
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_AUTO_CANNON_CHAOSRETRIBUTOR                      #CHAOS Retributor Pattern ROSEMOD
     categories: [STR_CAT_BOLTER]
@@ -3358,12 +3382,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     damageType: 3
     clipSize: 80
     battleType: 2
@@ -3374,6 +3393,9 @@ items:
     listOrder: 10526
     requires:
       - STR_ALIENS_ONLY
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_SNIPER_CHAOS  #SNIPER                    11905                         AIMED
     categories: [STR_CAT_SNIPER, STR_CAT_CHAOS]
@@ -3387,10 +3409,6 @@ items:
       - STR_HC_AP_AMMO
       - STR_HC_HE_AMMO
       - STR_HC_I_AMMO
-    accuracySnap: 55
-    accuracyAimed: 120
-    tuSnap: 45
-    tuAimed: 90
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -3398,7 +3416,12 @@ items:
     invHeight: 3
     listOrder: 11905
     bulletSpeed: 50
-    dropoff: 0
+    kneelBonus: 150
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_CHAOS_ROCKET_LAUNCHER #                 12110
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
@@ -3449,6 +3472,9 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12120
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_BLIGHT_ROCKET #                         12160
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
@@ -3464,11 +3490,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     clipSize: 1
     battleType: 2
     spawnUnit: STR_NURGLINGS
@@ -3479,7 +3501,10 @@ items:
     explosionHitSound: {mod: 40k, index: 832}
     hitAnimation: {mod: 40k, index: 120 } #Green EX
     listOrder: 12160
-    specialChance: 10 #low chance of zombifying its victims, adjusted down for AoE balance
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 5 #low chance of zombifying its victims, adjusted down for AoE balance
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -4153,12 +4178,7 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToHealth: 0.7
-      ToWound: 0.5
-      ToEnergy: 0.5
-      ToMorale: 0.5
-      ToStun: 0.3
       ToTime: 0.2
-      RandomWound: false
     accuracyMultiplier: #light weapon; relies on speed as well as skill
       melee: 0.7
       reactions: 0.3
@@ -4178,7 +4198,10 @@ items:
     flatRate: true
     attraction: 8
     listOrder: 15252
-    specialChance: 33 #high chance of Nurgle zombifying
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 20 #high chance of Nurgle zombifying
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -4522,27 +4545,6 @@ items:
     clipSize: -1
     recover: false
 
-
-  - type: STR_EXPLOSIVE_COLLAR_DUMMY
-    specialUseEmptyHand: true
-    fixedWeapon: true
-    recover: false
-    meleeSound: 2140
-    meleeHitSound: { mod: 40k, index: 0 }
-    power: 200 # for the AI to pick this
-    meleeAnimation: { mod: 40k, index: 0 }
-    damageType: 7
-    accuracyMelee: 200
-    tuMelee: 1
-    clipSize: -1
-    battleType: 3
-    meleeMultiplier:
-      melee: 0.0
-      flatHundred: 1.0
-    flatRate: true
-    tags:
-      ITEM_IS_FOR_BOMBER: 1
-
   - type: STR_EXPLOSIVE_COLLAR_CHAOS #frag                #4006
     bulletSprite: {mod: 40k, index: 22}
     fireSound: {mod: 40k, index: 491}
@@ -4554,17 +4556,20 @@ items:
     damageType: 3
     battleType: 4 # grenade
     recover: false
-    tuPrime: 999
+    tuThrow: 999 #only to be thrown via scripts
+    tuPrime: 999 #only to be thrown via scripts
+    throwRange: 1 #not meant to be thrown
     fixedWeapon: true
     isExplodingInHands: true
     hiddenOnMinimap: true
     defaultInventorySlot: STR_BELT
     tags:
       ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
 
 #Tzeentch
   - type: STR_CSERVITOR_HPLASMA  #Chaos servitor heavy plasma              12000
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_TZEENTCH]
     size: 0.3
     requires:
       - STR_ALIENS_ONLY
@@ -5042,3 +5047,13 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12120
+    tags:
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_STUB_RIFLE_CHAOS
+    compatibleAmmo:
+      - STR_STUB_GUN_AMMO
+      - STR_STUB_GUN_AMMO_HP
+      - STR_STUB_GUN_AMMO_AP
+      - STR_STUB_GUN_AMMO_WOUND

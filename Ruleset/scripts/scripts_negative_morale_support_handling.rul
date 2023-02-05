@@ -1,0 +1,35 @@
+extended:
+  scripts:
+    damageUnit:
+      # for units with effective >= 110 morale (which OXCE considers max)
+      # negative morale damage which should add to final morale will instead reduce it
+      # this script sets the gained morale to the flat value when damageType is support
+      - new: ROSIGMA_dU_negative_morale_support_handling
+        offset: 99 # goes last
+        code: |
+          # var int bravery;
+          # var int moraleDamage;
+          # var ptr RuleItem ruleDamagingItem;
+          # var ptr RuleDamageType ruleDamagingItemDamageType;
+
+          # unit.Stats.getBravery bravery;
+
+          # damaging_item.getRuleItem ruleDamagingItem;
+          # ruleDamagingItem.getDamageType ruleDamagingItemDamageType;
+          # ruleDamagingItemDamageType.getDamageToMorale moraleDamage orig_power;
+
+          if and eq damaging_type 0 le to_morale 0;
+            # debug_log "orig_power" orig_power;
+            # debug_log "moraleDamage" moraleDamage;
+            # debug_log "bravery" bravery;
+            # debug_log "unit" unit;
+            # debug_log "attacker" attacker;
+            # debug_log "to_morale was" to_morale;
+            # set to_morale 0;
+            mul to_morale -1; # turn morale value positive for addMorale
+            unit.addMorale to_morale;
+            set to_morale 0; # morale was handled already
+            # debug_log "to_morale is" to_morale;
+            
+          end;
+          return;

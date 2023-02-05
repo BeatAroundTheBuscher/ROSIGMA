@@ -1,0 +1,73 @@
+
+extended:
+  tags:
+    RuleArmor:
+      UNIT_IS_BOMBER_MAN: int
+
+
+  scripts:
+    hitUnit:
+      - offset: 20
+        code: |
+          debug_log "debug hitUnit triggered";
+          debug_log "attacker: " attacker;
+          debug_log "unit: " unit;
+          debug_log "power: " power;
+          debug_log "orig_power: " orig_power;
+          debug_log "damaging_type: " damaging_type; 
+          debug_log "damaging_item: " damaging_item;
+          debug_log "weapon_item: " weapon_item;
+
+          return power part side;
+
+    damageUnit:
+      - offset: 20
+        code: |
+          debug_log "debug damageUnit triggered";
+          debug_log "attacker: " attacker;
+          debug_log "unit: " unit;
+          debug_log "currPower: " currPower;
+          debug_log "orig_power: " orig_power;
+          debug_log "damaging_type: " damaging_type; 
+          debug_log "damaging_item: " damaging_item;
+          debug_log "weapon_item: " weapon_item;
+          return;
+
+    damageSpecialUnit:      
+      - offset: 20
+        code: |
+          var ptr RuleUnit myRuleUnit;
+          var ptr RuleArmor myRuleArmor;
+          var int myTag;
+
+          debug_log "debug damageSpecialUnit triggered";
+          debug_log "attacker: " attacker;
+          debug_log "unit: " unit;
+          # debug_log "currPower: " currPower;
+          debug_log "orig_power: " orig_power;
+          debug_log "damaging_type: " damaging_type; 
+          debug_log "damaging_item: " damaging_item;
+          debug_log "weapon_item: " weapon_item;
+
+          if eq damaging_item null;
+            # attacker.getRuleUnit myRuleUnit; # doesn't exist
+            attacker.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag myTag Tag.UNIT_IS_BOMBER_MAN;
+            if eq myTag 1;
+              debug_log "Bomber man found";
+              debug_log "Bomber man found";
+              debug_log "Bomber man found";
+              debug_log "Bomber man found";
+            end;
+
+          end;
+
+
+
+          return;
+
+armors:
+  - type: STR_CHAOS_PENETANTE_ARMOR
+    tags:
+      UNIT_IS_BOMBER_MAN: 1
+      

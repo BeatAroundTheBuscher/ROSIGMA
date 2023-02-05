@@ -12,6 +12,7 @@ items:
     specialIconSprite: 205
     tags:
       ActivateFlight: 1
+    specialUseEmptyHand: true
 
   - type: STR_JUMP_BAYONET
     medikitType: 1
@@ -43,6 +44,7 @@ items:
     flatMelee:
       time: true
     clipSize: -1
+    specialUseEmptyHand: true
 
   - type: STR_JUMP_CLAWS
     medikitType: 1
@@ -74,86 +76,107 @@ items:
     flatMelee:
       time: true
     clipSize: -1
+    specialUseEmptyHand: true
+
+  - type: STR_JUMP_GAUNTLET_PLUS
+    medikitType: 1
+    medikitActionName: STR_ACTIVATE_FLIGHT
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: 205
+    tags:
+      ActivateFlight: 1
+    #*** Melee punch
+    flatMelee:
+      time: true
+    clipSize: -1
+    meleeHitSound: {mod: 40k,index: 100}
+    meleeAnimation: 0
+    meleePower: 50
+    meleeType: 7
+    accuracyMelee: 90
+    meleeMultiplier:
+      melee: 1.0
+    tuMelee: 12
+    specialUseEmptyHand: true
 
 armors:
   - type: STR_CHAOS_RAPTOR_ARMOR #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ASS_ARMOR_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ASS_ARMOR_HONOR_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV1_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV2_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 2
       MaxCoolDown: 2
   - type: STR_MKX_INC_LV3_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_MKX_INC_LV4_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 4
       MaxCoolDown: 2
   - type: STR_MKX_INC_LV5_UC #ASSAULT
-    movementType: 0
-    specialWeapon: STR_JUMP_PACK
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS
     tags:
       MaxFlight: 5
       MaxCoolDown: 1
   - type: STR_ADEPTAS_ARMORS_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ADEPTAS_ARMORCEL_UC #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_PACK
     tags:
       MaxFlight: 2
       MaxCoolDown: 1
   - type: STR_ELYSIAN_JUMP_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_BAYONET
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
   - type: STR_ELYSIAN_JUMP_MEDIC_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_BAYONET
     tags:
       MaxFlight: 1
       MaxCoolDown: 2
   - type: STR_FELINID_JUMP_ARMOR #ASSAULT
-    movementType: 0
     specialWeapon: STR_JUMP_CLAWS
     tags:
       MaxFlight: 1
       MaxCoolDown: 1
+  - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_JUMPPACK #ASSAULT
+    movementType: 0
+    specialWeapon: STR_JUMP_BAYONET
+    tags:
+      MaxFlight: 1
+      MaxCoolDown: 1
+
 extended:
   tags:
     BattleUnit:
@@ -166,37 +189,52 @@ extended:
       ActivateFlight: int
   scripts:
 
+
+
+
     newTurnUnit:
-    - offset: 1
+    - new: ROSIGMA_nTU_limited_flight
+      offset: 1
       code: |
         var int maxFlight;
-        var int maxCooldown;
         var int flightTime;
-        var int cooldownTime;
-        var int duration;
         var int faction;
         var int factionturn;
+        var int currentTurn;
+
+        var int temp1;
+
+
+        unit.getTag maxFlight Tag.MaxFlight;
+
+        if eq maxFlight 0;
+          return;
+        end;
 
         unit.getFaction faction;
         battle_game.getTurnSide factionturn;
 
-        unit.getTag maxFlight Tag.MaxFlight;
-        unit.getTag maxCooldown Tag.MaxCoolDown;
+        battle_game.getTurn currentTurn;
         unit.getTag flightTime Tag.FlightTime;
-        unit.getTag cooldownTime Tag.CooldownTime;
+
+
+
 
         if and eq faction FACTION_PLAYER eq factionturn FACTION_PLAYER;
           if gt flightTime 0;
-            if and ge turn flightTime;
+            if ge turn flightTime;
               unit.setMovementType movement_type_walk;
             end;
+          end;
+          if eq currentTurn 1;
+            unit.setMovementType movement_type_walk;
           end;
         end;
         return;
 
     healUnit:
-
-    - offset: 1
+    - new: ROSIGMA_healU_limited_flight
+      offset: 1
       code: |
         var int activateFlight;
         var int maxFlight;
@@ -216,13 +254,13 @@ extended:
           if lt turn flightTime;
             set duration flightTime;
             sub duration turn;
-            battle_game.flashMessage "Flight Duration Left: {0}" duration;
+            battle_game.flashMessage "STR_SCRIPT_FLIGHT_DURATION_LEFT" duration;
             return;
           end;
           if lt turn cooldownTime;
             set duration cooldownTime;
             sub duration turn;
-            battle_game.flashMessage "Cooldown Duration Left: {0}" duration;
+            battle_game.flashMessage "STR_SCRIPT_COOLDOWN_DURATION_LEFT" duration;
             return;
           end;
 

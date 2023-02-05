@@ -10,6 +10,11 @@ extended:
       ITEM_SNAP_POWER_BONUS: int
       ITEM_AIMED_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
+      ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
+
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
       ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
@@ -17,7 +22,8 @@ extended:
     reactionUnitReaction: # do not react at max heat
       # but doesn't work perfectly yet as how value for getAmmoQuantity isn't being updated
       # when shooting multiple times during one reactionUnitReaction
-      - offset: 20
+      - new: ROSIGMA_rUR_plasma_heat
+        offset: 20
         code: |
           var int temp;
           var int currentHeat;
@@ -333,7 +339,7 @@ items:
     bigSprite: 400
     tags:
       ITEM_HEAT_MAX_LEVEL: 7
-      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2 #improved dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
 
 

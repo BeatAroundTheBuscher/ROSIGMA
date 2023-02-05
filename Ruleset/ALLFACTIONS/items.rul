@@ -63,7 +63,7 @@ items:
     battleType: 4
     invWidth: 0
     invHeight: 0
-    hitAnimation: {mod: 40k, index: 136}
+    hitAnimation: {mod: 40k, index: 1992}
     explosionHitSound: {mod: 40k, index: 866}
     hiddenOnMinimap: true
     armor: 255
@@ -124,6 +124,13 @@ items:
     invHeight: 0
     battleType: 4
 
+  - type: STR_ORBITAL_BEACON_SPAWNER
+    spawnUnit: STR_ORBITAL_BEACON
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
   - type: STR_T_BOLTER_WEAPON
     weight: 1
     bigSprite: {mod: 40k, index: 655}
@@ -165,16 +172,31 @@ items:
   - delete: STR_TANK_ROCKET_LAUNCHER
   - delete: STR_HWP_ROCKETS # Free ammo now
 
-  - type: STR_TANK_ROCKET_LAUNCHER #Tarantula Sentry Weapon
+  - type: STR_TANK_ROCKET_LAUNCHER #Tarantula Sentry Weapon    2300
     categories: [STR_CAT_AUXILIARY]
+    requiresBuyBaseFunc: [IMPERIUM]
     size: 6
-    customItemPreviewIndex: {mod: 40k, index: 3}
+    customItemPreviewIndex: 3
     costBuy: 480000
     costSell: 360000
     monthlySalary: 60000
     transferTime: 96
+    weight: 1
+    bigSprite: {mod: 40k, index: 205}
+    floorSprite: {mod: 40k, index: 0}
+    handSprite: {mod: 40k, index: 0}
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    accuracyAimed: 115
+    tuAimed: 75
+    battleType: 1
+    fixedWeapon: true
+    waypoints: 5
+    invWidth: 2
+    invHeight: 3
     turretType: -1
     listOrder: 2300
+    clipSize: 8
 
   - type: STR_ALIEN_ALLOYS
     recoveryDividers:
@@ -214,7 +236,7 @@ items:
   - type: STR_LASPISTOL_CLIP_HOTSHOT
     requiresBuy:
       - STR_MASTER_CRAFTING_AMMO
-      
+
   - type: STR_ALLIED_DEVASTATOR_SPAWNER
     spawnUnit: STR_MARINE_DEVASTATOR_AI
     spawnUnitFaction: 2
@@ -234,24 +256,24 @@ items:
     armor: 255
     recover: false
     hiddenOnMinimap: true
-    
+
 #XENOTECH
-  - type: STR_TRIPLE_GAUSS_CANNON 
+  - type: STR_TRIPLE_GAUSS_CANNON
     requires:
       - STR_NECRONTECH_RESEARCH
-      
-  - type: STR_HYPERPHASESWORD        
+
+  - type: STR_HYPERPHASESWORD
     requires:
       - STR_NECRONTECH_RESEARCH
-      
+
   - type: STR_GAUSS_CANNON
     requires:
-      - STR_NECRONTECH_RESEARCH 
+      - STR_NECRONTECH_RESEARCH
 
   - type: STR_GAUSS_FLAYER
     requires:
       - STR_NECRONTECH_RESEARCH
- 
+
   - type: STR_SYNAPTIC_DISINTEGRATOR
     requires:
       - STR_NECRONTECH_RESEARCH
@@ -277,3 +299,65 @@ items:
     recover: true
     liveAlien: true
     costSell: 1000
+
+  - type: STR_ELECTRO_FLARE
+    weight: 2 # 3
+
+
+  - type: STR_NOT_AVAILABLE
+
+  - type: STR_ORBITAL_BEACON #kludge dummy weapon
+    categories: [STR_CAT_AUXILIARY]
+    size: 0
+    costSell: 0
+    weight: 1
+    floorSprite: 0
+    handSprite: 0
+    bigSprite: {mod: 40k, index: 23}
+    handSprite: {mod: 40k, index: 504}
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    battleType: 7
+    tuUse: 25
+    fixedWeapon: true
+    listOrder: 2500
+    turretType: 4
+    defaultInventorySlot: STR_LEFT_HAND
+
+  - type: STR_ORBITAL_STRIKE #HWP                           2500
+    categories: [STR_CAT_AUXILIARY]
+    size: 0
+    costSell: 0
+    weight: 1
+    bigSprite: {mod: 40k, index: 206}
+    floorSprite: 0
+    handSprite: 0
+    bulletSprite: -1
+    fireSound: {mod: 40k, index: 703}
+    accuracySnap: 0
+    accuracyAimed: 100
+    tuSnap: 0
+    tuAimed: 1
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    maxRange: 1
+    twoHanded: false
+    listOrder: 2500
+    hitSound: 0
+    hitAnimation: 0
+    power: 1000
+    damageType: 3
+    damageAlter:
+      RandomType: 3
+      ToTile: 1 #obliterate the earth
+      ToArmorPre: 1 #annihilate the armor
+      FireThreshold: 1 #incinerate the sea
+      FixRadius: 200 #melt the map
+      ToMorale: 5 #mash the mind
+      RadiusReduction: 5
+      IgnoreOverKill: false #leave no trace; this is the end of days
+    clipSize: 1
+    defaultInventorySlot: STR_RIGHT_HAND
