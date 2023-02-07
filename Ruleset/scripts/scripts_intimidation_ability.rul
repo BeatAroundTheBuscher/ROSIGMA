@@ -1,0 +1,63 @@
+extended:
+  tags:
+    RuleItem:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: int #TU damage multiplier 100 = baseline
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: int #morale damage multiplier 100 = baseline
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_intimidation
+        offset: 24
+        code: |
+          var int temp;
+          var int temp2;
+          var int moraleMultiplier; #percent of damage the triggering attack inflicts
+          var int damage;
+
+          set damage to_mana;
+          if le to_mana 0; # only proceed if we actually do damage
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. No damage dealt.";
+            return;
+          end;
+
+          unit.Stats.getBravery temp2;
+          if ge temp2 110; #Bravery 110+ units are immune to intimidation
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is fearless; Bravery:" temp2;
+            return;
+          end;
+
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
+
+          if le moraleMultiplier 0; #morale damage multiplier has to be greater than 0, otherwise abort
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
+            return;
+          end;
+
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Weapon:" weapon_item;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
+
+          set temp to_mana;
+          sub temp temp2; #subtract target Bravery from our power
+
+          if le temp 0; #if our net power after Bravery is subtracted is null or negative, abort.
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale:" temp;
+            return;
+          end;
+
+          #calculate target Morale; we bypass to_morale because high Bravery reduces damage too aggressively
+          muldiv temp moraleMultiplier 100; #calculate morale damage
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" temp;
+          unit.getMorale temp2;
+          sub temp2 temp;
+          limit_lower temp2 0;
+          unit.setMorale temp2; #apply Morale damages
+
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_TU_DAMAGE_MULTIPLIER;
+          if gt moraleMultiplier 0;
+            set temp2 temp; #set our damage to TU
+            muldiv temp2 moraleMultiplier 100;
+            add to_time temp; #apply TU damages
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp;
+          end;
+
+          return;
