@@ -517,27 +517,26 @@ extended:
 
           battle_game.getTag researchLevel Tag.RESEARCH_LEVEL_CURE;
           #set our research level
-          if le researchLevel 2; #we don't care about setting this if we've maxed out our research level
-            set researchLevel 1;
+          if lt researchLevel 20; #we don't care about setting this if we've maxed out our research level
+            set researchLevel 5;
             battle_game.getGeoscapeGame geoScape;
 
             rules.getRuleResearch researchTopic "STR_APOC_BAY"; #apothecary bay research
             geoScape.isResearched temp researchTopic;
             if neq temp 0;
-              add researchLevel 1;
+              mul researchLevel 2;
             end;
 
             rules.getRuleResearch researchTopic "STR_PSI_LAB"; #chapel research
             geoScape.isResearched temp researchTopic;
             if neq temp 0;
-              add researchLevel 1;
+              mul researchLevel 2;
             end;
             #set research level
             battle_game.setTag Tag.RESEARCH_LEVEL_CURE researchLevel;
           end;
 
           #reduce infection level in proportion to research level
-          mul researchLevel 10; #infection level reduced by 10 per rank of research
           #debug_log "Infection Scripts; healUnit, offset 22: Heal Amount:" researchLevel;
           #debug_log "Infection Scripts; healUnit, offset 22: Infection Amount Before Heal:" infectionDamage;
           sub infectionDamage researchLevel;
