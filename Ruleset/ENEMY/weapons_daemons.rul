@@ -301,16 +301,52 @@ items:
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
 
   - type: STR_KHORNE_VALKIA_WEAPON #Deamon Spear
+    explosionHitSound: { mod: 40k, index: 101} #stabhit
+    hitAnimation: 2040 #Bloodgush sprite, X1.pck for ranged attacks, was 1070 #AOEMELEEGENE.png
+    hitAnimFrames: 8
+    powerForAnimation: 10
+    hitSound: { mod: 40k, index: 101} #stabhit
+    bulletSprite: 5
     meleeSound: {mod: 40k, index: 753} #753 Powersword miss
     meleeHitSound: {mod: 40k, index: 754} #744 Powersword hit
-    power: 40 #base damage lowered per Damage Alter and Damage Scaling
     meleeAnimation: {mod: 40k, index: 4}
     weight: 3
     bigSprite: 2202
     floorSprite: 2080
     handSprite: 2172
-    strengthApplied: false
+    #melee profile
+    accuracyMelee: 100
+    meleePower: 40
+    meleeType: 7
+    meleeBonus:
+      strength: 0.2
+      melee: 0.6
+      psiStrength: 0.2 #profaned weapon
+    meleeAlter: #Khorne hellblade weapon
+      IgnoreSelfDestruct: false
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ToStun: 0.3
+      ToMorale: 0.5
+      ToWound: 0.4
+      ToEnergy: 0.3
+      ArmorEffectiveness: 0.6
+    #range/thrust profile
+    powerRangeThreshold: 4
+    powerRangeReduction: 99
     damageType: 7
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 15
+    snapRange: 3
+    maxRange: 3 #has reach
+    accuracySnap: 100
+    accuracyMultiplier:
+      firing: 0.0
+      melee: 1
+    power: 40
     damageBonus:
       strength: 0.2
       melee: 0.6
@@ -319,11 +355,22 @@ items:
       IgnoreSelfDestruct: false
       ToArmorPre: 0.2
       ToArmor: 0.2
-      ToStun: 0.1
-      ToMorale: 0.2
+      ToStun: 0.3
+      ToMorale: 0.5
       ToWound: 0.4
       ToEnergy: 0.3
       ArmorEffectiveness: 0.6
+    tuMelee: 15
+    clipSize: -1
+    battleType: 1
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    flatRate: true
     tags: #Daemonspear is vampiric, granting power as its user spills blood for Khorne
       TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
       TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
@@ -336,19 +383,7 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 8
       YTAG_DAMAGE_RETURNED_AS_STUN: 8
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
-    accuracyMelee: 100
-    tuMelee: 15
-    clipSize: -1
-    battleType: 3
-    fixedWeapon: true
-    fixedWeaponShow: true
-    twoHanded: false
-    blockBothHands: false
-    oneHandedPenalty: 95
-    invWidth: 2
-    invHeight: 3
-    recover: false
-    flatRate: true
+
 
   - type: STR_NURGLE_WEAPON #Plaguebearer Plaguesword
     power: 100
@@ -1037,25 +1072,45 @@ items:
       STR_DESERTER_GUARD_OFFICER_ARMOR: STR_NURGLE_CULTIST_FEM
     }
 
-  - type: CYBERDISC_WEAPON #Deamon Blade2
+  - type: CYBERDISC_WEAPON #Flying Daemon Hellblade
+    power: 50 #base damage lowered per Damage Alter and Damage Scaling; works out to about 162 after Damage Bonuses
     weight: 3
-    power: 150
     damageType: 7
-    damageAlter:
-      IgnoreSelfDestruct: false
-    accuracySnap: 75
-    accuracyAimed: 110
-    accuracyMelee: 80
-    tuMelee: 30
-    tuSnap: 30
-    tuAimed: 60
+    accuracyMelee: 100
+    tuMelee: 15
     clipSize: -1
     battleType: 3
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
-    maxRange: 2
     recover: false
+    flatRate: true
+    damageBonus:
+      strength: 0.2
+      melee: 0.6
+      psiStrength: 0.2 #profaned weapon
+    damageAlter: #Khorne hellblade weapon
+      IgnoreSelfDestruct: false
+      FireThreshold: 0.0 #flaming weapon
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ToStun: 0.1
+      ToMorale: 0.2
+      ToWound: 0.4
+      ToEnergy: 0.3
+      ArmorEffectiveness: 0.6
+    tags: #Bloodletter Hellblade is vampiric, granting them power as they spill blood for Khorne
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 8 #regains 8 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8 #regain 8% of damage dealt in HP; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
 
   - type: STR_NURGLING_CLAWS #SCRATCHY BLIGHTY
     weight: 3
