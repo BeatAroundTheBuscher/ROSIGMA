@@ -9,7 +9,9 @@ extended:
       ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
-
+#intimidation scripts
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: int #TU damage multiplier 100 = baseline
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: int #morale damage multiplier 100 = baseline
 #bomb/kamikazi scripts
       ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
@@ -42,7 +44,6 @@ extended:
 #bomb/kamikazi scripts
       ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
-
 
 items:
   - type: AUX_DAEMON_FIREBALL #frag                #4006
@@ -3035,3 +3036,86 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 8
       YTAG_DAMAGE_RETURNED_AS_STUN: 8
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
+
+
+  - type: STR_INTIMIDATION_WEAPON
+    categories: [ STR_CAT_TACTICAL]
+    weight: 1
+    bulletSprite: 0
+    bigSprite: 250 #placeholder
+    specialIconSprite: 3 #placeholder
+    explosionHitSound: 2423
+    hitAnimation: 1050
+    bulletSpeed: 200
+    accuracySnap: 200
+    tuSnap: 25
+    battleType: 1
+    twoHanded: false
+    snapRange: 20
+    maxRange: 20
+    invWidth: 2
+    invHeight: 3
+    power: 5
+    accuracyMultiplier:
+      flatHundred: 1.0
+    damageBonus:
+      bravery: 0.7
+      healthCurrent: 0.3
+    damageType: 0
+    damageAlter: #DA MELTA Double
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ArmorEffectiveness: 0.0 #armor doesn't help against intimidation
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToTile: 0.0
+      ToMana: 1.0 #used by scripts
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    tags:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
+
+  - type: SILACOID_WEAPON #bloodletter intimidate
+    categories: [ STR_CAT_TACTICAL]
+    weight: 1
+    bulletSprite: 0
+    bigSprite: 250 #placeholder
+    specialIconSprite: 3 #placeholder
+    explosionHitSound: 2423
+    hitAnimation: 1050
+    bulletSpeed: 200
+    accuracySnap: 200
+    tuSnap: 25
+    battleType: 1
+    twoHanded: false
+    snapRange: 20
+    maxRange: 20
+    invWidth: 2
+    invHeight: 3
+    power: 5
+    accuracyMultiplier:
+      flatHundred: 1.0
+    damageBonus:
+      bravery: 0.7
+      healthCurrent: 0.3
+    damageType: 0
+    damageAlter: #DA MELTA Double
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ArmorEffectiveness: 0.0 #armor doesn't help against intimidation
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToTile: 0.0
+      ToMana: 1.0 #used by scripts
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    tags:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100

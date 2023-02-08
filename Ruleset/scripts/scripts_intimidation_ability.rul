@@ -1,0 +1,77 @@
+extended:
+  tags:
+    #intimidation script tags
+    RuleItem:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: int #TU damage multiplier 100 = baseline
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: int #morale damage multiplier 100 = baseline
+    RuleArmor:
+      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_intimidation
+        offset: 24
+        code: |
+          var int temp;
+          var int temp2;
+          var int moraleMultiplier; #percent of damage the triggering attack inflicts
+          var int intimidateResist;
+          var ptr RuleArmor armorRule;
+
+          if le to_mana 0; # only proceed if we actually do damage
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. No damage dealt.";
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; #if our infection resist is 100% and applies to all infection types we're immune; abort
+
+          if ge intimidateResist 100; #Abort if the target has immunity
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to intimidate:" intimidateResist;
+            return;
+          end;
+
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
+
+          if le moraleMultiplier 0; #morale damage multiplier has to be greater than 0, otherwise abort
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
+            return;
+          end;
+
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Weapon:" weapon_item;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
+
+          set temp to_mana;
+          unit.Stats.getBravery temp2;
+          sub temp temp2; #subtract target Bravery from our power
+
+          sub intimidateResist 100; #invert intimidateResist
+          mul intimidateResist -1; #invert intimidateResist
+
+          muldiv temp intimidateResist 100; #get the percentage
+
+          if le temp 0; #if our net power is null or negative, abort.
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale:" temp;
+            return;
+          end;
+
+          #calculate target Morale; we bypass to_morale because high Bravery reduces damage too aggressively
+          muldiv temp moraleMultiplier 100; #calculate morale damage
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" temp;
+          unit.getMorale temp2;
+          sub temp2 temp;
+          limit_lower temp2 0;
+          unit.setMorale temp2; #apply Morale damages
+
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_TU_DAMAGE_MULTIPLIER;
+          if gt moraleMultiplier 0;
+            set temp2 temp; #set our damage to TU
+            muldiv temp2 moraleMultiplier 100;
+            add to_time temp; #apply TU damages
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp;
+          end;
+
+          battle_game.flashMessage "STR_INTIMIDATION_NOTICE";
+
+          return;
