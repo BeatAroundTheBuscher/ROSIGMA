@@ -32,7 +32,9 @@ extended:
       ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_POWER_BONUS_PERCENTILE: int #TRUE or FALSE; if true, the power bonus is a percentile as opposed to an effectively flat amount
-
+#intimidation scripts
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: int #TU damage multiplier 100 = baseline
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: int #morale damage multiplier 100 = baseline
 
 
 items:
@@ -4687,6 +4689,7 @@ items:
     invHeight: 2
     recover: false
     listOrder: 12020
+
   - type: STR_CSERVITOR_HPLASMA_CELL #HEAVY PLASMA                12010                           ToStun
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
     size: 0.1
@@ -4754,20 +4757,42 @@ items:
     supportedInventorySections:
       - STR_LEFT_HAND
       - STR_GROUND
-    power: 90
-    damageType: 7
+    meleePower: 68
+    meleeBonus:
+      bravery: 0.3
+      healthCurrent: 0.2
+    meleeType: 7
     accuracyMelee: 110
     tuMelee: 20
     battleType: 3
-    damageAlter: #DA DAEMON OMNOM
+    meleeAlter: #DA DAEMON OMNOM
       RandomType: 0
       ToArmorPre: 0.6
       ToEnergy: 1.5
       ToWound: 0.1
+    accuracySnap: 200
+    tuSnap: 25
+    snapRange: 20
+    maxRange: 20
+    accuracyMultiplier:
+      flatHundred: 1.0
+    power: 5
+    damageBonus:
+      bravery: 0.7
+      healthCurrent: 0.3
+    damageType: 0
+    damageAlter: #DA MELTA Double
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ArmorEffectiveness: 0.0 #armor doesn't help against intimidation
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToTile: 0.0
+      ToMana: 1.0 #used by intimidation scripts
     twoHanded: false
     recover: false
-    skillApplied: true
-    strengthApplied: false
     isConsumable: false
     fixedWeapon: false
     invWidth: 2
@@ -4775,6 +4800,9 @@ items:
     armor: 80
     attraction: 1
     listOrder: 12999
+    tags:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
 
   - type: STR_SONIC_CANON #                        11790
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
@@ -5060,6 +5088,10 @@ items:
 
   - type: STR_KHORNE_CHAOS_CLAWS #                        DA POWER
     weight: 0
+    bigSprite: {mod: 40k, index: 320}
+    meleeSound: {mod: 40k, index: 753} #753 Powersword miss
+    meleeHitSound: {mod: 40k, index: 754} #744 Powersword hit
+    meleeAnimation: {mod: 40k, index: 12}
     power: 58
     damageType: 7
     costSell: 0

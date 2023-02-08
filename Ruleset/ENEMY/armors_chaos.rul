@@ -7,6 +7,9 @@ extended:
       INFECTION_RESIST: int #reduces infection damage by this as a %
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
       INFECTION_RESIST_TYPE: int #bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC
+    #intimidation script tags
+      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
+
 
 armors:
   - type: STR_IRON_WARRIOR_ARMOR
@@ -80,7 +83,6 @@ armors:
     psiDefence:
       moraleCurrent: 1.0
       flatHundred: 1.0 #Khorne protects against pitiful psykers
-    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -95,6 +97,8 @@ armors:
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
+    tags:
+      INTIMIDATION_RESISTANCE: 100 #Intimidation immune
 
   - type: STR_IRON_TERMINATOR_ARMOR #TER IRON WARRIOR TERMINATORS
     tags:
@@ -417,6 +421,7 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 4 ]
+
   - type: STR_WARPTALON_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -430,7 +435,6 @@ armors:
     psiDefence:
       moraleCurrent: 1.0
       flatHundred: 1.0 #Khorne protects against pitiful psykers
-    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -445,6 +449,9 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ] #bonus due to being warpy and going in and out of it
+    tags:
+      INTIMIDATION_RESISTANCE: 100 #Intimidation immune
+
   - type: BEHEMOTH_ARMOR       #CENT  BEHEMOTH ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -484,12 +491,11 @@ armors:
     rearArmor: 130
     underArmor: 180
     moveSound: {mod: 40k, index: 700}
-    fearImmune: true #it's a daemon, it doesn't care
+    fearImmune: true #it's a khorne daemon, it doesn't care
     painImmune: true #it's a daemon it doesn't care
     psiDefence:
       moraleCurrent: 1.0
       flatHundred: 1.0 #Khorne protects against pitiful psykers
-    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #VEHICLE ARMOR LARGE
       - 1.0 #none
       - 0.7 #AP
@@ -503,6 +509,10 @@ armors:
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.4 #MELTA
+    builtInWeapons:
+      - STR_INTIMIDATION_WEAPON
+    tags:
+      INTIMIDATION_RESISTANCE: 100 #Intimidation immune
 
   - type: SECTOPOD_ARMOR #Chaos Dread
     visibilityAtDay: 40

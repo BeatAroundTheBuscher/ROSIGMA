@@ -1,9 +1,16 @@
 extended:
   tags:
     RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      INFECTION_RESIST_TYPE: int #bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
+      ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+    #intimidation script tags
+      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
 
 armors:
   - type: STR_ADEPTAS_KHORNE      #ADEPTAS KHORNE ARMOR
@@ -710,6 +717,8 @@ armors:
       - 1.0 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 4 ]
+    tags:
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
   - type: STR_KHORNECHAMP_ARMOR
     visibilityAtDay: 40
@@ -740,8 +749,10 @@ armors:
       - 1.0 #IMPACT
       - 1.2 #MELTA]
     loftempsSet: [ 4 ]
+    tags:
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
-   #Khorngor Bloodgors
+  #Khorngor Bloodgors
   - type: STR_KHORNE_UNGOR_ARMOR                                 #Khorne Gor Grunt
     visibilityAtDay: 30
     visibilityAtDark: 25
