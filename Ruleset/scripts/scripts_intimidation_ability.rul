@@ -4,6 +4,7 @@ extended:
     RuleItem:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: int #TU damage multiplier 100 = baseline
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: int #morale damage multiplier 100 = baseline
+      INTIMIDATION_STUN_DAMAGE_MULTIPLIER: int #stun damage multiplier 100 = baseline
     RuleArmor:
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
 
@@ -64,12 +65,22 @@ extended:
           limit_lower temp2 0;
           unit.setMorale temp2; #apply Morale damages
 
+          #process TU damage
           weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_TU_DAMAGE_MULTIPLIER;
           if gt moraleMultiplier 0;
             set temp2 temp; #set our damage to TU
             muldiv temp2 moraleMultiplier 100;
             add to_time temp; #apply TU damages
             #debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp;
+          end;
+
+          #process stun damage
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_STUN_DAMAGE_MULTIPLIER;
+          if gt moraleMultiplier 0;
+            set temp2 temp; #set our damage to TU
+            muldiv temp2 moraleMultiplier 100;
+            add to_stun temp; #apply TU damages
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Stun damage dealt:" temp;
           end;
 
           battle_game.flashMessage "STR_INTIMIDATION_NOTICE";
