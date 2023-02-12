@@ -1310,10 +1310,12 @@ armors:
     spriteSheet: SCION_CARAPACE_MEDIC.PCK
     customArmorPreviewIndex: 521
 
-
-  - type: STR_OGRYN_UC
+  - &STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
+    type: STR_OGRYN_UC
     visibilityAtDay: 40
     visibilityAtDark: 9
+    tags:
+      INFECTION_RESIST: 33 #infection resistant
     frontArmor: 20
     sideArmor: 15
     rearArmor: 10
@@ -1332,14 +1334,21 @@ armors:
       - 0.5 #IMPACT
       - 1.0 #MELTA
 
-  - &STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
-    type: STR_OGRYN_CARAPACE
+  - type: STR_OGRYN_CARAPACE_BASIC
+    refNode: *STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
     visibilityAtDay: 40
     visibilityAtDark: 9
+    spriteSheet: OGRYN_CARAPACE.PCK
+    #spriteInv: OGRYN_CARAPACE
+    customArmorPreviewIndex: {mod: 40k, index: 509}
+    corpseBattle:
+      - STR_OGRYN_CARAPACE_CORPSE
+    storeItem: STR_NONE
+    loftempsSet: [ 5 ]
     frontArmor: 70
     sideArmor: 50
     rearArmor: 40
-    underArmor: 30
+    underArmor: 40
     damageModifier: #OGRYN ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -1354,8 +1363,36 @@ armors:
       - 0.5 #IMPACT
       - 1.0 #MELTA
 
-  - type: STR_OGRYN_CARAPACE
     weight: 10
+    stats:
+      tu: -5
+      stamina: -10
+
+  - &STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
+    type: STR_OGRYN_CARAPACE
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    frontArmor: 80
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 50
+    tags:
+      INFECTION_RESIST: 33 #infection resistant
+    damageModifier: #OGRYN ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 0.9 #PLASMA
+      - 0.6 #STUN
+      - 0.7 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.0 #MELTA
+
+    weight: 15
     stats:
       tu: -5
       stamina: -10
@@ -1363,11 +1400,11 @@ armors:
   - &STR_GUARD_ARMOR_BULLGRYN_SLAB # DAMAGE + STATS
     type: STR_BULLGRYN_SLAB
     refNode: *STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
-    frontArmor: 120
-    sideArmor: 60
-    rearArmor: 40
-    underArmor: 30
-    weight: 20
+    frontArmor: 130
+    sideArmor: 70
+    rearArmor: 50
+    underArmor: 50
+    weight: 25
     stats:
       tu: -5
       stamina: -15
@@ -1377,11 +1414,11 @@ armors:
   - &STR_GUARD_ARMOR_BULLGRYN_BUCKLER # DAMAGE + STATS
     type: STR_BULLGRYN_BUCKLER
     refNode: *STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
-    frontArmor: 85
-    sideArmor: 65
+    frontArmor: 95
+    sideArmor: 75
     rearArmor: 50
-    underArmor: 30
-    weight: 15
+    underArmor: 50
+    weight: 20
     stats:
       stamina: -10
       melee: 10
