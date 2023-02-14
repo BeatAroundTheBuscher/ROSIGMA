@@ -15,12 +15,27 @@ extended:
         code: |
           var int temp;
           var int temp2;
+          var int intimidateDamage;
           var int moraleMultiplier; #percent of damage the triggering attack inflicts
           var int intimidateResist;
           var ptr RuleArmor armorRule;
 
           if le to_mana 0; # only proceed if we actually do damage
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. No damage dealt.";
+            return;
+          end;
+
+          unit.getFaction temp;
+          attacker.getFaction temp2;
+          if eq temp temp2;
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is friendly/same faction.";
+            return;
+          end;
+
+          unit.getStun temp;
+          unit.getHealth temp2;
+          if ge temp temp2;
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is unconscious." unit;
             return;
           end;
 
@@ -43,44 +58,60 @@ extended:
           #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
           #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
 
-          set temp to_mana;
+          set intimidateDamage to_mana;
           unit.Stats.getBravery temp2;
-          sub temp temp2; #subtract target Bravery from our power
+          sub intimidateDamage temp2; #subtract target Bravery from our power
 
           sub intimidateResist 100; #invert intimidateResist
           mul intimidateResist -1; #invert intimidateResist
 
-          muldiv temp intimidateResist 100; #get the percentage
+          muldiv intimidateDamage intimidateResist 100; #get the percentage
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery and Resistance:" intimidateDamage;
 
-          if le temp 0; #if our net power is null or negative, abort.
-            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale:" temp;
+          if le intimidateDamage 0; #if our net power is null or negative, abort.
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
             return;
           end;
 
           #calculate target Morale; we bypass to_morale because high Bravery reduces damage too aggressively
-          muldiv temp moraleMultiplier 100; #calculate morale damage
-          #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" temp;
+          muldiv intimidateDamage moraleMultiplier 100; #calculate morale damage
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" intimidateDamage;
           unit.getMorale temp2;
-          sub temp2 temp;
-          limit_lower temp2 0;
+          sub temp2 intimidateDamage;
           unit.setMorale temp2; #apply Morale damages
+          if lt temp2 0;
+            set temp temp2; #calculate Morale overflow for negative values
+            mul temp -1; #change from negative to positive
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale overflow Stun damage dealt:" temp;
+            add to_stun temp;
+            unit.getHealth temp2; #calculate stun overflow
+            sub temp2 temp;
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Health minus Stun:" temp2;
+            if lt temp2 0; #if stun overflows, do health damage
+              mul temp2 -1;
+              unit.getHealth temp;
+              limit_upper temp2 temp; #cap health damage at current health; no disintegrations
+              #debug_log "Intimidation Scripts; damageUnit, offset 24: Stun overflow Health damage dealt:" temp2;
+              add to_health temp2; #do health damage equal to the excess stun damage; target is terrified to death
+            end;
+          end;
 
           #process TU damage
           weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_TU_DAMAGE_MULTIPLIER;
           if gt moraleMultiplier 0;
-            set temp2 temp; #set our damage to TU
+            set temp2 intimidateDamage; #set our damage to TU
             muldiv temp2 moraleMultiplier 100;
-            add to_time temp; #apply TU damages
-            #debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp;
+            add to_time temp2; #apply TU damages
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp2;
           end;
 
           #process stun damage
           weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_STUN_DAMAGE_MULTIPLIER;
           if gt moraleMultiplier 0;
-            set temp2 temp; #set our damage to TU
+            set temp2 intimidateDamage; #set our damage to TU
             muldiv temp2 moraleMultiplier 100;
-            add to_stun temp; #apply TU damages
-            #debug_log "Intimidation Scripts; damageUnit, offset 24: Stun damage dealt:" temp;
+            add to_stun temp2; #apply TU damages
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Stun damage dealt:" temp2;
           end;
 
           battle_game.flashMessage "STR_INTIMIDATION_NOTICE";
