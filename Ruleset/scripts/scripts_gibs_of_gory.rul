@@ -1,0 +1,155 @@
+# https://openxcom.old.mod.io/gibs-of-gory
+
+extended:
+  tags:
+    BattleGame:
+      NEXT_HIT_GIBS: int
+      # 1 gib
+      # 2 burned
+      # 3 goo
+    BattleItem:
+      ITEM_IS_GIBBED: int
+    BattleUnit:
+      UNIT_IS_GIBBED: int
+    RuleArmor:
+      NORMAL_SPRITESHEET: int # for deathFrames > 3
+      GIB_SPRITESHEET: int
+      BURNED_SPRITESHEET: int
+      GOO_SPRITESHEET: int
+    RuleItem:
+      GIB_BIGOB: int
+      GIB_FLOOROB: int
+      BURNED_BIGOB: int
+      BURNED_FLOOROB: int
+      GOO_BIGOB: int
+      GOO_FLOOROB: int
+
+
+  scripts:
+    damageUnit:
+      - new: next_hit_gibs
+        offset: 1
+        code: |
+          var int health;
+          var int maxHealth;
+
+          battle_game.setTag Tag.NEXT_HIT_GIBS 0; # sanity check
+
+          unit.getHealth health;
+          unit.getHealthMax maxHealth;
+
+          mul maxHealth -1;
+          sub health to_health;
+
+          if le health maxHealth;
+            if eq damaging_type 8; # acid
+              battle_game.setTag Tag.NEXT_HIT_GIBS 3;
+              unit.setTag Tag.UNIT_IS_GIBBED 3;
+            else or eq damaging_type 2 eq damaging_type 5; # incendiary or plasma/sonic
+              battle_game.setTag Tag.NEXT_HIT_GIBS 2;
+              unit.setTag Tag.UNIT_IS_GIBBED 2;
+            else; # anything else
+              battle_game.setTag Tag.NEXT_HIT_GIBS 1;
+              unit.setTag Tag.UNIT_IS_GIBBED 1;
+            end;
+          end;
+
+          return;
+
+
+    createItem:
+      - new: tag_item_is_gibbed
+        offset: 1
+        code: |
+          var int gibMode;
+
+          battle_game.getTag gibMode Tag.NEXT_HIT_GIBS;
+          if gt gibMode 0;
+            item.setTag Tag.ITEM_IS_GIBBED gibMode;
+          end;
+
+          return;
+
+
+    selectItemSprite:
+      - new: display_gibbed
+        offset: 10
+        code: |
+          var int gibMode;
+          var int gibSprite;
+          var ptr RuleItem myItem;
+
+          item.getTag gibMode Tag.ITEM_IS_GIBBED;
+
+          if gt gibMode 0;
+            item.getRuleItem myItem;
+
+            if eq blit_part blit_item_big;
+              if eq gibMode 3;
+                myItem.getTag sprite_index Tag.GOO_BIGOB;
+              else eq gibMode 2;
+                myItem.getTag sprite_index Tag.BURNED_BIGOB;
+              else eq gibMode 1;
+                myItem.getTag sprite_index Tag.GIB_BIGOB;
+              end;
+            end;
+            if eq blit_part blit_item_floor;
+              if eq gibMode 3;
+                myItem.getTag sprite_index Tag.GOO_FLOOROB;
+              else eq gibMode 2;
+                myItem.getTag sprite_index Tag.BURNED_FLOOROB;
+              else eq gibMode 1;
+                myItem.getTag sprite_index Tag.GIB_FLOOROB;
+              end;
+            end;
+            add sprite_index RuleList.current; # mod offset
+          end;
+
+          # this is sane enough to return the floor/bigob when no sprite was found at the index
+          # since the index is dependent on mod offset, this shouldn't create weird behavior
+          return sprite_index;
+
+
+    selectUnitSprite:
+      - new: display_gibbed
+        offset: 10
+        code: |
+          var int gibMode;
+          var int health;
+          var int startFrameOfGibSpritesheet;
+          var int currentFrame;
+          var int numDeathFrames;
+          var ptr RuleArmor myArmor;
+          var int collapsing;
+
+          unit.getRuleArmor myArmor;
+          myArmor.getTag startFrameOfGibSpritesheet Tag.GIB_SPRITESHEET;
+
+          if eq startFrameOfGibSpritesheet 0; # if armor has no gibs then quit
+            return sprite_index;
+          end;
+
+          unit.getHealth health;
+          unit.isCollapsing collapsing;
+          myArmor.getDeathFrames numDeathFrames;
+          unit.getTag gibMode Tag.UNIT_IS_GIBBED;
+
+          if and gt gibMode 0 eq collapsing 1 le health 0;
+            if eq gibMode 3;
+              myArmor.getTag startFrameOfGibSpritesheet Tag.GOO_SPRITESHEET;
+            else eq gibMode 2;
+              myArmor.getTag startFrameOfGibSpritesheet Tag.BURNED_SPRITESHEET;
+            else eq gibMode 1;
+              myArmor.getTag startFrameOfGibSpritesheet Tag.GIB_SPRITESHEET;
+            # else; # not reachable
+            #   myArmor.getTag startFrameOfGibSpritesheet Tag.NORMAL_SPRITESHEET;
+            end;
+            set sprite_index startFrameOfGibSpritesheet;
+            add sprite_index sprite_offset;
+          else and eq gibMode 0 eq collapsing 1 gt numDeathFrames 3; # no gibs/was stunned and more than the default three frames
+            myArmor.getTag startFrameOfGibSpritesheet Tag.NORMAL_SPRITESHEET;
+            set sprite_index startFrameOfGibSpritesheet;
+            add sprite_index sprite_offset;            
+          end;
+
+          return sprite_index;

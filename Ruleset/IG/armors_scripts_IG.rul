@@ -243,16 +243,18 @@ armors:
     refNode: *STR_CARAPACE_ARMOR_POWER_PACK_GREEN
 
   - type: STR_GUARD_ARMORSM
-    spriteSheet: GUARDSMAN_FLAK.PCK
+    spriteSheet: GUARDSMAN_FLAK_GOG.PCK
     scripts:
       selectUnitSprite: | ## whiteshields
         var int isFemale;
         var int currentRank;
         var int unitDirection;
+        var int health;
 
         unit.getRank currentRank;
+        unit.getHealth health;
 
-        if and eq currentRank 0 eq blit_part blit_torso;
+        if and gt health 0 eq currentRank 0 eq blit_part blit_torso;
 
           set sprite_index 288;
           unit.getGender isFemale;
