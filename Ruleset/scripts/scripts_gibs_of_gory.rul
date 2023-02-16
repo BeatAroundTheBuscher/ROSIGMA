@@ -1,5 +1,3 @@
-# https://openxcom.old.mod.io/gibs-of-gory
-
 extended:
   tags:
     BattleGame:
@@ -15,14 +13,15 @@ extended:
       NORMAL_SPRITESHEET: int # for deathFrames > 3
       GIB_SPRITESHEET: int
       BURNED_SPRITESHEET: int
-      GOO_SPRITESHEET: int
+      GAUSS_SPRITESHEET: int
     RuleItem:
       GIB_BIGOB: int
       GIB_FLOOROB: int
       BURNED_BIGOB: int
       BURNED_FLOOROB: int
-      GOO_BIGOB: int
-      GOO_FLOOROB: int
+      GAUSS_BIGOB: int
+      GAUSS_FLOOROB: int
+      DAMAGETYPE_OVERRIDE: int
 
 
   scripts:
@@ -32,6 +31,7 @@ extended:
         code: |
           var int health;
           var int maxHealth;
+          var int gibDamageType;
 
           battle_game.setTag Tag.NEXT_HIT_GIBS 0; # sanity check
 
@@ -41,11 +41,16 @@ extended:
           mul maxHealth -1;
           sub health to_health;
 
+          damaging_item.getTag gibDamageType Tag.DAMAGETYPE_OVERRIDE;
+          if eq gibDamageType 0;
+            set gibDamageType damaging_type;
+          end;
+
           if le health maxHealth;
-            if eq damaging_type 8; # acid
+            if eq gibDamageType 30; # DAMAGETYPE_OVERRIDE for Gauss
               battle_game.setTag Tag.NEXT_HIT_GIBS 3;
               unit.setTag Tag.UNIT_IS_GIBBED 3;
-            else or eq damaging_type 2 eq damaging_type 5; # incendiary or plasma/sonic
+            else eq gibDamageType 1; # incendiary
               battle_game.setTag Tag.NEXT_HIT_GIBS 2;
               unit.setTag Tag.UNIT_IS_GIBBED 2;
             else; # anything else
@@ -86,7 +91,7 @@ extended:
 
             if eq blit_part blit_item_big;
               if eq gibMode 3;
-                myItem.getTag sprite_index Tag.GOO_BIGOB;
+                myItem.getTag sprite_index Tag.GAUSS_BIGOB;
               else eq gibMode 2;
                 myItem.getTag sprite_index Tag.BURNED_BIGOB;
               else eq gibMode 1;
@@ -95,7 +100,7 @@ extended:
             end;
             if eq blit_part blit_item_floor;
               if eq gibMode 3;
-                myItem.getTag sprite_index Tag.GOO_FLOOROB;
+                myItem.getTag sprite_index Tag.GAUSS_FLOOROB;
               else eq gibMode 2;
                 myItem.getTag sprite_index Tag.BURNED_FLOOROB;
               else eq gibMode 1;
@@ -111,7 +116,7 @@ extended:
 
 
     selectUnitSprite:
-      - new: GOG_sUS_display_gibbed
+      - new: display_gibbed
         offset: 10
         code: |
           var int gibMode;
@@ -136,7 +141,7 @@ extended:
 
           if and gt gibMode 0 eq collapsing 1 le health 0;
             if eq gibMode 3;
-              myArmor.getTag startFrameOfGibSpritesheet Tag.GOO_SPRITESHEET;
+              myArmor.getTag startFrameOfGibSpritesheet Tag.GAUSS_SPRITESHEET;
             else eq gibMode 2;
               myArmor.getTag startFrameOfGibSpritesheet Tag.BURNED_SPRITESHEET;
             else eq gibMode 1;
