@@ -83,12 +83,14 @@ extended:
             set temp temp2; #calculate Morale overflow for negative values
             mul temp -1; #change from negative to positive
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Morale overflow Stun damage dealt:" temp;
+            div temp 2; #divide stun damage in half; doing the full amount is too punishing
             add to_stun temp;
             unit.getHealth temp2; #calculate stun overflow
             sub temp2 temp;
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Health minus Stun:" temp2;
             if lt temp2 0; #if stun overflows, do health damage
               mul temp2 -1;
+              div temp2 2; #divide health damage in half; doing the full amount is too punishing
               unit.getHealth temp;
               limit_upper temp2 temp; #cap health damage at current health; no disintegrations
               #debug_log "Intimidation Scripts; damageUnit, offset 24: Stun overflow Health damage dealt:" temp2;

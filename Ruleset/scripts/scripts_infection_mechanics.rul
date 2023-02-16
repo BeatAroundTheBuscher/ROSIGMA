@@ -206,6 +206,22 @@ extended:
             muldiv infectionDamage infectionResist 100;
           end;
 
+          if neq infectionType 2; #Devotion only protects against Chaos Corruption, not GSC infections.
+            unit.Stats.getPsiSkill temp;
+            if gt temp 50; #we only start getting the Emprah's protection from Chaos with Devotion above 50.
+              sub temp 50;
+              div temp 2;
+              limit_upper temp 100;
+              if eq temp 100; #abort if we get 100% infection resistance
+                #debug_log "Infection Scripts; damageUnit, offset 22: Aborting. Infection resistance from Devotion at 100%" temp;
+                return;
+              end;
+              sub temp -100; #invert
+              mul temp -1;
+              muldiv infectionDamage temp 100;
+            end;
+          end;
+
           #cannot have multiple infection types; the infection with higher damage takes priority; set appropriate variables
           unit.getTag currentInfectionType Tag.CURRENT_INFECTION_TYPE;
           unit.getTag currentInfectionDamage Tag.CURRENT_INFECTION_DAMAGE;
