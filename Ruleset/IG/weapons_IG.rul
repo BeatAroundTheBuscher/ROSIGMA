@@ -188,11 +188,12 @@ items:
     power: 140
     powerForAnimation: 15 # 5 / 5 = 3 tiles
     damageAlter:
-      ResistType: 1 #AP
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.15
-      FixRadius: 2
-      RandomType: 7 #50-200%
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ArmorEffectiveness: 0.7
+      FixRadius: 1 #1 for hand grenade version
     requiresBuy:
       - STR_MIDTIER_PREREQ
     costBuy: 40000 #Expensive
@@ -692,7 +693,7 @@ items:
     tags:
       ITEM_AMMO_COLOR: 2
 
-  - type: STR_KRAK_GRENADE40 #underslung grenade
+  - type: STR_KRAK_GRENADE40 #underslung grenade; krak munition
     categories: [ STR_CAT_GRENADES, STR_CAT_ADEPTAS]
     size: 0.1
     weight: 3
@@ -709,12 +710,12 @@ items:
     powerForAnimation: 5 # 5 / 5 = 1
     maxRange: 80 # ROSIGMA 1.06Beta2 12
     damageAlter:
-      ResistType: 1
-      ArmorEffectiveness: 0.70
-      ToArmorPre: 0.15 #melta 0.2
-      # RandomType: 2 # side effect of other damageType
+      RandomType: 6 #gaussian
+      ArmorEffectiveness: 0.8
+      ToHealth: 0.8
+      ToArmorPre: 0.2
+      ToArmor: 0.2
       FixRadius: 1
-      ToStun: 0.2
     clipSize: 3
     blastRadius: 2
     invWidth: 1 #smaller
@@ -2184,11 +2185,11 @@ items:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
       ITEM_HAS_BIPOD: 1
 
-  - type: STR_MORTAR_AMMO_HE
+  - type: STR_MORTAR_AMMO_HE #HE munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 7500
+    costBuy: 10000
     costSell: 500
     weight: 6
     bigSprite: 911
@@ -2197,18 +2198,52 @@ items:
     power: 100
     damageType: 3
     damageAlter:
-      ResistType: 1
-      ToTime: 0.2
-      ToHealth: 1.0
-      ArmorEffectiveness: 1.1 #shrapnel
-      FixRadius: 3 #1 for hand grenade version
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 1.0 #high explosive
+      ToItem: 1.0 #high explosive
+      FixRadius: 5 #1 for hand grenade version
     clipSize: 1
     battleType: 2
     invWidth: 1
     invHeight: 3
     listOrder: 11872
 
-  - type: STR_MORTAR_AMMO_KRAK
+  - type: STR_MORTAR_AMMO_FRAG #frag munition
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 5000
+    costSell: 500
+    weight: 6
+    bigSprite: 911
+    floorSprite: 2062
+    handSprite: { mod: 40k, index: 352 } #Needs new
+    power: 100
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.05 #small ablation
+      ArmorEffectiveness: 1.1 #armor helps vs shrapnel
+      ToHealth: 0.7 #much damage dealt in the form of debuffs
+      ToTime: 0.2 #staggering
+      ToStun: 0.4 #painful
+      ToMorale: 0.5 #painful
+      ToEnergy: 0.4 #painful
+      ToWound: 0.4 #shrapnel
+      RandomWound: false
+      ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
+      FixRadius: 7
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    listOrder: 11872
+    tags:
+      ITEM_AMMO_COLOR: 2
+
+  - type: STR_MORTAR_AMMO_KRAK #krak munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
@@ -2219,12 +2254,14 @@ items:
     floorSprite:  {mod: 40k, index: 70} #update with new
     handSprite:  {mod: 40k, index: 136} #update with new
     power: 120 #handheld 40mm is 80 power
-    damageType: 1 #AP
+    damageType: 3
     damageAlter:
+      RandomType: 6 #gaussian
       ToHealth: 0.8
       ResistType: 1
-      ToArmorPre: 0.1
-      ArmorEffectiveness: 0.80
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ArmorEffectiveness: 0.7
       FixRadius: 2 #1 for hand grenade version
     clipSize: 1
     battleType: 2
@@ -2233,12 +2270,12 @@ items:
     powerForAnimation: 5 # 5 / 5 = 1
     listOrder: 11872
 
-  - type: STR_MORTAR_AMMO_PHOSPHOR
+  - type: STR_MORTAR_AMMO_PHOSPHOR #phosphor munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 3000
+    costBuy: 5000
     costSell: 500
     weight: 5
     bigSprite: 914
@@ -2249,10 +2286,12 @@ items:
     power: 100
     damageType: 8 #Acid burns
     damageAlter:
-      ToMorale: 0.25
-      ToWound: 0.06
+      ToMorale: 1.0 #being savaged with white phosphorous is kinda demoralizing
+      ToWound: 0.2
+      RandomWound: false
       ToHealth: 0.4
-      FireThreshold: 40
+      ToStun: 0.4 #painful; agonizing even
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
       FixRadius: 5
     clipSize: 1
     battleType: 2
@@ -2305,7 +2344,7 @@ items:
     invHeight: 3
     listOrder: 11872
 
-  - type: STR_MORTAR_AMMO_PHOTON
+  - type: STR_MORTAR_AMMO_PHOTON #photon munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
@@ -2319,13 +2358,17 @@ items:
     explosionHitSound: { mod: 40k, index: 803 }
     hitAnimation: 2100
     #damageType: 2 #incendiary
-    power: 50
+    damageType: 6
+    power: 60
     damageAlter:
       ArmorEffectiveness: 0.5
-      ToStun: 0.4 # was 0.2
+      ToStun: 0.5 # was 0.2
       ToTime: 0.8
       RadiusReduction: 5.0
       ToHealth: 0.05
+      ToWound: 0.00
+      RandomWound: false
+      FixRadius: 7
     clipSize: 1
     battleType: 2
     invWidth: 1
@@ -2345,23 +2388,23 @@ items:
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
 
-  - type: STR_FRAG_GRENADE_DRUM
+  - type: STR_FRAG_GRENADE_DRUM #frag munition
     bigSprite: 258
     tags:
       ITEM_AMMO_COLOR: 1
 
-  - type: STR_KRAK_GRENADE_DRUM
+  - type: STR_KRAK_GRENADE_DRUM #krak munition
     bigSprite: 259
     tags:
       ITEM_AMMO_COLOR: 7
 
-  - type: STR_INCENDIARY_GRENADE_DRUM
+  - type: STR_INCENDIARY_GRENADE_DRUM #incendiary munition
     bigSprite: 260
     tags:
       ITEM_AMMO_COLOR: 2
 
   - &STR_GRENADE_DRUM
-    type: STR_SMOKE_GRENADE_DRUM
+    type: STR_SMOKE_GRENADE_DRUM #smoke munition
     requiresBuy:
 #      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GUARD_AND_ARBITES
@@ -2389,7 +2432,7 @@ items:
     tags:
       ITEM_AMMO_COLOR: 5
 
-  - type: STR_PHOTON_GRENADE_DRUM
+  - type: STR_PHOTON_GRENADE_DRUM #photon munition
     refNode: *STR_GRENADE_DRUM
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -3270,7 +3313,7 @@ items:
     clipSize: 8
 
   - &STR_GRENADE_BELT_TAUROS
-    type: STR_KRAK_GRENADE_BELT_TAUROS
+    type: STR_KRAK_GRENADE_BELT_TAUROS #krak munition
     size: 0.3
     weight: 15
     bigSprite: {mod: 40k, index: 1082}
@@ -3281,14 +3324,15 @@ items:
     invHeight: 3
     recover: false
     damageType: 3
-    # damageType: 1 # AP instead of HE
     damageAlter:
-      ResistType: 1
-      ArmorEffectiveness: 0.80
-      # RandomType: 2 # side effect of other damageType
-      FixRadius: 1
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ArmorEffectiveness: 0.8
+      FixRadius: 1 #1 for hand grenade version
 
-  - type: STR_INC_GRENADE_BELT_TAUROS
+  - type: STR_INC_GRENADE_BELT_TAUROS #incendiary munition
     refNode: *STR_GRENADE_BELT_TAUROS
     power: 50
     damageType: 2 # INC
@@ -3300,7 +3344,7 @@ items:
       ArmorEffectiveness: 1
       ToArmor: 0.1
 
-  - type: STR_SMOKE_GRENADE_BELT_TAUROS
+  - type: STR_SMOKE_GRENADE_BELT_TAUROS #smoke munition
     refNode: *STR_GRENADE_BELT_TAUROS
     #power: 100 # 60
     power: 60
@@ -3308,15 +3352,19 @@ items:
     #explosionHitSound: {mod: 40k, index: 792}
     blastRadius: 5
 
-  - type: STR_PHOTON_GRENADE_BELT_TAUROS
+  - type: STR_PHOTON_GRENADE_BELT_TAUROS #photon munition
     refNode: *STR_GRENADE_BELT_TAUROS
     power: 50
     damageType: 6
     damageAlter:
       ArmorEffectiveness: 0.5
-      ToStun: 0.4 # was 0.2
+      ToStun: 0.5 # was 0.2
       ToTime: 0.8
       RadiusReduction: 5.0
+      ToHealth: 0.05
+      ToWound: 0.00
+      RandomWound: false
+      FixRadius: 3
     blastRadius: 3
 
 
@@ -3563,6 +3611,7 @@ items:
   - type: STR_SMOKE_GRENADE                #4000
     power: 40
     blastRadius: 4
+    weight: 2
 
 
 
@@ -3625,7 +3674,7 @@ items:
     hiddenOnMinimap: true
 
 
-  - type: STR_PHOTON_GRENADE
+  - type: STR_PHOTON_GRENADE #photon grenade
     battleType: 4 # turn into grenade
     fuseType: -2
 
@@ -4051,10 +4100,34 @@ items:
     recover: false
     turretType: 1
 
-  - type: STR_RIPPER_GUN_CLIP
+  - &STR_RIPPER_GUN_CLIP
+    type: STR_RIPPER_GUN_CLIP
+    shotgunSpread: 35
     damageAlter:
       ToArmorPre: 0.05 #slightly better armor ablation
       ArmorEffectiveness: 0.9 #has minor armor penetration
+      ToTime: 0.3 #shotguns have impact shock; the Ripper especially so
+      ToEnergy: 0.3 #impact shock
+      ToStun: 0.5 #impact shock
+
+  - type: STR_RIPPER_GUN_CLIP_AP
+    refNode: *STR_RIPPER_GUN_CLIP
+    costBuy: 4000
+    costSell: 1000
+    requiresBuy:
+      - STR_OGRYN_REQUISITION
+      - STR_MIDTIER_GUARDSMEN
+    shotgunSpread: 20 #these flechettes are more aerodynamic and have improved grouping
+    damageAlter:
+      ToArmorPre: 0.02 #AP ammo; small armor ablation
+      ToArmor: 0.02 #AP ammo; small armor damage
+      ArmorEffectiveness: 0.5 #has significant armor penetration
+      ToHealth: 0.7 #AP weapon features reduced health damage
+      ToTime: 0.1 #shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
+      ToEnergy: 0.1 #impact shock; reduced due to AP ammo
+      ToStun: 0.3 #impact shock; reduced due to AP ammo
+    tags:
+      ITEM_AMMO_COLOR: 2
 
   - type: STR_LASGUN_CLIP #LASGUN CLIP                 11010
     costSell: 40
