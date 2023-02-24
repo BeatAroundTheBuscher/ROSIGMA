@@ -25,6 +25,12 @@ extended:
             return;
           end;
 
+          unit.isFearable temp; #fear immune targets ignore this
+          if gt temp 0;
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is fear immune.";
+            return;
+          end;
+
           unit.getFaction temp;
           attacker.getFaction temp2;
           if eq temp temp2;
@@ -71,6 +77,11 @@ extended:
           if le intimidateDamage 0; #if our net power is null or negative, abort.
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
             return;
+          end;
+
+          armorRule.getSize temp;
+          if eq temp 2; #divide damage to 2x2 by 4, because they get hit 4x as much.
+            muldiv intimidateDamage 25 100;
           end;
 
           #calculate target Morale; we bypass to_morale because high Bravery reduces damage too aggressively
