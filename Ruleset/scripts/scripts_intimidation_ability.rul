@@ -130,3 +130,45 @@ extended:
           battle_game.flashMessage "STR_INTIMIDATION_NOTICE";
 
           return;
+
+    #reactionUnitAction: #ignore fear immune targets with intimidate reactions
+    #  - new: ROSIGMA_rUA_intimidation
+    #    offset: 21
+    #    code: |
+    #      var int moraleMultiplier; #percent of damage the triggering attack inflicts
+    #      var int intimidateResist;
+    #      var ptr RuleArmor armorRule;
+    #      var ptr BattleItem intimidateWeapon;
+    #      var int temp;
+
+    #      action_unit.getRightHandWeapon intimidateWeapon;
+    #      intimidateWeapon.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
+
+    #      if le moraleMultiplier 0; #this is not an intimidate weapon; continue as normal
+    #        action_unit.getLeftHandWeapon intimidateWeapon;
+    #        intimidateWeapon.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
+    #        if le moraleMultiplier 0; #this is not an intimidate weapon; continue as normal
+    #          #debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Weapon has no intimidation parameters." moraleMultiplier;
+    #          return reaction_chance;
+    #        end;
+    #      end;
+
+    #      if le moraleMultiplier 0; #this is not an intimidate weapon; continue as normal
+    #        #debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Weapon has no intimidation parameters." moraleMultiplier;
+    #        return reaction_chance;
+    #      end;
+
+    #      action_unit.isFearable temp; #ignore fear immune with this reaction
+    #      if lt temp 1;
+    #        #debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is fear immune.";
+    #        return 0; #don't bother reacting to those immune to fear
+    #      end;
+
+    #      action_unit.getRuleArmor armorRule;
+    #      armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; #if our intimidation resist is 100% we're immune; abort
+    #      if ge intimidateResist 100;
+    #        #debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is intimidation immune.";
+    #        return 0; #don't bother reacting to those immune to fear
+    #      end;
+
+    #      return reaction_chance;
