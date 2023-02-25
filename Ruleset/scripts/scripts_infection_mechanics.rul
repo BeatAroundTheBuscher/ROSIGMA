@@ -192,12 +192,16 @@ extended:
           #set the base amount of infection damage to equal infection damage flat
           add infectionDamage infectionDamageFlat;
 
-          armorRule.getTag infectionReduction Tag.INFECTION_RESIST;
+          #debug_log "Infection Scripts; damageUnit, offset 22: Base infection damage:" infectionDamage;
+          armorRule.getTag infectionReduction Tag.INFECTION_REDUCTION;
+          #debug_log "Infection Scripts; damageUnit, offset 22: Target infection reduction:" infectionReduction;
           if gt infectionReduction 0; #only proceed if infectionReduction isn't null; subtract our infection reduction
             sub infectionDamage infectionReduction;
             limit_lower infectionDamage 0; #cannot go lower than 0
           end;
 
+          armorRule.getTag infectionResist Tag.INFECTION_RESIST;
+          #debug_log "Infection Scripts; damageUnit, offset 22: Target infection resistance:" infectionResist;
           if gt infectionResist 0; #only proceed if infectionResist isn't null; apply infection resistance as a %
             limit_lower infectionResist 0; #cannot go lower than 0
             limit_upper infectionResist 100; #cannot go higher than 100
@@ -241,6 +245,7 @@ extended:
 
           #now we actually apply the infection damage and type to the target unit
           if eq infectionDamage 0; # is not infected
+            #debug_log "Infection Scripts; damageUnit, offset 22: Aborting. No infection damage:" infectionDamage;
             unit.setTag Tag.CURRENT_INFECTION_FACTION 0;
             unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0;
             unit.setTag Tag.CURRENT_INFECTION_TYPE 0;
