@@ -275,6 +275,7 @@ extended:
           var int infectionFaction;
           var int remainingHealth;
           var int temp;
+          var int temp2;
           var int INFECTION_LOW_THRESHOLD;
           var int INFECTION_MID_THRESHOLD;
           var int INFECTION_HIGH_THRESHOLD;
@@ -286,17 +287,21 @@ extended:
             return;
           end;
 
-          #set infection thresholds
-          unit.getTag infectionType Tag.CURRENT_INFECTION_TYPE;
-          set INFECTION_LOW_THRESHOLD 20;
-          set INFECTION_MID_THRESHOLD 40;
-          set INFECTION_HIGH_THRESHOLD 80;
-
           unit.getHealth remainingHealth;
           sub remainingHealth to_health;
 
           if gt remainingHealth 0; #attack isn't lethal
             #debug_log "Infection Scripts; damageUnit, offset 23: Aborting. Fatal Damage Not Incurred; Remaining Health:" remainingHealth;
+            return;
+          end;
+
+          attacker.getFaction temp;
+          unit.getFaction temp2;
+          if and eq temp FACTION_PLAYER eq temp2 FACTION_PLAYER; #both attacker and target belong to the player faction; administer the Emperor's Peace
+            #debug_log "Infection Scripts; damageUnit, offset 23: Aborting. Friendly fire." remainingHealth;
+            unit.setTag Tag.CURRENT_INFECTION_FACTION 0; #untag
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #untag
+            unit.setTag Tag.CURRENT_INFECTION_TYPE 0; #untag
             return;
           end;
 
@@ -313,6 +318,12 @@ extended:
 
           unit.getHealthMax temp;
           limit_upper infectionDamage temp; #infection damage cannot exceed the victim's maximum health
+
+          #set infection thresholds
+          unit.getTag infectionType Tag.CURRENT_INFECTION_TYPE;
+          set INFECTION_LOW_THRESHOLD 20;
+          set INFECTION_MID_THRESHOLD 40;
+          set INFECTION_HIGH_THRESHOLD 80;
 
           #debug_log "Infection Scripts; damageUnit, offset 23: Fatal Damage Incurred; Remaining Health:" remainingHealth;
           if eq infectionType 1; #if Nurgle
