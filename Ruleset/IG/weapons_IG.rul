@@ -4115,12 +4115,13 @@ items:
   - type: STR_RIPPER_GUN
     compatibleAmmo:
       - STR_RIPPER_GUN_CLIP
+      - STR_RIPPER_GUN_CLIP_INC
       - STR_RIPPER_GUN_CLIP_AP
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
 
-  - &STR_RIPPER_GUN_CLIP
+  - &STR_RIPPER_CLIP_DEFAULT
     type: STR_RIPPER_GUN_CLIP
     shotgunSpread: 35
     damageAlter:
@@ -4131,7 +4132,6 @@ items:
       ToStun: 0.5 #impact shock
 
   - type: STR_RIPPER_GUN_CLIP_AP
-    refNode: *STR_RIPPER_GUN_CLIP
     costBuy: 4000
     costSell: 1000
     requiresBuy:
@@ -4139,7 +4139,7 @@ items:
       - STR_MIDTIER_GUARDSMEN
     size: 0.3
     weight: 10
-    bigSprite: {mod: 40k, index: 1051} #1009
+    bigSprite: 1009
     floorSprite: {mod: 40k, index: 1051}
     handSprite: {mod: 40k, index: 1408}
     hitSound: {mod: 40k, index: 22}
@@ -4160,6 +4160,44 @@ items:
       ToStun: 0.3 #impact shock; reduced due to AP ammo
     shotgunBehavior: 1
     shotgunSpread: 20 #these flechettes are more aerodynamic and have improved grouping
+    shotgunPellets: 6
+    tags:
+      ITEM_AMMO_COLOR: 3
+    listOrder: 10790
+
+  - type: STR_RIPPER_GUN_CLIP_INC
+    costBuy: 3000
+    costSell: 800
+    requiresBuy:
+      - STR_OGRYN_REQUISITION
+    size: 0.3
+    weight: 10
+    bigSprite: 1010
+    floorSprite: {mod: 40k, index: 1051}
+    handSprite: {mod: 40k, index: 1408}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 88}
+    invWidth: 2
+    invHeight: 1
+    clipSize: 24
+    battleType: 2
+    power: 50
+    damageType: 2
+    damageAlter:
+      RandomType: 6
+      IgnoreDirection: false
+      IgnoreOverKill: false
+      FireBlastCalc: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
+      FixRadius: 0
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 1.00
+      ToHealth: 1.5
+      ToMorale: 2.0 #being savaged with white phosphorous and promethium is kinda demoralizing
+      ToStun: 0.75 #painful
+      ToTile: 0.3
+    shotgunBehavior: 1
+    shotgunSpread: 35
     shotgunPellets: 6
     tags:
       ITEM_AMMO_COLOR: 4
