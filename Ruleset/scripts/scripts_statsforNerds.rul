@@ -66,6 +66,12 @@ extended:
       FLIGHT_DODGE_CHANCE: int
       MaxFlight: int
       MaxCoolDown: int
+    #corruption/infection script tags
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+    #intimidation script tags
+      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
+
 
 
   scripts:
@@ -108,7 +114,18 @@ extended:
           if gt temp1 0;
             stats_state.addIntRow "Ranged Dodge Chance In Flight" temp1;
           end;
-
+          rule.getTag temp1 Tag.INFECTION_RESIST;
+          if gt temp1 0;
+            stats_state.addIntRow "Corruption Resistance" temp1;
+          end;
+          rule.getTag temp1 Tag.INFECTION_REDUCTION;
+          if gt temp1 0;
+            stats_state.addIntRow "Corruption Reduction" temp1;
+          end;
+          rule.getTag temp1 Tag.INTIMIDATION_RESISTANCE;
+          if gt temp1 0;
+            stats_state.addIntRow "Intimidation Resistance" temp1;
+          end;
           return;
 
     statsForNerdsItem:
