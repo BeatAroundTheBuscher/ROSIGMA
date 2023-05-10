@@ -1491,3 +1491,65 @@ armors:
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       ARMOR_ENERGY_SHIELD_DECAY: 50
+
+  - type: STR_SLAANESH_PLAT_ARMOR_P   #FLYING PLATFORM
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 12
+    heatVision: 20
+    spriteSheet: SLAANESH_SONIC_PLATFORM_BS.PCK
+    spriteInv: SLAANESH_SONIC_PLATFORM_INV
+    fearImmune: true
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    allowInv: false
+    corpseBattle:
+      - SLAANESH_PLATFORM_CORPSE1
+      - SLAANESH_PLATFORM_CORPSE2
+      - SLAANESH_PLATFORM_CORPSE3
+      - SLAANESH_PLATFORM_CORPSE4
+    corpseGeo: STR_SLAANESH_PLAT_CORPSE_P
+    frontArmor: 100
+    sideArmor: 85
+    rearArmor: 60
+    underArmor: 100
+    drawingRoutine: 20
+    constantAnimation: false
+    movementType: 1
+    size: 2
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.3 #LASCANON
+      - 1.0 #PLASMA
+      - 0.9 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
