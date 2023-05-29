@@ -3,6 +3,15 @@ extended:
     RuleArmor:
       ARMOR_TENACIOUS_HP_MOD: int
       ARMOR_TENACIOUS_STUN_RECOVERY: int
+    #infection script tags
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+    #intimidation script tags
+      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
+    #dodge script tags
+      DODGE_CHANCE: int
+      FLIGHT_DODGE_CHANCE: int
+      ARMOR_MAX_SUCCESSFUL_DODGES: int
 
 armors:
   - &TENACIOUS_NECRON_ARMOR
@@ -11,9 +20,12 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 2
       ARMOR_TENACIOUS_STUN_RECOVERY: 10
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
     scripts:
-      damageUnit: | # take HP damage as stun damage. 
+      damageUnit: | # take HP damage as stun damage.
         var int temp;
+        var int temp2;
         var ptr RuleArmor targetArmor;
 
         if eq damaging_type 11; # Melta DT
@@ -31,10 +43,14 @@ armors:
           set temp 1;
         end;
 
-        div to_health temp;
+        #convert the HP damage to stun damage
+        set temp2 to_health; #set the health damage
+        div to_health temp; #divide the health damage by the Tenacious rating
+        sub temp2 to_health; #calculate the extra Stun damage that's converted from HP damage
+        add to_stun temp2; #apply the extra Stun damage
         return;
 
-      
+
       newTurnUnit: | # reduce stunlevel by a greater value than 1 per turn
         var int currentStun;
         var int stunRecovery;
@@ -69,23 +85,51 @@ armors:
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
       ARMOR_TENACIOUS_HP_MOD: 3
-      ARMOR_TENACIOUS_STUN_RECOVERY: 10
+      ARMOR_TENACIOUS_STUN_RECOVERY: 15
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
   - type: STR_NECRON_IMORTAL_ARMOR
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
       ARMOR_TENACIOUS_HP_MOD: 3
-      ARMOR_TENACIOUS_STUN_RECOVERY: 10
+      ARMOR_TENACIOUS_STUN_RECOVERY: 15
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
   - type: STR_NECRON_DEATHMARK_ARMOR
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
       ARMOR_TENACIOUS_HP_MOD: 2
-      ARMOR_TENACIOUS_STUN_RECOVERY: 10
+      ARMOR_TENACIOUS_STUN_RECOVERY: 15
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
   - type: STR_DESTROYER_ARMOR
     scripts:
-      damageUnit: | 
+      damageUnit: |
         div to_health 5;
         set to_stun 0;
         return;
+
+  - type: STR_NECRON_ARCHITECT_ARMOR       #NECRON WARRIOR
+    refNode: *TENACIOUS_NECRON_ARMOR
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 80
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 12
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      ARMOR_TENACIOUS_HP_MOD: 3
+      ARMOR_TENACIOUS_STUN_RECOVERY: 20
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+
+  - type: STR_NECRON_SCARAB_ARMOR1
+    refNode: *TENACIOUS_NECRON_ARMOR
+    tags:
+      ARMOR_TENACIOUS_HP_MOD: 2
+      ARMOR_TENACIOUS_STUN_RECOVERY: 15
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
