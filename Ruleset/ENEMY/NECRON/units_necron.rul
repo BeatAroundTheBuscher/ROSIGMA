@@ -1,11 +1,12 @@
 extended:
   tags:
     RuleArmor:
-      INFECTION_RESIST: int #reduces infection damage by this as a %
-      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+    #infection script tags
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
     #intimidation script tags
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
 
@@ -19,7 +20,7 @@ units:
       tu: 75
       stamina: 96
       health: 50
-      bravery: 100
+      bravery: 110
       reactions: 85
       firing: 74
       throwing: 80
@@ -36,13 +37,15 @@ units:
     canPanic: false
     canBeMindControlled: false
     intelligence: 6
-    aggression: 1
-    spotter: 2
+    aggression: 8
+    spotter: 1
+    sniper: 40
     energyRecovery: 40
     builtInWeaponSets:
       - - STR_GAUSS_FLAYER
       - - STR_GAUSS_FLAYER
       - - STR_GAUSS_FLAYER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
 
   - type: STR_NECRON_IMORTAL_REVIVES  #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -51,7 +54,7 @@ units:
       tu: 75
       stamina: 96
       health: 60
-      bravery: 100
+      bravery: 110
       reactions: 60
       firing: 74
       throwing: 80
@@ -68,13 +71,17 @@ units:
     canPanic: false
     canBeMindControlled: false
     intelligence: 6
-    aggression: 1
+    aggression: 8
     spotter: 1
+    sniper: 40
     energyRecovery: 40
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
       - - STR_GAUSS_BLASTER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
       - - STR_GAUSS_BLASTER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
 
   - type: STR_NECRON_DEATHMARK_REVIVES  #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -83,7 +90,7 @@ units:
       tu: 75
       stamina: 96
       health: 40
-      bravery: 100
+      bravery: 110
       reactions: 100
       firing: 80
       throwing: 80
@@ -101,29 +108,32 @@ units:
     canBeMindControlled: false
     intelligence: 6
     aggression: 1
-    spotter: 1
+    spotter: 2
     energyRecovery: 45
-    sniper: 50
+    sniper: 90 #they are primarily snipers
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
       - - STR_SYNAPTIC_DISINTEGRATOR
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
       - - STR_SYNAPTIC_DISINTEGRATOR
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
 
   - type: STR_NECRON_LYCHGUARD_REVIVES #STR_NECRON_LYCHGUARD_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
     rank: STR_LIVE_COMMANDER
     stats:
-      tu: 80
+      tu: 90
       stamina: 100
       health: 100
-      bravery: 100
-      reactions: 65
+      bravery: 110
+      reactions: 85
       firing: 74
       throwing: 80
       strength: 40
       psiStrength: 200
       psiSkill: 0
-      melee: 75
+      melee: 100
     armor: STR_NECRON_LYCHGUARD_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
@@ -133,7 +143,8 @@ units:
     spawnUnit: STR_NECRON_LYCHGUARD
     canPanic: false
     canBeMindControlled: false
-    aggression: 1
+    aggression: 8
+    isLeeroyJenkins: TRUE
     spotter: 1
     energyRecovery: 40
     builtInWeaponSets:
@@ -144,39 +155,70 @@ units:
   - type: STR_NECRON_WARRIOR
     stats:
       health: 60 # was 100, easier to use overKill this way
+    sniper: 40
+    spotter: 1
+    value: 10
     builtInWeaponSets:
       - - STR_GAUSS_FLAYER
         - STR_KILLPOINT_TOKEN_10
       - - STR_GAUSS_FLAYER
         - STR_KILLPOINT_TOKEN_10
       - - STR_GAUSS_FLAYER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_KILLPOINT_TOKEN_10
 
   - type: STR_NECRON_IMORTAL
     stats:
       health: 80
+    sniper: 40
+    spotter: 1
+    value: 15
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
         - STR_KILLPOINT_TOKEN_10
       - - STR_GAUSS_BLASTER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_KILLPOINT_TOKEN_10
       - - STR_GAUSS_BLASTER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_KILLPOINT_TOKEN_10
 
   - type: STR_NECRON_DEATHMARK
     stats:
       health: 60 # was 40
+    aggression: 2
+    sniper: 90 #they are primarily snipers
+    spotter: 2
+    value: 15
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
         - STR_KILLPOINT_TOKEN_10
       - - STR_SYNAPTIC_DISINTEGRATOR
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_KILLPOINT_TOKEN_10
       - - STR_SYNAPTIC_DISINTEGRATOR
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_KILLPOINT_TOKEN_10
 
   - type: STR_NECRON_LYCHGUARD
     stats:
+      tu: 90
+      stamina: 100
       health: 200 # was 100
+      bravery: 110
+      reactions: 85
+      firing: 74
+      throwing: 80
+      strength: 40
+      psiStrength: 200
+      psiSkill: 0
+      melee: 100
+    isLeeroyJenkins: TRUE
+    aggression: 8
+    spotter: 1
+    value: 25
     builtInWeaponSets:
       - - STR_HYPERPHASESWORD
         - STR_KILLPOINT_TOKEN_10
@@ -186,20 +228,154 @@ units:
         - STR_KILLPOINT_TOKEN_10
 
   - type: STR_NECRON_DESTROYER
+    sniper: 30
+    aggression: 8
+    spotter: 1
+    value: 30
     stats:
       health: 50 # effective HP 500 # tried 200 but was too much # was 100
 
+  - type: STR_NECRON_SCARAB5 #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
+    race: STR_NECRON
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 115
+      stamina: 200
+      health: 30
+      bravery: 110
+      reactions: 85
+      firing: 74
+      throwing: 80
+      strength: 30
+      psiStrength: 200
+      psiSkill: 0
+      melee: 65
+    value: 5
+    intelligence: 2
+    aggression: 8
+    isLeeroyJenkins: TRUE
+    spotter: 2
+    energyRecovery: 200
+    spawnUnit: STR_NECRON_SCARAB3
+
+  - type: STR_NECRON_SCARAB3 #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
+    race: STR_NECRON
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 115
+      stamina: 200
+      health: 30
+      bravery: 110
+      reactions: 85
+      firing: 74
+      throwing: 80
+      strength: 30
+      psiStrength: 200
+      psiSkill: 0
+      melee: 65
+    value: 5
+    intelligence: 2
+    aggression: 8
+    isLeeroyJenkins: TRUE
+    spotter: 2
+    energyRecovery: 200
+    spawnUnit: STR_NECRON_SCARAB1
+
+  - type: STR_NECRON_SCARAB1 #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
+    race: STR_NECRON
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 115
+      stamina: 200
+      health: 30
+      bravery: 110
+      reactions: 85
+      firing: 74
+      throwing: 80
+      strength: 30
+      psiStrength: 200
+      psiSkill: 0
+      melee: 65
+    value: 5
+    intelligence: 2
+    aggression: 8
+    isLeeroyJenkins: TRUE
+    spotter: 2
+    energyRecovery: 200
+
+  - type: STR_NECRON_ARCHITECT #STR_NECRON_LYCHGUARD_ARMOR                        RANK 5 weapons done
+    race: STR_NECRON
+    rank: STR_LIVE_COMMANDER
+    stats:
+      tu: 150
+      stamina: 150
+      health: 200
+      bravery: 100
+      reactions: 90
+      firing: 120
+      throwing: 80
+      strength: 60
+      psiStrength: 200
+      psiSkill: 0
+      melee: 120
+    armor: STR_NECRON_ARCHITECT_ARMOR
+    standHeight: 20
+    kneelHeight: 15
+    value: 40
+    deathSound: [289, 290, 291]
+    intelligence: 8
+    aggression: 1
+    spotter: 3
+    sniper: 60
+    energyRecovery: 40
+#    spawnUnit: STR_NECRON_IMORTAL
+    builtInWeaponSets:
+      - - STR_HYPERPHASESWORD
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_GAUSS_BLASTER
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_SYNAPTIC_DISINTEGRATOR
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+
+  - type: STR_MONO_N     #NECRON TURRET       race: STR_NECRON
+    aggression: 8
+    sniper: 100 #long range fire support
+
+  - type: STR_MONO_S     #NECRON TURRET       race: STR_NECRON
+    aggression: 8
+    sniper: 100 #long range fire support
+
+  - type: STR_MONO_E     #NECRON TURRET       race: STR_NECRON
+    aggression: 8
+    sniper: 100 #long range fire support
+
+  - type: STR_MONO_W     #NECRON TURRET       race: STR_NECRON
+    aggression: 8
+    sniper: 100 #long range fire support
+
 armors:
   - type: STR_NECRON_WARRIOR_ARMOR     #NECRON WARRIOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 50
     overKill: 0.2 #0.5 is default, health+50, so 150 damage to vaporize
     frontArmor: 80
     sideArmor: 70
     rearArmor: 40
     underArmor: 45
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
 
   - type: STR_NECRON_WARRIOR_ARMOR_REVIVES      #NECRON WARRIOR
     visibilityAtDay: 40
     visibilityAtDark: 40
+    heatVision: 50
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -217,6 +393,9 @@ armors:
     rearArmor: 40
     underArmor: 45
     drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
     damageModifier: #NECRON ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -235,11 +414,19 @@ armors:
       - INV_NULL_3X3
 
   - type: STR_NECRON_LYCHGUARD_ARMOR
+    visibilityAtDay: 50
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
     overKill: 0.5
     frontArmor: 170
-    sideArmor: 80
+    sideArmor: 150
     rearArmor: 70
     underArmor: 70
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
 
   - type: STR_NECRON_LYCHGUARD_ARMOR_REVIVES        #NECRON WARRIOR
     tags:
@@ -251,8 +438,11 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
-    visibilityAtDay: 40
-    visibilityAtDark: 40
+    visibilityAtDay: 50
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -263,10 +453,13 @@ armors:
     corpseBattle:
       - STR_NECRON_LYCHGUARD_CORPSE
     frontArmor: 170
-    sideArmor: 80
+    sideArmor: 150
     rearArmor: 70
     underArmor: 70
     drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
     damageModifier: #NECRON ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -286,16 +479,23 @@ armors:
       - AUX_DISPERSIONSHIELD
 
   - type: STR_NECRON_IMORTAL_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 50
     overKill: 0.4
     frontArmor: 110
     sideArmor: 90
     rearArmor: 40
     underArmor: 45
     drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
 
   - type: STR_NECRON_IMORTAL_ARMOR_REVIVES       #NECRON WARRIOR
     visibilityAtDay: 40
     visibilityAtDark: 40
+    heatVision: 50
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -313,6 +513,9 @@ armors:
     rearArmor: 40
     underArmor: 45
     drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
     damageModifier: #NECRON ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -331,11 +534,22 @@ armors:
       - INV_NULL_3X3
 
   - type: STR_NECRON_DEATHMARK_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 60
+    heatVision: 90 #smoke is only a minor impairment to Deathmark snipers
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 15
     overKill: 0.4
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
 
   - type: STR_NECRON_DEATHMARK_ARMOR_REVIVES      #NECRON WARRIOR
     visibilityAtDay: 60
     visibilityAtDark: 60
+    heatVision: 90 #smoke is only a minor impairment to Deathmark snipers
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 15
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -353,6 +567,9 @@ armors:
     rearArmor: 40
     underArmor: 45
     drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
     damageModifier: #NECRON ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -369,3 +586,356 @@ armors:
     loftempsSet: [ 3 ]
     builtInWeapons:
       - INV_NULL_3X3
+
+  - type: STR_DESTROYER_ARMOR              #NECRON WARRIOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 50
+    spriteSheet: NECRONDR5.PCK
+    fearImmune: true
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    allowInv: false
+    spriteInv: NECRON5.SPK
+    corpseBattle:
+      - 100_NECRON1
+      - 100_NECRON2
+      - 100_NECRON3
+      - 100_NECRON4
+    corpseGeo: STR_DESTROYER_CORPSE
+    frontArmor: 100
+    sideArmor: 80
+    rearArmor: 70
+    underArmor: 80
+    drawingRoutine: 20
+    constantAnimation: false
+    movementType: 1
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    size: 2
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.9 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    builtInWeapons:
+      - STR_GAUSS_CANNON
+
+  - type: STR_NECRON_SCARAB_ARMOR3         #NECRON WARRIOR
+    visibilityAtDay: 50 #effective scouters/spotters for Necrons
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    spriteSheet: NECRONDR7.PCK
+    fearImmune: true
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    allowInv: false
+    spriteInv: NECRON8.SPK
+    corpseBattle:
+      - 100_NECRON1
+      - 100_NECRON2
+      - 100_NECRON3
+      - 100_NECRON4
+    corpseGeo: STR_DESTROYER_CORPSE
+    frontArmor: 30
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 35
+    drawingRoutine: 20
+    constantAnimation: false
+    movementType: 1
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    size: 2
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE; only AoE does full damage due to being a dispersed swarm
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.0 #STUN; they're automatons, they can't be stunned.
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_SCARAB_R_WEAPON
+      - STR_SCARAB_L_WEAPON
+
+  - type: STR_NECRON_SCARAB_ARMOR5         #NECRON WARRIOR
+    visibilityAtDay: 50 #effective scouters/spotters for Necrons
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    spriteSheet: NECRONDR8.PCK
+    fearImmune: true
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    allowInv: false
+    spriteInv: NECRON7.SPK
+    corpseBattle:
+      - 100_NECRON1
+      - 100_NECRON2
+      - 100_NECRON3
+      - 100_NECRON4
+    corpseGeo: STR_DESTROYER_CORPSE
+    frontArmor: 30
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 35
+    drawingRoutine: 20
+    constantAnimation: false
+    movementType: 1
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    size: 2
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE; only AoE does full damage due to being a dispersed swarm
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.0 #STUN; they're automatons, they can't be stunned.
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_SCARAB_R_WEAPON
+      - STR_SCARAB_L_WEAPON
+
+  - type: STR_NECRON_SCARAB_ARMOR1         #NECRON WARRIOR
+    visibilityAtDay: 50 #effective scouters/spotters for Necrons
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    zombiImmune: true
+    spriteSheet: NECRONDR9.PCK
+    spriteInv: NECRON9.SPK
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    corpseBattle:
+      - STR_NECRON_SCARAB_CORPSE
+    frontArmor: 30
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 35
+    drawingRoutine: 4
+    movementType: 1
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE; only AoE does full damage due to being a dispersed swarm
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 1.0 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_SCARAB_R_WEAPON
+      - STR_SCARAB_L_WEAPON
+
+  - type: STR_NECRON_ARCHITECT_ARMOR       #NECRON WARRIOR
+    visibilityAtDay: 50
+    visibilityAtDark: 50
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    zombiImmune: true
+    spriteSheet: NECRONDR6.PCK
+    spriteInv: NECRON6.SPK
+    corpseBattle:
+      - STR_NECRON_ARCHITECT_CORPSE
+    frontArmor: 170
+    sideArmor: 80
+    rearArmor: 70
+    underArmor: 70
+    drawingRoutine: 0
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.1 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+
+  - type: STR_MONO_N_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 60
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    builtInWeapons:
+      - STR_TRIPLE_GAUSS_CANNON
+
+  - type: STR_MONO_S_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 60
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    builtInWeapons:
+      - STR_TRIPLE_GAUSS_CANNON
+
+  - type: STR_MONO_W_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 60
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    builtInWeapons:
+      - STR_TRIPLE_GAUSS_CANNON
+
+  - type: STR_MONO_E_ARMOR
+    visibilityAtDay: 60
+    visibilityAtDark: 60
+    heatVision: 60
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+    builtInWeapons:
+      - STR_TRIPLE_GAUSS_CANNON
