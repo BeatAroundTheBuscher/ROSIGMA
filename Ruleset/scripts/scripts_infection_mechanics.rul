@@ -215,12 +215,11 @@ extended:
             if gt temp 50; #we only start getting the Emprah's protection from Chaos with Devotion above 50.
               sub temp 50;
               div temp 2;
-              limit_upper temp 100;
-              if eq temp 100; #abort if we get 100% infection resistance
+              if ge temp 100; #abort if we get 100+% infection resistance
                 #debug_log "Infection Scripts; damageUnit, offset 22: Aborting. Infection resistance from Devotion at 100%" temp;
                 return;
               end;
-              sub temp -100; #invert
+              sub temp 100; #invert
               mul temp -1;
               muldiv infectionDamage temp 100;
             end;
