@@ -1,52 +1,52 @@
 soldiers:
   - type: STR_ADEPTAS_NOVICE
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
 
   - type: STR_ADEPTAS_PILOT
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
-      
+
   - type: STR_ADEPTAS_GEMINAE
-    tags: 
-      SOLDIER_IS_SOB: 1      
-      
+    tags:
+      SOLDIER_IS_SOB: 1
+
   - type: STR_CANONESS
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
 
   - type: STR_ADEPTAS_DCAssassin
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
 
   - type: STR_ADEPTAS
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
   - type: STR_ADEPTAS_REPENTIA
-    tags: 
-      SOLDIER_IS_SOB: 1       
+    tags:
+      SOLDIER_IS_SOB: 1
   - type: STR_ADEPTAS_VETERAN
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
-      
+
   - type: STR_ADEPTAS_ASSASSIN
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
- 
+
   - type: STR_ADEPTAS_NOVITIATE_SUPERIOR
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
 
   - type: STR_ADEPTAS_REPENTIA_SUPERIOR
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
-      
+
   - type: STR_ADEPTAS_SUPERIOR
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
-      
+
   - type: STR_SAINT
-    tags: 
+    tags:
       SOLDIER_IS_SOB: 1
 
 extended:
@@ -71,6 +71,8 @@ extended:
       UNIT_EXP_PSISKILL: int
       UNIT_EXP_PSISTRENGTH: int
       UNIT_EXP_STRENGTH: int
+      #infection scripts
+      CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
 
 
   scripts:
@@ -109,7 +111,7 @@ extended:
         return;
 
     - offset: 2 # Spirit of the Martyr
-      code: | 
+      code: |
         var int temp1;
         var int temp2;
 
@@ -147,6 +149,7 @@ extended:
           add to_health temp1; # temp1 is negative
           sub to_health 5; # get above 0 HP
           set to_wound 0;
+          unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #spirit of martyr purges all infection/corruption
           battle_game.setTag Tag.MIRACLE_POINTS temp2;
           battle_game.getTurn temp2;
           battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
@@ -157,7 +160,7 @@ extended:
 
     newTurnUnit:
     - offset: 1 # gain miracle points by gaining experience
-      code: | 
+      code: |
         var int temp1;
         var int temp2;
         var int miraclePointsGained;
@@ -218,7 +221,7 @@ extended:
 
         unit.getTag temp2 Tag.UNIT_EXP_STRENGTH;
         unit.Exp.getStrength temp1; # probably doesn't do anything
-        unit.setTag Tag.UNIT_EXP_STRENGTH temp1;        
+        unit.setTag Tag.UNIT_EXP_STRENGTH temp1;
         sub temp1 temp2;
         mul temp1 10;
         add miraclePointsGained temp1;
@@ -226,15 +229,15 @@ extended:
 
         unit.getTag temp2 Tag.UNIT_EXP_PSISKILL;
         unit.Exp.getPsiSkill temp1;
-        unit.setTag Tag.UNIT_EXP_PSISKILL temp1;  
+        unit.setTag Tag.UNIT_EXP_PSISKILL temp1;
         sub temp1 temp2;
         mul temp1 10;
-        add miraclePointsGained temp1;   
+        add miraclePointsGained temp1;
         # debug_log "Miracle Points gained getPsiSkill" temp1;
 
         unit.getTag temp2 Tag.UNIT_EXP_PSISTRENGTH;
         unit.Exp.getPsiStrength temp1;
-        unit.setTag Tag.UNIT_EXP_PSISTRENGTH temp1;     
+        unit.setTag Tag.UNIT_EXP_PSISTRENGTH temp1;
         sub temp1 temp2;
         mul temp1 10;
         add miraclePointsGained temp1;
@@ -249,7 +252,7 @@ extended:
 
 
     skillUseUnit:
-    - offset: 1 
+    - offset: 1
       code: |
         var int temp1;
         var int temp2;
@@ -257,7 +260,7 @@ extended:
         var int currentTurn;
         var int lastCommand;
         var int lastTurn;
-        
+
         skill.getTag newCommand Tag.SKILL_MIRACLE_ID;
         if eq newCommand 0;
           return;
@@ -296,7 +299,7 @@ extended:
           if lt temp1 0;
             battle_game.getTag temp1 Tag.MIRACLE_POINTS;
             battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
-            return;            
+            return;
           end;
 
           battle_game.setTag Tag.MIRACLE_POINTS temp1;
@@ -318,7 +321,7 @@ extended:
           battle_game.setTag Tag.CHOICE_ACTIVE_MIRACLE newCommand;
           # debug_log "skill CHOICE_ACTIVE_MIRACLE" newCommand;
         else;
-            battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";        
-        end;          
-        
+            battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
+        end;
+
         return;
