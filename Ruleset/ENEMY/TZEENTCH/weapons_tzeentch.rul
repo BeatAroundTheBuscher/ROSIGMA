@@ -9,10 +9,13 @@ extended:
       ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_POWER_BONUS_PERCENTILE: int #0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
-    #Infection system vars
+#Infection system vars
       INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
       INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+#reaction modifier tags
+      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
+      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
 
 items:
   - type: STR_NIGHTLORD_HORROR
@@ -82,6 +85,7 @@ items:
     tags:
       ITEM_SNAP_FLAT_POWER_BONUS: 10
       ITEM_AIMED_FLAT_POWER_BONUS: 20
+      REACTION_MULTIPLIER: 200
     battleType: 1
     twoHanded: false #Pistol
     invWidth: 1
@@ -269,7 +273,8 @@ items:
     bulletSpeed: 30
     attraction: 5
     listOrder: 10140
-
+    tags:
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
 
   - type: STR_TZEENTCH_BOLTER_LIGHT_SOLO #Light Inferno Bolter
     categories: [STR_CAT_BOLTER, STR_CAT_TZEENTCH]

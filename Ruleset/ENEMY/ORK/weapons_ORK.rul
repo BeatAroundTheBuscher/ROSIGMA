@@ -12,6 +12,7 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+      DAMAGETYPE_OVERRIDE: int
 
 #vampiric on kill; weapons
       TAG_HP_RETURNED_ON_KILL: int
@@ -1778,6 +1779,7 @@ items:
 #NECRON Items
   - type: STR_TRIPLE_GAUSS_CANNON   #              18017
     categories: [STR_CAT_NECRON, STR_CAT_DEVASTATOR]
+    damageType: 11 #melta; this is the closest thing
     damageAlter: #DA GUASS
       RandomType: 6 #Gauss has... gaussian damage. Consistent.
       ArmorEffectiveness: 1.0 #destroys armor; doesn't ignore it.
@@ -1796,6 +1798,7 @@ items:
   - type: STR_HYPERPHASESWORD #         13000           DA POWER
     categories: [STR_CAT_NECRON, STR_CAT_ASSAULT]
     power: 50
+    damageType: 7
     damageBonus: #damage scales dramatically with melee ability; specialists like assassins benefit the most
       melee: [0.0, 0.005]
     damageAlter: #DA GUASS
@@ -1808,13 +1811,15 @@ items:
 
   - type: STR_GAUSS_CANNON   #              18016
     categories: [STR_CAT_NECRON, STR_CAT_DEVASTATOR]
-    power: 150 #this will fuck you up
+    power: 140 #this will fuck you up
     snapRange: 18 #improved range due to heavy weapon
     tuSnap: 45 #fires twice if the attacker doesn't really move
     tuAuto: 50
     accuracyAuto: 70
     autoRange: 15
-    autoShots: 3
+    dropoff: 4
+    autoShots: 6 #has roughly the fire rate of a heavy bolter
+    damageType: 11 #melta; this is the closest thing
     damageAlter: #DA GUASS
       RandomType: 6 #Gauss has... gaussian damage. Consistent.
       ArmorEffectiveness: 1.0 #destroys armor; doesn't ignore it.
@@ -1838,6 +1843,7 @@ items:
     accuracyAuto: 60
     autoRange: 10
     autoShots: 3
+    damageType: 11 #melta; this is the closest thing
     damageAlter: #DA GUASS
       RandomType: 6 #Gauss has... gaussian damage. Consistent.
       ArmorEffectiveness: 1.0 #destroys armor; doesn't ignore it.
@@ -1872,6 +1878,7 @@ items:
     tuMelee: 15
     flatMelee:
       time: true
+    attraction: 7
     requires:
       - STR_XENO_ONLY
 
@@ -1880,7 +1887,8 @@ items:
     power: 40 #power scales with accuracy
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
-    damageType: 1
+    dropoff: 3
+    damageType: 11
     damageAlter: #DA GUASS
       RandomType: 6 #Gaussian/bell curve damage distribution
       ToArmor: 0.0 #doesn't really interact with armor
@@ -1894,8 +1902,9 @@ items:
       FixRadius: 0
     kneelBonus: 130 #light sniper weapon; benefits twice as much from kneeling
     tags:
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+    attraction: 6
     requires:
       - STR_XENO_ONLY
 
@@ -1907,6 +1916,9 @@ items:
     accuracyAuto: 65
     autoRange: 12
     autoShots: 3
+    dropoff: 4
+    power: 70
+    damageType: 11 #melta; this is the closest thing
     damageAlter: #DA GUASS
       RandomType: 6 #Gauss has... gaussian damage. Consistent.
       ArmorEffectiveness: 1.0 #destroys armor; doesn't ignore it.
@@ -1919,6 +1931,9 @@ items:
       ToWound: 0.05 #disintegrates rather than causing ugly wounds.
       RandomWound: false
       IgnoreOverKill: false
+    shotgunSpread: 1 # 1/100; hit together
+    shotgunBehavior: 1 # new behaviour
+    shotgunPellets: 2
     #Gauss Axe bayonet
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: {mod: 40k, index: 0 }
@@ -1942,6 +1957,7 @@ items:
     flatMelee:
       time: true
     kneelBonus: 130 #heavyish weapon; benefits twice as much from kneeling
+    attraction: 8
     requires:
       - STR_XENO_ONLY
 
@@ -1955,7 +1971,7 @@ items:
     hitAnimation: 2130
     meleeAnimation: 76
     power: 40
-    damageType: 1 #it's not melee; they disassemble enemies gauss style
+    damageType: 11 #it's not melee; they disassemble enemies gauss style; melta closest damage type
     damageAlter: #basically mini-chain axe
       RandomType: 6 #gaussian; many attacks make for consistent damage
       ToArmorPre: 1.0
@@ -1968,7 +1984,7 @@ items:
       RandomWound: false
       IgnoreSelfDestruct: false
     meleePower: 40
-    meleeType: 1 #it's not melee; they disassemble enemies gauss style
+    meleeType: 11 #it's not melee; they disassemble enemies gauss style
     meleeAlter:
       RandomType: 6 #gaussian; many attacks make for consistent damage
       ToArmorPre: 1.0
@@ -2002,6 +2018,7 @@ items:
       YTAG_DAMAGE_RETURNED_AS_ENERGY: 50
       YTAG_DAMAGE_RETURNED_AS_STUN: 50
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
+      DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
 
   - type: STR_SCARAB_R_WEAPON #Deamon Blade2
     weight: 3
@@ -2013,7 +2030,7 @@ items:
     hitAnimation: 2130
     meleeAnimation: 76
     power: 40
-    damageType: 1 #it's not melee; they disassemble enemies gauss style
+    damageType: 11 #it's not melee; they disassemble enemies gauss style; melta closest damage type
     damageAlter: #basically mini-chain axe
       RandomType: 6 #gaussian; many attacks make for consistent damage
       ToArmorPre: 1.0
@@ -2026,7 +2043,7 @@ items:
       RandomWound: false
       IgnoreSelfDestruct: false
     meleePower: 40
-    meleeType: 1 #it's not melee; they disassemble enemies gauss style
+    meleeType: 11 #it's not melee; they disassemble enemies gauss style
     meleeAlter:
       RandomType: 6 #gaussian; many attacks make for consistent damage
       ToArmorPre: 1.0
@@ -2060,6 +2077,7 @@ items:
       YTAG_DAMAGE_RETURNED_AS_ENERGY: 50
       YTAG_DAMAGE_RETURNED_AS_STUN: 50
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
+      DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
 
   - type: AUX_DISPERSIONSHIELD        #AUX T Shield
     weight: 5
@@ -2075,7 +2093,7 @@ items:
     tuSnap: 20
     flatSnap: true
     accuracySnap: 110
-    damageType: 1 #it's not melee; they disassemble enemies gauss style
+    damageType: 11 #it's not melee; they disassemble enemies gauss style
     damageAlter:
       RandomType: 6 #gaussian
       ToArmorPre: 1.0
@@ -2087,6 +2105,8 @@ items:
       ToWound: 0.05 #disintegrates rather than causing ugly wounds.
       RandomWound: false
       IgnoreSelfDestruct: false
+    tags:
+      DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
 
 #--- ELDAR  ------------------------------------------------------      dropoff: 5
   - type: STR_CATAPULT_PISTOL  #              16000

@@ -57,6 +57,9 @@ extended:
       ITEM_POWER_BONUS_PERCENTILE: int #0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
       GravPercentage: int
+#reaction modifier tags
+      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
+      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
     RuleArmor:
       HAS_EXTENDED_FRONT_SHIELD: int
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
@@ -70,7 +73,6 @@ extended:
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
     #intimidation script tags
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
-
 
 
   scripts:
@@ -194,6 +196,13 @@ extended:
           if gt temp 0;
             stats_state.addIntRow "STR_GRAVPERCENTAGE" temp;
           end;
-
+          rule.getTag temp Tag.REACTION_MULTIPLIER;
+          if gt temp 0;
+            stats_state.addIntRow "STR_REACTION_MULTIPLIER_STATS_FOR_NERDS" temp;
+          end;
+          rule.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+          if gt temp 0;
+            stats_state.addIntRow "STR_REACTION_FLAT_BONUS_OR_PENALTY_STATS_FOR_NERDS" temp;
+          end;
 
           return;

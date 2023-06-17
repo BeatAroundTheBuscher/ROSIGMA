@@ -1,0 +1,64 @@
+# hooks
+# reactionUnitAction   # Runs when an unit performs an action that triggers reaction fire.
+# reactionUnitReaction # Runs when a unit sees another unit perform an action that triggers reaction fire.
+# reactionWeaponAction # Runs for the weapon that triggered reaction shots by firing.
+
+# these are tags for modifying the effective reaction values of weapons; largely meant to give most pistols bonuses to reactions.
+
+extended:
+  tags:
+    RuleItem:
+      #reaction modifier tags
+      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
+      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
+
+  scripts:
+    reactionUnitReaction:
+      - new: ROSIGMA_rUA_item_reactions_modifier
+        offset: 19
+        code: |
+          var int friendyReactionScore;
+          var int enemyReactionScore;
+
+          var int temp;
+          var int temp2;
+
+          reaction_weapon.getTag temp Tag.REACTION_MULTIPLIER;
+          if le temp 0;
+            reaction_weapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+            if eq temp 0;
+              return reaction_chance; #if neither tag has a relevant value, cancel out
+              #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: No appropriate tags detected. Aborting.";
+            end;
+          end;
+
+          reaction_unit.Stats.getReactions friendyReactionScore;
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Initial Friendly Reaction Score:" enemyReactionScore;
+          reaction_unit.getTimeUnits temp;
+          mul friendyReactionScore temp;
+          reaction_unit.getTimeUnitsMax temp;
+          div friendyReactionScore temp;
+
+          reaction_weapon.getTag temp2 Tag.REACTION_MULTIPLIER;
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Reaction Multiplier Bonus Tag Value:" temp2;
+          muldiv friendyReactionScore temp2 100;
+
+          reaction_weapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Reaction Flat Bonus or Penalty Tag Value:" temp2;
+          add friendyReactionScore temp2;
+
+          action_unit.Stats.getReactions enemyReactionScore;
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Initial Enemy Reaction Score:" enemyReactionScore;
+          action_unit.getTimeUnits temp;
+          mul enemyReactionScore temp;
+          action_unit.getTimeUnitsMax temp;
+          div enemyReactionScore temp;
+
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Final Friendly Reaction Score:" friendyReactionScore;
+          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Final Enemy Reaction Score:" enemyReactionScore;
+
+          if gt friendyReactionScore enemyReactionScore;
+            return 1;
+          end;
+
+          return reaction_chance;

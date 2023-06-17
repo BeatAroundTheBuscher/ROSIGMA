@@ -5,6 +5,9 @@ extended:
       INFECTION_DAMAGE_FLAT: int #if 0 uses damage dealt
       INFECTION_DAMAGE_PERCENT: int #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: int #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+#reaction modifier tags
+      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
+      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
 
 items:
 
@@ -586,7 +589,7 @@ items:
     tuMelee: 14
     flatMelee:
       time: true
-      
+
   - type: STR_LASGUN_CLIP_SLAAN
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     size: 0.1
@@ -615,7 +618,7 @@ items:
     invHeight: 1
     armor: 70
     listOrder: 11060
-    
+
   - type: STR_LASCARBINE_SLAAN #Bray/ungor weapon
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
     size: 0.2
@@ -676,7 +679,7 @@ items:
     size: 0.2
     weight: 6 #lightish weight
     requires:
-      - STR_ALIENS_ONLY    
+      - STR_ALIENS_ONLY
     costSell: 1000
     bigSprite: 2228
     floorSprite: 923
@@ -710,7 +713,7 @@ items:
     bulletSpeed: 50
     armor: 200 #to avoid item pile destruction
     listOrder: 10912
-    
+
   - type: STR_LASER_PISTOLCS  #LASPISTOL SLAAN
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
     requires:
@@ -737,6 +740,9 @@ items:
     invWidth: 1
     invHeight: 2
     listOrder: 10820
+    tags:
+      REACTION_MULTIPLIER: 200
+
   - type: STR_LASPISTOL_CLIP_SLAAN #LASPISTOL CLIP           10850
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
     size: 0.05
@@ -767,6 +773,7 @@ items:
     vaporColor: 2
     vaporDensity: 5
     listOrder: 10850
+
   - type: STR_HEAVY_STUBBER_SLAAN
     categories: [STR_CAT_AUTO]
     requires:
@@ -801,6 +808,7 @@ items:
       shots: 6
     sprayWaypoints: 2
     listOrder: 10762
+
   - type: STR_SLAAN_HEAVY_STUBBER_CLIP
     categories: [STR_CAT_AUTO]
     size: 0.1
@@ -828,6 +836,7 @@ items:
     invHeight: 3
     armor: 30
     listOrder: 10770
+
   - type: STR_AUTOGUN_SLAANESH #"Tainted Autogun"
     categories: [STR_CAT_AUTO]
     requires:
@@ -940,6 +949,7 @@ items:
     recoveryPoints: 3
     armor: 45
     listOrder: 11210
+
   - type: STR_PLASMA_PISTOL_CLIP_SLAAN #                  11310
     categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
     vaporColorSurface: {mod: 40k, index: 2}
@@ -1559,7 +1569,7 @@ items:
     hitAnimation: 1020
     listOrder: 12152
 
-  - type: STR_SONIC_GUN 
+  - type: STR_SONIC_GUN
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
     requires:
       - STR_ALIENS_ONLY
@@ -1582,8 +1592,8 @@ items:
       ToHealth: 1.0 #sonic cannon 2.0
       ArmorEffectiveness: 0.4 #sonic cannon 0.2
       RandomType: 2 #TFTD [50% - 150%]
-      ToMorale: 1.0 
-      ToStun: 0.2 
+      ToMorale: 1.0
+      ToStun: 0.2
       ToTime: 0.5
       ToEnergy: 0.2
     accuracySnap: 70 #sonic cannon 75
