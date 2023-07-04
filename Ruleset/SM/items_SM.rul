@@ -94,7 +94,7 @@ items:
       - STR_DEATHWATCH
     bigSprite: 2010 #artifex boltgun bigob
     floorSprite: 210 #red
-    handSprite: 3020
+    handSprite: 700
     size: 0.3
     dropoff: 5
     costBuy: 10000
@@ -801,7 +801,7 @@ items:
     weight: 9
     bigSprite: 2510
     floorSprite: 2510
-    handSprite: 3000
+    handSprite: 703
     fireSound: 2261 #chunky Nihilus sound
     hitSound: {mod: 40k, index: 19}
     bulletSprite: {mod: 40k, index: 12}
@@ -863,6 +863,62 @@ items:
       ITEM_SNAP_FLAT_POWER_BONUS: 10 #INQ BONUS
       ITEM_AIMED_FLAT_POWER_BONUS: 20 #INQ BONUS
 
+  - type: STR_HAND_MULTILASER_PAI #Inquisition version, for the codex to function
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    size: 0.2
+    dropoff: 5 #worse than Hotshot Volleygun
+    #requiresBuy: #armor attached specialWeapon, the armor is bought with the gun
+      #- STR_CHAMBERMILITANT
+      #- STR_MT_GK #Midtier Inquisition #Guard gets a manufacturing option
+    #costBuy: 1000000 #more than double initial cost vs rotor cannon, but no ammo cost
+    #costSell: 150000
+    weight: 45 #Inq version is slightly lighter, used by storm troopers, still gets integrated power and what not.
+    bigSprite: 910 #multilaser black
+    floorSprite: 922
+    handSprite: 650
+    bulletSprite: {mod: 40k, index: 12}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 741}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    accuracySnap: 55
+    accuracyAuto: 45 # -5 vs volleygun, +5 vs rotorcannon
+    accuracyAimed: 0
+    tuSnap: 35
+    tuAuto: 45
+    tuAimed: 0
+    confSnap: #3 shot burst
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+    autoShots: 12 #-3 vs Rotorcannon, +5 vs volleygun
+    autoRange: 12 #Hellgun +2
+    snapRange: 15
+    aimRange: 0
+    clipSize: -1 #infinite ammo is a boon vs rotorcannon
+    kneelBonus: 150 #big accuracy benefit from deploying
+    power: 60 #-5 vs Hotshot volleygun, higher ROF instead
+    damageType: 1 # AP instead of LAS
+    damageAlter: #Hotshot
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+    sprayWaypoints: 2
+    recover: false #armor attached specialWeapon
+    fixedWeapon: true #armor attached specialWeapon
+    fixedWeaponShow: true #armor attached specialWeapon
+    listOrder: 10761
+
   - type: STR_INQ_FLAMER #Special Inquisition Stormtrooper only flamer
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL]
     weight: 10
@@ -870,7 +926,7 @@ items:
     vaporDensitySurface: 4
     vaporProbabilitySurface: 100
     bigSprite: 1013
-    handSprite: 3022
+    handSprite: 702
     bulletSprite: {mod: 40k, index: 5}
     fireSound: {mod: 40k, index: 706}
     accuracySnap: 70
@@ -888,6 +944,8 @@ items:
     autoShots: 6
     confSnap: #Double Shot
       shots: 2
+      name: STR_BURST_SNAP_SHOT
+      arcing: true
     hitSound: {mod: 40k, index: 12}
     hitAnimation: {mod: 40k, index: 88} #XFIRE
     power: 60
@@ -926,7 +984,7 @@ items:
       RandomWound: false
     meleeBonus:
       psiSkill: 0.2 #consecrated weapon
-      strength: 0.3 #heavy weapon; biased towards strength over skill
+      strength: 0.2 #heavy weapon; biased towards strength over skill
       melee: 0.1
     clipSize: -1
     bulletSpeed: 50
@@ -944,7 +1002,7 @@ items:
     weight: 10
     fireSound: 2261 #chunky Nihilus sound
     bigSprite: 1011
-    handSprite: 3023
+    handSprite: 704
     hitSound: {mod: 40k, index: 19}
     bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 50
@@ -1012,8 +1070,9 @@ items:
     tuSnap: 33
     tuAimed: 33 #Maximal Shot
     confSnap:
-      name: STR_BURST_SNAP_SHOT
       shots: 2
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
     confAimed: #Maximal Shot
       name: STR_MAXIMAL_SHOT
       spendPerShot: 4 #more powerful focused shot that creates more heat
@@ -1021,6 +1080,7 @@ items:
     power: 110 #75 #*** PLASMA rebalance
     damageType: 5
     damageAlter: #DA PLASMA
+      RandomType: 6
       ArmorEffectiveness: 0.75 #*** PLASMA rebalance
       ToArmorPre: 0.1
       ToArmor: 0.2
@@ -1031,6 +1091,8 @@ items:
     twoHanded: true
     blockBothHands: true
     listOrder: 10765
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Overcharged
 
   - type: STR_INQ_MULTIMELTA #Inquisition Multimelta
     categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
@@ -1038,8 +1100,10 @@ items:
     weight: 20
     accuracySnap: 90
     tuSnap: 45
-    confSnap:
+    confSnap: #Double Shot
       shots: 2
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
     snapRange: 16 #+2 over base
     accuracyAuto: 60
     tuAuto: 60
