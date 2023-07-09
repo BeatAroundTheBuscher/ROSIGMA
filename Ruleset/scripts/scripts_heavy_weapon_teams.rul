@@ -19,15 +19,17 @@ extended:
           var int bipod;
           var int weight;
           var int strength;
+          var ptr waypoints;
 
           weapon.getTag bipod Tag.ITEM_HAS_BIPOD;
-          unit.getTag deploy Tag.UNIT_IS_DEPLOYED; 
+          unit.getTag deploy Tag.UNIT_IS_DEPLOYED;
           weapon.getTotalWeight weight;
           unit.Stats.getStrength strength;
 
           # if bipod is not deployed and wielder has not enough strength
           if and eq bipod 1 eq deploy 0 lt strength weight;
             set bonus 0;
+            if
           end;
 
           return bonus;
@@ -48,7 +50,7 @@ extended:
           bipodItem.getTag temp Tag.ITEM_HAS_BIPOD;
 
           if neq temp 1;
-            victim.getLeftHandWeapon bipodItem;  
+            victim.getLeftHandWeapon bipodItem;
             bipodItem.getTag temp Tag.ITEM_HAS_BIPOD;
           end;
 
