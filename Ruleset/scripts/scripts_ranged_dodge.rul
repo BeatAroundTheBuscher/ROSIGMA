@@ -14,6 +14,9 @@ extended:
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
       ARMOR_MAX_SUCCESSFUL_DODGES: int
+    RuleItem:
+      DODGE_CHANCE_FLAT_REDUCTION: int
+      DODGE_CHANCE_PERCENT_REDUCTION: int
 
 armors:
   - &STR_DODGE_ARMOR
@@ -47,6 +50,8 @@ armors:
         var int attackerDirection;
         var int counterSuccessfulDodges;
         var int maxSuccessfulDodges;
+        var int dodgeFlatReduction;
+        var int dodgePercentReduction;
 
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
@@ -56,6 +61,12 @@ armors:
         # don't dodge when counter has reached max;
         unit.getTag counterSuccessfulDodges Tag.UNIT_COUNTER_SUCCESSFUL_DODGES;
         targetArmor.getTag maxSuccessfulDodges Tag.ARMOR_MAX_SUCCESSFUL_DODGES;
+        damagingItem.getTag dodgeFlatReduction Tag.DODGE_CHANCE_FLAT_REDUCTION;
+        damagingItem.getTag dodgePercentReduction Tag.DODGE_CHANCE_PERCENT_REDUCTION;
+
+        if or ge dodgeFlatReduction 100 ge dodgePercentReduction 100; #these weapons are undodgable
+          return power part side;
+        end;
 
         # assume that setting it has been forgotten
         if eq maxSuccessfulDodges 0;
@@ -102,9 +113,21 @@ armors:
         # debug_log "dodgeChance" dodgeChance;
 
         if gt isAoE 0;
-            set randomNumber 200; # always hit # 200 > 100
+          # debug_log "Attack is an AoE and cannot be dodged.";
+          return power part side;
         end;
 
+        #reduce the dodge chance by the dodgeFlatReduction amount
+        sub dodgeChance dodgeFlatReduction;
+        if le dodgeChance 0;
+          # debug_log "Dodge chance reduced to 0 by dodgeFlatReduction property.";
+          return power part side;
+        end;
+
+        #invert the dodgePercentReduction and multiply with the dodgeChance to get a % chance reduction
+        sub dodgePercentReduction 100;
+        mul dodgePercentReduction -1;
+        muldiv dodgeChance dodgePercentReduction 100;
 
         unit.getDirection unitDirection; # {0-7}
         attacker.getDirection attackerDirection;
@@ -166,6 +189,12 @@ armors:
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  - type: STR_GUARD_IMPERIAL_ASSASSIN_UC #Vindicare are proper Temple assassins; they can dodge more than worth a damn; invul 4+ baby
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 50
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_ADEPTAS_ARMORR_UC
     refNode: *STR_DODGE_ARMOR
