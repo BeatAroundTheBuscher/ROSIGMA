@@ -30,6 +30,93 @@ extended:
 
 
 items:
+-  type: STR_AUTOSHOTGUN #                               10600
+    categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
+    size: 0.2
+    costBuy: 50000 #5x standard shotgun. Probably too high.
+    costSell: 25000
+    weight: 16 #28 with ammo drum
+    bigSprite: 1014
+    floorSprite: 932
+    handSprite: 724 #Think this is right
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 755}
+    compatibleAmmo:
+      - STR_SHOTGUN_SHELLS
+      - STR_SHOTGUN_DRUM
+    accuracyAuto: 45
+    accuracySnap: 65
+    accuracyAimed: 0
+    tuSnap: 25
+    tuAimed: 0
+    tuAuto: 30
+    battleType: 1
+    twoHanded: true
+    invWidth: 1
+    invHeight: 3
+    listOrder: 10605
+    followProjectiles: false
+    autoShots: 4 #Will empty a standard mag in one turn
+    sprayWaypoints: 2
+    snapRange: 9
+    autoRange: 5
+    dropoff: 5
+
+  - type: STR_SHOTGUN_DRUM 
+    categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
+    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
+    shotgunSpread: 25
+    size: 0.1
+    costBuy: 2000 #Precisely 4x the cost of standard shotgun shells. Cost of the drum itself is abstracted out
+    costSell: 600
+    weight: 12 #4x the weight of the shells themselves.
+    bigSprite: 1018 
+    floorSprite: 938 
+    handSprite: 776
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 40
+    damageType: 1
+    clipSize: 32
+    battleType: 2
+    listOrder: 10715
+    invWidth: 2
+    invHeight: 1 #Same size as grenade drums. Smaller ammo, but more of it.
+    shotgunPellets: 6
+  - type: STR_POWERKNUCKLE
+    bigSprite: 1017
+    floorSprite: 934
+    handSprite: 760
+    weight: 2
+    size: 0.1
+    meleeSound: {mod: 40k, index: 710} # 710 powerfist miss, change to 40k version
+    meleeHitSound: {mod: 40k, index: 772} # 772 powerfist hit
+    meleeAnimation: {mod: 40k, index: 28} # 28 bolt anitmation
+    power: 50 # More raw damage than a bayonet, less than felinid claws. Much less than a power fist.
+    damageBonus:
+      strength: 0.2 
+      melee 0.2
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+    damageType: 7
+    accuracyMelee: 80
+    tuMelee: 10
+    flatRate: true
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    skillApplied: true
+    meleeMultiplier:
+      melee: 0.5
+      flatHundred: 0.5
+    strengthApplied: false
+    invWidth: 1
+    invHeight: 2
+    armor: 200
+    listOrder: 12650 #don't know if this works
   - type: STR_LASGUN_ESCHER
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
     size: 0.2
@@ -384,6 +471,50 @@ items:
     tags:
       ITEM_RECOIL: 25 #pistol, more recoil
       REACTION_MULTIPLIER: 200
+- type: STR_AUTOCARBINE_NAVY #In between pistol and full size, stat wise
+    categories: [STR_CAT_AUTO]
+    dropoff: 5 #Same barrel length as pistol but better recoil
+    weight: 8 #same as lasgun HG, +1 vs pistol
+    requiresBuy: #Might make it available to arbites somehow
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 15000 #-5000 vs as high grade lasgun, consider ammo cost
+    costSell: 1500   
+    bigSprite: 1014
+    floorSprite: 936
+    handSprite: 724 
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 4}
+    hitAnimation: {mod: 40k, index: 36}
+    battleType: 1
+    twoHanded: true
+    invWidth: 1
+    invHeight: 3 #At the moment, still a full size gun and not a viable sidearm. Could maybe look into making the folding stock functional.
+    bulletSpeed: 25
+    compatibleAmmo:
+      - STR_AUTOGUN_CLIP
+      - STR_AUTOGUN_CLIP_DRUM
+      - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+    snapRange: 13 #-2 vs rifle
+    autoRange: 12 #Well-controlled
+    aimRange: 0
+    accuracyAuto: 55 #-5 vs HG lasgun
+    accuracySnap: 75 #Smaller than rifle, but double tap instead of burst
+    accuracyAimed: 0
+    tuSnap: 20 #carbine, double tap instead of burst
+    tuAuto: 33 #vs40 for normal autogun
+    tuAimed: 0
+    confSnap:
+      shots: 2
+    autoShots: 4 #-1
+    attraction: 1
+    #No bayonet at the moment. Might add it back
+    experienceTrainingMode: 4
+    armor: 200 #to avoid item pile destruction
+    listOrder: 10740
+    tags:
+      ITEM_RECOIL: 20 #Worse recoil compensation, but slower firing rate
+
 
   - type: STR_AUTOGUN_HIGHGRADE #sans underslung but with bayonetta
     categories: [STR_CAT_AUTO]
