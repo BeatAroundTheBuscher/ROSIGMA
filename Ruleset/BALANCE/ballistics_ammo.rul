@@ -1,3 +1,22 @@
+extended:
+  tags:
+    RuleArmor:
+#*** Tags for energy shield on armor ***
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+
+#*** Tags for shield penetrating on weapon ***
+    RuleItem:
+      ITEM_ENERGY_SHIELD_PENETRATION_PERCENT: int
+      ITEM_ENERGY_SHIELD_PENETRATION_FLAT_AMOUNT: int
+      ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: int
+      ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT: int
+
+    BattleUnit:
+#*** Tags for handling energy shields on units ***
+      UNIT_ENERGY_SHIELD_HP: int
+      UNIT_ENERGY_SHIELD_DECAY: int
+
 items:
 
 ## Pistol
@@ -401,6 +420,7 @@ items:
   - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
     damageAlter:
+      ToTile: 0.25
       ToArmorPre: 0.4 #acid melts armor
       ArmorEffectiveness: 0.9
       RandomType: 6
@@ -428,20 +448,14 @@ items:
   - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
     refNode: *STR_EXITUS_BULLETS
     power: 150
-    damageType: 2
+    damageType: 1
     damageAlter:
-      ResistType: 1
       ToTile: 0.0
-      RandomType: 6
-      FireThreshold: 1000 # no fire
       ToArmorPre: 0.1 #high velocity
+      RandomType: 6
       ArmorEffectiveness: 0.8
-      FixRadius: 0
-      IgnoreDirection: false
-
-
-
-
+    tags:
+      ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: 100 #breaks shields
 
 ## Vehicle
 
