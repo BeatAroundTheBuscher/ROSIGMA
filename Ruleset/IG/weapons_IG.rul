@@ -33,7 +33,8 @@ items:
   - type: STR_AUTOSHOTGUN #                               10600
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
     size: 0.2
-    costBuy: 50000 #5x standard shotgun. Probably too high.
+    costBuy: 40000 #4x standard shotgun. Probably still too high.
+    requiresBuyBaseFunc: [TRADE] #Market exclusive but available from the moment you get the market
     costSell: 25000
     weight: 16 #28 with ammo drum
     bigSprite: 1015
@@ -44,6 +45,8 @@ items:
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS
       - STR_SHOTGUN_DRUM
+      - STR_STUN_SHELLS
+      - STR_STUN_GAS_SHELLS
     accuracyAuto: 45
     accuracySnap: 65
     accuracyAimed: 0
@@ -56,11 +59,13 @@ items:
     invHeight: 3
     listOrder: 10605
     followProjectiles: false
-    autoShots: 4 #Will empty a standard mag in one turn
+    autoShots: 4 #Can empty a standard mag in one turn
     sprayWaypoints: 2
     snapRange: 9
     autoRange: 5
     dropoff: 5
+    tags:
+      ITEM_RECOIL: 40
 
   - type: STR_SHOTGUN_DRUM 
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
@@ -85,8 +90,8 @@ items:
     shotgunPellets: 6
   - type: STR_POWERKNUCKLE
     categories: [STR_CAT_MELEE]
-    costBuy: 2000
-    costSell: 1000
+    costBuy: 6000
+    costSell: 3000
     bigSprite: 1017
     floorSprite: 934
     handSprite: 760
@@ -104,7 +109,7 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 2 #TFTD [50% - 150%]
-    damageType: 7
+    damageType: 5
     accuracyMelee: 80
     tuMelee: 10
     flatRate: true
@@ -478,7 +483,7 @@ items:
     categories: [STR_CAT_AUTO]
     dropoff: 5 #Same barrel length as pistol but better recoil
     weight: 8 #same as lasgun HG, +1 vs pistol
-    requiresBuy: #Might make it available to arbites somehow
+    requiresBuy: #Fixed requirement
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
     costBuy: 15000 #-5000 vs as high grade lasgun, consider ammo cost
     costSell: 1500   
