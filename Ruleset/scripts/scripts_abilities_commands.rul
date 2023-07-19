@@ -20,7 +20,7 @@ extended:
 
   scripts:
     createUnit:
-    - offset: 1 
+    - offset: 1
       code: |
         var int temp;
         var int rank;
@@ -53,7 +53,7 @@ extended:
         return;
 
     skillUseUnit:
-    - offset: 1 
+    - offset: 1
       code: |
         var int temp1;
         var int temp2;
@@ -61,7 +61,7 @@ extended:
         var int currentTurn;
         var int lastCommand;
         var int lastTurn;
-        
+
         skill.getTag newCommand Tag.SKILL_COMMAND_ID;
         if eq newCommand 0;
           return;
@@ -101,11 +101,11 @@ extended:
           if lt temp1 0;
             battle_game.getTag temp1 Tag.COMMAND_POINTS;
             battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
-            return;            
+            return;
           end;
 
           battle_game.setTag Tag.COMMAND_POINTS temp1;
-          # debug_log "Remaining Command Points" temp1;
+          #debug_log "Remaining Command Points" temp1;
 
           if eq newCommand 2;
             battle_game.flashLongMessage "STR_FIX_BAYONETS";
@@ -118,32 +118,38 @@ extended:
           end;
 
           battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
-          # debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
+          #debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
 
           battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
-          # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
+          #debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
         else;
-            battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";        
-        end;          
-        
+            battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
+        end;
+
         return;
-      
-    hitUnit: 
+
+    hitUnit:
       - offset: 10 # 1 - Fix Bayonets
         code: |
           var int temp;
           var int temp2;
 
+          attacker.getFaction temp; #we don't care about enemy units
+          if neq temp FACTION_PLAYER;
+            return power part side;
+          end;
+
           battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
-          # debug_log "TURN_ACTIVE_COMMAND" temp;
+          #debug_log "TURN_ACTIVE_COMMAND" temp;
           battle_game.getTurn temp2;
           if neq temp temp2;
             return power part side;
           end;
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
-          # debug_log "CHOICE_ACTIVE_COMMAND" temp;
-          if neq temp 1;
+          #debug_log "CHOICE_ACTIVE_COMMAND" temp;
+          if neq temp 2;
+            #debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. Fix Bayonets command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return power part side;
           end;
 
@@ -151,18 +157,23 @@ extended:
             return power part side;
           end;
 
-          # debug_log "hitUnit:10 before power" power;
+          #debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. Before power:" power;
           set temp power;
           mul temp 6; # 20 % boost
           div temp 5;
 
-          # debug_log "hitUnit:10 after power" temp;
+          #debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. After power:" temp;
           return temp part side;
 
-      - offset: 30 # 3 - Hunker Down 
+      - offset: 30 # 3 - Hunker Down
         code: |
           var int temp;
           var int temp2;
+
+          unit.getFaction temp; #we don't care about enemy units
+          if neq temp FACTION_PLAYER;
+            return power part side;
+          end;
 
           battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
           battle_game.getTurn temp2;
@@ -171,16 +182,12 @@ extended:
           end;
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
-          if neq temp 3;
+          if neq temp 4;
+            #debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return power part side;
           end;
 
-          unit.getFaction temp;
-          if neq temp FACTION_PLAYER;
-            return power part side;
-          end;
-
-          # debug_log "hitUnit:30 before power" power;
+          #debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down before power:" power;
           set temp power;
 
           unit.isKneeled temp2;
@@ -190,7 +197,7 @@ extended:
             mul temp 4;
             div temp 5;
           end;
-          # debug_log "hitUnit:30 after power" temp;
+          #debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down after power:" temp;
 
           return temp part side;
 
@@ -200,6 +207,11 @@ extended:
           var int temp;
           var int temp2;
 
+          attacker.getFaction temp; #we don't care about enemy units
+          if neq temp FACTION_PLAYER;
+            return melee_attack_success;
+          end;
+
           battle_game.getTag temp Tag.TURN_ACTIVE_COMMAND;
           battle_game.getTurn temp2;
           if neq temp temp2;
@@ -207,11 +219,12 @@ extended:
           end;
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
-          if neq temp 1;
+          if neq temp 2;
+            #debug_log "tryMeleeAttackItem, offset 10, Fix Bayonets command accuracy bonus. Fix Bayonets command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return melee_attack_success;
           end;
 
-          # debug_log "tryMeleeAttackUnit: 10 before accuracy" melee_attack_success;
+          #debug_log "tryMeleeAttackItem, offset 10, Fix Bayonets command accuracy bonus. Before accuracy:" melee_attack_success;
           set temp attack_strength;
           mul temp 6; # 20 % boost
           div temp 5;
@@ -220,10 +233,10 @@ extended:
           set temp2 melee_attack_success;
           add temp2 temp;
 
-          # debug_log "tryMeleeAttackUnit: 10 after accuracy" temp2;
+          #debug_log "tryMeleeAttackItem, offset 10, Fix Bayonets command accuracy bonus. After accuracy:" temp2;
           return temp2;
 
-    reactionUnitAction: 
+    reactionUnitAction:
       - offset: 20 # 2 - Blitzkrieg
         code: |
           var int friendyReactionScore;
@@ -245,30 +258,34 @@ extended:
           end;
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
-          if neq temp 2;
+          if neq temp 3;
+            #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Blitzkrieg command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return reaction_chance;
           end;
 
 
           action_unit.Stats.getReactions friendyReactionScore;
+          #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Base friendyReactionScore:" friendyReactionScore;
           action_unit.getTimeUnits temp;
           mul friendyReactionScore temp;
           action_unit.getTimeUnitsMax temp;
           div friendyReactionScore temp;
+          #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Pre bonus, post TU adjustment friendyReactionScore:" friendyReactionScore;
 
           mul friendyReactionScore 2;
           add friendyReactionScore 50;
 
           reaction_unit.Stats.getReactions enemyReactionScore;
+          #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Base enemyReactionScore:" enemyReactionScore;
           reaction_unit.getTimeUnits temp;
           mul enemyReactionScore temp;
           reaction_unit.getTimeUnitsMax temp;
           div enemyReactionScore temp;
-
-          # debug_log "friendyReactionScore" friendyReactionScore;
-          # debug_log "enemyReactionScore" enemyReactionScore;
+          #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Pre bonus, post TU adjustment enemyReactionScore:" enemyReactionScore;
+          #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Post modifier friendyReactionScore:" friendyReactionScore;
 
           if gt friendyReactionScore enemyReactionScore;
+            #debug_log "reactionUnitAction, offset 20, Blitzkrieg command reaction bonus. Enemy prevented from reacting.";
             return 0;
           end;
 
@@ -279,53 +296,53 @@ extended:
 
       - offset: 21
         code: |
-          # debug_log "reactionUnitAction";
-          ## debug_log "action_target" action_target;
-          ## debug_log "action_unit" action_unit;
-          ## debug_log "arc_to_action_unit" arc_to_action_unit;
-          ## debug_log "battle_action" battle_action;
-          ## debug_log "distance" distance;
-          ## debug_log "move" move;
-          ## debug_log "reaction_battle_action" reaction_battle_action;
-          # debug_log "reaction_chance" reaction_chance;
-          # debug_log "reaction_unit" reaction_unit;
-          ## debug_log "reaction_weapon" reaction_weapon;
-          ## debug_log "weapon" weapon;
+          #debug_log "reactionUnitAction";
+          #debug_log "action_target" action_target;
+          #debug_log "action_unit" action_unit;
+          #debug_log "arc_to_action_unit" arc_to_action_unit;
+          #debug_log "battle_action" battle_action;
+          #debug_log "distance" distance;
+          #debug_log "move" move;
+          #debug_log "reaction_battle_action" reaction_battle_action;
+          #debug_log "reaction_chance" reaction_chance;
+          #debug_log "reaction_unit" reaction_unit;
+          #debug_log "reaction_weapon" reaction_weapon;
+          #debug_log "weapon" weapon;
 
           return reaction_chance;
 
-    reactionUnitReaction: 
+    reactionUnitReaction:
       - offset: 21
         code: |
-          # debug_log "reactionUnitReaction";
-          ## debug_log "action_target" action_target;
-          ## debug_log "action_unit" action_unit;
-          ## debug_log "arc_to_action_unit" arc_to_action_unit;
-          ## debug_log "battle_action" battle_action;
-          ## debug_log "distance" distance;
-          ## debug_log "move" move;
-          ## debug_log "reaction_battle_action" reaction_battle_action;
-          # debug_log "reaction_chance" reaction_chance;
-          # debug_log "reaction_unit" reaction_unit;
-          ## debug_log "reaction_weapon" reaction_weapon;
-          ## debug_log "weapon" weapon;
+          #debug_log "reactionUnitReaction";
+          #debug_log "action_target" action_target;
+          #debug_log "action_unit" action_unit;
+          #debug_log "arc_to_action_unit" arc_to_action_unit;
+          #debug_log "battle_action" battle_action;
+          #debug_log "distance" distance;
+          #debug_log "move" move;
+          #debug_log "reaction_battle_action" reaction_battle_action;
+          #debug_log "reaction_chance" reaction_chance;
+          #debug_log "reaction_unit" reaction_unit;
+          #debug_log "reaction_weapon" reaction_weapon;
+          #debug_log "weapon" weapon;
           return reaction_chance;
 
 
     reactionWeaponAction:
       - offset: 21
         code: |
-          # debug_log "reactionWeaponAction";
-          ## debug_log "action_target" action_target;
-          ## debug_log "action_unit" action_unit;
-          ## debug_log "arc_to_action_unit" arc_to_action_unit;
-          ## debug_log "battle_action" battle_action;
-          ## debug_log "distance" distance;
-          ## debug_log "move" move;
-          ## debug_log "reaction_battle_action" reaction_battle_action;
-          # debug_log "reaction_chance" reaction_chance;
-          ## debug_log "reaction_unit" reaction_unit;
-          ## debug_log "reaction_weapon" reaction_weapon;
-          ## debug_log "weapon" weapon;
-          
+          #debug_log "reactionWeaponAction";
+          #debug_log "action_target" action_target;
+          #debug_log "action_unit" action_unit;
+          #debug_log "arc_to_action_unit" arc_to_action_unit;
+          #debug_log "battle_action" battle_action;
+          #debug_log "distance" distance;
+          #debug_log "move" move;
+          #debug_log "reaction_battle_action" reaction_battle_action;
+          #debug_log "reaction_chance" reaction_chance;
+          #debug_log "reaction_unit" reaction_unit;
+          #debug_log "reaction_weapon" reaction_weapon;
+          #debug_log "weapon" weapon;
+
           return reaction_chance;
