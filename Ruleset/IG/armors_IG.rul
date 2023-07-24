@@ -1332,8 +1332,6 @@ armors:
     type: STR_OGRYN_UC
     visibilityAtDay: 40
     visibilityAtDark: 9
-    tags:
-      INFECTION_RESIST: 33 #infection resistant
     frontArmor: 20
     sideArmor: 15
     rearArmor: 10
@@ -1351,6 +1349,12 @@ armors:
       - 0.0 #SMOKE
       - 0.5 #IMPACT
       - 1.0 #MELTA
+    psiDefence:
+      psiStrength: 1.0
+      moraleCurrent: 1.0
+      psiSkill: 0.2
+    tags:
+      INFECTION_RESIST: 33 #infection resistant
 
   - type: STR_OGRYN_CARAPACE_BASIC
     refNode: *STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
@@ -1386,6 +1390,7 @@ armors:
     psiDefence:
       psiStrength: 1.0
       moraleCurrent: 1.0
+      psiSkill: 0.2
     recovery:
       morale:
         flatOne: 2.0
@@ -1393,6 +1398,8 @@ armors:
     stats:
       tu: -5
       stamina: -10
+    tags:
+      INFECTION_RESIST: 33 #infection resistant
 
   - &STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
     type: STR_OGRYN_CARAPACE
@@ -2521,3 +2528,74 @@ armors:
       - INV_NULL_2X1_LL
       - INV_NULL_2X1_RL
     ufopediaType: STR_GUARD_ARMORS_TAUROS_HEAVY_STUBBER
+
+  - &STR_OGRYN_BONEHEAD_CARAPACE_LAYER
+    type: STR_OGRYN_BONEHEAD_CARAPACE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 25 #bionic eye
+    heatVision: 25 #bionic eye
+    antiCamouflageAtDark: 5 #bionic eye
+    antiCamouflageAtDay: 5 #bionic eye
+    spriteSheet: OGRYN_BONEHEAD_CARAPACE.PCK
+    spriteInv: OGRYN_BONEHEAD_CARAPACE_INVENTORY.SPK
+    customArmorPreviewIndex: 809 #509
+    corpseBattle:
+      - STR_OGRYN_CARAPACE_CORPSE
+    storeItem: STR_NONE
+    loftempsSet: [ 5 ]
+    drawingRoutine: 10
+    units:
+      - STR_OGRYN_BONEHEAD
+    frontArmor: 90
+    sideArmor: 80
+    rearArmor: 60
+    underArmor: 60
+    damageModifier: #OGRYN ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 0.9 #PLASMA
+      - 0.6 #STUN
+      - 0.7 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_BONEHEAD_ORDERS
+    psiDefence:
+      psiStrength: 1.0
+      moraleCurrent: 1.0
+      psiSkill: 0.2
+    recovery:
+      morale:
+        flatOne: 2.0
+    weight: 10
+    stats: #light weight
+      tu: -2
+      stamina: -5
+      bravery: 10
+    tags:
+      INFECTION_RESIST: 40 #infection resistant
+
+  - type: STR_OGRYN_BONEHEAD_SLAB_SHIELD_ARMOR
+    refNode: *STR_OGRYN_BONEHEAD_CARAPACE_LAYER
+    spriteInv: OGRYN_BONEHEAD_SLAB_SHIELD_INVENTORY.SPK
+    frontArmor: 140
+    sideArmor: 130
+    rearArmor: 60
+    underArmor: 60
+    weight: 30
+    loftempsSet: [ 5 ]
+    drawingRoutine: 10
+    corpseBattle:
+      - STR_OGRYN_CARAPACE_CORPSE
+    stats:
+      tu: -5
+      stamina: -10
+      reactions: -2
+      bravery: 10
+      melee: 5
+    builtInWeapons:
+      - STR_SLAB_SHIELD

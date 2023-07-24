@@ -23,6 +23,7 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+      ITEM_IS_STR_BONEHEAD_ORDERS: int
 
       #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
@@ -4325,3 +4326,72 @@ items:
 
   - type: STR_LASGUN_CLIP #LASGUN CLIP                 11010
     costSell: 40
+
+# Bonehead orders
+  - type: STR_BONEHEAD_ORDERS
+    categories: [STR_CAT_SPELLS]
+    specialIconSprite: 203 #command
+    fireSound: [{mod: 40k, index: 261},{mod: 40k, index: 262},{mod: 40k, index: 263},{mod: 40k, index: 264},{mod: 40k, index: 265}]
+    hitSound: {mod: 40k, index: 779} #page
+    hitAnimation: {mod: 40k, index: 1100}
+    weight: 0
+    power: 10
+    damageBonus:
+      bravery: 0.3
+      psiSkill: 0.2
+    damageType: 0
+    damageAlter:
+      RandomType: 3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToMorale: 0.0
+      ToTime: 0.0
+      ToHealth: 0.0
+      ToWound: 0.0
+      ToArmor: 0.0
+      ToTile: 0.0 #this shouldn't blow up cover
+      ToItem: 0.0
+      ToMana: 1.0
+      RandomWound: false
+    tags:
+      ITEM_IS_STR_BONEHEAD_ORDERS: 1
+    confAimed:
+      name: STR_BONEHEAD_ORDER_TARGET
+    costAimed:
+      time: 25
+      energy: 30
+      stun: 10
+    accuracyAimed: 100
+    accuracyMultiplier:
+      firing: 0.0
+      bravery: 2.2
+    maxRange: 10
+    powerRangeThreshold: 2
+    powerRangeReduction: 4.0
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    recover: false
+    flatRate: true
+    clipSize: -1
+    experienceTrainingMode: 19
+    #*** Ogryn Pawnch
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 100}
+    meleeAnimation: 0
+    meleePower: 12
+    meleeType: 6
+    meleeBonus:
+      strength: 0.4
+      melee: 0.2
+    meleeAlter:
+      RandomType: 1
+      FixRadius: 0
+      IgnoreDirection: false
+      ToHealth: 0.5
+    accuracyMelee: 90
+    tuMelee: 12
+    flatMelee:
+      time: true

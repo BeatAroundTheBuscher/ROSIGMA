@@ -6,28 +6,62 @@ extended:
 
 skills:
   - type: STR_CHECK_COMMAND
-    tags: 
+    tags:
       SKILL_COMMAND_ID: 1
     costUse:
       time: 1 # doesn't seem to do anything?
 
   - type: STR_FIX_BAYONETS
-    tags: 
+    tags:
       SKILL_COMMAND_ID: 2
     costUse:
       time: 1 # doesn't seem to do anything?
 
   - type: STR_BLITZKRIEG
-    tags: 
+    tags:
       SKILL_COMMAND_ID: 3
     costUse:
       time: 1 # doesn't seem to do anything?
 
   - type: STR_HUNKER_DOWN
-    tags: 
+    tags:
       SKILL_COMMAND_ID: 4
     costUse:
       time: 1 # doesn't seem to do anything?
+
+
+#bonehead orders
+  - type: STR_SKILL_BONEHEAD_GETTA_GRIP
+    tags:
+      SKILL_BONEHEAD_ORDER_ID: 1
+    costUse:
+      time: 1
+    compatibleWeapons: [STR_BONEHEAD_ORDERS]
+    targetMode: 9
+
+  - type: STR_SKILL_BONEHEAD_GET_EM #Grants bonus throwing, firing and melee accuracy and damage.
+    tags:
+      SKILL_BONEHEAD_ORDER_ID: 2
+    costUse:
+      time: 1
+    compatibleWeapons: [STR_BONEHEAD_ORDERS]
+    targetMode: 9
+
+  - type: STR_SKILL_SHRUG_IT_OFF #Grants damage resistance and removes fatal wounds. If the target is unconscious, removes stun. Effect is stronger the higher the target's morale.
+    tags:
+      SKILL_BONEHEAD_ORDER_ID: 3
+    costUse:
+      time: 1
+    compatibleWeapons: [STR_BONEHEAD_ORDERS]
+    targetMode: 9
+
+  - type: STR_SKILL_GOTTA_GO_FAST #Grants TU, Reactions (until end of the current turn) and Energy. Depletes TU and Energy at start of player's next turn.
+    tags:
+      SKILL_BONEHEAD_ORDER_ID: 4
+    costUse:
+      time: 1
+    compatibleWeapons: [STR_BONEHEAD_ORDERS]
+    targetMode: 9
 
 soldiers:
   - &STR_OFFICER
@@ -45,4 +79,10 @@ soldiers:
   - type: STR_STORMTROOPER_OFFICER
     refNode: *STR_OFFICER
 
-
+  - type: STR_OGRYN_BONEHEAD
+    skillIconSprite: 203 # can't have bayonette? yes, if specialweapons are used, skills don't show up
+    skills:
+      - STR_SHRUG_IT_OFF
+      - STR_GOTTA_GO_FAST
+      - STR_BONEHEAD_GET_EM
+      - STR_BONEHEAD_CHECK_ORDER
