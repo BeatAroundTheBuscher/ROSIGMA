@@ -97,7 +97,7 @@ extended:
           #make sure we're using the Bonehead Order weapon
           weapon_item.getTag temp Tag.ITEM_IS_STR_BONEHEAD_ORDERS;
           if eq temp 0;
-            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: No Bonehead tag. Aborting, temp:" temp;
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Item lacks Bonehead Order tag. Aborting, temp:" temp;
             return;
           end;
 
@@ -110,6 +110,13 @@ extended:
           unit.getFaction temp;
           if neq temp FACTION_PLAYER;
             debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Target not player faction. Aborting, temp:" temp;
+            return;
+          end;
+
+          #make sure the ordering unit is a Bonehead
+          attacker.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS;
+          if le temp 0;
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker lacks UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER. Aborting, temp:" temp;
             return;
           end;
 
