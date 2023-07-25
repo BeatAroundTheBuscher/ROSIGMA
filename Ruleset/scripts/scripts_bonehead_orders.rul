@@ -60,7 +60,7 @@ extended:
           end;
 
           #set the current Order and notify the player
-          actor.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER newBoneheadOrder;
+          actor.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER newBoneheadOrder;
           if eq newBoneheadOrder 1;
             battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_GETTA_GRIP";
           else eq newBoneheadOrder 2;
@@ -113,16 +113,15 @@ extended:
             return;
           end;
 
+          #make sure we're concerned with Soldier type units.
+          unit.getRuleSoldier rSoldierTarget;
+          attacker.getRuleSoldier rSoldierBonehead;
           #make sure the ordering unit is a Bonehead
-          attacker.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS;
+          rSoldierBonehead.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS;
           if le temp 0;
             debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker lacks UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER. Aborting, temp:" temp;
             return;
           end;
-
-          #make sure we're concerned with Soldier type units.
-          unit.getRuleSoldier rSoldierTarget;
-          attacker.getRuleSoldier rSoldierBonehead;
 
           #we only care about units that can accept Bonehead orders (normal Ogryns)
           rSoldierTarget.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_BE_ORDERED;
@@ -131,15 +130,8 @@ extended:
             return;
           end;
 
-          #make sure the ordering unit is a Bonehead
-          rSoldierTarget.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS;
-          if le temp 0;
-            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker lacks remaining orders per SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS. Aborting, temp:" temp;
-            return;
-          end;
-
           #now we check to see if our target already got a command for this turn; if so notify the player and abort
-          unit.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER;
+          unit.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER;
           if gt temp 0;
             if eq temp 1;
               battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_ALREADY_ORDERED_GETTA_GRIP";
@@ -163,10 +155,14 @@ extended:
           #we succeeded at giving a Bonehead order! Decrement the number of available orders by 1 to a minimum of 1.
           sub temp 1;
           attacker.setTag Tag.UNIT_BONEHEAD_REMAINING_ORDERS temp;
+          debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker orders decremented per UNIT_BONEHEAD_REMAINING_ORDERS. Orders remaining: temp:" temp;
 
           set orderPower to_mana;
           debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Order power. orderPower:" orderPower;
           attacker.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER;
+          debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker issued order per UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER. temp:" temp;
+          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER temp;
+          debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Target current order set UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER. temp:" temp;
 
           #apply ORDER 1 Getta Grip effects: restores morale and grants temporary bravery in proportion to to_mana's value;
           if eq temp 1;
@@ -200,22 +196,21 @@ extended:
           else eq temp 3;
             unit.getFatalwoundsTotal temp2;
             unit.setTag Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS temp2; #save our current Fatal Wounds to be restored later.
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Fatal Wounds per UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS, temp2:" temp2;
 
             unit.getMorale temp2;
             muldiv temp2 orderPower 200;
             limit_upper temp2 50; #cannot exceed 50% damage reduction
 
-            unit.getFatalwoundsTotal temp2;
             unit.setTag Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION temp2; #save our current Damage Reduction.
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Damage Reduction per UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION, temp2:" temp2;
 
             begin;
               var int numWounds 0;
               var int healWounds temp2;
-              if and gt temp 0 gt numWounds 0;
-                div temp 5;
                 loop var i 6; #cycle through the body parts
                   debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Body Part Loop i#:" i;
-                  debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Number of Heals, temp:" temp;
+                  debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Number of Heals, healWounds:" healWounds;
                   unit.getFatalwounds numWounds i; #check the number of wounds in this bodypart
                   debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Number of wounds in bodypart, numWounds:" numWounds;
                   if and gt numWounds 0 gt healWounds 0; #if there are any wounds in this body part and any heals remaining, remove as many as we can
@@ -225,13 +220,12 @@ extended:
                     limit_lower numWounds 0; #ensure wounds do not go below 0
                     limit_lower healWounds 0; #ensure heals do not  go below 0
                     debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Remaining number of wounds in bodypart, numWounds:" numWounds;
-                    debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Remaining number of heals, temp:" temp;
+                    debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Remaining number of heals, healWounds:" healWounds;
                     unit.setFatalwounds i numWounds; #remove the wounds
                     unit.getFatalwoundsTotal numWounds; #recalculate wounds
                     debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Shrug It Off: Total number of wounds remaining, numWounds:" numWounds;
                   end;
                 end;
-              end;
             end;
             battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_TARGET_SHRUG_IT_OFF";
 
@@ -243,11 +237,10 @@ extended:
             end;
             unit.MoveCost.setBaseNormalTimePercent temp;
             unit.MoveCost.setBaseNormalEnergyPercent temp;
-            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Gotta Go Fast: Low Strength Mobility Boost, setBaseNormal/EnergyTimePercentageArgs, temp:" temp;
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Gotta Go Fast: Mobility Boost, setBaseNormal/EnergyTimePercentageArgs, temp:" temp;
             battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_TARGET_GOTTA_GO_FAST";
           end;
 
-          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER temp;
           attacker.setTag Tag.UNIT_GOT_BONEHEAD_ORDER_XP 1; #we have order xp!
           return;
 
@@ -266,11 +259,13 @@ extended:
 
           unit.getTag temp Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION;
           if le temp 0;
-            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders_shrug_it_off, offset 30: No UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION value, temp:" temp;
+            debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders_shrug_it_off, offset 30: No UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION value, temp:" unit;
             return power part side;
           end;
 
           debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders_shrug_it_off, offset 30: Damage reduction % value, temp:" temp;
+          sub temp 100; #invert the value
+          mul temp -1;
           debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders_shrug_it_off, offset 30: Power before reduction, power:" power;
           muldiv power temp 100;
           debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders_shrug_it_off, offset 30: Power after reduction, power:" power;
@@ -285,7 +280,7 @@ extended:
           var int temp2;
           var ptr RuleSoldier rSoldier;
 
-          unit.getFaction temp; #reset stats on the player's turn only
+          battle_game.getTurnSide temp; #reset stats on the player's turn only
           if neq temp FACTION_PLAYER;
             return;
           end;
@@ -293,9 +288,9 @@ extended:
           unit.getRuleSoldier rSoldier;
           rSoldier.getTag temp Tag.SOLDIER_BONEHEAD_OGRYN_CAN_ISSUE_ORDERS;
           if gt temp 0;
-            unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER 0; #revert the number of orders we can give
-            unit.setTag Tag.UNIT_BONEHEAD_REMAINING_ORDERS 5; #revert the number of orders we can give
             debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Reset Bonehead remaining and given orders. Aborting, temp:" temp;
+            unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER 0; #revert our current order.
+            unit.setTag Tag.UNIT_BONEHEAD_REMAINING_ORDERS 5; #revert the number of orders we can give
             return;
           end;
 
@@ -305,7 +300,7 @@ extended:
             return;
           end;
 
-          unit.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER; #revert our issued command to no command
+          unit.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER; #revert our issued command to no command
           debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Resetting order, temp:" temp;
           #BONEHEAD ORDER 1 GETTA GRIP EM; revert our bravery to normal
           if eq temp 1;
@@ -337,8 +332,8 @@ extended:
             unit.setTag Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_DAMAGE_REDUCTION 0;
             unit.getTag temp Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS;
             if gt temp 0;
-              debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. Reapplying Fatal Wounds UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS. temp:" temp;
-              unit.addFatalwounds temp 1;
+              debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. Reapplying Fatal Wounds UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS. temp:" temp;
+              unit.addFatalwounds 1 temp;
               unit.setTag Tag.UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS 0;
             end;
 
@@ -348,8 +343,8 @@ extended:
             unit.MoveCost.setBaseNormalEnergyPercent 100;
           end;
 
-          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER 0; #revert our issued command to no command
-          debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Resetting UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER.";
+          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER 0; #revert our issued command to no command
+          debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Resetting UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER." unit;
           return;
 
     returnFromMissionUnit: #for Ogryn: revert our modified stats to normal and reset Ogryn current orders
@@ -406,8 +401,8 @@ extended:
           unit.MoveCost.setBaseNormalTimePercent 100; #return movement TU and energy costs to normal
           unit.MoveCost.setBaseNormalEnergyPercent 100;
 
-          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER 0; #revert our issued command to no command
-          debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Resetting UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER.";
+          unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER 0; #revert our issued command to no command
+          debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Resetting UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER." unit;
           return;
 
       - new: ROSIGMA_rFMU_bonehead_orders_award_xp #for Boneheads: award XP for issuing orders
