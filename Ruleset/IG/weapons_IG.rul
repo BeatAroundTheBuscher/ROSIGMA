@@ -23,6 +23,7 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+      ITEM_IS_STR_BONEHEAD_ORDERS: int
 
       #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
@@ -4325,3 +4326,117 @@ items:
 
   - type: STR_LASGUN_CLIP #LASGUN CLIP                 11010
     costSell: 40
+
+# Bonehead orders
+  - type: STR_BONEHEAD_ORDERS
+    categories: [STR_CAT_SPELLS]
+    specialIconSprite: 206 #command
+    fireSound: [{mod: 40k, index: 787}]
+    hitSound: [{mod: 40k, index: 261},{mod: 40k, index: 262},{mod: 40k, index: 263},{mod: 40k, index: 264},{mod: 40k, index: 265}] #page
+    hitAnimation: {mod: 40k, index: 1100}
+    weight: 0
+    power: 10
+    damageBonus:
+      bravery: 0.3
+      psiSkill: 0.2
+    damageType: 0
+    damageAlter:
+      RandomType: 3
+      ArmorEffectiveness: 0.0
+      ToStun: 0.1
+      ToMorale: 0.0
+      ToTime: 0.0
+      ToHealth: 0.0
+      ToWound: 0.0
+      ToArmor: 0.0
+      ToTile: 0.0 #this shouldn't blow up cover
+      ToItem: 0.0
+      ToMana: 1.0
+      RandomWound: false
+    tags:
+      ITEM_IS_STR_BONEHEAD_ORDERS: 1
+    confAimed:
+      name: STR_BONEHEAD_ORDER_TARGET
+    costAimed:
+      time: 5
+      energy: 5
+      stun: 5
+    accuracyAimed: 100
+    accuracyMultiplier:
+      firing: 0.0
+      bravery: 2.2
+    maxRange: 10
+    powerRangeThreshold: 2
+    powerRangeReduction: 4.0
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    fixedWeapon: true
+    recover: false
+    flatRate: true
+    clipSize: -1
+    experienceTrainingMode: 19
+    #*** Ogryn Pawnch
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 100}
+    meleeAnimation: 0
+    meleePower: 12
+    meleeType: 7
+    meleeBonus:
+      strength: 0.4
+      melee: 0.3 #Boneheads have better technique
+    meleeAlter:
+      RandomType: 1
+      FixRadius: 0
+      IgnoreDirection: false
+      ToStun: 0.5
+      ToTime: 0.1 #disorienting/staggering
+    accuracyMelee: 90
+    tuMelee: 12
+    flatMelee:
+      time: true
+
+#*** Ogryn armors and weapons ***
+  - type: STR_OGRYN_UNARMED
+    power: 12
+    damageType: 7
+    damageBonus:
+      strength: 0.4
+      melee: 0.2
+    damageAlter:
+      RandomType: 1
+      FixRadius: 0
+      IgnoreDirection: false
+      ToStun: 0.5
+      ToTime: 0.1 #disorienting/staggering
+
+  - type: STR_SLAB_SHIELD
+    weight: 20
+    invWidth: 2
+    invHeight: 3
+    bigSprite: 1052
+    handSprite: 1416
+    meleeHitSound: 100
+    meleeAnimation: 0
+    power: 20
+    damageType: 7
+    damageBonus:
+      strength: 0.8
+      melee: 0.2
+    damageAlter:
+      ToStun: 0.6
+      ToTime: 0.2 #disorienting/staggering
+    accuracyMelee: 80
+    meleeMultiplier:
+      strength: 0.5
+      melee: 0.5
+    tuMelee: 18
+    flatMelee:
+      time: true
+    clipSize: -1
+    battleType: 3
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    defaultInventorySlot: STR_LEFT_HAND
