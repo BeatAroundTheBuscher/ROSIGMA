@@ -164,6 +164,23 @@ extended:
           unit.setTag Tag.UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER temp;
           #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Target current order set UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER. temp:" temp;
 
+          if le temp 0;
+            attacker.getEnergy temp; #rebate cost of Ordurr
+            add temp 5;
+            attacker.setEnergy temp;
+
+            attacker.getStun temp; #rebate cost of Ordurr
+            add temp 5;
+            attacker.setStun temp;
+
+            attacker.getTimeUnits temp; #rebate cost of Ordurr
+            add temp 5;
+            attacker.setTimeUnits temp;
+
+            battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_TARGET_NO_ORDER";
+            return;
+          end;
+
           #apply ORDER 1 Getta Grip effects: restores morale and grants temporary bravery in proportion to to_mana's value;
           if eq temp 1;
             unit.addMorale orderPower; #add Morale equal to our orderPower
