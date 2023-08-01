@@ -1,0 +1,133 @@
+extended:
+  tags:
+    #turret reload scripts
+    RuleItem:
+    #turret reload scripts
+      TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
+      TURRET_RELOAD_CAPACITY: int #reload capacity of turret
+    BattleItem:
+      TURRET_RELOAD_TIMER: int #dynamic timer counting down turns until weapon reloads
+
+  scripts:
+    newTurnUnit:
+      - new: ROSIGMA_nTU_turret_reload_check_ammo
+        offset: 10
+        code: |
+          var int temp; #turret reload turn data for left handed weapon
+          var int temp2;
+          var int ammo; #ammo of left handed weapon
+          var int timer; #timer of left handed weapon
+          var ptre BattleItem rItem; #weapon of left hand
+          var ptr RuleItem weaponRule;
+
+          battle_game.getTurnSide temp; #trigger reload only on the same turn as the unit's faction
+          unit.getFaction temp2;
+          if neq temp temp2;
+            return;
+          end;
+
+          unit.getLeftHandWeapon rItem;
+
+          rItem.getRuleItem weaponRule;
+          weaponRule.getTag temp Tag.TURRET_RELOAD_TURNS;
+
+          #if weapon lacks the reload tag, cancel out
+          if le temp 0;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Equipped weapon lacks a turret reload property, weaponRule:" weaponRule;
+            return;
+          end;
+
+          rItem.getAmmoQuantity ammo;
+
+          #if weapon is loaded, cancel out
+          if gt ammo 0;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Weapon loaded; right hand weapon: ammo2." ammo;
+            return;
+          end;
+
+          debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Starting left hand reload process for:." unit;
+          rItem.getTag timer Tag.TURRET_RELOAD_TIMER; #set timer variable
+
+          if le timer 0; #we have no timer, no ammo, and a reload duration
+            rItem.setTag Tag.TURRET_RELOAD_TIMER timer; #set the reload timer.
+            battle_game.flashLongMessage "STR_SCRIPT_TURRET_RELOAD_RECHARGING" timer;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Right hand weapon timer, timer2." timer;
+            return;
+          end;
+
+          sub timer 1;
+          rItem.setTag Tag.TURRET_RELOAD_TIMER timer;
+          debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Decrementing turret reload timer. New timer, timer2:" timer;
+
+          if gt timer 0; #if our timer isn't zeroed out, return
+            return;
+          end;
+
+          weaponRule.getTag ammo Tag.TURRET_RELOAD_CAPACITY; #get our ammo cap
+          rItem.setAmmoQuantity ammo; #reload the weapon
+          battle_game.flashMessage "STR_SCRIPT_TURRET_RELOAD_RECHARGED" ammo;
+
+          return;
+
+      - new: ROSIGMA_nTU_turret_reload_check_ammo2
+        offset: 11
+        code: |
+          var int temp;
+          var int temp2; #turret reload turn data for right handed weapon
+          var int ammo2; #ammo of right handed weapon
+          var int timer2; #timer of right handed weapon
+          var ptre BattleItem rItem2; #weapon of right hand
+          var ptre BattleItem rAmmo;
+          var ptr RuleItem weaponRule;
+
+          battle_game.getTurnSide temp; #trigger reload only on the same turn as the unit's faction
+          unit.getFaction temp2;
+          if neq temp temp2;
+            return;
+          end;
+
+          unit.getRightHandWeapon rItem2;
+          debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: rItem2." rItem2;
+
+          rItem2.getRuleItem weaponRule;
+          weaponRule.getTag temp2 Tag.TURRET_RELOAD_TURNS;
+
+          #if weapon lacks the reload tag, cancel out
+          if le temp2 0;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Equipped weapon lacks a turret reload property." weaponRule;
+            return;
+          end;
+
+          unit.getMana ammo2;
+
+          #if weapon is loaded, cancel out
+          if gt ammo2 0;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Weapon loaded; right hand weapon: ammo2." ammo2;
+            return;
+          end;
+
+          debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Starting right hand reload process for:" unit;
+          rItem2.getTag timer2 Tag.TURRET_RELOAD_TIMER; #set timer variable
+
+          if le timer2 0; #we have no timer, no ammo, and a reload duration
+            weaponRule.getTag timer2 Tag.TURRET_RELOAD_TURNS; #get the timer duration
+            rItem2.setTag Tag.TURRET_RELOAD_TIMER timer2; #set the reload timer.
+            battle_game.flashLongMessage "STR_SCRIPT_TURRET_RELOAD_RECHARGING" timer2;
+            debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Right hand weapon timer, timer2." timer2;
+            return;
+          end;
+
+          sub timer2 1;
+          rItem2.setTag Tag.TURRET_RELOAD_TIMER timer2;
+          battle_game.flashMessage "STR_SCRIPT_TURRET_RELOAD_RECHARGING" timer2;
+          debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo2, offset 11: Decrementing turret reload timer. New timer, timer2:" timer2;
+
+          if gt timer2 0; #if our timer isn't zeroed out, return
+            return;
+          end;
+
+          unit.getManaMax ammo2;
+          unit.setMana ammo2; #recharge mana
+          battle_game.flashMessage "STR_SCRIPT_TURRET_RELOAD_RECHARGED" ammo2;
+
+          return;
