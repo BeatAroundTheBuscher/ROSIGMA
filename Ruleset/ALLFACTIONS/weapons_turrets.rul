@@ -1,3 +1,9 @@
+extended:
+  tags:
+    #turret reload scripts
+    RuleItem:
+      TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
+
 items:
   - &STR_TURRET_DEFAULT
     type: AUX_BOLTER
@@ -60,6 +66,10 @@ items:
     accuracyAimed: 0
     tuSnap: 0
     tuAimed: 0
+    costAuto:
+      energy: 5
+      time: 1
+      mana: 6
     damageType: 1
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
@@ -85,7 +95,9 @@ items:
     bulletSpeed: 60
     explosionSpeed: 5
     recover: false
-    clipSize: 50
+    clipSize: -1
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_IMPULSOR_SHIELD_CW
     costUse:
@@ -107,16 +119,22 @@ items:
 
   - type: STR_STORMRAVEN_WEAPON
     refNode: *STR_TURRET_DEFAULT
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_STORMRAVENGK_WEAPON #STORMRAven TURRET
     refNode: *STR_TURRET_DEFAULT
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_IMMOLATOR_HEAVY_FLAMER # Rhino Flamer
     costAuto:
       energy: 5
       time: 1
+      mana: 4
     dropoff: 4
     autoRange: 15 # Mounted but considered as Vehicle in the model for range
+    clipSize: -1
     snapRange: 0
     aimRange: 0
     accuracyAuto: 50
@@ -128,6 +146,8 @@ items:
     autoShots: 4
     arcingShot: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
+    damageType: 2
+    power: 80
     damageAlter:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
@@ -137,11 +157,21 @@ items:
       ToHealth: 1.5
       ArmorEffectiveness: 1.0
       ToMorale: 0.5
+    vaporColorSurface: 0
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    hitAnimation: {mod: 40k, index: 88} #XFIRE
+    explosionHitSound: {mod: 40k, index: 771} #FlAMES
+    compatibleAmmo: !remove
+      - STR_HFLAMER_CLIP
+    tags:
+      TURRET_RELOAD_TURNS: 4
 
   - type: STR_MORTAR
     costAuto:
       energy: 10
       time: 1
+      mana: 50
     dropoff: 4
     autoRange: 18
     snapRange: 0
@@ -151,16 +181,28 @@ items:
     accuracyAimed: 0
     tuSnap: 0
     tuAimed: 0
-    clipSize: 12
+    clipSize: -1
     autoShots: 3
     accuracyMultiplier:
       firing: 0.8
       throwing: 0.8
-    power: 200
+    power: 100
     damageType: 3
+    damageAlter: #high explosive
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 7 #1 for hand grenade version
     arcingShot: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     minRange: 5
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_TAUROX_WEAPON
     refNode: *STR_TURRET_DEFAULT
@@ -188,6 +230,9 @@ items:
     explosionSpeed: 5
     hitSound: {mod: 40k, index: 13}
     hitAnimation: {mod: 40k, index: 26}
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
 
   - &STR_MANTICORE_DEFAULT
     type: STR_MANTICORE_R
@@ -207,18 +252,25 @@ items:
     tuAuto: 0
   - type: STR_MANTICORE_L
     refNode: *STR_MANTICORE_DEFAULT
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
 
   - &STR_TARANTULA_HYPERIOS
     type: STR_T_SEC
     costAimed:
       energy: 10
       time: 1
+      mana: 50
     accuracyAimed: 115
     waypoints: 5
     power: 125 # was 85
     damageType: 3
-    clipSize: 4
+    clipSize: 2
     blastRadius: 10
+    tags:
+      TURRET_RELOAD_TURNS: 4
+
   - type: STR_T_SEC2
     refNode: *STR_TARANTULA_HYPERIOS
 
@@ -228,7 +280,20 @@ items:
     bigSprite: {mod: 40k, index: 640} #PD turret BIGOB
     bulletSprite:  {mod: 40k, index: 6}
     fireSound:  {mod: 40k, index: 12}
-    compatibleAmmo:
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 110
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    clipSize: -1
+    compatibleAmmo: !remove
       - STR_AUTOCANNON_CLIP
     accuracyAuto: 65
     accuracySnap: 0
@@ -244,9 +309,14 @@ items:
     autoShots: 6 #twin-linked
     tuSnap: 0
     tuAimed: 0
-    bulletSpeed: 50
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 6
     fixedWeapon: true
     recover: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_AUTOCANNON_TAUROX
     refNode: *STR_TURRET_DEFAULT
@@ -254,23 +324,49 @@ items:
     autoRange: 18
     snapRange: 0
     aimRange: 0
+    bulletSprite:  {mod: 40k, index: 6}
+    fireSound:  {mod: 40k, index: 12}
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 110
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    clipSize: -1
+    compatibleAmmo: !remove
+      - STR_AUTOCANNON_CLIP
     accuracyAuto: 50
     accuracySnap: 0
     accuracyAimed: 0
     autoShots: 3
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 3
     tuSnap: 0
     tuAimed: 0
+    tags:
+      TURRET_RELOAD_TURNS: 4
 
   - type: AUX_BOLTERPD
     costAuto:
       energy: 5
       time: 1
+      mana: 10
     costSnap:
       energy: 0
       time: 0
     costAimed:
       energy: 0
       time: 0
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_MULTI_LASER
     refNode: *STR_TURRET_DEFAULT
@@ -285,6 +381,10 @@ items:
     tuAimed: 0
     autoShots: 10
     power: 60
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
     damageType: 1
     #Not sure which one is the right one. there were two.
     # damageAlter:
@@ -300,17 +400,23 @@ items:
       ToStun: 0.3 #painful las burns
       ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
+    bulletSpeed: 200
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_LEMONRUSS_WEAPON
     costAimed:
       energy: 10
       time: 1
+      mana: 20
     costAuto:
       energy: 5
       time: 1
+      mana: 20
     costSnap:
       energy: 10
       time: 1
+      mana: 20
     dropoff: 4
     autoRange: 27
     snapRange: 12
@@ -320,14 +426,18 @@ items:
     accuracyAimed: 90
     tuSnap: 0
     autoShots: 1
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_LEMANRUSS_BOLTER
     costAuto:
       energy: 4
       time: 1
+      mana: 5
     costSnap:
       energy: 2
       time: 1
+      mana: 1
     dropoff: 4
     autoRange: 17
     snapRange: 26
@@ -344,9 +454,48 @@ items:
       ToHealth: 1.0
       ToStun: 0.5
     autoShots: 5
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_GORGON_HEAVY_FLAMER
     refNode: *STR_TURRET_DEFAULT
+  - type: STR_GORGON_HEAVY_FLAMER
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 4
+    flatAuto:
+      time: true
+      energy: true
+      mana: true
+    powerRangeReduction: 15
+    powerRangeThreshold: 22
+    damageType: 2
+    power: 80
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 3
+      ToHealth: 2.0
+      ToTile: 0.3
+      ToItem: 0.3
+      ToMorale: 0.75
+      RandomType: 7 #50-200% # Flamer now respects armor values
+      ArmorEffectiveness: 0.7 # 1.0
+      ToArmorPre: 0.1
+    autoShots: 4
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    clipSize: -1
+    hitAnimation: {mod: 40k, index: 88} #XFIRE
+    explosionHitSound: {mod: 40k, index: 771} #FlAMES
+    compatibleAmmo: !remove
+      - STR_HFLAMER_CLIP
+    tags:
+      TURRET_RELOAD_TURNS: 4
 
   # AUX_BOLTER is Razorback Turret
   # Used for Emplacement and Arbites Chimera
@@ -354,6 +503,7 @@ items:
     costAuto:
       energy: 5
       time: 1
+      mana: 10
     flatUse:
       time: true
       energy: true
@@ -374,6 +524,8 @@ items:
       ToHealth: 1.0
       ToStun: 0.5
     autoShots: 10
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_LASCANNON_TAUROS # done
     dropoff: 3
@@ -389,9 +541,11 @@ items:
     costSnap:
       time: 1
       energy: 5
+      mana: 20
     costAimed:
       time: 1
       energy: 10
+      mana: 20
     flatUse:
       time: true
       energy: true
@@ -409,6 +563,8 @@ items:
     clipSize: -1
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_GRENADE_LAUNCHER_TAUROS # done
     dropoff: 4
@@ -511,9 +667,11 @@ items:
     costAuto:
       time: 1
       energy: 4
+      mana: 3
     costSnap:
       time: 1
       energy: 2
+      mana: 1
     autoShots: 3
     battleType: 1
     clipSize: -1
@@ -540,3 +698,106 @@ items:
     fireSound: {mod: 40k, index: 12}
     hitSound: {mod: 40k, index: 13}
     hitAnimation: {mod: 40k, index: 26}
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_GRENADE_LAUNCHER_RHINO_SMOKE
+    size: 1.0
+    weight: 85
+    bigSprite: {mod: 40k, index: 1083}
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 4}
+    ammo:
+      0:
+        compatibleAmmo: [ STR_SMOKE_GRENADE_BELT_TAUROS ]
+      1:
+        compatibleAmmo: [ STR_PHOTON_GRENADE_BELT_TAUROS ]
+    confAimed:
+      name: STR_SMOKE_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 0
+      shots: 1
+    confSnap:
+      name: STR_PHOTON_SHOT_TAURUS  #name of attack in action menu.
+      ammoSlot: 1
+      shots: 1
+    flatUse:
+      time: true
+      energy: true
+    battleType: 1
+    arcingShot: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    dropoff: 4
+    accuracyAuto: 0
+    accuracyAimed: 65
+    accuracySnap: 65
+    autoRange: 0 # same as snap
+    snapRange: 21
+    aimRange: 21 # same as snap
+    costAuto:
+      time: 0
+      energy: 0
+    costSnap:
+      time: 1
+      energy: 3
+    costAimed:
+      time: 1
+      energy: 3
+
+  - type: STR_T_BOLTER_WEAPON
+    weight: 1
+    bigSprite: {mod: 40k, index: 655}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    explosionSpeed: 5
+    bulletSpeed: 50
+    hitAnimation: {mod: 40k, index: 26}
+    hitSound: {mod: 40k, index: 13}
+    battleType: 1
+    sprayWaypoints: 2
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    twoHanded: false
+    fixedWeapon: true
+    recover: false
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - delete: STR_T_BOLTER # get rid of inbuilt HWP weapon
+  - delete: STR_T_BOLTER_I
+  - delete: STR_T_ARBITES_BOLTER
+
+  - &STR_TARANTULA_BOLTER_ITEM
+    type: STR_T_BOLTER
+    categories: [STR_CAT_AUXILIARY]
+    customItemPreviewIndex: {mod: 40k, index: 3}
+    size: 6
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    listOrder: 2400
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_T_BOLTER_I
+    refNode: *STR_TARANTULA_BOLTER_ITEM
+    listOrder: 2401
+
+  - type: STR_T_ARBITES_BOLTER
+    refNode: *STR_TARANTULA_BOLTER_ITEM
+    customItemPreviewIndex: {mod: 40k, index: 28}
+    listOrder: 2401
+
+  - type: STR_TANK_ROCKET_LAUNCHER # the HWP weapon isn't actually used. It uses STR_T_SEC
+    compatibleAmmo: []
+    clipSize: -1
+
