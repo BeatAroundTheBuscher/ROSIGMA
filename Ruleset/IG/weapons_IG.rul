@@ -31,87 +31,7 @@ extended:
 
 
 items:
-  - type: STR_HEAVY_STUBBER_HYBRID #Earlier alternative to kombi-rotor cannon
-    categories: [STR_CAT_AUTO]
-    requiresBuy:
-      - STR_MIDTIER_PREREQ 
-      - STR_GUARD_AND_ARBITES
-    costBuy: 150000
-    size: 0.3
-    costSell: 50000
-    weight: 15
-    bigSprite: 1016 # 200 # {mod: 40k, index: 1130}
-    floorSprite: 937 # {mod: 40k, index: 1130}
-    handSprite: 800 # {mod: 40k, index: 1944}
-    bulletSprite: {mod: 40k, index: 2}
-    bulletSpeed: 25
-    fireSound: {mod: 40k, index: 4}
-    compatibleAmmo:
-      - STR_HEAVY_STUBBER_CLIP
-      - STR_HEAVY_STUBBER_CLIP_MC
-      - STR_ROTOR_KOMBI_BUCKSHOT40 #Ripper shot equivalent
-      - STR_ROTOR_KOMBI_SLUG40 #Heavy Bolt equivalent single shot
-      - STR_INCENDIARY_GRENADE40 #manufactured for guard
-      - STR_MELTA_GRENADE40 #manufactured for guard
-    ammo:
-     0:
-      compatibleAmmo: [STR_HEAVY_STUBBER_CLIP, STR_HEAVY_STUBBER_CLIP_MC]
-     1:
-      compatibleAmmo: [STR_ROTOR_KOMBI_BUCKSHOT40, STR_ROTOR_KOMBI_SLUG40, STR_INCENDIARY_GRENADE40, STR_MELTA_GRENADE40]
-    battleType: 1
-    twoHanded: true
-    blockBothHands: true
-    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
-    invWidth: 2
-    invHeight: 3
-    armor: 200
-    confSnap:
-      shots: 4
-    confAimed:
-      shots: 1
-      ammoSlot: 1 #direct fire grenades and shotty
-      name: STR_LAUNCH_GRENADE
-      shortName: STR_LAUNCH_GRENADE_SHORT
-      arcing: true
-    sprayWaypoints: 2
-    listOrder: 10761
-    tags:
-      ITEM_RECOIL: 40
-      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
 
-  - type: STR_BOLTER_HEAVY_SOLAR #Solar-pattern heavy bolter with bipod
-    categories: [STR_CAT_BOLTER]
-    requiresBuy:
-      - STR_UFO_CONSTRUCTION
-    size: 0.3
-    costBuy: 250000 
-    costSell: 100000
-    weight: 36 #Bit lighter than the godwyn.
-    bigSprite: 1021 
-    floorSprite: 939 
-    handSprite: 784 
-    bulletSprite: {mod: 40k, index: 6}
-    bulletSpeed: 40
-    fireSound: 2137
-    compatibleAmmo: #Heavy Bolter Ammo
-      - STR_AC_AP_AMMO
-      - STR_AC_MC_AMMO
-      - STR_AC_HE_AMMO
-      - STR_AC_I_AMMO
-    battleType: 1
-    kneelBonus: 110
-    twoHanded: true
-    blockBothHands: true
-    invWidth: 2
-    invHeight: 3
-    armor: 200
-    sprayWaypoints: 2
-    autoShots: 5
-    attraction: 1
-    listOrder: 19170
-    tags:
-      ITEM_RECOIL: 60 #30 for basic bipod less one, really meant to set this one up
-      # ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
   - type: STR_FELINID_SCANNER
     weight: 0
     specialIconSprite: 208
@@ -1292,7 +1212,7 @@ items:
     #recoveryTransformations:
       #STR_ROTOR_CANNON: [1] #Doesn´t work for player weapons as they don´t transform back
     costBuy: 300000
-    costSell: 50000
+    costSell: 25000
     weight: 40 #similar to heavy bolter guard
     bigSprite: 908
     floorSprite: 904
@@ -1343,7 +1263,7 @@ items:
     size: 0.5
     dropoff: 5
     costBuy: 400000
-    costSell: 50000
+    costSell: 30000
     weight: 45 #similar to heavy bolter guard + grenade launcher
     bigSprite: 909
     floorSprite: 904
@@ -2939,7 +2859,6 @@ items:
       - STR_SHOTGUN_SHELLS #maybe other ammo types too?
       - STR_STUN_SHELLS
       - STR_STUN_GAS_SHELLS
-    rangeSnap: 8
     accuracySnap: 50
     tuSnap: 20
     confSnap:
@@ -2953,7 +2872,6 @@ items:
     armor: 200 #to avoid item pile destruction
     tags:
       ITEM_RECOIL: 20
-      REACTION_MULTIPLIER: 200
 
   - type: STR_MC_BOLTER_DEAZ
     armor: 200 #to avoid item pile destruction
@@ -4414,6 +4332,7 @@ items:
     turretType: 1
 
   - type: STR_RIPPER_GUN
+    oneHandedPenalty: 50
     compatibleAmmo:
       - STR_RIPPER_GUN_CLIP
       - STR_RIPPER_GUN_CLIP_INC
@@ -4433,11 +4352,11 @@ items:
       ToStun: 0.5 #impact shock
 
   - type: STR_RIPPER_GUN_CLIP_AP
-    costBuy: 4000
+    costBuy: 6000
     costSell: 1000
     requiresBuy:
       - STR_OGRYN_REQUISITION
-      - STR_MIDTIER_GUARDSMEN
+      - STR_MIDTIER_PREREQ
     size: 0.3
     weight: 10
     bigSprite: 1009
@@ -4456,9 +4375,9 @@ items:
       ToArmor: 0.02 #AP ammo; small armor damage
       ArmorEffectiveness: 0.5 #has significant armor penetration
       ToHealth: 0.7 #AP weapon features reduced health damage
-      ToTime: 0.1 #shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
-      ToEnergy: 0.1 #impact shock; reduced due to AP ammo
-      ToStun: 0.3 #impact shock; reduced due to AP ammo
+      ToTime: 0.05 #shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
+      ToEnergy: 0.05 #impact shock; reduced due to AP ammo
+      ToStun: 0.25 #impact shock; reduced due to AP ammo
     shotgunBehavior: 1
     shotgunSpread: 20 #these flechettes are more aerodynamic and have improved grouping
     shotgunPellets: 6
@@ -4495,7 +4414,9 @@ items:
       ArmorEffectiveness: 1.00
       ToHealth: 1.5
       ToMorale: 2.0 #being savaged with white phosphorous and promethium is kinda demoralizing
-      ToStun: 0.75 #painful
+      ToTime: 0.2 #has less heft than buckshot
+      ToEnergy: 0.1 #has less heft than buckshot
+      ToStun: 0.7 #painful
       ToTile: 0.3
     shotgunBehavior: 1
     shotgunSpread: 35
@@ -4512,7 +4433,7 @@ items:
     categories: [STR_CAT_SPELLS]
     specialIconSprite: 206 #command
     fireSound: [{mod: 40k, index: 787}]
-    hitSound: [{mod: 40k, index: 261},{mod: 40k, index: 262},{mod: 40k, index: 263},{mod: 40k, index: 264},{mod: 40k, index: 265}] #page
+    hitSound: [3931,3932,3933,3934,3935,3936,3937,3938] #page
     hitAnimation: {mod: 40k, index: 1100}
     weight: 0
     power: 10
