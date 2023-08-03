@@ -97,7 +97,7 @@ items:
     recover: false
     clipSize: -1
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_IMPULSOR_SHIELD_CW
     costUse:
@@ -120,12 +120,12 @@ items:
   - type: STR_STORMRAVEN_WEAPON
     refNode: *STR_TURRET_DEFAULT
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_STORMRAVENGK_WEAPON #STORMRAven TURRET
     refNode: *STR_TURRET_DEFAULT
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_IMMOLATOR_HEAVY_FLAMER # Rhino Flamer
     costAuto:
@@ -146,6 +146,8 @@ items:
     autoShots: 4
     arcingShot: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
+    damageType: 2
+    power: 80
     damageAlter:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
@@ -163,13 +165,13 @@ items:
     compatibleAmmo: !remove
       - STR_HFLAMER_CLIP
     tags:
-      TURRET_RELOAD_TURNS: 2
+      TURRET_RELOAD_TURNS: 4
 
   - type: STR_MORTAR
     costAuto:
       energy: 10
       time: 1
-      mana: 100
+      mana: 50
     dropoff: 4
     autoRange: 18
     snapRange: 0
@@ -184,13 +186,23 @@ items:
     accuracyMultiplier:
       firing: 0.8
       throwing: 0.8
-    power: 200
+    power: 100
     damageType: 3
+    damageAlter: #high explosive
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 7 #1 for hand grenade version
     arcingShot: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     minRange: 5
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_TAUROX_WEAPON
     refNode: *STR_TURRET_DEFAULT
@@ -219,7 +231,7 @@ items:
     hitSound: {mod: 40k, index: 13}
     hitAnimation: {mod: 40k, index: 26}
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
 
   - &STR_MANTICORE_DEFAULT
@@ -241,7 +253,7 @@ items:
   - type: STR_MANTICORE_L
     refNode: *STR_MANTICORE_DEFAULT
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
 
   - &STR_TARANTULA_HYPERIOS
@@ -257,7 +269,7 @@ items:
     clipSize: 2
     blastRadius: 10
     tags:
-      TURRET_RELOAD_TURNS: 2
+      TURRET_RELOAD_TURNS: 4
 
   - type: STR_T_SEC2
     refNode: *STR_TARANTULA_HYPERIOS
@@ -304,7 +316,7 @@ items:
     fixedWeapon: true
     recover: false
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_AUTOCANNON_TAUROX
     refNode: *STR_TURRET_DEFAULT
@@ -340,7 +352,7 @@ items:
     tuSnap: 0
     tuAimed: 0
     tags:
-      TURRET_RELOAD_TURNS: 2
+      TURRET_RELOAD_TURNS: 4
 
   - type: AUX_BOLTERPD
     costAuto:
@@ -354,7 +366,7 @@ items:
       energy: 0
       time: 0
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_MULTI_LASER
     refNode: *STR_TURRET_DEFAULT
@@ -396,15 +408,15 @@ items:
     costAimed:
       energy: 10
       time: 1
-      mana: 5
+      mana: 20
     costAuto:
       energy: 5
       time: 1
-      mana: 5
+      mana: 20
     costSnap:
       energy: 10
       time: 1
-      mana: 5
+      mana: 20
     dropoff: 4
     autoRange: 27
     snapRange: 12
@@ -415,7 +427,7 @@ items:
     tuSnap: 0
     autoShots: 1
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_LEMANRUSS_BOLTER
     costAuto:
@@ -443,7 +455,7 @@ items:
       ToStun: 0.5
     autoShots: 5
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_GORGON_HEAVY_FLAMER
     refNode: *STR_TURRET_DEFAULT
@@ -456,10 +468,10 @@ items:
       time: true
       energy: true
       mana: true
-    power: 80
     powerRangeReduction: 15
     powerRangeThreshold: 22
     damageType: 2
+    power: 80
     damageAlter:
       FireBlastCalc: false
       IgnoreOverKill: false
@@ -483,7 +495,7 @@ items:
     compatibleAmmo: !remove
       - STR_HFLAMER_CLIP
     tags:
-      TURRET_RELOAD_TURNS: 2
+      TURRET_RELOAD_TURNS: 4
 
   # AUX_BOLTER is Razorback Turret
   # Used for Emplacement and Arbites Chimera
@@ -513,7 +525,7 @@ items:
       ToStun: 0.5
     autoShots: 10
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_LASCANNON_TAUROS # done
     dropoff: 3
@@ -552,7 +564,7 @@ items:
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_GRENADE_LAUNCHER_TAUROS # done
     dropoff: 4
@@ -687,7 +699,7 @@ items:
     hitSound: {mod: 40k, index: 13}
     hitAnimation: {mod: 40k, index: 26}
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_GRENADE_LAUNCHER_RHINO_SMOKE
     size: 1.0
@@ -734,8 +746,6 @@ items:
     costAimed:
       time: 1
       energy: 3
-    tags:
-      TURRET_RELOAD_TURNS: 1
 
   - type: STR_T_BOLTER_WEAPON
     weight: 1
@@ -759,7 +769,7 @@ items:
       energy: 5
       mana: 10
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - delete: STR_T_BOLTER # get rid of inbuilt HWP weapon
   - delete: STR_T_BOLTER_I
@@ -776,7 +786,7 @@ items:
       mana: 10
     listOrder: 2400
     tags:
-      TURRET_RELOAD_TURNS: 1
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_T_BOLTER_I
     refNode: *STR_TARANTULA_BOLTER_ITEM
@@ -790,3 +800,4 @@ items:
   - type: STR_TANK_ROCKET_LAUNCHER # the HWP weapon isn't actually used. It uses STR_T_SEC
     compatibleAmmo: []
     clipSize: -1
+
