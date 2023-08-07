@@ -28,9 +28,93 @@ extended:
       #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
       REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
+    #turret reload scripts
+      TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
+      TURRET_RELOAD_CAPACITY: int #reload capacity of turret
 
 
 items:
+  - type: STR_HEAVY_STUBBER_HYBRID #Earlier alternative to kombi-rotor cannon
+    categories: [STR_CAT_AUTO]
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_GUARD_AND_ARBITES
+    costBuy: 150000
+    size: 0.3
+    costSell: 50000
+    weight: 15
+    bigSprite: 1016 # 200 # {mod: 40k, index: 1130}
+    floorSprite: 937 # {mod: 40k, index: 1130}
+    handSprite: 824 # {mod: 40k, index: 1944}
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 25
+    fireSound: {mod: 40k, index: 4}
+    compatibleAmmo:
+      - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
+      - STR_ROTOR_KOMBI_BUCKSHOT40 #Ripper shot equivalent
+      - STR_ROTOR_KOMBI_SLUG40 #Heavy Bolt equivalent single shot
+      - STR_INCENDIARY_GRENADE40 #manufactured for guard
+      - STR_MELTA_GRENADE40 #manufactured for guard
+    ammo:
+     0:
+      compatibleAmmo: [STR_HEAVY_STUBBER_CLIP, STR_HEAVY_STUBBER_CLIP_MC]
+     1:
+      compatibleAmmo: [STR_ROTOR_KOMBI_BUCKSHOT40, STR_ROTOR_KOMBI_SLUG40, STR_INCENDIARY_GRENADE40, STR_MELTA_GRENADE40]
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    confSnap:
+      shots: 4
+    confAimed:
+      shots: 1
+      ammoSlot: 1 #direct fire grenades and shotty
+      name: STR_LAUNCH_GRENADE
+      shortName: STR_LAUNCH_GRENADE_SHORT
+      arcing: true
+    sprayWaypoints: 2
+    listOrder: 10761
+    tags:
+      ITEM_RECOIL: 40
+      ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
+
+  - type: STR_BOLTER_HEAVY_SOLAR #Solar-pattern heavy bolter with bipod
+    categories: [STR_CAT_BOLTER]
+    requiresBuy:
+      - STR_UFO_CONSTRUCTION
+    size: 0.3
+    costBuy: 250000
+    costSell: 100000
+    weight: 36 #Bit lighter than the godwyn.
+    bigSprite: 1028
+    floorSprite: 943
+    handSprite: 808
+    bulletSprite: {mod: 40k, index: 6}
+    bulletSpeed: 40
+    fireSound: 2137
+    compatibleAmmo: #Heavy Bolter Ammo
+      - STR_AC_AP_AMMO
+      - STR_AC_MC_AMMO
+      - STR_AC_HE_AMMO
+      - STR_AC_I_AMMO
+    battleType: 1
+    kneelBonus: 110
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    sprayWaypoints: 2
+    autoShots: 5
+    attraction: 1
+    listOrder: 19170
+    tags:
+      ITEM_RECOIL: 60 #30 for basic bipod less one, really meant to set this one up
+      # ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
 
   - type: STR_FELINID_SCANNER
     weight: 0
@@ -1212,7 +1296,7 @@ items:
     #recoveryTransformations:
       #STR_ROTOR_CANNON: [1] #Doesn´t work for player weapons as they don´t transform back
     costBuy: 300000
-    costSell: 50000
+    costSell: 25000
     weight: 40 #similar to heavy bolter guard
     bigSprite: 908
     floorSprite: 904
@@ -1263,7 +1347,7 @@ items:
     size: 0.5
     dropoff: 5
     costBuy: 400000
-    costSell: 50000
+    costSell: 30000
     weight: 45 #similar to heavy bolter guard + grenade launcher
     bigSprite: 909
     floorSprite: 904
@@ -2264,7 +2348,7 @@ items:
 #    costSell: 4800
     weight: 15
     bigSprite: 224
-#    floorSprite: 11
+    floorSprite: 942
     handSprite: 224
     bulletSprite: {mod: 40k, index: 6}
     fireSound: {mod: 40k, index: 711}
@@ -2295,13 +2379,13 @@ items:
     tuSnap: 40
     tuAimed: 85
     kneelBonus: 150
+    defaultInventorySlot: STR_RIGHT_HAND
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
     tags:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 75 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
-      ITEM_IS_HEAVY_WEAPON: 1
       DODGE_CHANCE_FLAT_REDUCTION: 100 #it's impossible to dodge a Vindicare's shot; forget it
 
   - &STR_EXITUS_BULLETS
@@ -2312,8 +2396,8 @@ items:
     costSell: 2250
     weight: 2
     bigSprite: 225
-    floorSprite: {mod: 40k, index: 12}
-    handSprite: {mod: 40k, index: 464}
+    floorSprite: 940
+    handSprite: 792
     hitSound: {mod: 40k, index: 712}
     hitAnimation: {mod: 40k, index: 26}
     battleType: 2
@@ -2352,6 +2436,202 @@ items:
     #hitAnimFrames: 10
     tags:
       ITEM_AMMO_COLOR: 8
+
+  - type: STR_EXITUS_PISTOL
+    categories: [STR_CAT_SNIPER]
+    size: 0.1
+#    costBuy: 18400
+#    costSell: 4800
+    weight: 5
+    bigSprite: 1023
+    floorSprite: 939
+    handSprite: 784
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2419
+    compatibleAmmo:
+      - STR_EXITUS_PISTOL_AMMO
+      - STR_EXITUS_PISTOL_AMMO_HELLFIRE
+      - STR_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
+      - STR_EXITUS_PISTOL_AMMO_SHELLBREAKER
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 1
+    invHeight: 2
+    listOrder: 11990
+    bulletSpeed: 50
+    recover: false
+    dropoff: 4
+    noLOSAccuracyPenalty: 90 #Vindicare don't care about not being able to 'see' his target
+    autoRange: 0
+    snapRange: 15
+    aimRange: 20 #it's an Exitus pistol; it has the best aimed range of any pistol in the game
+    accuracyAuto: 0
+    accuracySnap: 50
+    accuracyAimed: 90
+    tuAuto: 0
+    tuSnap: 25
+    tuAimed: 50
+    kneelBonus: 110
+    defaultInventorySlot: STR_LEFT_HAND
+    accuracyMultiplier: #sniper rifle scaling; only good in skilled hands
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 20
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 40 #Not as good as the sniper rifle, but still good; definitely more of a snap shot weapon
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      DODGE_CHANCE_FLAT_REDUCTION: 100 #it's impossible to dodge a Vindicare's shot; forget it
+      REACTION_MULTIPLIER: 200
+
+  - &STR_EXITUS_PISTOL_BULLETS
+    type: STR_EXITUS_PISTOL_AMMO
+    categories: [STR_CAT_SNIPER]
+    size: 0.1
+#    costBuy: 3000
+    costSell: 2250
+    weight: 2
+    bigSprite: 1024
+    floorSprite: 940
+    handSprite: 792
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    listOrder: 12000
+    power: 100 #much less powerful than rifle rounds
+    damageType: 1
+    damageAlter:
+      ToTile: 0.0
+      ToArmorPre: 0.1 #high velocity
+      RandomType: 6
+      ArmorEffectiveness: 0.8
+    clipSize: 10
+
+  - type: STR_EXITUS_PISTOL_AMMO_HELLFIRE # attacks twice by being HE
+    refNode: *STR_EXITUS_PISTOL_BULLETS
+#    costBuy: 12000
+    costSell: 5000
+    bigSprite: 1025
+    listOrder: 12010
+    hitAnimation: 0
+    damageType: 1
+    damageAlter:
+      ToTile: 0.25
+      ToArmorPre: 0.4 #acid melts armor
+      ArmorEffectiveness: 0.9
+      ResistType: 8
+      RandomType: 6
+      ToArmor: 0.2
+      ToHealth: 0.7
+      ToStun: 0.5 #painful
+      ToWound: 0.5 #acid and armor piercing needles cause lots of mortal wounds
+      ToMorale: 2.0 #painful
+      FixRadius: 1
+
+  - type: STR_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
+    refNode: *STR_EXITUS_PISTOL_BULLETS
+#    costBuy: 12000
+    costSell: 5000
+    bigSprite: 1026
+    listOrder: 12020
+    damageType: 1
+    damageAlter:
+      ToTile: 1.0 #it'll destroy about anything it hits
+      RandomType: 6
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.4 #armor piercing
+      ToHealth: 0.7 #armor piercing
+      ToArmor: 0.5 #obliterates armor on penetration
+
+  - type: STR_EXITUS_PISTOL_AMMO_SHELLBREAKER # shield piercing
+    refNode: *STR_EXITUS_PISTOL_BULLETS
+#    costBuy: 12000
+    costSell: 5000
+    bigSprite: 1027
+    listOrder: 12030
+    damageType: 1
+    damageAlter:
+      ToTile: 0.0
+      ToArmorPre: 0.1 #high velocity
+      RandomType: 6
+      ArmorEffectiveness: 0.8
+    tags:
+      ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: 100 #breaks shields
+
+  - type: STR_RIPPER_PISTOL
+    categories: [STR_CAT_SNIPER]
+    size: 0.2
+#    costSell: 4800
+    weight: 4
+    bigSprite: 1021
+    floorSprite: 941
+    handSprite: 800
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2419
+    compatibleAmmo:
+      - STR_RIPPER_PISTOL_AMMO
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 1
+    invHeight: 2
+    listOrder: 12040
+    bulletSpeed: 50
+    recover: true
+    dropoff: 5
+    autoRange: 12
+    snapRange: 14
+    aimRange: 16
+    accuracyAuto: 50
+    accuracySnap: 60
+    accuracyAimed: 90
+    tuAuto: 0
+    tuSnap: 25
+    tuAimed: 50
+    confAuto:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    kneelBonus: 110
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 15
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 30 #highly accurate for a pistol
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      REACTION_MULTIPLIER: 200
+
+  - type: STR_RIPPER_PISTOL_AMMO
+    categories: [STR_CAT_SNIPER]
+    size: 0.1
+    costBuy: 5000
+    costSell: 1000
+    weight: 1
+    bigSprite: 1022
+    floorSprite: {mod: 40k, index: 12}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    listOrder: 12000
+    power: 60
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.02 #not very effective at actually destroying/shredding armor
+      ToArmor: 0.02 #not very effective at actually destroying/shredding armor
+      ToTile: 0.0
+      ToItem: 0.0
+      RandomType: 6
+      ResistType: 3 #toxins/acids
+      ArmorEffectiveness: 0.5 #armor piercing
+      ToMorale: 2.0 #demoralizing poison
+      ToHealth: 0.5 #almost as debilitating as it is deadly
+      ToStun: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5
+      ToWound: 0.5
+      RandomWound: false
+    clipSize: 8
 
   - type: STR_MORTAR_PORTABLE #Cadian style
     categories: [STR_CAT_ROCKETL]
@@ -2854,6 +3134,10 @@ items:
     battleType: 1
     invWidth: 1
     invHeight: 2
+    dropoff: 6
+    autoRange: 5
+    snapRange: 7
+    aimRange: 0
     listOrder: 10851
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS #maybe other ammo types too?
@@ -2872,6 +3156,7 @@ items:
     armor: 200 #to avoid item pile destruction
     tags:
       ITEM_RECOIL: 20
+      REACTION_MULTIPLIER: 200
 
   - type: STR_MC_BOLTER_DEAZ
     armor: 200 #to avoid item pile destruction
@@ -3525,6 +3810,9 @@ items:
       shots: 1
       ammoSlot: 2
 
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
   - type: STR_GRENADE_LAUNCHER_TAUROS_SMOKE
     size: 1.0
     weight: 85
@@ -3655,7 +3943,6 @@ items:
     invHeight: 3
     recover: false
     listOrder: 2710
-
 
   - type: STR_COMMISSAR_CLAW_BUILTIN # based on STR_CLAWS
     categories: [STR_CAT_MELEE]
@@ -4058,22 +4345,77 @@ items:
     invHeight: 3
     bigSprite: {mod: 40k, index: 1101}
     handSprite: {mod: 40k, index: 1800}
+    bulletSprite: {mod: 40k, index: 17}
+    hitSound: {mod: 40k, index: 864}
+    hitAnimation: {mod: 40k, index: 1110}
     bulletSpeed: 30
+    meleeSound: {mod: 40k, index: 710} # 710 powerfist miss
+    meleeHitSound: {mod: 40k, index: 775} # 772 powerfist hit
+    meleeAnimation: {mod: 40k, index: 28} # 28 bolt anitmation
     weight: 5
+    #ranged profile
     confSnap:
       ammoSlot: 0
       name: STR_PSYKER_LIGHTNING_STRIKE
+    costSnap:
+      time: 25
+      energy: 10
+      stun: 5
+      morale: 5
+    accuracySnap: 100
+    accuracyMultiplier:
+      firing: 0.5
+      psi: 0.01
+    dropoff: 5
+    damageType: 5
+    power: 0
+    damageBonus:
+      psi: 0.01
+    damageAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.5
+      ToStun: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5
+      ToWound: 0.05
+      ToTile: 0.0 #only affects living targets
+      ToItem: 0.0
+      RandomWound: false
+    powerRangeThreshold: 5.0
+    powerRangeReduction: 5.0
+    maxRange: 20
+    #melee profile
+    meleeType: 5
+    meleePower: 0
+    costMelee:
+      time: 15
+      energy: 10
+      stun: 5
+      morale: 5
+    meleeBonus:
+      psi: 0.01
+    accuracyMelee: 100
+    meleeMultiplier:
+      melee: 0.5
+      psi: 0.01
+    meleeAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.5
+      ToStun: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5
+      ToWound: 0.05
+      RandomWound: false
     clipSize: -1
     battleType: 1
     fixedWeapon: true
     fixedWeaponShow: true
     recover: false
     experienceTrainingMode: 28
-    bulletSprite: {mod: 40k, index: 17}
-    hitSound: {mod: 40k, index: 864}
-    hitAnimation: {mod: 40k, index: 1110}
-
-
 
   - type: STR_HEAVY_STUBBER_KRIEG #Lucius Pattern Heavy Stubber 14.5mm
     categories: [STR_CAT_AUTO]
@@ -4305,6 +4647,8 @@ items:
     bulletSprite: 2
     bulletSpeed: 25
     turretType: 0
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_TAUROS_HEAVY_FLAMER # ToDo: Balance
     weight: 0
@@ -4330,8 +4674,11 @@ items:
     invHeight: 3
     recover: false
     turretType: 1
+    tags:
+      TURRET_RELOAD_TURNS: 2
 
   - type: STR_RIPPER_GUN
+    oneHandedPenalty: 50
     compatibleAmmo:
       - STR_RIPPER_GUN_CLIP
       - STR_RIPPER_GUN_CLIP_INC
@@ -4351,11 +4698,11 @@ items:
       ToStun: 0.5 #impact shock
 
   - type: STR_RIPPER_GUN_CLIP_AP
-    costBuy: 4000
+    costBuy: 6000
     costSell: 1000
     requiresBuy:
       - STR_OGRYN_REQUISITION
-      - STR_MIDTIER_GUARDSMEN
+      - STR_MIDTIER_PREREQ
     size: 0.3
     weight: 10
     bigSprite: 1009
@@ -4374,9 +4721,9 @@ items:
       ToArmor: 0.02 #AP ammo; small armor damage
       ArmorEffectiveness: 0.5 #has significant armor penetration
       ToHealth: 0.7 #AP weapon features reduced health damage
-      ToTime: 0.1 #shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
-      ToEnergy: 0.1 #impact shock; reduced due to AP ammo
-      ToStun: 0.3 #impact shock; reduced due to AP ammo
+      ToTime: 0.05 #shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
+      ToEnergy: 0.05 #impact shock; reduced due to AP ammo
+      ToStun: 0.25 #impact shock; reduced due to AP ammo
     shotgunBehavior: 1
     shotgunSpread: 20 #these flechettes are more aerodynamic and have improved grouping
     shotgunPellets: 6
@@ -4413,7 +4760,9 @@ items:
       ArmorEffectiveness: 1.00
       ToHealth: 1.5
       ToMorale: 2.0 #being savaged with white phosphorous and promethium is kinda demoralizing
-      ToStun: 0.75 #painful
+      ToTime: 0.2 #has less heft than buckshot
+      ToEnergy: 0.1 #has less heft than buckshot
+      ToStun: 0.7 #painful
       ToTile: 0.3
     shotgunBehavior: 1
     shotgunSpread: 35

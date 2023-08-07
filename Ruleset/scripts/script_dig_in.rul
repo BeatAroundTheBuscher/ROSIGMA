@@ -1,0 +1,196 @@
+extended:
+  tags:
+
+    BattleUnit:
+      TimesHit: int
+      DugInBonus: int
+      LocX: int 
+      LocY: int
+      LocZ: int
+    RuleSkill:
+      DigIn: int
+
+  scripts:
+    skillUseUnit:
+      - offset: 1
+        code: |
+          var int MaxTu;
+          var int CurrentTu;
+          var int HasBonus;
+          var int DigIn;
+          var int locX;
+          var int locY;
+          var int locZ; 
+
+          skill.getTag DigIn Tag.DigIn;
+          if eq DigIn 1;
+            actor.Stats.getTimeUnits MaxTu;
+            actor.getTimeUnits CurrentTu;
+            muldiv MaxTu 1 2; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
+            actor.getTag HasBonus Tag.DugInBonus;
+            if eq HasBonus 1;
+              actor.setTag Tag.DugInBonus 0;
+              return;
+            end;
+            if gt CurrentTu MaxTu;
+              sub CurrentTu MaxTu;
+              actor.setTimeUnits CurrentTu;
+              actor.setTag Tag.DugInBonus 1;
+              actor.getPosition.getX locX;
+              actor.getPosition.getY locY;
+              actor.getPosition.getZ locZ;
+              actor.setTag Tag.LocX locX;
+              actor.setTag Tag.LocY locY;
+              actor.setTag Tag.LocZ locZ;
+            else;
+              battle_game.flashMessage "Not Enough Time Units!";
+            end;
+          end;
+          return;
+
+    newTurnUnit:
+      - offset: 99
+        code: |
+          var int TurnSide;
+          var int HasBonus;
+          var int kneeling;
+          var int maxTu;
+          var int locX;
+          var int locY;
+          var int locZ; 
+          var int currentX;
+          var int currentY;
+          var int currentZ;
+
+          unit.setTag Tag.TimesHit 0;
+
+          battle_game.getTurnSide TurnSide;
+          unit.getTag HasBonus Tag.DugInBonus;
+          
+          if and eq TurnSide FACTION_PLAYER eq  HasBonus 1;
+            unit.isKneeled kneeling;
+            if eq kneeling 1;
+            
+            unit.getPosition.getX currentX;
+            unit.getPosition.getY currentY;
+            unit.getPosition.getZ currentZ;
+            unit.getTag locX Tag.LocX;
+            unit.getTag locY Tag.LocY;
+            unit.getTag locZ Tag.LocZ;
+            if neq locX currentX;
+              unit.setTag Tag.DugInBonus 0;
+              return;
+            end;
+            if neq locY currentY;
+              unit.setTag Tag.DugInBonus 0;
+              return;
+            end;
+            if neq locZ currentZ;
+              unit.setTag Tag.DugInBonus 0;
+              return;
+            end;
+
+            unit.getTimeUnitsMax maxTu;
+            muldiv maxTu 75 100;
+            unit.setTimeUnits maxTu;
+            return;
+            end;
+            unit.setTag Tag.DugInBonus 0;
+          end;
+          
+          return;
+
+    hitUnit:
+      - offset: 1
+        code: |
+          var int HasBonus;
+          var int NoTimesHit;
+          var int TriggerChance;
+          var int locX;
+          var int locY;
+          var int locZ; 
+          var int currentX;
+          var int currentY;
+          var int currentZ;
+
+          unit.getTag HasBonus Tag.DugInBonus;
+
+          if and eq HasBonus 1 eq side SIDE_FRONT;
+
+            unit.getPosition.getX currentX;
+            unit.getPosition.getY currentY;
+            unit.getPosition.getZ currentZ;
+            unit.getTag locX Tag.LocX;
+            unit.getTag locY Tag.LocY;
+            unit.getTag locZ Tag.LocZ;
+            if neq locX currentX;
+              return power part side;
+            end;
+            if neq locY currentY;
+              return power part side;
+            end;
+            if neq locZ currentZ;
+              return power part side;
+            end;
+
+
+            unit.getTag NoTimesHit Tag.TimesHit;
+            add NoTimesHit 1;
+            unit.setTag Tag.TimesHit NoTimesHit;
+
+            set TriggerChance 60; #Edit base trigger chance, value is in %, note that the value will always be reduced by atleast 1 times hit penalty
+            mul NoTimesHit 10; #Edit times hit penalty multiplier
+            sub TriggerChance NoTimesHit; #Chance formula: Base trigger chance - (Times hit * times hit penalty multiplier)
+            if lt TriggerChance 0;
+              set TriggerChance 0;
+            end;
+            #debug_log "chance" TriggerChance;
+            battle_game.randomChance TriggerChance;
+            if eq TriggerChance 1;
+              set power 0;
+              battle_game.flashMessage "Dug in!";
+            end;
+          end;
+
+          return power part side;
+
+    selectUnitSprite:
+      - offset: 20
+        code: |
+          var int HasBonus;
+          var int kneeling;
+          var int locX;
+          var int locY;
+          var int locZ; 
+          var int currentX;
+          var int currentY;
+          var int currentZ;
+          unit.getTag HasBonus Tag.DugInBonus;
+          unit.isKneeled kneeling;
+          if and eq HasBonus 1 eq kneeling 1;
+            unit.getPosition.getX currentX;
+            unit.getPosition.getY currentY;
+            unit.getPosition.getZ currentZ;
+            unit.getTag locX Tag.LocX;
+            unit.getTag locY Tag.LocY;
+            unit.getTag locZ Tag.LocZ;
+            if neq locX currentX;
+              return sprite_index;
+            end;
+            if neq locY currentY;
+              return sprite_index;
+            end;
+            if neq locZ currentZ;
+              return sprite_index;
+            end;
+            add sprite_index 1000;
+          end;
+          return sprite_index;
+
+###
+skills:
+  - type: STR_DIG_IN
+    costUse: 
+      time: 50 
+    tags:
+      DigIn: 1

@@ -14,6 +14,7 @@ extended:
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
       ARMOR_MAX_SUCCESSFUL_DODGES: int
+      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: int #how much our chance to dodge decreases with each successful dodge
     RuleItem:
       DODGE_CHANCE_FLAT_REDUCTION: int
       DODGE_CHANCE_PERCENT_REDUCTION: int
@@ -52,6 +53,7 @@ armors:
         var int maxSuccessfulDodges;
         var int dodgeFlatReduction;
         var int dodgePercentReduction;
+        var int dodgeDeclines;
 
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
@@ -71,6 +73,11 @@ armors:
         # assume that setting it has been forgotten
         if eq maxSuccessfulDodges 0;
           set maxSuccessfulDodges 1;
+        end;
+
+        targetArmor.getTag dodgeDeclines Tag.ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS;
+        if gt dodgeDeclines 0;
+          set maxSuccessfulDodges 999; #effectively we ignore max dodges; we're limited by our declining chance of dodge success instead
         end;
 
         if ge counterSuccessfulDodges maxSuccessfulDodges;
@@ -119,6 +126,8 @@ armors:
 
         #reduce the dodge chance by the dodgeFlatReduction amount
         sub dodgeChance dodgeFlatReduction;
+        mul dodgeDeclines counterSuccessfulDodges; #reduce dodge chance by ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS times number of successful dodges.
+        sub dodgeChance dodgeDeclines;
         if le dodgeChance 0;
           # debug_log "Dodge chance reduced to 0 by dodgeFlatReduction property.";
           return power part side;
@@ -708,6 +717,18 @@ armors:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
+  - type: STR_DIVINER
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #perfect dodge chance but we only get one
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_TELEPATH
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 50 #telepath can 'read' the thoughts of enemies, giving it some preternatural dodging capabilities
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
 #Tzeentch
   - type: STR_ADEPTAS_TZEENTCHNASSASSINARMOR
     refNode: *STR_DODGE_ARMOR
@@ -887,6 +908,18 @@ armors:
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_GENE_HYBRID_ACOLYTE_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_GENE_HYBRID_ACOLYTE_LEADER_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_GSC_KELER_ARMOR
