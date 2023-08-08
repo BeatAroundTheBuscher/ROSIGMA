@@ -87,6 +87,14 @@ extended:
           var ptr RuleSoldier rSoldierTarget;
           var ptr RuleSoldier rSoldierBonehead;
 
+          if le to_mana 0; # only proceed if we actually do damage
+            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: No mana damage dealt. Aborting, to_mana:" to_mana;
+            return;
+          end;
+
+          set orderPower to_mana;
+          set to_mana 0; #avoid conflicts
+
           #we can only apply orders on the player's turn
           battle_game.getTurnSide temp;
           if neq temp FACTION_PLAYER;
@@ -98,11 +106,6 @@ extended:
           weapon_item.getTag temp Tag.ITEM_IS_STR_BONEHEAD_ORDERS;
           if eq temp 0;
             #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Item lacks Bonehead Order tag. Aborting, temp:" temp;
-            return;
-          end;
-
-          if le to_mana 0; # only proceed if we actually do damage
-            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: No mana damage dealt. Aborting, to_mana:" to_mana;
             return;
           end;
 
@@ -157,8 +160,6 @@ extended:
           attacker.setTag Tag.UNIT_BONEHEAD_REMAINING_ORDERS temp;
           #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker orders decremented per UNIT_BONEHEAD_REMAINING_ORDERS. Orders remaining: temp:" temp;
 
-          set orderPower to_mana;
-          set to_mana 0; #avoid conflicts
           #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Order power. orderPower:" orderPower;
           attacker.getTag temp Tag.UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER;
           #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Attacker issued order per UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER. temp:" temp;

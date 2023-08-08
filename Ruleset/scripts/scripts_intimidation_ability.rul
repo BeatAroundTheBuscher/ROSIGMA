@@ -25,6 +25,10 @@ extended:
             return;
           end;
 
+          set intimidateDamage to_mana;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
+          set to_mana 0; #so we don't conflict with mana stuff
+
           unit.isFearable temp; #fear immune targets ignore this
           if lt temp 1;
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is fear immune.";
@@ -62,10 +66,7 @@ extended:
 
           #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Weapon:" weapon_item;
           #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
-          #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
 
-          set intimidateDamage to_mana;
-          set to_mana 0;
           unit.Stats.getBravery temp2;
           sub intimidateDamage temp2; #subtract target Bravery from our power
 
