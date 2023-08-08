@@ -7,6 +7,7 @@ extended:
     RuleArmor:
       ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+      ARMOR_IS_DUMMY: int #is this a dummy we immediately kill off and trigger the bomb for?
 
   scripts:
     hitUnit:
@@ -141,3 +142,95 @@ extended:
           end;
           #debug_log "Bomberman Scripts; damageUnit, offset 24: Failed. No Kamikazi Bomb detected. Item:";
           return;
+
+    #blow up our bomb if we're killed
+    createUnit:
+      - new: ROSIGMA_cU_bomberman
+        offset: 10
+        code: |
+          var ptr RuleItem ruleItem;
+          var int temp;
+          var int fuseEnabled;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
+          var int remainingHealth;
+          var ptr RuleArmor armorRule;
+          var int randomFuse;
+
+          #if our armor doesn't have the kamikazi tag, cancel out
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_IS_DUMMY; #we check the armor for this tag to avoid having to cycle through items every time we damage something
+          if le temp 0;
+            #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 10: Aborted. No ARMOR_IS_DUMMY Tag Detected";
+            return;
+          end;
+
+          unit.getInventoryItem.size numInventoryItems;
+          #debug_log "numInventoryItems" numInventoryItems;
+          loop var i numInventoryItems;
+            unit.getInventoryItem someItem i;
+            someItem.getTag temp Tag.ITEM_IS_BOMB_ON_DEATH; #get the bomb timer
+            someItem.isFuseEnabled fuseEnabled; #don't bother if the fuse is already active
+            if and ge temp 1 le fuseEnabled 0;
+              someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
+              if ge randomFuse 1;
+                battle_game.randomRange temp 0 randomFuse;
+                #debug_log "Bomberman Scripts; damageUnit, offset 24: Random fuse. Random fuse upper limit:" randomFuse;
+              else;
+                sub temp 1;
+              end;
+              #someItem.InventoryMoveCost.setBaseTimePercent 999;
+              someItem.setFuseTimer temp;
+              someItem.setFuseEnabled 1;
+              #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 10: Successful. Bomb Triggered. Bomb Item:" someItem;
+              #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 10: Successful. Bomb Fuse. Fuse Timer:" temp;
+              unit.setHealthWithOverkill -1; #kill our kamikazi unit
+              unit.getHealth remainingHealth;
+              #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 10: Killing unit. remainingHealth:" remainingHealth;
+              return;
+            end;
+          end;
+          #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 10: Failed. No Kamikazi Bomb detected. Item:";
+          return;
+
+      - new: ROSIGMA_cU_bomberman_2
+        offset: 11
+        code: |
+          var ptr RuleItem ruleItem;
+          var int temp;
+          var int fuseEnabled;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
+          var int remainingHealth;
+          var ptr RuleArmor armorRule;
+          var int randomFuse;
+
+          #if our armor doesn't have the kamikazi tag, cancel out
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_IS_DUMMY; #we check the armor for this tag to avoid having to cycle through items every time we damage something
+          if le temp 0;
+            #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 11: Aborted. No ARMOR_IS_DUMMY Tag Detected";
+            return;
+          end;
+
+          unit.setHealthWithOverkill -1; #kill our kamikazi unit
+          unit.getHealth remainingHealth;
+          #debug_log "Bomberman Scripts; ROSIGMA_cU_bomberman, offset 11: Killing unit. remainingHealth:" remainingHealth;
+          return;
+
+    visibilityUnit:
+      - new: ROSIGMA_vU_bomberman
+        offset: 1 # hide unit
+        code: |
+          var ptr RuleArmor myRuleArmor;
+          var int temp;
+
+          target_unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_IS_DUMMY;
+
+          if eq temp 1;
+            #debug_log "Bomberman Scripts; ROSIGMA_vU_bomberman, offset 11: making dummy unit invisible per ARMOR_IS_DUMMY tag, temp:" temp;
+            return 0 visibility_mode;
+          end;
+
+          return current_visibility visibility_mode;

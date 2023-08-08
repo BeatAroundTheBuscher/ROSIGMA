@@ -8,6 +8,7 @@ extended:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
       ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+      ARMOR_IS_DUMMY: int #does this unit prime their bomb and die immediately on spawn?
     #intimidation script tags
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
 
@@ -295,8 +296,45 @@ armors:
       - STR_NURGLING_CLAWS
     tags:
       INFECTION_RESIST: 100 #infection immune
+
+  - type: STR_NURGLE_BOOMER_DUMMY_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemons have perfect night vision
+    heatVision: 33 #daemons have at least 33% heat vision as standard
+    psiVision: 5 #daemons have at least 5 psi vision as standard
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: NURGLEZOMBIE_BOOMER_BS_DUMMY.PCK
+    spriteInv: NURGLEBOOMER_INV.SPK
+    corpseBattle:
+      - STR_NURGLE_BOOMER_CORPSE
+    frontArmor: 10 #bloated to survive a bit further
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 10
+    drawingRoutine: 4
+    bleedImmune: true #Plague Daemons don't bleed
+    zombiImmune: true #Plague Daemons can't be corrupted further
+    painImmune: true #Plague Daemons don't care about pain
+    damageModifier: #Zombie boomer
+      - 1.0 #NONE
+      - 0.9 #AP
+      - 1.5 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCAN
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 1.0 #MELEE
+      - 0.2 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.3 #MELTA
+    loftempsSet: [ 3 ]
+    tags:
+      INFECTION_RESIST: 100 #infection immune
       ARMOR_IS_EXPLODE_ON_DEATH: 1 #used for bomberman scripts
       ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit
+      ARMOR_IS_DUMMY: 1 #this is a dummy; it primes and dies immediately.
 
 
   - type: STR_NURGLE_DAEMONETTE_ARMOR   #DAEMONETTE NURGLE ARMOR
@@ -1306,9 +1344,9 @@ armors:
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 7
     spriteSheet: VERMIN_MONK_BS.PCK #Vermin-ified Nurgle follower
-    spriteInv: VERMIN_MONK_INV.SPK 
+    spriteInv: VERMIN_MONK_INV.SPK
     corpseBattle:
-      - STR_VERMIN_MONK_CORPSE 
+      - STR_VERMIN_MONK_CORPSE
     frontArmor: 10
     sideArmor: 5
     rearArmor: 5
@@ -1347,12 +1385,12 @@ armors:
     spriteSheet: VERMINKIN_BS.PCK #HRUD VERMINKIN NURGLE BASIC SKAVEN
     spriteInv: VERMINKIN_INV.SPK #FOES INV
     corpseBattle:
-      - STR_VERMINKIN_CORPSE 
+      - STR_VERMINKIN_CORPSE
     frontArmor: 30
     sideArmor: 25
     rearArmor: 20
     underArmor: 5
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 100 #infection immune
@@ -1389,7 +1427,7 @@ armors:
     sideArmor: 40
     rearArmor: 25
     underArmor: 10
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 100 #infection immune
@@ -1426,7 +1464,7 @@ armors:
     sideArmor: 15
     rearArmor: 10
     underArmor: 5
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 50 #infection resistant
@@ -1445,7 +1483,7 @@ armors:
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
 
-  - type: STR_HRUD_ARMORED_WARRIOR_ARMOR   
+  - type: STR_HRUD_ARMORED_WARRIOR_ARMOR
     visibilityAtDay: 30  #weak eyes at day
     visibilityAtDark: 30 #perfect night vision
     camouflageAtDay: 20
@@ -1455,12 +1493,12 @@ armors:
     spriteSheet: ARMOREDSKAVEN_BS.PCK #HRUD_ARMORED_WARRIOR
     spriteInv: HRUD_ARMORED_INV.SPK #FOES INV
     corpseBattle:
-      - STR_HRUD_ARMORED_WARRIOR_CORPSE 
+      - STR_HRUD_ARMORED_WARRIOR_CORPSE
     frontArmor: 40
     sideArmor: 30
     rearArmor: 20
     underArmor: 5
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 50 #infection resistant
@@ -1513,7 +1551,7 @@ armors:
       - 1.1 #MELTA
     loftempsSet: [ 2 ]
 
-  - type: STR_HRUD_STORMVERMIN_ARMOR    
+  - type: STR_HRUD_STORMVERMIN_ARMOR
     visibilityAtDay: 30 #weak eyes at day
     visibilityAtDark: 30 #perfect night vision
     antiCamouflageAtDay: 4
@@ -1521,12 +1559,12 @@ armors:
     spriteSheet: STORMVERMIN_BS.PCK #HRUD STORMVERMIN
     spriteInv: STORMVERMIN_INV.SPK #FOES INV
     corpseBattle:
-      - STR_STORMVERMIN_CORPSE 
+      - STR_STORMVERMIN_CORPSE
     frontArmor: 65
     sideArmor: 55
     rearArmor: 30
     underArmor: 15
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 50 #infection resistant
@@ -1545,7 +1583,7 @@ armors:
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
 
-  - type: STR_HRUD_STORMVERMIN_OFFICER_ARMOR    
+  - type: STR_HRUD_STORMVERMIN_OFFICER_ARMOR
     visibilityAtDay: 30 #weak eyes at day
     visibilityAtDark: 30 #perfect night vision
     antiCamouflageAtDay: 5
@@ -1553,12 +1591,12 @@ armors:
     spriteSheet: STORMVERMIN_OFFICER_BS.PCK #HRUD STORMVERMIN OFFICER
     spriteInv: STORMVERMIN_OFFICER_INV.SPK #FOES INV
     corpseBattle:
-      - STR_STORMVERMIN_OFFICER_CORPSE 
+      - STR_STORMVERMIN_OFFICER_CORPSE
     frontArmor: 75
     sideArmor: 65
     rearArmor: 40
     underArmor: 20
-    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack 
+    #specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON #change to Hrud Bite attack
     zombiImmune: true #can't be corrupted further
     tags:
       INFECTION_RESIST: 50 #infection resistant
