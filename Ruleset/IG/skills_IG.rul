@@ -2,7 +2,9 @@ extended:
   tags:
     RuleSkill:
       SKILL_COMMAND_ID: int
-
+      SKILL_BONEHEAD_ORDER_ID: int
+      SKILL_LIKE_FIGHTING_A_SHADOW_ID: int
+      SKILL_LIKE_FIGHTING_A_SHADOW_RESTEALTH_DURATION: int
 
 skills:
   - type: STR_CHECK_COMMAND
@@ -55,6 +57,22 @@ skills:
     costUse:
       time: 1
 
+#stealth/deep strike skills
+  - type: STR_SKILL_LIKE_FIGHTING_A_SHADOW_CHECK #Allows unit to enter stealth mode again at the cost of their turn
+    tags:
+      SKILL_LIKE_FIGHTING_A_SHADOW_ID: 1
+    costUse:
+      time: 1
+    flatUse: true
+
+  - type: STR_SKILL_LIKE_FIGHTING_A_SHADOW #Allows unit to enter stealth mode again at the cost of their turn
+    tags:
+      SKILL_LIKE_FIGHTING_A_SHADOW_ID: 2
+      SKILL_LIKE_FIGHTING_A_SHADOW_RESTEALTH_DURATION: 2
+    costUse:
+      time: 100
+    flatUse: false
+
 soldiers:
   - &STR_OFFICER
     type: STR_GUARD_OFFICER
@@ -78,3 +96,10 @@ soldiers:
       - STR_SKILL_BONEHEAD_GET_EM
       - STR_SKILL_BONEHEAD_SHRUG_IT_OFF
       - STR_SKILL_BONEHEAD_GOTTA_GO_FAST
+
+  - type: STR_GUARD_IMPERIAL_ASSASSIN
+    skillIconSprite: 203 #
+    skills:
+      - STR_SKILL_LIKE_FIGHTING_A_SHADOW_CHECK
+      - STR_SKILL_LIKE_FIGHTING_A_SHADOW
+

@@ -15,6 +15,8 @@ extended:
       FLIGHT_DODGE_CHANCE: int
       ARMOR_MAX_SUCCESSFUL_DODGES: int
       ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: int #how much our chance to dodge decreases with each successful dodge
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: int
+      ARMOR_DODGE_CHANCE_FLAT_REDUCTION: int
     RuleItem:
       DODGE_CHANCE_FLAT_REDUCTION: int
       DODGE_CHANCE_PERCENT_REDUCTION: int
@@ -42,6 +44,7 @@ armors:
         var int flightDodgeChance;
         var int flying;
         var ptr RuleArmor targetArmor;
+        var ptr RuleArmor attackerArmor;
         var ptr RuleItem damagingItem;
         var ptr RuleDamageType damageType;
         var int isAoE;
@@ -65,8 +68,21 @@ armors:
         targetArmor.getTag maxSuccessfulDodges Tag.ARMOR_MAX_SUCCESSFUL_DODGES;
         damagingItem.getTag dodgeFlatReduction Tag.DODGE_CHANCE_FLAT_REDUCTION;
         damagingItem.getTag dodgePercentReduction Tag.DODGE_CHANCE_PERCENT_REDUCTION;
+        attacker.getRuleArmor attackerArmor;
+        attackerArmor.getTag temp Tag.ARMOR_DODGE_CHANCE_PERCENT_REDUCTION;
+        if gt temp dodgePercentReduction; #use the armor dodge mitigation if it's higher
+          set dodgePercentReduction temp;
+        end;
 
+        attackerArmor.getTag temp Tag.ARMOR_DODGE_CHANCE_FLAT_REDUCTION;
+        if gt temp dodgeFlatReduction; #use the armor dodge mitigation if it's higher
+          set dodgeFlatReduction temp;
+        end;
+
+        #debug_log "hitUnit | dodgePercentReduction:" dodgePercentReduction;
+        #debug_log "hitUnit | dodgeFlatReduction:" dodgeFlatReduction;
         if or ge dodgeFlatReduction 100 ge dodgePercentReduction 100; #these weapons are undodgable
+          #debug_log "hitUnit | dodgeFlatReduction or dodgePercentReduction 100 or greater:" dodgePercentReduction;
           return power part side;
         end;
 
@@ -204,6 +220,7 @@ armors:
     tags:
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 100 #vindicare don't care
 
   - type: STR_ADEPTAS_ARMORR_UC
     refNode: *STR_DODGE_ARMOR
