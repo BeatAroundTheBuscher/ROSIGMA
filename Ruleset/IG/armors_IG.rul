@@ -18,6 +18,7 @@ extended:
   tags:
     RuleArmor:
       INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_RESIST_TYPE: int
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
@@ -42,6 +43,10 @@ items:
       - STR_IMPERIAL_GUARD_OPERATIONS
 
   - type: STR_MEDIC_CARAPACE_ARMOR
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
     requiresBuy:
       - STR_CARAPACE_ARMOR_IG
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -115,7 +120,9 @@ armors:
        stamina: 10
     loftempsSet: [ 3 ]
     specialWeapon: STR_BAYONET
-
+    tags:
+      INFECTION_RESIST: 33 #infection resistant to GSC due to robust physiology
+      INFECTION_RESIST_TYPE: 2
 
   - &BEASTGUARD_FLAK_ARMOR_REF
     type: STR_BEASTGUARD_FLAK_ARMOR
@@ -136,7 +143,7 @@ armors:
     drawingRoutine: 0
     zombiImmune: true
     tags:
-      INFECTION_RESIST: 50 #infection resistant
+      INFECTION_RESIST: 33 #infection/corruption resistant due to warp acclimatization and physiology
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -172,6 +179,7 @@ armors:
     stats:
        tu: -5 #heavy
        stamina: -10 #heavy
+       reactions: -10 #heavy
        bravery: 10 #always multiples of 10
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
@@ -346,8 +354,9 @@ armors:
     underArmor: 60
     weight: 20
     stats:
-       tu: 0
-       stamina: -5
+       tu: -5
+       stamina: -10
+       reactions: -10
        strength: 5
        bravery: 10 #always multiples of 10
     drawingRoutine: 0
@@ -502,11 +511,11 @@ armors:
     units:
       - STR_GUARD_FELINID_VETERAN
     stats:
-       tu: 5
-       firing: 10
-       reactions: 10
-       strength: 5
-       bravery: 20 #always multiples of 10
+      tu: -2
+      firing: 10
+      stamina: -10 #more used to moving in armor, but it's heavier.
+      strength: 5
+      bravery: 20 #always multiples of 10
     loftempsSet: [ 2 ] #Felenid
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
@@ -843,10 +852,14 @@ armors:
       - STR_GUARD_SQUAT
     stats:
        bravery: 10
+       stamina: 5
        strength: 5
     weight: 10 #high quality squat armor fit, also... smaller surface area
     loftempsSet: [ 3 ]
     specialWeapon: STR_BAYONET
+    tags:
+      INFECTION_RESIST: 33 #infection resistant to GSC due to robust physiology
+      INFECTION_RESIST_TYPE: 2
 
   - type: STR_BEASTGUARD_CARAPACE_ARMOR
     visibilityAtDay: 35 #abhuman squat malus
@@ -866,7 +879,7 @@ armors:
     drawingRoutine: 0
     zombiImmune: true
     tags:
-      INFECTION_RESIST: 50 #infection resistant
+      INFECTION_RESIST: 33 #infection/corruption resistant due to warp acclimatization and physiology
     weight: 15
     damageModifier: #GUARD ARMOR
       - 1.0 #none
@@ -908,7 +921,7 @@ armors:
     drawingRoutine: 0
     zombiImmune: true
     tags:
-      INFECTION_RESIST: 50 #infection resistant
+      INFECTION_RESIST: 33 #infection/corruption resistant due to warp acclimatization and physiology
     weight: 20
     damageModifier: #GUARD ARMOR
       - 1.0 #none
@@ -976,6 +989,9 @@ armors:
     builtInWeapons:
       - STR_SLAB_SHIELD
     specialWeapon: STR_BAYONET
+    zombiImmune: true
+    tags:
+      INFECTION_RESIST: 33 #infection/corruption resistant due to warp acclimatization and physiology
     #scripts:
       #hitUnit: *armorForcesHitsToFront
 
@@ -1164,6 +1180,10 @@ armors:
     units:
       - STR_GUARDSM
       - STR_GUARD_OFFICER
+    stats:
+      tu: -10 #heavy
+      stamina: -20 #heavy
+      reactions: -10 #heavy
 
   - &STR_GUARD_ARMOR_TANITH # DAMAGE + STATS
     type: STR_TANITH_CAMO_ARMOR
@@ -1203,7 +1223,10 @@ armors:
   - type: STR_TANITH_MEDIC_ARMOR
     refNode: *STR_GUARD_ARMOR_TANITH
     weight: 5
-
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
 
   - &STR_GUARD_ARMOR_SENTINEL_OPEN # DAMAGE + STATS
     type: STR_SENTINEL_ARMOR_UC
@@ -1594,7 +1617,10 @@ armors:
 
   - type: STR_STORMTROOPER_MEDIC_CARAPACE_ARMOR
     refNode: *STR_GUARD_ARMOR_CARAPACE_VETERAN
-
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
 
     storeItem: STR_NONE
     corpseBattle:
@@ -1735,6 +1761,10 @@ armors:
     units:
       - STR_STORMTROOPER
       - STR_STORMTROOPER_OFFICER
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
 
     corpseBattle:
       - STR_STORMTROOPER_CORPSE
@@ -2031,6 +2061,10 @@ armors:
     recovery:
       morale:
         flatHundred: 1
+    psiDefence:
+      psiStrength: 1.0
+      psiSkill: 0.2
+      moraleCurrent: 1.0 #kriegs resist mental subversion while morale is high; disciplined
     units:
       - STR_GUARDSM_KRIEG
 
@@ -2087,6 +2121,10 @@ armors:
     recovery:
       morale:
         flatHundred: 1
+    psiDefence:
+      psiStrength: 1.0
+      psiSkill: 0.2
+      moraleCurrent: 1.0 #kriegs resist mental subversion while morale is high; disciplined
     units:
       - STR_GUARD_KRIEG_GRENADIER
 
@@ -2170,6 +2208,10 @@ armors:
     builtInWeapons:
       - INV_NULL_MEDI_KIT
       - AUX_MEDICAE_MEDI_KIT
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
 
   - type: STR_GUARD_IMPERIAL_ASSASSIN_UC
     spriteSheet: IGMA_IMPERIAL_ASSASSIN.PCK
@@ -2594,6 +2636,10 @@ armors:
 
   - type: STR_TANITH_MEDIC_ARMOR
     refNode: *STR_TANITH_ARMOR
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
 
   - &STR_GUARD_POWER_ARMOR_REF # DAMAGE + STATS
     type: STR_GUARD_POWER_ARMOR
@@ -2660,6 +2706,12 @@ armors:
     recovery:
       morale:
         flatHundred: 1
+    psiDefence:
+      psiStrength: 1.0
+      psiSkill: 0.2
+      moraleCurrent: 1.0 #kriegs resist mental subversion while morale is high; disciplined
+    tags:
+
 
     units:
       - STR_GUARD_KRIEG_GRENADIER #vet equivalent
