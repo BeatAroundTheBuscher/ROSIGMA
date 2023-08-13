@@ -21,6 +21,10 @@ extended:
           var int numInventoryItems;
           var int randomFuse;
 
+          if neq battle_action BA_HIT; #only triggers on melee attacks
+            return power part side;
+          end;
+
           #if our armor doesn't have the kamikazi tag, cancel out
           attacker.getRuleArmor armorRule;
           armorRule.getTag temp Tag.ARMOR_IS_KAMIKAZI; #we check the armor for this tag to avoid having to cycle through items every time we damage something
