@@ -1,0 +1,73 @@
+extended:
+  tags:
+    RuleItem:
+      ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER: int #how much accuracy falloff do we increment per shot?
+    BattleItem:
+      ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_TOTAL: int #how much total accuracy falloff does this weapon have?
+      ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_PRIOR_AMMO_COUNT: int #prior ammo count for a basis of comparison
+      ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_COOLDOWN: int #how much does this weapon cooldown per turn?
+
+  scripts:
+    accuracyMultiplierBonusStats: #handles accuracy falloff incrementation
+      - new: ROSIGMA_aMBS_repeated_accuracy_penalty
+        offset: 10
+        code: |
+          var int temp;
+          var int temp2;
+          var int multiplier;
+
+          ammo.getTag multiplier Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER;
+
+          if le multiplier 0;
+            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER is 0. Aborting. multiplier:" temp;
+            return bonus; # final accuracy
+          end;
+
+          ammo.getTag temp Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_PRIOR_AMMO_COUNT;
+          ammo.getAmmoQuantity temp2;
+
+          sub temp temp2;
+          if lt temp 1;
+            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp is null or negative. Weapon reloaded?:" temp;
+            return bonus;
+          end;
+
+          mul temp multiplier;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Accuracy penalty, temp:" temp;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Original accuracy, bonus:" bonus;
+          sub bonus temp;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | New accuracy set, bonus:" bonus;
+          return bonus; # final accuracy
+
+    newTurnItem:
+      - new: ROSIGMA_nTI_repeated_accuracy_penalty #handles accuracy falloff cooldown/removal
+        offset: 5
+        code: |
+          var int temp;
+          var int temp2;
+          var int ammoCount;
+
+          if neq side FACTION_PLAYER;
+            return;
+          end;
+
+          item.getTag temp Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER;
+
+          if le temp 0;
+            return;
+          end;
+
+          item.getAmmoQuantity ammoCount;
+          item.setTag Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_PRIOR_AMMO_COUNT ammoCount;
+
+          item.getTag temp2 Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_COOLDOWN;
+          if le temp2 0; #if we have no assigned value assume the weapon cools down completely
+            item.setTag Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_TOTAL 0;
+            return;
+          end;
+
+          sub temp temp2;
+          limit_lower temp 0;
+          item.setTag Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_TOTAL temp;
+          return;
+
