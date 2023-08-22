@@ -156,10 +156,10 @@ extended:
           if eq attackerFaction targetFaction; #if attacker faction = the target faction heal instead of harm
 
             div rulePower 2; #half power vs allies since there's no resistance to reduce its power
+            set to_stun rulePower; #restoring health is tiring
+            set to_energy rulePower;
             mul rulePower -1; #negative as we're healing, not harming
             #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Stamina and Stun restored, rulePower:" rulePower;
-            set to_energy rulePower;
-            set to_stun rulePower;
             set temp rulePower;
             div temp 4; #define the number of wounds we heal
             mul temp -1;
