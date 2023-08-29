@@ -33,22 +33,32 @@ armors:
         var int temp2;
         var ptr RuleArmor targetArmor;
 
-        if eq damaging_type 11; # Melta DT
+        unit.getRuleArmor targetArmor;
+        targetArmor.getTag temp Tag.ARMOR_TENACIOUS_HP_MOD;
+        if le temp 0; #no Tenacious? cancel out
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | target lacks ARMOR_TENACIOUS_HP_MOD value. Aborting." unit;
           return;
         end;
-        unit.getRuleArmor targetArmor;
-        targetArmor.getSize temp;
 
-        if eq temp 1; # don't stun 2x2 as they can't get up
-          set to_stun to_health;
+        if eq damaging_type 11; # Melta reduces the tenacious value by 1 rather than disabling the mechanic entirely
+          sub temp 1;
         end;
 
-        targetArmor.getTag temp Tag.ARMOR_TENACIOUS_HP_MOD;
-        if le temp 1; # sanity check not to divide through 0 or minus value
-          set temp 1;
+        if le temp 1; #if our tenacious value is reduced to 1 or less cancel out as we just take damage as normal now
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | ARMOR_TENACIOUS_HP_MOD value 1 or less. Aborting." temp;
+          return;
         end;
 
-        #convert the HP damage to stun damage
+        targetArmor.getSize temp2;
+        if ge temp2 2; # don't stun 2x2 as they can't get up
+          div to_health temp; #divide damage by tenacious rating
+          set to_stun 0;
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 2x2. ARMOR_TENACIOUS_HP_MOD:" temp;
+          return;
+        end;
+
+        #convert the HP damage to stun damage for non-large units
+        #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 1x1. ARMOR_TENACIOUS_HP_MOD:" temp;
         set temp2 to_health; #set the health damage
         div to_health temp; #divide the health damage by the Tenacious rating
         sub temp2 to_health; #calculate the extra Stun damage that's converted from HP damage
@@ -94,6 +104,14 @@ armors:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
 
+  - type: STR_DESTROYER_ARMOR
+    refNode: *TENACIOUS_NECRON_ARMOR
+    tags:
+      ARMOR_TENACIOUS_HP_MOD: 6
+      ARMOR_TENACIOUS_STUN_RECOVERY: 20
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+
   - type: STR_NECRON_IMORTAL_ARMOR
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
@@ -109,13 +127,6 @@ armors:
       ARMOR_TENACIOUS_STUN_RECOVERY: 20
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
-
-  - type: STR_DESTROYER_ARMOR
-    scripts:
-      damageUnit: |
-        div to_health 5;
-        set to_stun 0;
-        return;
 
   - type: STR_NECRON_ARCHITECT_ARMOR       #NECRON WARRIOR
     refNode: *TENACIOUS_NECRON_ARMOR
