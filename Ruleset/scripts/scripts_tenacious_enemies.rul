@@ -33,8 +33,10 @@ armors:
         var int temp2;
         var ptr RuleArmor targetArmor;
 
+        unit.getRuleArmor targetArmor;
         targetArmor.getTag temp Tag.ARMOR_TENACIOUS_HP_MOD;
         if le temp 0; #no Tenacious? cancel out
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | target lacks ARMOR_TENACIOUS_HP_MOD value. Aborting." unit;
           return;
         end;
 
@@ -43,18 +45,20 @@ armors:
         end;
 
         if le temp 1; #if our tenacious value is reduced to 1 or less cancel out as we just take damage as normal now
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | ARMOR_TENACIOUS_HP_MOD value 1 or less. Aborting." temp;
           return;
         end;
 
-        unit.getRuleArmor targetArmor;
         targetArmor.getSize temp2;
-        if eq temp2 1; # don't stun 2x2 as they can't get up
+        if ge temp2 2; # don't stun 2x2 as they can't get up
           div to_health temp; #divide damage by tenacious rating
           set to_stun 0;
+          #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 2x2. ARMOR_TENACIOUS_HP_MOD:" temp;
           return;
         end;
 
         #convert the HP damage to stun damage for non-large units
+        #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 1x1. ARMOR_TENACIOUS_HP_MOD:" temp;
         set temp2 to_health; #set the health damage
         div to_health temp; #divide the health damage by the Tenacious rating
         sub temp2 to_health; #calculate the extra Stun damage that's converted from HP damage
