@@ -39,17 +39,13 @@ armors:
 
       hitUnit: |
         var int temp;
-        var int randomNumber;
+        var int temp2;
         var int dodgeChance;
         var int flightDodgeChance;
-        var int flying;
         var ptr RuleArmor targetArmor;
         var ptr RuleArmor attackerArmor;
         var ptr RuleItem damagingItem;
         var ptr RuleDamageType damageType;
-        var int isAoE;
-        var int currentStunLevel;
-        var int currentHealth;
         var int unitDirection;
         var int attackerDirection;
         var int counterSuccessfulDodges;
@@ -57,6 +53,30 @@ armors:
         var int dodgeFlatReduction;
         var int dodgePercentReduction;
         var int dodgeDeclines;
+        var int dodgeArmorPercentReduction;
+
+        # don't dodge on melee and psi
+        if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
+          # debug_log "hitUnit | dodge scripts | battle_action undodgeable. Aborting:";
+          return power part side;
+        end;
+
+        damaging_item.getRuleItem damagingItem;
+        damagingItem.getDamageType damageType;
+        damageType.getResistType temp;
+
+        # don't dodge support skills
+        # terrain artillery shell (terror city map) do damageType 0
+        if or eq temp 0 eq temp 10; # Support or Impact (IG Support, non-IG drop deploy) damage type
+          # debug_log "hitUnit | dodge scripts | damage type undodgeable. Aborting:" temp;
+          return power part side;
+        end;
+
+        damageType.isAreaOfEffect temp;
+        if gt temp 0;
+          # debug_log "hitUnit | dodge scripts | Attack is an aoe and undodgeable. Aborting:";
+          return power part side;
+        end;
 
         #define defender armor values
         unit.getRuleArmor targetArmor;
@@ -64,36 +84,32 @@ armors:
         targetArmor.getTag flightDodgeChance Tag.FLIGHT_DODGE_CHANCE;
         #define attacker armor values
         attacker.getRuleArmor attackerArmor;
-        attackerArmor.getTag temp Tag.ARMOR_DODGE_CHANCE_PERCENT_REDUCTION;
+        attackerArmor.getTag dodgeArmorPercentReduction Tag.ARMOR_DODGE_CHANCE_PERCENT_REDUCTION;
+        set temp dodgeArmorPercentReduction;
         add temp dodgeChance;
         add temp flightDodgeChance;
         if le temp 0;
-          #debug_log "hitUnit | dodge scripts | no dodge or dodge mitigation chance detected. Aborting:" temp;
+          # debug_log "hitUnit | dodge scripts | no dodge or dodge mitigation chance detected. Aborting:" temp;
           return power part side;
         end;
 
         # don't dodge when stunned
-        unit.getHealth currentHealth;
-        unit.getStun currentStunLevel;
+        unit.getHealth temp;
+        unit.getStun temp2;
 
-        if ge currentStunLevel currentHealth;
-          #debug_log "hitUnit | dodge scripts | target is stunned and cannot dodge. Aborting:";
+        if ge temp2 temp;
+          # debug_log "hitUnit | dodge scripts | target is stunned and cannot dodge. Aborting:";
           return power part side;
         end;
 
         # don't dodge when counter has reached max;
         unit.getTag counterSuccessfulDodges Tag.UNIT_COUNTER_SUCCESSFUL_DODGES;
         targetArmor.getTag maxSuccessfulDodges Tag.ARMOR_MAX_SUCCESSFUL_DODGES;
-        damaging_item.getRuleItem damagingItem;
         damagingItem.getTag dodgeFlatReduction Tag.DODGE_CHANCE_FLAT_REDUCTION;
         damagingItem.getTag dodgePercentReduction Tag.DODGE_CHANCE_PERCENT_REDUCTION;
 
-        if gt temp dodgePercentReduction; #use the armor dodge mitigation if it's higher
-          set dodgePercentReduction temp;
-        end;
-
-        if gt temp dodgePercentReduction; #use the armor dodge mitigation if it's higher
-          set dodgePercentReduction temp;
+        if gt dodgeArmorPercentReduction dodgePercentReduction; #use the armor dodge mitigation if it's higher
+          set dodgePercentReduction dodgeArmorPercentReduction;
         end;
 
         attackerArmor.getTag temp Tag.ARMOR_DODGE_CHANCE_FLAT_REDUCTION;
@@ -101,10 +117,10 @@ armors:
           set dodgeFlatReduction temp;
         end;
 
-        #debug_log "hitUnit | dodgePercentReduction:" dodgePercentReduction;
-        #debug_log "hitUnit | dodgeFlatReduction:" dodgeFlatReduction;
+        # debug_log "hitUnit | dodge scripts | dodgePercentReduction:" dodgePercentReduction;
+        # debug_log "hitUnit | dodge scripts | dodgeFlatReduction:" dodgeFlatReduction;
         if or ge dodgeFlatReduction 100 ge dodgePercentReduction 100; #these weapons are undodgable
-          #debug_log "hitUnit | dodgeFlatReduction or dodgePercentReduction 100 or greater:" dodgePercentReduction;
+          # debug_log "hitUnit | dodgeFlatReduction or dodgePercentReduction 100 or greater, Aborting." dodgePercentReduction;
           return power part side;
         end;
 
@@ -115,46 +131,19 @@ armors:
 
         targetArmor.getTag dodgeDeclines Tag.ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS;
         if gt dodgeDeclines 0;
-          set maxSuccessfulDodges 999; #effectively we ignore max dodges; we're limited by our declining chance of dodge success instead
+          set maxSuccessfulDodges 999; #effectively we ignore max dodges; we're limited by our declining chance of dodge success on subsequent hits instead
         end;
 
         if ge counterSuccessfulDodges maxSuccessfulDodges;
-          #debug_log "hitUnit | dodge scripts | Max successful dodges exceeded. Aborting:" counterSuccessfulDodges;
-          return power part side;
-        end;
-
-        # don't dodge on melee and psi
-        if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
-          #debug_log "hitUnit | dodge scripts | battle_action undodgeable. Aborting:";
-          return power part side;
-        end;
-
-        damagingItem.getDamageType damageType;
-        damageType.getResistType temp;
-
-        # don't dodge support skills
-        # terrain artillery shell (terror city map) do damageType 0
-        if or eq temp 0 eq temp 10; # Support or Impact (IG Support, non-IG drop deploy) damage type
-          #debug_log "hitUnit | dodge scripts | damage type undodgeable. Aborting:" temp;
+          # debug_log "hitUnit | dodge scripts | Max successful dodges exceeded. Aborting:" counterSuccessfulDodges;
           return power part side;
         end;
 
         if gt flightDodgeChance 0;
-          unit.isFlying flying;
-          if eq flying 1;
+          unit.isFlying temp;
+          if eq temp 1;
             set dodgeChance flightDodgeChance;
           end;
-        end;
-
-        damageType.isAreaOfEffect isAoE;
-
-        battle_game.randomRange randomNumber 1 100;
-        # debug_log "randomNumber" randomNumber;
-        # debug_log "dodgeChance" dodgeChance;
-
-        if gt isAoE 0;
-          #debug_log "hitUnit | dodge scripts | Attack is an aoe and undodgeable. Aborting:";
-          return power part side;
         end;
 
         #reduce the dodge chance by the dodgeFlatReduction amount
@@ -162,7 +151,7 @@ armors:
         mul dodgeDeclines counterSuccessfulDodges; #reduce dodge chance by ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS times number of successful dodges.
         sub dodgeChance dodgeDeclines;
         if le dodgeChance 0;
-          #debug_log "Dodge chance reduced to 0 by dodgeFlatReduction property.";
+          # debug_log "Dodge chance reduced to 0 by dodgeFlatReduction property.";
           return power part side;
         end;
 
@@ -184,8 +173,12 @@ armors:
           muldiv dodgeChance 1 3; # multiply chance by 33 %
         end;
 
-        if gt randomNumber dodgeChance;
-          #debug_log "hitUnit | dodge scripts | Target failed to dodge. Aborting.";
+        battle_game.randomRange temp 1 100;
+        # debug_log "randomNumber" temp;
+        # debug_log "dodgeChance" dodgeChance;
+
+        if gt temp dodgeChance;
+          # debug_log "hitUnit | dodge scripts | Target failed to dodge. Aborting.";
           return power part side;
         end;
 
