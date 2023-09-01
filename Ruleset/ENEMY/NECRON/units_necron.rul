@@ -29,7 +29,7 @@ units:
     sniper: 40
     spotter: 1
     value: 10
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_FLAYER
         - STR_KILLPOINT_TOKEN_10
@@ -67,7 +67,7 @@ units:
     aggression: 8
     spotter: 1
     sniper: 40
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_FLAYER
       - - STR_GAUSS_FLAYER
@@ -91,7 +91,7 @@ units:
     sniper: 40
     spotter: 1
     value: 15
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
         - STR_KILLPOINT_TOKEN_10
@@ -130,7 +130,7 @@ units:
     aggression: 8
     spotter: 1
     sniper: 40
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
       - - STR_GAUSS_BLASTER
@@ -165,7 +165,7 @@ units:
     intelligence: 6
     aggression: 1
     spotter: 2
-    energyRecovery: 45
+    energyRecovery: 200
     sniper: 90 #they are primarily snipers
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
@@ -192,7 +192,7 @@ units:
     sniper: 90 #they are primarily snipers
     spotter: 2
     value: 15
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
         - STR_KILLPOINT_TOKEN_10
@@ -231,7 +231,7 @@ units:
     aggression: 8
     isLeeroyJenkins: TRUE
     spotter: 1
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_HYPERPHASESWORD
       - - STR_HYPERPHASESWORD
@@ -254,7 +254,7 @@ units:
     aggression: 8
     spotter: 1
     value: 25
-    energyRecovery: 45
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_HYPERPHASESWORD
         - STR_KILLPOINT_TOKEN_10
@@ -268,7 +268,7 @@ units:
     aggression: 8
     spotter: 1
     value: 30
-    energyRecovery: 45
+    energyRecovery: 200
     stats:
       health: 50 # effective HP 500 # tried 200 but was too much # was 100
 
@@ -365,7 +365,7 @@ units:
     aggression: 1
     spotter: 3
     sniper: 60
-    energyRecovery: 45
+    energyRecovery: 200
 #    spawnUnit: STR_NECRON_IMORTAL
     builtInWeaponSets:
       - - STR_HYPERPHASESWORD
@@ -629,10 +629,12 @@ armors:
     builtInWeapons:
       - INV_NULL_3X3
 
-  - type: STR_DESTROYER_ARMOR              #NECRON WARRIOR
+  - type: STR_DESTROYER_ARMOR              #NECRON DESTROYER
     visibilityAtDay: 40
     visibilityAtDark: 40
     heatVision: 50
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 5
     spriteSheet: NECRONDR5.PCK
     fearImmune: true
     bleedImmune: true
@@ -666,9 +668,9 @@ armors:
       - 100_NECRON4
     corpseGeo: STR_DESTROYER_CORPSE
     frontArmor: 100
-    sideArmor: 80
+    sideArmor: 90
     rearArmor: 70
-    underArmor: 80
+    underArmor: 100
     drawingRoutine: 20
     constantAnimation: false
     movementType: 1
@@ -676,16 +678,16 @@ armors:
       health:
         healthCurrent: 0.5
     size: 2
-    damageModifier: #VEHICLE ARMOR LARGE
+    damageModifier: #VEHICLE ARMOR LARGE; takes reduced explosive, incendiary and AP damage in exchange for greater lascannon and melta damage vs baseline necrons
       - 1.0 #none
-      - 1.0 #AP
-      - 0.4 #FLAMES
-      - 1.0 #HE
+      - 0.8 #AP
+      - 0.3 #FLAMES
+      - 0.8 #HE
       - 1.4 #LASCANON
       - 1.0 #PLASMA
       - 0.9 #STUN
       - 0.8 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.2 #MELTA
@@ -704,9 +706,6 @@ armors:
     bleedImmune: true
     painImmune: true
     zombiImmune: true
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
     scripts:
       selectUnitSprite: |
         var int temp;
@@ -775,9 +774,6 @@ armors:
     bleedImmune: true
     painImmune: true
     zombiImmune: true
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
     scripts:
       selectUnitSprite: |
         var int temp;
@@ -843,7 +839,7 @@ armors:
     antiCamouflageAtDay: 5
     bleedImmune: true
     fearImmune: true
-    painImmune: true
+    painImmune: false
     zombiImmune: true
     spriteSheet: NECRONDR9.PCK
     spriteInv: NECRON9.SPK
