@@ -13,6 +13,48 @@ extended:
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
 
 armors:
+  - type: STR_NURGLE_ROTBEARER_ARMOR  #Nurgle Deamon
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #Weaker night vision for lesser daemon
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 6
+    heatVision: 15 #daemons have 33% heat vision as standard, half for lesser daemon
+    psiVision: 5 #weak daemon, so not 10 psivision
+    spriteSheet: rotbearer_BS.PCK
+    drawingRoutine: 4
+    spriteInv: ROTBEARER_INV.SPK
+    corpseBattle:
+      - STR_NURGLE_ROTBEARER_CORPSE
+    frontArmor: 10 #20 Plaguebearer
+    sideArmor: 5 #15 Plaguebearer
+    rearArmor: 5 #10 Plaguebearer
+    underArmor: 5 #10 Plaguebearer
+    bleedImmune: true #Nurgle daemons don't bleed
+    zombiImmune: true #It's a daemon; can't zombify this.
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 50 #intimidation resistant
+      #ARMOR_IS_EXPLODE_ON_DEATH: 1 #no boomer bomb
+    painImmune: true #Most daemons don't care about pain; especially not Plaguebearers
+    recovery: #Plaguebearers regenerate health
+      health:
+        healthCurrent: 0.10 #0.2 for Plaguebearer
+    damageModifier: #NURGLE ARMOR
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.75 #AP Plaguebearers have 50% resist, these guys have 25%
+      - 1.5 #FLAMES
+      - 0.75 #HE Plaguebearers have 50% resist, these guys have 25%
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.75 #MELEE Plaguebearers have 50% resist, these guys have 25%
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 4 ]
+
+
   - type: GREEN_ROBE_ARMOR
     visibilityAtDay: 30
     visibilityAtDark: 15
