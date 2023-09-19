@@ -2709,6 +2709,104 @@ alienMissions:
         trajectory: P7
         timer: 16500
 
+
+  - type: STR_NURGLE_INFILTRATION
+    points: 0
+    objective: 1
+    endlessInfiltration: false # default is true; if set to false, mission will end after the first pact/base
+    spawnZone: 4 #Mission zone for alien bases
+    siteType: STR_ALIEN_BASE_ASSAULT #replace with nurgle base when done
+    raceWeights:
+      0:
+        STR_NURGLE_EARLY_CULTISTS_RACELIST: 10
+      1:
+        STR_NURGLE_EARLY_CULTISTS_RACELIST: 5
+        STR_NURGLE_CULTISTS_RACELIST: 5
+      3:
+        STR_NURGLE_LIGHT: 5
+        STR_NURGLE_CULTISTS_RACELIST: 5
+        STR_NURGLE_ZOMBINO_RACELIST: 3
+        STR_NURGLESISTERS: 3
+      4:
+        STR_NURGLE_LIGHT: 2
+        STR_NURGLE_CULTISTS_RACELIST: 8
+        STR_NURGLESISTERS: 6
+      5:
+        STR_NURGLESISTERS: 5
+      6:
+        STR_NURGLE: 2
+        STR_NURGLESISTERS: 6
+        STR_NURGLE_DAEMONS_RACELIST: 5
+      7:
+        STR_NURGLESISTERS: 5
+        STR_NURGLE: 5
+        STR_NURGLE_DAEMONS_RACELIST: 5
+      8:
+        STR_NURGLESISTERS: 5
+        STR_NURGLE_DAEMONS_RACELIST: 5
+        STR_NURGLE: 10
+        STR_NURGLE2: 5
+      9:
+        STR_NURGLESISTERS: 4
+        STR_NURGLE_DAEMONS_RACELIST: 4
+        STR_NURGLE: 8
+        STR_NURGLE2: 8
+        STR_NURGLE_ELITE: 5
+      10:
+        STR_NURGLESISTERS: 1
+        STR_NURGLE_DAEMONS_RACELIST: 2
+        STR_NURGLE2: 2
+        STR_NURGLE: 2
+        STR_NURGLE_ELITE: 15
+
+    waves:
+      - ufo: STR_NURGLE_SMALL_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 9000
+      - ufo: STR_NURGLE_MEDIUM_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_NURGLE_LARGE_SCOUT
+        count: 1
+        trajectory: P4
+        timer: 4000
+      - ufo: STR_NURGLE_SUPPLY_SHIP
+        count: 1
+        trajectory: P7
+        timer: 16500
+
+  - type: STR_NURGLE_BASE
+    points: 50
+    objective: 2
+    spawnZone: 4 #Mission zone for alien bases
+    siteType: STR_ALIEN_BASE_ASSAULT #replace with nurgle base once done
+    raceWeights:
+      0:
+        STR_NURGLE: 100
+      1:
+        STR_NURGLE: 100
+      3:
+        STR_NURGLE: 100
+      6:
+        STR_NURGLE2: 100
+      9:
+        STR_NURGLE_ELITE: 100
+    waves:
+      - ufo: STR_NURGLE_LARGE_SCOUT
+        count: 1
+        trajectory: P5
+        timer: 4000
+      - ufo: STR_NURGLE_SUPPLY_SHIP
+        count: 2
+        trajectory: P5
+        timer: 5000
+      - ufo: STR_NURGLE_BATTLESHIP
+        count: 1
+        trajectory: P7
+        timer: 5000
+
   - type: STR_SLAANESH_BASE
     points: 50
     objective: 2
@@ -7103,7 +7201,25 @@ alienMissions:
         timer: 0
         huntMode: 0
         huntBehavior: 1  
-        
+
+  - type: STR_NURGLE_SUPPLY # WITH HK/escort
+    points: 0
+    objective: 5
+    raceWeights: {} #Special case, race comes from base.
+    waves:
+      - ufo: STR_NURGLE_HARVESTER #Supply Ship or Harvest
+        count: 1
+        trajectory: P9
+        timer: 0
+        objective: true                 # cannot become a HK/escort
+      - ufo: STR_NURGLE_SUPPLY_SHIP #Large Supply Ship
+        count: 2
+        trajectory: P9
+        timer: 0
+        hunterKillerPercentage: 100
+        escort: true
+        objective: false                # can become a HK/escort
+
   - type: STR_ALIEN_AIR_SUPERIORITY_LIGHT
     operationType: 0    # no base needed
     points: 100
