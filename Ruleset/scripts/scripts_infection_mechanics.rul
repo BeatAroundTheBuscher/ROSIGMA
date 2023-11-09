@@ -91,25 +91,8 @@ extended:
           var int infectionReduction; #flat amount infection damage is reduced by
           var int infectionResistType; #bitmask; type types of infection the damaged unit resists: 0 = all, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
 
-          unit.getRuleArmor armorRule;
           armorRule.getSize temp;
-
           if eq temp 2; # we ignore tanks
-            set to_mana 0; #so it doesn't conflict with mana stuff
-            return;
-          end;
-
-          set infectionDamage to_health;
-          add infectionDamage to_mana;
-          set to_mana 0; #so it doesn't conflict with mana stuff
-
-          if le infectionDamage 0; # only proceed if we actually do damage
-            return;
-          end;
-
-          armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE; #if our infection resist is 100% and applies to all infection types we're immune; abort
-          armorRule.getTag infectionResist Tag.INFECTION_RESIST;
-          if and ge infectionResist 100 le infectionResistType 0;
             return;
           end;
 
@@ -126,6 +109,21 @@ extended:
               #debug_log "Infection Scripts; damageUnit, offset 22: No infection type detected; aborting.";
               return;
             end;
+          end;
+
+          set infectionDamage to_health;
+          add infectionDamage to_mana;
+
+          if le infectionDamage 0; # only proceed if we actually do damage
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE; #if our infection resist is 100% and applies to all infection types we're immune; abort
+          armorRule.getTag infectionResist Tag.INFECTION_RESIST;
+          if and ge infectionResist 100 le infectionResistType 0;
+            #debug_log "Infection Scripts; damageUnit, offset 22: Infection immune; aborting.";
+            return;
           end;
 
           #if our infection is specific to a type, define that check if our infection resistance type applies

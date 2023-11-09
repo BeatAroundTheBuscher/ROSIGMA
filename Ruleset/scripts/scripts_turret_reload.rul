@@ -169,7 +169,6 @@ extended:
         offset: 22 # change unit color to green so player knows who's infected
         code: |
           var int temp;
-          var int temp2;
           var ptr BattleItem battleItem; #weapon of right hand
 
           unit.getTag temp Tag.TURRET_RELOAD_TIMER;
@@ -223,4 +222,22 @@ extended:
           end;
 
           actor.setMana 0; #zero out our mana to trigger the reload scripts.
+          return;
+
+    damageUnit:
+      - new: ROSIGMA_dU_turret_reload
+        offset: 99
+        code: |
+          var int temp;
+          var ptr BattleItem battleItem; #weapon of right hand
+
+          unit.getTag temp Tag.TURRET_RELOAD_TIMER;
+
+          if le temp 0;
+            #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: No TURRET_RELOAD_TIMER detected. Aborting. temp:" temp;
+            return;
+          end;
+
+          #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: TURRET_RELOAD_TIMER detected. Mana damage set to 0. temp:" temp;
+          set to_mana 0;
           return;
