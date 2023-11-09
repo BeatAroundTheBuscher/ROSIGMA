@@ -169,8 +169,6 @@ extended:
         offset: 22 # change unit color to green so player knows who's infected
         code: |
           var int temp;
-          var int temp2;
-          var ptr BattleItem battleItem; #weapon of right hand
 
           unit.getTag temp Tag.TURRET_RELOAD_TIMER;
 
@@ -186,8 +184,6 @@ extended:
         code: |
           var int temp;
           var int temp2; #turret reload turn data for right handed weapon
-          var int ammo2; #ammo of right handed weapon
-          var int timer2; #timer of right handed weapon
           var ptr RuleItem weaponRule;
           var ptre BattleItem battleItem;
 
@@ -223,4 +219,41 @@ extended:
           end;
 
           actor.setMana 0; #zero out our mana to trigger the reload scripts.
+          return;
+
+    damageUnit:
+      - new: ROSIGMA_dU_turret_reload
+        offset: 99
+        code: |
+          var int temp;
+          var int temp2; #turret reload turn data for right handed weapon
+          var int ammo2; #ammo of right handed weapon
+          var int timer2; #timer of right handed weapon
+          var ptr RuleItem weaponRule;
+          var ptre BattleItem battleItem;
+
+          if le to_mana 0;
+            return;
+          end;
+
+          unit.getRightHandWeapon battleItem;
+          battleItem.getRuleItem weaponRule;
+          #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: Right Hand: ruleItem." battleItem;
+          battleItem.getTag temp Tag.TURRET_RELOAD_TURNS;
+
+          unit.getLeftHandWeapon battleItem;
+          battleItem.getRuleItem weaponRule;
+          #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: Left Hand: ruleItem." battleItem;
+          battleItem.getTag temp2 Tag.TURRET_RELOAD_TURNS;
+
+          add temp temp2;
+
+          #if weapon lacks the reload tag, cancel out
+          if le temp 0;
+            #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 22: No TURRET_RELOAD_TURNS detected. Aborting. temp" temp;
+            return;
+          end;
+
+          #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: TURRET_RELOAD_TURNS detected. Mana damage set to 0. temp:" temp;
+          set to_mana 0;
           return;
