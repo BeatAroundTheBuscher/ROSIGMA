@@ -227,12 +227,10 @@ extended:
         code: |
           var int temp;
           var int temp2; #turret reload turn data for right handed weapon
-          var int ammo2; #ammo of right handed weapon
-          var int timer2; #timer of right handed weapon
           var ptr RuleItem weaponRule;
           var ptre BattleItem battleItem;
 
-          if le to_mana 0;
+          if le to_mana 0; #if we aren't doing mana damage, cancel out; we don't care
             return;
           end;
 
@@ -248,7 +246,7 @@ extended:
 
           add temp temp2;
 
-          #if weapon lacks the reload tag, cancel out
+          #if weapon lacks the reload tag, cancel out and do mana damage as normal
           if le temp 0;
             #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 22: No TURRET_RELOAD_TURNS detected. Aborting. temp" temp;
             return;
