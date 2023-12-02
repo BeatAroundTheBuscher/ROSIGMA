@@ -1826,7 +1826,7 @@ items:
     }
 
   - type: STR_NURGLE_DAEMONETTE_WEAPON
-    categories: [STR_CAT_MELEE]
+    categories: [STR_CAT_MELEE, STR_CAT_NURGLE]
     weight: 0
     bigSprite: {mod: 40k, index: 814}
     floorSprite: {mod: 40k, index: 24}
@@ -2697,11 +2697,11 @@ items:
     twoHanded: false
     snapRange: 18
     aimRange: 22
-    maxRange: 25
+    maxRange: 30
     dropoff: 5
     invWidth: 2
     invHeight: 3
-    power: 9
+    power: 19
     damageType: 11
     damageAlter: #DA MELTA Double
       RandomType: 1 #Swingy damage
@@ -2721,9 +2721,9 @@ items:
       TileDamageMethod: 2
       IgnoreOverKill: true
     shotgunBehavior: 1
-    shotgunPellets: 10
-    shotgunSpread: 25
-    powerRangeReduction: 0.5
+    shotgunPellets: 9
+    shotgunSpread: 35
+    powerRangeReduction: 1.0
     powerRangeThreshold: 20.0
     clipSize: -1
     recover: false
@@ -3111,9 +3111,10 @@ items:
       shots: 2
     damageAlter: ## Plague-inflicting weapon
       ArmorEffectiveness: 0.7 #bypasses armor
-      ToArmorPre: 0.3
-      ToArmor: 0.3
-      ToHealth: 0.13 #was 0.7
+      ToArmorPre: 0.45
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
       ToTime: 0.2
       FixRadius: 2
     powerForAnimation: 20
@@ -3130,7 +3131,7 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    specialChance: 2 #tiny chance of zombifying its victims
+    specialChance: 1 #tiny chance of zombifying its victims
     zombieUnit: STR_NURGLE_ZOMBIE #generic placeholder
     #Armors go left side of the colon, units go right side of the colon
     zombieUnitByArmorMale: { STR_JARMOR_UCM: STR_NURGLE_SOLDIER_BLESSED, STR_JARMORH_UC: STR_NURGLE_SOLDIER_BLESSED,
@@ -3445,8 +3446,6 @@ items:
 
   - type: STR_PLAGUE_SPRAY  #DAUGHTER OF NURGLE SPRAY
     weight: 0
-    power: 37
-    dropoff: 5
     fireSound: {mod: 40k, index: 51 }
     hitSound: {mod: 40k, index: 19 }
     hitAnimation: 1030 #128 green from X1.pck
@@ -3456,13 +3455,17 @@ items:
     bulletSpeed: 25
     snapRange: 15
     maxRange: 25
+    power: 37
+    dropoff: 5
     damageType: 8 #acid
     damageAlter: ## Plague-inflicting weapon
       ArmorEffectiveness: 0.6 #bypasses armor
-      ToArmorPre: 0.6
-      ToArmor: 0.1
+      ToArmorPre: 0.7
+      ToArmor: 0.0 #does its armor damage on the way in; melts/corrodes
       ToHealth: 0.1 #was 0.5, lowering direct health damage. More of a debuff attack.
-      ToMana: 0.4 #Mana damage counts for the purposes of imposing infection
+      ToMana: 0.5 #Mana damage counts for the purposes of imposing infection
+      ToMorale: 2.0
+      ToEnergy: 0.3
       ToStun: 0.3
       ToTime: 0.2
       FixRadius: 2
@@ -3915,3 +3918,77 @@ items:
       INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
+
+  - type: STR_ROTBEARER_TENDRILS #Rotbearer melee weapon
+    hitAnimation: 1030 #128 green from X1.pck
+    hitSound: {mod: 40k, index: 832 }
+    hitAnimFrames: 8
+    bulletSprite: {mod: 40k, index: 14}
+    meleeSound: { mod: 40k, index: 832} #SPLAT
+    meleeAnimation: 24 #melee green
+    weight: 1
+    bigSprite: 2962 #plague tendrils
+    #melee profile
+    accuracyMelee: 100
+    meleePower: 7
+    meleeType: 7
+    meleeBonus:
+      strength: 0.7
+      melee: 0.3
+    meleeMultiplier: #heavy weapon; relies on strength as well as skill
+      melee: 0.7
+      strength: 0.3
+    meleeAlter: #Immobilizing plague tendrils
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.4
+      ToStun: 0.3
+      ToEnergy: 0.3
+      ResistType: 8
+    #range/thrust profile
+    powerRangeThreshold: 4
+    powerRangeReduction: 99
+    damageType: 7
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 7
+    snapRange: 3
+    maxRange: 3 #has reach
+    power: 7
+    accuracySnap: 100
+    accuracyMultiplier:
+      melee: 0.7
+      strength: 0.3
+    damageAlter: #Immobilizing plague tendrils
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.4
+      ToStun: 0.3
+      ToEnergy: 0.3
+      ResistType: 8
+    damageBonus:
+      strength: 0.7
+      melee: 0.3
+    tuMelee: 7
+    clipSize: -1
+    battleType: 1
+    fixedWeapon: true
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    flatRate: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch

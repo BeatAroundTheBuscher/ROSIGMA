@@ -38,7 +38,7 @@ armors:
       - 1.0 #PLASMA
       - 1.0 #STUN
       - 1.0 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
 
   - type: STR_SILACOID_ARMORT                          #khorne Deamon#    DEAMONS ARMOR
@@ -67,10 +67,50 @@ armors:
       - 1.0 #PLASMA
       - 0.5 #STUN
       - 0.5 #MELEE; Bloodletters are masters of melee combat, and are especially protected against it
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.0 #MELTA
+
+  - type: STR_NURGLE_ROTBEARER_ARMOR  #Nurgle Deamon
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #Weaker night vision for lesser daemon
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5 #weak daemon, so not 10 psivision
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: rotbearer_BS.PCK
+    drawingRoutine: 4
+    spriteInv: ROTBEARER_INV.SPK
+    corpseBattle:
+      - STR_NURGLE_ROTBEARER_CORPSE
+    frontArmor: 10 #20 Plaguebearer
+    sideArmor: 5 #15 Plaguebearer
+    rearArmor: 5 #10 Plaguebearer
+    underArmor: 5 #10 Plaguebearer
+    bleedImmune: true #Nurgle daemons don't bleed
+    zombiImmune: true #It's a daemon; can't zombify this.
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 50 #intimidation resistant
+    painImmune: true #Most daemons don't care about pain; especially not Plaguebearers
+    recovery: #Plaguebearers regenerate health
+      health:
+        healthCurrent: 0.2
+    damageModifier: #NURGLE ARMOR
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.5 #AP Same resistances as plaguebearers; much lower health (which also means lower regen) and lower armor already makes them much less durable
+      - 1.5 #FLAMES
+      - 0.5 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 4 ]
 
   - type: STR_CELATID_ARMOR                            #Nurgle Deamon
     visibilityAtDay: 40
@@ -105,9 +145,50 @@ armors:
       - 0.5 #MELEE
       - 0.1 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.5 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 4 ]
+
+  - type: NURGLINGS_ARMOR #NURGLE ANIMATED Blessed variant
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemons have perfect night vision
+    heatVision: 33 #daemons have at least 33% heat vision as standard
+    psiVision: 5 #daemons have at least 5 psi vision as standard
+    spriteSheet: NURGLINGS2.PCK
+    spriteInv: NURGLING_INV.SPK
+    allowInv: true
+    corpseBattle:
+      - STR_NURGLING_CORPSE
+    frontArmor: 10
+    sideArmor: 10
+    rearArmor: 5
+    underArmor: 10
+    drawingRoutine: 4
+    deathFrames: 3
+    specialWeapon: STR_NURGLING_CLAWS
+    size: 1
+    bleedImmune: true #Nurgle daemons don't bleed
+    zombiImmune: true #It's a daemon; can't zombify this.
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+    painImmune: true #Most daemons don't care about pain; especially not Nurglings
+    recovery: #Nurglings regenerate health
+      health:
+        healthCurrent: 0.2
+    damageModifier: #NURGLE ARMOR
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.5 #AP Plaguebearers resist everything significantly but heat based weaponry; also helps compensate for their terrible armor
+      - 1.5 #FLAMES
+      - 0.5 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 2 ]
 
   - type: STR_CHRYSSALID_ARMOR     #DAEMONETTE
     spriteSheet: CH4.PCK
@@ -121,7 +202,7 @@ armors:
     frontArmor: 30
     sideArmor: 30
     rearArmor: 10
-    underArmor: 5
+    underArmor: 10
     zombiImmune: true #It's a daemon; can't zombify this. Daemonettes can feel and like pain so no pain immunity
     tags:
       INFECTION_RESIST: 100 #infection immune
@@ -135,7 +216,7 @@ armors:
       - 0.5 #PLASMA
       - 1.0 #STUN
       - 0.7 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
@@ -156,7 +237,7 @@ armors:
     frontArmor: 20
     sideArmor: 15
     rearArmor: 10
-    underArmor: 5
+    underArmor: 10
     drawingRoutine: 4
     damageModifier: #NAKED
       - 1.0
@@ -167,7 +248,7 @@ armors:
       - 0.8
       - 1.0
       - 0.7
-      - 1.0
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
@@ -191,7 +272,7 @@ armors:
     frontArmor: 60
     sideArmor: 45
     rearArmor: 30
-    underArmor: 15
+    underArmor: 45
     zombiImmune: true #It's a daemon; can't zombify this. Daemonettes can feel and like pain so no pain immunity
     tags:
       INFECTION_RESIST: 100 #infection immune
@@ -205,7 +286,7 @@ armors:
       - 0.5
       - 1.0
       - 0.7
-      - 1.0
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
@@ -214,11 +295,11 @@ armors:
 
   - type: STR_DEMI_DAEMONETTE_ARMOR     #DEMI ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 25
+    visibilityAtDark: 40 #daemons have perfect night vision
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 6
-    heatVision: 30
-#    psiVision: 6 # either mind control or psiVision, not both
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5
     spriteSheet: DEMID.PCK
     spriteInv: DemiDaemonetteINV.SPK
     allowInv: false
@@ -238,18 +319,19 @@ armors:
       - 0.8 #PLASMA
       - 1.0 #STUN
       - 1.1 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 2 ]
+
   - type: STR_DEMI_DAEMONETTE_ARMOR_BLESSED     #DEMI ARMOR Demi Daemonette Blessed Transforms into Daemonette
     visibilityAtDay: 40
-    visibilityAtDark: 25
+    visibilityAtDark: 40 #daemons have perfect night vision
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 6
-    heatVision: 30
-#    psiVision: 6 # either mind control or psiVision, not both
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5
     spriteSheet: DEMIDBlessed.PCK
     spriteInv: DemiDaemonetteINV.SPK
     allowInv: false
@@ -270,7 +352,7 @@ armors:
       - 0.8 #PLASMA
       - 1.0 #STUN
       - 1.1 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.1 #MELTA
@@ -286,10 +368,8 @@ armors:
     frontArmor: 20
     sideArmor: 15
     rearArmor: 10
-    underArmor: 5
+    underArmor: 10
     zombiImmune: true #It's a daemon; can't zombify this.
-    tags:
-      INFECTION_RESIST: 100 #infection immune
     painImmune: true #Most daemons don't care about pain
     movementType: 1 #these actually fly
     moveSound: 2430 #magical flight
@@ -302,11 +382,52 @@ armors:
       - 0.5 #PLASMA
       - 1.1 #STUN
       - 1.1 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 0.8 #MELTA
     builtInWeapons: []
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40 #horror level shielding; standard for Tzeentch daemons
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+
+
+  - type: STR_TZEENTCH_LESSER_DAEMON_ARMOR #Gleaming One Mr Crabby
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemons have perfect night vision
+    heatVision: 33 #daemons have at least 33% heat vision as standard
+    psiVision: 5 #daemons have at least 5 psi vision as standard
+    spriteSheet: TZEENTCH_LESSER_DAEMON.PCK
+    spriteInv: TZEENTCH_LESSER_DAEMON_INV.SPK
+    corpseBattle:
+      - STR_TZEENTCH_LESSER_DAEMON_CORPSE
+    frontArmor: 80
+    sideArmor: 70
+    rearArmor: 100
+    underArmor: 80
+    specialWeapon: STR_TZEENTCH_FIEND_CLAWS
+    drawingRoutine: 0
+    damageModifier: #TZ DAEMON ARMOR
+      - 1.0 #none
+      - 1.2 #AP; vulnerable to physical damage
+      - 0.0 #FLAMES; immune to flame damage
+      - 1.3 #HE; vulnerable to physical damage
+      - 0.5 #LASCANON; resistant to energy/heat
+      - 0.5 #PLASMA; resistant to energy/heat
+      - 1.0 #STUN
+      - 1.4 #MELEE; vulnerable to physical damage
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 0.8 #MELTA; resistant to energy/heat
+    loftempsSet: [ 3 ]
+    painImmune: true #daemon; pain immune
+    zombiImmune: true #daemon; zombie immune
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40 #horror level shielding; standard for Tzeentch daemons
+      ARMOR_ENERGY_SHIELD_DECAY: 50
 
   - type: STR_NEVERBORN_TERRORIST_ARMOR                        #Undivided Deamon
     visibilityAtDay: 40
@@ -342,7 +463,7 @@ armors:
       - 1.1 #PLASMA
       - 1.0 #STUN
       - 0.3 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.4 #MELTA
