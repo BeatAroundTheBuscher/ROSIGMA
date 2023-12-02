@@ -31,22 +31,30 @@ items:
   - &STR_BOLTER_AMMO
     type: STR_PISTOL_CLIP # done
     damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
+      ToArmorPre: 0.1
       ArmorEffectiveness: 0.9
-      ToArmor: 0.1
+      ToArmor: 0.15
       ToHealth: 1.1
       ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     power: 60
     damageType: 1
 
   - &STR_BOLTER_AMMO_METAL_STORM
     type: STR_PISTOL_CLIP_EX # done
     damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 1.0
-      ToArmor: 0.15
-      ToHealth: 1.4
-      ToStun: 0.5
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 1.2 #increasing this because it targets under armor and is AoE
+      RandomType: 6 #gaussian as it's AoE
+      ToArmor: 0.1
+      ToHealth: 1.5 #hollow point + fragmentation
+      ToStun: 0.6 #hollow point + fragmentation
+      ToEnergy: 0.4 #hollow point + fragmentation
+      ToWound: 0.3 #hollow point + fragmentation
+      IgnoreDirection: false
+      RandomWound: false
     blastRadius: 1
     power: 60
     damageType: 3
@@ -57,19 +65,23 @@ items:
       ArmorEffectiveness: 0.5
       ToArmorPre: 0.02
       ToArmor: 0.05
-      ToHealth: 1.0
-      ToStun: 0.5
+      ToHealth: 0.9 #armor piercing; good penetration, much less stopping power
+      ToStun: 0.3
+      ToEnergy: 0.1
     power: 60
     damageType: 1
 
   - &STR_BOLTER_AMMO_MC
     type: STR_PISTOL_CLIP_MC # done
     damageAlter: #DA BOLTER
-      ToArmorPre: 0.1 # was 0.05
+      ToArmorPre: 0.15 # was 0.05
       ArmorEffectiveness: 0.8 # was 0.9
-      ToArmor: 0.1
+      ToArmor: 0.15
       ToHealth: 1.15
       ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     power: 75
     damageType: 1
 
@@ -141,18 +153,42 @@ items:
     refNode: *STR_BOLTER_AMMO_KRAKEN
     power: 60
 
+#heavy bolter ammo
 
+  - type: STR_AC_AP_AMMO
+    refNode: *STR_BOLTER_AMMO
+    power: 70
+
+  - type: STR_AC_MC_AMMO
+    refNode: *STR_BOLTER_AMMO
+
+  - type: STR_AC_HE_AMMO
+    damageType: 3
+    damageAlter:
+      RandomType: 6 #AoE so gaussian
+      ToArmorPre: 0.05 #HE does minimal damage to armor if it doesn't penetrate
+      ToArmor: 0.2 #HE savages armor if it can penetrate
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      FixRadius: 2
+
+#storm bolter ammo
   - &STR_STORMBOLTER_AMMO
     type: STR_HB_CLIP # done
     damageType: 1
-    power: 80 # was 90
+    power: 70
     damageAlter: #DA BOLTER  DOUBLE SHOT
-      RandomType: 0 # was 6
+      RandomType: 1
       ToArmorPre: 0.1
       ArmorEffectiveness: 0.9
-      ToArmor: 0.1 # was 0.2
-      ToHealth: 1.0 # was 2.0
+      ToArmor: 0.15
+      ToHealth: 1.1
       ToStun: 0.5 # was 1.0
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     shotgunSpread: 1 # 1/100; hit together
     shotgunBehavior: 1 # new behaviour
     shotgunPellets: 2
@@ -174,6 +210,7 @@ items:
     power: 40
 
   - type: STR_LIGHT_BOLTPISTOL_PENITENCE_AMMO
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
       ArmorEffectiveness: 1.1
@@ -186,22 +223,28 @@ items:
     shotgunPellets: 5
 
   - type: STR_LIGHT_BOLTER_AMMO_AP #Elohim ammo
+    refNode: *STR_BOLTER_AMMO_KRAKEN
     damageAlter: #DA BOLTER
       ToArmorPre: 0.15
       ArmorEffectiveness: 0.7
       ToArmor: 0.3
       ToHealth: 0.9
-      ToStun: 0.6
+      ToStun: 0.3
+      ToEnergy: 0.1
     power: 60 # was 70
     damageType: 1
 
   - type: STR_CANTUS_BOLTER_AMMO #Ammo for the Cantus light bolter
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER LIGHT
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.85
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
       ToArmor: 0.15
-      ToHealth: 1.0
-      ToStun: 0.6
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     power: 48
     damageType: 1
     clipSize: 30
@@ -216,6 +259,7 @@ items:
       ArmorEffectiveness: 0.9
       ToArmor: 0.1
       ToHealth: 1.5
+      ToMorale: 2.0
       ToStun: 0.2
     blastRadius: 1
     power: 55
@@ -223,6 +267,7 @@ items:
     clipSize: 12
 
   - type: STR_RIFLE_CLIP_DOM # Dominion special rounds DETONATOR       10430     EXPLOSIVE        ToStun
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.2
       ArmorEffectiveness: 0.9
@@ -299,12 +344,7 @@ items:
     shotgunPellets: 6
 
   - type: STR_AC_AP_ADEPTAS_AMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.95
-      ToArmor: 0.05
-      ToHealth: 1.0
-      ToStun: 0.5
+    refNode: *STR_BOLTER_AMMO
     power: 65
     damageType: 1
     clipSize: 60
@@ -317,15 +357,19 @@ items:
   - type: STR_AC_HE_ADEPTAS_AMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
     power: 55
     damageType: 3
+    damageAlter:
+      RandomType: 6 #AoE so gaussian
+      ToArmorPre: 0.05 #HE does minimal damage to armor if it doesn't penetrate
+      ToArmor: 0.2 #HE savages armor if it can penetrate
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      FixRadius: 2
     clipSize: 60
 
   - type: STR_AC_AP_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
-    damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.95
-      ToArmor: 0.05
-      ToHealth: 1.0
-      ToStun: 0.5
+    refNode: *STR_BOLTER_AMMO_KRAKEN
     power: 65
     damageType: 1
     clipSize: 40
@@ -338,6 +382,15 @@ items:
   - type: STR_AC_HE_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
     power: 55
     damageType: 3
+    damageAlter:
+      RandomType: 6 #AoE so gaussian
+      ToArmorPre: 0.05 #HE does minimal damage to armor if it doesn't penetrate
+      ToArmor: 0.2 #HE savages armor if it can penetrate
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      FixRadius: 2
     clipSize: 40
 
   - type: STR_ASSC_CLIP                                                         #13230              ToStun
@@ -362,7 +415,6 @@ items:
       ToHealth: 1.0
       ToStun: 0.3
 
-
   - &STR_STUBBERS_AMMO
     type: STR_STUB_GUN_AMMO
     damageAlter:
@@ -376,9 +428,9 @@ items:
     refNode: *STR_STUBBERS_AMMO
     damageAlter:
       ArmorEffectiveness: 0.5
-      ToArmorPre: 0.0
-      ToArmor: 0.0
-      ToHealth: 1.0
+      ToArmorPre: 0.02
+      ToArmor: 0.02
+      ToHealth: 0.9
       ToStun: 0.5
 
   - type: STR_STUB_GUN_AMMO_WOUND
@@ -461,15 +513,5 @@ items:
 ## Vehicle
 
   - type: STR_HWP_CANNON_SHELLS # Bikes
+    refNode: *STR_STORMBOLTER_AMMO # done
     power: 65
-    damageAlter: #DA BOLTER  DOUBLE SHOT
-      RandomType: 0 # was 6
-      ToArmorPre: 0.1
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1 # was 0.2
-      ToHealth: 1.0 # was 2.0
-      ToStun: 0.5 # was 1.0
-    shotgunSpread: 1 # 1/100; hit together
-    shotgunBehavior: 1 # new behaviour
-    shotgunPellets: 2
-
