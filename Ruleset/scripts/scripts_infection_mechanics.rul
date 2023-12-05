@@ -91,10 +91,13 @@ extended:
           var int infectionReduction; #flat amount infection damage is reduced by
           var int infectionResistType; #bitmask; type types of infection the damaged unit resists: 0 = all, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
 
+          unit.getRuleArmor armorRule;
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
+            #debug_log "Infection Scripts; damageUnit, offset 22: armorSize 2x2. Aborting:" temp;
             return;
           end;
+          #debug_log "Infection Scripts; damageUnit, offset 22: armorSize:" temp;
 
           #we're not a 2x2, we've done damage and we're not totally immune to infection; it's time to set our other variables
           weapon_item.getRuleItem itemRule;
@@ -118,7 +121,6 @@ extended:
             return;
           end;
 
-          unit.getRuleArmor armorRule;
           armorRule.getTag infectionResistType Tag.INFECTION_RESIST_TYPE; #if our infection resist is 100% and applies to all infection types we're immune; abort
           armorRule.getTag infectionResist Tag.INFECTION_RESIST;
           if and ge infectionResist 100 le infectionResistType 0;
