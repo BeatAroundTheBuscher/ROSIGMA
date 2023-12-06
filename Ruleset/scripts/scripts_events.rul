@@ -1,0 +1,71 @@
+extended:
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_alpha_infiltration
+        offset: 90
+        code: |
+          var int faction;
+          var int temp;
+          var ptr RuleUnit alpha;
+          var ptr RuleResearch researchTopic;
+          var int canBeTraitor;
+          var int randomNumber;
+
+          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_PURGED"; #if Alpha Legion was purged, abort.
+          if gt temp 0;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Alpha Legion Purged." researchTopic;
+            return;
+          end;
+
+          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_INFILTRATED"; #if Alpha Legion isn't infiltrating, abort.
+          if lt temp 1;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No Alpha Legion Infiltration." researchTopic;
+            return;
+          end;
+
+          attacker.getFaction faction; #the attacker must be from the player's faction
+          if neq faction FACTION_PLAYER;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker isn't player faction." faction;
+            return;
+          end;
+
+          unit.getFaction faction;
+          if eq faction 1; #the victim must not be hostile; civilian or player faction only
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is enemy." unit;
+            return;
+          end;
+
+          # Abort for inappropriate damage type or if the attacker or victim are null
+          if or eq null attacker eq null unit;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker or victim is null.";
+            return;
+          else or eq damaging_type 0 eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
+            return;
+          end;
+
+          set temp to_health; #need to deal at least some damage
+          if lt temp 1;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No damage dealt." temp;
+            return;
+          end;
+
+          unit.getHealth temp;
+          sub temp to_health;
+          battle_game.randomRange randomNumber 1 100;
+
+          if lt temp 1; #if we kill the target, odds are inverted; 90% chance we are an Alpha Legion traitor instead of 10%
+            add randomNumber 80;
+          end;
+
+          if lt randomNumber 91; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor." randomNumber;
+            return;
+          end;
+
+          rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS"; #turn the offender into an Alpha Legion
+          attacker.setSpawnUnit alpha;
+          attacker.setSpawnUnitFaction FACTION_HOSTILE;
+          attacker.setSpawnUnitInstantRespawn 1;
+          return;
