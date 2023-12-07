@@ -64,8 +64,14 @@ extended:
             return;
           end;
 
-          rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS"; #turn the offender into an Alpha Legion
+          battle_game.randomRange temp 1 10;
+          if lt temp 9;
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS"; #turn the offender into an Alpha Legion; CQC
+          else;
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER"; #turn the offender into an Alpha Legion; Ranged
+          end;
           attacker.setSpawnUnit alpha;
           attacker.setSpawnUnitFaction FACTION_HOSTILE;
           attacker.setSpawnUnitInstantRespawn 1;
+          battle_game.flashMessage "STR_ALPHA_LEGION_INFILTATION_REVEAL_MESSAGE";
           return;
