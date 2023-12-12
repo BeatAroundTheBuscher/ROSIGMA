@@ -11,6 +11,9 @@ extended:
           var ptr RuleResearch researchTopic;
           var int canBeTraitor;
           var int randomNumber;
+          var ptr RuleArmor armorRule;
+
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: weapon_item" weapon_item;
 
           rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_PURGED"; #if Alpha Legion was purged, abort.
           if gt temp 0;
@@ -37,10 +40,24 @@ extended:
           end;
 
           # Abort for inappropriate damage type or if the attacker or victim are null
+          if eq attacker unit;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Victim is also attacker.";
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getSize temp;
+          if eq temp 2; # we ignore tanks
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2.";
+            return;
+          end;
+
           if or eq null attacker eq null unit;
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker or victim is null.";
             return;
-          else or eq damaging_type 0 eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
+          end;
+
+          if or eq damaging_type 0 eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
             return;
           end;
