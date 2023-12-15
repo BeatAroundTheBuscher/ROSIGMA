@@ -9,7 +9,8 @@ extended:
       INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
     #intimidation script tags
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
-
+    #unit typing tags
+      UNIT_TYPE_MECHANICAL: int
 
 
 units:
@@ -19,15 +20,17 @@ units:
       stamina: 96
       health: 60 # was 100, easier to use overKill this way
       bravery: 110
-      reactions: 85
+      reactions: 65 #warriors have slower reactions than Immortals
       firing: 75
       throwing: 80
       strength: 60
       psiStrength: 200
       psiSkill: 0
-      melee: 65
+      melee: 75
+    intelligence: 1 #Giving them 1; I'm assuming they have some direction, rather than being left to their own devices entirely
+    aggression: 8
     spotter: 1
-    intelligence: 0 #Pretty mindless
+    sniper: 50
     value: 10
     energyRecovery: 200
     builtInWeaponSets:
@@ -48,13 +51,13 @@ units:
       stamina: 96
       health: 50
       bravery: 110
-      reactions: 85
+      reactions: 65 #warriors have slower reactions than Immortals
       firing: 75
       throwing: 80
       strength: 60
       psiStrength: 200
       psiSkill: 0
-      melee: 65
+      melee: 75
     armor: STR_NECRON_WARRIOR_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
@@ -63,9 +66,10 @@ units:
     spawnUnit: STR_NECRON_WARRIOR
     canPanic: false
     canBeMindControlled: false
-    intelligence: 0
+    intelligence: 2 #Necron immortals have some level of intelligence
     aggression: 8
     spotter: 1
+    sniper: 50
     energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_FLAYER
@@ -80,15 +84,17 @@ units:
       stamina: 96
       health: 80
       bravery: 110
-      reactions: 75
+      reactions: 85
       firing: 90
       throwing: 85
       strength: 60
       psiStrength: 200
       psiSkill: 0
       melee: 85
+    intelligence: 2 #Necron immortals have some level of intelligence
+    aggression: 8
     spotter: 1
-    intelligence: 1
+    sniper: 50
     value: 15
     energyRecovery: 200
     builtInWeaponSets:
@@ -108,15 +114,15 @@ units:
     stats:
       tu: 75
       stamina: 96
-      health: 60
+      health: 80
       bravery: 110
-      reactions: 60
-      firing: 85
-      throwing: 80
+      reactions: 85
+      firing: 90
+      throwing: 85
       strength: 60
       psiStrength: 200
       psiSkill: 0
-      melee: 65
+      melee: 85
     armor: STR_NECRON_IMORTAL_ARMOR_REVIVES
     standHeight: 20
     kneelHeight: 15
@@ -125,9 +131,10 @@ units:
     spawnUnit: STR_NECRON_IMORTAL
     canPanic: false
     canBeMindControlled: false
-    intelligence: 1
-    aggression: 4
+    intelligence: 2 #Necron immortals have some level of intelligence
+    aggression: 8
     spotter: 1
+    sniper: 50
     energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
@@ -160,11 +167,11 @@ units:
     spawnUnit: STR_NECRON_DEATHMARK
     canPanic: false
     canBeMindControlled: false
-    intelligence: 2
+    intelligence: 4 #deathmark are intelligent necrons
     aggression: 1
     spotter: 2
-    energyRecovery: 200
     sniper: 100 #they are primarily snipers
+    energyRecovery: 200
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
       - - STR_SYNAPTIC_DISINTEGRATOR
@@ -186,12 +193,12 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 65
-    aggression: 2
-    sniper: 90 #they are primarily snipers
+    intelligence: 4 #deathmark are intelligent necrons
+    aggression: 1
     spotter: 2
-    intelligence: 2
-    value: 15
+    sniper: 100 #they are primarily snipers
     energyRecovery: 200
+    value: 15
     builtInWeaponSets:
       - - STR_SYNAPTIC_DISINTEGRATOR
         - STR_KILLPOINT_TOKEN_10
@@ -223,7 +230,7 @@ units:
     kneelHeight: 15
     value: 5
     deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
-    intelligence: 2
+    intelligence: 5 #Lychguard are intelligent necrons
     spawnUnit: STR_NECRON_LYCHGUARD
     canPanic: false
     canBeMindControlled: false
@@ -251,7 +258,7 @@ units:
       melee: 100
     isLeeroyJenkins: TRUE
     aggression: 8
-    intelligence: 2
+    intelligence: 5 #Lychguard are intelligent necrons
     spotter: 1
     value: 25
     energyRecovery: 200
@@ -362,17 +369,17 @@ units:
     kneelHeight: 15
     value: 40
     deathSound: [289, 290, 291]
-    intelligence: 5
+    intelligence: 9
     aggression: 1
     spotter: 3
     sniper: 60
     energyRecovery: 200
 #    spawnUnit: STR_NECRON_IMORTAL
     builtInWeaponSets:
-      - - STR_HYPERPHASESWORD
+      - - STR_GAUSS_BLASTER
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
-      - - STR_SYNAPTIC_DISINTEGRATOR
+      - - STR_GAUSS_BLASTER
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
@@ -430,6 +437,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical #necrons count as robotic/mechanical
     spriteSheet: NECRONDR1_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON1.SPK
@@ -475,6 +483,7 @@ armors:
       health:
         healthCurrent: 0.5
 
+
   - type: STR_NECRON_LYCHGUARD_ARMOR_REVIVES        #NECRON WARRIOR
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 80
@@ -485,6 +494,7 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     visibilityAtDay: 50
     visibilityAtDark: 50
     heatVision: 60
@@ -550,6 +560,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     spriteSheet: NECRONDR2_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON2.SPK
@@ -612,6 +623,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     spriteSheet: NECRONDR3_REVIVE.PCK
     deathFrames: 6
     spriteInv: NECRON3.SPK
@@ -707,9 +719,6 @@ armors:
     loftempsSet: [ 92, 89, 90, 91 ]
     builtInWeapons:
       - STR_GAUSS_CANNON
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #infection immune
 
   - type: STR_NECRON_SCARAB_ARMOR3         #NECRON WARRIOR
     visibilityAtDay: 50 #effective scouters/spotters for Necrons
@@ -781,7 +790,9 @@ armors:
       - STR_SCARAB_L_WEAPON
     tags:
       INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1
+
 
   - type: STR_NECRON_SCARAB_ARMOR5         #NECRON WARRIOR
     visibilityAtDay: 50 #effective scouters/spotters for Necrons
@@ -853,7 +864,8 @@ armors:
       - STR_SCARAB_L_WEAPON
     tags:
       INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: STR_NECRON_SCARAB_ARMOR1         #NECRON WARRIOR
     visibilityAtDay: 50 #effective scouters/spotters for Necrons
@@ -915,9 +927,6 @@ armors:
       - INV_NULL_3X3
       - STR_SCARAB_R_WEAPON
       - STR_SCARAB_L_WEAPON
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #infection immune
 
   - type: STR_NECRON_ARCHITECT_ARMOR       #NECRON WARRIOR
     visibilityAtDay: 50
@@ -957,9 +966,6 @@ armors:
     loftempsSet: [ 3 ]
     builtInWeapons:
       - INV_NULL_3X3
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #infection immune
 
   - type: STR_MONO_N_ARMOR
     visibilityAtDay: 60
@@ -973,6 +979,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     damageModifier: #VEHICLE ARMOR LARGE NECRON
       - 0.9 #AP
       - 0.5 #ACID
@@ -991,6 +998,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     damageModifier: #VEHICLE ARMOR LARGE NECRON
       - 0.9 #AP
       - 0.5 #ACID
@@ -1009,6 +1017,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     damageModifier: #VEHICLE ARMOR LARGE NECRON
       - 0.9 #AP
       - 0.5 #ACID
@@ -1027,6 +1036,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_MECHANICAL: 1 #necrons count as robotic/mechanical
     damageModifier: #VEHICLE ARMOR LARGE NECRON
       - 0.9 #AP
       - 0.5 #ACID
