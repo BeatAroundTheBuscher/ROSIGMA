@@ -11,7 +11,22 @@ extended:
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
     #intimidation script tags
       INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
-
+    #unit typing tags
+      UNIT_TYPE_MECHANICAL: int
+      UNIT_TYPE_DAEMONIC: int
+      UNIT_TYPE_CONSECRATED: int
+      UNIT_TYPE_CHAOS: int
+      UNIT_TYPE_PSYKER: int
+      UNIT_TYPE_NULL: int
+      UNIT_TYPE_TYRANID: int
+      UNIT_TYPE_LIVING: int
+      UNIT_TYPE_TZEENTCH: int
+      UNIT_TYPE_KHORNE: int
+      UNIT_TYPE_SLAANESH: int
+      UNIT_TYPE_NURGLE: int
+      UNIT_TYPE_XENO: int
+      UNIT_TYPE_ELDAR: int
+      UNIT_TYPE_IMPERIUM: int
 
 armors:
   - type: STR_GSC_ZOMBIE_ARMOR  # GSC ZOMBIE ARMOR
@@ -45,7 +60,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GC_ARMOR #"Brood Brother"
     visibilityAtDay: 30
@@ -57,33 +74,7 @@ armors:
     frontArmor: 20
     sideArmor: 18
     rearArmor: 16
-    underArmor: 12
-    drawingRoutine: 0
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 0.7 #ACID GSC BONUS
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
-    loftempsSet: [ 3 ]
-  - type: STR_GC2_ARMOR #heavier armor "Brood Brother"
-    visibilityAtDay: 30
-    visibilityAtDark: 25
-    spriteSheet: GENEDR2.PCK
-    spriteInv: GENE3.SPK
-    corpseBattle:
-      - STR_BW2_CORPSE
-    frontArmor: 40
-    sideArmor: 30
-    rearArmor: 20
-    underArmor: 15
+    underArmor: 16
     drawingRoutine: 0
     damageModifier: #GUARD ARMOR
       - 1.0 #none
@@ -102,6 +93,42 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
+  - type: STR_GC2_ARMOR #heavier armor "Brood Brother"
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    spriteSheet: GENEDR2.PCK
+    spriteInv: GENE3.SPK
+    corpseBattle:
+      - STR_BW2_CORPSE
+    frontArmor: 40
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 20
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 0.7 #ACID GSC BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GC3_ARMOR #Brood Sister (not Adeptas)
     visibilityAtDay: 30
@@ -132,6 +159,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_SAB_ARMOR  #SABUTOUR
     visibilityAtDay: 40
@@ -167,7 +197,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_KELER_ARMOR  #KELERMORPH ARMOR
     visibilityAtDay: 40
@@ -203,6 +235,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_HORMAGAUNT_ARMOR #Tyranid
     visibilityAtDay: 40
@@ -221,9 +256,6 @@ armors:
     underArmor: 10
     bleedImmune: true #Nurgle daemons don't bleed
     zombiImmune: true #It's a daemon; can't zombify this.
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
     painImmune: true #Adrenal Glands + Tyranid synapse
     damageModifier: #Tyranid Layered Chitin
       - 1.0 #untyped damage is supposed to be neutral
@@ -241,6 +273,12 @@ armors:
     loftempsSet: [ 2 ] #small, slim agile target
     builtInWeapons:
       - STR_HORMAGAUNT_WEAPON
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: CARNI_ARMOR #CARNIFEX
     visibilityAtDay: 40
@@ -269,7 +307,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GENE_ARMOR
     visibilityAtDay: 40
@@ -303,7 +343,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GENE_ARMOR2
     visibilityAtDay: 40
@@ -333,6 +375,12 @@ armors:
     loftempsSet: [ 2 ]
     builtInWeapons:
       - STR_GENE_WEAPON
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GENE_ARMOR3 #DR4
     visibilityAtDay: 40
@@ -365,6 +413,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GENE_HYBRID_ACOLYTE_ARMOR    #GENE HYBRID ACOLYTE ARMOR
     visibilityAtDay: 40
@@ -386,6 +437,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
     damageModifier: #INDUSTRIAL
       - 1.0 #none
       - 1.0 #AP
@@ -418,9 +473,6 @@ armors:
     rearArmor: 40
     underArmor: 35
     specialWeapon: STR_GSC_MELEE #grapple attack
-    tags:
-      INFECTION_RESIST: 100
-      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
     damageModifier: #INDUSTRIAL
       - 1.0 #none
       - 1.0 #AP
@@ -435,6 +487,12 @@ armors:
       - 1.0 #IMPACT
       - 0.9 #MELTA
     loftempsSet: [ 3 ]
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
 #Armor GSC
   - type: CLOAKED_WOMAN_ARMOR
@@ -466,7 +524,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: CLOAKED_WOMAN2_ARMOR
     visibilityAtDay: 30
@@ -497,7 +557,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: CLOAKED_WOMAN_ORANGE_ARMOR
     visibilityAtDay: 30
@@ -528,7 +590,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
 #GSC
   - type: GSC_CLOAKED_WOMAN_ARMOR
@@ -560,7 +624,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CLOAKED_WOMAN2_ARMOR
     visibilityAtDay: 30
@@ -591,6 +657,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CLOAKED_WOMAN_ORANGE_ARMOR
     visibilityAtDay: 30
@@ -621,6 +690,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_F0_ARMOR
     visibilityAtDay: 30
@@ -653,6 +725,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_M0_ARMOR
     visibilityAtDay: 30
@@ -685,7 +760,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
-
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_F1_ARMOR
     visibilityAtDay: 30
@@ -717,6 +794,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_M1_ARMOR
     visibilityAtDay: 30
@@ -748,6 +828,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_FSPACER_ARMOR #Female Space Crew
     visibilityAtDay: 30
@@ -778,6 +861,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_CIVILIAN_MSPACER_ARMOR #Male Space Crew
     visibilityAtDay: 30
@@ -808,6 +894,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_PENETANTE_ARMOR_FEMALE #Female
     visibilityAtDay: 30
@@ -839,6 +928,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
       ARMOR_IS_EXPLODE_ON_DEATH: 1 #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: 1 #do we kamikazi when we hit regardless of the weapon used?
 
@@ -871,6 +963,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
       ARMOR_IS_EXPLODE_ON_DEATH: 1 #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: 1 #do we kamikazi when we hit regardless of the weapon used?
 
@@ -913,6 +1008,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_ENFORCER_HEAVY_ARMOR #GSC Enforcer Heavy armor
     visibilityAtDay: 30
@@ -943,6 +1041,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_ENFORCER_SHIELD_ARMOR #GSC RIOT CONTROL ENCFORCER
     visibilityAtDay: 30
@@ -976,6 +1077,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_JUDGEF_ARMOR #GSC JUDGE F
     visibilityAtDay: 40
@@ -1009,6 +1113,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_JUDGEM_ARMOR #GSC JUDGE M
     visibilityAtDay: 40
@@ -1042,17 +1149,11 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_ARBITOR_ARMOR #WARDEN ARBITOR
-    tags:
-      #ARMOR_ENERGY_SHIELD_CAPACITY: 100
-      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
-      ARMOR_ENERGY_SHIELD_DECAY: 10
-      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
-      INFECTION_RESIST: 100
-      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
     visibilityAtDay: 40
     visibilityAtDark: 30
     camouflageAtDay: 15 #Visible at 15 tiles without anticamo
@@ -1086,8 +1187,6 @@ armors:
       - INV_SHIELD_3X3
     loftempsSet: [ 3 ]
     drawingRoutine: 0
-
-  - type: STR_GSC_WARDEN_ARMOR #WARDEN MARSHAL
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 100
       #ARMOR_ENERGY_SHIELD_PER_TURN: 10
@@ -1097,6 +1196,11 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
+  - type: STR_GSC_WARDEN_ARMOR #WARDEN MARSHAL
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDark: 10
@@ -1127,6 +1231,18 @@ armors:
       - INV_SHIELD_3X3
     loftempsSet: [ 3 ]
     drawingRoutine: 0
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 100
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_JUDGE_BIKE_ARMOR      #BIKE
     visibilityAtDay: 40
@@ -1172,6 +1288,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_SENTINELPD_ARMOR            #GSC SENTINEL
     ufopediaType: STR_SENTINEL_ARMOR_UC
@@ -1223,6 +1342,9 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: GSC_HB_ARMOR
     visibilityAtDay: 40
@@ -1271,6 +1393,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: GSC_AUTOCANNON_ARMOR
     visibilityAtDay: 40
@@ -1321,6 +1447,11 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_PDF_ARMOR #female
     visibilityAtDay: 40
@@ -1353,6 +1484,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_PDF_ARMOR1 #Male, heavy
     visibilityAtDay: 40
@@ -1384,6 +1519,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
 
   - type: STR_GSC_PDF_MEDIC_ARMOR  #female infector
@@ -1420,6 +1559,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_OGRYN_ARMOR
     visibilityAtDay: 40
@@ -1457,6 +1600,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_OGRYN_ORANGE_ARMOR
     visibilityAtDay: 40
@@ -1494,6 +1641,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: GSC_ARMORED_CAR_ARMOR
     visibilityAtDay: 40
@@ -1502,9 +1653,6 @@ armors:
     bleedImmune: true
     zombiImmune: true
     fearImmune: false
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 50 #intimidate resistance
     painImmune: true
     allowInv: false
     spriteSheet: GSC_ARMORED_CAR_BS.PCK
@@ -1540,6 +1688,12 @@ armors:
     loftempsSet: [ 92, 89, 90, 91 ]
     builtInWeapons:
       - STR_GSC_ARMORED_CAR_TURRET
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 50 #intimidate resistance
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_TYRANID: 1
 
   - type: STR_GSC_GUARD_FLAK_ARMOR_FEMALE
     visibilityAtDay: 40
@@ -1570,6 +1724,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_FLAK_ARMOR_MALE
     visibilityAtDay: 40
@@ -1600,6 +1758,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_FLAK_ARMOR_FEMALE
     visibilityAtDay: 40
@@ -1630,6 +1792,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_KRIEG_ARMOR
     visibilityAtDay: 40
@@ -1660,6 +1826,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_MEDIC_ARMOR  #female infector
     visibilityAtDay: 40
@@ -1694,6 +1864,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_CARAPACE_ARMOR
     visibilityAtDay: 40
@@ -1727,6 +1901,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_CARAPACE_MEDIC_ARMOR
     visibilityAtDay: 40
@@ -1761,6 +1939,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_SCION_ARMOR
     visibilityAtDay: 40
@@ -1794,6 +1976,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_TANITH_ARMOR
     visibilityAtDay: 40
@@ -1829,6 +2015,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_FLAK_ARMOR_OFFICER
     visibilityAtDay: 40
@@ -1862,6 +2052,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_GUARD_CARAPACE_ARMOR_OFFICER
     visibilityAtDay: 40
@@ -1895,6 +2089,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_COMMISSAR_ARMOR
     visibilityAtDay: 45 #officer
@@ -1928,6 +2126,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_COMMISSAR_CARAPACE_ARMOR
     visibilityAtDay: 40
@@ -1961,6 +2163,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_PSYKER_ARMOR
     visibilityAtDay: 40
@@ -2002,6 +2208,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_MEDICAE_ARMOR #female infector
     visibilityAtDay: 40
@@ -2036,6 +2246,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_REPENTIA_ARMOR #infected
     visibilityAtDay: 40
@@ -2066,6 +2280,10 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
 
   - type: STR_GSC_INFECTED_ADEPTAS_ARMOR #Adeptas infected basic
     visibilityAtDay: 40
@@ -2097,3 +2315,7 @@ armors:
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
