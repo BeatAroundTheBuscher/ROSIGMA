@@ -3000,27 +3000,26 @@ items:
     strengthApplied: false
     attraction: 8
     listOrder: 15100
+
   - type: STR_PHASE_BLADE #         3010          DA POWER
-    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
-    requires:
-      - STR_ALIENS_ONLY
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_NECRON]
     size: 0.1
-    costSell: 100000
     weight: 10
-    bigSprite: { mod: 40k, index: 379 }
-    floorSprite: { mod: 40k, index: 226 }
-    handSprite: { mod: 40k, index: 792 }
+    bigSprite: 1031
+    floorSprite: 946
+    handSprite: 840
     meleeAnimation: { mod: 40k, index: 4 }
     meleeSound: {mod: 40k, index: 753} #753 Powersword miss
     meleeHitSound: {mod: 40k, index: 754} #744 Powersword hit
-    power: 120
-    damageAlter:     #DA POWER
-      ArmorEffectiveness: 0.5
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      IgnoreSelfDestruct: false
-    damageType: 7
+    power: 50
+    damageType: 11
+    damageBonus: #damage scales dramatically with melee ability; specialists like assassins benefit the most
+      melee: [0.0, 0.005]
+    damageAlter: #DA GUASS
+      RandomType: 6 #Gaussian/bell curve damage distribution
+      ToArmor: 0.05 #doesn't really interact with armor
+      ToHealth: 0.5
+      ArmorEffectiveness: 0.2 #basically ignores armor
     accuracyMelee: 110
     tuMelee: 10
     clipSize: -1
@@ -3033,6 +3032,8 @@ items:
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
+    fixedWeapon: true
+    recover: false
     strengthApplied: false
     attraction: 8
     listOrder: 15100
