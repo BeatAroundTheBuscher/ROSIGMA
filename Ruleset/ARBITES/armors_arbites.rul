@@ -1,3 +1,28 @@
+extended:
+  tags:
+    RuleArmor:
+      INFECTION_RESIST: int #reduces infection damage by this as a %
+      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+    #unit typing tags
+      UNIT_TYPE_MECHANICAL: int
+      UNIT_TYPE_DAEMONIC: int
+      UNIT_TYPE_CONSECRATED: int
+      UNIT_TYPE_CHAOS: int
+      UNIT_TYPE_PSYKER: int
+      UNIT_TYPE_NULL: int
+      UNIT_TYPE_TYRANID: int
+      UNIT_TYPE_LIVING: int
+      UNIT_TYPE_TZEENTCH: int
+      UNIT_TYPE_KHORNE: int
+      UNIT_TYPE_SLAANESH: int
+      UNIT_TYPE_NURGLE: int
+      UNIT_TYPE_XENO: int
+      UNIT_TYPE_ELDAR: int
+      UNIT_TYPE_IMPERIUM: int
+
 armors:
   - &STR_GUARD_ARMOR_FLAK_DAMAGE
     type: STR_GUARDPD_ARMOR_UC #DR10 SPACE MARINE SUPORT
@@ -20,6 +45,9 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_NPC_GUARDPD_ARMOR_UC #FEMALE IMPERIAL FEMALE_CIVILIAN
     ufopediaType: STR_GUARD_ARMORSM
@@ -53,6 +81,9 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_GUARDPDMEDIC_ARMOR_UC # Flak/Medic
     refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
@@ -93,13 +124,15 @@ armors:
       - 1.0 #IMPACT
       - 1.2 #MELTA
     stats:
-       tu: 20
-       stamina: 20
-       health: 50
+      tu: 20
+      stamina: 20
+      health: 50
     units:
       - STR_GUARDPD
       - STR_PILOT_ARBITES
-
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: STR_SENTINELPD_ARMOR_MISSILE_UC
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
@@ -138,11 +171,14 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     stats:
-       tu: -5
-       stamina: -10
+      tu: -5
+      stamina: -10
 #       strength: 5
 #       bravery: 10 #always multiples of 10
 #    weight: 15
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_ENFORCER_MEDIC_ARMOR_UC #DR10 ARBITES SUPORT
     refNode: *STR_ENFORCER_ARMOR
@@ -170,7 +206,7 @@ armors:
     frontArmor: 80 # was 50
     sideArmor: 70 # was 50
     rearArmor: 50 # was 50
-    underArmor: 50 # was 50
+    underArmor: 70 # was 50
     weight: 5
 
 
@@ -179,7 +215,7 @@ armors:
     frontArmor: 130 # was 110
     sideArmor: 70 # was 50
     rearArmor: 50 # was 50
-    underArmor: 50 # was 50
+    underArmor: 70 # was 50
     storeItem: STR_ENFORCER_HEAVY_ARMOR
     weight: 5 # 5 + 5 shield = 10
 
@@ -206,6 +242,9 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_ARBITOR_ARMOR_UC
     refNode: *STR_ARMOR_JUDGE
@@ -215,7 +254,7 @@ armors:
     frontArmor: 110 # was 70
     sideArmor: 100 # was 60
     rearArmor: 70 # was 50
-    underArmor: 60 # was 50
+    underArmor: 100 # was 50
 
   - type: STR_CMAS_ARMOR
     antiCamouflageAtDay: 5
@@ -249,6 +288,9 @@ armors:
     units:
       - STR_ARBITES_MASTIFF
     customArmorPreviewIndex: 838 #600
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_CHIMERA_PD_ARMOR # Heavy Bolter
     visibilityAtDay: 40
@@ -259,12 +301,17 @@ armors:
     frontArmor: 160 # was 130
     sideArmor: 160 # was 130
     rearArmor: 160 # was 130
-    underArmor: 150
+    underArmor: 160
     fearImmune: false
     specialWeapon: STR_TURRET_RELOAD
     recovery: #Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 75
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: STR_CHIMERA_PDH_ARMOR # Manitcore
     visibilityAtDay: 40
@@ -275,12 +322,17 @@ armors:
     frontArmor: 160 # was 130
     sideArmor: 160 # was 130
     rearArmor: 160 # was 130
-    underArmor: 150
+    underArmor: 160
     fearImmune: false
     specialWeapon: STR_TURRET_RELOAD
     recovery: #Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 75
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: WHIRLWINDPD_ARMOR
     visibilityAtDay: 40
@@ -297,6 +349,11 @@ armors:
     recovery: #Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 75
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: DAMOCLESPD_ARMOR # Mobile Precint Artillery Turret
     visibilityAtDay: 40
@@ -313,6 +370,11 @@ armors:
     recovery: #Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 75
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: TAUROXPD_ARMOR # now same level as STR_TAUROX_TURRET_ARMOR
     visibilityAtDay: 40
@@ -323,29 +385,49 @@ armors:
     frontArmor: 130
     sideArmor: 130
     rearArmor: 130
-    underArmor: 120
+    underArmor: 130
     fearImmune: false
     specialWeapon: STR_TURRET_RELOAD
     recovery: #Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 75
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
 
   - type: STR_GUARDPD_ARMOR_UC
     specialWeapon: STR_BAYONET
     storeItem: STR_NOT_AVAILABLE
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_GUARDPDMEDIC_ARMOR_UC
     storeItem: STR_NOT_AVAILABLE
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_ENFORCER_ARMOR_UC
     specialWeapon: STR_BAYONET
     storeItem: STR_NONE
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_ENFORCER_HEAVY_ARMOR_UC
     specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_ENFORCER_SHIELD_ARMOR_UC
     specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
 
   - type: STR_PILOT_ARBITES_ARMOR_UC #DR10 GUARD PILOT
     visibilityAtDay: 40
@@ -376,7 +458,6 @@ armors:
       - STR_PILOT_ARBITES
     specialWeapon: STR_BAYONET
     ufopediaType: STR_GUARD_ARMORP_UC
-
     spriteSheet: ARBITESPILOT.PCK
     #spriteInv: MAN_37
     customArmorPreviewIndex: 807 #601
@@ -415,3 +496,6 @@ armors:
       M7: ["", "M7", "M7_Hair_Tight", "", "Male", "", "", "", ""]
       M8: ["", "M8", "M8_Hair_Tight", "", "Male", "", "", "", ""]
       M9: ["", "M9", "", "", "Male", "", "", "", ""]
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1

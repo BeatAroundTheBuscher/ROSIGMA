@@ -58,6 +58,12 @@ extended:
             return;
           end;
 
+          unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          if gt temp 0; # we always ignore infected units
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is infected.";
+            return;
+          end;
+
           if or eq null attacker eq null unit;
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker or victim is null.";
             return;
