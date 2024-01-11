@@ -12,6 +12,7 @@ extended:
           var int temp;
           var int temp2;
           var int faction;
+          var ptr RuleItem itemRule;
           var ptr RuleArmor armorRule;
 
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: attacker:" attacker;
@@ -51,8 +52,12 @@ extended:
 
           armorRule.getSize temp;
           if eq temp 2; #for handling mechanical units
-            muldiv power 25 100;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is large. Modified power:" power;
+            weapon_item.getRuleItem itemRule;
+            itemRule.isSingleTarget temp;
+            if eq temp 0; #reduce power to 25% if our buff doesn't single target
+              muldiv power 25 100;
+              #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is large. Modified power:" power;
+            end;
           end;
 
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
