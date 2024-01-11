@@ -16,6 +16,8 @@ extended:
       ITEM_RECOIL: int
       ITEM_HAS_BIPOD: int
       ITEM_IS_HEAVY_WEAPON: int # infantry but not mounted/vehicle heavy weapons
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
+      ITEM_IS_BUFF_WEAPON: int
 #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
       REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
@@ -687,8 +689,6 @@ items:
     specialIconSprite: 5
     specialUseEmptyHand: true
     #*** Melee
-    tags:
-      ITEM_REPAIRS_ARMOR: 1
     confMelee:
       name: STR_REPAIR
     meleeSound: { mod: 40k, index: 698 }
@@ -713,6 +713,9 @@ items:
     costMelee:
       time: 10 #more TU and energy efficient than the basic Techmarine suite
       energy: 30
+    tags:
+      ITEM_REPAIRS_ARMOR: 1
+      ITEM_IS_BUFF_WEAPON: 1
 
   - type: AUX_CROZIUS                                               #Time to nerf this to sanity
     costAimed:
@@ -954,6 +957,7 @@ items:
     damageBonus: #scales with bravery and devotion now
       bravery: 0.6
       psiSkill: 0.6
+    damageType: 1
     damageAlter:
       RandomType: 3
       RadiusEffectiveness: 0.3
@@ -961,6 +965,9 @@ items:
       ToStun: 0.4 #increase the stun amount up from 0.1
       ToMorale: -0.18
       ToTime: -1.00
+    tags:
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
 
   - type: STR_PATCHMORAL #SPEED                           9001
     damageBonus:
@@ -999,6 +1006,8 @@ items:
       stun: 25
       morale: 25
       energy: 50
+    tags:
+      ITEM_IS_BUFF_WEAPON: 1
 
   - type: STR_CHAPLAIN_INSPIRE
     categories: [STR_CAT_SPELLS]
@@ -1067,6 +1076,9 @@ items:
     tuMelee: 12
     flatMelee:
       time: true
+    tags:
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
 
   - type: STR_THUNDERFIRE_P
     compatibleAmmo:
