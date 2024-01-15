@@ -20,6 +20,17 @@ extended:
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: unit:" unit;
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: power:" power;
 
+          if neq damaging_type 0; #needs to be untyped damage
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking damage isn't untyped. damaging_type:" damaging_type;
+            return power part side;
+          end;
+
+          weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if le temp 0; #if we're not a buff weapon, pass
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
+            return power part side;
+          end;
+
           weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
           if le temp 0; #if we're not a buff weapon, pass
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
