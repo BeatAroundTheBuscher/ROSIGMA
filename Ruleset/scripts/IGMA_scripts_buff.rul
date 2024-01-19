@@ -13,15 +13,12 @@ extended:
       ITEM_BLESS_MELEE_ACCURACY: int
       ITEM_BLESS_FIRING_ACCURACY: int
     RuleSoldier:
-      SOLDIER_IS_LONE_WOLF: int 
+      SOLDIER_IS_LONE_WOLF: int
     BattleUnit:
       SOLDIER_BLESS_CURRENT_MELEE_BONUS: int
       SOLDIER_BLESS_CURRENT_FIRING_BONUS: int
+      SOLDIER_BLESS_CORRUPTION_RESISTANCE: int
       SOLDIER_IS_FANATIC: int
-
-
-      
-
 
   scripts:
     hitUnit: # damageUnit:
@@ -32,6 +29,7 @@ extended:
           var int bufferBravery;
           var int blessPower;
           var int bonusBlessPower;
+          var int corruptionResistance;
           var int temp;
 
           var ptr RuleItem rule;
@@ -69,6 +67,14 @@ extended:
             return power part side;
           end;
 
+          set corruptionResistance power;
+          limit_lower corruptionResistance 0;
+          limit_upper corruptionResistance 50;
+          unit.getTag temp Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE;
+          if gt corruptionResistance temp; #if our incoming bless corruption resistance is higher, use it
+            unit.setTag Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE corruptionResistance;
+          end;
+
           attacker.Stats.getBravery bufferBravery;
           set blessPower 0; # 10;
           set bonusBlessPower 1;
@@ -81,7 +87,7 @@ extended:
             if gt blessPower currentBlessBonus;
               set temp 0;
               sub temp currentBlessBonus;
-              unit.Stats.addMelee temp;  
+              unit.Stats.addMelee temp;
 
               unit.setTag Tag.SOLDIER_IS_FANATIC 1; # handled in scripts_faith_vs_naughtiness.rul
               unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS blessPower;
@@ -94,13 +100,14 @@ extended:
             if gt blessPower currentBlessBonus;
               set temp 0;
               sub temp currentBlessBonus;
-              unit.Stats.addFiring temp; 
+              unit.Stats.addFiring temp;
 
               unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS blessPower;
               unit.Stats.addFiring blessPower;
             end;
           end;
-          
+          battle_game.flashMessage "STR_SCRIPT_BLESS_NOTICE"; #notify of blessing
+
           return power part side;
 
     newTurnUnit:
@@ -110,13 +117,14 @@ extended:
         code: |
           var int currentMeleeBlessBonus;
           var int currentFiringBlessBonus;
+          var int corruptionResistance;
           var int temp;
           var int unitFaction;
-          var ptr GeoscapeSoldier geoUnit; 
+          var ptr GeoscapeSoldier geoUnit;
 
           var int dissipationFactor;
           set dissipationFactor 5;
-          
+
           # Only run this at the beginning of the player's turn
           if neq 0 side;
             return;
@@ -128,9 +136,10 @@ extended:
             return;
           end;
 
+          unit.getTag corruptionResistance Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE;
           unit.getTag currentMeleeBlessBonus Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS;
           unit.getTag currentFiringBlessBonus Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS;
-          if and eq currentMeleeBlessBonus 0 eq currentFiringBlessBonus 0;
+          if and eq currentMeleeBlessBonus 0 eq currentFiringBlessBonus 0 eq corruptionResistance 0;
             return; # nothing to do
           end;
 
@@ -145,7 +154,7 @@ extended:
 
           set temp 0;
           sub temp currentFiringBlessBonus;
-          unit.Stats.addFiring temp;        
+          unit.Stats.addFiring temp;
 
           if gt currentMeleeBlessBonus dissipationFactor;
             sub currentMeleeBlessBonus dissipationFactor;
@@ -155,11 +164,17 @@ extended:
 
           unit.setTag Tag.SOLDIER_BLESS_CURRENT_MELEE_BONUS currentMeleeBlessBonus;
           unit.Stats.addMelee currentMeleeBlessBonus;
-          
+
           if gt currentFiringBlessBonus dissipationFactor;
             sub currentFiringBlessBonus dissipationFactor;
           else;
             set currentFiringBlessBonus 0;
+          end;
+
+          if gt corruptionResistance 0; #only bother if we have corruption resistance
+            sub corruptionResistance dissipationFactor;
+            limit_lower corruptionResistance 0;
+            unit.setTag Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE corruptionResistance;
           end;
 
           unit.setTag Tag.SOLDIER_BLESS_CURRENT_FIRING_BONUS currentFiringBlessBonus;
