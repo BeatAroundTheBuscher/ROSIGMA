@@ -4,126 +4,173 @@ facilities:
 # Case insensitive
 #
 # Sections: 
-# General, Outpost
+# Facilities, Outpost
 #
 # Factions:
-# General
+# General, Adeptas, IG
 #
 
-# General General
+# Facilities General
 ##########################################
-# Section: General
+# Section: Facilities
 # Faction: General
 ##########################################
   - type: STR_LIVING_QUARTERS
     refundValue: 200000
+    canBeBuiltOver: true
 
   - type: STR_CORRIDOR
     refundValue: 10000
+    canBeBuiltOver: true
 
   - type: STR_LABORATORY
     refundValue: 370000
+    canBeBuiltOver: true
 
   - type: STR_WORKSHOP
     refundValue: 400000
+    canBeBuiltOver: true
 
   - type: STR_SMALL_RADAR_SYSTEM
     refundValue: 250000
+    canBeBuiltOver: true
 
   - type: STR_LARGE_RADAR_SYSTEM
     refundValue: 400000
+    canBeBuiltOver: true
 
   - type: STR_GENERAL_STORES
     storage: 100
     refundValue: 75000
+    canBeBuiltOver: true
 
   - type: STR_ALIEN_CONTAINMENT # Normal Prison
     aliens: 20
     refundValue: 200000
+    canBeBuiltOver: true
 
   - type: STR_PRISION # Arbites Prison
     aliens: 15
     personnel: 20
     refundValue: 250000
+    canBeBuiltOver: true
 
   - type: STR_MISSILE_DEFENSES
     refundValue: 100000
 #    defense: 1000
 #    hitRatio: 50
+    canBeBuiltOver: true
 
   - type: STR_LASER_DEFENSES
     refundValue: 200000
 #    defense: 1200
 #    hitRatio: 60
+    canBeBuiltOver: true
 
   - type: STR_PLASMA_DEFENSES
     refundValue: 300000
 #    defense: 1800
 #    hitRatio: 70
+    canBeBuiltOver: true
 
   - type: STR_FUSION_BALL_DEFENSES
     refundValue: 400000
 #    defense: 2400
 #    hitRatio: 80
+    canBeBuiltOver: true
 
   - type: STR_HANGAR
     refundValue: 100000
-
-  - type: STR_GUARD_BARRACKS
-    refundValue: 250000
 
   - &STR_TECH_MARINE_BAY
     type: STR_TEC_BAY
     workshops: 10
     refundValue: 225000
+    canBeBuiltOver: true
 
   - type: STR_TEC_BAY_CHAMBER # ToDo: why does this even exist
     refNode: *STR_TECH_MARINE_BAY
+    canBeBuiltOver: true
 
   - type: STR_COMUNICATIONS
     workshops: 20 # was 10
     refundValue: 1500000
+    canBeBuiltOver: true
 
   - type: STR_ACCESS_LIFT
     refundValue: 150000
+    canBeBuiltOver: true
+
   - type: STR_GRAV_SHIELD
     refundValue: 600000
+    canBeBuiltOver: true
+
   - type: STR_MIND_SHIELD
     refundValue: 650000
+    canBeBuiltOver: true
+
   - type: STR_PSIONIC_LABORATORY
     refundValue: 225000
+    canBeBuiltOver: true
+
   - type: STR_HYPER_WAVE_DECODER
     refundValue: 700000
+    canBeBuiltOver: true
+
   - type: STR_ARMORY
     refundValue: 225000
+    canBeBuiltOver: true
+
   - type: STR_ARMORY_ARBITES
     refundValue: 225000
+    canBeBuiltOver: true
+
   - type: STR_APOC_BAY
     refundValue: 275000
+    canBeBuiltOver: true
+
   - type: STR_LIBRARY
     refundValue: 275000
+    canBeBuiltOver: true
+
   - type: STR_INQOFF
     refundValue: 275000
+    canBeBuiltOver: true
+
   - type: STR_TEC_BAY
     refundValue: 275000
+    canBeBuiltOver: true
+
   - type: STR_DEFENSE_CORRIDOR
     refundValue: 750000
+    canBeBuiltOver: true
+
   - type: STR_DEFENSE_HALL
     refundValue: 150000
+    canBeBuiltOver: true
+
   - type: STR_DEFENSE_CORRIDORB
     refundValue: 750000
+    canBeBuiltOver: true
+
   - type: STR_DEFENSE_CORRIDORGK
     refundValue: 750000
+    canBeBuiltOver: true
+
   - type: STR_STEELMILL
     refundValue: 1500000
+
   - type: STR_TRAINFACILITY
     refundValue: 325000
+    canBeBuiltOver: true
+
   - type: STR_CHAOS_SHRINE
     refundValue: 325000
 
   - &DW_QUARTERS
     type: STR_DW_QUARTERS_ULTRA
     refundValue: 100000
+    canBeBuiltOver: true
   - type: STR_DW_QUARTERS_IF
     refNode: *DW_QUARTERS
   - type: STR_DW_QUARTERS_BA
@@ -142,6 +189,44 @@ facilities:
     refNode: *DW_QUARTERS
   - type: STR_DW_QUARTERS
     refNode: *DW_QUARTERS
+
+# Facilities Adeptas
+##########################################
+# Section: Facilities
+# Faction: Adeptas
+##########################################
+#*** Upgraded barracks that allows recruitment of Battle Sisters STR_ADEPTAS
+  - type: STR_ADEPTAS_CONVENT 
+    requires:
+      - STR_ADEPTAS_RECRUITMENT_REQ
+      - STR_ADEPTAS_SOB_MOBILIZATION
+    buildOverFacilities:
+      - STR_LIVING_QUARTERS
+    provideBaseFunc:
+      - STR_ADEPTAS_RECRUITMENT
+    spriteShape: 1
+    spriteFacility: 742
+    buildCost: 500000
+    refundValue: 250000
+    buildTime: 16
+    monthlyCost: 15000
+    personnel: 50
+    mapName: XBASE_01
+    trainingRooms: 10
+    canBeBuiltOver: true
+
+# Facilities IG
+##########################################
+# Section: Facilities
+# Faction: Imperial Guard
+##########################################
+  - type: STR_GUARD_BARRACKS
+    spriteFacility: 741
+    requires:
+      - STR_GUARD_BARRACKS
+    requiresBaseFunc: [BASE]
+    refundValue: 250000
+    canBeBuiltOver: true
 
 # Outpost General
 ##########################################
@@ -293,13 +378,3 @@ facilities:
         size: [4, 4, 3]
         terrain: ARVUS4X4
         blocks: [0]
-
-items:
-  - type: STR_MARKET_GOODS # trading goods
-    requiresBuyBaseFunc: [TRADE]
-    costBuy: 1000000
-    costSell: 1100000 #sell at a profit; trade money now for more money later; each trading post can earn a maximum of 500k / MO in this way (400k with garrison supplies).
-    size: 100 #bulk goods
-    listOrder: 19182
-    battleType: 0
-    transferTime: 720 #takes a month to arrive
