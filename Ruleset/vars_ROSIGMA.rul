@@ -2,18 +2,40 @@
 # For documentation on these values, see http://ufopaedia.org/index.php?title=Rulesets_(OpenXcom)
 
 # Resources
+enableUnitResponseSounds: true     # set back to false once you get tired of the sounds :)
 unitResponseSoundsFrequency: [33, 33, 33, 15] #Corresponds to % response noises when clicking a unit. Default is 100, 100, 100, 20
+fontName: Font.dat
 
 # Сampaign
+startingTime:
+  second: 0
+  minute: 0
+  hour: 12
+  weekday: 6
+  day: 1
+  month: 1
+  year: 40000
 initialFunding: 6600 # was 6000
 lessAliensDuringBaseDefense: true
 chanceToStopRetaliation: 100
+allowCountriesToCancelAlienPact: true
+customTrainingFactor: 100
 
 # Basescape/Personnel
+costEngineer: 25000
+costScientist: 30000
+hireScientistsRequiresBaseFunc: [RESE]
+hireEngineersRequiresBaseFunc: [MANU]
 hireScientistsUnlockResearch: STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
 hireEngineersUnlockResearch: STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+timePersonnel: 72
 maxLookVariant: 2
 enableNewResearchSorting: true
+flagByKills: [9,19,29,39,49,59,69,79,89,99,109,119,129,139,149,159,169,179,189,199]
+
+#Interception
+selectBaseSound: {mod: 40k, index: 57}   # indices into GEO.CAT
+startDogfightSound: {mod: 40k, index: 55}   # indices into GEO.CAT
 
 # Pedia
 pediaReplaceCraftFuelWithRangeType: 0 # display maximum theoretical range
@@ -25,6 +47,8 @@ noLOSAccuracyPenaltyGlobal: 50
 showFullNameInAlienInventory: true
 statisticalBulletConservation: true
 tuRecoveryWakeUpNewTurn: 0
+oneHandedPenaltyGlobal: 50
+baseDefenseMapFromLocation: 1
 
 # Mana
 mana:
@@ -35,6 +59,8 @@ mana:
   replenishAfterMission: true
 
 # AI
+turnAIUseGrenade: 1
+turnAIUseBlaster: 1
 ai:
   extendedFireModeChoice: true
   respectMaxRange: true
@@ -53,17 +79,53 @@ bughuntTimeUnitsLeft: 40 # default value 60 # squats have 40 tus
 
 # Difficulty Settings
 startingDifficulty: 0
+difficultyCoefficient: [2, 2, 2, 2, 2]
+aimAndArmorMultipliers: [1.0, 1.0, 1.0, 1.0, 1.0]
+statGrowthMultipliers:
+  tu: 4
+  stamina: 4
+  health: 0
+  bravery: 0
+  reactions: 6
+  firing: 6
+  throwing: 0
+  strength: 2
+  psiStrength: 2
+  psiSkill: 2
+  melee: 6
 
-# Extended
+# Constants and Extended
 constants:
   extendedExperienceAwardSystem: true # https://openxcom.org/forum/index.php/topic,4230.msg154823.html#msg154823
   extendedRunningCost: true # running soldiers will ignore mutual surprise
+  damageRange: 100
+  explosiveDamageRange: 50
+  fireDamageRange: [5, 10]
+  extendedHwpLoadOrder: true
+  extendedTerrainMelee: 4
 
 # User Options
 fixedUserOptions:
   oxceGeoscapeEventsInstantDelivery: true
+  battleUFOExtenderAccuracy: true
+  canSellLiveAliens: true
+  battleExplosionHeight: 3
+  alienBleeding: true
+  battleInstantGrenade: false
+  weaponSelfDestruction: false
+  retainCorpses: false
+  allowPsiStrengthImprovement: false
+  allowPsionicCapture: true
+  bleedingIndicator: true
+  autoSell: true
+  strafe: true
+  strictBlockedChecking: false
+  sneakyAI: false
 recommendedUserOptions:
   oxceAutomaticPromotions: true
+  nightVisionColor: 4
+  fullNightVision: false
+  playBriefingMusicDuringEquipment: true
 
 # Vapor
 transparencyLUTs:
@@ -84,3 +146,8 @@ transparencyLUTs:
     - [14, 14, 16, 12] # 13 silver flames
     - [2, 4, 16, 2] # 14 blue warpfire
     - [16, 4, 8, 2] # 15 pink warpfire
+    # From 40k
+    - [16, 14, 4, 2] # flames - vaporColorSurface: 0, vaporDensitySurface: 4, vaporProbabilitySurface: 100
+    - [16, 10, 0, 2] # melta - vaporColorSurface: 1, vaporDensitySurface: 2, vaporProbabilitySurface: 85
+    - [4, 8, 14, 2] # plasma  - vaporColorSurface: 2, vaporDensitySurface: 6, vaporProbabilitySurface: 18
+    - [4, 16, 8, 2] # gauss  - vaporColorSurface: 3, vaporDensitySurface: 6, vaporProbabilitySurface: 30
