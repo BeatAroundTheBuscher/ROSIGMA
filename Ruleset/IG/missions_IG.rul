@@ -1,15 +1,15 @@
 ## Seriously, doing these missions in the standard Valk? 
 ## I'd rather have no cover than the green box of death
 
- startingConditions:
+startingConditions:
   - type: STR_VALKYRIE_ONLY
     allowedCraft:
       - STR_VALKYRIE
       - STR_VALKYRIE_GRAV_DROP # added this
       - STR_TAUROS # added this
-      
- terrains:      
-  - type: ALLIED_MARINE_DEPLOYMENT
+    
+terrains:      
+  - name: ALLIED_MARINE_DEPLOYMENT
     mapDataSets:
       - BLANKS
       - DROPPOD_ALLIED
@@ -36,13 +36,41 @@
           STR_DROPPOD_DEPLOY_CHARGE: [1, 1]
           STR_ALLIED_MARINE_SPAWNER: [1, 1]
           STR_ALLIED_DEVASTATOR_SPAWNER: [1, 1]
-          
- mapScripts:
+
+  - name: PDF_DEPLOYMENT
+    mapDataSets:
+      - BLANKS
+      - CHIMERAUFO
+    mapBlocks:
+      - name: CHIMERAPDF
+        width: 20
+        length: 10
+        height: 2
+        items:
+          STR_GUARDSMAN_FEMALE_SPAWNER:
+            - [1, 1, 0]
+            - [4, 3, 0]
+            - [12, 1, 0]
+            - [16, 2, 0]
+            - [19, 8, 0]
+            - [7, 7, 0]
+          STR_GUARDSMAN_MALE_SPAWNER:
+            - [3, 3, 0]
+            - [6, 1, 0]
+            - [15, 2, 0]
+            - [18, 1, 0]
+            - [12, 8, 0]
+            - [0, 9, 0]
+        fuseTimers:
+          STR_GUARDSMAN_FEMALE_SPAWNER: [0, 0]
+          STR_GUARDSMAN_MALE_SPAWNER: [0, 0]
+
+mapScripts:
   - type: WARSCRIPT_TANITH_MISSION0
     commands:
     - type: addCraft
-# How about "Nope!"?    
-#      craftName: STR_VALKYRIE_TANITH_MISSION0
+  # How about "Nope!"?    
+  #      craftName: STR_VALKYRIE_TANITH_MISSION0
     - type: addLine
       label: 1
       direction: vertical
@@ -72,8 +100,6 @@
       blocks: [3, 4, 10, 11, 12, 13, 14]
       freqs: [1, 1, 2, 2, 2, 2, 2]
       maxUses: [2, 2, 2, 2, 2, 2, 2]
-
-
 
   - type: WARSCRIPT_TANITH_CONVOYAMBUSH
     commands:
@@ -151,8 +177,8 @@
       maxUses: [2, 2, 2, 2, 2, 2, 2]
     #*** Place the player's craft ***
     - type: addCraft
-# How about "Nope!"? 
-#      craftName: STR_VALKYRIE_TANITH_CONVOYAMBUSH
+  # How about "Nope!"? 
+  #      craftName: STR_VALKYRIE_TANITH_CONVOYAMBUSH
     #*** Fill in the rest of the map
     - type: addBlock
       size: 2
@@ -165,31 +191,5 @@
       blocks: [3, 4, 10, 11, 12, 13, 14]
       freqs: [1, 1, 2, 2, 2, 2, 2]
       maxUses: [2, 2, 2, 2, 2, 2, 2]
- 
-  - type: PDF_DEPLOYMENT
-    mapDataSets:
-      - BLANKS
-      - CHIMERAUFO
-    mapBlocks:
-      - name: CHIMERAPDF
-        width: 20
-        length: 10
-        height: 2
-        items:
-          STR_GUARDSMAN_FEMALE_SPAWNER:
-            - [1, 1, 0]
-            - [4, 3, 0]
-            - [12, 1, 0]
-            - [16, 2, 0]
-            - [19, 8, 0]
-            - [7, 7, 0]
-          STR_GUARDSMAN_MALE_SPAWNER:
-            - [3, 3, 0]
-            - [6, 1, 0]
-            - [15, 2, 0]
-            - [18, 1, 0]
-            - [12, 8, 0]
-            - [0, 9, 0]
-        fuseTimers:
-          STR_GUARDSMAN_FEMALE_SPAWNER: [0, 0]
-          STR_GUARDSMAN_MALE_SPAWNER: [0, 0]
+
+
