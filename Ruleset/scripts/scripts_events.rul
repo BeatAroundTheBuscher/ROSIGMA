@@ -16,18 +16,24 @@ extended:
           var int canBeTraitor;
           var int randomNumber;
           var ptr RuleArmor armorRule;
+          var ptr GeoscapeGame geoScape;
 
           #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: weapon_item" weapon_item;
 
+          battle_game.getGeoscapeGame geoScape;
           rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_PURGED"; #if Alpha Legion was purged, abort.
+          geoScape.isResearched temp researchTopic;
           if gt temp 0;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Alpha Legion Purged." researchTopic;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Alpha Legion Purged." temp;
             return;
           end;
 
           rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_INFILTRATED"; #if Alpha Legion isn't infiltrating, abort.
-          if lt temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No Alpha Legion Infiltration." researchTopic;
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: researchTopic:" researchTopic;
+          geoScape.isResearched temp researchTopic;
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: temp:" temp;
+          if eq temp 0;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No Alpha Legion Infiltration. temp:" temp;
             return;
           end;
 
