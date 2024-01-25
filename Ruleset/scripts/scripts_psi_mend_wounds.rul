@@ -137,6 +137,7 @@ extended:
           var int targetFaction;
           var int attackerFaction;
           var ptr RuleItem ruleItem;
+          var ptr RuleArmor armorRule;
 
           weapon_item.getRuleItem ruleItem;
           ruleItem.getTag temp Tag.ITEM_MENDS_WOUNDS;
@@ -148,6 +149,19 @@ extended:
 
           if le orig_power 0;
             #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Power null. Aborting. power:" orig_power;
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_LIVING; #handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
+          if eq temp 0;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target isn't living.";
+            return;
+          end;
+
+          armorRule.getTag temp Tag.UNIT_TYPE_NULL; #we ignore null units
+          if eq temp 1;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target is a null.";
             return;
           end;
 
