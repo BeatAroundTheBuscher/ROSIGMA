@@ -25,6 +25,12 @@ extended:
             return;
           end;
 
+          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
+          if le moraleMultiplier 0; #morale damage multiplier has to be greater than 0, otherwise abort
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
+            return;
+          end;
+
           set intimidateDamage to_mana;
           #debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
 
@@ -49,17 +55,9 @@ extended:
           end;
 
           unit.getRuleArmor armorRule;
-          armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; #if our infection resist is 100% and applies to all infection types we're immune; abort
-
+          armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; #if our intimidate resist is 100% and applies to all infection types we're immune; abort
           if ge intimidateResist 100; #Abort if the target has immunity
             #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to intimidate:" intimidateResist;
-            return;
-          end;
-
-          weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; #get morale damage multiplier
-
-          if le moraleMultiplier 0; #morale damage multiplier has to be greater than 0, otherwise abort
-            #debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
             return;
           end;
 
@@ -68,17 +66,26 @@ extended:
 
           unit.Stats.getBravery temp2;
           sub intimidateDamage temp2; #subtract target Bravery from our power
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: target Bravery:" temp2;
+          if le intimidateDamage 0; #if our net power is null or negative, abort.
+            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
+            return;
+          end;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery:" intimidateDamage;
+
+          attacker.getHealth temp; #our current health influences the power of the intimidate
+          attacker.getHealthMax temp2;
+          muldiv temp 100 temp2;
+          limit_lower temp 50; #we can't reduce after Bravery intimidation from health loss by more than 50%
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: intimidate Health Loss multiplier:" temp;
+          muldiv intimidateDamage temp 100;
+          #debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Health Loss:" intimidateDamage;
 
           sub intimidateResist 100; #invert intimidateResist
           mul intimidateResist -1; #invert intimidateResist
 
           muldiv intimidateDamage intimidateResist 100; #get the percentage
           #debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery and Resistance:" intimidateDamage;
-
-          if le intimidateDamage 0; #if our net power is null or negative, abort.
-            #debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
-            return;
-          end;
 
           armorRule.getSize temp;
           if eq temp 2; #divide damage to 2x2 by 4, because they get hit 4x as much.
