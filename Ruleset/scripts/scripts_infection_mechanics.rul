@@ -347,7 +347,12 @@ extended:
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
               rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
             else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Rotbearer
-              rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
+              battle_game.randomRange temp 1 100;
+              if lt temp 71;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
+              end;
             else gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Plaguebearer
               rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
             end;
@@ -365,9 +370,21 @@ extended:
             end;
           else eq infectionType 4; #if Tzeentch
             if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
-              rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              battle_game.randomRange temp 1 100;
+              if lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_MUTANT";
+              else lt temp 67;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_WARP_THRALL";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              end;
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
-              rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              battle_game.randomRange temp 1 100;
+              if lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              end;
             else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
               rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
             else; #very high level infection
@@ -503,7 +520,12 @@ extended:
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection; spawns Boomer Zombie
               rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
             else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection; spawns Rotbearer
-              rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
+              battle_game.randomRange temp 1 100;
+              if lt temp 71;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
+              end;
             else gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection; spawns Plaguebearer
               rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
             end;
@@ -521,13 +543,25 @@ extended:
             end;
           else eq infectionType 4; #if Tzeentch
             if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
-              rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              battle_game.randomRange temp 1 100;
+              if lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_MUTANT";
+              else lt temp 67;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_WARP_THRALL";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              end;
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
-              rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              battle_game.randomRange temp 1 100;
+              if lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              end;
             else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
               rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
-            else and gt infectionDamage INFECTION_HIGH_THRESHOLD; #very high level infection
-              rules.getRuleUnit myRuleUnit "STR_PINK_HORROR";
+            else; #very high level infection
+              rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
             end;
           end;
 
