@@ -55,7 +55,7 @@ extended:
             return;
           end;
 
-          unit.getRuleArmor armorRule;
+          attacker.getRuleArmor armorRule; #if the attacker is a 2x2 unit, we abort.
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2.";
@@ -98,18 +98,20 @@ extended:
 
           unit.getHealth temp;
           sub temp to_health;
-          battle_game.randomRange randomNumber 1 100;
+          battle_game.randomRange randomNumber 0 100;
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Random roll:" randomNumber;
 
-          if lt temp 1; #if we kill the target, odds are inverted; 90% chance we are an Alpha Legion traitor instead of 10%
-            add randomNumber 80;
+          if lt temp 1; #if we kill the target, 90% chance we are an Alpha Legion traitor;
+            add randomNumber 90;
           else; #if we don't kill, the chance of a reveal is proportional to the damage we deal; half the to_health value, capping at 50%.
             set temp to_health;
-            div temp 2;
+            div temp 4;
             limit_upper temp 50; #cap the chance from damage at 50
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from damage:" temp;
             add randomNumber temp;
           end;
 
-          if lt randomNumber 91; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
+          if lt randomNumber 100; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor." randomNumber;
             return;
           end;
