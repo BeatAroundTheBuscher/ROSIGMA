@@ -102,14 +102,17 @@ extended:
           #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Random roll:" randomNumber;
 
           if lt temp 1; #if we kill the target, 90% chance we are an Alpha Legion traitor;
-            add randomNumber 90;
+            unit.getHealthMax temp; #percentage chance is equal to the victim's max health.
+            limit_upper temp 95; #we don't exceed a 95% chance
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from kill:" temp;
           else; #if we don't kill, the chance of a reveal is proportional to the damage we deal; half the to_health value, capping at 50%.
             set temp to_health;
             div temp 4;
             limit_upper temp 50; #cap the chance from damage at 50
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from damage:" temp;
-            add randomNumber temp;
           end;
+
+          add randomNumber temp; #add our roll bonus
 
           if lt randomNumber 100; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor." randomNumber;
@@ -118,9 +121,9 @@ extended:
 
           battle_game.randomRange temp 1 10;
           if lt temp 9;
-            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS"; #turn the offender into an Alpha Legion; CQC
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR"; #turn the offender into an Alpha Legion; CQC
           else;
-            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER"; #turn the offender into an Alpha Legion; Ranged
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_INFILTRATOR"; #turn the offender into an Alpha Legion; Ranged
           end;
           attacker.setSpawnUnit alpha;
           attacker.setSpawnUnitFaction FACTION_HOSTILE;
