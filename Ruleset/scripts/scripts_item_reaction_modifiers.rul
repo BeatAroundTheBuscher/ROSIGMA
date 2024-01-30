@@ -11,54 +11,135 @@ extended:
       #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
       REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
+    BattleUnit:
+      UNIT_REACTION_BASE_REACTIONS_BONUS: int
+
 
   scripts:
-    reactionUnitReaction:
-      - new: ROSIGMA_rUA_item_reactions_modifier
-        offset: 19
+    returnFromMissionUnit: #reset our reactions to baseline on mission return
+      - new: ROSIGMA_rFMU_item_reactions_modifier
+        offset: 1
         code: |
-          var int friendyReactionScore;
-          var int enemyReactionScore;
+          var int reactionBonus;
+          var int reactions;
 
+          unit.getTag reactionBonus Tag.UNIT_REACTION_BASE_REACTIONS_BONUS;
+
+          if le reactionBonus 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" reactionBonus;
+            return;
+          end;
+
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Target Unit:" unit;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Removing Reaction Bonus granted by items:" reactionBonus;
+          unit.Stats.getReactions reactions;
+          sub reactions reactionBonus;
+          unit.Stats.setReactions reactions;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Reactions reset:" reactions;
+          unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS 0;
+
+          return;
+
+    newTurnUnit: #reset our reactions to baseline on mission return
+      - new: ROSIGMA_nTU_item_reactions_modifier
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var int baseReactions;
+          var ptre BattleItem battleWeapon;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if eq temp temp2; #abort if it's our turn; we only modify when it's not our turn.
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
+            return;
+          end;
+
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
+            return;
+          end;
+
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Target Unit:" unit;
+
+          #handle the reaction multiplier on weapons
+          unit.Stats.getReactions baseReactions;
+
+          unit.getLeftHandWeapon battleWeapon;
+          battleWeapon.getTag temp Tag.REACTION_MULTIPLIER;
+
+          unit.getRightHandWeapon battleWeapon;
+          battleWeapon.getTag temp2 Tag.REACTION_MULTIPLIER;
+
+          if gt temp2 temp; #we only take the highest multiplier among our weapons.
+            set temp temp2;
+          end;
+
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
+            set temp2 baseReactions;
+            muldiv temp2 temp 100;
+            unit.Stats.setReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
+            sub temp2 baseReactions; #get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
+            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
+          end;
+
+          #handle the reaction bonus on weapons
+          unit.getLeftHandWeapon battleWeapon;
+          battleWeapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+
+          unit.getRightHandWeapon battleWeapon;
+          battleWeapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+
+          if gt temp temp2; #we only take the highest bonus among our weapons.
+            set temp temp2;
+          end;
+
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+            unit.Stats.getReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+            add temp2 temp;
+            unit.Stats.setReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+            sub temp2 baseReactions;
+            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          end;
+
+          return;
+
+      - new: ROSIGMA_nTU_item_reactions_modifier_reset
+        offset: 2
+        code: |
           var int temp;
           var int temp2;
 
-          reaction_weapon.getTag temp Tag.REACTION_MULTIPLIER;
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2; #if it's not our turn, abort; we only reset when it's not our turn.
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. Faction turn doesn't equal unit turn.";
+            return;
+          end;
+
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
           if le temp 0;
-            reaction_weapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
-            if eq temp 0;
-              return reaction_chance; #if neither tag has a relevant value, cancel out
-              #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: No appropriate tags detected. Aborting.";
-            end;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" temp;
+            return;
           end;
 
-          reaction_unit.Stats.getReactions friendyReactionScore;
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Initial Friendly Reaction Score:" enemyReactionScore;
-          reaction_unit.getTimeUnits temp;
-          mul friendyReactionScore temp;
-          reaction_unit.getTimeUnitsMax temp;
-          div friendyReactionScore temp;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Target Unit:" unit;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Removing Reaction Bonus granted by items:" temp;
+          unit.Stats.getReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions pre-reset:" temp2;
+          sub temp2 temp;
+          unit.Stats.setReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions post-reset:" temp2;
+          unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS 0;
 
-          reaction_weapon.getTag temp2 Tag.REACTION_MULTIPLIER;
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Reaction Multiplier Bonus Tag Value:" temp2;
-          muldiv friendyReactionScore temp2 100;
-
-          reaction_weapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Reaction Flat Bonus or Penalty Tag Value:" temp2;
-          add friendyReactionScore temp2;
-
-          action_unit.Stats.getReactions enemyReactionScore;
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Initial Enemy Reaction Score:" enemyReactionScore;
-          action_unit.getTimeUnits temp;
-          mul enemyReactionScore temp;
-          action_unit.getTimeUnitsMax temp;
-          div enemyReactionScore temp;
-
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Final Friendly Reaction Score:" friendyReactionScore;
-          #debug_log "Reaction Modifier Scripts; reactionUnitReaction, offset 19: Final Enemy Reaction Score:" enemyReactionScore;
-
-          if gt friendyReactionScore enemyReactionScore;
-            return 1;
-          end;
-
-          return reaction_chance;
+          return;
