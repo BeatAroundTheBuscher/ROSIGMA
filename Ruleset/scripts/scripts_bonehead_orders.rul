@@ -16,9 +16,9 @@ extended:
       UNIT_BONEHEAD_OGRYN_CURRENT_ISSUED_ORDER: int
       UNIT_BONEHEAD_OGRYN_CURRENT_GIVEN_ORDER: int
       UNIT_BONEHEAD_REMAINING_ORDERS: int
-      UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY: int
-      UNIT_BONEHEAD_GET_EM_BASE_STRENGTH: int
-      UNIT_BONEHEAD_GET_EM_BASE_MELEE: int
+      UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS: int
+      UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS: int
+      UNIT_BONEHEAD_GET_EM_MELEE_BONUS: int
       UNIT_BONEHEAD_BASE_SHRUG_IT_OFF_FATAL_WOUNDS: int
     RuleItem:
       ITEM_IS_STR_BONEHEAD_ORDERS: int
@@ -188,24 +188,25 @@ extended:
 
             unit.Stats.getBravery temp2;
             if gt orderPower temp2; #if our order power exceeds the target ogryn's Bravery, he uses its value for his Bravery until the start of the player's next turn.
-              unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY temp2; #save our current Bravery to be restored later.
-              #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Getta Grip: Unit current Bravery set per UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY. temp2:" temp2;
               limit_upper orderPower 110;
               unit.Stats.setBravery orderPower;
+              sub orderPower temp2;
+              unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS orderPower; #save our current Bravery to be restored later.
+              #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Getta Grip: Unit current Bravery set per UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS. temp2:" temp2;
             end;
             battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_TARGET_GETTA_GRIP";
 
           #apply ORDER 2 Get Em effects: temporarily increases Strength and Melee Accuracy in proportion to orderPower
           else eq temp 2;
             unit.Stats.getStrength temp2;
-            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_STRENGTH temp2; #save our current Strength to be restored later.
-            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Get Em: Unit current Strength set per UNIT_BONEHEAD_GET_EM_BASE_STRENGTH. temp2:" temp2;
+            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Get Em: Unit current Strength set per UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS. temp2:" temp2;
             unit.Stats.getMelee temp2;
-            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_MELEE temp2; #save our current Melee to be restored later.
-            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Get Em: Unit current Melee Skill set per UNIT_BONEHEAD_GET_EM_BASE_MELEE. temp2:" temp2;
+            #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Get Em: Unit current Melee Skill set per UNIT_BONEHEAD_GET_EM_MELEE_BONUS. temp2:" temp2;
             set temp2 orderPower;
             div temp2 2;
             #debug_log "Bonehead Order Scripts; ROSIGMA_dU_bonehead_orders, offset 2: Get Em: Target Melee Skill and Strength bonus. temp2:" temp2;
+            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS temp2; #save our Strength bonus to be reverted later.
+            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_MELEE_BONUS temp2; #save our Melee bonus to be reverted later.
             unit.Stats.addStrength temp2;
             unit.Stats.addMelee temp2;
             battle_game.flashLongMessage "STR_SCRIPT_BONEHEAD_ORDER_TARGET_GET_EM";
@@ -322,27 +323,33 @@ extended:
           #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Resetting order, temp:" temp;
           #BONEHEAD ORDER 1 GETTA GRIP EM; revert our bravery to normal
           if eq temp 1;
-            unit.getTag temp Tag.UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY;
+            unit.getTag temp Tag.UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS;
             if gt temp 0;
-              unit.Stats.setBravery temp; #revert our bravery to normal
-              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY. temp:" temp;
-              unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY 0;
+              unit.Stats.getBravery temp2;
+              sub temp2 temp;
+              unit.Stats.setBravery temp2; #revert our bravery to normal
+              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS. temp2:" temp2;
+              unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS 0;
             end;
 
           #BONEHEAD ORDER 2 GET EM; revert our melee/strength to normal
           #revert our strength to normal
           else eq temp 2;
-            unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_BASE_STRENGTH;
+            unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS;
             if gt temp 0;
-              unit.Stats.setStrength temp;
-              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_BASE_STRENGTH. temp:" temp;
-              unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_STRENGTH 0;
+              unit.Stats.getStrength temp2;
+              sub temp2 temp;
+              unit.Stats.setStrength temp2; #revert our stat to normal
+              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS. temp2:" temp2;
+              unit.setTag Tag.UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS 0;
             end;
-            unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_BASE_MELEE;
+            unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_MELEE_BONUS;
             if gt temp 0;
-              unit.Stats.setMelee temp; #revert our strength to normal
-              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_BASE_MELEE. temp:" temp;
-              unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_MELEE 0;
+              unit.Stats.getMelee temp2;
+              sub temp2 temp;
+              unit.Stats.setMelee temp2; #revert our stat to normal
+              #debug_log "Bonehead Order Scripts; ROSIGMA_nTU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_MELEE_BONUS. temp2:" temp2;
+              unit.setTag Tag.UNIT_BONEHEAD_GET_EM_MELEE_BONUS 0;
             end;
 
           #BONEHEAD ORDER 3 Shrug it Off
@@ -373,6 +380,7 @@ extended:
           var int statCap;
           var int randomNumber;
           var int temp;
+          var int temp2;
           var ptr RuleSoldier rSoldier;
           var int orderXP;
 
@@ -384,26 +392,32 @@ extended:
           end;
 
           #BONEHEAD ORDER 1 GETTA GRIP EM; revert our bravery to normal
-          unit.getTag temp Tag.UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY;
+          unit.getTag temp Tag.UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS;
           if gt temp 0;
-            unit.Stats.setBravery temp; #revert our bravery to normal
-            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY. temp:" temp;
-            unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BASE_BRAVERY 0;
+            unit.Stats.getBravery temp2;
+            sub temp2 temp;
+            unit.Stats.setBravery temp2; #revert our bravery to normal
+            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS. temp2:" temp2;
+            unit.setTag Tag.UNIT_BONEHEAD_GETTA_GRIP_BRAVERY_BONUS 0;
           end;
 
           #BONEHEAD ORDER 2 GET EM; revert our melee/strength to normal
           #revert our strength to normal
-          unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_BASE_STRENGTH;
+          unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS;
           if gt temp 0;
-            unit.Stats.setStrength temp;
-            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_BASE_STRENGTH. temp:" temp;
-            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_STRENGTH 0;
+            unit.Stats.getStrength temp2;
+            sub temp2 temp;
+            unit.Stats.setStrength temp2; #revert our stat to normal
+            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS. temp2:" temp2;
+            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_STRENGTH_BONUS 0;
           end;
-          unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_BASE_MELEE;
+          unit.getTag temp Tag.UNIT_BONEHEAD_GET_EM_MELEE_BONUS;
           if gt temp 0;
-            unit.Stats.setMelee temp; #revert our strength to normal
-            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_BASE_MELEE. temp:" temp;
-            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_BASE_MELEE 0;
+            unit.Stats.getMelee temp2;
+            sub temp2 temp;
+            unit.Stats.setMelee temp2; #revert our stat to normal
+            #debug_log "Bonehead Order Scripts; ROSIGMA_rFMU_bonehead_orders, offset 1: Player Turn Start. 0ifying UNIT_BONEHEAD_GET_EM_MELEE_BONUS. temp2:" temp2;
+            unit.setTag Tag.UNIT_BONEHEAD_GET_EM_MELEE_BONUS 0;
           end;
 
           #BONEHEAD ORDER 3 Shrug it Off
