@@ -143,3 +143,77 @@ extended:
           unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS 0;
 
           return;
+
+    createUnit:
+      - new: ROSIGMA_cU_item_reactions_modifier
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var int baseReactions;
+          var ptre BattleItem battleWeapon;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if eq temp temp2; #abort if it's our turn; we only modify when it's not our turn.
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
+            return;
+          end;
+
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
+            return;
+          end;
+
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Target Unit:" unit;
+
+          #handle the reaction multiplier on weapons
+          unit.Stats.getReactions baseReactions;
+
+          unit.getLeftHandWeapon battleWeapon;
+          battleWeapon.getTag temp Tag.REACTION_MULTIPLIER;
+
+          unit.getRightHandWeapon battleWeapon;
+          battleWeapon.getTag temp2 Tag.REACTION_MULTIPLIER;
+
+          if gt temp2 temp; #we only take the highest multiplier among our weapons.
+            set temp temp2;
+          end;
+
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
+            set temp2 baseReactions;
+            muldiv temp2 temp 100;
+            unit.Stats.setReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
+            sub temp2 baseReactions; #get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
+            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
+          end;
+
+          #handle the reaction bonus on weapons
+          unit.getLeftHandWeapon battleWeapon;
+          battleWeapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+
+          unit.getRightHandWeapon battleWeapon;
+          battleWeapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
+
+          if gt temp temp2; #we only take the highest bonus among our weapons.
+            set temp temp2;
+          end;
+
+          if gt temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+            unit.Stats.getReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+            add temp2 temp;
+            unit.Stats.setReactions temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+            sub temp2 baseReactions;
+            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          end;
+
+          return;
