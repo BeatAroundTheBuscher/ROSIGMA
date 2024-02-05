@@ -74,6 +74,13 @@ extended:
             return;
           end;
 
+          unit.getRuleArmor armorRule; # we ignore decoy targets
+          armorRule.getTag temp Tag.UNIT_TYPE_DECOY;
+          if eq temp 1;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is decoy.";
+            return;
+          end;
+
           unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
           if gt temp 0; # we always ignore infected units
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is infected.";
