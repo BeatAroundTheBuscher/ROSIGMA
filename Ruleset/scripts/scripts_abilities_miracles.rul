@@ -73,6 +73,7 @@ extended:
       UNIT_EXP_STRENGTH: int
       #infection scripts
       CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
+      CURRENT_INFECTION_TYPE: int
 
 
   scripts:
@@ -150,6 +151,7 @@ extended:
           sub to_health 5; # get above 0 HP
           set to_wound 0;
           unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #spirit of martyr purges all infection/corruption
+          unit.setTag Tag.CURRENT_INFECTION_TYPE 0; #spirit of martyr purges all infection/corruption
           battle_game.setTag Tag.MIRACLE_POINTS temp2;
           battle_game.getTurn temp2;
           battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
@@ -157,6 +159,29 @@ extended:
         end;
 
         return;
+
+    returnFromMissionUnit:
+      - new: ROSIGMA_rFMU_miracles #how many Miracle points does this unit generate after each combat?
+        offset: 99
+        code: |
+          var int temp;
+          var int miraclePointsGained;
+          var ptr RuleSoldier rSoldier;
+
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag miraclePointsGained Tag.SOLDIER_MIRACLE_POINTS;
+          if le miraclePointsGained 0;
+            #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Aborting. No Soldier Miracle Points generated:" miraclePointsGained;
+            return;
+          end;
+
+          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Soldier Miracle Points generated:" miraclePointsGained;
+          battle_game.getTag temp Tag.MIRACLE_POINTS;
+          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Current Miracle Points:" temp;
+          add temp miraclePointsGained;
+          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: New Miracle Points:" temp;
+          battle_game.setTag Tag.MIRACLE_POINTS temp;
+          return;
 
     newTurnUnit:
     - offset: 1 # gain miracle points by gaining experience
