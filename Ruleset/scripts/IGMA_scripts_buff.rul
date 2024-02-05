@@ -21,6 +21,7 @@ extended:
           var int bonusBlessPower;
           var int corruptionResistance;
           var int temp;
+          var int temp2;
 
           var ptr RuleItem rule;
           var int isWeaponBlessMeleeAccuracy;
@@ -64,6 +65,14 @@ extended:
           unit.getTag temp Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE;
           if gt corruptionResistance temp; #if our incoming bless corruption resistance is higher, use it
             unit.setTag Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE corruptionResistance;
+          end;
+
+          unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          unit.getTag temp2 Tag.CURRENT_INFECTION_TYPE;
+          if and gt temp 0 neq temp2 2; #we remove non-GSC corruption equal to the resistance we grant
+            sub temp corruptionResistance;
+            limit_lower temp 0;
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
           end;
 
           attacker.Stats.getBravery bufferBravery;
