@@ -801,7 +801,7 @@ items:
     damageType: 5
     accuracySnap: 75
     accuracyAimed: 110
-    powerForAnimation: 10
+    powerForAnimation: 48
     tuSnap: 30
     tuAimed: 60
     snapRange: 24 #*** PLASMA rebalance
@@ -820,6 +820,7 @@ items:
     clipSize: -1
     bulletSprite: {mod: 40k, index: 17}
     recover: false
+
   - type: PREDATOR_WEAPON #PREDATOR PLASMA
     vaporColorSurface: {mod: 40k, index: 2}
     vaporDensitySurface: 6
@@ -832,7 +833,7 @@ items:
     tuSnap: 40
     tuAimed: 60
     battleType: 1
-    powerForAnimation: 10
+    powerForAnimation: 48
     damageAlter: #DA PLASMA
       #ToHealth: 0.9
       #ToArmor: 0.1
@@ -841,13 +842,14 @@ items:
       ToArmor: 0.2
       IgnoreDirection: false
       RadiusReduction: 30.0
+      FixRadius: 2
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
     clipSize: -1
     bulletSprite: {mod: 40k, index: 17}
     recover: false
-    blastRadius: 2
+
   - type: PREDSIDE_WEAPON #Chaos Dread BOLTER
     weight: 60
     power: 60
@@ -1993,6 +1995,10 @@ items:
     snapRange: 18
     autoRange: 13
     battleType: 1
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 3
     twoHanded: true
     oneHandedPenalty: 75
     invWidth: 2
@@ -2021,7 +2027,7 @@ items:
     power: 70
     damageAlter: #DA BLIGHT
       ToArmorPre: 0.4 #corrodes/melts away
-      ToHealth: 0.7
+      ToHealth: 0.6
       ToTime: 0.2
       ToTile: 0.4 #corrodes/melts away
       FixRadius: 1
@@ -2129,8 +2135,8 @@ items:
     handSprite: {mod: 40k, index: 440} #CHANGE
     size: 0.2
     # costBuy: 500
-    hitAnimation: 1090
-    costSell: 2000
+    hitAnimation: 1030
+    costSell: 500
     weight: 5
     power: 57
     powerRangeReduction: 13
@@ -2143,10 +2149,11 @@ items:
       ToArmor: 0.0
       ToHealth: 0.1
       ToMana: 0.7 #mana counts as health damage for the purposes of infection
-      ToMorale: 1.0
+      ToMorale: 5.0 #flamer level demoralization
       ToEnergy: 0.3
       ToTime: 0.2
       FixRadius: 3 #animation related+balance
+    powerForAnimation: 80
     clipSize: 100
     vaporColorSurface: 12
     vaporDensitySurface: 6
@@ -3046,36 +3053,6 @@ items:
     bulletSpeed: 50
     attraction: 8
     listOrder: 10521
-
-  - type: STR_AC_N_AMMO #HEAVYBOLTER Nurgle Ammo                 12030
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
-    size: 0.1
-    costSell: 500
-    weight: 20
-    bigSprite: { mod: 40k, index: 10 } #needs new
-    floorSprite: { mod: 40k, index: 10 }
-    hitSound: { mod: 40k, index: 708 }
-    hitAnimation: { mod: 40k, index: 0 }
-    power: 70
-    damageAlter: #DA BLIGHT
-      ToArmorPre: 0.4
-      ToArmor: 0.1
-      ToHealth: 0.7
-      ToTime: 0.2
-      ToTile: 0.4
-    damageType: 3
-    clipSize: 80
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 2
-    autoShots: 5
-    listOrder: 10526
-    requires:
-      - STR_ALIENS_ONLY
-    tags:
-      INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_SNIPER_CHAOS  #SNIPER                    11905                         AIMED
     categories: [STR_CAT_SNIPER, STR_CAT_CHAOS]
@@ -4510,7 +4487,7 @@ items:
     explosionHitSound: {mod: 40k, index: 690} #*** PLASMA rebalance
     hitAnimation: {mod: 40k, index: 112 } #100 #*** PLASMA rebalance
     power: 110 #less than the dread heavy plasma
-    powerForAnimation: 10
+    powerForAnimation: 48
     damageType: 5
     battleType: 1
     damageAlter: #DA PLASMA
@@ -4898,6 +4875,7 @@ items:
       ToTime: 0.2
       ToTile: 0.4 #corrodes/melts away
       FixRadius: 1
+    powerForAnimation: 16 #Fix radius * 32 - 16.
     damageType: 8
     clipSize: -1
     listOrder: 10530
@@ -4948,15 +4926,16 @@ items:
       ToItem: 0.75 #caustic + high explosive
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 8
+    powerForAnimation: 240 #Fix radius * 32 - 16.
     clipSize: -1
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
+    spawnUnitChance: 25
     explosionHitSound: {mod: 40k, index: 832}
     hitAnimation: {mod: 40k, index: 120 } #Green EX
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    spawnUnitChance: 25
 
   - type: STR_BLIGHT_HAULER_MISSILE_LAUNCHER
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
@@ -5002,6 +4981,7 @@ items:
       ToItem: 0.75 #caustic + high explosive
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 10
+    powerForAnimation: 304 #Fix radius * 32 - 16.
     clipSize: -1
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
@@ -5392,7 +5372,7 @@ items:
     fireSound: {mod: 40k, index: 51}
     hitSound: {mod: 40k, index: 19}
     explosionHitSound: {mod: 40k, index: 832 } #blight rocket SFX
-    hitAnimation: 1200 # uses SMOKE.PCK instead of X1.PCK
+    hitAnimation: 1030 #128 green from X1.pck
     vaporColorSurface: 12
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
@@ -5431,12 +5411,13 @@ items:
       ToArmor: 0.0
       ToHealth: 0.1
       ToMana: 0.7 #mana counts as health damage for the purposes of infection
-      ToMorale: 1.0
+      ToMorale: 5.0 #flamer level demoralization
       ToEnergy: 0.3
       ToTime: 0.2
       FixRadius: 3 #animation related+balance
     #bulletSpeed: 50
     #explosionSpeed: 10
+    powerForAnimation: 80 #Fix radius * 32 - 16.
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
@@ -5795,7 +5776,7 @@ items:
       ToTile: 1.0
       ToItem: 1.0
     explosionSpeed: 5
-    powerForAnimation: 5
+    powerForAnimation: 48
     battleType: 1
     twoHanded: false
     blockBothHands: false
@@ -5893,7 +5874,7 @@ items:
       ToTile: 1.0
       ToItem: 1.0
       FixRadius: 2
-    powerForAnimation: 5 # 5 / 5 = 1
+    powerForAnimation: 48 # 5 / 5 = 1
 
   - type: STR_CHAOS_SENTINEL_INC_ROCKET_POD
     weight: 0
@@ -5904,7 +5885,7 @@ items:
     fireSound: {mod: 40k, index: 52}
     explosionHitSound: { mod: 40k, index: 771 }
     hitAnimation: 2120 #fireballhitex
-    powerForAnimation: 50
+    powerForAnimation: 176
     dropoff: 4
     noLOSAccuracyPenalty: 75 #artillery
     accuracyAimed: 150 #laser guided
