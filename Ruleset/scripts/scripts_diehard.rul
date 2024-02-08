@@ -1,0 +1,114 @@
+extended:
+  tags:
+    RuleArmor:
+      UNIT_IS_DIEHARD: int #is the unit diehard?
+      DIEHARD_MODIFIER: int #adds or subtracts from the unit's diehard chance
+      DIEHARD_TEMP_MODIFIER_INCREMENT: int #how much the temp modifier goes up each time diehard is triggered since the start of our last turn.
+      DIEHARD_THRESHOLD: int #overkill beyond this number cannot be negated by diehard
+    BattleUnit:
+      DIEHARD_TEMP_MODIFIER: int #our cumulative penalty to diehard triggers since the start of our last turn
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_diehard
+        offset: 90
+        code: |
+          var int currentHealth;
+          var int damage;
+          var int randomNumber;
+          var int temp;
+          var int temp2;
+          var ptr RuleArmor armorRule;
+
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: weapon_item" weapon_item;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_DIEHARD;
+          if lt temp 1;
+            #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Aborting. Unit isn't diehard." temp;
+            return;
+          end;
+
+          set temp to_health;
+          unit.getHealth currentHealth;
+          sub currentHealth temp;
+          if gt currentHealth 1;
+            #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Aborting. Non-lethal damage, remaining health:" currentHealth;
+            return;
+          end;
+
+          weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if eq temp 1; # we ignore buffing items/weapons
+            #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Aborting. Attacking item is a buff item.";
+            return;
+          end;
+
+          unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          if gt temp 0; # we always ignore infected units
+            #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Aborting. Target is infected.";
+            return;
+          end;
+
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Target sustained lethal damage. Current Health:" currentHealth;
+          unit.getHealthMax temp;
+          add temp currentHealth;
+          unit.getHealthMax temp2;
+          muldiv temp 100 temp2; #get the percentage of our max HP minus overkill vs our max HP to get the % chance of a trigger
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Initial Diehard value before modifiers:" temp;
+
+          armorRule.getTag temp2 Tag.DIEHARD_MODIFIER; #apply modifiers; this can be positive or negative.
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: DIEHARD_MODIFIER:" temp2;
+          add temp temp2;
+          unit.getTag temp2 Tag.DIEHARD_TEMP_MODIFIER; #this should always be 0 or negative.
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Current DIEHARD_TEMP_MODIFIER:" temp2;
+          add temp temp2;
+
+          battle_game.randomRange randomNumber 0 100; #if we roll under our diehard value we endure
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Diehard value:" temp;
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Roll:" randomNumber;
+          if ge randomNumber temp;
+            #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Aborting. Rolled above Diehard value.";
+            return;
+          end;
+
+          unit.getHealth currentHealth;
+          set to_health currentHealth;
+          sub to_health 1; #we will take just enough damage to put us at 1 hp.
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: Diehard successfully triggered. New damage value:" to_health;
+
+          unit.getTag temp Tag.DIEHARD_TEMP_MODIFIER; #reduce our temp modifier by our temp modifier increment
+          armorRule.getTag temp2 Tag.DIEHARD_TEMP_MODIFIER_INCREMENT;
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: DIEHARD_TEMP_MODIFIER_INCREMENT:" temp2;
+          add temp temp2;
+          limit_upper temp 0; #we cannot become more likely to endure from our temp modifier.
+          unit.setTag Tag.DIEHARD_TEMP_MODIFIER temp;
+          #debug_log "ROSIGMA_dU_diehard Scripts; damageUnit, offset 90: New DIEHARD_TEMP_MODIFIER:" temp;
+
+          battle_game.flashMessage "STR_SCRIPT_DIEHARD_ACTIVATED";
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_diehard
+        offset: 22
+        code: |
+          var int temp;
+          var int temp2;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2; #abort if it's not our turn
+            #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+            return;
+          end;
+
+          unit.getTag temp Tag.DIEHARD_TEMP_MODIFIER;
+          if eq temp 0;
+            #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Aborting. DIEHARD_TEMP_MODIFIER_INCREMENT is 0.";
+            return;
+          end;
+
+          #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Reset DIEHARD_TEMP_MODIFIER_INCREMENT. Current value:" temp;
+          set temp 0;
+          unit.setTag Tag.DIEHARD_TEMP_MODIFIER temp;
+          return;
