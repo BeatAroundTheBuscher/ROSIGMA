@@ -34,6 +34,13 @@ extended:
             return 0 0 0;
           end;
 
+          attacker.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2; #abort if it's not our turn; only test for perils on our turn so reaction fire doesn't trigger
+            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+            return 0 0 0;
+          end;
+
           attacker.getMorale perilsMagnitude;
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
           attacker.getTag perilsModifier Tag.UNIT_PERILS_MODIFIER;
@@ -87,13 +94,17 @@ extended:
             battle_game.randomRange randomNumber 0 100; #determine our random perils result; lower is worse.
             #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
             if lt randomNumber 1; #psyker is instantly corrupted and transforms into a random higher end daemon
-              battle_game.randomRange randomNumber 0 2;
+              battle_game.randomRange randomNumber 0 4;
               if eq randomNumber 0;
                 rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
               else eq randomNumber 1;
                 rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
-              else;
+              else eq randomNumber 2;
                 rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
+              else eq randomNumber 3;
+                rules.getRuleUnit myRuleUnit "STR_SILACOID_TERRORIST";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_NEVERBORN_TERRORIST";
               end;
               attacker.setSpawnUnit myRuleUnit;
               attacker.setSpawnUnitInstantRespawn 1;
@@ -111,13 +122,11 @@ extended:
               attacker.getEnergy temp;
               battle_game.randomRange temp2 1 perilsMagnitude;
               sub temp temp2;
-              limit_lower temp 0;
               attacker.setEnergy temp;
 
               attacker.getStun temp;
               battle_game.randomRange temp2 1 perilsMagnitude;
               sub temp temp2;
-              limit_lower temp 0;
               attacker.setStun temp;
             end;
 
