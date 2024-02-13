@@ -344,20 +344,24 @@ items:
     hitAnimation: {mod: 40k, index: 36}
     powerRangeThreshold: 14
     powerRangeReduction: 5
-    dropoff: 3
-    snapRange: 30
+    dropoff: 4 #handheld heavy weapon
+    snapRange: 25
+    aimRange: 30
     battleType: 1
     clipSize: -1
     power: 120
     damageType: 4
     damageAlter: #LASCAN 50-150%
-      RandomType: 2
+      RandomType: 6
       ToArmorPre: 0.3
       ToHealth: 0.8
       ToArmor: 0.15
       ToStun: 0.0
     accuracySnap: 60 #20
-    tuSnap: 50
+    accuracyAimed: 80 #20
+    kneelBonus: 130
+    tuSnap: 40
+    tuAimed: 70
     twoHanded: true
     blockBothHands: true
     invWidth: 2
@@ -5986,3 +5990,90 @@ items:
     recover: false
     skillApplied: false
     strengthApplied: false
+
+  - type: STR_NURGLE_GRENADE_DRUM #debuff rather than damage
+    categories: [STR_CAT_ROCKETL, STR_CAT_NURGLE, STR_CAT_GRENADES]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costBuy: 800
+    costSell: 200
+    weight: 4
+    bigSprite: 1037
+    floorSprite: 952
+    handSprite: {mod: 40k, index: 1048 }
+    power: 70
+    damageType: 8
+    damageAlter:
+      ArmorEffectiveness: 0.7 #bypasses armor
+      RandomType: 6
+      ToArmorPre: 0.5 #rots armor
+      ToArmor: 0.0 #does damage on the way in
+      ToHealth: 0.1 #going for low health damage, mainly armor and corruption threat.
+      ToMana: 0.5
+      ToMorale: 5.0
+      ToEnergy: 0.5
+      ToStun: 0.5
+      ToTime: 0.5 #sticky goo; also so it's still relevant vs mechanical/corruption immune enemies
+      ToTile: 0.5 #acidic
+      ToWound: 0.05
+      RandomWound: false
+      FixRadius: 5
+    powerForAnimation: 144
+    clipSize: 6
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    listOrder: 11871
+    explosionHitSound: {mod: 40k, index: 832 } #blight rocket SFX
+    hitAnimation: 1030 #128 green from X1.pck
+    hitSound: {mod: 40k, index: 832 }
+    vaporColorSurface: 2 #toxic green
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 50
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100
+      INFECTION_TYPE: 1
+      ITEM_AMMO_COLOR: 8
+
+  - type: STR_MORTAR_PORTABLE_CHAOS
+    categories: [STR_CAT_ROCKETL]
+    size: 0.4
+    dropoff: 4 #high drop off, inaccurate
+    requires:
+      - STR_ALIENS_ONLY
+    costSell: 5000
+    weight: 40 #like heavy bolter
+    bigSprite: 1038
+    floorSprite: 953
+    handSprite: 896
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound:  {mod: 40k, index: 4}
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    compatibleAmmo:
+      - STR_MORTAR_AMMO_HE
+      - STR_MORTAR_AMMO_KRAK
+      - STR_MORTAR_AMMO_PHOSPHOR
+      - STR_MORTAR_AMMO_SMOKE
+      - STR_MORTAR_AMMO_ILLUMINATION
+      - STR_MORTAR_AMMO_PHOTON
+      - STR_MORTAR_AMMO_FRAG
+    accuracyAimed: 80
+    tuLoad: 15 #a bit of work to reload
+    tuAimed: 50 #two grenades per turn+some turn adjustment, or reload cost?
+    reloadSound: 2427
+    autoRange: 0
+    snapRange: 0 #no snap, to prevent reactions
+    aimRange: 30 #Sniper range
+    kneelBonus: 150
+    battleType: 1
+    arcingShot: true
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    listOrder: 11872
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+      ITEM_HAS_BIPOD: 1
