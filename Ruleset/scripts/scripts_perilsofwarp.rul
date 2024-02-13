@@ -38,107 +38,108 @@ extended:
           battle_game.getTurnSide temp2;
           if neq temp temp2; #abort if it's not our turn; only test for perils on our turn so reaction fire doesn't trigger
             #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
-            return 0 0 0;
+            return power part side;
           end;
 
           attacker.getMorale perilsMagnitude;
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
           attacker.getTag perilsModifier Tag.UNIT_PERILS_MODIFIER;
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: UNIT_PERILS_MODIFIER:" perilsModifier;
+          add perilsMagnitude 10; #offset for morale cost
           sub perilsMagnitude perilsModifier;
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
-
-          battle_game.randomRange randomNumber 0 100; #if we roll equal to or greater than our roll, we trigger Perils
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils of the Warp roll:" randomNumber;
-          if ge randomNumber perilsMagnitude;
-            sub perilsMagnitude 100; #potency scales with the amount we're under max Morale
-            mul perilsMagnitude -1;
-            attacker.getTag temp Tag.CURRENT_INFECTION_DAMAGE; #add infection damage equal to PerilsMagnitude
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage before Perils increment:" temp;
-            add temp perilsMagnitude;
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
-            attacker.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
-
-            battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
-            if eq randomNumber 0;
-              attacker.setTag Tag.CURRENT_INFECTION_TYPE 1;
-            else eq randomNumber 1;
-              attacker.setTag Tag.CURRENT_INFECTION_TYPE 3;
-            else;
-              attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
-            end;
-            attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; #randomize our infection type
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
-
-            attacker.getHealth temp; #deplete health in proportion to perilMagnitude
-            battle_game.randomRange temp2 1 perilsMagnitude;
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Health loss from Perils:" temp2;
-            sub temp temp2;
-            limit_lower temp 1; #don't go below 1 hp... at least not now.
-            attacker.setHealth temp;
-
-            attacker.getMorale temp; #deplete morale in proportion to perilMagnitude
-            sub temp perilsMagnitude;
-            limit_lower temp 0;
-            attacker.setMorale temp;
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Morale loss from Perils:" perilsMagnitude;
-
-            #attacker.getHealth temp; #apply fatal wounds to head in proportion to perilMagnitude
-            #battle_game.randomRange temp2 1 perilsMagnitude;
-            #attacker.getFatalwounds temp 1; #add fatal wounds to any we currently have in this location
-            #add temp temp2;
-            #attacker.setFatalwounds 1 temp;
-            ##debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
-
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Rolled more or equal to Perils target value." temp;
-            battle_game.randomRange randomNumber 0 100; #determine our random perils result; lower is worse.
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
-            if lt randomNumber 1; #psyker is instantly corrupted and transforms into a random higher end daemon
-              battle_game.randomRange randomNumber 0 4;
-              if eq randomNumber 0;
-                rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
-              else eq randomNumber 1;
-                rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
-              else eq randomNumber 2;
-                rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
-              else eq randomNumber 3;
-                rules.getRuleUnit myRuleUnit "STR_SILACOID_TERRORIST";
-              else;
-                rules.getRuleUnit myRuleUnit "STR_NEVERBORN_TERRORIST";
-              end;
-              attacker.setSpawnUnit myRuleUnit;
-              attacker.setSpawnUnitInstantRespawn 1;
-            else lt randomNumber 11; #psyker is almost zeroed out
-              attacker.setHealth 1;
-              attacker.setStun 0;
-              attacker.setMorale 0;
-              attacker.setEnergy 0;
-            else lt randomNumber 31; #KO
-              attacker.setStun 0;
-              attacker.setMorale 0;
-              attacker.setEnergy 0;
-            else lt randomNumber 71; #do extra stun and energy damage in proportion to perilsMagnitude
-              battle_game.randomRange temp 1 perilsMagnitude;
-              attacker.getEnergy temp;
-              battle_game.randomRange temp2 1 perilsMagnitude;
-              sub temp temp2;
-              attacker.setEnergy temp;
-
-              attacker.getStun temp;
-              battle_game.randomRange temp2 1 perilsMagnitude;
-              sub temp temp2;
-              attacker.setStun temp;
-            end;
-
-            battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; #let the player know we have suffered perils of the warp
-            return 0 0 0;
-          end;
 
           damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER; #increment our Perils of the Warp chance
           attacker.getTag temp2 Tag.UNIT_PERILS_MODIFIER;
           add temp2 temp;
           attacker.setTag Tag.UNIT_PERILS_MODIFIER temp2;
 
+          battle_game.randomRange randomNumber 0 100; #if we roll greater than our Morale + offsets, we trigger Perils
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils of the Warp roll:" randomNumber;
+          if le randomNumber perilsMagnitude;
+            return power part side;
+          end;
+
+          sub perilsMagnitude 100; #potency scales with the amount we're under max Morale
+          mul perilsMagnitude -1;
+          attacker.getTag temp Tag.CURRENT_INFECTION_DAMAGE; #add infection damage equal to PerilsMagnitude
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage before Perils increment:" temp;
+          add temp perilsMagnitude;
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
+          attacker.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
+
+          battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
+          if eq randomNumber 0;
+            attacker.setTag Tag.CURRENT_INFECTION_TYPE 1;
+          else eq randomNumber 1;
+            attacker.setTag Tag.CURRENT_INFECTION_TYPE 3;
+          else;
+            attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
+          end;
+          attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; #randomize our infection type
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
+
+          attacker.getHealth temp; #deplete health in proportion to perilMagnitude
+          battle_game.randomRange temp2 1 perilsMagnitude;
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Health loss from Perils:" temp2;
+          sub temp temp2;
+          limit_lower temp 1; #don't go below 1 hp... at least not now.
+          attacker.setHealth temp;
+
+          attacker.getMorale temp; #deplete morale in proportion to perilMagnitude
+          sub temp perilsMagnitude;
+          limit_lower temp 0;
+          attacker.setMorale temp;
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Morale loss from Perils:" perilsMagnitude;
+
+          #attacker.getHealth temp; #apply fatal wounds to head in proportion to perilMagnitude
+          #battle_game.randomRange temp2 1 perilsMagnitude;
+          #attacker.getFatalwounds temp 1; #add fatal wounds to any we currently have in this location
+          #add temp temp2;
+          #attacker.setFatalwounds 1 temp;
+          ##debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
+
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Rolled more or equal to Perils target value." temp;
+          battle_game.randomRange randomNumber 0 100; #determine our random perils result; lower is worse.
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
+          if lt randomNumber 1; #psyker is instantly corrupted and transforms into a random higher end daemon
+            battle_game.randomRange randomNumber 0 4;
+            if eq randomNumber 0;
+              rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
+            else eq randomNumber 1;
+              rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
+            else eq randomNumber 2;
+              rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
+            else eq randomNumber 3;
+              rules.getRuleUnit myRuleUnit "STR_SILACOID_TERRORIST";
+            else;
+              rules.getRuleUnit myRuleUnit "STR_NEVERBORN_TERRORIST";
+            end;
+            attacker.setSpawnUnit myRuleUnit;
+            attacker.setSpawnUnitInstantRespawn 1;
+          else lt randomNumber 11; #psyker is almost zeroed out
+            attacker.setHealth 1;
+            attacker.setStun 0;
+            attacker.setMorale 0;
+            attacker.setEnergy 0;
+          else lt randomNumber 31; #KO
+            attacker.setStun 0;
+            attacker.setMorale 0;
+            attacker.setEnergy 0;
+          else lt randomNumber 71; #do extra stun and energy damage in proportion to perilsMagnitude
+            battle_game.randomRange temp 1 perilsMagnitude;
+            attacker.getEnergy temp;
+            battle_game.randomRange temp2 1 perilsMagnitude;
+            sub temp temp2;
+            attacker.setEnergy temp;
+
+            attacker.getStun temp;
+            battle_game.randomRange temp2 1 perilsMagnitude;
+            sub temp temp2;
+            attacker.setStun temp;
+          end;
+
+          battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; #let the player know we have suffered perils of the warp
           return power part side;
 
     newTurnUnit: #reset our Perils modifier
