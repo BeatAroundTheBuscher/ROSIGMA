@@ -1373,7 +1373,7 @@ items:
     }
 
   - type: STR_BOLTPISTOL_NURGLE  #NURGLE BOLTER PISTOL  10140
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     size: 0.2
     dropoff: 5
     requires:
@@ -1390,6 +1390,8 @@ items:
       - STR_PISTOL_CLIP_BLIGHT
       - STR_PISTOL_CLIP
       - STR_PISTOL_CLIP_MC
+      - STR_PISTOL_CLIP_AP
+      - STR_PISTOL_CLIP_EX
     accuracySnap: 55
     tuSnap: 21
     battleType: 1
@@ -1407,7 +1409,7 @@ items:
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
 
   - type: STR_PISTOL_CLIP_BLIGHT #              10210                    ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     size: 0.1
     requires:
       - STR_ALIENS_ONLY
@@ -1421,10 +1423,16 @@ items:
     damageAlter: #DA BLIGHT
       ToArmorPre: 0.4
       ToArmor: 0.1
-      ToHealth: 0.7
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
       ToTime: 0.2
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.05 #debilitates and infects instead of wounds
+      RandomWound: false
     explosionSpeed: 5
-    power: 50 #10 less than boltpistol)
+    power: 60
     damageType: 1
     clipSize: 12
     battleType: 2
@@ -1436,7 +1444,7 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_BOLTERN_LIGHT #LIGHT BOLTER NURGLE CHAOS
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
@@ -1470,7 +1478,7 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_BOLTERN_LIGHT_GRENADELAUNCHER #LIGHT BOLTER NURGLE CHAOS with grenade launcher
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
@@ -1905,7 +1913,7 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_LIGHT_BOLTER_AMMO_NURGLE
-    categories: [STR_CAT_BOLTER]
+    categories: [STR_CAT_BOLTER, STR_CAT_NURGLE]
     requiresBuy:
       - STR_ALIENS_ONLY
     size: 0.1
@@ -1920,8 +1928,14 @@ items:
     damageAlter: #DA BLIGHT
       ToArmorPre: 0.4
       ToArmor: 0.1
-      ToHealth: 0.7
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
       ToTime: 0.2
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.05 #debilitates and infects instead of wounds
+      RandomWound: false
     explosionSpeed: 5
     power: 50
     damageType: 1
@@ -1937,12 +1951,12 @@ items:
 
 
   - type: STR_BOLTERN #BOLTER NURGLE CHAOS   10350
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
     dropoff: 4
-    costSell: 2750
+    costSell: 500 #rotted and disgusting; no one wants this
     weight: 20
     compatibleAmmo:
       - STR_RIFLE_CLIP
@@ -1971,12 +1985,12 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_HEAVY_BOLTER_CHAOSNURGLE     #CHAOS NURGLE HBOLTER ROSEMOD
-    categories: [STR_CAT_BOLTER]
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     size: 0.3
-    dropoff: 5
+    dropoff: 4 #heavy weapon drop off
     requires:
       - STR_ALIENS_ONLY
-    costSell: 7000
+    costSell: 1000 #rotted and disgusting; no one wants this
     weight: 40
     bigSprite: 2601
     floorSprite: 2600
@@ -2017,23 +2031,32 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_AC_N_AMMO #HEAVYBOLTER Nurgle Ammo                 12030
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     size: 0.1
     requires:
       - STR_ALIENS_ONLY
-    costSell: 1000
+    costSell: 100 #rotted and disgusting; no one wants this
     weight: 20
     bigSprite: 2600
     floorSprite: { mod: 40k, index: 10 }
     hitSound: { mod: 40k, index: 708 }
     explosionHitSound: {mod: 40k, index: 832}
     hitAnimation: {mod: 40k, index: 120 } #Green EX
+    vaporColorSurface: 2 #toxic green plague tracer
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 50
     power: 70
     damageAlter: #DA BLIGHT
-      ToArmorPre: 0.4 #corrodes/melts away
-      ToHealth: 0.6
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
       ToTime: 0.2
-      ToTile: 0.4 #corrodes/melts away
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.05 #debilitates and infects instead of wounds
+      RandomWound: false
       FixRadius: 1
     damageType: 8
     clipSize: 80
@@ -2140,7 +2163,7 @@ items:
     size: 0.2
     # costBuy: 500
     hitAnimation: 1030
-    costSell: 500
+    costSell: 100 #it's literally a tank of concentratred Chaos corruption and waste
     weight: 5
     power: 57
     powerRangeReduction: 13
@@ -2154,8 +2177,11 @@ items:
       ToHealth: 0.1
       ToMana: 0.7 #mana counts as health damage for the purposes of infection
       ToMorale: 5.0 #flamer level demoralization
-      ToEnergy: 0.3
-      ToTime: 0.2
+      ToEnergy: 0.5
+      ToStun: 0.5
+      ToTime: 0.5 #sticky goo; also helps this remain effective against inorganic/infection immune
+      ToWound: 0.05 #debilitates rather than wounds
+      RandomWound: false
       FixRadius: 3 #animation related+balance
     powerForAnimation: 80
     clipSize: 100
@@ -2522,20 +2548,26 @@ items:
     listOrder: 10360
 
   - type: STR_RIFLE_CLIP_N #          10450                      ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costSell: 150
+    costSell: 50 #rotted and disgusting; no one wants this
     hitAnimation: 2010 #nurgle green small explosion
     weight: 3
     damageAlter: #Plague weapon
       ToArmorPre: 0.4
       ToArmor: 0.1
-      ToHealth: 0.7
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
       ToTime: 0.2
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.05 #debilitates and infects instead of wounds
+      RandomWound: false
     explosionSpeed: 5
-    power: 55
+    power: 65
     damageType: 1
     clipSize: 20
     battleType: 2
@@ -3709,12 +3741,12 @@ items:
     listOrder: 11821
 
   - type: STR_NURGLE_KOMBIBOLTER_GRAV ## Nurge Kombi-Grav
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_GRAVGUN]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_GRAVGUN, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
     dropoff: 6
-    costSell: 5000
+    costSell: 5000 #only valuable because the technology is esoteric
     weight: 18
     bigSprite: 2613
     floorSprite: 2612
@@ -4880,10 +4912,16 @@ items:
     autoShots: 8
     bulletSpeed: 75
     damageAlter: #DA BLIGHT
-      ToArmorPre: 0.4 #corrodes/melts away
-      ToHealth: 0.6
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
       ToTime: 0.2
-      ToTile: 0.4 #corrodes/melts away
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.05 #debilitates and infects instead of wounds
+      RandomWound: false
       FixRadius: 1
     powerForAnimation: 16 #Fix radius * 32 - 16.
     damageType: 8
@@ -4983,6 +5021,7 @@ items:
       ToArmorPre: 0.7 #caustic + high explosive
       ToArmor: 0.0 #melts on the way in
       ToHealth: 0.1 #infectious blight
+      ToMorale: 1.0
       ToMana: 0.6 #infectious blight
       ToStun: 0.6 #concussive
       ToEnergy: 0.5 #concussive
