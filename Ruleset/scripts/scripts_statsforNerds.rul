@@ -40,40 +40,7 @@ armors:
       HAS_EXTENDED_FRONT_SHIELD: 1
 
 extended:
-  tags:
-    RuleItem:
-      ITEM_RECOIL: int
-      ITEM_HAS_BIPOD: int
-      ITEM_STRENGTH_REQUIREMENT: int
-      ITEM_HEAT_MAX_LEVEL: int
-      ITEM_HEAT_DISSIPATION_PER_TURN: int
-      ITEM_AUTO_FLAT_POWER_BONUS: int
-      ITEM_SNAP_FLAT_POWER_BONUS: int
-      ITEM_AIMED_FLAT_POWER_BONUS: int
-      ITEM_MELEE_POWER_BONUS: int
-      ITEM_AIMED_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_POWER_BONUS_PERCENTILE: int #0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
-      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
-      GravPercentage: int
-#reaction modifier tags
-      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
-      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
-      ITEM_IS_HEAVY_WEAPON: int
-    RuleArmor:
-      HAS_EXTENDED_FRONT_SHIELD: int
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
-      ARMOR_ENERGY_SHIELD_DECAY: int
-      DODGE_CHANCE: int
-      FLIGHT_DODGE_CHANCE: int
-      MaxFlight: int
-      MaxCoolDown: int
-    #corruption/infection script tags
-      INFECTION_RESIST: int #reduces infection damage by this as a %
-      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
-    #intimidation script tags
-      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
 
   scripts:
@@ -195,8 +162,12 @@ extended:
             stats_state.addIntRow "STR_HEAT_DISSIPATION_PER_TURN" temp;
           end;
           rule.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-          if gt temp 0;
+          if gt temp 1;
             stats_state.addIntRow "STR_HEAT_AMMO_SPENT_FOR_INCREASE" temp;
+          end;
+          rule.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+          if gt temp 0;
+            stats_state.addIntRow "STR_ITEM_HEAT_PER_AMMO" temp;
           end;
           rule.getTag temp Tag.GravPercentage;
           if gt temp 0;

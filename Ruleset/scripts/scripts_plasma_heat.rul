@@ -6,6 +6,7 @@ extended:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
+      ITEM_HEAT_PER_AMMO: int
       ITEM_AUTO_FLAT_POWER_BONUS: int
       ITEM_SNAP_FLAT_POWER_BONUS: int
       ITEM_AIMED_FLAT_POWER_BONUS: int
@@ -47,9 +48,14 @@ extended:
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
-          reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           add previousAmmoCount reaction_count; # assumes that snap will always use one ammo per shot
-          div previousAmmoCount temp;
+          reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+          if eq temp 1;
+            reaction_weapon.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+            mul previousAmmoCount temp;
+          else;
+            div previousAmmoCount temp;
+          end;
 
           add currentHeat previousAmmoCount;
 
@@ -67,6 +73,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_HEAT_PER_AMMO: 1
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
@@ -111,7 +118,12 @@ items:
           end;
 
           item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-          div previousAmmoCount temp;
+          if eq temp 1;
+            item.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+            mul previousAmmoCount temp;
+          else;
+            div previousAmmoCount temp;
+          end;
 
           add currentHeat previousAmmoCount;
           if le currentHeat maxHeat;
@@ -154,7 +166,12 @@ items:
         end;
 
         item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-        div previousAmmoCount temp;
+        if eq temp 1;
+          item.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+          mul previousAmmoCount temp;
+        else;
+          div previousAmmoCount temp;
+        end;
 
         add currentHeat previousAmmoCount;
 
@@ -204,7 +221,12 @@ items:
           sub previousAmmoCount currentAmmoCount; # delta ammo count
 
           item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-          div previousAmmoCount temp; # delta heat
+          if eq temp 1;
+            item.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+            mul previousAmmoCount temp;
+          else;
+            div previousAmmoCount temp;
+          end;
 
           add currentHeat previousAmmoCount;
         else;
@@ -263,7 +285,12 @@ items:
         end;
 
         weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-        div previousAmmoCount temp;
+        if eq temp 1;
+          weapon.getTag temp Tag.ITEM_HEAT_PER_AMMO;
+          mul previousAmmoCount temp;
+        else;
+          div previousAmmoCount temp;
+        end;
 
         # bonus - bonus * currentHeat / maxHeat / 2
         set temp bonus;
