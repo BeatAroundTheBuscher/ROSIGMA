@@ -234,49 +234,49 @@ items:
 
         return;
 
-    accuracyMultiplier: |
-      var int temp;
-      var int previousAmmoCount;
-      var int currentAmmoCount;
+      accuracyMultiplier: |
+        var int temp;
+        var int previousAmmoCount;
+        var int currentAmmoCount;
 
-      var int currentHeat;
-      var int maxHeat;
-      var ptr BattleItem ammoItem;
+        var int currentHeat;
+        var int maxHeat;
+        var ptr BattleItem ammoItem;
 
-      # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
-      # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
-      mul bonus 1000;
-      unit.firingBonusStats bonus 1000000 0 0 0;
-      if ge bonus 0; add bonus 500; else; sub bonus 500; end;
-      div bonus 1000;
+        # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
+        # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
+        mul bonus 1000;
+        unit.firingBonusStats bonus 1000000 0 0 0;
+        if ge bonus 0; add bonus 500; else; sub bonus 500; end;
+        div bonus 1000;
 
-      weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+        weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
-      weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-      weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+        weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+        weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
-      weapon.getAmmoItem ammoItem;
-      ammoItem.getAmmoQuantity currentAmmoCount;
+        weapon.getAmmoItem ammoItem;
+        ammoItem.getAmmoQuantity currentAmmoCount;
 
-      if le currentAmmoCount previousAmmoCount;
-        sub previousAmmoCount currentAmmoCount;
-      end;
+        if le currentAmmoCount previousAmmoCount;
+          sub previousAmmoCount currentAmmoCount;
+        end;
 
-      weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-      div previousAmmoCount temp;
+        weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+        div previousAmmoCount temp;
 
-      # bonus - bonus * currentHeat / maxHeat / 2
-      set temp bonus;
-      add currentHeat previousAmmoCount; # delta
-      if gt currentHeat maxHeat;
-        set currentHeat maxHeat;
-      end;
-      muldiv temp currentHeat maxHeat;
-      div temp 2;
+        # bonus - bonus * currentHeat / maxHeat / 2
+        set temp bonus;
+        add currentHeat previousAmmoCount; # delta
+        if gt currentHeat maxHeat;
+          set currentHeat maxHeat;
+        end;
+        muldiv temp currentHeat maxHeat;
+        div temp 2;
 
-      sub bonus temp;
+        sub bonus temp;
 
-      return bonus;
+        return bonus;
 
   - type: STR_PLASMA_PISTOL_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
@@ -377,6 +377,8 @@ items:
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
+  - type: STR_BOLTER_PLASMA_GUN
+    refNode: *STR_OVERHEATING_PLASMA
 
 #items:
 #  - type: STR_RIFLE
