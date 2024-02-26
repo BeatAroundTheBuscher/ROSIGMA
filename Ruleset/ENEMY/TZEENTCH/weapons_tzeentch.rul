@@ -69,6 +69,8 @@ items:
     tags:
       ITEM_SNAP_FLAT_POWER_BONUS: 10
       ITEM_AIMED_FLAT_POWER_BONUS: 20
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 20
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       REACTION_MULTIPLIER: 200
     battleType: 1
     twoHanded: false #Pistol
@@ -80,7 +82,7 @@ items:
   - type: STR_TZEENTCH_LASGUN #Nihilis Pattern High Tech lasgun
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     size: 0.2
-    dropoff: 4 #low drop off, precise
+    dropoff: 4 #low drop off, precise, battle rifle
     requires:
       - STR_ALIENS_ONLY
     costSell: 1000
@@ -99,7 +101,6 @@ items:
     autoRange: 16 #drop off begins sooner due to power shot
     snapRange: 18
     aimRange: 24
-    maxRange: 30
     damageBonus:
       flatHundred: 0.1 #10% damage bonus over the normal lasgun
     confSnap:
@@ -111,15 +112,16 @@ items:
       name: STR_BURST_SNAP_SHOT
     confAimed:
       shots: 1
-      spendPerShot: 3 #higher consumption
+      spendPerShot: 4 #higher consumption
       name: STR_POWER_SHOT
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     tags:
-      ITEM_SNAP_FLAT_POWER_BONUS: 10
-      ITEM_AUTO_FLAT_POWER_BONUS: 10
-      ITEM_AIMED_FLAT_POWER_BONUS: 20
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 10
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25
+      ITEM_AIMED_FLAT_POWER_BONUS: 20 #power shot bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
     battleType: 1
     twoHanded: false #compact carbine, enough to use single handed
     invWidth: 1
@@ -130,7 +132,7 @@ items:
   - type: STR_LONGLAS_TZEENTCH
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER, STR_CAT_TZEENTCH]
     size: 0.2
-    dropoff: 4
+    dropoff: 2 #proper scoped sniper
     requires:
       - STR_ALIENS_ONLY
     costSell: 750
@@ -147,24 +149,24 @@ items:
       firing: [0.5, 0.005]
     tuSnap: 40
     tuAimed: 65
-    snapRange: 33
+    snapRange: 20
     autoRange: 0
     aimRange: 33
+    minRange: 7
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     kneelBonus: 130
-    tags:
-      ITEM_SNAP_ACCURACY_POWER_BONUS: 10
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 50
-      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
-
     battleType: 1
     twoHanded: true
     invWidth: 1
     invHeight: 3
     bulletSpeed: 50
     listOrder: 11056
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 20
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
 #Tzeentch Plasma
   - type: STR_PLASMA_PISTOL_TZEENTCH #                       11210
@@ -340,24 +342,29 @@ items:
 
 #Bolter Ammo types
   - type: STR_RIFLE_CLIP_R #          10460                      ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
     costSell: 250
     weight: 3
+    vaporColorSurface: 2
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.9
       ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
       ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 0.5
+      ToMorale: 5.0 #incendiary + Tzeentch spook
+    hitAnimation: 2020 #blue flames
     explosionSpeed: 5
-    power: 70 #buff, chaos hellguns have 80-90 power
+    power: 65
     damageType: 1
     clipSize: 20
     battleType: 2
@@ -377,17 +384,21 @@ items:
     floorSprite: {mod: 40k, index: 2}
     handSprite: {mod: 40k, index: 464}
     hitSound: {mod: 40k, index: 708}
-    hitAnimation: {mod: 40k, index: 26}
+    vaporColorSurface: 2
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    hitAnimation: 2020 #blue flames
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.7 #armor penetrating
-      ToArmor: 0.0 #does armor damage on the way in
-      ToHealth: 0.7 #compensates a bit for the extra AP and power
+      ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 5.0
+      ToMorale: 5.0 #incendiary + Tzeentch spook
     explosionSpeed: 5
     power: 60 #buff, chaos hellguns have 80-90 power
     damageType: 1 #change to plasma or melta for INFERNO properties?

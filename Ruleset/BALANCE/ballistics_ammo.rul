@@ -69,6 +69,18 @@ items:
     power: 75
     damageType: 1
 
+  - &STR_BOLTER_AMMO_KRAKEN
+    type: STR_PISTOL_CLIP_AP # done
+    damageAlter: #DA BOLTER AP+
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.02
+      ToArmor: 0.05
+      ToHealth: 0.9 #armor piercing; good penetration, much less stopping power
+      ToStun: 0.3
+      ToEnergy: 0.1
+    power: 60
+    damageType: 1
+
   - type: STR_LIGHT_BOLTPISTOL_AMMO # done
     refNode: *STR_BOLTER_AMMO
     costSell: 75
@@ -144,9 +156,23 @@ items:
     power: 80
     clipSize: 50
 
-  - type: STR_AC_I_AMMO
+  - &STR_BOLTER_AMMO_INCENDIARY
+    type: STR_AC_I_AMMO
+    refNode: *STR_BOLTER_AMMO
     power: 60
     clipSize: 50
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 6
+      FixRadius: 0
+      FireThreshold: 1
+      ArmorEffectiveness: 1
+      ToArmorPre: 0.05
+      ToArmor: 0.1
+      ToTile: 0.0
+      ToMorale: 2.0 #burning damage unpleasant
 
   - type: STR_AC_MC_AMMO
     refNode: *STR_BOLTER_AMMO_MC
@@ -308,6 +334,7 @@ items:
     shotgunPellets: 6
 
   - type: STR_REDEEMER_SHELLS_INC #                       10612
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
     shotgunPellets: 6
@@ -345,11 +372,12 @@ items:
     clipSize: 60
 
   - type: STR_AC_INC_ADEPTAS_AMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     power: 55
-    damageType: 2
     clipSize: 60
 
   - type: STR_AC_HE_ADEPTAS_AMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO
     power: 55
     damageType: 3
     damageAlter:
@@ -371,10 +399,11 @@ items:
 
   - type: STR_AC_INC_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
     power: 55
-    damageType: 2
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     clipSize: 40
 
   - type: STR_AC_HE_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO
     power: 55
     damageType: 3
     damageAlter:
@@ -530,28 +559,30 @@ items:
     power: 60
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.7 #armor penetrating
-      ToArmor: 0.0 #does armor damage on the way in
-      ToHealth: 0.7 #compensates a bit for the extra AP and power
+      ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 2.0
+      ToMorale: 2.0 #incendiary
 
   - type: STR_RIFLE_CLIP_R #          10460                      ToStun
     power: 65
     refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.7 #armor penetrating
-      ToArmor: 0.0 #does armor damage on the way in
-      ToHealth: 0.7 #compensates a bit for the extra AP and power
+      ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 2.0
+      ToMorale: 2.0 #incendiary
 
 ##Nurgle Bolter bolts
   - type: STR_RIFLE_CLIP_N #          10450                      ToStun
@@ -574,7 +605,7 @@ items:
 
   - type: STR_AC_N_AMMO #HEAVYBOLTER Nurgle Ammo                 12030
     refNode: *STR_BOLTER_AMMO
-    power: 70
+    power: 80
     damageAlter: #DA BLIGHT
       ToArmorPre: 0.4 #corrodes/melts away
       ToHealth: 0.6
