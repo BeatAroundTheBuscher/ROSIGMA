@@ -7,6 +7,7 @@ extended:
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
       ITEM_HEAT_PER_AMMO: int
+      ITEM_HEAT_SHOT_TYPE: int
       ITEM_AUTO_FLAT_POWER_BONUS: int
       ITEM_SNAP_FLAT_POWER_BONUS: int
       ITEM_AIMED_FLAT_POWER_BONUS: int
@@ -88,6 +89,7 @@ items:
 
       var int currentHeat;
       var int maxHeat;
+      var int heatShotType;
       var ptr BattleItem ammoItem;
 
       # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
@@ -97,8 +99,12 @@ items:
       if ge bonus 0; add bonus 500; else; sub bonus 500; end;
       div bonus 1000;
 
-      weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+      weapon.getTag heatShotType Tag.ITEM_HEAT_SHOT_TYPE;
+      if and gt heatShotType 0 neq heatShotType battle_action;
+        return bonus;
+      end;
 
+      weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
       weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
       weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
@@ -415,6 +421,7 @@ items:
       ITEM_HEAT_DISSIPATION_PER_TURN: 7
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_HEAT_PER_AMMO: 7
+      ITEM_HEAT_SHOT_TYPE: 9
       ITEM_AIMED_FLAT_POWER_BONUS: 0
       ITEM_POWER_BONUS_PERCENTILE: 0
 
