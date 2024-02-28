@@ -969,7 +969,7 @@ items:
     listOrder: 10340
 
   - type: STR_AUTOGUN_CHAOS_NURGLE
-    categories: [STR_CAT_AUTO]
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
@@ -987,14 +987,16 @@ items:
     fireSound: {mod: 40k, index: 4}
     compatibleAmmo:
       - STR_AUTOGUN_CLIP
+      - STR_AUTOGUN_CLIP_BLIGHT
     accuracySnap: 70
     tuSnap: 35
     confSnap:
-      shots: 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
     accuracyAuto: 55
     tuAuto: 40
     confAuto:
-      shots: 4
+      shots: 9
     snapRange: 22
     autoRange: 12
     aimRange: 0
@@ -4588,9 +4590,10 @@ items:
     recover: false
     invWidth: 2
     invHeight: 3
-    power: 70
+    power: 80
     confSnap:
       shots: 3
+      name: STR_BURST_SNAP_SHOT
     autoShots: 8
     bulletSpeed: 75
     damageAlter: #DA BLIGHT
@@ -5878,6 +5881,7 @@ items:
     tuSnap: 28
     confSnap:
       shots: 3
+      name: STR_BURST_SNAP_SHOT
     accuracyAuto: 35
     tuAuto: 35
     confAuto:
@@ -5892,7 +5896,7 @@ items:
       REACTION_MULTIPLIER: 200
 
   - type: STR_AUTOPISTOL_CLIP_BLIGHT
-    categories: [STR_CAT_AUTO, STR_CAT_NURGLE]
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
@@ -5920,10 +5924,45 @@ items:
     clipSize: 30
     battleType: 2
     armor: 60
-    listOrder: 10731
+    listOrder: 10722
     tags:
       INFECTION_DAMAGE_PERCENT: 25
       INFECTION_TYPE: 1
+
+  - type: STR_AUTOGUN_CLIP_BLIGHT
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costBuy: 400
+    costSell: 100
+    weight: 4
+    bigSprite: 1042
+    floorSprite: 958
+    handSprite: 928
+    hitSound: {mod: 40k, index: 832} #blight rocket SFX change to SCHUCK
+    explosionSpeed: 5
+    hitAnimation: {mod: 40k, index: 120 } #Green EX
+    vaporColorSurface: 2 #toxic green plague tracer
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 50
+    power: 30
+    damageType: 8
+    damageAlter:
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.7
+      ToTime: 0.2
+      ToEnergy: 0.2
+      ToStun: 0.4
+    clipSize: 45
+    battleType: 2
+    armor: 60
+    listOrder: 10742
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25
+      INFECTION_TYPE: 1
+
 
   - type: STR_BLIGHT_GRENADE                #4010
     categories: [STR_CAT_TACTICAL, STR_CAT_NURGLE, STR_CAT_GRENADES]
@@ -5940,7 +5979,7 @@ items:
       ArmorEffectiveness: 0.7 #bypasses armor
       RandomType: 6
       ToArmorPre: 0.5 #rots armor
-      ToArmor: 0.0 #does damage on the way in
+      ToArmor: 0.0 #does armor damage on the way in
       ToHealth: 0.1 #going for low health damage, mainly armor and corruption threat.
       ToMana: 0.6
       ToMorale: 2.0
