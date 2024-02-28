@@ -2525,7 +2525,7 @@ items:
 
 
   - type: STR_BOLTERR #BOLTER RUBRIC CHAOS   10360
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_CHAOS]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
@@ -2538,9 +2538,9 @@ items:
       - STR_RIFLE_CLIP_MC
       - STR_RIFLE_CLIP_AP
       - STR_RIFLE_CLIP_EX
-    accuracySnap: 60
-    accuracyAuto: 46
-    accuracyAimed: 80
+    accuracySnap: 70
+    accuracyAuto: 35
+    accuracyAimed: 90
     tuSnap: 25
     tuAuto: 40
     tuAimed: 50
@@ -2552,10 +2552,14 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 30
-    autoShots: 3
+    autoShots: 2 #fewer autofire shots; Tzeentch bolter is more of a battle rifle
     bulletSpeed: 50
     attraction: 1
     listOrder: 10360
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 10 #Marksman/battle rifle
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #Marksman/battle rifle
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_RIFLE_CLIP_N #          10450                      ToStun
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
@@ -3025,15 +3029,22 @@ items:
     compatibleAmmo:
       - STR_FLAMETHROWER_CLIP
       - STR_FLAMETHROWER_PROMETHIUM_CLIP
+      - STR_FLAMETHROWER_WARPFIRE_CLIP
     damageAlter:
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyAuto: 20
+    tuSnap: 30 #needs a snap shot if this weapon is going to be a mainstay for high-tier units; TU cost too high to be used by spawn-ins
     tuAuto: 35
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 12
+    accuracySnap: 39
+    accuracyAuto: 20
     battleType: 1
     twoHanded: true
     experienceTrainingMode: 6
     arcingShot: false
-    maxRange: 12
+    maxRange: 15
     invWidth: 2
     invHeight: 3
     armor: 30
