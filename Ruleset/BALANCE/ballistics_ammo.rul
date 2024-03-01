@@ -25,9 +25,14 @@ items:
       RandomWound: false
     power: 60
     damageType: 1
+    hitAnimation:
+      mod: 40k
+      index: 120
+    explosionSpeed: 3
 
   - &STR_BOLTER_AMMO_METAL_STORM
     type: STR_PISTOL_CLIP_EX # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.02
       ArmorEffectiveness: 1.2 #increasing this because it targets under armor and is AoE
@@ -39,12 +44,16 @@ items:
       ToWound: 0.3 #hollow point + fragmentation
       IgnoreDirection: false
       RandomWound: false
-    blastRadius: 1
+      FixRadius: 1
     power: 60
     damageType: 3
+    powerForAnimation: 1
+    hitAnimation: 0
+    explosionSpeed: 1
 
   - &STR_BOLTER_AMMO_KRAKEN
     type: STR_PISTOL_CLIP_AP # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER AP+
       ArmorEffectiveness: 0.5
       ToArmorPre: 0.02
@@ -57,6 +66,7 @@ items:
 
   - &STR_BOLTER_AMMO_MC
     type: STR_PISTOL_CLIP_MC # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.15 # was 0.05
       ArmorEffectiveness: 0.8 # was 0.9
@@ -67,18 +77,6 @@ items:
       ToWound: 0.2
       RandomWound: false
     power: 75
-    damageType: 1
-
-  - &STR_BOLTER_AMMO_KRAKEN
-    type: STR_PISTOL_CLIP_AP # done
-    damageAlter: #DA BOLTER AP+
-      ArmorEffectiveness: 0.5
-      ToArmorPre: 0.02
-      ToArmor: 0.05
-      ToHealth: 0.9 #armor piercing; good penetration, much less stopping power
-      ToStun: 0.3
-      ToEnergy: 0.1
-    power: 60
     damageType: 1
 
   - type: STR_LIGHT_BOLTPISTOL_AMMO # done
@@ -162,6 +160,10 @@ items:
     power: 60
     clipSize: 50
     damageType: 2
+    hitAnimation:
+      mod: 40k
+      index: 110
+    explosionSpeed: 3
     damageAlter:
       IgnoreDirection: false
       FireBlastCalc: false
@@ -173,6 +175,11 @@ items:
       ToArmor: 0.1
       ToTile: 0.0
       ToMorale: 2.0 #burning damage unpleasant
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
 
   - type: STR_AC_MC_AMMO
     refNode: *STR_BOLTER_AMMO_MC
@@ -252,7 +259,6 @@ items:
       ToStun: 0.3
       ToEnergy: 0.1
     power: 60 # was 70
-    damageType: 1
 
   - type: STR_CANTUS_BOLTER_AMMO #Ammo for the Cantus light bolter
     refNode: *STR_BOLTER_AMMO
@@ -266,25 +272,11 @@ items:
       ToWound: 0.2
       RandomWound: false
     power: 48
-    damageType: 1
     clipSize: 30
 
   - type: STR_LIGHT_BOLTER_AMMO_INF #         10430     INFERNO FLAME        ToStun
-    refNode: *STR_BOLTER_AMMO
-    damageAlter: #DA BOLTER
-      RandomType: 1 #0-200%
-      FireBlastCalc: false
-      IgnoreSelfDestruct: false
-      IgnoreDirection: false
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.5
-      ToMorale: 2.0
-      ToStun: 0.2
-    blastRadius: 1
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     power: 55
-    damageType: 2
     clipSize: 12
 
   - type: STR_RIFLE_CLIP_DOM # Dominion special rounds DETONATOR       10430     EXPLOSIVE        ToStun
@@ -295,7 +287,7 @@ items:
       ToArmor: 0.3
       ToHealth: 1.1
       ToStun: 0.4
-    blastRadius: 1
+      FixRadius: 1
     power: 80
     damageType: 3
     clipSize: 15
@@ -396,7 +388,6 @@ items:
   - type: STR_AC_AP_ADEPTAS_AMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
     refNode: *STR_BOLTER_AMMO
     power: 65
-    damageType: 1
     clipSize: 60
 
   - type: STR_AC_INC_ADEPTAS_AMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
@@ -422,7 +413,6 @@ items:
   - type: STR_AC_AP_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
     refNode: *STR_BOLTER_AMMO_KRAKEN
     power: 65
-    damageType: 1
     clipSize: 40
 
   - type: STR_AC_INC_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
@@ -545,7 +535,6 @@ items:
 
   - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
-    damageType: 1
     damageAlter:
       ToTile: 0.25
       ToArmorPre: 0.4 #acid melts armor
@@ -562,7 +551,6 @@ items:
 
   - type: STR_EXITUS_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_BULLETS
-    damageType: 1
     damageAlter:
       ToTile: 1.0 #it'll destroy about anything it hits
       RandomType: 6
@@ -575,7 +563,6 @@ items:
   - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
     refNode: *STR_EXITUS_BULLETS
     power: 150
-    damageType: 1
     damageAlter:
       ToTile: 0.0
       ToArmorPre: 0.1 #high velocity
