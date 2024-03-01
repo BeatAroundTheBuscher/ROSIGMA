@@ -1,76 +1,7 @@
 items:
-  - type: STR_HAND_FLAMETHROWER_CLIP ## Handflamer fuel tank
-    power: 50
-    powerRangeReduction: 13 # Filip: added to limit artillery flamers
-    powerRangeThreshold: 9
-    damageAlter:
-      FireBlastCalc: false
-      IgnoreOverKill: false
-      # IgnoreSelfDestruct: false
-      IgnoreDirection: false
-      FixRadius: 3
-      ToHealth: 1.5
-      ToTile: 0.3
-      ToItem: 0.3
-      ToArmor: 0.0 #damages armor on the way in
-      ToMorale: 5.0
-      ToTime: 0.2 #debilitating pain
-      RandomType: 6 #Gaussian
-      ArmorEffectiveness: 1.5
-      ToArmorPre: 0.01
-    damageType: 2
-    blastRadius: 2
-    clipSize: 15
-
-  - type: STR_LIGHT_FLAMETHROWER_CLIP # MEPHISTO FLAMER                     10520
-    power: 50
-    powerRangeReduction: 13
-    powerRangeThreshold: 9
-    damageType: 2
-    damageAlter:
-      FireBlastCalc: false
-      IgnoreOverKill: false
-      # IgnoreSelfDestruct: false
-      IgnoreDirection: false
-      FixRadius: 3
-      ToHealth: 1.5
-      ToTile: 0.3
-      ToItem: 0.3
-      ToArmor: 0.0 #damages armor on the way in
-      ToMorale: 5.0
-      ToTime: 0.2 #debilitating pain
-      RandomType: 6 #Gaussian
-      ArmorEffectiveness: 1.0
-      ToArmorPre: 0.01
-    blastRadius: 2
-    clipSize: 15
-
 #  - type: STR_INCENDIARY_GRENADE40 # in explosives.rul
-
-  - type: STR_HFLAMER_CLIP # Promethium                                                   13310 Heavy Flamer
-    power: 80
-    powerRangeReduction: 15
-    powerRangeThreshold: 22
-    damageType: 2
-    damageAlter:
-      FireBlastCalc: false
-      IgnoreOverKill: false
-      # IgnoreSelfDestruct: false
-      IgnoreDirection: false
-      FixRadius: 3
-      ToHealth: 1.7
-      ToStun: 0.4
-      ToTile: 0.3
-      ToItem: 0.3
-      ToArmor: 0.0 #damages armor on the way in
-      ToMorale: 5.0
-      ToTime: 0.2 #debilitating pain
-      RandomType: 6 #Gaussian
-      ArmorEffectiveness: 0.8
-      ToArmorPre: 0.2
-    clipSize: 40
-
-  - type: STR_FLAMETHROWER_CLIP #                     10520
+  - &STR_FLAMER_FUEL
+    type: STR_FLAMETHROWER_CLIP #                     10520
     power: 50
     powerRangeReduction: 12
     powerRangeThreshold: 12
@@ -78,6 +9,7 @@ items:
     damageAlter:
       FireBlastCalc: false
       IgnoreOverKill: false
+      RandomType: 6 #Gaussian
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
       FixRadius: 3
@@ -86,20 +18,21 @@ items:
       ToItem: 0.3
       ToArmor: 0.0 #damages armor on the way in
       ToMorale: 5.0
+      ToStun: 0.4
       ToTime: 0.2 #debilitating pain
-      RandomType: 6 #Gaussian
       ArmorEffectiveness: 1.0
       ToArmorPre: 0.01
     clipSize: 40
 
   - type: STR_FLAMETHROWER_PROMETHIUM_CLIP #                     10520
+    refNode: *STR_FLAMER_FUEL
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL]
     bigSprite: 281
     floorSprite: {mod: 40k, index: 103}
     handSprite: {mod: 40k, index: 440}
     size: 0.2
     # costBuy: 500
-    costSell: 4000
+    costSell: 1000
     vaporColorSurface: {mod: 40k, index: 0}
     vaporDensitySurface: 4
     vaporProbabilitySurface: 100
@@ -107,18 +40,17 @@ items:
     power: 50
     powerRangeReduction: 12
     powerRangeThreshold: 12
-    damageType: 2
     damageAlter:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
       FireBlastCalc: false
-      RandomType: 2 #50-150% Flamer now respects armor values
-      FixRadius: 2
-      ToHealth: 1.5
+      RandomType: 6
+      ToHealth: 1.75
       ArmorEffectiveness: 0.7
       ToMorale: 5.0
       ToArmorPre: 0.1
-      ToItem: 0.3
+      ToItem: 0.5
+      ToTile: 0.5
     clipSize: 40
     battleType: 2
     invWidth: 1
@@ -131,6 +63,7 @@ items:
 
   - type: STR_FLAMETHROWER_WARPFIRE_CLIP #                     10520
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_CHAOS, STR_CAT_TZEENTCH]
+    refNode: *STR_FLAMER_FUEL
     requires:
       - STR_ALIENS_ONLY
     bigSprite: 402 #golden tank
@@ -141,7 +74,7 @@ items:
     costSell: 100
     bulletSprite: {mod: 40k, index: 16}
     hitAnimation: 2020
-    powerForAnimation: 48
+    powerForAnimation: 80
     vaporColorSurface: 14 #blue warpfire
     vaporDensitySurface: 2
     vaporProbabilitySurface: 85
@@ -149,13 +82,12 @@ items:
     power: 50
     powerRangeReduction: 12
     powerRangeThreshold: 12
-    damageType: 2
     damageAlter:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
       FireBlastCalc: false
       RandomType: 1 #Warpfire; highly swingy and randumb damage
-      FixRadius: 2
+      FixRadius: 3
       ToArmorPre: 0.5 #melts armor on the way in
       ToArmor: 0.0 #melts armor on the way in
       ArmorEffectiveness: 0.5 #partially incorporeal flames
@@ -181,3 +113,71 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_HAND_FLAMETHROWER_CLIP ## Handflamer fuel tank
+    refNode: *STR_FLAMER_FUEL
+    power: 50
+    powerRangeReduction: 13 # Filip: added to limit artillery flamers
+    powerRangeThreshold: 9
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 2
+      ToHealth: 1.5
+      ToTile: 0.3
+      ToItem: 0.3
+      ToArmor: 0.0 #damages armor on the way in
+      ToMorale: 5.0
+      ToTime: 0.2 #debilitating pain
+      RandomType: 6 #Gaussian
+      ArmorEffectiveness: 1.5
+      ToArmorPre: 0.01
+    damageType: 2
+    blastRadius: 2
+    clipSize: 15
+
+  - type: STR_LIGHT_FLAMETHROWER_CLIP # MEPHISTO FLAMER                     10520
+    refNode: *STR_FLAMER_FUEL
+    power: 50
+    powerRangeReduction: 13
+    powerRangeThreshold: 9
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 3
+      ToHealth: 1.5
+      ToTile: 0.3
+      ToItem: 0.3
+      ToArmor: 0.0 #damages armor on the way in
+      ToMorale: 5.0
+      ToTime: 0.2 #debilitating pain
+      RandomType: 6 #Gaussian
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.01
+    clipSize: 15
+
+  - type: STR_HFLAMER_CLIP # Promethium                                                   13310 Heavy Flamer
+    refNode: *STR_FLAMER_FUEL
+    power: 80
+    powerRangeReduction: 15
+    powerRangeThreshold: 22
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 3
+      ToHealth: 1.7
+      ToStun: 0.4
+      ToTile: 0.3
+      ToItem: 0.3
+      ToMorale: 5.0
+      ToTime: 0.2 #debilitating pain
+      RandomType: 6 #Gaussian
+      ArmorEffectiveness: 0.8
+      ToArmorPre: 0.2
+    clipSize: 40
