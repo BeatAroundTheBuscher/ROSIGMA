@@ -160,9 +160,9 @@ items:
       - STR_LASGUN_CLIP_HOTSHOT_CHAOS
 
   - type: STR_LONGLAS_CHAOS
-    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
+    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER, STR_CAT_CHAOS]
     size: 0.2
-    dropoff: 5
+    dropoff: 2 #this is a proper sniper weapon
     requires:
       - STR_ALIENS_ONLY
     costSell: 500
@@ -177,7 +177,7 @@ items:
     accuracyAimed: 90
     tuSnap: 35
     tuAimed: 65
-    snapRange: 33
+    snapRange: 20
     aimRange: 33
     autoRange: 0
     compatibleAmmo:
@@ -193,6 +193,7 @@ items:
     accuracyMultiplier:
       firing: [0.5, 0.005]
     tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 20
       ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
@@ -224,7 +225,7 @@ items:
     listOrder: 11060
 
   - type: STR_CHAOS_RIPPERGUN
-    categories: [STR_CAT_SHOTGUN]
+    categories: [STR_CAT_SHOTGUN, STR_CAT_ASSAULT]
     requires:
       - STR_ALIENS_ONLY
     size: 0.6
@@ -238,6 +239,8 @@ items:
     fireSound: {mod: 40k, index: 755 }
     compatibleAmmo:
       - STR_RIPPER_GUN_CLIP
+      - STR_RIPPER_GUN_CLIP_INC
+      - STR_RIPPER_GUN_CLIP_AP
     accuracyMultiplier:
       firing: 0.0
       strength: 1.0
@@ -672,15 +675,18 @@ items:
     #floorSprite: 8
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 26}
+    power: 80 # was 60
+    damageType: 1
     damageAlter: #DA BOLTER
       ToArmorPre: 0.1
-      ArmorEffectiveness: 1.0
+      ArmorEffectiveness: 0.9
       ToArmor: 0.15
-      ToHealth: 0.9
-      ToStun: 0.7
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     explosionSpeed: 5
-    power: 70
-    damageType: 1
     clipSize: 200
     battleType: 2
     armor: 30
@@ -706,8 +712,11 @@ items:
       ToArmor: 0.2 #AP
       ToHealth: 0.8 #AP
       ToStun: 0.5 #AP
+      ToEnergy: 0.15
+      ToWound: 0.1
+      RandomWound: false
     explosionSpeed: 5
-    power: 80 #Slightly stronger for anti armor but weaker vs health
+    power: 90 #Slightly stronger for anti armor but weaker vs health
     damageType: 1
     clipSize: 200
     battleType: 2
@@ -735,7 +744,7 @@ items:
       ToHealth: 1.0 #HEAT
       ToStun: 0.7 #HEAT
     explosionSpeed: 5
-    power: 90 #Slightly stronger for anti armor but weaker vs health
+    power: 100 #Slightly stronger for anti armor but weaker vs health
     damageType: 3
     clipSize: 200
     battleType: 2
@@ -865,11 +874,14 @@ items:
     tuAimed: 60
     battleType: 1
     damageAlter: #DA BOLTER
-      ToArmorPre: 0.05
+      ToArmorPre: 0.1
       ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
+      ToArmor: 0.15
+      ToHealth: 1.1
       ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     explosionSpeed: 5
     fixedWeapon: true
     invWidth: 2
@@ -914,6 +926,9 @@ items:
     compatibleAmmo:
       - STR_PISTOL_CLIP
       - STR_PISTOL_CLIP_MC
+      - STR_PISTOL_CLIP_AP
+      - STR_PISTOL_CLIP_EX
+      - STR_PISTOL_CLIP_BLIGHT
     accuracySnap: 60
     tuSnap: 21
     snapRange: 14
@@ -960,7 +975,7 @@ items:
     listOrder: 10340
 
   - type: STR_AUTOGUN_CHAOS_NURGLE
-    categories: [STR_CAT_AUTO]
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
@@ -978,14 +993,16 @@ items:
     fireSound: {mod: 40k, index: 4}
     compatibleAmmo:
       - STR_AUTOGUN_CLIP
+      - STR_AUTOGUN_CLIP_BLIGHT
     accuracySnap: 70
     tuSnap: 35
     confSnap:
-      shots: 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
     accuracyAuto: 55
     tuAuto: 40
     confAuto:
-      shots: 4
+      shots: 9
     snapRange: 22
     autoRange: 12
     aimRange: 0
@@ -2516,7 +2533,7 @@ items:
 
 
   - type: STR_BOLTERR #BOLTER RUBRIC CHAOS   10360
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_CHAOS]
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
@@ -2529,9 +2546,9 @@ items:
       - STR_RIFLE_CLIP_MC
       - STR_RIFLE_CLIP_AP
       - STR_RIFLE_CLIP_EX
-    accuracySnap: 60
-    accuracyAuto: 46
-    accuracyAimed: 80
+    accuracySnap: 70
+    accuracyAuto: 35
+    accuracyAimed: 90
     tuSnap: 25
     tuAuto: 40
     tuAimed: 50
@@ -2543,10 +2560,14 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 30
-    autoShots: 3
+    autoShots: 2 #fewer autofire shots; Tzeentch bolter is more of a battle rifle
     bulletSpeed: 50
     attraction: 1
     listOrder: 10360
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 10 #Marksman/battle rifle
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #Marksman/battle rifle
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - type: STR_RIFLE_CLIP_N #          10450                      ToStun
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_NURGLE]
@@ -2579,30 +2600,6 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-
-  - type: STR_RIFLE_CLIP_R #          10460                      ToStun
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.1
-    costSell: 150
-    weight: 3
-    damageAlter: #DA BOLTER TZZ
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-      ToMorale: 0.5
-    explosionSpeed: 5
-    power: 60
-    damageType: 1
-    clipSize: 20
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10460
 
   - type: STR_CPOWER_SWORD #         3009           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
@@ -2887,16 +2884,18 @@ items:
     tuAuto: 45
     accuracySnap: 60
     tuSnap: 40
+    snapRange: 20
+    autoRange: 16
+    confSnap:
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+    autoShots: 10
     battleType: 1
     twoHanded: true
     oneHandedPenalty: 100
-    damageBonus:
-      flatHundred: 0.1 #10% power bonus
     invWidth: 2
     invHeight: 3
     armor: 30
-    autoRange: 16
-    autoShots: 5
     sprayWaypoints: 2
     bulletSpeed: 50
     attraction: 8
@@ -2929,7 +2928,7 @@ items:
     armor: 30
     autoRange: 18
     snapRange: 22
-    autoShots: 5
+    autoShots: 9
     sprayWaypoints: 2
     bulletSpeed: 50
     attraction: 8
@@ -3040,15 +3039,22 @@ items:
     compatibleAmmo:
       - STR_FLAMETHROWER_CLIP
       - STR_FLAMETHROWER_PROMETHIUM_CLIP
+      - STR_FLAMETHROWER_WARPFIRE_CLIP
     damageAlter:
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyAuto: 20
+    tuSnap: 30 #needs a snap shot if this weapon is going to be a mainstay for high-tier units; TU cost too high to be used by spawn-ins
     tuAuto: 35
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 12
+    accuracySnap: 39
+    accuracyAuto: 20
     battleType: 1
     twoHanded: true
     experienceTrainingMode: 6
     arcingShot: false
-    maxRange: 12
+    maxRange: 15
     invWidth: 2
     invHeight: 3
     armor: 30
@@ -3062,10 +3068,10 @@ items:
   - type: STR_AUTO_CANNON_CHAOSRETRIBUTOR                      #CHAOS Retributor Pattern ROSEMOD
     categories: [STR_CAT_BOLTER]
     size: 0.3
-    dropoff: 4
+    dropoff: 4 #heavy weapon
     requires:
       - STR_ALIENS_ONLY
-    costSell: 9000
+    costSell: 5000
     weight: 33
     bigSprite: 2004 #1020
     floorSprite: 2001
@@ -3084,11 +3090,15 @@ items:
     tuAimed: 0
     tuSnap: 28
     tuAuto: 35
-    snapRange: 16
+    snapRange: 20
+    confSnap: #For AI Reaction Overwatch
+      name: STR_BURST_SNAP_SHOT  #name of attack in action menu.
+      shots: 2
     autoRange: 12
     battleType: 1
     twoHanded: true
     oneHandedPenalty: 75
+    kneelBonus: 130
     invWidth: 2
     invHeight: 3
     armor: 30
@@ -3309,7 +3319,7 @@ items:
     tuSnap: 50
     confSnap:
       shots: 2
-    maxRange: 20
+    maxRange: 40
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -4239,7 +4249,7 @@ items:
     listOrder: 12020
 
   - type: STR_VALKIA_SHIELD ## Equip to the right hand to reduce damage
-    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_KHORNE]
     size: 0.2
     requires:
       - STR_ALIENS_ONLY
@@ -4265,7 +4275,6 @@ items:
     bigSprite: 2329
     floorSprite: 2083
     handSprite: 2470
-    clipSize: -1
     hidePower: true
     supportedInventorySections:
       - STR_LEFT_HAND
@@ -4293,13 +4302,13 @@ items:
     maxRange: 20
     accuracyMultiplier:
       flatHundred: 1.0
-    power: 5
+    power: 8
     damageBonus:
       bravery: 1.0
     damageType: 0
     damageAlter: #DA MELTA Double
       FixRadius: 2
-      RandomType: 1 #Swingy damage
+      RandomType: 6 #Swingy damage
       ArmorEffectiveness: 0.0 #armor doesn't help against intimidation
       ToHealth: 0.0
       ToArmor: 0.0
@@ -4307,6 +4316,7 @@ items:
       ToWound: 0.0
       ToTile: 0.0
       ToMana: 1.0 #used by intimidation scripts
+    clipSize: -1
     twoHanded: false
     recover: false
     isConsumable: false
@@ -4319,7 +4329,6 @@ items:
     tags:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
-      INTIMIDATION_STUN_DAMAGE_MULTIPLIER: 50
 
   - type: STR_SONIC_CANON #                        11790
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
@@ -4592,9 +4601,10 @@ items:
     recover: false
     invWidth: 2
     invHeight: 3
-    power: 70
+    power: 80
     confSnap:
       shots: 3
+      name: STR_BURST_SNAP_SHOT
     autoShots: 8
     bulletSpeed: 75
     damageAlter: #DA BLIGHT
@@ -5882,6 +5892,7 @@ items:
     tuSnap: 28
     confSnap:
       shots: 3
+      name: STR_BURST_SNAP_SHOT
     accuracyAuto: 35
     tuAuto: 35
     confAuto:
@@ -5896,7 +5907,7 @@ items:
       REACTION_MULTIPLIER: 200
 
   - type: STR_AUTOPISTOL_CLIP_BLIGHT
-    categories: [STR_CAT_AUTO, STR_CAT_NURGLE]
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
@@ -5924,10 +5935,45 @@ items:
     clipSize: 30
     battleType: 2
     armor: 60
-    listOrder: 10731
+    listOrder: 10722
     tags:
       INFECTION_DAMAGE_PERCENT: 25
       INFECTION_TYPE: 1
+
+  - type: STR_AUTOGUN_CLIP_BLIGHT
+    categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costBuy: 400
+    costSell: 100
+    weight: 4
+    bigSprite: 1042
+    floorSprite: 958
+    handSprite: 928
+    hitSound: {mod: 40k, index: 832} #blight rocket SFX change to SCHUCK
+    explosionSpeed: 5
+    hitAnimation: {mod: 40k, index: 120 } #Green EX
+    vaporColorSurface: 2 #toxic green plague tracer
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 50
+    power: 30
+    damageType: 8
+    damageAlter:
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.7
+      ToTime: 0.2
+      ToEnergy: 0.2
+      ToStun: 0.4
+    clipSize: 45
+    battleType: 2
+    armor: 60
+    listOrder: 10742
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25
+      INFECTION_TYPE: 1
+
 
   - type: STR_BLIGHT_GRENADE                #4010
     categories: [STR_CAT_TACTICAL, STR_CAT_NURGLE, STR_CAT_GRENADES]
@@ -5944,7 +5990,7 @@ items:
       ArmorEffectiveness: 0.7 #bypasses armor
       RandomType: 6
       ToArmorPre: 0.5 #rots armor
-      ToArmor: 0.0 #does damage on the way in
+      ToArmor: 0.0 #does armor damage on the way in
       ToHealth: 0.1 #going for low health damage, mainly armor and corruption threat.
       ToMana: 0.6
       ToMorale: 2.0

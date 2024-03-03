@@ -25,9 +25,14 @@ items:
       RandomWound: false
     power: 60
     damageType: 1
+    hitAnimation:
+      mod: 40k
+      index: 120
+    explosionSpeed: 3
 
   - &STR_BOLTER_AMMO_METAL_STORM
     type: STR_PISTOL_CLIP_EX # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.02
       ArmorEffectiveness: 1.2 #increasing this because it targets under armor and is AoE
@@ -39,12 +44,16 @@ items:
       ToWound: 0.3 #hollow point + fragmentation
       IgnoreDirection: false
       RandomWound: false
-    blastRadius: 1
+      FixRadius: 1
     power: 60
     damageType: 3
+    powerForAnimation: 1
+    hitAnimation: 0
+    explosionSpeed: 1
 
   - &STR_BOLTER_AMMO_KRAKEN
     type: STR_PISTOL_CLIP_AP # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER AP+
       ArmorEffectiveness: 0.5
       ToArmorPre: 0.02
@@ -57,6 +66,7 @@ items:
 
   - &STR_BOLTER_AMMO_MC
     type: STR_PISTOL_CLIP_MC # done
+    refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER
       ToArmorPre: 0.15 # was 0.05
       ArmorEffectiveness: 0.8 # was 0.9
@@ -141,15 +151,45 @@ items:
 
   - type: STR_AC_AP_AMMO
     refNode: *STR_BOLTER_AMMO
-    power: 70
+    power: 80
     clipSize: 50
+
+  - &STR_BOLTER_AMMO_INCENDIARY
+    type: STR_AC_I_AMMO
+    refNode: *STR_BOLTER_AMMO
+    power: 60
+    clipSize: 50
+    damageType: 2
+    hitAnimation:
+      mod: 40k
+      index: 110
+    explosionSpeed: 3
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 6
+      FixRadius: 0
+      FireThreshold: 1
+      ArmorEffectiveness: 1
+      ToArmorPre: 0.05
+      ToArmor: 0.1
+      ToTile: 0.0
+      ToMorale: 2.0 #burning damage unpleasant
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
 
   - type: STR_AC_MC_AMMO
     refNode: *STR_BOLTER_AMMO_MC
-    power: 85
+    power: 95
     clipSize: 50
 
   - type: STR_AC_HE_AMMO
+    refNode: *STR_BOLTER_AMMO
+    power: 60
+    clipSize: 50
     damageType: 3
     damageAlter:
       RandomType: 6 #AoE so gaussian
@@ -219,7 +259,6 @@ items:
       ToStun: 0.3
       ToEnergy: 0.1
     power: 60 # was 70
-    damageType: 1
 
   - type: STR_CANTUS_BOLTER_AMMO #Ammo for the Cantus light bolter
     refNode: *STR_BOLTER_AMMO
@@ -233,24 +272,11 @@ items:
       ToWound: 0.2
       RandomWound: false
     power: 48
-    damageType: 1
     clipSize: 30
 
   - type: STR_LIGHT_BOLTER_AMMO_INF #         10430     INFERNO FLAME        ToStun
-    damageAlter: #DA BOLTER
-      RandomType: 1 #0-200%
-      FireBlastCalc: false
-      IgnoreSelfDestruct: false
-      IgnoreDirection: false
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.5
-      ToMorale: 2.0
-      ToStun: 0.2
-    blastRadius: 1
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     power: 55
-    damageType: 2
     clipSize: 12
 
   - type: STR_RIFLE_CLIP_DOM # Dominion special rounds DETONATOR       10430     EXPLOSIVE        ToStun
@@ -261,7 +287,7 @@ items:
       ToArmor: 0.3
       ToHealth: 1.1
       ToStun: 0.4
-    blastRadius: 1
+      FixRadius: 1
     power: 80
     damageType: 3
     clipSize: 15
@@ -287,7 +313,7 @@ items:
 
   - type: STR_REDEEMER_SHELLS_KRAK #                        10610
     shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
-    shotgunSpread: 25
+    shotgunSpread: 15 #fewer pellets, but less spread
     power: 40
     damageAlter: #DA BOLTER AP+
       ArmorEffectiveness: 0.8
@@ -297,26 +323,25 @@ items:
       ToStun: 0.2
     damageType: 1
     clipSize: 8
-    shotgunPellets: 6
+    shotgunPellets: 4
 
   - type: STR_REDEEMER_SHELLS_INC #                       10612
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
     shotgunPellets: 6
-    power: 60
-    damageType: 2
-    blastRadius: 2
+    power: 40 #was 60; why?
     clipSize: 8
     damageAlter:
       RandomType: 1 #0-200%
       FireBlastCalc: false
       IgnoreSelfDestruct: false
       IgnoreDirection: false
+      FixRadius: 2
 
   - type: STR_REDEEMER_PENITENCE_SHELLS #                        10613
     shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
-
     power: 40
     damageType: 7 #melee penance
     damageAlter: #DA BLIGHT
@@ -330,18 +355,48 @@ items:
     clipSize: 8
     shotgunPellets: 6
 
+  - type: STR_SHOTGUN_SHELLS #                        10710
+    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
+    shotgunSpread: 25
+    power: 40
+    damageType: 1
+    clipSize: 8
+    shotgunPellets: 6
+    damageAlter:
+      ToTime: 0.2 #shotguns have impact shock
+      ToEnergy: 0.2 #impact shock
+      ToStun: 0.4 #impact shock
+
+  - type: STR_SHOTGUN_SHELLS_AP
+
+  - type: STR_SHOTGUN_SHELLS_INC
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
+    shotgunBehavior: 1
+    shotgunSpread: 25
+    shotgunPellets: 6
+    power: 40
+    clipSize: 8
+    damageAlter:
+      RandomType: 1
+      FireBlastCalc: false
+      IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 2
+
+  - type: STR_SHOTGUN_SHELLS_MC
+
   - type: STR_AC_AP_ADEPTAS_AMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
     refNode: *STR_BOLTER_AMMO
     power: 65
-    damageType: 1
     clipSize: 60
 
   - type: STR_AC_INC_ADEPTAS_AMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     power: 55
-    damageType: 2
     clipSize: 60
 
   - type: STR_AC_HE_ADEPTAS_AMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO
     power: 55
     damageType: 3
     damageAlter:
@@ -358,15 +413,15 @@ items:
   - type: STR_AC_AP_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
     refNode: *STR_BOLTER_AMMO_KRAKEN
     power: 65
-    damageType: 1
     clipSize: 40
 
   - type: STR_AC_INC_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas inc belt                 12010                           ToStun
     power: 55
-    damageType: 2
+    refNode: *STR_BOLTER_AMMO_INCENDIARY
     clipSize: 40
 
   - type: STR_AC_HE_ADEPTAS_BOXAMMO #HEAVYBOLTER adeptas HE belt                 12010                           ToStun
+    refNode: *STR_BOLTER_AMMO
     power: 55
     damageType: 3
     damageAlter:
@@ -445,7 +500,8 @@ items:
       FireThreshold: 1
       ToTile: 0
 
-  - type: STR_AUTOPISTOL_CLIP_BLIGHT
+  - &STR_AUTOGUN_BLIGHT
+    type: STR_AUTOPISTOL_CLIP_BLIGHT
     weight: 3
     power: 30
     damageType: 8
@@ -457,6 +513,14 @@ items:
       ToEnergy: 0.2
       ToStun: 0.4
     clipSize: 30
+    tags:
+      INFECTION_DAMAGE_PERCENT: 25
+      INFECTION_TYPE: 1
+
+  - type: STR_AUTOGUN_CLIP_BLIGHT
+    refNode: *STR_AUTOGUN_BLIGHT
+    weight: 4
+    clipSize: 45
 
   - &STR_EXITUS_BULLETS
     type: STR_EXITUS_AMMO
@@ -471,7 +535,6 @@ items:
 
   - type: STR_EXITUS_AMMO_HELLFIRE # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
-    damageType: 1
     damageAlter:
       ToTile: 0.25
       ToArmorPre: 0.4 #acid melts armor
@@ -488,7 +551,6 @@ items:
 
   - type: STR_EXITUS_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_BULLETS
-    damageType: 1
     damageAlter:
       ToTile: 1.0 #it'll destroy about anything it hits
       RandomType: 6
@@ -501,7 +563,6 @@ items:
   - type: STR_EXITUS_AMMO_SHELLBREAKER # shield piercing
     refNode: *STR_EXITUS_BULLETS
     power: 150
-    damageType: 1
     damageAlter:
       ToTile: 0.0
       ToArmorPre: 0.1 #high velocity
@@ -522,28 +583,30 @@ items:
     power: 60
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.7 #armor penetrating
-      ToArmor: 0.0 #does armor damage on the way in
-      ToHealth: 0.7 #compensates a bit for the extra AP and power
+      ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 2.0
+      ToMorale: 2.0 #incendiary
 
   - type: STR_RIFLE_CLIP_R #          10460                      ToStun
     power: 65
     refNode: *STR_BOLTER_AMMO
     damageAlter: #DA BOLTER TZZ
       RandomType: 1 #swingy random damage
+      ResistType: 5 #plasma typing
       ToArmorPre: 0.5 #melts armor on the way in
-      FireThreshold: 35 #can ignite
-      ArmorEffectiveness: 0.7 #armor penetrating
-      ToArmor: 0.0 #does armor damage on the way in
-      ToHealth: 0.7 #compensates a bit for the extra AP and power
+      ToArmor: 0.0 #does damage on the way in
+      ArmorEffectiveness: 0.7 #armor piercing
+      FireThreshold: 19 #can ignite
+      ToHealth: 0.8 #compensates a bit for the extra AP and power
       ToWound: 0.05 #melta type injuries
       RandomWound: false
-      ToMorale: 2.0
+      ToMorale: 2.0 #incendiary
 
 ##Nurgle Bolter bolts
   - type: STR_RIFLE_CLIP_N #          10450                      ToStun
@@ -566,7 +629,7 @@ items:
 
   - type: STR_AC_N_AMMO #HEAVYBOLTER Nurgle Ammo                 12030
     refNode: *STR_BOLTER_AMMO
-    power: 70
+    power: 80
     damageAlter: #DA BLIGHT
       ToArmorPre: 0.4 #corrodes/melts away
       ToHealth: 0.6

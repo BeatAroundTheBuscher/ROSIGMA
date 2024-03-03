@@ -27,6 +27,7 @@ items:
 
   - type: INV_NULL_4X2
     bigSprite: {mod: 40k, index: 850}
+    invHeight: 3
 
   - type: INV_NULL_SENTINEL_BELT
     bigSprite: 263
@@ -35,7 +36,8 @@ items:
 #    battleType: 0
 #    costSell: 0
 
-  - type: STR_INVISIBLE_CORPSE
+  - &STR_INVISBLE_CORPSE
+    type: STR_INVISIBLE_CORPSE
     name: STR_CORPSE
     bigSprite: 201 # shouldn't be visible anyway
     floorSprite: 201
@@ -44,6 +46,22 @@ items:
     battleType: 11
     recover: false
     hiddenOnMinimap: true
+
+  - type: STR_INVISIBLE_EXPLOSIVE_CORPSE
+    refNode: *STR_INVISBLE_CORPSE
+    blastRadius: 1
+    damageAlter:
+      FixRadius: 1
+    power: 70
+    powerForAnimation: 5
+
+
+  - type: STR_OBJECTIVE_TARGET_SPAWNER
+    spawnUnit: STR_OBJECTIVE_TARGET
+    spawnUnitFaction: 1
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
 
   - &STR_UNIT_DESTROYER
     type: STR_UNIT_DESTROYER_FT1

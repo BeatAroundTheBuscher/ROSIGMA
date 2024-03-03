@@ -106,6 +106,8 @@ items:
     bulletSpeed: 30
     attraction: 1
     listOrder: 10305
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
   - type: STR_RIFLEB #BOLTER #To remove deathwatch requirement
     requiresBuy: !remove
@@ -267,22 +269,12 @@ items:
 
   - type: STR_SHOTGUN_SHELLS #                        10710
     categories: [ STR_CAT_SHOTGUN, STR_CAT_SCOUT]
-    shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
-    shotgunSpread: 25
     size: 0.1
     costBuy: 500
     costSell: 150
     weight: 3
-    power: 40
-    damageType: 1
-    clipSize: 8
     battleType: 2
     listOrder: 10710
-    shotgunPellets: 6
-    damageAlter:
-      ToTime: 0.2 #shotguns have impact shock
-      ToEnergy: 0.2 #impact shock
-      ToStun: 0.4 #impact shock
 
   - type: STR_MELTA_AMMO #MELTAGUN AMMO                2020
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
@@ -438,21 +430,14 @@ items:
       - STR_FLAMETHROWER_CLIP
       - STR_FLAMETHROWER_PROMETHIUM_CLIP
 
-  - &STR_INC_AMMO
-    type: STR_AC_I_AMMO
+  - type: STR_INCENDIARY_ROCKET
+    damageType: 2
     damageAlter:
-      # IgnoreSelfDestruct: false
       IgnoreDirection: false
       FireBlastCalc: false
-      RandomType: 2
-      FixRadius: 0
+      RandomType: 6
+      FireThreshold: 1
       ArmorEffectiveness: 1
-      ToArmor: 0.1
-
-  - type: STR_INCENDIARY_ROCKET
-    refNode: *STR_INC_AMMO
-    # blastRadius: 7 # was 5; sure about turning it to 7?
-    damageAlter:
       FixRadius: 7
 
   - &STR_POWER_MELEE_WEAPON
