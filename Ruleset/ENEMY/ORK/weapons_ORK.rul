@@ -2037,7 +2037,8 @@ items:
     requires:
       - STR_NECRONTECH_RESEARCH
 
-  - type: STR_SCARAB_L_WEAPON #Deamon Blade2
+  - &STR_SCARAB_WEAPON
+    type: STR_SCARAB_L_WEAPON #Solo Scarab
     weight: 3
     bigSprite: {mod: 40k, index: 714}
     bulletSprite: -1
@@ -2096,64 +2097,24 @@ items:
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
       DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
 
-  - type: STR_SCARAB_R_WEAPON #Deamon Blade2
-    weight: 3
-    bigSprite: {mod: 40k, index: 716}
-    bulletSprite: -1
-    fireSound: 2170
-    hitSound: 2171
-    meleeSound: 2171
-    hitAnimation: 2130
-    meleeAnimation: 76
-    power: 40
-    damageType: 11 #it's not melee; they disassemble enemies gauss style; melta closest damage type
-    damageAlter: #basically mini-chain axe
-      RandomType: 6 #gaussian; many attacks make for consistent damage
-      ToArmorPre: 1.0
-      ToHealth: 1.0 #normalize damage to health
-      ToMorale: 0.4 #highly painful
-      ToStun: 0.4 #highly painful
-      ToArmor: 0.0 #all the armor damage is done on the way in
-      ToTile: 3.0 #disintegrates matter
-      ToWound: 0.05 #disintegrates rather than causing ugly wounds.
-      RandomWound: false
-      IgnoreSelfDestruct: false
-    meleePower: 40
-    meleeType: 11 #it's not melee; they disassemble enemies gauss style
-    meleeAlter:
-      RandomType: 6 #gaussian; many attacks make for consistent damage
-      ToArmorPre: 1.0
-      ToHealth: 1.0 #normalize damage to health
-      ToMorale: 0.4 #highly painful
-      ToStun: 0.4 #highly painful
-      ToArmor: 0.0 #all the armor damage is done on the way in
-      ToTile: 3.0 #disintegrates matter
-      ToWound: 0.05 #disintegrates rather than causing ugly wounds.
-      RandomWound: false
-      IgnoreSelfDestruct: false
-    accuracySnap: 80
-    accuracyAimed: 110
-    accuracyMelee: 80
-    tuMelee: 10
-    tuSnap: 10
-    tuAimed: 20
-    clipSize: -1
-    battleType: 3
-    fixedWeapon: true
-    flatSnap: true
-    flatAimed: true
-    flatMelee:
-      time: true
-    invWidth: 2
-    invHeight: 3
-    maxRange: 2
-    recover: false
-    tags: #scarbs rebuild themselves with consumed matter
-      YTAG_DAMAGE_RETURNED_AS_HP: 50
-      YTAG_DAMAGE_RETURNED_AS_ENERGY: 50
-      YTAG_DAMAGE_RETURNED_AS_STUN: 50
-      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
-      DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
+  - type: STR_SCARAB_R_WEAPON #Solo Scarab
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_L_WEAPON_MEDIUM #Small Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 7
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_R_WEAPON_MEDIUM #Small Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 7
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_L_WEAPON_HEAVY #Large Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 5
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_R_WEAPON_HEAVY #Large Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 5
+    refNode: *STR_SCARAB_WEAPON
 
   - type: AUX_DISPERSIONSHIELD        #AUX T Shield
     weight: 5
