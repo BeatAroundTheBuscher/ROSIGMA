@@ -164,73 +164,54 @@ items:
 
 ## Heavy Weapon
 
-  - type: STR_HEAVY_PLASMA_MCJ # done # Joan # MC
+  - &STR_HEAVY_PLASMA_WEAPON
+    type: STR_HEAVY_PLASMA_TERRAN # done
     minRange: 7 #cumbersome
     dropoff: 4
-    autoRange: 0
-    snapRange: 22
-    aimRange: 0
-
-    accuracyAuto: 0
-    accuracySnap: 95
-    accuracyAimed: 0
-    tuAuto: 0
-    tuSnap: 30
-    tuAimed: 0
-
-  - type: STR_HEAVY_PLASMA_MC # done
-    minRange: 7 #cumbersome
-    dropoff: 3
     autoRange: 0
     snapRange: 21
     aimRange: 21
 
     accuracyAuto: 0
+    accuracySnap: 75
+    accuracyAimed: 75
+    tuAuto: 0
+    tuSnap: 30
+    tuAimed: 30
+
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_HEAVY_PLASMA_MCJ # done # Joan # MC
+    refNode: *STR_HEAVY_PLASMA_WEAPON
+    dropoff: 3
+
+    snapRange: 22
+    aimRange: 22
+
     accuracySnap: 95
     accuracyAimed: 95
-    tuAuto: 0
-    tuSnap: 30
-    tuAimed: 30
 
-    confAimed:
-      spendPerShot: 4
-      name: STR_MAXIMAL_SHOT
+  - type: STR_HEAVY_PLASMA_MC # done
+    refNode: *STR_HEAVY_PLASMA_WEAPON
+    dropoff: 3
 
-  - type: STR_HEAVY_PLASMA_TERRAN # done
-    minRange: 7 #cumbersome
-    dropoff: 4
-    autoRange: 0
-    snapRange: 21
-    aimRange: 21
+    snapRange: 22
+    aimRange: 22
 
-    accuracyAuto: 0
-    accuracySnap: 75
-    accuracyAimed: 75
-    tuAuto: 0
-    tuSnap: 30
-    tuAimed: 30
-
-    confAimed:
-      spendPerShot: 4
-      name: STR_MAXIMAL_SHOT
+    accuracySnap: 95
+    accuracyAimed: 95
 
   - type: STR_HEAVY_PLASMA
-    minRange: 7 #cumbersome
-    dropoff: 4
-    autoRange: 0
-    snapRange: 21
-    aimRange: 21
+    refNode: *STR_HEAVY_PLASMA_WEAPON
 
-    accuracyAuto: 0
-    accuracySnap: 75
-    accuracyAimed: 75
-    tuAuto: 0
-    tuSnap: 30
-    tuAimed: 30
-
-    confAimed:
-      spendPerShot: 4
-      name: STR_MAXIMAL_SHOT
+    accuracySnap: 70 #less accurate because no heat restrictions
+    accuracyAimed: 70
 
   - type: STR_BARRAGE_PLASMA_TERRAN # done
     minRange: 7 #cumbersome
@@ -253,32 +234,84 @@ items:
   - &STR_PLASMA_TWINCORE
     type: STR_PLASMA_GUN_TWINCORE_DEKKER # done
     dropoff: 4
-    autoRange: 12
     snapRange: 21
     aimRange: 21
+    autoRange: 10
 
-    accuracyAuto: 60
     accuracySnap: 70
     accuracyAimed: 70
-    tuAuto: 40
-    tuSnap: 33
-    tuAimed: 33
+    accuracyAuto: 60
+
+    tuSnap: 30
+    tuAimed: 30
+    tuAuto: 35
 
     confSnap:
       name: STR_BURST_SNAP_SHOT
       shots: 2
 
+    confAuto:
+      name: STR_AUTOFIRE
+      shots: 4
+
     confAimed:
       spendPerShot: 4
       name: STR_MAXIMAL_SHOT
 
-  - type: STR_PLASMA_GUN_TWINCORE_ADEPTAS # done
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_PLASMA_GUN_TWINCORE #Chaos Plasma Twincore
     refNode: *STR_PLASMA_TWINCORE
+
+    accuracySnap: 65 #less accurate because no cooldown limitations
+    accuracyAimed: 65
+    accuracyAuto: 55
+
+  - type: STR_PLASMA_GUN_TWINCORE_ADEPTAS #assault oriented vesion of the Twincore
+    refNode: *STR_PLASMA_TWINCORE
+    dropoff: 5
+    snapRange: 20
+    aimRange: 20
 
     accuracyAuto: 40
     accuracySnap: 65
     accuracyAimed: 65
-    tuAuto: 33
+    tuAuto: 30
+
+  - type: STR_INQ_PLASMA #Inquisition Dekker Twincore Plasma
+    dropoff: 4
+    autoRange: 11
+    snapRange: 22
+    aimRange: 22 #Maximal Shot
+    accuracyAuto: 80
+    accuracySnap: 90 #basically masterwork
+    accuracyAimed: 90
+    tuAuto: 35
+    tuSnap: 30
+    tuAimed: 30 #Maximal Shot
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+    confAuto:
+      name: STR_AUTOFIRE
+      shots: 4
+    confAimed: #Maximal Shot
+      name: STR_MAXIMAL_SHOT
+      spendPerShot: 4 #more powerful focused shot that creates more heat
+    battleType: 1
+    power: 120
+    damageType: 5
+    damageAlter: #DA PLASMA
+      RandomType: 6
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70
+      ToArmorPre: 0.15
+      ToArmor: 0.15
+    powerRangeReduction: 5
+    powerRangeThreshold: 35.0 #plasma decoheres at longer ranges
 
 ## Vehicle
 
@@ -384,33 +417,3 @@ items:
       ITEM_POWER_BONUS_PERCENTILE: 1
     powerRangeReduction: 5
     powerRangeThreshold: 40.0 #plasma decoheres at longer ranges; basically irrelevant for vehicle mounted weapons
-
-  - type: STR_INQ_PLASMA #Inquisition Dekker Twincore Plasma
-    dropoff: 4
-    autoRange: 12
-    snapRange: 21
-    aimRange: 21 #Maximal Shot
-    accuracyAuto: 60
-    accuracySnap: 70
-    accuracyAimed: 70 #Maximal Shot
-    tuAuto: 40
-    tuSnap: 33
-    tuAimed: 33 #Maximal Shot
-    confSnap:
-      shots: 2
-      name: STR_BURST_SNAP_SHOT
-      arcing: false
-    confAimed: #Maximal Shot
-      name: STR_MAXIMAL_SHOT
-      spendPerShot: 4 #more powerful focused shot that creates more heat
-    battleType: 1
-    power: 110 #75 #*** PLASMA rebalance
-    damageType: 5
-    damageAlter: #DA PLASMA
-      RandomType: 6
-      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
-      FireThreshold: 70
-      ToArmorPre: 0.15
-      ToArmor: 0.15
-    powerRangeReduction: 5
-    powerRangeThreshold: 35.0 #plasma decoheres at longer ranges
