@@ -3,6 +3,9 @@ extended:
     RuleItem:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_IS_BUFF_WEAPON: int
+    RuleArmor:
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: int #attacker armor property; modifies the final modifier by this as a percent after all other modifiers
+      ARMOR_ALPHA_TARGET_VALUE_MODIFIER: int #target armor property; modifies the final modifier by this as a percent after all other modifiers
 
   scripts:
     damageUnit:
@@ -11,6 +14,7 @@ extended:
         code: |
           var int faction;
           var int temp;
+          var int armorMod;
           var ptr RuleUnit alpha;
           var ptr RuleResearch researchTopic;
           var int randomNumber;
@@ -54,22 +58,9 @@ extended:
             return;
           end;
 
-          attacker.getRuleArmor armorRule; #if the attacker is a 2x2 unit, we abort.
-          armorRule.getSize temp;
-          if eq temp 2; # we ignore tanks
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2.";
-            return;
-          end;
-
           weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
           if eq temp 1; # we ignore buffing items/weapons
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacking item is a buff item.";
-            return;
-          end;
-
-          armorRule.getTag temp Tag.UNIT_TYPE_MECHANICAL;
-          if eq temp 1; # we ignore mechanical units
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is mechanical.";
             return;
           end;
 
@@ -77,6 +68,20 @@ extended:
           armorRule.getTag temp Tag.UNIT_TYPE_DECOY;
           if eq temp 1;
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is decoy.";
+            return;
+          end;
+
+          attacker.getRuleArmor armorRule; # we ignore decoy targets
+          armorRule.getTag temp Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
+          if lt temp 1;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker has no chance to be Alpha Legion.";
+            return;
+          end;
+
+          unit.getRuleArmor armorRule; # we ignore decoy targets
+          armorRule.getTag temp Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
+          if lt temp 1;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target has no chance cause Alpha Legion trigger.";
             return;
           end;
 
@@ -118,7 +123,39 @@ extended:
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from damage:" temp;
           end;
 
-          add randomNumber temp; #add our roll bonus
+          if eq faction 2;
+            div temp 2; #halve the final roll bonus in the case of civilian targets; we don't care about them as much as our own
+          end;
+
+          attacker.getRuleArmor armorRule;
+          armorRule.getTag armorMod Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
+          if gt armorMod 0;
+            muldiv temp armorMod 100;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" temp;
+          end;
+
+          unit.getRuleArmor armorRule; # we ignore decoy targets
+          armorRule.getTag armorMod Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
+          if gt armorMod 0;
+            muldiv temp armorMod 100;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Target Bonus mod, temp:" temp;
+          end;
+
+          armorRule.getTag armorMod Tag.UNIT_TYPE_MECHANICAL;
+          if eq armorMod 1; # we ignore mechanical units
+            set temp 0; #negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is mechanical.";
+          end;
+
+          attacker.getRuleArmor armorRule; #if the attacker is a 2x2 unit, we abort.
+          armorRule.getSize temp;
+          if eq temp 2; # we ignore tanks
+            set temp 0; #negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2.";
+            return;
+          end;
+
+          add randomNumber temp; #after all modifiers, add our roll bonus
 
           if lt randomNumber 100; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor." randomNumber;
