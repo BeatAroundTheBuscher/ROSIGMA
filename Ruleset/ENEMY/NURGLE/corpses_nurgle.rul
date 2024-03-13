@@ -26,30 +26,41 @@ items:
     armor: 20
 
   - type: STR_NURGLE_BOOMER_CORPSE
+    categories: [STR_CAT_NURGLE]
+    bulletSprite: {mod: 40k, index: 22}
     size: 0.4
-    costSell: 5000
     weight: 25
+    costSell: 100
     bigSprite: 2621
     floorSprite: 2619
-    power: 120
-    damageType: 8 #acid
-    damageAlter: #Bio Blast
-      FixRadius: 5 #was 7
-      RandomType: 6
-      ToArmorPre: 0.05 #small ablation
-      ArmorEffectiveness: 1.1 #concussive + shrapnel everywhere
-      ToHealth: 0.5 #much damage dealt in the form of debuffs, was 0.7
-      ToTime: 0.2 #painful
-      ToStun: 0.4 #painful
-      ToMorale: 0.5 #painful
-      ToEnergy: 0.4 #painful
-      ToWound: 0.4 #Toxic
-    recover: false
     invWidth: 2
     invHeight: 3
-    recoveryPoints: 1
     battleType: 11
+    hitAnimation: 1030 #128 green from X1.pck
+    powerForAnimation: 208
+    explosionHitSound: {mod: 40k, index: 832 } #blight rocket SFX
     armor: 20
+    power: 120
+    damageType: 8 #acid
+    damageAlter: ## Plague-inflicting weapon
+      RandomType: 2 #TFTD [50% - 150%]
+      ArmorEffectiveness: 0.7
+      SmokeThreshold: 0.0
+      ToArmorPre: 0.75 #higher than normal plague weapons
+      ToArmor: 0.0 #damages armor on the way in
+      ToHealth: 0.1
+      ToMana: 0.9 #mana counts as health damage for the purposes of infection
+      ToTile: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5 #sticky goo; also makes it decent vs infection immune/mechanical units
+      FixRadius: 7
+    spawnUnit: STR_NURGLINGS
+    spawnUnitFaction: 1
+    spawnUnitChance: 50
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
 
   - type: STR_NURGLE_DAEMONETTE_CORPSE
     size: 0.4
