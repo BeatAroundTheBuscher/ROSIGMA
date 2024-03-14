@@ -127,26 +127,26 @@ extended:
           unit.getHealth temp; #don't bother if we have more than 0 health
           sub temp health_damage;
           if gt temp 0;
-            debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
             return;
           end;
 
           unit.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; #don't bother unless we're a scripted kamikazi
           if lt temp 1;
-            debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Unit not set to explode on death:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Unit not set to explode on death:" temp;
             return;
           end;
 
           unit.getTag temp Tag.UNIT_OVERKILL_DISABLE_SELF_DESTRUCT; #if overkill disables self-destruct, set our SD chance to 0.
           if gt temp 0;
             set self_destruct_chance 0;
-            debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
             return;
           end;
 
           set self_destruct_chance 100; #melee type damage and other such typical negators will not stop us from self-destructing due to our ARMOR_IS_EXPLODE_ON_DEATH tag
-          debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: self_destruct_chance set to 100";
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: self_destruct_chance set to 100";
 
           return;
 

@@ -88,6 +88,7 @@ extended:
           attacker.setHealth temp;
 
           attacker.getMorale temp; #deplete morale in proportion to perilMagnitude
+          set temp2 temp; #save pre-perils morale
           sub temp perilsMagnitude;
           limit_lower temp 0;
           attacker.setMorale temp;
@@ -98,12 +99,12 @@ extended:
           #attacker.getFatalwounds temp 1; #add fatal wounds to any we currently have in this location
           #add temp temp2;
           #attacker.setFatalwounds 1 temp;
-          ##debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
 
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Rolled more or equal to Perils target value." temp;
           battle_game.randomRange randomNumber 0 100; #determine our random perils result; lower is worse.
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
-          if lt randomNumber 1; #psyker is instantly corrupted and transforms into a random higher end daemon
+          if and lt randomNumber 6 lt temp2 50; #can only happen if morale is less than 50; psyker is instantly corrupted and transforms into a random higher end daemon
             battle_game.randomRange randomNumber 0 4;
             if eq randomNumber 0;
               rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
@@ -140,7 +141,9 @@ extended:
             attacker.setStun temp;
           end;
 
-          battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; #let the player know we have suffered perils of the warp
+          unit.getFaction temp;
+          if eq temp FACTION_PLAYER;
+            battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; #let the player know we have suffered perils of the warp
           return power part side;
 
     newTurnUnit: #reset our Perils modifier
