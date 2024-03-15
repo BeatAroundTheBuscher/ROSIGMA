@@ -1,0 +1,213 @@
+# BattleUnit.MoveCost.setBaseTimePercent
+
+
+# Hooks
+# reactionUnitAction # not necessary due to visibilityUnit?
+# selectUnitSprite
+# selectMoveSoundUnit
+# healUnit # start teleport
+# newTurnUnit # stop teleport
+# visibilityUnit # hide unit while teleporting
+
+armors: 
+  - type: STR_FLYING_SUIT_UC # "Terminator Assault Armor"
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_ULTRA_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_IF_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_BA_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_SALA_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_BT_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_WS_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_SW_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_DA_UC
+    specialWeapon: STR_TELEPORT
+  - type: STR_DW_TASS_ARMOR_CF_UC
+    specialWeapon: STR_TELEPORT
+
+
+items:
+  - type: STR_TELEPORT
+    medikitType: 3
+    medikitActionName: STR_SCRIPT_TELEPORTER_TOGGLE
+    medikitTargetSelf: true
+    painKiller: 999 # unexpected effects possible
+    battleType: 6
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: {mod: 40k, index: 220}
+    tags:
+      ITEM_IS_TELEPORTER: 1
+      ITEM_TELEPORTER_COOLDOWN: 1 # code adds +1 => 2
+      ITEM_TELEPORTER_ENERGY: 10
+    specialUseEmptyHand: true
+    hitSound: {mod: 40k, index: 788}
+
+extended:
+  tags:
+    BattleUnit:
+      UNIT_IS_TELEPORTING: int
+      UNIT_LAST_ACTIVATED_TELEPORTER_TURN: int
+      UNIT_ENERGY_BEFORE_TELEPORT: int
+    RuleItem:
+      ITEM_IS_TELEPORTER: int
+      ITEM_TELEPORTER_COOLDOWN: int
+      ITEM_TELEPORTER_ENERGY: int
+  scripts:
+    # tryPsiAttackUnit: # no ptre
+    # tryMeleeAttackUnit: # no ptre
+    hitUnit:
+      - new: ROSIGMA_hU_disable_teleport # ROSIGMA_hU_infiltration_stealth_deactivate
+        offset: 11
+        code: |
+          var int temp;
+
+          attacker.getTag temp Tag.UNIT_IS_TELEPORTING;
+
+          if ge temp 1;
+            attacker.setTag Tag.UNIT_IS_TELEPORTING 0;
+            attacker.MoveCost.setBaseTimePercent 100;
+            attacker.MoveCost.setBaseClimbEnergyPercent 100;
+            attacker.MoveCost.setBaseNormalEnergyPercent 100;
+            attacker.MoveCost.setBaseFlyEnergyPercent 100;
+            attacker.getOriginalMovementType temp;
+            attacker.setMovementType temp;
+            attacker.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
+            attacker.setEnergy temp;
+
+            battle_game.flashMessage "STR_SCRIPT_TELEPORTER_SHUTTING_DOWN";
+          end;
+
+          return power part side;
+
+    selectUnitSprite:
+      - new: ROSIGMA_sUS_change_sprite_on_teleport
+        offset: 11
+        code: |
+          var int isTeleporting;
+
+          unit.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
+
+          if ge isTeleporting 1;
+            return 1000;
+          end;
+
+          # add sprite_index sprite_offset; 
+          return sprite_index;
+
+    selectMoveSoundUnit:
+      - new: ROSIGMA_sMSU_teleporting_sound
+        offset: 11
+        code: |
+          var int isTeleporting;
+
+          unit.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
+
+          if ge isTeleporting 1;
+            return 40; # sound_index # for hovertank/cyberdisk move hum
+          end;
+
+          return sound_index;
+
+    visibilityUnit:
+      - new: ROSIGMA_vU_hide_teleporter # ROSIGMA_vU_infiltration
+        offset: 5 # hide unit
+        code: |
+          var int temp;
+
+          target_unit.getTag temp Tag.UNIT_IS_TELEPORTING;
+
+          if gt temp 0;
+            #debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+            return 0 visibility_mode;
+          end;
+
+          return current_visibility visibility_mode;
+
+    newTurnUnit: 
+      - new: ROSIGMA_nTU_disable_teleport_on_new_turn
+        offset: 11
+        code: |
+          var int isTeleporting;
+
+          unit.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
+
+          if ge isTeleporting 1;
+            unit.setTag Tag.UNIT_IS_TELEPORTING 0;
+          end;
+
+          return;
+
+        # side doesn't matter, we want to instantly disable it
+    healUnit:
+      - new: ROSIGMA_healU_start_teleport
+        offset: 11
+        code: |
+          var int temp;
+          var int lastActivatedTeleporterTurn;
+          var int currentTurn;
+
+          
+          target.getTag temp Tag.UNIT_IS_TELEPORTING;
+          if ge temp 1;
+            target.setTag Tag.UNIT_IS_TELEPORTING 0;
+            target.MoveCost.setBaseTimePercent 100;
+            target.MoveCost.setBaseClimbEnergyPercent 100;
+            target.MoveCost.setBaseNormalEnergyPercent 100;
+            target.MoveCost.setBaseFlyEnergyPercent 100;
+            target.getOriginalMovementType temp;
+            target.setMovementType temp;
+            target.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
+            target.setEnergy temp;
+
+            battle_game.flashMessage "STR_SCRIPT_TELEPORTER_SHUTTING_DOWN";
+          else;
+            item.getTag temp Tag.ITEM_IS_TELEPORTER;
+            
+
+            if ge temp 1;
+              target.getTag lastActivatedTeleporterTurn Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
+              battle_game.getTurn currentTurn;
+              # UNIT_LAST_ACTIVATED_TELEPORTER_TURN + ITEM_TELEPORTER_COOLDOWN <= currentTurn
+              # debug_log "lastActivatedTeleporterTurn" lastActivatedTeleporterTurn;
+              if gt lastActivatedTeleporterTurn 0; # first use
+                item.getTag temp Tag.ITEM_TELEPORTER_COOLDOWN;
+                add temp lastActivatedTeleporterTurn;
+              else;
+                set temp 0;
+              end;
+              
+              if gt currentTurn temp;
+                target.setTag Tag.UNIT_IS_TELEPORTING 1;
+                target.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN currentTurn;
+
+                
+                target.getEnergy temp;
+                target.setTag Tag.UNIT_ENERGY_BEFORE_TELEPORT temp;
+                item.getTag temp Tag.ITEM_TELEPORTER_ENERGY;
+                target.setEnergy temp;
+                target.MoveCost.setBaseTimePercent 0;
+                target.MoveCost.setBaseClimbEnergyPercent 100; # normal is 0, so this will never do anything, woo
+                target.MoveCost.setBaseNormalEnergyPercent 50; # normal energy cost is 2 per tile
+                target.MoveCost.setBaseFlyEnergyPercent 50; # normal energy cost is 2 per tile
+                target.setMovementType movement_type_fly;
+                battle_game.flashMessage "STR_SCRIPT_TELEPORTER_STARTING_UP";
+              else;
+                # debug_log "currentTurn" currentTurn;
+                # debug_log "temp" temp;
+                sub temp currentTurn;
+                add temp 1;
+                battle_game.flashMessage "STR_SCRIPT_TELEPORTER_COOLDOWN" temp;
+              end;
+              set painkiller_recovery 0;
+            end;
+          end;
+
+          return;
