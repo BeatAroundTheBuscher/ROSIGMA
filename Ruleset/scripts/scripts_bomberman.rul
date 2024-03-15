@@ -123,12 +123,23 @@ extended:
           var ptr RuleUnit myRuleUnit;
           var ptr RuleArmor myRuleArmor;
           var int temp;
+          var int temp2;
+          var int temp3;
 
           unit.getHealth temp; #don't bother if we have more than 0 health
           sub temp health_damage;
           if gt temp 0;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
-            return;
+            unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag temp Tag.ARMOR_IS_KAMIKAZI; #don't bother unless we're a scripted kamikazi
+            unit.getHealth temp2; #don't bother if we have more than 0 health
+            unit.getStun temp3;
+            if and gt temp 0 ge temp3 temp2;
+              unit.setHealth 0;
+            else;
+              set self_destruct_chance 0;
+              #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
+              return;
+            end;
           end;
 
           unit.getRuleArmor myRuleArmor;
