@@ -4,6 +4,7 @@ extended:
       ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
+      ITEM_IS_KAMIKAZI_BOMB: int #damage from this will kill the source if they have the Kamikazi armor tag.
     RuleArmor:
       ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
@@ -124,17 +125,16 @@ extended:
           var ptr RuleArmor myRuleArmor;
           var int temp;
           var int temp2;
-          var int temp3;
 
           unit.getHealth temp; #don't bother if we have more than 0 health
           sub temp health_damage;
           if gt temp 0;
             unit.getRuleArmor myRuleArmor;
             myRuleArmor.getTag temp Tag.ARMOR_IS_KAMIKAZI; #don't bother unless we're a scripted kamikazi
-            unit.getHealth temp2; #don't bother if we have more than 0 health
-            unit.getStun temp3;
-            if and gt temp 0 ge temp3 temp2;
+            weapon_item.getTag temp2 Tag.ITEM_IS_KAMIKAZI_BOMB;
+            if and gt temp 0 gt temp2 0 eq unit attacker; #if we're the attacker, we and our damage source have the kamikazi tag kill ourselves.
               unit.setHealth 0;
+              #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Stun exceeds health; zeroing out health:" temp;
             else;
               set self_destruct_chance 0;
               #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
