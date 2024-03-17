@@ -14,6 +14,7 @@ extended:
         code: |
           var int faction;
           var int temp;
+          var int rollBonus;
           var int armorMod;
           var ptr RuleUnit alpha;
           var ptr RuleResearch researchTopic;
@@ -73,15 +74,15 @@ extended:
 
           attacker.getRuleArmor armorRule; # we ignore decoy targets
           armorRule.getTag temp Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
-          if lt temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker has no chance to be Alpha Legion.";
+          if lt temp 0; #if the value is -1 there is no chance to trigger Alpha legion
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker has no chance to be Alpha Legion. ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER:" temp;
             return;
           end;
 
           unit.getRuleArmor armorRule; # we ignore decoy targets
-          armorRule.getTag temp Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
-          if lt temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target has no chance cause Alpha Legion trigger.";
+          armorRule.getTag temp Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER; #if the value is -1 there is no chance to trigger Alpha legion
+          if lt temp 0;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target has no chance cause Alpha Legion trigger. ARMOR_ALPHA_TARGET_VALUE_MODIFIER:" temp;
             return;
           end;
 
@@ -113,54 +114,59 @@ extended:
           #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Random roll:" randomNumber;
 
           if lt temp 1; #if we kill the target, 90% chance we are an Alpha Legion traitor;
-            unit.getHealthMax temp; #percentage chance is equal to the victim's max health.
-            limit_upper temp 95; #we don't exceed a 95% chance
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from kill:" temp;
+            unit.getHealthMax rollBonus; #percentage chance is equal to the victim's max health.
+            limit_upper rollBonus 95; #we don't exceed a 95% chance
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from kill:" rollBonus;
           else; #if we don't kill, the chance of a reveal is proportional to the damage we deal; half the to_health value, capping at 50%.
-            set temp to_health;
-            div temp 4;
-            limit_upper temp 50; #cap the chance from damage at 50
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to roll from damage:" temp;
+            set rollBonus to_health;
+            div rollBonus 4;
+            limit_upper rollBonus 50; #cap the chance from damage at 50
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from damage:" rollBonus;
           end;
 
           if eq faction 2;
-            div temp 2; #halve the final roll bonus in the case of civilian targets; we don't care about them as much as our own
+            div rollBonus 2; #halve the final roll bonus in the case of civilian targets; we don't care about them as much as our own
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL trigger chance after civilian halving:" rollBonus;
           end;
 
           attacker.getRuleArmor armorRule;
           armorRule.getTag armorMod Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
           if gt armorMod 0;
-            muldiv temp armorMod 100;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" temp;
+            muldiv rollBonus armorMod 100;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" rollBonus;
           end;
 
           unit.getRuleArmor armorRule; # we ignore decoy targets
           armorRule.getTag armorMod Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
           if gt armorMod 0;
-            muldiv temp armorMod 100;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Target Bonus mod, temp:" temp;
+            muldiv rollBonus armorMod 100;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Target Bonus mod, rollBonus:" rollBonus;
           end;
 
           armorRule.getTag armorMod Tag.UNIT_TYPE_MECHANICAL;
           if eq armorMod 1; # we ignore mechanical units
-            set temp 0; #negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is mechanical.";
+            set rollBonus 0; #negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Attacker is mechanical; rollBonus negated:" rollBonus;
           end;
 
           attacker.getRuleArmor armorRule; #if the attacker is a 2x2 unit, we abort.
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
-            set temp 0; #negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2.";
+            set rollBonus 0; #negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2; rollBonus negated:" rollBonus;
             return;
           end;
 
-          add randomNumber temp; #after all modifiers, add our roll bonus
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Final bonus to AL trigger chance:" rollBonus;
+
+          add randomNumber rollBonus; #after all modifiers, add our roll bonus
 
           if lt randomNumber 100; #10% chance to be traitor if we merely damaged the friendly unit; 90% if we killed them.
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor." randomNumber;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor. randomNumber:" randomNumber;
             return;
           end;
+
+          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL triggered. randomNumber:" randomNumber;
 
           battle_game.randomRange temp 1 10;
           if lt temp 6;

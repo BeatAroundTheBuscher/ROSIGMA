@@ -441,17 +441,31 @@ items:
       FixRadius: 7
 
   - &STR_POWER_MELEE_WEAPON
-    type: STR_MFIST
+    type: STR_MFIST_TEMPLATE
     armor: 200
     damageType: 5
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
 
-  - type: STR_POWERFIST
+  - &STR_POWER_FIST_WEAPON
+    type: STR_POWERFIST
     refNode: *STR_POWER_MELEE_WEAPON
+    tuMelee: 20 #slow and cumbersome, but hard hitting; especially for terminators
+    costMelee:
+      energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    meleeMultiplier:
+      melee: 0.7
+      strength: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    flatMelee: true
+    power: 40
+    meleeBonus:
+      strength: 1.5 #greatly magnifies your strength
+
+  - type: STR_MFIST
+    refNode: *STR_POWER_FIST_WEAPON
 
   - type: STR_CPOWER_SWORD
     refNode: *STR_POWER_MELEE_WEAPON
@@ -470,6 +484,21 @@ items:
 
   - type: STR_POWER_SWORD_MC
     refNode: *STR_POWER_MELEE_WEAPON
+
+  - type: STR_POWERKNUCKLE
+    refNode: *STR_POWER_MELEE_WEAPON
+    costMelee:
+      time: 10
+      energy: 1 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 40
+    meleeBonus:
+      strength: 0.2 #magnifies your strength
+      melee: 0.3
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    experienceTrainingMode: 13 #trains reactions
 
   - type: STR_HYPERPHASESWORD
     armor: 400
