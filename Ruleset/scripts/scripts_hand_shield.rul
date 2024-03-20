@@ -3,9 +3,46 @@ extended:
   tags:
     RuleItem:
       ITEM_SHIELD_BLOCKING_STRENGTH: int
+      ITEM_SHIELD_RECHARGES: int
+    BattleItem:
+      ITEM_MAX_SHIELD: int
 
 
   scripts:
+    createItem:
+    - new: ROSIGMA_cI_hand_shield_item_recharge # set level to recharge to per turn
+      offset: 1
+      code: |  
+        var int temp;
+
+        item.getTag temp Tag.ITEM_SHIELD_RECHARGES;
+        if gt temp 0;
+          item.getAmmoQuantity temp;
+          item.setTag Tag.ITEM_MAX_SHIELD temp;
+        end;
+
+        return;
+
+
+
+
+    newTurnItem:
+    - new: ROSIGMA_nTI_hand_shield_item_recharge # recharge shield to beginning level
+      offset: 1
+      code: |  
+        var int temp;
+
+        item.getTag temp Tag.ITEM_SHIELD_RECHARGES;
+        if gt temp 0;
+          item.getTag temp Tag.ITEM_MAX_SHIELD;
+          item.setAmmoQuantity temp;
+        end;
+
+        return;
+
+
+
+
     hitUnit:
     - new: ROSIGMA_hU_hand_shield_item
       offset: 1 # Extend Front Armor facing (40k script) + Reduce incoming damage
@@ -133,8 +170,14 @@ extended:
 
 
 
-#items: 
-#  - type: AUX_SHIELDPD
-#    clipSize: 201 # Shield HP + 1
-#    tags:
-#      ITEM_SHIELD_BLOCKING_STRENGTH: 20
+items: 
+  - &STR_STORM_SHIELD
+    type: AUX_SHIELD
+    clipSize: 41 # Shield HP + 1
+    tuMelee: 0
+    tags:
+      ITEM_SHIELD_BLOCKING_STRENGTH: 20
+      ITEM_SHIELD_RECHARGES: 1
+
+  - type: AUX_SHIELD_DW
+    refNode: *STR_STORM_SHIELD
