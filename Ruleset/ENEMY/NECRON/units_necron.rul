@@ -363,7 +363,7 @@ units:
     standHeight: 20
     kneelHeight: 15
     value: 40
-    deathSound: [289, 290, 291]
+    deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
     intelligence: 9
     aggression: 1
     spotter: 3
@@ -406,6 +406,49 @@ units:
     intelligence: 1
     spotter: 1
     sniper: 100 #long range fire support
+
+
+  - &FLAYED_ONE_TEMPLATE
+    type: STR_NECRON_FLAYED_ONE #STR_NECRON_FLAYED_ONE
+    race: STR_NECRON
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 60
+      stamina: 200
+      health: 100
+      bravery: 110
+      reactions: 55
+      firing: 0
+      throwing: 0
+      strength: 80
+      psiStrength: 200
+      psiSkill: 0
+      melee: 100
+    armor: STR_NECRON_FLAYED_ONE_ARMOR
+    standHeight: 20
+    kneelHeight: 15
+    deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
+    intelligence: 2 #feral but cunning
+    aggression: 8
+    canPanic: false
+    canBeMindControlled: false
+    avoidsFire: false
+    isLeeroyJenkins: TRUE
+    spotter: 1
+    value: 10
+    energyRecovery: 200
+    builtInWeaponSets:
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+
+  - type: STR_NECRON_FLAYED_ONE_REVIVES #STR_NECRON_FLAYED_ONE
+    refNode: *FLAYED_ONE_TEMPLATE
+    spawnUnit: STR_NECRON_FLAYED_ONE
+
 
 armors:
   - type: STR_NECRON_WARRIOR_ARMOR     #NECRON WARRIOR
@@ -1069,6 +1112,58 @@ armors:
       - INV_NULL_3X3
       - STR_SCARAB_R_WEAPON_MEDIUM
       - STR_SCARAB_L_WEAPON_MEDIUM
+
+  - &NECRON_FLAYED_ARMOR_TEMPLATE
+    type: STR_NECRON_FLAYED_ONE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 15
+    camouflageAtDay: 10 #active camo level stealth
+    camouflageAtDark: 5
+    heatVision: 50
+    psiVision: 10 #bloodhunt/sense the living
+    frontArmor: 110
+    sideArmor: 100
+    rearArmor: 70
+    underArmor: 100
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    zombiImmune: true
+    spriteSheet: NECRON_FLAYED_ONE_BS.PCK
+    spriteInv: NECRON_FLAYED_ONE_INV.SPK
+    corpseBattle:
+      - STR_NECRON_FLAYED_ONE_CORPSE
+    drawingRoutine: 0
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.1 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+
+  - type: STR_NECRON_FLAYED_ONE_ARMOR_REVIVES
+    refNode: *NECRON_FLAYED_ARMOR_TEMPLATE
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
 
 items:
   - type: STR_NECRON_SCARAB_CORPSE              #NECRON 19968
