@@ -135,12 +135,20 @@ extended:
       - new: ROSIGMA_nTU_disable_teleport_on_new_turn
         offset: 11
         code: |
-          var int isTeleporting;
+          var int temp;
 
-          unit.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
+          unit.getTag temp Tag.UNIT_IS_TELEPORTING;
 
-          if ge isTeleporting 1;
+          if ge temp 1;
             unit.setTag Tag.UNIT_IS_TELEPORTING 0;
+            unit.MoveCost.setBaseTimePercent 100;
+            unit.MoveCost.setBaseClimbEnergyPercent 100;
+            unit.MoveCost.setBaseNormalEnergyPercent 100;
+            unit.MoveCost.setBaseFlyEnergyPercent 100;
+            unit.getOriginalMovementType temp;
+            unit.setMovementType temp;
+            unit.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
+            unit.setEnergy temp;
           end;
 
           return;
