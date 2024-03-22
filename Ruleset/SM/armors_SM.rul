@@ -339,6 +339,8 @@ armors:
     allowsRunning: false
     allowsKneeling: false
     loftempsSet: [ 5 ]
+    units:
+      - STR_SOLDIER_TERMINATOR
 
   - type: STR_CAPTAIN_UC
     antiCamouflageAtDay: 5
@@ -520,7 +522,8 @@ armors:
     rearArmor: 100
     underArmor: 160
 
-  - type: STR_FLYING_SUIT_UC                #TERMINATOR ASSAULT
+  - &STR_TASS_ARMOR
+    type: STR_FLYING_SUIT_UC # "Terminator Assault Armor / Lightning Claws"
     refNode: *STR_TERMINATOR_ARMOR
     stats:
       tu: 20
@@ -538,6 +541,44 @@ armors:
     sideArmor: 140
     rearArmor: 100
     underArmor: 160
+    specialWeapon: STR_TELEPORT
+
+
+  - type: STR_TASS_ARMOR_CLAWS
+    refNode: *STR_TASS_ARMOR
+    ufopediaType: STR_FLYING_SUIT_UC
+    builtInWeapons:
+      - STR_CLAWS
+      - STR_CLAWS
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+    spriteSheet: XCOM_2.PCK
+    customArmorPreviewIndex: 7
+    corpseBattle:
+      - STR_TERMINATOR_CORPSE
+    forcedTorso: 1
+    storeItem: STR_FLYING_SUIT
+    corpseGeo: STR_FALLEN_CORPSE
+    units:
+      - STR_SOLDIER_TERMINATOR
+    layersDefaultPrefix: 0
+    layersSpecificPrefix:
+      1: TERMINATOR
+      3: TERMINATOR
+    layersDefinition:
+      M0: ["0", "TERMINATORMF", "M0_FACE", "CLAWS"]
+      M1: ["0", "TERMINATORMF", "M1_FACE", "CLAWS"]
+      M2: ["0", "TERMINATORMF", "M2_FACE", "CLAWS"]
+      M3: ["0", "TERMINATORMF", "M3_FACE", "CLAWS"]
+      M4: ["0", "TERMINATORMF", "M4_FACE", "CLAWS"]
+      M5: ["0", "TERMINATORMF", "M5_FACE", "CLAWS"]
+      F0: ["0", "TERMINATORMF", "F0_FACE", "CLAWS"]
+      F1: ["0", "TERMINATORMF", "F1_FACE", "CLAWS"]
+      F2: ["0", "TERMINATORMF", "F2_FACE", "CLAWS"]
+      F3: ["0", "TERMINATORMF", "F3_FACE", "CLAWS"]
+      F4: ["0", "TERMINATORMF", "F4_FACE", "CLAWS"]
+      F5: ["0", "TERMINATORMF", "F5_FACE", "CLAWS"]
 
   - &STR_CENTURION_ARMOR
     type: CENT_ARMOR_UC            #CENT
@@ -677,22 +718,6 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
 
   # Terminator specific armors and letting Termies use other armor
-  - type: STR_POWER_SUIT_UC                 #TERMINATOR
-    units:
-      - STR_SOLDIER_TERMINATOR
-  - type: STR_TSARGENT_UC                   #TERMINATOR SARGENT
-    units:
-      - STR_SOLDIER_TERMINATOR
-  - type: STR_FLYING_SUIT_UC                #TERMINATOR ASSAULT
-    units:
-      - STR_SOLDIER_TERMINATOR
-  - type: CENT_ARMOR_UC            #CENT
-    units:
-      - STR_SOLDIER_TERMINATOR
-  - type: STR_CAPTAIN_UC                    #TERMINATOR CAPTAIN ARMOR
-    units:
-      - STR_SOLDIER_TERMINATOR
-
   - type: STR_SIGNALFALSE_ARMOR_UC #HONOR
     units:
       - STR_SOLDIER
