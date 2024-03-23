@@ -11,6 +11,7 @@
 
 items:
   - type: STR_TELEPORT
+    medikitTargetMatrix: 0
     medikitType: 3
     medikitActionName: STR_SCRIPT_TELEPORTER_TOGGLE
     medikitTargetSelf: true
@@ -140,17 +141,17 @@ extended:
           var int currentTurn;
 
           
-          target.getTag temp Tag.UNIT_IS_TELEPORTING;
+          actor.getTag temp Tag.UNIT_IS_TELEPORTING;
           if ge temp 1;
-            target.setTag Tag.UNIT_IS_TELEPORTING 0;
-            target.MoveCost.setBaseTimePercent 100;
-            target.MoveCost.setBaseClimbEnergyPercent 100;
-            target.MoveCost.setBaseNormalEnergyPercent 100;
-            target.MoveCost.setBaseFlyEnergyPercent 100;
-            target.getOriginalMovementType temp;
-            target.setMovementType temp;
-            target.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
-            target.setEnergy temp;
+            actor.setTag Tag.UNIT_IS_TELEPORTING 0;
+            actor.MoveCost.setBaseTimePercent 100;
+            actor.MoveCost.setBaseClimbEnergyPercent 100;
+            actor.MoveCost.setBaseNormalEnergyPercent 100;
+            actor.MoveCost.setBaseFlyEnergyPercent 100;
+            actor.getOriginalMovementType temp;
+            actor.setMovementType temp;
+            actor.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
+            actor.setEnergy temp;
 
             battle_game.flashMessage "STR_SCRIPT_TELEPORTER_SHUTTING_DOWN";
           else;
@@ -158,7 +159,7 @@ extended:
             
 
             if ge temp 1;
-              target.getTag lastActivatedTeleporterTurn Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
+              actor.getTag lastActivatedTeleporterTurn Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
               battle_game.getTurn currentTurn;
               # UNIT_LAST_ACTIVATED_TELEPORTER_TURN + ITEM_TELEPORTER_COOLDOWN <= currentTurn
               # debug_log "lastActivatedTeleporterTurn" lastActivatedTeleporterTurn;
@@ -170,19 +171,19 @@ extended:
               end;
               
               if gt currentTurn temp;
-                target.setTag Tag.UNIT_IS_TELEPORTING 1;
-                target.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN currentTurn;
+                actor.setTag Tag.UNIT_IS_TELEPORTING 1;
+                actor.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN currentTurn;
 
                 
-                target.getEnergy temp;
-                target.setTag Tag.UNIT_ENERGY_BEFORE_TELEPORT temp;
+                actor.getEnergy temp;
+                actor.setTag Tag.UNIT_ENERGY_BEFORE_TELEPORT temp;
                 item.getTag temp Tag.ITEM_TELEPORTER_ENERGY;
-                target.setEnergy temp;
-                target.MoveCost.setBaseTimePercent 0;
-                target.MoveCost.setBaseClimbEnergyPercent 100; # normal is 0, so this will never do anything, woo
-                target.MoveCost.setBaseNormalEnergyPercent 50; # normal energy cost is 2 per tile
-                target.MoveCost.setBaseFlyEnergyPercent 50; # normal energy cost is 2 per tile
-                target.setMovementType movement_type_fly;
+                actor.setEnergy temp;
+                actor.MoveCost.setBaseTimePercent 0;
+                actor.MoveCost.setBaseClimbEnergyPercent 100; # normal is 0, so this will never do anything, woo
+                actor.MoveCost.setBaseNormalEnergyPercent 50; # normal energy cost is 2 per tile
+                actor.MoveCost.setBaseFlyEnergyPercent 50; # normal energy cost is 2 per tile
+                actor.setMovementType movement_type_fly;
                 battle_game.flashMessage "STR_SCRIPT_TELEPORTER_STARTING_UP";
               else;
                 # debug_log "currentTurn" currentTurn;
