@@ -114,6 +114,14 @@ extended:
         offset: 11
         code: |
           var int temp;
+          
+          unit.getTag temp Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
+
+          if and eq turn 1 neq temp 0 eq side FACTION_PLAYER;  # multi sage missions
+            
+            unit.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN 0;
+            return;
+          end;
 
           unit.getTag temp Tag.UNIT_IS_TELEPORTING;
 
