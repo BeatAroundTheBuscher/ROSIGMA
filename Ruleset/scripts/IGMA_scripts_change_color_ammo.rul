@@ -15,38 +15,42 @@ extended:
           var int color;
           var int ammoColor;
 
-          item.getRuleItem weaponRuleset;
-          weaponRuleset.getTag weaponColor Tag.ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY;
-          if eq weaponColor 0;
+          if eq blit_part blit_item_big;
 
-            return new_pixel;
+            item.getRuleItem weaponRuleset;
+            weaponRuleset.getTag weaponColor Tag.ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY;
+            if eq weaponColor 0;
 
-          end;
-
-          get_color color new_pixel;
-
-          item.getAmmoItem ammoItem;
-          ammoItem.getRuleItem ammoRuleset;
-          ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_COLOR;
-
-          if eq color weaponColor;
-
-            if neq 0 ammoColor;
-
-              set_color new_pixel ammoColor;
-              ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_SHADE;
-              add ammoColor shade;
-
-            else;
-
-            # keep the color and don't turn it into gray
-            # set_color new_pixel 0;
-              set ammoColor shade;
+              return new_pixel;
 
             end;
 
-            add_shade new_pixel ammoColor;
+            get_color color new_pixel;
 
+            item.getAmmoItem ammoItem;
+            ammoItem.getRuleItem ammoRuleset;
+            ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_COLOR;
+
+            if eq color weaponColor;
+
+              if neq 0 ammoColor;
+
+                set_color new_pixel ammoColor;
+                ammoRuleset.getTag ammoColor Tag.ITEM_AMMO_SHADE;
+                add ammoColor shade;
+
+              else;
+
+              # keep the color and don't turn it into gray
+              # set_color new_pixel 0;
+                set ammoColor shade;
+
+              end;
+
+              add_shade new_pixel ammoColor;
+
+            end;
+          
           end;
 
           return new_pixel;
