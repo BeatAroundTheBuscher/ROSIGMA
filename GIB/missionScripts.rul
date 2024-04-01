@@ -1,0 +1,40 @@
+missionScripts:
+  - &STR_COMPETING_ORKS
+    type: COMPETING_ORK_BASE_1
+    missionWeights:
+      0:
+        STR_ORK_BASE_COMPETING_LEVEL1: 100
+    useTable: false
+    firstMonth: 0
+    lastMonth: 0
+    executionOdds: 100
+    startDelay: 300
+    targetBaseOdds: 100
+    maxRuns: 1
+    varName: CORK1
+
+  - type: COMPETING_ORK_BASE_2
+    refNode: *STR_COMPETING_ORKS
+    varName: CORK2
+    missionWeights:
+      0:
+        STR_ORK_BASE_COMPETING_LEVEL2: 100
+    researchTriggers:
+      STR_COMPETING_ORK_LEVEL_1_DEFEATED: true
+
+  - delete: firstMonthTerror
+  - delete: recurringTerror
+  - delete: recurringTerrorHard
+  - delete: recurringGSCTerror
+
+  - type: igTerrorMission
+    firstMonth: 0
+    lastMonth: 10
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_IG_TERROR_MISSION: 100
+    useTable: false
+    executionOdds: 100
+    startDelay: 14400
+    randomDelay: 14400
