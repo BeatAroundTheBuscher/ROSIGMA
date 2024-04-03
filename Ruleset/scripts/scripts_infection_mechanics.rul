@@ -427,8 +427,13 @@ extended:
 
           unit.getFaction temp;
           battle_game.getTurnSide temp2;
-          if eq temp temp2; # turn player
-            #debug_log "Infection Scripts; newTurnUnit, offset 22: Aborting. Faction turn equals unit turn; unit:" unit;
+          if or eq temp temp2 eq temp2 FACTION_NEUTRAL; #we don't trigger on our turn or the neutral turn
+            #debug_log "Infection Scripts; newTurnUnit, offset 22: Aborting. We don't trigger infection progression on our or neutral turns." unit;
+            return;
+          end;
+
+          if and eq temp FACTION_NEUTRAL neq temp2 FACTION_HOSTILE; #neutral triggers on the enemy turn
+            #debug_log "Infection Scripts; newTurnUnit, offset 22: Aborting. Neutral units trigger infection progression on enemy turn only." unit;
             return;
           end;
 

@@ -788,13 +788,18 @@ items:
     costSell: 45800
     weight: 10
     clipSize: -1
-    power: 25
+    power: 40
     damageType: 3
     damageAlter: #DA Sound
-      ToHealth: 1.5
-      ToEnergy: 5.0
+      ToHealth: 1.0
+      ToTime: 1.0
+      ToStun: 2.0
+      ToEnergy: 2.0
+      ToMorale: 2.0
       ArmorEffectiveness: 0.2
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
     accuracySnap: 75
     tuSnap: 30
     battleType: 1
@@ -1079,7 +1084,7 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 15 #low chance of insta zombifying
-    
+
     #Armors go left side of the colon, units go right side of the colon
 
 
@@ -2482,35 +2487,6 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
 
-  - type: STR_GRAVPISTOL_AMMO #GRAVPISTOL AMMO                              2062
-    categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_STUN_BOMB
-    size: 0.1
-    costSell: 300
-    weight: 3
-    bigSprite: {mod: 40k, index: 38}
-    floorSprite: {mod: 40k, index: 37}
-    handSprite: {mod: 40k, index: 616}
-    hitSound: {mod: 40k, index: 830}
-    hitAnimation: {mod: 40k, index: 130}
-    power: 35
-    powerRangeThreshold: 8
-    powerRangeReduction: 5
-    damageType: 1
-    clipSize: 8
-    battleType: 2
-    recoveryPoints: 1
-    damageAlter: #GRAV GUN
-      RandomType: 2 #TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2
-      ToArmorPre: 1.0
-      ToArmor: 0.5
-      ToHealth: 1.0
-      ToStun: 0.5
-      ToEnergy: 0.5
-    listOrder: 11821
-
   - type: STR_NURGLE_KOMBIBOLTER_GRAV ## Nurge Kombi-Grav
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_GRAVGUN, STR_CAT_NURGLE]
     requires:
@@ -2755,17 +2731,18 @@ items:
     flatUse:
       time: true
       energy: true
-    power: 30
+    power: 40
     damageType: 3
     damageAlter: #DA Sound
-      ToHealth: 1.0 #weaker than the Havocs, does stun/morale/time etc damage instead
-      ArmorEffectiveness: 0.2
-      RandomType: 2 #TFTD [50% - 150%]
-      FixRadius: 3
+      ToHealth: 1.0
+      ToTime: 1.0
+      ToStun: 2.0
+      ToEnergy: 2.0
       ToMorale: 2.0
-      ToStun: 0.5
-      ToTime: 0.5
-      ToEnergy: 0.5
+      ArmorEffectiveness: 0.2
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
     bulletSpeed: 80
     invWidth: 2
     invHeight: 3
@@ -3101,12 +3078,18 @@ items:
     costSell: 45800
     weight: 40
     clipSize: -1
-    power: 30
+    power: 40
     damageType: 3
     damageAlter: #DA Sound
-      ToHealth: 2.0
+      ToHealth: 1.0
+      ToTime: 1.0
+      ToStun: 2.0
+      ToEnergy: 2.0
+      ToMorale: 2.0
       ArmorEffectiveness: 0.2
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
     accuracySnap: 75
     tuSnap: 30
     battleType: 1
@@ -3131,22 +3114,24 @@ items:
     handSprite: 2390
     explosionHitSound: 2118 #Sonichit
     hitAnimation: {mod: 40k, index: 96 }
-    power: 20
+    power: 40
     damageType: 3
     damageAlter: #DA Sound
-      ToHealth: 1.5
+      ToHealth: 1.0
+      ToTime: 1.0
       ToStun: 2.0
+      ToEnergy: 2.0
+      ToMorale: 2.0
       ArmorEffectiveness: 0.3
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
     battleType: 4
     recoveryPoints: 1
     invWidth: 1
     invHeight: 2
-    blastRadius: 3
     listOrder: 15300
     throwRange: 16
-
-
 
   - type: STR_SONICKOMBI_CHARGE
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
@@ -3161,15 +3146,18 @@ items:
     fireSound: {mod: 40k, index: 861}
     explosionHitSound: {mod: 40k, index: 863} #Sound
     bulletSprite: {mod: 40k, index: 11}
-    hitAnimation: 96 #XSOUND
-    power: 15
-    damageAlter: #sonic
-      ToHealth: 2.0
-      ArmorEffectiveness: 0.4
-      ToMorale: 2.0
+    hitAnimation: {mod: 40k, index: 96}
+    power: 25
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.0
+      ToTime: 1.0
       ToStun: 2.0
       ToEnergy: 2.0
-      RandomType: 2 #TFTD [50% - 150%]
+      ToMorale: 2.0
+      ArmorEffectiveness: 0.3
+      RandomType: 6
+      FixRadius: 3
     bulletSpeed: 80
     clipSize: -1
     battleType: 2
@@ -3188,15 +3176,18 @@ items:
     bigSprite: 2326
     floorSprite: 2431
     handSprite: {mod: 40k, index: 448}
-    power: 30
+    power: 40
     damageType: 3
     damageAlter: #DA Sound
-      ToHealth: 1.2
-      ToWound: 0.1
+      ToHealth: 1.0
+      ToTime: 1.0
       ToStun: 2.0
-      ToMorale: 1.5
+      ToEnergy: 2.0
+      ToMorale: 2.0
       ArmorEffectiveness: 0.3
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
     clipSize: 6
     battleType: 2
     invWidth: 2
