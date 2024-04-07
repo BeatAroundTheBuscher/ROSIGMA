@@ -61,15 +61,27 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
 
   - &STR_MARINE_ARMOR
-    type: STR_SIGNALFALSE_ARMOR_UC #HONOR
+    type: STR_PERSONAL_ARMOR_UC #TACTICAL
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 3
     antiCamouflageAtDark: 3
-    frontArmor: 140
-    sideArmor: 130
-    rearArmor: 90
-    underArmor: 90
+    stats:
+      tu: 10
+      stamina: 20
+      health: 5
+      bravery: 10 #always multiples of 10
+      reactions: 10
+      firing: 10
+      throwing: 5
+      strength: 20
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15
+    frontArmor: 125
+    sideArmor: 115
+    rearArmor: 85
+    underArmor: 125
     damageModifier: #MARINE ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -83,12 +95,41 @@ armors:
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
+    builtInWeapons:
+      - INV_NULL_3X1_BACKPACK
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_MARINE_OFFICER_ARMOR
+    type: STR_SIGNALFALSE_ARMOR_UC #HONOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    frontArmor: 140
+    sideArmor: 130
+    rearArmor: 90
+    underArmor: 90
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 0.8 #AP was 1.0
+      - 0.7 #FLAMES was 0.8
+      - 0.6 #HE was 0.7
+      - 0.7 #LASCANON was 0.8
+      - 0.9 #PLASMA was 1.1
+      - 0.8 #STUN was 1.1
+      - 0.9 #MELEE was 1.1
+      - 0.8 #ACID was 1.0
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
     loftempsSet: [ 4 ]
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-  - type: STR_SIGNALFALSE_ARMOR_UC #HONOR
+  - type: STR_SIGNALFALSE_ARMOR_UC #HONOR Sergeant
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     stats:
@@ -107,8 +148,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-  - type: STR_SIGNAL_ARMOR_UC #HONOR
-    refNode: *STR_MARINE_ARMOR
+  - type: STR_SIGNAL_ARMOR_UC #HONOR Sergeant 
+    refNode: *STR_MARINE_OFFICER_ARMOR
     stats:
       tu: 10
       stamina: 20
@@ -123,7 +164,7 @@ armors:
       melee: 20
 
   - type: STR_LIB_ARMOR_UC  #LIBRARIAN
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 10
     stats:
@@ -167,7 +208,7 @@ armors:
     underArmor: 110
 
   - type: STR_HONOR_ARMOR_UC #HONOR
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     stats:
       tu: 10
       stamina: 20
@@ -205,7 +246,7 @@ armors:
     underArmor: 100
 
   - type: STR_ASS_ARMOR_HONOR_UC #ASSAULT HONOR
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     stats:
       tu: 30
       stamina: 30
@@ -224,7 +265,7 @@ armors:
     underArmor: 110
 
   - type: STR_APOT_ARMOR_UC
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 5
@@ -247,7 +288,7 @@ armors:
     underArmor: 90
 
   - type: STR_TECH_ARMOR_UC
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 5
@@ -270,7 +311,7 @@ armors:
     underArmor: 105
 
   - type: STR_SARGENT_ARMOR_UC
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     stats:
@@ -291,7 +332,7 @@ armors:
     underArmor: 115
 
   - type: STR_CHAP_ARMOR_UC                 #CHAPLAIN  zombiImmune: true
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 10
     stats:
@@ -318,21 +359,21 @@ armors:
 
   - &STR_TERMINATOR_ARMOR
     type: STR_CAPTAIN_UC                    #TERMINATOR CAPTAIN ARMOR
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     frontArmor: 150
     sideArmor: 140
     rearArmor: 100
     underArmor: 150
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
-      - 0.7 #AP
+      - 0.6 #AP
       - 0.3 #FLAMES
-      - 0.5 #HE
+      - 0.4 #HE
       - 0.8 #LASCANON
-      - 1.0 #PLASMA
+      - 0.8 #PLASMA
       - 1.0 #STUN
-      - 1.0 #MELEE
-      - 1.0 #ACID
+      - 0.9 #MELEE
+      - 0.8 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
@@ -359,7 +400,7 @@ armors:
       melee: 20
 
   - type: STR_GREYKNIGHT_UC                 #GREYKNIGHT ARMOR
-    refNode: *STR_TERMINATOR_ARMOR
+    refNode: *STR_MARINE_OFFICER_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     stats:
@@ -378,27 +419,6 @@ armors:
     sideArmor: 140
     rearArmor: 100
     underArmor: 155
-
-  - type: STR_PERSONAL_ARMOR_UC #TACTICAL
-    refNode: *STR_MARINE_ARMOR
-    stats:
-      tu: 10
-      stamina: 20
-      health: 5
-      bravery: 10 #always multiples of 10
-      reactions: 10
-      firing: 10
-      throwing: 5
-      strength: 20
-      psiStrength: 0
-      psiSkill: 0
-      melee: 15
-    frontArmor: 125
-    sideArmor: 115
-    rearArmor: 85
-    underArmor: 125
-    builtInWeapons:
-      - INV_NULL_3X1_BACKPACK
 
   - &STR_SCOUT_ARMOR
     type: STR_SCOUT_UC #SCOUT
