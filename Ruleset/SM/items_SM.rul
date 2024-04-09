@@ -472,7 +472,7 @@ items:
   - &STR_POWER_FIST_WEAPON
     type: STR_POWERFIST
     refNode: *STR_POWER_MELEE_WEAPON
-    tuMelee: 22 #slow and cumbersome, but hard hitting; especially for terminators
+    tuMelee: 25 #slow and cumbersome, but hard hitting; especially for terminators
     costMelee:
       energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     meleeMultiplier:
@@ -591,7 +591,7 @@ items:
     maxRange: 3
     powerRangeThreshold: 4
     powerRangeReduction: 99
-    power: 50 #lower base damage; compensated for by stat scaling
+    power: 90 #lower base damage; compensated for by stat scaling
     meleePower: 50
     battleType: 1
     damageType: 11 #melta damage; more effective against daemons
@@ -767,16 +767,24 @@ items:
     damageAlter:
       FireBlastCalc: true #aoe should scale with power
       IgnoreOverKill: false
-      ToHealth: 3.0
+      ToHealth: 1.5
       ToTile: 0.3
       ToItem: 0.3
-      ToMorale: 40.0
-      ArmorEffectiveness: 0
+      ToMorale: 10.0
+      ArmorEffectiveness: 0.5
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
     damageBonus:
       bravery: 0.5
-      psi: 0.02
+      psi: 0.01
     #melee
+    meleePower: 100
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+      bravery: 0.1
+    costMelee:
+      time: 15
+      energy: 4 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     meleeType: 5
     meleeAlter:     #DA POWER
       ArmorEffectiveness: 0.7
@@ -805,10 +813,13 @@ items:
       time: 25
       energy: 8 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatMelee: true
-    power: 100
+    power: 120
     damageBonus:
-      strength: 0.4
+      strength: 1.0
       melee: 0.2
+    meleeAlter:     #DA POWER
+      ArmorEffectiveness: 0.6 #armor breaking
+      ToArmorPre: 0.3
     meleeMultiplier: #very heavy and cumbersome; strength matters a lot for hitting
       melee: 0.6
       strength: 0.4
@@ -1052,21 +1063,48 @@ items:
 
   - type: STR_PATCHMORAL #SPEED                           9001
     damageBonus:
-      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
+      bravery: 0.5
+      psiSkill: 0.5
     costMelee:
       stun: 5
       morale: 10
       time: 25
       energy: 25
+    damageType: 0
+    damageAlter:
+      RandomType: 3
+      FixRadius: 3.0
+      ArmorEffectiveness: 0.0
+      ToStun: 0.2
+      ToHealth: 0.0
+      ToMorale: -1.00
+      ToItem: 0.00
+      ToTile: 0.00
+      ToArmor: 0.00
+      ToWound: 0.00
+      RandomWound: false
+    tags:
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
 
   - type: STR_PATCHSMOKE #SPEED                           9001
     damageBonus:
-      psi: 0.25 #this is magic/psychic power; bravery has nothing to do with it
+      psi: 0.2 #this is magic/psychic power; bravery has nothing to do with it
     costAimed:
       time: 40
       stun: 25
-      morale: 25
+      morale: 10
       energy: 50
+    damageAlter:
+      ToHealth: 0.0
+      ToItem: 0.00
+      ToTile: 0.00
+      ToArmor: 0.00
+      ToWound: 0.00
+      RandomWound: false
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 0
 
 
   - type: STR_PATCHSPEED #SPEED                           9001
@@ -1089,10 +1127,12 @@ items:
     costMelee:
       time: 25
       stun: 25
-      morale: 25
+      morale: 10
       energy: 50
     tags:
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 1
 
   - type: STR_CHAPLAIN_INSPIRE
     categories: [STR_CAT_SPELLS]

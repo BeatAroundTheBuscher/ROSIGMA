@@ -7,6 +7,8 @@ extended:
       UNIT_PERILS_MODIFIER: int #our cumulative increase to perils of the warp
       CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
       CURRENT_INFECTION_TYPE: int #type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+    RuleArmor:
+      ARMOR_PERILS_EFFECTS_RESISTANCE: int #% resistance to Perils effects
 
   scripts:
     hitUnit:
@@ -61,12 +63,26 @@ extended:
             return power part side;
           end;
 
+          attacker.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.ARMOR_PERILS_EFFECTS_RESISTANCE; #if we have immunity to perils, don't bother
+          if gt temp 99;
+            return power part side;
+          end;
+
           sub perilsMagnitude 100; #potency scales with the amount we're under max Morale
           mul perilsMagnitude -1;
           attacker.getTag temp Tag.CURRENT_INFECTION_DAMAGE; #add infection damage equal to PerilsMagnitude
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage before Perils increment:" temp;
           add temp perilsMagnitude;
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
+          attacker.getRuleArmor rArmor;
+          rArmor.getTag temp2 Tag.ARMOR_PERILS_EFFECTS_RESISTANCE;
+          muldiv temp temp2 perilsMagnitude;
+
+          attacker.getRuleArmor rArmor;
+          rArmor.getTag temp2 Tag.INFECTION_RESIST;
+          muldiv temp temp2 perilsMagnitude;
+
           attacker.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
 
           battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
