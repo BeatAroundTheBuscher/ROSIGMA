@@ -74,19 +74,31 @@ extended:
           var int temp;
           var int temp2;
           var int regenDivisor;
+          var int maxPercent;
           var int maxHealth;
           var int totalWounds;
           var int unitFaction;
           var ptr RuleArmor armorRule;
 
           unit.getRuleArmor armorRule;
-          armorRule.getTag temp Tag.ARMOR_WOUND_REGENERATE_MAX_PERCENT;
-          if lt temp 1;
+          armorRule.getTag maxPercent Tag.ARMOR_WOUND_REGENERATE_MAX_PERCENT;
+          if lt maxPercent 1;
+            #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; no maxPercent:" maxPercent;
             return;
           end;
 
           armorRule.getTag regenDivisor Tag.ARMOR_PSI_REGENERATE_DIVISOR;
           if lt regenDivisor 1;
+            #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; no regenDivisor:" regenDivisor;
+            return;
+          end;
+
+          unit.getHealth temp;
+          unit.getHealthMax maxHealth;
+          #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: maxHealth amount:" maxHealth;
+          muldiv maxHealth maxPercent 100;
+          if gt temp maxHealth; #don't bother if our current health exceeds the maximum health we can regenerate up to
+            #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; current health above ARMOR_WOUND_REGENERATE_MAX_PERCENT:" maxPercent;
             return;
           end;
 
@@ -96,17 +108,13 @@ extended:
             return;
           end;
 
-          unit.getHealthMax maxHealth;
-          muldiv maxHealth temp 100;
-          #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: maxHealth amount:" maxHealth;
-          unit.Stats.getPsiSkill temp;
+          unit.Stats.getPsiSkill temp; #regeneration equals psi divided by regenDivisor;
           unit.Stats.getPsiStrength temp2;
           muldiv temp temp2 regenDivisor;
           #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Psi Regenerate amount:" temp;
           unit.getHealth temp2;
           #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Current health amount:" temp2;
           add temp2 temp;
-          limit_upper temp2 maxHealth;
           #debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Post Regenerate amount:" temp2;
           unit.setHealth temp2;
 
