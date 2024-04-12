@@ -2411,18 +2411,19 @@ items:
       - STR_ALIENS_ONLY
       - STR_SMALL_LAUNCHER
     size: 0.2
-    dropoff: 6
+    dropoff: 5
     costSell: 12000
     weight: 10
     compatibleAmmo:
       - STR_STUN_BOMB
-    accuracySnap: 65
+    accuracySnap: 70
 #    accuracyAimed: 110
     tuSnap: 40
 #    tuAimed: 75
     battleType: 1
     snapRange: 16
-    maxRange: 24
+    powerRangeThreshold: 18
+    powerRangeReduction: 2
     twoHanded: true
     invWidth: 2
     invHeight: 3
@@ -2430,11 +2431,11 @@ items:
     listOrder: 11810
 
   - type: STR_GRAVGUN_AOE_CHAOS #GRAVGUN AOE CHAOS                  11800
+    dropoff: 5
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
-    dropoff: 10
     costSell: 18000
     weight: 15
     bigSprite: 2050
@@ -2444,11 +2445,12 @@ items:
     fireSound: { mod: 40k, index: 829 }
     compatibleAmmo:
       - STR_GRAVGUN_AOE_AMMO
-    accuracySnap: 45
+    accuracySnap: 55
 #    accuracyAimed: 110
     tuSnap: 40
     snapRange: 12
-    maxRange: 20
+    powerRangeThreshold: 16
+    powerRangeReduction: 2
 #    tuAimed: 75
     battleType: 1
     twoHanded: true
@@ -2457,12 +2459,12 @@ items:
     listOrder: 11800
 
   - type: STR_NURGLE_GRAVPISTOL #GRAVPISTOL                          11810
+    dropoff: 6
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
       - STR_SMALL_LAUNCHER
     size: 0.2
-    dropoff: 7
     costSell: 5000
     weight: 6
     bigSprite: 2614
@@ -2473,9 +2475,10 @@ items:
     compatibleAmmo:
       - STR_GRAVPISTOL_AMMO
     accuracySnap: 65
-    accuracyAimed: 85
     tuSnap: 30
-    tuAimed: 66
+    snapRange: 14
+    powerRangeThreshold: 16
+    powerRangeReduction: 2
     battleType: 1
     twoHanded: false
     invWidth: 2
@@ -2492,7 +2495,7 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
-    dropoff: 6
+    dropoff: 5
     costSell: 5000 #only valuable because the technology is esoteric
     weight: 18
     bigSprite: 2613
@@ -2537,7 +2540,7 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
-    dropoff: 10
+    dropoff: 6 #shotgun/scattershot
     costSell: 20000
     weight: 20 #heavier
     bigSprite: 2612
@@ -2550,12 +2553,13 @@ items:
       - STR_GRAVGUN_AOE_AMMO
     accuracySnap: 55
     accuracyAuto: 45
+    powerRangeThreshold: 14
+    powerRangeReduction: 2
 #    accuracyAimed: 110
     tuSnap: 35
     tuAuto: 45
     snapRange: 12 #shorter range
     autoRange: 8
-    maxRange: 14 #shorter range
 #    tuAimed: 75
     battleType: 1
     twoHanded: true
@@ -2571,7 +2575,7 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
-    dropoff: 7
+    dropoff: 4 #heavy weapon
     costSell: 30000
     weight: 30 #heavier
     bigSprite: 2616
@@ -2585,50 +2589,19 @@ items:
     accuracyAimed: 90
     tuSnap: 35
     tuAimed: 70
-    powerRangeThreshold: 14
-    powerRangeReduction: 0.25
+    powerRangeThreshold: 25
+    powerRangeReduction: 2
     snapRange: 16
-    maxRange: 25
+    aimRange: 25
     battleType: 1
     twoHanded: true
     invWidth: 2
     invHeight: 3
     listOrder: 11805
+    minRange: 5 #cumbersome heavy weapon
     tags:
       INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-
-  - type: STR_GRAVCANNON_AMMO #GRAVGUN ADEPTAS AMMO                 2062
-    categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_STUN_BOMB
-    size: 0.1
-    costSell: 500
-    weight: 8
-    bigSprite: 2617
-    floorSprite: { mod: 40k, index: 37 }
-    handSprite: { mod: 40k, index: 616 }
-    hitSound: { mod: 40k, index: 830 }
-    hitAnimation: 2200
-    hitAnimFrames: 16
-    power: 5 #used to be 40
-    damageType: 1
-    clipSize: 5
-    battleType: 2
-    invWidth: 2
-    invHeight: 1
-    recoveryPoints: 2
-    damageAlter: #GRAV GUN
-      RandomType: 2 #TFTD [50% - 150%]
-      ArmorEffectiveness: 0.0
-      ToArmorPre: 20.0 #1.2
-      ToArmor: 12.0 #1.2
-      ToHealth: 10.0 #0.6
-      ToStun: 12.0 #1.0
-      ToEnergy: 6.0
-      FixRadius: 2.0
-    listOrder: 11806
 
   - type: STR_PLAGUE_KNIFE # Plague Knife
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
@@ -3939,7 +3912,7 @@ items:
   - type: STR_NURGLE_NEEDLER_RIFLE
     categories: [STR_CAT_CHAOS, STR_CAT_NURGLE, STR_CAT_SNIPER]
     size: 0.2
-    dropoff: 5
+    dropoff: 2 #this is a proper sniper rifle
     costSell: 20000
     weight: 10
     bigSprite: 2625
@@ -3951,24 +3924,26 @@ items:
     hitAnimation: 2010 #green hit
     power: 30 #sniper weapon; power scales with accuracy
     accuracySnap: 50
-    accuracyAimed: 80
+    accuracyAimed: 110
     tuSnap: 45
     tuAimed: 70
     snapRange: 18
-    aimRange: 25
+    aimRange: 30
     damageType: 8 #acid
     damageAlter: #plague weapon
       ArmorEffectiveness: 0.5 #low power but high penetration; doesn't corrode like most Nurgle plague weapons
       ToArmorPre: 0.05 #precision weapon; minimal armor damage
       ToArmor: 0.05 #precision weapon; minimal armor damage
       ToHealth: 0.1
-      ToMana: 0.8
+      ToMana: 0.9
+      ToEnergy: 1.0 #sedative cocktail
+      ToStun: 1.0 #sedative cocktail
+      ToTime: 0.5 #higher than normal TU depletion
       ToWound: 0.0 #precision needler weapon; leaves no terminal wounds
       RandomWound: false
-      ToTime: 0.5 #higher than normal TU depletion
       RandomType: 6 #gaussian
     damageBonus: #sniper weapon; power scales with accuracy
-      firing: 0.3
+      firing: 0.4
     battleType: 1
     twoHanded: true
     fixedWeapon: true
@@ -3977,6 +3952,7 @@ items:
     invHeight: 3
     clipSize: -1
     kneelBonus: 130
+    minRange: 7
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
     tags:
@@ -3984,7 +3960,6 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #sniper weapon; aimed shots target vitals
       ITEM_POWER_BONUS_PERCENTILE: 1
-    specialChance: 1 #tiny chance of insta zombifying
     bulletSpeed: 15
     listOrder: 6940
 
@@ -4023,6 +3998,8 @@ items:
     listOrder: 10721
     tags:
       REACTION_MULTIPLIER: 200
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1
 
   - type: STR_AUTOPISTOL_CLIP_BLIGHT
     categories: [STR_CAT_AUTO, STR_CAT_CHAOS, STR_CAT_NURGLE]
