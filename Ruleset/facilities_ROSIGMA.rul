@@ -299,7 +299,7 @@ facilities:
     monthlyCost: 9000000
     personnel: 50
     storage: 100
-    mapName: XBASE_57
+    mapName: XBASE_R00
     requires:
       - STR_HYPER_WAVE_DECODER
     listOrder: 801
@@ -309,7 +309,7 @@ facilities:
     canBeBuiltOver: true
     provideBaseFunc: [OUTP, HANGAR, IMPERIUM]
     maxAllowedPerBase: 1
-    monthlyCost: 300000
+    monthlyCost: 30000
     refundValue: 500000
 
   - type: STR_OUTPOST # Arbites
@@ -335,7 +335,7 @@ facilities:
     buildCost: 1250000
     crafts: 1
     buildTime: 15 # 10
-    monthlyCost: 650000 # 600000 # 800000 is too much
+    monthlyCost: 65000 # 600000 # 800000 is too much
     personnel: 50
     storage: 100
     mapName: XBASE_60
@@ -423,3 +423,70 @@ facilities:
         size: [4, 4, 3]
         terrain: ARVUS4X4
         blocks: [0]
+
+  - &STR_OUTPOST_DEFENSES
+    type: STR_OUTPOST_MISSILE_DEFENSES
+    placeSound: {mod: 40k, index: 98}
+    requiresBaseFunc: [OUTP]
+    spriteShape: 0
+    spriteFacility: 23
+    buildCost: 200000
+    buildTime: 16
+    monthlyCost: 5000
+    defense: 1000
+    hitRatio: 50
+    fireSound: {mod: 40k, index: 5}
+    hitSound: {mod: 40k, index: 10}
+    mapName: XBASE_R01
+    connectorsDisabled: true
+
+  - type: STR_OUTPOST_LASER_DEFENSES
+    refNode: *STR_OUTPOST_DEFENSES
+    requires:
+      - STR_LASER_DEFENSE
+    spriteFacility: 26
+    buildCost: 400000
+    buildTime: 24
+    monthlyCost: 10000
+    defense: 1200
+    hitRatio: 60
+    fireSound: {mod: 40k, index: 8}
+    mapName: XBASE_R02
+
+  - type: STR_OUTPOST_PLASMA_DEFENSES
+    refNode: *STR_OUTPOST_DEFENSES
+    requires:
+      - STR_PLASMA_DEFENSE
+    spriteFacility: 27
+    buildCost: 600000
+    buildTime: 34
+    monthlyCost: 12000
+    defense: 1800
+    hitRatio: 70
+    fireSound: {mod: 40k, index: 9}
+    mapName: XBASE_R03
+
+  - type: STR_OUTPOST_MELTA_DEFENSES
+    refNode: *STR_OUTPOST_DEFENSES
+    requires:
+      - STR_FUSION_DEFENSE
+    spriteFacility: 28
+    buildCost: 800000
+    buildTime: 34
+    monthlyCost: 14000
+    defense: 2400
+    hitRatio: 80
+    fireSound: {mod: 40k, index: 7}
+    mapName: XBASE_R04
+
+  - type: STR_OUTPOST_HANGAR
+    requiresBaseFunc: [OUTP, HANGAR]
+    connectorsDisabled: true
+    spriteShape: 763
+    size: 2
+    buildCost: 150000
+    crafts: 1
+    buildTime: 5
+    monthlyCost: 15000
+    storage: 5
+    mapName: XBASE_R05
