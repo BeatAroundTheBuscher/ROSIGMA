@@ -3,10 +3,14 @@ extended:
     RuleItem:
       ITEM_IS_PSYCHIC_POWER: int #is this item a psychic power/spell?
       ITEM_PSYCHIC_POWER_MODIFIER: int #increments UNIT_PERILS_MODIFIER or our risk of perils by this much per use
+      ITEM_PSYCHIC_POWER_FLAT_CHECK: int #if we only check for perils once per turn
     BattleUnit:
       UNIT_PERILS_MODIFIER: int #our cumulative increase to perils of the warp
       CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
       CURRENT_INFECTION_TYPE: int #type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+      CURRENT_INFECTION_FACTION: int #faction source of the infection
+    BattleItem:
+      ITEM_PSYCHIC_POWER_CHECKED: int #have we checked this item?
     RuleArmor:
       ARMOR_PERILS_EFFECTS_RESISTANCE: int #% resistance to Perils effects
 
@@ -23,10 +27,37 @@ extended:
           var ptr RuleArmor rArmor;
           var ptr RuleUnit myRuleUnit;
 
+          attacker.getFaction temp;
+          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
+            #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
+            return power part side;
+          end;
+
           damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
           if eq temp 0;
             #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
             return power part side;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK;
+          if gt temp 0;
+            damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_CHECKED;
+            if gt temp 0;
+              #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. We've already checked this for perils this turn." damaging_item;
+              return power part side;
+            else;
+              damaging_item.setTag Tag.ITEM_PSYCHIC_POWER_CHECKED 1; #this flags the item as already having performed a check
+            end;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if eq temp 1;
+            unit.getFaction temp;
+            attacker.getFaction temp2;
+            if neq temp temp2; #don't roll for enemies caught in buff effects
+              #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Buff power targeting a non-ally.";
+              return power part side;
+            end;
           end;
 
           unit.getRuleArmor rArmor;
@@ -77,24 +108,26 @@ extended:
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
           attacker.getRuleArmor rArmor;
           rArmor.getTag temp2 Tag.ARMOR_PERILS_EFFECTS_RESISTANCE;
-          muldiv temp temp2 perilsMagnitude;
-
-          attacker.getRuleArmor rArmor;
-          rArmor.getTag temp2 Tag.INFECTION_RESIST;
-          muldiv temp temp2 perilsMagnitude;
+          if gt temp2 0;
+            muldiv temp temp2 100;
+          end;
+          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils resistance:" temp;
 
           attacker.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
 
-          battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
-          if eq randomNumber 0;
-            attacker.setTag Tag.CURRENT_INFECTION_TYPE 1;
-          else eq randomNumber 1;
-            attacker.setTag Tag.CURRENT_INFECTION_TYPE 3;
-          else;
-            attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
+          if gt temp 0; #only bother assigning a type if we actually have infection damage
+            battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
+            if eq randomNumber 0;
+              attacker.setTag Tag.CURRENT_INFECTION_TYPE 1;
+            else eq randomNumber 1;
+              attacker.setTag Tag.CURRENT_INFECTION_TYPE 3;
+            else;
+              attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
+            end;
+            attacker.setTag Tag.CURRENT_INFECTION_FACTION 1; #infection faction is hostile
+            attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; #randomize our infection type
+            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
           end;
-          attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; #randomize our infection type
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
 
           attacker.getHealth temp; #deplete health in proportion to perilMagnitude
           battle_game.randomRange temp2 1 perilsMagnitude;
@@ -170,20 +203,58 @@ extended:
         code: |
           var int temp;
           var int temp2;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
 
           unit.getFaction temp;
+          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
+            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Unit is a non-player faction.";
+            return;
+          end;
+
           battle_game.getTurnSide temp2;
           if neq temp temp2; #abort if it's not our turn
-            #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
             return;
           end;
 
           unit.getTag temp Tag.UNIT_PERILS_MODIFIER;
           if eq temp 0;
-            #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Aborting. UNIT_PERILS_MODIFIER is 0.";
+            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. UNIT_PERILS_MODIFIER is 0.";
             return;
           end;
 
-          #debug_log "ROSIGMA_nTU_diehard Scripts; newTurnUnit, offset 22: Reset UNIT_PERILS_MODIFIER. Current value:" temp;
+          #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Reset UNIT_PERILS_MODIFIER. Current value:" temp;
           unit.setTag Tag.UNIT_PERILS_MODIFIER 0;
+
+          unit.getInventoryItem.size numInventoryItems;
+          #debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: numInventoryItems" numInventoryItems;
+          loop var i numInventoryItems;
+            unit.getInventoryItem someItem i;
+            someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_CHECKED; #get check value
+            if gt temp 0;
+              someItem.setTag Tag.ITEM_PSYCHIC_POWER_CHECKED 0;
+              #debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
+              return;
+            end;
+          end;
+
           return;
+
+#    newTurnItem: #reset our Perils modifier
+#      - new: ROSIGMA_nTI_perils
+#        offset: 22
+#        code: |
+#          var int temp;
+#          var ptre BattleItem someItem;
+#          var int numInventoryItems;
+#
+#          someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK; #get check value
+#          if lt temp 2;
+#            #debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Aborting ITEM_PSYCHIC_POWER_FLAT_CHECK less than 2:" temp;
+#            return;
+#          end;
+#
+#          someItem.setTag Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK 1;
+#          #debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
+#          return;
