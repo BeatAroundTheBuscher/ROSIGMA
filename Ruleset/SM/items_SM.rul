@@ -630,109 +630,61 @@ items:
     damageBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psiSkill: 1 #infused by psychic power
+      psi: 0.15 #infused by psychic power
     meleeBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psiSkill: 1 #infused by psychic power
-    tuMelee: 15
+      psi: 0.15 #infused by psychic power
+    tuMelee: 20
     costMelee:
-      energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+      energy: 8 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatRate: true
     tags:
       ITEM_STRENGTH_REQUIREMENT: 100
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+
+  - &STR_NARTHECIUM_TEMPLATE
+    type: AUX_MEDI_KIT      #AUX MEDI KIT
+    medikitTargetImmune: true
+    tuMelee: 15 #Lower TU cost from Mastercrafting
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+      bravery: 0.1
+    meleeAlter: #DA CHAIN
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 6
+      ToWound: 0.3
+      RandomWound: false
+      ToEnergy: 0.5
+    costMelee:
+      time: 15
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: AUX_MEDI_KIT_ADVANCED      #AUX MEDI KIT - Advanced Narthecium for Level 4/Paladin GK Apothecary Armor
-    medikitTargetImmune: true
-    size: 0.1
-    costSell: 50
-    weight: 0
-    bigSprite: 24
-    floorSprite: 24
-    battleType: 6
-    invWidth: 2
-    invHeight: 3
+    refNode: *STR_NARTHECIUM_TEMPLATE
     painKiller: 40 #More uses from Advanced
     heal: 40 #More uses from Advanced
     stimulant: 40 #More uses from Advanced
-    woundRecovery: 1
     healthRecovery: 5 #+2 HP recovery
     stunRecovery: 6 #+2 Stun recovery
     energyRecovery: 15 #+5 Energy recovery
-    tuUse: 10
-    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
-    medikitTargetSelf: true
-    flatRate: true
-    recover: false
-    fixedWeapon: true
-    #*** Melee
-    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
-    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
-    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
-    meleeType: 7
-    meleePower: 50
-    accuracyMelee: 70
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter: #DA CHAIN
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      ToWound: 0.3
-      ToEnergy: 0.5
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 15
-    flatMelee:
-      time: true
 
   - type: AUX_MEDI_KIT_MC      #AUX MEDI KIT - Mastercrafted Narthecium for Level 5/Captain GK Apothecary Armor
-    medikitTargetImmune: true
-    size: 0.1
-    costSell: 50
-    weight: 0
-    bigSprite: 24
-    floorSprite: 24
-    battleType: 6
-    invWidth: 2
-    invHeight: 3
+    refNode: *STR_NARTHECIUM_TEMPLATE
     painKiller: 50 #More uses from Mastercrafting
     heal: 50 #More uses from Mastercrafting
     stimulant: 50 #More uses from Mastercrafting
-    woundRecovery: 1
-    healthRecovery: 5
-    stunRecovery: 6
-    energyRecovery: 15
-    tuUse: 10
-    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
-    medikitTargetSelf: true
-    flatRate: true
-    recover: false
-    fixedWeapon: true
-    #*** Melee
-    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
-    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
-    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
-    meleeType: 7
-    meleePower: 50
     accuracyMelee: 90 #Improved accuracy from Mastercrafting
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter: #DA CHAIN
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      ToWound: 0.3
-      ToEnergy: 0.5
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 10 #Lower TU cost from Mastercrafting
-    flatMelee:
-      time: true
+    costMelee:
+      time: 14 #reduced TU cost from Mastercrafting
+      energy: 2
 
   - type: AUX_PROBE_ADVANCED                                                 #TOME
     #psiAttackName: STR_ANALYZE #string id of psi-amp attack name in the pop-up menu. Required to enable special attack.
@@ -890,6 +842,12 @@ items:
     meleeMultiplier:
       reactions: 0.25
       melee: 0.75
+    costMelee:
+      time: 10
+      energy: 1
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_CRATED_RHINO
 
@@ -1116,14 +1074,15 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_PSYCHIC_POWER_MODIFIER: 5
 
   - type: STR_PATCHSMOKE #SPEED                           9001
     damageBonus:
-      psi: 0.2 #this is magic/psychic power; bravery has nothing to do with it
+      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
     costAimed:
-      time: 40
+      time: 50
       stun: 25
-      morale: 10
+      morale: 20
       energy: 50
     damageAlter:
       ToHealth: 0.0
@@ -1135,7 +1094,7 @@ items:
     tags:
       ITEM_IS_PSYCHIC_POWER: 1
       ITEM_PSYCHIC_POWER_MODIFIER: 10
-
+      ITEM_PSYCHIC_POWER_FLAT_CHECK: 1 #if we only check for perils once per turn
 
   - type: STR_PATCHSPEED #SPEED                           9001
     damageType: 0
@@ -1198,9 +1157,9 @@ items:
     accuracyMultiplier:
       firing: 0.0
       bravery: 2.2
-    maxRange: 10
+    maxRange: 7
     powerRangeThreshold: 2
-    powerRangeReduction: 4.0
+    powerRangeReduction: 5.0
     battleType: 1
     twoHanded: false
     invWidth: 1
