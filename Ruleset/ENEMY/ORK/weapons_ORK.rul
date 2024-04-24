@@ -345,7 +345,7 @@ items:
     accuracySnap: 80 #+5 accuracy, better drop off
     accuracyAuto: 55 #+5 accuracy
     tuSnap: 25
-    snapRange: 13 ¤+4
+    snapRange: 13 #+4
     tuAuto: 40
     autoRange: 9 #+2
     battleType: 1
@@ -387,7 +387,7 @@ items:
     accuracyAuto: 55 #+5 accuracy
     accuracyAimed: 50 #Rokkit
     tuSnap: 25
-    snapRange: 13 ¤+4
+    snapRange: 13 #+4
     tuAuto: 40
     autoRange: 9 #+2
     tuAimed: 33 #rokkit
@@ -431,7 +431,7 @@ items:
     accuracyAuto: 55 #+5 accuracy
     accuracyAimed: 70 #Plasma
     tuSnap: 25
-    snapRange: 13 ¤+4
+    snapRange: 13 #+4
     tuAuto: 40
     autoRange: 9 #+2
     tuAimed: 25 #plasma
@@ -1787,8 +1787,15 @@ items:
     requires:
       - STR_NECRONTECH_RESEARCH
 
-  - type: STR_HYPERPHASESWORD #         13000           DA POWER
+  - &STR_HYPERPHASESWORD_NODE
+    type: STR_HYPERPHASESWORD #         13000           DA POWER
     categories: [STR_CAT_NECRON, STR_CAT_ASSAULT]
+    bigSprite: {mod: 40k, index:  703}
+    floorSprite: {mod: 40k, index: 703}
+    handSprite: {mod: 40k, index: 312}
+    meleeAnimation: 4
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 754} #744 Powerswrod hit
     power: 50
     damageType: 7
     damageBonus: #damage scales dramatically with melee ability; specialists like assassins benefit the most
@@ -1798,8 +1805,26 @@ items:
       ToArmor: 0.05 #doesn't really interact with armor
       ToHealth: 0.5
       ArmorEffectiveness: 0.2 #basically ignores armor
+    accuracyMelee: 90
+    tuMelee: 12
+    clipSize: -1
+    battleType: 3
+    invWidth: 2
+    invHeight: 3
+    flatRate: true
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    strengthApplied: false
     requires:
       - STR_NECRONTECH_RESEARCH
+
+  - type: STR_HYPERPHASESWORD_FIXED #Fixed for Leeroy Lychguard
+    refNode: *STR_HYPERPHASESWORD_NODE
+    recover: false
+    fixedWeapon: true
+    defaultInventorySlot: STR_RIGHT_HAND
 
   - type: STR_GAUSS_CANNON   #              18016
     categories: [STR_CAT_NECRON, STR_CAT_DEVASTATOR]
@@ -1951,10 +1976,10 @@ items:
 
   - type: STR_SYNAPTIC_DISINTEGRATOR #        18011
     categories: [STR_CAT_NECRON, STR_CAT_SNIPER, STR_CAT_SCOUT]
-    power: 40 #power scales with accuracy
+    power: 60 #power scales with accuracy
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
-    dropoff: 3
+    dropoff: 2 #it's a proper sniper rifle
     tuSnap: 45
     tuAimed: 80 #so the unit can actually move to/from cover
     aimRange: 38 #it's a sniper rifle
@@ -1971,8 +1996,9 @@ items:
       ArmorEffectiveness: 0.4
       FixRadius: 0
     kneelBonus: 130 #light sniper weapon; benefits twice as much from kneeling
+    minRange: 7 #less accurate up close
     tags:
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #Sniper rifle bonus to aimed shots; power of precision
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 130 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
     attraction: 6
     requires:
@@ -2031,7 +2057,8 @@ items:
     requires:
       - STR_NECRONTECH_RESEARCH
 
-  - type: STR_SCARAB_L_WEAPON #Deamon Blade2
+  - &STR_SCARAB_WEAPON
+    type: STR_SCARAB_L_WEAPON #Solo Scarab
     weight: 3
     bigSprite: {mod: 40k, index: 714}
     bulletSprite: -1
@@ -2090,64 +2117,27 @@ items:
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
       DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
 
-  - type: STR_SCARAB_R_WEAPON #Deamon Blade2
-    weight: 3
+  - type: STR_SCARAB_R_WEAPON #Solo Scarab
     bigSprite: {mod: 40k, index: 716}
-    bulletSprite: -1
-    fireSound: 2170
-    hitSound: 2171
-    meleeSound: 2171
-    hitAnimation: 2130
-    meleeAnimation: 76
-    power: 40
-    damageType: 11 #it's not melee; they disassemble enemies gauss style; melta closest damage type
-    damageAlter: #basically mini-chain axe
-      RandomType: 6 #gaussian; many attacks make for consistent damage
-      ToArmorPre: 1.0
-      ToHealth: 1.0 #normalize damage to health
-      ToMorale: 0.4 #highly painful
-      ToStun: 0.4 #highly painful
-      ToArmor: 0.0 #all the armor damage is done on the way in
-      ToTile: 3.0 #disintegrates matter
-      ToWound: 0.05 #disintegrates rather than causing ugly wounds.
-      RandomWound: false
-      IgnoreSelfDestruct: false
-    meleePower: 40
-    meleeType: 11 #it's not melee; they disassemble enemies gauss style
-    meleeAlter:
-      RandomType: 6 #gaussian; many attacks make for consistent damage
-      ToArmorPre: 1.0
-      ToHealth: 1.0 #normalize damage to health
-      ToMorale: 0.4 #highly painful
-      ToStun: 0.4 #highly painful
-      ToArmor: 0.0 #all the armor damage is done on the way in
-      ToTile: 3.0 #disintegrates matter
-      ToWound: 0.05 #disintegrates rather than causing ugly wounds.
-      RandomWound: false
-      IgnoreSelfDestruct: false
-    accuracySnap: 80
-    accuracyAimed: 110
-    accuracyMelee: 80
-    tuMelee: 10
-    tuSnap: 10
-    tuAimed: 20
-    clipSize: -1
-    battleType: 3
-    fixedWeapon: true
-    flatSnap: true
-    flatAimed: true
-    flatMelee:
-      time: true
-    invWidth: 2
-    invHeight: 3
-    maxRange: 2
-    recover: false
-    tags: #scarbs rebuild themselves with consumed matter
-      YTAG_DAMAGE_RETURNED_AS_HP: 50
-      YTAG_DAMAGE_RETURNED_AS_ENERGY: 50
-      YTAG_DAMAGE_RETURNED_AS_STUN: 50
-      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 1
-      DAMAGETYPE_OVERRIDE: 30 #gauss disintegration nation
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_L_WEAPON_MEDIUM #Small Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 7
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_R_WEAPON_MEDIUM #Small Swarm; more Scarabs so it attacks more quickly
+    bigSprite: {mod: 40k, index: 716}
+    tuMelee: 7
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_L_WEAPON_HEAVY #Large Swarm; more Scarabs so it attacks more quickly
+    tuMelee: 5
+    refNode: *STR_SCARAB_WEAPON
+
+  - type: STR_SCARAB_R_WEAPON_HEAVY #Large Swarm; more Scarabs so it attacks more quickly
+    bigSprite: {mod: 40k, index: 716}
+    tuMelee: 5
+    refNode: *STR_SCARAB_WEAPON
 
   - type: AUX_DISPERSIONSHIELD        #AUX T Shield
     weight: 5
@@ -2240,6 +2230,59 @@ items:
     attraction: 7
     requires:
       - STR_NECRONTECH_RESEARCH
+
+  - type: STR_NECRON_FLAYED_ONE_CLAW
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_NECRON]
+    requires:
+      - STR_NECRONTECH_RESEARCH
+    size: 0.2
+    weight: 1
+    bigSprite: 1044
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: 2420
+    meleeAnimation: 12 #claws white
+    power: 88
+    damageAlter: #DA CHAIN
+      RandomType: 6 #Gaussian damage
+      ToArmorPre: 0.4 #shreds armor
+      ToHealth: 0.9
+      ToWound: 0.4 #spills blood
+      ToMorale: 10 #horrifying
+      ToEnergy: 0.5
+      ToTime: 0.4 #grappling/disorienting
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+      RandomWound: false
+    damageBonus:
+      strength: 0.25
+      melee: 0.25
+    damageType: 7
+    accuracyMelee: 108
+    tuMelee: 10
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    recover: false
+    skillApplied: true
+    strengthApplied: false
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    fixedWeapon: true
+    tags: #Flayed Ones regenerate when they wound/kill
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 8 #regains 8 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8 #regain 8% of damage dealt in HP; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
 
 #--- ELDAR  ------------------------------------------------------      dropoff: 5
   - type: STR_CATAPULT_PISTOL  #              16000

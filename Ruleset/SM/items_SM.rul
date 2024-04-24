@@ -2,12 +2,27 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 items:
+  - type: STR_STORMTALON_WEAPON #flying missile launcher
+    power: 130 #was 110
+    damageAlter: #DA MELTA MISSILES
+      RandomType: 2 #50-150%
+      ToArmorPre: 0.50
+      ArmorEffectiveness: 0.75
+
   - type: AUX_DREAD_ASSC #dread ASSAULT CAN
+    dropoff: 3
     hitSound: 13
     hitAnimation: 26
     power: 100
     damageType: 1
     clipSize: 500 #used normal 100 round ammo before.
+    autoRange: 20
+    accuracySnap: 75
+    tuSnap: 30
+    snapRange: 25
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 3
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
       ArmorEffectiveness: 0.9
@@ -143,12 +158,44 @@ items:
     armor: 200
     listOrder: 10400
 
-  - type: STR_CHAINSWORD #         12400            DA CHAIN
+  - &STR_CHAINSWORD_TEMPLATE
+    type: STR_CHAINSWORD #         12400            DA CHAIN
     armor: 200
+    power: 60
+    weight: 15
+    tuMelee: 15 #medium melee weapon
+    costMelee:
+      energy: 2 #medium melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    accuracyMelee: 90
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    damageBonus:
+      melee: 0.2
+      strength: 0.2
     damageAlter:
       RandomWound: false
+
   - type: STR_CHAINSWORD_MC #       3007           DA CHAIN
+    refNode: *STR_CHAINSWORD_TEMPLATE
     armor: 200
+    weight: 12 #lighter
+    power: 70 #somewhat more damaging
+    accuracyMelee: 110 #significantly more accurate/better balanced
+    tuMelee: 14 #slightly faster to swing
+    damageAlter:
+      RandomWound: false
+
+  - type: STR_ELDAR_CHAINSWORD #       3007           DA CHAIN
+    refNode: *STR_CHAINSWORD_TEMPLATE
+    weight: 12 #lighter
+    power: 45 #less damaging
+    accuracyMelee: 100 #somewhat more accurate
+    tuMelee: 14 #slightly faster to swing
+    damageBonus:
+      melee: 0.3
+      strength: 0.1
     damageAlter:
       RandomWound: false
 
@@ -184,6 +231,7 @@ items:
   - type: STR_HC_AP_AMMO #SNIPER AP                   11910
     costBuy: 4000 #far better than hotshot cells or AP Stub Rifle rounds, but half the clipsize so2x the cost
     costSell: 1000
+    armor: 200
     damageAlter:
       RandomType: 6
       ArmorEffectiveness: 0.5 #Armor piercing; reduced health damage in exchange for armor piercing
@@ -194,6 +242,7 @@ items:
   - type: STR_HC_HE_AMMO #SNIPER HE                   11920
     costBuy: 4000
     costSell: 1000
+    armor: 200
     damageAlter: #effectively a high powered bolter round
       ToArmorPre: 0.1 # was 0.05
       ArmorEffectiveness: 0.8 # was 0.9
@@ -206,6 +255,7 @@ items:
   - type: STR_HC_I_AMMO #SNIPER I                     11930
     costBuy: 4000
     costSell: 1000
+    armor: 200
     damageAlter:
       RandomType: 6
       ToArmorPre: 0.05 #minor ablation
@@ -239,6 +289,7 @@ items:
     damageType: 5 #plasma energy shock
     clipSize: 8
     battleType: 2
+    armor: 200
     listOrder: 10710
 
   - type: STR_STUN_GAS_SHELLS #                        10710
@@ -265,6 +316,7 @@ items:
     blastRadius: 3
     clipSize: 8
     battleType: 2
+    armor: 200
     listOrder: 10710
 
   - type: STR_SHOTGUN_SHELLS #                        10710
@@ -274,6 +326,7 @@ items:
     costSell: 150
     weight: 3
     battleType: 2
+    armor: 200
     listOrder: 10710
 
   - type: STR_MELTA_AMMO #MELTAGUN AMMO                2020
@@ -306,6 +359,7 @@ items:
     invWidth: 1
     invHeight: 2
     recoveryPoints: 1
+    armor: 200
     listOrder: 11150
 
 
@@ -339,28 +393,8 @@ items:
     invWidth: 1
     invHeight: 2
     recoveryPoints: 1
+    armor: 200
     listOrder: 12320
-
-  - type: STR_STUN_BOMB #GRAVGUN                               2062
-    categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_STUN_BOMB
-    size: 0.1
-    costSell: 300
-    weight: 3
-    power: 40
-    damageType: 1
-    clipSize: 5
-    battleType: 2
-    recoveryPoints: 1
-    damageAlter: #GRAV GUN
-      RandomType: 2 #TFTD [50% - 150%]
-      ArmorEffectiveness: 0.0
-      ToArmorPre: 1.5
-      ToArmor: 1.5
-      ToHealth: 1.0
-      ToStun: 0.5
-    listOrder: 11820
 
   - type: STR_DREAD_MELEE_WEAPON
     categories: [STR_CAT_AUXILIARY]
@@ -383,10 +417,12 @@ items:
     costSell: 30000
     transferTime: 48
     weight: 20
-    power: 120
+    power: 130
     damageType: 3
     damageAlter:
       RandomType: 2 #TFTD [50% - 150%]
+      ToArmorPre: 0.50
+      ArmorEffectiveness: 0.75
     clipSize: 8
     battleType: 2
     invWidth: 2
@@ -401,7 +437,7 @@ items:
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 709} #709 chainhit
     meleeAnimation: {mod: 40k, index: 44}
-    power: 85 # melee
+    power: 105 # melee
     damageAlter: #DA CHAIN
       ToArmorPre: 0.3
       ToHealth: 0.9
@@ -410,7 +446,7 @@ items:
       ToEnergy: 0.5
       RandomWound: false
     accuracyMelee: 150
-    tuMelee: 15
+    tuMelee: 10
 
   - type: STR_AUTO_CANNON
     armor: 200
@@ -431,6 +467,7 @@ items:
       - STR_FLAMETHROWER_PROMETHIUM_CLIP
 
   - type: STR_INCENDIARY_ROCKET
+    armor: 200
     damageType: 2
     damageAlter:
       IgnoreDirection: false
@@ -441,35 +478,120 @@ items:
       FixRadius: 7
 
   - &STR_POWER_MELEE_WEAPON
-    type: STR_MFIST
+    type: STR_MFIST_TEMPLATE
     armor: 200
     damageType: 5
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6
 
-  - type: STR_POWERFIST
+  - &STR_POWER_FIST_WEAPON
+    type: STR_POWERFIST
+    armor: 200
     refNode: *STR_POWER_MELEE_WEAPON
+    tuMelee: 25 #slow and cumbersome, but hard hitting; especially for terminators
+    costMelee:
+      energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    meleeMultiplier:
+      melee: 0.7
+      strength: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    flatMelee: true
+    power: 40
+    damageBonus: # meleeBonus: only works if this was a gun
+      strength: 1.5 #greatly magnifies your strength
+    accuracyMelee: 70
+
+  - type: STR_MFIST
+    refNode: *STR_POWER_FIST_WEAPON
+
+  - &STR_POWER_SWORD_WEAPON
+    type: STR_POWER_SWORD
+    refNode: *STR_POWER_MELEE_WEAPON
+    armor: 200
+    costMelee:
+      time: 15
+      energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 100
+    damageBonus:
+      strength: 0.2
+      melee: 0.3
+    meleeMultiplier:
+      melee: 0.9
+      reactions: 0.1
 
   - type: STR_CPOWER_SWORD
-    refNode: *STR_POWER_MELEE_WEAPON
+    refNode: *STR_POWER_SWORD_WEAPON
 
   - type: STR_CPOWER_AXE
-    refNode: *STR_POWER_MELEE_WEAPON
+    refNode: *STR_POWER_SWORD_WEAPON
+    damageBonus:
+      strength: 0.3
+      melee: 0.2
+    meleeMultiplier:
+      melee: 1.0
 
   - type: STR_CPOWER_DAGGER
-    refNode: *STR_POWER_MELEE_WEAPON
+    refNode: *STR_POWER_SWORD_WEAPON
+    costMelee:
+      time: 10
+      energy: 1 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 50
+    damageBonus:
+      strength: 0.1
+      melee: 0.4
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3
+    accuracyMelee: 110
 
-  - type: STR_POWER_SWORD
-    refNode: *STR_POWER_MELEE_WEAPON
+  - type: STR_EPOWER_SWORD
+    refNode: *STR_POWER_SWORD_WEAPON
+    costMelee:
+      time: 12
+      energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 80
+    damageBonus:
+      strength: 0.1
+      melee: 0.4
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3
+    accuracyMelee: 100
 
   - type: STR_POWER_SWORD_SUP
-    refNode: *STR_POWER_MELEE_WEAPON
+    refNode: *STR_POWER_SWORD_WEAPON
+    weight: 15 #lighter
+    costMelee:
+      time: 12 #swings faster
+      energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
 
   - type: STR_POWER_SWORD_MC
+    refNode: *STR_POWER_SWORD_WEAPON
+    weight: 15 #lighter
+    costMelee:
+      time: 12 #swings faster
+      energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+
+  - type: STR_POWERKNUCKLE
     refNode: *STR_POWER_MELEE_WEAPON
+    costMelee:
+      time: 10
+      energy: 1 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 30
+    damageBonus:
+      strength: 0.2 #magnifies your strength
+      melee: 0.3
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    experienceTrainingMode: 13 #trains reactions
+    accuracyMelee: 80
 
   - type: STR_HYPERPHASESWORD
     armor: 400
@@ -489,7 +611,7 @@ items:
     maxRange: 3
     powerRangeThreshold: 4
     powerRangeReduction: 99
-    power: 50 #lower base damage; compensated for by stat scaling
+    power: 90 #lower base damage; compensated for by stat scaling
     meleePower: 50
     battleType: 1
     damageType: 11 #melta damage; more effective against daemons
@@ -499,6 +621,7 @@ items:
       shots: 1
     costSnap:
       time: 15
+      energy: 4
     accuracySnap: 90
     accuracyMultiplier:
       firing: 0.0
@@ -507,105 +630,61 @@ items:
     damageBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psiSkill: 1 #infused by psychic power
+      psi: 0.15 #infused by psychic power
     meleeBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psiSkill: 1 #infused by psychic power
-    tuMelee: 15
+      psi: 0.15 #infused by psychic power
+    tuMelee: 20
+    costMelee:
+      energy: 8 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatRate: true
     tags:
       ITEM_STRENGTH_REQUIREMENT: 100
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+
+  - &STR_NARTHECIUM_TEMPLATE
+    type: AUX_MEDI_KIT      #AUX MEDI KIT
+    medikitTargetImmune: true
+    tuMelee: 15 #Lower TU cost from Mastercrafting
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+      bravery: 0.1
+    meleeAlter: #DA CHAIN
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 6
+      ToWound: 0.3
+      RandomWound: false
+      ToEnergy: 0.5
+    costMelee:
+      time: 15
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: AUX_MEDI_KIT_ADVANCED      #AUX MEDI KIT - Advanced Narthecium for Level 4/Paladin GK Apothecary Armor
-    size: 0.1
-    costSell: 50
-    weight: 0
-    bigSprite: 24
-    floorSprite: 24
-    battleType: 6
-    invWidth: 2
-    invHeight: 3
+    refNode: *STR_NARTHECIUM_TEMPLATE
     painKiller: 40 #More uses from Advanced
     heal: 40 #More uses from Advanced
     stimulant: 40 #More uses from Advanced
-    woundRecovery: 1
     healthRecovery: 5 #+2 HP recovery
     stunRecovery: 6 #+2 Stun recovery
     energyRecovery: 15 #+5 Energy recovery
-    tuUse: 10
-    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
-    medikitTargetSelf: true
-    flatRate: true
-    recover: false
-    fixedWeapon: true
-    #*** Melee
-    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
-    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
-    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
-    meleeType: 7
-    meleePower: 50
-    accuracyMelee: 70
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter: #DA CHAIN
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      ToWound: 0.3
-      ToEnergy: 0.5
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 15
-    flatMelee:
-      time: true
 
   - type: AUX_MEDI_KIT_MC      #AUX MEDI KIT - Mastercrafted Narthecium for Level 5/Captain GK Apothecary Armor
-    size: 0.1
-    costSell: 50
-    weight: 0
-    bigSprite: 24
-    floorSprite: 24
-    battleType: 6
-    invWidth: 2
-    invHeight: 3
+    refNode: *STR_NARTHECIUM_TEMPLATE
     painKiller: 50 #More uses from Mastercrafting
     heal: 50 #More uses from Mastercrafting
     stimulant: 50 #More uses from Mastercrafting
-    woundRecovery: 1
-    healthRecovery: 5
-    stunRecovery: 6
-    energyRecovery: 15
-    tuUse: 10
-    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
-    medikitTargetSelf: true
-    flatRate: true
-    recover: false
-    fixedWeapon: true
-    #*** Melee
-    meleeSound: { mod: 40k, index: 753 } #753 Powersword miss
-    meleeHitSound: { mod: 40k, index: 709 } #709 chainhit
-    meleeAnimation: { mod: 40k, index: 44 } #44 chainhit
-    meleeType: 7
-    meleePower: 50
     accuracyMelee: 90 #Improved accuracy from Mastercrafting
-    meleeBonus:
-      strength: 0.2
-      melee: 0.2
-    meleeAlter: #DA CHAIN
-      ToArmorPre: 0.3
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
-      ToWound: 0.3
-      ToEnergy: 0.5
-    meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 10 #Lower TU cost from Mastercrafting
-    flatMelee:
-      time: true
+    costMelee:
+      time: 14 #reduced TU cost from Mastercrafting
+      energy: 2
 
   - type: AUX_PROBE_ADVANCED                                                 #TOME
     #psiAttackName: STR_ANALYZE #string id of psi-amp attack name in the pop-up menu. Required to enable special attack.
@@ -657,38 +736,83 @@ items:
       time: 20
       energy: 40
       morale: 20
+    power: 10
+    damageType: 2
     damageAlter:
-      FireBlastCalc: true #aoe should scale with power
+      RandomType: 6
+      FireBlastCalc: false
       IgnoreOverKill: false
-      ToHealth: 3.0
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+      ToHealth: 1.0
       ToTile: 0.3
       ToItem: 0.3
-      ToMorale: 40.0
-      ArmorEffectiveness: 0
-      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+      ToMorale: 5.0
+      ArmorEffectiveness: 0.5
+      FixRadius: -1
     damageBonus:
       bravery: 0.5
-      psi: 0.02
+      psiSkill: 0.5
     #melee
+    meleePower: 100
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+      bravery: 0.1
+    costMelee:
+      time: 20
+      energy: 4 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     meleeType: 5
     meleeAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 2 #TFTD [50% - 150%]
-
-
+    dropoff: 5
+    aimRange: 20
+    snapRange: 15
+    powerRangeThreshold: 20
+    powerRangeReduction: 5
 
   - type: STR_CLAWS
     refNode: *STR_POWER_MELEE_WEAPON
+    costMelee:
+      time: 10
+      energy: 4 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    power: 80
+    damageBonus:
+      strength: 0.2
+      melee: 0.3
+    accuracyMelee: 80
+    meleeMultiplier:
+      melee: 0.9
+      reactions: 0.1
 
-  - type: STR_HAMMER
+  - &STR_POWER_MELEE_WEAPON_HAMMER
+    type: STR_HAMMER
     refNode: *STR_POWER_MELEE_WEAPON
-    power: 160 #+30
+    costMelee:
+      time: 25
+      energy: 8 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    power: 120
+    damageBonus:
+      strength: 1.0
+      melee: 0.2
+    meleeAlter:     #DA POWER
+      ArmorEffectiveness: 0.6 #armor breaking
+      ToArmorPre: 0.3
+    meleeMultiplier: #very heavy and cumbersome; strength matters a lot for hitting
+      melee: 0.6
+      strength: 0.4
+    accuracyMelee: 80
 
   - type: STR_HAMMER_MC
-    refNode: *STR_POWER_MELEE_WEAPON
-    power: 200 #+70
+    refNode: *STR_POWER_MELEE_WEAPON_HAMMER
+    weight: 70
+    costMelee:
+      time: 22
+      energy: 8 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    accuracyMelee: 90
 
   - type: STR_BIKE_ARMOR
     requiresBuy:
@@ -718,6 +842,12 @@ items:
     meleeMultiplier:
       reactions: 0.25
       melee: 0.75
+    costMelee:
+      time: 10
+      energy: 1
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_CRATED_RHINO
 
@@ -841,6 +971,31 @@ items:
     armor: 100
     listOrder: 19925
 
+#Blood Ravens Corpse items 
+  - type: STR_MK7_BLOODRAVENS_CORPSE #CORPSE
+    size: 0.4
+    costSell: 0
+    weight: 40
+    bigSprite: 2970
+    floorSprite: 2970
+    invWidth: 2
+    invHeight: 3
+    recover: false 
+    battleType: 11
+    armor: 80
+
+  - type: STR_BLOODRAVENS_TACTICAL_AI_CORPSE
+    size: 0.4
+    costSell: 0
+    weight: 40
+    bigSprite: 2970
+    floorSprite: 2970
+    invWidth: 2
+    invHeight: 3
+    recover: false #true? For kill tokens, potentially. 
+    battleType: 11
+    armor: 80
+
   #- type: STR_FLOATER_CORPSE_PLAYER      #19600
     #name: STR_CORPSE
     #size: 0.4
@@ -882,6 +1037,7 @@ items:
 #Tome/Banner nerfs
 
   - type: STR_BANNER #             30600
+    armor: 200
     # costBuy: 0 #cannot buy this; only make it at the cost of tokens
     requiresBuy:
       - STR_GENERALLOCK
@@ -902,28 +1058,68 @@ items:
       ToTile: 0.00
       ToWound: 0.00
       RandomWound: false
+      FixRadius: 3.0
+    costAimed: # lowered cost
+      time: 80 # was 60 but now % instead of flat
+      energy: 80
+      morale: 20
+      stun: 25 #need to limit recursive use of this weapon
+    flatAimed:
+      time: false # was true
+      energy: false
+    powerRangeThreshold: 3
+    powerRangeReduction: 5
+    arcingShot: false
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
 
   - type: STR_PATCHMORAL #SPEED                           9001
     damageBonus:
-      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
+      bravery: 0.5
+      psiSkill: 0.5
     costMelee:
       stun: 5
       morale: 10
       time: 25
       energy: 25
+    damageType: 0
+    damageAlter:
+      RandomType: 3
+      FixRadius: 3.0
+      ArmorEffectiveness: 0.0
+      ToStun: 0.2
+      ToHealth: 0.0
+      ToMorale: -1.00
+      ToItem: 0.00
+      ToTile: 0.00
+      ToArmor: 0.00
+      ToWound: 0.00
+      RandomWound: false
+    tags:
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_PSYCHIC_POWER_MODIFIER: 5
 
   - type: STR_PATCHSMOKE #SPEED                           9001
     damageBonus:
-      psi: 0.25 #this is magic/psychic power; bravery has nothing to do with it
+      psi: 0.15 #this is magic/psychic power; bravery has nothing to do with it
     costAimed:
-      time: 40
+      time: 50
       stun: 25
-      morale: 25
+      morale: 20
       energy: 50
-
+    damageAlter:
+      ToHealth: 0.0
+      ToItem: 0.00
+      ToTile: 0.00
+      ToArmor: 0.00
+      ToWound: 0.00
+      RandomWound: false
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+      ITEM_PSYCHIC_POWER_FLAT_CHECK: 1 #if we only check for perils once per turn
 
   - type: STR_PATCHSPEED #SPEED                           9001
     damageType: 0
@@ -939,13 +1135,18 @@ items:
       RandomWound: false
       ToMorale: 0.2 #time dilation is stressful and unnerving
       ToTime: -1.00
+      ToItem: 0.00
+      ToTile: 0.00
+      ToArmor: 0.00
     costMelee:
       time: 25
       stun: 25
-      morale: 25
+      morale: 10
       energy: 50
     tags:
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 1
 
   - type: STR_CHAPLAIN_INSPIRE
     categories: [STR_CAT_SPELLS]
@@ -981,9 +1182,9 @@ items:
     accuracyMultiplier:
       firing: 0.0
       bravery: 2.2
-    maxRange: 10
+    maxRange: 7
     powerRangeThreshold: 2
-    powerRangeReduction: 4.0
+    powerRangeReduction: 5.0
     battleType: 1
     twoHanded: false
     invWidth: 1
@@ -1082,3 +1283,8 @@ items:
   - type: STR_RAZORBACK_SPAWNER
     spawnUnit: STR_RAZORBACK_WITH_SMOKE
 
+  - type: STR_GK_HB
+    bigSprite: 2520
+
+  - type: STR_GK_HB_MC
+    bigSprite: 2521

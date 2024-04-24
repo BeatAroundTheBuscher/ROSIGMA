@@ -1300,7 +1300,7 @@ armors:
     stats:
       tu: -5 #heavy
       stamina: -10 #heavy
-      reactions: -5 #heavy
+      reactions: -10 #heavy
 
   - &STR_GUARD_ARMOR_SENTINEL_OPEN # DAMAGE + STATS
     type: STR_SENTINEL_ARMOR_UC
@@ -2470,6 +2470,7 @@ armors:
 
   - type: STR_GUARD_FLAK_VOX
     refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
+
   - type: STR_GUARD_FLAK_VOX
     refNode: *STR_GUARD_ARMOR_FLAK_STATS
 
@@ -2493,11 +2494,12 @@ armors:
     spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
     storeItem: STR_TRANSFORMED_ARMOR
     units:
-      - STR_GUARDSM
+      - STR_VOX_ARMOR_DUMMY
     loftempsSet: [ 3 ]
     builtInWeapons:
       - INV_NULL_BACK_SIGNAL
     corpseGeo: STR_AIRSTRIKE_VOX
+    weight: 5 #voxcaster weight
     corpseBattle:
       - STR_GUARD_CORPSE_GEO
 
@@ -2518,8 +2520,6 @@ armors:
     customArmorPreviewIndex: 812
     corpseBattle:
       - STR_GUARDH_CORPSE_GEO
-    units:
-      - STR_GUARD_VETERAN
 
   - &STR_GUARD_VOX_OPERATOR_SCION
     type: STR_GUARD_SCION_VOX_NOAIRSTRIKE
@@ -2529,9 +2529,6 @@ armors:
     customArmorPreviewIndex: 813
     corpseBattle:
       - STR_STORMTROOPER_CORPSE_GEO
-    units:
-      - STR_STORMTROOPER
-
 
   - type: STR_GUARD_FLAK_VOX
     refNode: *STR_GUARD_VOX_OPERATOR_FLAK
@@ -2539,6 +2536,8 @@ armors:
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
     storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_GUARDSM
 
   - type: STR_GUARD_CARAPACE_VOX
     refNode: *STR_GUARD_VOX_OPERATOR_CARAPACE
@@ -2546,6 +2545,8 @@ armors:
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
     storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_GUARDSM
 
   - type: STR_GUARD_VETERAN_VOX
     refNode: *STR_GUARD_VOX_OPERATOR_VETERAN
@@ -2553,6 +2554,8 @@ armors:
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
     storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_GUARD_VETERAN
 
   - type: STR_GUARD_SCION_VOX
     refNode: *STR_GUARD_VOX_OPERATOR_SCION
@@ -2560,6 +2563,8 @@ armors:
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
     storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_STORMTROOPER
 
   - type: STR_CHIMERA_TURRET_ARMOR
     visibilityAtDay: 40
@@ -2585,21 +2590,53 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     tags:
       INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_CASSIUM_BOLTER_LEFT2_ARMOR
     specialWeapon: STR_TURRET_RELOAD
     tags:
       INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_CASSIUM_BOLTER_RIGHT1_ARMOR
     specialWeapon: STR_TURRET_RELOAD
     tags:
       INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_CASSIUM_BOLTER_RIGHT2_ARMOR
     specialWeapon: STR_TURRET_RELOAD
     tags:
       INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CCASSIUM_BOLTER_LEFT1_ARMOR
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_CHAOS: 1
+
+  - type: STR_CCASSIUM_BOLTER_LEFT2_ARMOR
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_CHAOS: 1
+
+  - type: STR_CCASSIUM_BOLTER_RIGHT1_ARMOR
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_CHAOS: 1
+
+  - type: STR_CCASSIUM_BOLTER_RIGHT2_ARMOR
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_CHAOS: 1
 
   - type: STR_TAUROX_TURRET_ARMOR
     visibilityAtDay: 40
@@ -2813,6 +2850,162 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
 
+  - type: STR_CORVUS_LEFT_CANNON_ARMOR #armor Adeptas/Inq, Crovus left assault cannon
+    refNode: *STR_CAS_ARMOR
+    spriteSheet: LEFT_CORVUS_ASSC.PCK
+    allowInv: false    
+    builtInWeapons:
+      - STR_CAS_ASSCANNON
+    specialWeapon: STR_TURRET_RELOAD
+    corpseGeo: STR_DREAD_CORPSE #
+    corpseBattle:
+      - TA_CORPSE1 #
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    camouflageAtDay: -1 
+    camouflageAtDark: -1
+    personalLight: 0 #
+    allowsKneeling: false #
+    allowsRunning: false #
+    allowsMoving: false #
+    drawingRoutine: 19 #
+    loftempsSet: [ 20 ] #
+    selectUnitMale:     [{ mod: 40k, index: 482}, { mod: 40k, index: 483}, { mod: 40k, index: 484}]
+    selectUnitFemale:   [{ mod: 40k, index: 482}, { mod: 40k, index: 483}, { mod: 40k, index: 484}]
+    selectWeaponMale:   [{ mod: 40k, index: 471}, { mod: 40k, index: 472}, { mod: 40k, index: 473}, { mod: 40k, index: 474}, { mod: 40k, index: 475}]
+    selectWeaponFemale: [{ mod: 40k, index: 471}, { mod: 40k, index: 472}, { mod: 40k, index: 473}, { mod: 40k, index: 474}, { mod: 40k, index: 475}]
+    annoyedMale:        [{ mod: 40k, index: 486}, { mod: 40k, index: 487}]
+    annoyedFemale:      [{ mod: 40k, index: 486}, { mod: 40k, index: 487}]
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CORVUS_RIGHT_CANNON_ARMOR #armor Adeptas/Inq, Crovus right assault cannon
+    refNode: *STR_CAS_ARMOR
+    spriteSheet: RIGHT_CORVUS_ASSC.PCK
+    allowInv: false    
+    builtInWeapons:
+      - STR_CAS_ASSCANNON
+    specialWeapon: STR_TURRET_RELOAD
+    corpseGeo: STR_DREAD_CORPSE #
+    corpseBattle:
+      - TA_CORPSE1 #
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    camouflageAtDay: -1 
+    camouflageAtDark: -1
+    personalLight: 0 #
+    allowsKneeling: false #
+    allowsRunning: false #
+    allowsMoving: false #
+    drawingRoutine: 19 #
+    loftempsSet: [ 20 ] #
+    selectUnitMale:     [{ mod: 40k, index: 482}, { mod: 40k, index: 483}, { mod: 40k, index: 484}]
+    selectUnitFemale:   [{ mod: 40k, index: 482}, { mod: 40k, index: 483}, { mod: 40k, index: 484}]
+    selectWeaponMale:   [{ mod: 40k, index: 471}, { mod: 40k, index: 472}, { mod: 40k, index: 473}, { mod: 40k, index: 474}, { mod: 40k, index: 475}]
+    selectWeaponFemale: [{ mod: 40k, index: 471}, { mod: 40k, index: 472}, { mod: 40k, index: 473}, { mod: 40k, index: 474}, { mod: 40k, index: 475}]
+    annoyedMale:        [{ mod: 40k, index: 486}, { mod: 40k, index: 487}]
+    annoyedFemale:      [{ mod: 40k, index: 486}, { mod: 40k, index: 487}]
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CORVUS_LEFT_CIV_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    camouflageAtDark: -999
+    camouflageAtDay: -999
+    psiCamouflage: -999
+    spriteSheet: LEFT_CORVUS_CIV.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_DREAD_CORPSE #
+    corpseBattle:
+      - TA_CORPSE1 #
+    frontArmor: 200
+    sideArmor: 200
+    rearArmor: 200
+    underArmor: 200
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 20 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+
+  - type: STR_CORVUS_RIGHT_CIV_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    camouflageAtDark: -999
+    camouflageAtDay: -999
+    psiCamouflage: -999
+    spriteSheet: RIGHT_CORVUS_CIV.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_DREAD_CORPSE #
+    corpseBattle:
+      - TA_CORPSE1 #
+    frontArmor: 200
+    sideArmor: 200
+    rearArmor: 200
+    underArmor: 200
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 20 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      
   - &STR_TANITH_ARMOR
     type: STR_TANITH_CAMO_ARMOR
     storeItem: STR_NONE
@@ -2829,7 +3022,7 @@ armors:
     stats:
       tu: -5 #heavy
       stamina: -10 #heavy
-      reactions: -10 #heavy
+      reactions: -5 #heavy
 
   - &STR_GUARD_POWER_ARMOR_REF # DAMAGE + STATS
     type: STR_GUARD_POWER_ARMOR
@@ -2942,16 +3135,19 @@ armors:
     units:
       - STR_GUARD_VETERAN
       - STR_STORMTROOPER
+    weight: 5 #medical apparatus
     stats:
-      tu: -10 #Clunky Primitive Power Armor Interface
-      stamina: 10 #Armor does help with stamina though
+      tu: -15 #Clunky Primitive Power Armor Interface; worsened by heavy medical gear
+      stamina: 0 #Armor does help with stamina though; offset by heavy medical gear
       firing: 10 #same as scions targeting
-      reactions: -5 #Primitive Power Armor Interface
+      reactions: -15 #Primitive Power Armor Interface + Cumbersome medical gear
       bravery: 10 #Feeling a lot braver in Power armor
       strength: 10 #+10 boost, does not have full PA strength boost built in. Gameplay wise, needs to be good enough to carry Rotor Cannon etc
+    builtInWeapons:
+      - INV_NULL_MEDI_KIT
 
   - &STR_GUARD_POWER_ARMOR_OFFICER_REF
-    type: STR_GUARD_POWER_ARMOR_OFFICER
+    type: STR_GUARD_POWER_ARMOR_OFFICER_NO_VOX
     antiCamouflageAtDay: 5 #equivalent to Scion Officer gear
     antiCamouflageAtDark: 5 #equivalent to Scion Officer gear
     heatVision: 25 #same as Chimera or Taurox + 5 bonus for officer
@@ -2964,13 +3160,12 @@ armors:
     customArmorPreviewIndex: 854
     loftempsSet: [ 4 ] #bigger, PA
     ufopediaType: STR_GUARD_POWER_ARMOR
-    storeItem: STR_GUARD_POWER_ARMOR
+    storeItem: STR_TRANSFORMED_ARMOR
+    weight: 5 #voxcaster weight
     corpseBattle:
       - STR_GUARD_POWER_ARMOR_CORPSE_GEO
-    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL #Officer armor equipped with Vox caster
     units:
-      - STR_STORMTROOPER_OFFICER
-      - STR_GUARD_OFFICER_VETERAN
+      - STR_VOX_ARMOR_DUMMY #placeholder
     stats:
       tu: -5 #Clunky Primitive Power Armor Interface
       stamina: 10 #Armor does help with stamina though
@@ -2978,6 +3173,18 @@ armors:
       reactions: 0 #Primitive Power Armor Interface
       bravery: 10 #Feeling a lot braver in Power armor
       strength: 10 #+10 boost, does not have full PA strength boost built in. Gameplay wise, needs to be good enough to carry Rotor Cannon etc
+    builtInWeapons:
+      - INV_NULL_BACK_SIGNAL
+
+  - type: STR_GUARD_POWER_ARMOR_OFFICER_VOX
+    refNode: *STR_GUARD_POWER_ARMOR_OFFICER_REF
+    units:
+      - STR_STORMTROOPER_OFFICER
+      - STR_GUARD_OFFICER_VETERAN
+    storeItem: STR_GUARD_POWER_ARMOR
+    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL #Officer armor equipped with Vox caster
+    builtInWeapons:
+      - INV_NULL_AIRSTRIKE_VOX_DUMMY
 
   - &STR_GUARD_POWER_ARMOR_COMMISSAR_REF
     type: STR_GUARD_POWER_ARMOR_COMMISSAR

@@ -98,16 +98,20 @@ items:
     meleePower: 40
     meleeBonus:
       strength: 0.2
-      melee: 0.2
+      melee: 0.3
     meleeAlter:
       ArmorEffectiveness: 0.95
-    accuracyMelee: 80
+    accuracyMelee: 90
     meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 8
+      reactions: 0.4
+      melee: 0.6
+    tuMelee: 9
+    costMelee:
+      time: 9
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     clipSize: -1
     specialUseEmptyHand: true
 
@@ -128,21 +132,25 @@ items:
     meleeHitSound: 2420 #slashhit
     meleeAnimation: 12 #claws white
     damageType: 5
-    power: 90 # melee
+    power: 60 # melee
     damageBonus:
       strength: 0.2
-      melee: 0.4
+      melee: 0.2
     damageAlter:
-      ArmorEffectiveness: 0.65
+      ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
     accuracyMelee: 90
     meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 5
+      reactions: 0.4
+      melee: 0.6
+    tuMelee: 9
+    costMelee:
+      time: 9
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     fixedWeapon: true
     recover: false
     battleType: 3
@@ -188,6 +196,7 @@ items:
     requiresBuyBaseFunc: [TRADE] #Market exclusive but available from the moment you get the market
     costSell: 10000
     weight: 16 #28 with ammo drum
+    armor: 200
     bigSprite: 1015
     floorSprite: 932
     handSprite: 724 #Think this is right
@@ -235,11 +244,13 @@ items:
     power: 40
     damageType: 1
     clipSize: 32
+    armor: 200
     battleType: 2
     listOrder: 10715
     invWidth: 2
     invHeight: 1 #Same size as grenade drums. Smaller ammo, but more of it.
     shotgunPellets: 6
+
   - type: STR_POWERKNUCKLE
     categories: [STR_CAT_MELEE]
     costBuy: 2000
@@ -252,26 +263,19 @@ items:
     meleeSound: {mod: 40k, index: 710} # 710 powerfist miss, change to 40k version
     meleeHitSound: {mod: 40k, index: 772} # 772 powerfist hit
     meleeAnimation: {mod: 40k, index: 28} # 28 bolt anitmation
-    power: 50 # More raw damage than a bayonet, less than felinid claws. Much less than a power fist.
-    damageBonus:
-      strength: 0.2
-      melee: 0.2
-    damageAlter:     #DA POWER
-      ArmorEffectiveness: 0.7
-      ToArmorPre: 0.2
-      ToHealth: 0.9
-      RandomType: 2 #TFTD [50% - 150%]
+    power: 40 # More raw damage than a bayonet, less than felinid claws. Much less than a power fist.
     damageType: 5
     accuracyMelee: 80
     tuMelee: 10
+    costMelee:
+      energy: 1
     flatRate: true
     clipSize: -1
     battleType: 3
     twoHanded: false
-    skillApplied: true
     meleeMultiplier:
-      melee: 0.5
-      flatHundred: 0.5
+      melee: 0.7
+      reactions: 0.3 #need strength as well as skill to wield this cumbersome weapon
     strengthApplied: false
     invWidth: 1
     invHeight: 2
@@ -451,6 +455,7 @@ items:
     invWidth: 1
     invHeight: 3
     hitAnimation: {mod: 40k, index: 0 }
+    armor: 200
     listOrder: 12158
 
   - type: STR_HEAVY_ROCKET_KRAK #KRAK
@@ -482,6 +487,7 @@ items:
     invWidth: 1
     invHeight: 3
     hitAnimation: {mod: 40k, index: 0 }
+    armor: 200
     listOrder: 12159
 
   - type: STR_HEAVY_ROCKET #Melta
@@ -508,7 +514,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
-    armor: 100 #to avoid item pile destruction
+    armor: 200 #to avoid item pile destruction
     hitAnimation: {mod: 40k, index: 0 }
     listOrder: 12160
 
@@ -727,18 +733,20 @@ items:
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
     meleeType: 7
-    meleePower: 45
+    meleePower: 55
     meleeBonus:
       strength: 0.2
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-      RandomType: 7 # 50-200
+      RandomType: 1 # 0-200
     accuracyMelee: 100 #lower due to weight
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 14
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
     experienceTrainingMode: 4
@@ -832,7 +840,7 @@ items:
       ArmorEffectiveness: 0.70
     clipSize: 40
     battleType: 2
-    armor: 30
+    armor: 200
     listOrder: 10750
 
   - type: STR_AUTOGUN_CLIP_DRUM
@@ -856,7 +864,7 @@ items:
       ArmorEffectiveness: 0.85
     clipSize: 40
     battleType: 2
-    armor: 30
+    armor: 200
     listOrder: 10750
 
   - type: STR_LONG_RIFLE_GUARD # GUARD basic sniper rifle
@@ -886,7 +894,7 @@ items:
     battleType: 1
     twoHanded: true
     blockBothHands: true
-    invWidth: 2
+    invWidth: 1
     invHeight: 3
     armor: 200
     bulletSpeed: 40
@@ -960,6 +968,7 @@ items:
   - type: STR_HEAVY_SNIPER_RIFLEG_AMMO
     categories: [STR_CAT_SNIPER]
     size: 0.1
+    armor: 200
     requiresBuy:
       - STR_UFO_CONSTRUCTION #ceramite tier
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -988,6 +997,7 @@ items:
   - type: STR_HEAVY_SNIPER_RIFLEG_AMMO_PENETRATOR
     categories: [STR_CAT_SNIPER]
     size: 0.1
+    armor: 200
     requiresBuy:
       - STR_UFO_CONSTRUCTION #ceramite tier
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -1019,6 +1029,7 @@ items:
     categories: [ STR_CAT_GRENADES, STR_CAT_ADEPTAS]
     size: 0.1
     weight: 3
+    armor: 200
     requiresBuy:
       - STR_MIDTIER_PREREQ
     costBuy: 2500
@@ -1414,7 +1425,7 @@ items:
     battleType: 2
     invWidth: 2
     invHeight: 3
-    armor: 100
+    armor: 200
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
@@ -1443,7 +1454,7 @@ items:
     battleType: 2
     invWidth: 2
     invHeight: 3
-    armor: 150
+    armor: 200
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
@@ -1470,6 +1481,7 @@ items:
     power: 60 #+10
     damageType: 1
     clipSize: 3
+    armor: 200
     shotgunPellets: 6
     damageAlter:
       ToArmorPre: 0.2 #armor rend
@@ -1498,6 +1510,7 @@ items:
     power: 90 #hits like a truck
     damageType: 1
     clipSize: 3
+    armor: 200
     damageAlter:
       ToArmorPre: 0.15
       ArmorEffectiveness: 0.85
@@ -1687,6 +1700,7 @@ items:
     hitSound: 0
     hitAnimation: 0
     battleType: 2
+    armor: 200
     listOrder: 6840
     # blastRadius: 7 # was 5; sure about turning it to 7?
     tags:
@@ -1761,19 +1775,22 @@ items:
     meleeHitSound: {mod: 40k, index: 773} #{mod: 40k, index: 101}
     meleeAnimation: {mod: 40k, index: 4} # 0
     meleeType: 7
-    meleePower: 40
+    meleePower: 50
     meleeBonus:
       strength: 0.2
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-    accuracyMelee: 70
+    accuracyMelee: 80
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 10
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
+      energy: true
     tags:
       ITEM_BLESS_FIRING_ACCURACY: 1
       ITEM_IS_BUFF_WEAPON: 1
@@ -1839,11 +1856,13 @@ items:
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-    accuracyMelee: 70
+    accuracyMelee: 80
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 10
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
     tags:
@@ -1853,15 +1872,45 @@ items:
 
   - type: STR_LASER_RIFLE # blue one
     armor: 200 #to avoid item pile destruction
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LASER_RIFLEG #LASGUN GUARD
     weight: 8
     bigSprite: 207
     armor: 200 #to avoid item pile destruction
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LASER_RIFLE_G_HIGH_GRADE #mid-tier basic lasgun
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -1894,33 +1943,63 @@ items:
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
     meleeType: 7
-    meleePower: 40
+    meleePower: 50
     meleeBonus:
       strength: 0.2
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-      RandomType: 7 # 50-200
+      RandomType: 1
     accuracyMelee: 100 #lower due to weight
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 14
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
+      energy: true
 
   - type: STR_LASCARBINE
     armor: 200 #to avoid item pile destruction
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LASGUN_ACCATRAN
     requiresBuyBaseFunc: [TRADE]
     costBuy: 50000 #made cheaper for balance
     listOrder: 19101
     armor: 200 #to avoid item pile destruction
+    meleePower: 50
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LASGUN_VOSS # no bayonet
     requiresBuyBaseFunc: [TRADE]
@@ -1936,8 +2015,20 @@ items:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
     armor: 200 #to avoid item pile destruction
+    meleePower: 50
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LONGLAS # Added higher energy drain for aimed shots
     requiresBuy:
@@ -1953,10 +2044,21 @@ items:
     costBuy: 50000
     listOrder: 19104
     armor: 200 #to avoid item pile destruction
-    meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
     compatibleAmmo:
       - STR_LASGUN_CLIP
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_HEAVY_LASGUN_LUCIUS_XIV
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -1984,18 +2086,20 @@ items:
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
     meleeType: 7
-    meleePower: 40
+    meleePower: 55
     meleeBonus:
-      strength: 0.2
+      strength: 0.3
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-      RandomType: 7
-    accuracyMelee: 100 #lower due to weight
+      RandomType: 1
+    accuracyMelee: 70 #lower due to weight
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 14
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
     fixedWeapon: true
@@ -2062,14 +2166,29 @@ items:
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_MCLASER_RIFLE #LASGUN
     bigSprite: 214
     armor: 200 #to avoid item pile destruction
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
+      RandomType: 1 # 50-200 # was 0 (50-150)
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
@@ -2143,19 +2262,23 @@ items:
     meleeHitSound: 2420 #slashhit
     meleeAnimation: 12 #claws white
     damageType: 7
-    power: 65 # melee
+    power: 40 # melee
     damageBonus:
       strength: 0.2
-      melee: 0.2
+      melee: 0.3
     damageAlter:
       ArmorEffectiveness: 0.95
-    accuracyMelee: 80
+      RandomType: 1
+    accuracyMelee: 90
     meleeMultiplier:
-      flatHundred: 0.5
-      melee: 0.5
-    tuMelee: 8
+      melee: 0.6
+      reactions: 0.4
+    tuMelee: 10
+    costMelee:
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     fixedWeapon: true
     recover: false
     battleType: 3
@@ -2173,15 +2296,20 @@ items:
     damageBonus:
       strength: 0.2
       melee: 0.2
+      bravery: 0.1
     damageAlter:
       ArmorEffectiveness: 0.9
-    accuracyMelee: 70
+      RandomType: 1
+    accuracyMelee: 80
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
     tuMelee: 10
+    costMelee:
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     fixedWeapon: true
     recover: false
     battleType: 3
@@ -2325,11 +2453,13 @@ items:
       melee: 0.2
     meleeAlter:
       ArmorEffectiveness: 0.9
-    accuracyMelee: 70
+    accuracyMelee: 80
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 10
+    tuMelee: 12
+    costMelee:
+      energy: 2
     flatMelee:
       time: true
 
@@ -2395,6 +2525,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 1
+    armor: 200
     listOrder: 11950
     tags:
       ITEM_AMMO_COLOR: 15
@@ -2553,6 +2684,7 @@ items:
   - type: STR_RIPPER_PISTOL
     categories: [STR_CAT_SNIPER]
     size: 0.2
+    armor: 200
 #    costSell: 4800
     weight: 4
     bigSprite: 1021
@@ -2595,6 +2727,7 @@ items:
     size: 0.1
     costSell: 1000
     weight: 1
+    armor: 200
     bigSprite: 1022
     floorSprite: {mod: 40k, index: 12}
     handSprite: {mod: 40k, index: 464}
@@ -2693,6 +2826,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_FRAG #frag munition
@@ -2723,6 +2857,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_KRAK #krak munition
@@ -2750,6 +2885,7 @@ items:
     invWidth: 1
     invHeight: 3
     powerForAnimation: 48 # 5 / 5 = 1
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_PHOSPHOR #phosphor munition
@@ -2779,6 +2915,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_SMOKE
@@ -2803,6 +2940,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_ILLUMINATION
@@ -2824,6 +2962,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
+    armor: 200
     listOrder: 11872
 
   - type: STR_MORTAR_AMMO_PHOTON #photon munition
@@ -2856,6 +2995,7 @@ items:
     invWidth: 1
     invHeight: 3
     listOrder: 11872
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 3
 
@@ -2873,16 +3013,19 @@ items:
 
   - type: STR_FRAG_GRENADE_DRUM #frag munition
     bigSprite: 258
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 1
 
   - type: STR_KRAK_GRENADE_DRUM #krak munition
     bigSprite: 259
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 7
 
   - type: STR_INCENDIARY_GRENADE_DRUM #incendiary munition
     bigSprite: 260
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 2
 
@@ -2908,7 +3051,7 @@ items:
     battleType: 2
     invWidth: 2
     invHeight: 1
-    armor: 30
+    armor: 200
     listOrder: 11890
     blastRadius: 5
     bigSprite: 261
@@ -2936,6 +3079,7 @@ items:
       FixRadius: 3
     listOrder: 11891
     bigSprite: 262
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 3
 
@@ -2960,13 +3104,14 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
-    armor: 100
+    armor: 200
     listOrder: 10771
     tags:
       ITEM_AMMO_COLOR: 1
       ITEM_AMMO_SHADE: -3
 
   - type: STR_HEAVY_STUBBER_CLIP
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 6
 
@@ -3100,6 +3245,7 @@ items:
 
   - type: STR_HELLPISTOL
     bigSprite: 211
+    armor: 200
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
@@ -3502,6 +3648,7 @@ items:
     costSell: 300
     bigSprite: 288
     listOrder: 19181
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 1
 
@@ -3524,7 +3671,7 @@ items:
     explosionSpeed: 5
     clipSize: 40 #added ammo capacity
     battleType: 2
-    armor: 100
+    armor: 200
     invWidth: 1
     invHeight: 3
     listOrder: 19180
@@ -3561,7 +3708,7 @@ items:
     explosionSpeed: 5
     clipSize: 20
     battleType: 2
-    armor: 100
+    armor: 200
     invWidth: 1
     invHeight: 2
     listOrder: 19180
@@ -3571,6 +3718,7 @@ items:
   - type: STR_LIGHT_BOLTER_AMMO_EX
     refNode: *STR_LIGHT_BOLTER_CLIP_AP
     bigSprite: {mod: 40k, index: 348}
+    armor: 200
     listOrder: 19181
     tags:
       ITEM_AMMO_COLOR: 2
@@ -3587,6 +3735,7 @@ items:
     floorSprite: {mod: 40k, index: 4}
     clipSize: 10
     listOrder: 19160
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 1
 
@@ -3594,6 +3743,7 @@ items:
     refNode: *STR_LIGHT_BOLTPISTOL_CLIP_AP
     bigSprite: {mod: 40k, index: 354}
     listOrder: 19161
+    armor: 200
     tags:
       ITEM_AMMO_COLOR: 2
     hitAnimation: 0
@@ -3614,7 +3764,7 @@ items:
       ResistType: 0
       RandomType: 3
       ArmorEffectiveness: 0.0
-      ToStun: 0.3
+      ToStun: 0.4
       ToMorale: -1.00
       ToTime: -1.00
       ToHealth: 0.0
@@ -3626,22 +3776,36 @@ items:
       FixRadius: 3
     costAimed: # lowered cost
       time: 80 # was 60 but now % instead of flat
-      energy: 60 # was 75
+      energy: 80
       morale: 20
       stun: 25 #need to limit recursive use of this weapon
     flatAimed:
       time: false # was true
+      energy: false
+    meleePower: 60 #lighter than typical power swords
+    costMelee:
+      time: 14
+      energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    meleeBonus:
+      strength: 0.1
+      melee: 0.3
+    meleeMultiplier:
+      melee: 0.9
+      reactions: 0.1
     meleeType: 5
-    meleePower: 90
     meleeAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
+      RandomType: 6
+    powerRangeThreshold: 3
+    powerRangeReduction: 5
+    maxRange: 7
     tags:
       ITEM_STRENGTH_REQUIREMENT: 30
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
-
 
 # Worked together with Tal'Raziid
   - type: STR_OFFICERS_CHAIN_SWORD
@@ -3664,7 +3828,7 @@ items:
       ResistType: 0
       RandomType: 3
       ArmorEffectiveness: 0.0
-      ToStun: 0.3
+      ToStun: 0.4
       ToMorale: -1.00
       ToTime: -1.00
       ToHealth: 0.0
@@ -3676,13 +3840,14 @@ items:
       FixRadius: 3
     costAimed: # lowered cost
       time: 80 # was 60 but now % instead of flat
-      energy: 60 # was 75
+      energy: 80
       morale: 20
       stun: 25 #need to limit recursive use of this weapon
     confAimed:
       name: STR_INSPIRE
     flatAimed:
       time: false # was true
+      energy: false
     accuracyAimed: 100
     accuracyMultiplier:
       firing: 0.0
@@ -3690,19 +3855,26 @@ items:
       rank: [0.0, 2.0]
     arcingShot: true
     noLOSAccuracyPenalty: 100 #buff
-    maxRange: 12
+    maxRange: 7
+    powerRangeThreshold: 2
+    powerRangeReduction: 5.0
     bulletSpeed: 80
     experienceTrainingMode: 19
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 709} #709 chainhit
     meleeAnimation: {mod: 40k, index: 44}
-    meleePower: 80
+    meleePower: 55
     meleeType: 7
     accuracyMelee: 100
     meleeMultiplier:
+      melee: 1.0
       flatHundred: 0.0
-      melee: 1.0 # accuracy
-    tuMelee: 12
+    meleeBonus:
+      melee: 0.2
+      strength: 0.1
+    tuMelee: 14 #medium melee weapon
+    costMelee:
+      energy: 2 #medium melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatMelee: true
     meleeAlter:
       ToArmorPre: 0.3
@@ -3768,6 +3940,9 @@ items:
       energy: 30
       stun: 10
     experienceTrainingMode: 19 #trains Bravery
+    maxRange: 7
+    powerRangeThreshold: 2
+    powerRangeReduction: 5.0
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
@@ -3776,6 +3951,16 @@ items:
     meleeSound: {mod: 40k, index: 754}
     meleeHitSound: {mod: 40k, index: 773}
     meleeAnimation: {mod: 40k, index: 4}
+    power: 50
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
   - type: STR_LASCANNON_TAUROS
     compatibleAmmo: !remove
@@ -4005,15 +4190,18 @@ items:
   - type: STR_KRAK_GRENADE_DRUM
     costBuy: 10000
     costSell: 8000
+    armor: 200
     explosionHitSound: 5
 
   - type: STR_FRAG_GRENADE_DRUM
     costBuy: 5000
     costSell: 4000
+    armor: 200
 
   - type: STR_INCENDIARY_GRENADE_DRUM
     costBuy: 6000
     costSell: 4800
+    armor: 200
     damageAlter:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
@@ -4143,6 +4331,7 @@ items:
 
   - type: STR_SMOKE_GRENADE                #4000
     power: 40
+    armor: 200
     blastRadius: 4
     weight: 2
 
@@ -4169,6 +4358,7 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 13701
+    armor: 200
     throwRange: 10
 
   - type: STR_HOLOGRAM_GRENADE
@@ -4193,6 +4383,7 @@ items:
     explosionHitSound: [{mod: 40k, index: 788}]
     hidePower: true
     throwRange: 20
+    armor: 200
     listOrder: 13702
 
   - type: STR_ELECTRO_FLARE_HOLOGRAM
@@ -4204,12 +4395,14 @@ items:
     fixedWeapon: true
     defaultInventorySlot: STR_LEFT_HAND
     recover: false
+    armor: 200
     hiddenOnMinimap: true
 
 
   - type: STR_PHOTON_GRENADE #photon grenade
     battleType: 4 # turn into grenade
     fuseType: -2
+    armor: 200
 
   - type: STR_HELLGUN_BASE_INVENTORY
     battleType: 0
@@ -4293,6 +4486,11 @@ items:
 
   - type: STR_TELEPATH_STAFF # Nothing should mind control
     armor: 200
+    costPanic:
+      time: 25
+      energy: 10
+      morale: 5
+      stun: 2
     costMindControl:
       time: 0
     defaultInventorySlot: STR_LEFT_HAND
@@ -4314,10 +4512,12 @@ items:
     costSnap:
       time: 40
       energy: 20
+      stun: 2
       morale: 15
     costAuto:
       time: 45
       energy: 20
+      stun: 2
       morale: 5
     defaultInventorySlot: STR_LEFT_HAND
     tags:
@@ -4345,6 +4545,16 @@ items:
   - type: STR_PYROMANCER_STAFF
     armor: 200
     defaultInventorySlot: STR_LEFT_HAND
+    costSnap:
+      time: 35
+      energy: 15
+      morale: 5
+      stun: 2
+    costAuto:
+      time: 45
+      energy: 20
+      morale: 5
+      stun: 2
     tags:
       ITEM_IS_PSYCHIC_POWER: 1
       ITEM_PSYCHIC_POWER_MODIFIER: 2
@@ -4494,7 +4704,7 @@ items:
     damageType: 1
     clipSize: 10 #low ammo capacity
     battleType: 2
-    armor: 100
+    armor: 200
     invWidth: 2 #make it chunky, see bigOB, does not fit in belt slots inventory
     invHeight: 2
     listOrder: 10766
@@ -4502,9 +4712,23 @@ items:
 
   - type: STR_HELLGUN
     armor: 200
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
     meleeAlter:
-      RandomType: 7 # 50-200 # was 0 (50-150)
-    meleePower: 50 # was 40
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    tuMelee: 12
+    costMelee:
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
 
 # By Firaa
 # https://openxcom.org/forum/index.php/topic,7443.0.html
@@ -4523,7 +4747,7 @@ items:
     meleeSound: { mod: 40k, index: 753 }
     meleeHitSound: { mod: 40k, index: 709 }
     meleeAnimation: { mod: 40k, index: 44 }
-    power: 75 # was 78
+    power: 45
     damageAlter:
       ToArmorPre: 0.3
       ToHealth: 0.9
@@ -4533,7 +4757,9 @@ items:
       RandomWound: false
     damageType: 7
     accuracyMelee: 100
-    tuMelee: 15
+    tuMelee: 12 #light/medium melee
+    costMelee:
+      energy: 2 #light/medium melee
     clipSize: -1
     battleType: 3
     invWidth: 1
@@ -4543,6 +4769,9 @@ items:
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
+    damageBonus:
+      melee: 0.3
+      strength: 0.1
     experienceTrainingMode: 13
     listOrder: 12360
 
@@ -4571,7 +4800,7 @@ items:
     damageAlter:
       FixRadius: 2
       RandomType: 3
-      ResistType: 10
+      ResistType: 10 # Impact
       ToHealth: 0.0
       ToArmor: 0.0
       ToStun: 0.0
@@ -4700,6 +4929,7 @@ items:
 
   - type: STR_RIPPER_GUN
     oneHandedPenalty: 50
+    armor: 200
     compatibleAmmo:
       - STR_RIPPER_GUN_CLIP
       - STR_RIPPER_GUN_CLIP_INC
@@ -4710,6 +4940,7 @@ items:
 
   - &STR_RIPPER_CLIP_DEFAULT
     type: STR_RIPPER_GUN_CLIP
+    armor: 200
     shotgunSpread: 35
     damageAlter:
       ToArmorPre: 0.05 #slightly better armor ablation
@@ -4793,6 +5024,7 @@ items:
     listOrder: 10790
 
   - type: STR_LASGUN_CLIP #LASGUN CLIP                 11010
+    armor: 200
     costSell: 40
 
 # Bonehead orders
@@ -4811,7 +5043,7 @@ items:
     damageAlter:
       RandomType: 3
       ArmorEffectiveness: 0.0
-      ToStun: 0.1
+      ToStun: 0.2
       ToMorale: 0.0
       ToTime: 0.0
       ToHealth: 0.0
@@ -4826,14 +5058,14 @@ items:
     costAimed:
       time: 5
       energy: 5
-      stun: 5
+      stun: 10
     accuracyAimed: 100
     accuracyMultiplier:
       firing: 0.0
       bravery: 2.2
-    maxRange: 10
+    maxRange: 7
     powerRangeThreshold: 2
-    powerRangeReduction: 4.0
+    powerRangeReduction: 5.0
     battleType: 1
     twoHanded: false
     invWidth: 1
@@ -4859,9 +5091,12 @@ items:
       ToStun: 0.5
       ToTime: 0.1 #disorienting/staggering
     accuracyMelee: 90
-    tuMelee: 12
+    costMelee:
+      time: 12
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     tags:
       ITEM_IS_STR_BONEHEAD_ORDERS: 1
       ITEM_IS_BUFF_WEAPON: 1
@@ -4948,3 +5183,67 @@ items:
     tags:
       ITEM_IS_PSYCHIC_POWER: 1
       ITEM_PSYCHIC_POWER_MODIFIER: 2
+
+  - type: STR_GUARD_MEDI_KIT
+    medikitTargetImmune: true
+
+  - type: STR_TANITH_MEDI_KIT
+    medikitTargetImmune: true
+
+  - type: STR_LOCKDOWN_TOME
+    armor: 200
+    costUse:
+      energy: 25
+      stun: 10
+      morale: 10
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+  - type: STR_LIBRARIAN_SPECIAL_WEAPON
+    costUse:
+      energy: 25
+      stun: 10
+      morale: 10
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+  - type: STR_SHIELD_TOME
+    armor: 200
+    costUse:
+      energy: 25
+      stun: 10
+      morale: 10
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 5
+
+  - type: STR_SMITE_TOME
+    armor: 200
+    costUse:
+      energy: 10
+      stun: 5
+      morale: 10
+    power: 10
+    damageBonus:
+      psi: 0.002
+    damageType: 0
+    damageAlter:
+      RandomType: 2
+      ArmorEffectiveness: 0.0
+      ToArmor: 0.0
+    maxRange: 20 #no blasting someone across the map
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 5
+
+  - type: STR_STASIS_TOME
+    armor: 200
+    costUse:
+      energy: 25
+      stun: 10
+      morale: 10
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10

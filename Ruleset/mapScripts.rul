@@ -1,10 +1,54 @@
 mapScripts:
   - type: TWOCRAFTS
     commands:
-      - type: addUFO
-      - type: addUFO
-      - type: addCraft
-      - type: fillArea
+    - type: addUFO
+    - type: addUFO
+    - type: addCraft
+    - type: addBlock #BLOCK1X1 #DROPPODHELPER1
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels:  &VL_DROPPOD_ESCAPE
+        - type: ground
+          size: [1, 1, 0]
+          groups: [1] #<--- FLAT GROUP add this!
+        - type: ceiling
+          blocks: [0]
+          size: [1, 1, 4]
+          terrain: HELPERDROPPOD
+    - type: addBlock #BLOCK1X1 #DROPPODHELPER2
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: &VL_DROPPOD_FIRESTORM
+        - type: ground
+          size: [1, 1, 0]
+          groups: [1] #<--- FLAT GROUP add this!
+        - type: ceiling
+          blocks: [0]
+          size: [1, 1, 4]
+          terrain: HELPERDROPPOD2
+    - type: fillArea
+      blocks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # any 10x10 but bombardment
+
+  - type: THREECRAFTS
+    commands:
+    - type: addUFO
+    - type: addUFO
+    - type: addUFO
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
+    - type: addCraft
+    - type: fillArea
+      blocks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # any 10x10 but bombardment
 
   - type: ARTIFACT_P1
     commands:
@@ -14,7 +58,7 @@ mapScripts:
     - type: addBlock
       size: [3,7]
       blocks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] #HSHIP, HSHIP1, HSHIP2, HSHIP3 to HSHIP11
-      
+
   - type: REFINERYS
     commands:
     - type: addLine
@@ -63,6 +107,16 @@ mapScripts:
       maxUses: [1]
     - type: addCraft
     - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
+    - type: addBlock
       blocks: [3, 4, 12]
       size: 1
       terrain: URBAN
@@ -70,6 +124,8 @@ mapScripts:
       executionChances: 25
       maxUses: [4]
     - type: fillArea
+      blocks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # any 10x10 but bombardment # see plainsmudd
+
 
   - type: STR_TYRANID_HIVE_SCRIPT
     commands:
@@ -91,25 +147,48 @@ mapScripts:
     commands:
     - type: addCraft
     - type: fillArea
-    
+
   - type: STR_GSC_CITY_BASE_START
     commands:
     - type: addLine
       direction: horizontal
     - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
 #    - type: addUFO
 #      executions: 1
 #      UFOName: STR_IMP_TRANSPORT_BATTLESHIP
     - type: fillArea
+
+
   - type: STR_GSC_CITY_BASE_5
     commands:
     - type: addLine
       direction: horizontal
-    - type: addCraft
     - type: addUFO
       executions: 1
       UFOName: STR_IMP_TRANSPORT_BATTLESHIP
-      blocks: [16, 17, 18]
+      blocks: [0]
+      terrain: CITY_ROSIGMA
+    - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: fillArea
 
 
@@ -117,11 +196,22 @@ mapScripts:
     commands:
     - type: addLine
       direction: horizontal
-    - type: addCraft
     - type: addUFO
       executions: 1
       UFOName: STR_IMP_HEAVY_TRANSPORT_SHIP
-      blocks: [16, 17, 18]
+      blocks: [0]
+      terrain: CITY_ROSIGMA
+    - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: fillArea
 
 
@@ -129,11 +219,22 @@ mapScripts:
     commands:
     - type: addLine
       direction: horizontal
-    - type: addCraft
     - type: addUFO
       executions: 1
       UFOName: STR_IMP_LARGE_TRANSPORT
-      blocks: [16, 17, 18]
+      blocks: [0]
+      terrain: CITY_ROSIGMA
+    - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: fillArea
 
 
@@ -141,11 +242,22 @@ mapScripts:
     commands:
     - type: addLine
       direction: horizontal
-    - type: addCraft
     - type: addUFO
       executions: 1
       UFOName: STR_GSC_TRUCK_CONVOY
-      blocks: [16, 17, 18]
+      blocks: [0]
+      terrain: CITY_ROSIGMA
+    - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: fillArea
 
   - type: CATACOMB_SCRIPT
@@ -230,6 +342,16 @@ mapScripts:
       #size: [4, 2]
       #groups: 8
     - type: addCraft #adds a terrain tile from group 1, mapblock 00 by default
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: addBlock #00
       groups: 1
     - type: fillArea #fill with the rest
@@ -251,7 +373,7 @@ mapScripts:
       size: 2
     - type: addBlock
       groups: 0
-      maxUses: [2]          
+      maxUses: [2]
     - type: fillArea #should autofill with smaller blocks
     - type: digTunnel
       direction: both
@@ -295,10 +417,20 @@ mapScripts:
       size: 2
       executions: 1
     - type: addCraft #adds a terrain tile from group 1, mapblock 00 by default
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: addBlock #00
       groups: 1
     - type: fillArea #fill with the rest
-      blocks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] 
+      blocks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
       freqs: [2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1]
       maxUses: [1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1]
     - type: fillArea
@@ -316,7 +448,7 @@ mapScripts:
       size: 2
     - type: addBlock
       groups: 0
-      maxUses: [2]          
+      maxUses: [2]
     - type: fillArea #should autofill with smaller blocks
     - type: digTunnel
       direction: both
@@ -406,112 +538,112 @@ mapScripts:
     commands:
     - type: addBlock # STR_DEFENSE_CORRIDOR
       rects:
-        - [1, 0, 1, 1] 
+        - [1, 0, 1, 1]
       size: 1
       blocks: 29
     - type: addBlock # STR_DEFENSE_CORRIDORB
       rects:
-        - [1, 1, 1, 1] 
+        - [1, 1, 1, 1]
       size: 1
       blocks: 38
     - type: addBlock # STR_DEFENSE_CORRIDORGK
       rects:
-        - [4, 0, 1, 1] 
+        - [4, 0, 1, 1]
       size: 1
       blocks: 77
     - type: addBlock # STR_DEFENSE_HALL
       rects:
-        - [4, 1, 1, 1] 
+        - [4, 1, 1, 1]
       size: 1
       blocks: 37
     - type: addBlock # top hangar
       rects:
-        - [2, 0, 1, 1] 
+        - [2, 0, 1, 1]
       size: 1
-      blocks: 16 
+      blocks: 16
     - type: addBlock # top hangar
       rects:
-        - [3, 0, 1, 1] 
+        - [3, 0, 1, 1]
       size: 1
       blocks: 17
     - type: addBlock # top hangar
       rects:
-        - [2, 1, 1, 1] 
+        - [2, 1, 1, 1]
       size: 1
       blocks: 18
     - type: addBlock # top hangar
       rects:
-        - [3, 1, 1, 1] 
+        - [3, 1, 1, 1]
       size: 1
       blocks: 19
     - type: addBlock # sw hangar
       rects:
-        - [0, 4, 1, 1] 
+        - [0, 4, 1, 1]
       size: 1
-      blocks: 16 
+      blocks: 16
     - type: addBlock # sw hangar
       rects:
-        - [1, 4, 1, 1] 
+        - [1, 4, 1, 1]
       size: 1
       blocks: 17
     - type: addBlock # sw hangar
       rects:
-        - [0, 5, 1, 1] 
+        - [0, 5, 1, 1]
       size: 1
       blocks: 18
     - type: addBlock # sw hangar
       rects:
-        - [1, 5, 1, 1] 
+        - [1, 5, 1, 1]
       size: 1
       blocks: 19
     - type: addBlock # se hangar
       rects:
-        - [4, 4, 1, 1] 
+        - [4, 4, 1, 1]
       size: 1
-      blocks: 16 
+      blocks: 16
     - type: addBlock # se hangar
       rects:
-        - [5, 4, 1, 1] 
+        - [5, 4, 1, 1]
       size: 1
       blocks: 17
     - type: addBlock # se hangar
       rects:
-        - [4, 5, 1, 1] 
+        - [4, 5, 1, 1]
       size: 1
       blocks: 18
     - type: addBlock # se hangar
       rects:
-        - [5, 5, 1, 1] 
+        - [5, 5, 1, 1]
       size: 1
       blocks: 19
     - type: addBlock # access
       rects:
-        - [2, 2, 1, 1] 
+        - [2, 2, 1, 1]
       size: 1
       blocks: 0
     - type: addBlock # living
       rects:
-        - [3, 2, 1, 1] 
+        - [3, 2, 1, 1]
       size: 1
       blocks: 1
     - type: addBlock # stores
       rects:
-        - [2, 3, 1, 1] 
+        - [2, 3, 1, 1]
       size: 1
       blocks: 7
     - type: addBlock # lab
       rects:
-        - [3, 3, 1, 1] 
+        - [3, 3, 1, 1]
       size: 1
       blocks: 2
     - type: addBlock # workshop
       rects:
-        - [4, 3, 1, 1] 
+        - [4, 3, 1, 1]
       size: 1
       blocks: 3
     - type: addBlock # radar
       rects:
-        - [1, 3, 1, 1] 
+        - [1, 3, 1, 1]
       size: 1
       blocks: 4
     - type: digTunnel
@@ -551,11 +683,21 @@ mapScripts:
       groups: [16]
 
 
-  - type: VALKYRIE_CRASHED
+  - type: VALKYRIE_CRASHED # this was previously an UFO which is now a mission site
     commands:
     - type: addUFO
       UFOName: STR_VALKYRIE_CRASHED
     - type: addCraft
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [80]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_ESCAPE
+    - type: addBlock
+      size: [1, 1, 4]
+      craftGroups: [81]
+      executions: 1
+      verticalLevels: *VL_DROPPOD_FIRESTORM
     - type: fillArea
       blocks: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
       freqs: [6, 6, 6, 6, 6, 6, 6, 3, 3, 4, 2, 2, 2, 2]
@@ -604,18 +746,19 @@ mapScripts:
 
   - type: TOMB_SCRIPT
     commands:
-    - type: addUFO
-      UFOName: STR_MONOLITH
-      size: 2
-      blocks: [22] # placeholder - needs to be 1x1
-      rects:
-        - [3,1,2,2]
-    - type: removeBlock # remove the 4 single rooms (2x2)
-      size: 2
-      rects:
-        - [3,1,2,2]
-    - type: addBlock 
-      blocks: [20] # monolith room
+    #- type: addUFO
+    #  UFOName: STR_MONOLITH
+    #  size: 2
+    #  blocks: [22] # placeholder - needs to be 1x1
+    #  rects:
+    #    - [3,1,2,2]
+    #  label: 1
+    #- type: removeBlock # remove the 4 single rooms (2x2)
+    #  size: 2
+    #  rects:
+    #   - [3,1,2,2]
+    - type: addBlock
+      blocks: [23, 24] # stasis chamber + security room
       rects:
         - [3,1,2,2]
 

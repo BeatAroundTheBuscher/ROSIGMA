@@ -97,6 +97,7 @@ items:
     zombieUnit: STR_ALPHA_SOLDIER_CORVUS
 
   - type: AUX_MEDI_KIT
+    medikitTargetImmune: true
     defaultInventorySlot: STR_LEFT_HAND
     damageAlter:
       RandomWound: false
@@ -128,8 +129,20 @@ items:
     hitAnimation: -1
 
   - type: STR_KNIF
+    power: 40
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3 #need speed as well as skill to land effective blows
+    damageBonus:
+      strength: 0.1
+      melee: 0.4 #finesse over strength
+    costMelee:
+      time: 10 #fast attack
+      energy: 1 #light melee
+    flatMelee: true
     damageAlter:
       ArmorEffectiveness: 0.9
+    experienceTrainingMode: 13 #trains reactions
 
   - type: STR_TARANTULA_ROCKET_SPAWNER
     spawnUnit: STR_TANK_ROCKET_LAUNCHER
@@ -202,6 +215,26 @@ items:
       ToTile: 0.0
     hitAnimation: {mod: 40k, index: 1992}
     explosionHitSound: {mod: 40k, index: 26}
+    armor: 255
+    recover: false
+    hiddenOnMinimap: true
+
+  - type: STR_BLOODRAVENS_TACTICAL_ALLIED_SPAWNER 
+    spawnUnit: STR_BLOODRAVENS_TACTICAL_AI 
+    spawnUnitFaction: 2 # 2: Civilian faction
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    power: 5
+    damageType: 3
+    damageAlter:
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToArmor: 0.0
+      ToWound: 0.0
+      ToTile: 0.0
+    hitAnimation: {mod: 40k, index: 150 } #teleport VFX
+    hitSound: {mod: 40k, index: 788 }
     armor: 255
     recover: false
     hiddenOnMinimap: true
@@ -323,6 +356,7 @@ items:
     defaultInventorySlot: STR_RIGHT_HAND
 
   - type: AUX_SERVITOR_KIT      #AUX FOR SERVITOR UNIT MEDI KIT
+    medikitTargetImmune: true
     #*** Melee
     confMelee:
       name: STR_REPAIR
@@ -372,7 +406,7 @@ items:
     medikitActionName: STR_RELOAD_WEAPONS
     medikitTargetSelf: true
     heal: 999
-    battleType: 6
+    battleType: 6 # not used as medikit
     tuUse: 1
     costUse:
       energy: 10

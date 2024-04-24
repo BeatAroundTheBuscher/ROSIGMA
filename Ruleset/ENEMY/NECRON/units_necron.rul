@@ -37,7 +37,7 @@ units:
     stats:
       tu: 75
       stamina: 96
-      health: 50
+      health: 60
       bravery: 110
       reactions: 65 #warriors have slower reactions than Immortals
       firing: 75
@@ -82,7 +82,7 @@ units:
     intelligence: 2 #Necron immortals have some level of intelligence
     aggression: 8
     spotter: 1
-    sniper: 50
+    sniper: 75
     value: 15
     energyRecovery: 200
     builtInWeaponSets:
@@ -122,7 +122,7 @@ units:
     intelligence: 2 #Necron immortals have some level of intelligence
     aggression: 8
     spotter: 1
-    sniper: 50
+    sniper: 75
     energyRecovery: 200
     builtInWeaponSets:
       - - STR_GAUSS_BLASTER
@@ -138,7 +138,7 @@ units:
     stats:
       tu: 75
       stamina: 100
-      health: 40
+      health: 60
       bravery: 110
       reactions: 100
       firing: 100
@@ -204,12 +204,12 @@ units:
     stats:
       tu: 90
       stamina: 100
-      health: 100
+      health: 200 # was 100
       bravery: 110
       reactions: 85
       firing: 74
       throwing: 80
-      strength: 40
+      strength: 80
       psiStrength: 200
       psiSkill: 0
       melee: 100
@@ -241,7 +241,7 @@ units:
       reactions: 85
       firing: 74
       throwing: 80
-      strength: 40
+      strength: 80
       psiStrength: 200
       psiSkill: 0
       melee: 100
@@ -253,22 +253,24 @@ units:
     value: 25
     energyRecovery: 200
     builtInWeaponSets:
-      - - STR_HYPERPHASESWORD
+      - - STR_HYPERPHASESWORD_FIXED
         - STR_KILLPOINT_TOKEN_10
-      - - STR_HYPERPHASESWORD
+      - - STR_HYPERPHASESWORD_FIXED
         - STR_KILLPOINT_TOKEN_10
-      - - STR_HYPERPHASESWORD
+      - - STR_HYPERPHASESWORD_FIXED
         - STR_KILLPOINT_TOKEN_10
 
   - type: STR_NECRON_DESTROYER
-    sniper: 30
+    sniper: 50
     intelligence: 2
     aggression: 8
+    avoidsFire: false
     spotter: 1
     value: 30
     energyRecovery: 200
     stats:
-      health: 50 # effective HP 500 # tried 200 but was too much # was 100
+      health: 75 # effective HP 500 # tried 200 but was too much # was 100
+      bravery: 110
 
   - type: STR_NECRON_SCARAB5 #STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -276,7 +278,7 @@ units:
     stats:
       tu: 115
       stamina: 200
-      health: 30
+      health: 60 #each scarab has 30 HP; after losing 60 HP, loses 2 scarabs and respawns a 3 scarab swarm
       bravery: 110
       reactions: 100
       firing: 74
@@ -300,7 +302,7 @@ units:
     stats:
       tu: 115
       stamina: 200
-      health: 30
+      health: 60
       bravery: 110
       reactions: 100
       firing: 74
@@ -361,7 +363,7 @@ units:
     standHeight: 20
     kneelHeight: 15
     value: 40
-    deathSound: [289, 290, 291]
+    deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
     intelligence: 9
     aggression: 1
     spotter: 3
@@ -404,6 +406,49 @@ units:
     intelligence: 1
     spotter: 1
     sniper: 100 #long range fire support
+
+
+  - &FLAYED_ONE_TEMPLATE
+    type: STR_NECRON_FLAYED_ONE #STR_NECRON_FLAYED_ONE
+    race: STR_NECRON
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 60
+      stamina: 200
+      health: 100
+      bravery: 120
+      reactions: 65
+      firing: 0
+      throwing: 0
+      strength: 80
+      psiStrength: 200
+      psiSkill: 0
+      melee: 100
+    armor: STR_NECRON_FLAYED_ONE_ARMOR
+    standHeight: 20
+    kneelHeight: 15
+    deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
+    intelligence: 2 #feral but cunning
+    aggression: 8
+    canPanic: false
+    canBeMindControlled: false
+    avoidsFire: false
+    isLeeroyJenkins: TRUE
+    spotter: 1
+    value: 10
+    energyRecovery: 200
+    builtInWeaponSets:
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+    - - STR_NECRON_FLAYED_ONE_CLAW
+      - STR_INTIMIDATION_WEAPON
+
+  - type: STR_NECRON_FLAYED_ONE_REVIVES #STR_NECRON_FLAYED_ONE
+    refNode: *FLAYED_ONE_TEMPLATE
+    armor: STR_NECRON_FLAYED_ONE_ARMOR_REVIVES
+    spawnUnit: STR_NECRON_FLAYED_ONE
 
 armors:
   - type: STR_NECRON_WARRIOR_ARMOR     #NECRON WARRIOR
@@ -1055,6 +1100,71 @@ armors:
       - 0.5 #ACID
     builtInWeapons:
       - STR_TRIPLE_GAUSS_CANNON
+
+  - type: STR_NECRON_SCARAB_ARMOR5         #NECRON WARRIOR
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_SCARAB_R_WEAPON_HEAVY
+      - STR_SCARAB_L_WEAPON_HEAVY
+
+  - type: STR_NECRON_SCARAB_ARMOR3         #NECRON WARRIOR
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_SCARAB_R_WEAPON_MEDIUM
+      - STR_SCARAB_L_WEAPON_MEDIUM
+
+  - &NECRON_FLAYED_ARMOR_TEMPLATE
+    type: STR_NECRON_FLAYED_ONE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 15
+    camouflageAtDay: 5 #active camo level stealth
+    camouflageAtDark: 5
+    heatVision: 50
+    psiVision: 10 #bloodhunt/sense the living
+    frontArmor: 110
+    sideArmor: 100
+    rearArmor: 70
+    underArmor: 100
+    recovery: #Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    bleedImmune: true
+    fearImmune: true
+    painImmune: false
+    zombiImmune: true
+    spriteSheet: NECRON_FLAYED_ONE_BS.PCK
+    spriteInv: NECRON_FLAYED_ONE_INV.SPK
+    corpseBattle:
+      - STR_NECRON_FLAYED_ONE_CORPSE
+    drawingRoutine: 0
+    specialWeapon: STR_INTIMIDATION_WEAPON
+    damageModifier: #NECRON ARMOR
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.1 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_3X3
+
+  - type: STR_NECRON_FLAYED_ONE_ARMOR_REVIVES
+    refNode: *NECRON_FLAYED_ARMOR_TEMPLATE
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
 
 items:
   - type: STR_NECRON_SCARAB_CORPSE              #NECRON 19968

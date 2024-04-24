@@ -181,6 +181,8 @@ research:
       - STR_CHAMBERMILITANT
     lookup: STR_CHOSEN_DEATHWATCH
     unlocks:
+      - STR_POWER_ARMOR_SM_CODEX
+      - STR_TERMINATOR_ARMOR_SM_CODEX
       - STR_NOT_PRIMARIS
       - STR_DEATHWATCH_AND_ADEPTAS
       - STR_PRIMARIS_AND_DEATHWATCH
@@ -310,6 +312,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_CASS_R
       - STR_HB_DEP1
+      - STR_SIDEOPERATIONS
     cutscene: c2
 
   - name: STR_MT_DW #mid tier #cutcscene c2 DEATHWATCH
@@ -326,6 +329,7 @@ research:
       - STR_CASS_R
       - STR_HB_DEP1
       - STR_NEW_FIGHTER_TRANSPORTER
+      - STR_SIDEOPERATIONS
     cutscene: c2
 
   #---HIGH TIER--------------------------------------------------------
@@ -374,12 +378,16 @@ research:
     dependencies:
       - STR_MIDTIER_PREREQ
       - STR_MARINES_AND_ADEPTAS
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_TATICALTRAININFO # skip training mission
   - name: STR_TATICALTRAININFO # MISSION 2
     cost: 200
     points: 25
     needItem: true
     dependencies:
       - STR_SIDEOPERATIONS
+      - STR_GENERALLOCK
   - name: STR_DISTRESSDATA # MISSION 3
     cost: 200
     points: 25
@@ -1486,6 +1494,8 @@ research:
     dependencies:
       - STR_NOVICE_STRATEGY_ADEPTAS
       - STR_ADEPTAS_MIDTIER
+    getOneFree:
+      - STR_LIGHT_BOLTERS_LOWTIER_ADEPTAS
     unlocks:
       - STR_CORVUS_RESEARCH
       - STR_ADEPTAS_DROPPOD_RESEARCH
@@ -2287,6 +2297,7 @@ research:
       - STR_HFLAMERR
       - STR_CASS_R
       - STR_HB_DEP1
+      - STR_SIDEOPERATIONS
     cutscene: c2
 
   - name: STR_ARBITES_MIDTIER #mid tier #cutcscene c2
@@ -2408,6 +2419,7 @@ research:
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_ASSC
+      - STR_SIDEOPERATIONS
     getOneFree:
       - STR_POWER_SWORD
     cutscene: c2
@@ -2477,7 +2489,7 @@ research:
       - STR_GENERALLOCK
     unlocks:
       - STR_HWP_CANNON_SHELLS
-      - STR_GUARDSMEN
+      - STR_POWER_ARMOR_SM_CODEX
       - STR_HARDER_MISSIONS
       - STR_LIGHT_BOLTERS
       - STR_GUARD_SUPORT
@@ -2976,6 +2988,19 @@ research:
     refNode: *MONTHS
   - name: STR_MONTH24
     refNode: *MONTHS
+
+  # Ufopedia General
+  ##########################################
+  # Section: Ufopedia
+  # Faction: General
+  ##########################################
+  - name: STR_POWER_ARMOR_SM_CODEX
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TERMINATOR_ARMOR_SM_CODEX
+    dependencies:
+      - STR_GENERALLOCK
 
   # UFOS General
   ##########################################
@@ -3504,6 +3529,8 @@ research:
       - STR_UFO_POWER_SOURCE
       - STR_MIDTIER_PREREQ
       - STR_PERSONAL_ARMOR
+    unlocks:
+      - STR_TERMINATOR_ARMOR_SM_CODEX
 
   - name: STR_FLYING_SUIT # unchanged from XCOM1
     cost: 330
@@ -3805,16 +3832,16 @@ research:
     cost: 205
     points: 20
     dependencies:
+      - STR_MASTER_CRAFTING
       - STR_UFO_CONSTRUCTION #ceramite
-      - STR_ADEPTAS_ARMOR_CELESTIAN_ELITE
       - STR_FAITHFUL_ARMORY
 
   - name: STR_ADEPTAS_ARMOR_CELESTIAN_SACRESANT #celestian elite
     cost: 205
     points: 20
     dependencies:
+      - STR_MASTER_CRAFTING
       - STR_UFO_CONSTRUCTION #ceramite
-      - STR_ADEPTAS_ARMOR_CELESTIAN_SACRESANT
       - STR_FAITHFUL_ARMORY
 
   - name: STR_ADEPTAS_ARMOR_HONOR
@@ -3834,10 +3861,9 @@ research:
     dependencies:
       - STR_ELERIUM_115
       - STR_UFO_POWER_SOURCE
-      # - STR_MIDTIER_PREREQ
-      - STR_ADEPTAS_ARMORS
       - STR_UFO_CONSTRUCTION
       - STR_FAITHFUL_ARMORY
+      - STR_ADEPTAS_ARMORS
 
   - name: STR_ADEPTAS_ARMORD #ADEPTAS DOM
     cost: 205
@@ -3847,6 +3873,7 @@ research:
       - STR_ADEPTAS_ARMOR_HONOR
       - STR_UFO_CONSTRUCTION
       - STR_FAITHFUL_ARMORY
+      - STR_ADEPTAS
 
   - name: STR_ADEPTAS_ARMORC #baroness
     cost: 300
@@ -9484,7 +9511,7 @@ research:
   - name: STR_ALPHA_LEGION_CORPSE
     refNode: *STR_CORPSE_BASIC
 
-  - name: STR_ALPHA_LEGION_CORPSE
+  - name: STR_ALPHA_LEGION_CORPSE_CORVUS
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_CHAOS_HERETEK_CORPSE
@@ -9722,6 +9749,10 @@ research:
 
   - name: STR_NECRON_LYCHGUARD_CORPSE
     refNode: *STR_CORPSE_BASIC
+
+  - name: STR_NECRON_FLAYED_ONE_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
 
   - name: STR_DESTROYER_CORPSE
     refNode: *STR_CORPSE_BASIC

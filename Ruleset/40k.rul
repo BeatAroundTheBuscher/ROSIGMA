@@ -24,14 +24,25 @@ units:
     stats:
       health: 120 #60 in vanilla
 
+  - type: STR_LTT #LEFT TURRET THUNDERHAWK/LANDRAIDER
+    stats:
+      health: 150 #60 in vanilla
+      bravery: 110     
+  - type: STR_RTT #RIGHT TURRET THUNDERHAWK/LANDRAIDER
+    stats:
+      health: 150 #60 in vanilla
+      bravery: 110
+
   - type: STR_VINDICATOR
     stats:
       reactions: 60
       firing: 120
+      health: 400 #was 200
   - type: STR_VINDICATOR2
     stats:
       reactions: 60
       firing: 110
+      health: 400 #was 200
   - type: STR_PRED_TURRET     #PREDATOR TURRET       race: STR_PREDATOR
     stats:
       reactions: 60
@@ -317,6 +328,35 @@ units:
         - BLUE_HORROR_WEAPON #Indigo fire Horror Mutator
       - - STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles
         - BLUE_HORROR_WEAPON #Indigo fire Horror Mutator
+
+  - type: STR_SCREAMER_TERRORIST
+    race: STR_TZEENTCH
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 159 #screamers are *fast* asf
+      stamina: 159
+      health: 109 #fragile for its size
+      bravery: 110 #daemons don't care
+      reactions: 89 #fast asf
+      firing: 0
+      throwing: 0
+      strength: 90
+      psiStrength: 79
+      psiSkill: 0
+      melee: 80
+    armor: STR_SCREAMER_ARMOR
+    standHeight: 15
+    kneelHeight: 10
+    value: 25
+    spotter: 2 #scouts for other Tzeentchian units
+    deathSound: [{mod: 40k, index: 686}, {mod: 40k, index: 687}]
+    intelligence: 2 #not particularly smart; have significant animal cunning though
+    aggression: 8
+    isLeeroyJenkins: true
+    avoidsFire: false
+    canBeMindControlled: false
+    energyRecovery: 99
+    livingWeapon: true
 
   - type: STR_TZAANGOR #TZEENTCH TZAANGOR
     race: STR_TZEENTCH_CULT
@@ -1938,6 +1978,7 @@ units:
         - STR_LASGUN_CLIP_HOTSHOT_CHAOS
         - STR_LASGUN_CLIP_HOTSHOT_CHAOS
         - STR_MGRENADE
+
   - type: STR_SLAANESH_ANOINTED #CHAOS Slaanesh SNEKman             aggroSound
     race: STR_SLAANESH
     rank: STR_LIVE_SOLDIER
@@ -1960,7 +2001,7 @@ units:
     deathSound: [2127, 2128, 2129, 2130, 2131, 2132, 2133, 2134, 2135]
     aggroSound: 2126
     intelligence: 4
-    aggression: 5
+    aggression: 8
     spotter: 1
     sniper: 75
     livingWeapon: true
@@ -1981,6 +2022,7 @@ units:
         - STR_SONICKOMBI_CHARGE
         - STR_SLAANESH_GRENADE
         - STR_DAEMONETTESPAWNER_GRENADE
+
   - type: STR_SLAANESH_ANOINTED_MISSILE #CHAOS Slaanesh SNEKman missile launcher             aggroSound
     race: STR_SLAANESH
     rank: STR_LIVE_SOLDIER
@@ -2003,21 +2045,22 @@ units:
     deathSound: [2127, 2128, 2129, 2130, 2131, 2132, 2133, 2134, 2135]
     aggroSound: 2126
     intelligence: 4
-    aggression: 5
+    aggression: 1
     spotter: 1
-    sniper: 50
+    sniper: 75
     livingWeapon: true
     energyRecovery: 60
     builtInWeaponSets:
-     - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
-       - STR_SLAANESH_MISSILE_PACK
-       - STR_SONIC_MISSILE_PACK
-     - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
-       - STR_SONIC_MISSILE_PACK
-       - STR_SLAANESH_MISSILE_PACK
-     - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
-       - STR_DAEMONETTE_MISSILE_PACK
-       - STR_DAEMONETTE_MISSILE_PACK
+      - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
+        - STR_SLAANESH_MISSILE_PACK
+        - STR_SONIC_MISSILE_PACK
+      - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
+        - STR_SONIC_MISSILE_PACK
+        - STR_SLAANESH_MISSILE_PACK
+      - - STR_SLAANESH_ROCKET_LAUNCHER #Micromissile launcher
+        - STR_DAEMONETTE_MISSILE_PACK
+        - STR_DAEMONETTE_MISSILE_PACK
+
   - type: STR_SLAANGOR_FIENDGOR #Slaanesh terror unit, two claws no guns
     race: STR_SLAANESH
     rank: STR_LIVE_TERRORIST
@@ -2602,7 +2645,7 @@ units:
     kneelHeight: 16
     value: 30
     deathSound: [{mod: 40k, index: 842}, {mod: 40k, index: 843}, {mod: 40k, index: 844}]
-    intelligence: 1
+    intelligence: 2
     specab: 1
     aggression: 2
     sniper: 50
@@ -2636,7 +2679,7 @@ units:
     kneelHeight: 15
     value: 8
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}] #male
-    intelligence: 0
+    intelligence: 1
     aggression: 2
     berserkChance: 33
     energyRecovery: 50 #bonus
@@ -2674,7 +2717,7 @@ units:
     kneelHeight: 15
     value: 8
     deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}] #female
-    intelligence: 0
+    intelligence: 1
     aggression: 1
     berserkChance: 33
     energyRecovery: 50
@@ -2713,8 +2756,10 @@ units:
     kneelHeight: 15
     value: 12
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}] #male
-    intelligence: 1
+    intelligence: 2
     aggression: 2
+    spotter: 1
+    sniper: 50
     berserkChance: 50
     energyRecovery: 50
     livingWeapon: true
@@ -2749,8 +2794,9 @@ units:
     kneelHeight: 15
     value: 15
     deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}] #female
-    intelligence: 2
+    intelligence: 4 #officer
     aggression: 1
+    spotter: 1
     berserkChance: 50
     energyRecovery: 60
     moraleLossWhenKilled: 120
@@ -2792,8 +2838,9 @@ units:
     kneelHeight: 15
     value: 30
     deathSound: [2014, 2015, 2016, 2017, 2018] #female
-    intelligence: 3
-    aggression: 0
+    intelligence: 4 #officer
+    spotter: 1
+    aggression: 1
     berserkChance: 75
     energyRecovery: 60
     moraleLossWhenKilled: 130
@@ -2813,6 +2860,7 @@ units:
         - STR_RIFLE_CLIP_S
         - STR_RIFLE_CLIP_S
         - STR_SONIC_GRENADE
+        - STR_SLAANESH_GRENADE
 
   - type: STR_SLAANESH_CHOSENASS     #Slaaneshi Chosen Assassin
     race: STR_SLAANESH
@@ -5760,52 +5808,6 @@ units:
         - STR_HEAVY_PLASMA_CLIP
         - STR_MGRENADE
 
-  - type: STR_ALPHA_SOLDIER_ULTRA #Alpha Legionnaire disguised as Ultramarine
-    race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 68
-      stamina: 96
-      health: 40
-      bravery: 100
-      reactions: 75
-      firing: 70
-      throwing: 80
-      strength: 70
-      psiStrength: 70
-      psiSkill: 0
-      melee: 85
-    armor: STR_ALPHA_ARMOR_ULTRA
-    aggroSound: {mod: 40k, index: 404} #for the emperor
-    intelligence: 3
-    aggression: 3
-    berserkChance: 70
-    standHeight: 20
-    kneelHeight: 15
-    spotter: 4
-    sniper: 50
-    energyRecovery: 60
-    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER_INFILTRATOR
-    #spawnUnitFaction: -1
-    value: 25
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_RIFLEB
-        - STR_RIFLE_CLIP_AP
-        - STR_RIFLE_CLIP_AP
-        - STR_KRAK_GRENADE
-      - - STR_RIFLED
-        - STR_RIFLE_CLIP_AP
-        - STR_RIFLE_CLIP_AP
-        - STR_KRAK_GRENADE
-        - STR_ALIEN_GRENADE
-      - - STR_PLASMA_RIFLE
-        - STR_PLASMA_RIFLE_CLIP
-        - STR_PLASMA_RIFLE_CLIP
-        - STR_KRAK_GRENADE
-        - STR_ALIEN_GRENADE
-
   - type: STR_ALPHA_SOLDIER #Alpha Legionnaire; Long Range
     race: STR_ETHEREAL
     rank: STR_LIVE_SOLDIER
@@ -5897,6 +5899,100 @@ units:
         - STR_PLASMA_PISTOL_CLIP
         - STR_MGRENADE
 
+  - type: STR_ALPHA_SOLDIER_POSSESSED #Alpha Legionnaire; Long Range; this one is possessed: AL terror unit
+    race: STR_ETHEREAL
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 80
+      firing: 100
+      throwing: 80
+      strength: 100 #possessed
+      psiStrength: 100
+      psiSkill: 0
+      melee: 100
+    armor: STR_ALPHA_ARMOR_POSSESSED
+    spawnUnit: STR_NEVERBORN_TERRORIST
+    aggroSound: {mod: 40k, index: 404} #for the emperor
+    intelligence: 4
+    aggression: 8 #possessed
+    berserkChance: 70
+    standHeight: 20
+    kneelHeight: 15
+    spotter: 4
+    sniper: 75 #longer range
+    energyRecovery: 100
+    deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
+    value: 25
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_RIFLEC
+        - STR_RIFLE_CLIP_AP
+        - STR_RIFLE_CLIP_AP
+        - STR_ALIEN_GRENADE
+      - - STR_PLASMA_RIFLE
+        - STR_PLASMA_RIFLE_CLIP
+        - STR_PLASMA_RIFLE_CLIP
+        - STR_KRAK_GRENADE
+        - STR_ALIEN_GRENADE
+      - - STR_SNIPER_CHAOS
+        - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
+        - STR_HC_AP_AMMO
+        - STR_HC_AP_AMMO
+        - STR_HC_AP_AMMO
+        - STR_MGRENADE
+
+  - type: STR_ALPHA_SOLDIER_CORVUS_POSSESSED #Alpha Legionnaire BEAKIE; Assault/CQC; this one is possessed: AL terror unit
+    race: STR_ETHEREAL
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 100
+      stamina: 100
+      health: 100
+      bravery: 110
+      reactions: 80
+      firing: 90
+      throwing: 80
+      strength: 100 #possessed
+      psiStrength: 100
+      psiSkill: 0
+      melee: 110
+    armor: STR_ALPHA_ARMOR_CORVUS_POSSESSED
+    spawnUnit: STR_NEVERBORN_TERRORIST
+    aggroSound: {mod: 40k, index: 457} #Praise the Emperor female version
+    intelligence: 4
+    aggression: 8 #CQC
+    berserkChance: 70
+    standHeight: 20
+    kneelHeight: 15
+    spotter: 4
+    sniper: 50
+    energyRecovery: 60
+    deathSound: [{mod: 40k, index: 161}, {mod: 40k, index: 162}, {mod: 40k, index: 163}, {mod: 40k, index: 164}, {mod: 40k, index: 165}, {mod: 40k, index: 166}, {mod: 40k, index: 167}, {mod: 40k, index: 168}]
+    value: 25
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_PISTOLS
+        - STR_CHAOS_CLAWS
+        - STR_PISTOL_CLIP_AP
+        - STR_PISTOL_CLIP_AP
+        - STR_ALIEN_GRENADE
+      - - STR_PISTOLH
+        - STR_CHAOS_CLAWS
+        - STR_RIFLE_CLIP_AP
+        - STR_RIFLE_CLIP_AP
+        - STR_ALIEN_GRENADE
+        - STR_KRAK_GRENADE
+      - - STR_PLASMA_PISTOL #Chaos Plasma Pistol
+        - STR_CHAOS_CLAWS
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_MGRENADE
+
+
   - type: STR_ALPHA_SOLDIER_INFILTRATOR #Alpha Legionnaire; Long Range; for amongus/infiltrator spawning
     race: STR_ETHEREAL
     rank: STR_LIVE_SOLDIER
@@ -5969,13 +6065,60 @@ units:
         - STR_PLASMA_PISTOL_CLIP
         - STR_MGRENADE
 
+  - type: STR_ALPHA_SOLDIER_ULTRA #Alpha Legionnaire disguised as Ultramarine
+    race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 80
+      stamina: 96
+      health: 45 #decoy health is half normal health
+      bravery: 100
+      reactions: 85
+      firing: 80
+      throwing: 80
+      strength: 60
+      psiStrength: 70
+      psiSkill: 0
+      melee: 90
+    armor: STR_ALPHA_ARMOR_ULTRA
+    aggroSound: {mod: 40k, index: 404} #for the emperor
+    intelligence: 4
+    aggression: 1 #longer range
+    berserkChance: 70
+    standHeight: 20
+    kneelHeight: 15
+    spotter: 4
+    sniper: 50
+    energyRecovery: 60
+    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
+    specab: 1
+    #spawnUnitFaction: -1
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_RIFLEB
+        - STR_RIFLE_CLIP_AP
+        - STR_RIFLE_CLIP_AP
+        - STR_KRAK_GRENADE
+      - - STR_RIFLED
+        - STR_RIFLE_CLIP_AP
+        - STR_RIFLE_CLIP_AP
+        - STR_KRAK_GRENADE
+        - STR_ALIEN_GRENADE
+      - - STR_PLASMA_RIFLE
+        - STR_PLASMA_RIFLE_CLIP
+        - STR_PLASMA_RIFLE_CLIP
+        - STR_KRAK_GRENADE
+        - STR_ALIEN_GRENADE
+
   - type: STR_ALPHA_SCOUT_ULTRA  #Alpha Legionnaire disguised as Ultramarine
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
     rank: STR_LIVE_SOLDIER
     stats:
       tu: 80
       stamina: 96
-      health: 20
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 100
@@ -5995,9 +6138,10 @@ units:
     sniper: 90
     energyRecovery: 60
     deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    spawnUnit: STR_ALPHA_SOLDIER_INFILTRATOR
+    specab: 1
     #spawnUnitFaction: -1
-    value: 25
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_PISTOLH
@@ -6009,7 +6153,7 @@ units:
         - STR_RIFLE_CLIP_AP
         - STR_RIFLE_CLIP_AP
         - STR_KRAK_GRENADE
-      - - STR_HEAVY_CANNON
+      - - STR_SNIPER_CHAOS #because the AI can't deal with the Heavy Weapon tag
         - STR_HC_AP_AMMO
         - STR_HC_AP_AMMO
         - STR_HC_AP_AMMO
@@ -6022,7 +6166,7 @@ units:
     stats:
       tu: 80
       stamina: 96
-      health: 90
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 85
       firing: 80
@@ -6042,9 +6186,10 @@ units:
     sniper: 50
     energyRecovery: 60
     deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
+    specab: 1
     #spawnUnitFaction: -1
-    value: 25
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_PLASMA_PISTOL
@@ -6055,10 +6200,11 @@ units:
         - STR_MELTA_AMMO_HARMONIC
         - STR_MELTA_AMMO_HARMONIC
         - STR_KRAK_GRENADE
-      - - STR_PLASMA_RIFLE
-        - STR_PLASMA_RIFLE_CLIP
-        - STR_CPOWER_SWORD
+      - - STR_PLASMA_GUN_TWINCORE
+        - STR_PLASMA_TWINCORE_CLIP
+        - STR_PLASMA_TWINCORE_CLIP
         - STR_ALIEN_GRENADE
+        - STR_KRAK_GRENADE
 
   - type: STR_ALPHA_DEV_ULTRA #Alpha Legionnaire disguised as Ultramarine Devastator
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
@@ -6066,12 +6212,12 @@ units:
     stats:
       tu: 80
       stamina: 96
-      health: 90
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 100
       throwing: 80
-      strength: 60
+      strength: 70
       psiStrength: 70
       psiSkill: 0
       melee: 80
@@ -6086,23 +6232,27 @@ units:
     sniper: 90
     energyRecovery: 60
     deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER_INFILTRATOR
+    specab: 1
     #spawnUnitFaction: -1
-    value: 25
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
-      - - STR_ROCKET_LAUNCHER #missile launcher
-        - STR_INCENDIARY_ROCKET
-        - STR_SMALL_ROCKET #HE missile
-        - STR_LARGE_ROCKET #krak missile
-        - STR_ALIEN_GRENADE
-      - - STR_AUTO_CANNON #marine heavy bolter
-        - STR_AC_HE_AMMO
+      - - STR_AUTO_CANNON #heavy bolter
+        - STR_AC_AP_AMMO
         - STR_KRAK_GRENADE
         - STR_ALIEN_GRENADE
-      - - STR_LASCAN
-        - STR_LASCAN_CLIP
-        - STR_LASCAN_CLIP
+      - - STR_ROCKET_LAUNCHER #missile launcher
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_ALIEN_GRENADE
+      - - STR_CHAOS_LASCANNON_HANDHELD
+        - STR_MGRENADE
         - STR_ALIEN_GRENADE
 
   - type: STR_ALPHA_ELOHIM  #Alpha Legionnaire disguised as SoB Elohim
@@ -6111,7 +6261,7 @@ units:
     stats:
       tu: 80
       stamina: 96
-      health: 90
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 100
@@ -6123,7 +6273,7 @@ units:
     armor: STR_ALPHA_ARMOR_ELOHIM
     aggroSound: {mod: 40k, index: 457} #Praise the Emperor female version
     intelligence: 4
-    aggression: 1
+    aggression: 8
     berserkChance: 70
     standHeight: 20
     kneelHeight: 15
@@ -6131,9 +6281,9 @@ units:
     sniper: 50
     energyRecovery: 60
     deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    spawnUnit: STR_ALPHA_SOLDIER_INFILTRATOR
     #spawnUnitFaction: -1
-    value: 25
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_BOLTER_HERETIC_DEAZ
@@ -6145,8 +6295,8 @@ units:
         - STR_LIGHT_BOLTER_AMMO
         - STR_PHOSPHOR_GRENADE
       - - STR_AUTO_CANNON_CHAOSRETRIBUTOR
-        - STR_AC_HE_AMMO
         - STR_AC_I_AMMO
+        - STR_AC_AP_AMMO
         - STR_MGRENADE
 
   - type: STR_ALPHA_DAEMONETTE #Alpha Legionnaire disguised as Daemonette
@@ -6155,7 +6305,7 @@ units:
     stats:
       tu: 120
       stamina: 96
-      health: 10
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 0
@@ -6176,9 +6326,9 @@ units:
     spotter: 4
     energyRecovery: 60
     deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    spawnUnit: STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
     #spawnUnitFaction: -1
-    value: 20
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_PHOTON_GRENADE
@@ -6191,7 +6341,7 @@ units:
     stats:
       tu: 120
       stamina: 96
-      health: 30
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 0
@@ -6212,8 +6362,8 @@ units:
     spotter: 4
     energyRecovery: 60
     deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    spawnUnit: STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
-    value: 20
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_PHOTON_GRENADE
@@ -6226,7 +6376,7 @@ units:
     stats:
       tu: 80
       stamina: 96
-      health: 90
+      health: 45 #decoy health is half normal health
       bravery: 100
       reactions: 75
       firing: 100
@@ -6237,8 +6387,8 @@ units:
       melee: 80
     armor: STR_ALPHA_GREYKNIGHT_ARMOR
     aggroSound: {mod: 40k, index: 404} #for the emperor
-    intelligence: 3
-    aggression: 3
+    intelligence: 4
+    aggression: 1
     berserkChance: 70
     standHeight: 20
     kneelHeight: 15
@@ -6246,8 +6396,8 @@ units:
     sniper: 50
     energyRecovery: 60
     deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER_INFILTRATOR
-    value: 35
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
     livingWeapon: true
     builtInWeaponSets:
       - - STR_CHB
@@ -6261,6 +6411,132 @@ units:
         - STR_ASSC_CLIP
         - STR_ASSC_CLIP
         - STR_MGRENADE
+
+  - type: STR_DARK_APOSTLE_ALPHA #Alpha Legionnaire disguised as Cult Leader
+    race: STR_SECTOID
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 80
+      stamina: 96
+      health: 45 #decoy health is half normal health
+      bravery: 100
+      reactions: 75
+      firing: 100
+      throwing: 80
+      strength: 60
+      psiStrength: 70
+      psiSkill: 0
+      melee: 80
+    armor: STR_DARK_APOSTLE_ALPHA_ARMOR
+    intelligence: 4
+    aggression: 1
+    berserkChance: 70
+    standHeight: 20
+    kneelHeight: 15
+    spotter: 4
+    sniper: 90
+    energyRecovery: 60
+    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
+    #spawnUnitFaction: -1
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
+    livingWeapon: true
+    builtInWeaponSets:
+          - - STR_STUB_RIFLE_CHAOS
+            - STR_STUB_GUN_AMMO_AP
+            - STR_STUB_GUN_AMMO_AP
+            - STR_STUB_GUN_AMMO_AP
+            - STR_KRAK_GRENADE
+          - - STR_SNIPER_CHAOS
+            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
+            - STR_HC_AP_AMMO
+            - STR_HC_AP_AMMO
+            - STR_HC_AP_AMMO
+            - STR_ALIEN_GRENADE
+          - - STR_SNIPER_CHAOS
+            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
+            - STR_HC_AP_AMMO
+            - STR_HC_AP_AMMO
+            - STR_HC_AP_AMMO
+            - STR_MGRENADE
+
+  - type: STR_DARK_APOSTLE_ALPHA_RITUALIST #Alpha Legionnaire disguised as Cult Leader
+    race: STR_SECTOID
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 80
+      stamina: 96
+      health: 45 #decoy health is half normal health
+      bravery: 100
+      reactions: 85
+      firing: 80
+      throwing: 80
+      strength: 60
+      psiStrength: 70
+      psiSkill: 0
+      melee: 90
+    armor: STR_DARK_APOSTLE_ALPHA_RITUALIST_ARMOR
+    intelligence: 4
+    aggression: 1
+    berserkChance: 70
+    standHeight: 20
+    kneelHeight: 15
+    spotter: 4
+    sniper: 50
+    energyRecovery: 60
+    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_CPOWER_DAGGER
+      - - STR_CPOWER_DAGGER
+        - STR_STUB_GUN_CHAOS
+        - STR_STUB_GUN_AMMO
+      - - STR_CPOWER_DAGGER
+        - STR_LASER_PISTOLC
+        - STR_LASPISTOL_CLIP
+        - STR_ALIEN_GRENADE
+
+  - type: STR_SECTOID_DARKDISCIPLE_ALPHA     #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO ALPHA BEAKIE
+    race: STR_SECTOID
+    rank: STR_LIVE_MEDIC
+    stats:
+      tu: 80
+      stamina: 96
+      health: 45 #decoy health is half normal health
+      bravery: 100
+      reactions: 85
+      firing: 80
+      throwing: 80
+      strength: 60
+      psiStrength: 70
+      psiSkill: 0
+      melee: 90
+    armor: STR_DARK_DISCIPLE_ARMOR_ALPHA
+    standHeight: 20
+    kneelHeight: 15
+    value: 10 #these don't actually die
+    moraleLossWhenKilled: 50 #these don't actually die
+    deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
+    #spawnUnitFaction: -1
+    intelligence: 4
+    aggression: 8
+    berserkChance: 66
+    energyRecovery: 40
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_BOLTER_HERETIC_DEAZ
+        - STR_LIGHT_BOLTER_AMMO
+        - STR_LIGHT_BOLTER_AMMO
+      - - STR_SMALL_LAUNCHER
+        - STR_STUN_BOMB
+        - STR_STUN_BOMB
+        - STR_ALIEN_GRENADE
+      - - STR_GRAVGUN_AOE_CHAOS
+        - STR_GRAVGUN_AOE_AMMO
+        - STR_GRAVGUN_AOE_AMMO
+        - STR_ALIEN_GRENADE
 
   - type: STR_CHRYSSALID_TERRORIST #Daemonette
     race: STR_CHRYSSALID
@@ -6568,7 +6844,7 @@ units:
         - STR_HEAVY_STUBBER_CLIP
         - STR_HEAVY_STUBBER_CLIP
         - STR_GRENADE
-      - - STR_AUTO_CANNON
+      - - STR_HEAVY_STUBBER_CHAOS
         - STR_AC_AP_AMMO
         - STR_AC_AP_AMMO
         - STR_KRAK_GRENADE
@@ -8776,46 +9052,6 @@ units:
         - STR_GRAVGUN_AOE_AMMO
         - STR_ALIEN_GRENADE
 
-  - type: STR_SECTOID_DARKDISCIPLE_ALPHA     #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO ALPHA BEAKIE
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 65
-      stamina: 90
-      health: 50
-      bravery: 90
-      reactions: 64
-      firing: 62
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 75
-    armor: STR_DARK_DISCIPLE_ARMOR_ALPHA
-    standHeight: 20
-    kneelHeight: 15
-    value: 15
-    deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    spawnUnit: STR_ALPHA_SOLDIER_CORVUS
-    #spawnUnitFaction: -1
-    intelligence: 3
-    aggression: 2
-    berserkChance: 66
-    energyRecovery: 40
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_BOLTER_HERETIC_DEAZ
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_LIGHT_BOLTER_AMMO
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-        - STR_ALIEN_GRENADE
-      - - STR_GRAVGUN_AOE_CHAOS
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_ALIEN_GRENADE
-
   - type: STR_SECTOID_DARK_DISCIPLE_DAEMONETTE  #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO DAEMONETTE
     race: STR_SECTOID
     rank: STR_LIVE_MEDIC
@@ -8890,6 +9126,7 @@ units:
         - STR_MELTA_AMMO
         - STR_KNIF
       - - STR_CPOWER_DAGGER
+
         - STR_ALIEN_GRENADE
 
   - type: STR_NEVERBORN_TERRORIST #CHAOS UNDIVIDED DAEMON NEVERBORN
@@ -8899,7 +9136,7 @@ units:
       tu: 80
       stamina: 100
       health: 120 #less health than Bloodletter
-      bravery: 100
+      bravery: 110 #it's a daemon; it's fearless
       reactions: 70 #hard to react against
       firing: 60
       throwing: 70
@@ -8914,7 +9151,7 @@ units:
     deathSound: {mod: 40k, index: 737} #change?
     moveSound: -1
     intelligence: 3
-    aggression: 6
+    aggression: 8
     berserkChance: 90
     energyRecovery: 60
     livingWeapon: true
@@ -8922,87 +9159,6 @@ units:
       - - STR_NEVERBORN_WEAPON
       - - STR_NEVERBORN_WEAPON
       - - STR_NEVERBORN_WEAPON
-
-  - type: STR_DARK_APOSTLE_ALPHA #Alpha Legionnaire disguised as Cult Leader
-    race: STR_SECTOID
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 68
-      stamina: 96
-      health: 50
-      bravery: 100
-      reactions: 75
-      firing: 70
-      throwing: 80
-      strength: 70
-      psiStrength: 70
-      psiSkill: 0
-      melee: 85
-    armor: STR_DARK_APOSTLE_ALPHA_ARMOR
-    intelligence: 4
-    aggression: 1
-    berserkChance: 70
-    standHeight: 20
-    kneelHeight: 15
-    spotter: 4
-    sniper: 50
-    energyRecovery: 60
-    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER
-    #spawnUnitFaction: -1
-    value: 15
-    livingWeapon: true
-    builtInWeaponSets:
-          - - STR_STUB_RIFLE_CHAOS
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_AP
-            - STR_KRAK_GRENADE
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_ALIEN_GRENADE
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_MGRENADE
-
-  - type: STR_DARK_APOSTLE_ALPHA_RITUALIST #Alpha Legionnaire disguised as Cult Leader
-    race: STR_SECTOID
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 68
-      stamina: 96
-      health: 30
-      bravery: 100
-      reactions: 60
-      firing: 70
-      throwing: 80
-      strength: 70
-      psiStrength: 70
-      psiSkill: 0
-      melee: 85
-    armor: STR_DARK_APOSTLE_ALPHA_RITUALIST_ARMOR
-    intelligence: 4
-    aggression: 1
-    berserkChance: 70
-    standHeight: 20
-    kneelHeight: 15
-    spotter: 4
-    sniper: 50
-    energyRecovery: 60
-    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    spawnUnit: STR_ALPHA_SOLDIER
-    value: 15
-    livingWeapon: true
-    builtInWeaponSets:
-          - - STR_CPOWER_DAGGER
-          - - STR_CPOWER_DAGGER
-          - - STR_CPOWER_DAGGER
 
   - type: STR_SECTOID_DARK_DISCIPLE_NEVERBORN_RITUALIST  #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO NEVERBORN
     race: STR_SECTOID

@@ -2,6 +2,19 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 items:
+  - type: STR_CORVUS_LEFT_ASSC_SPAWNER #weapons adeptas rul/spawner items
+    spawnUnit: STR_CORVUS_LEFT_ASSC_MOUNT
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+  - type: STR_CORVUS_RIGHT_ASSC_SPAWNER #weapons adeptas rul/spawner items
+    spawnUnit: STR_CORVUS_RIGHT_ASSC_MOUNT
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
   - type: STR_SACRESANT_SHIELD
     categories: [STR_CAT_MELEE, STR_CAT_BOLTER, STR_CAT_ADEPTAS]
     weight: 20
@@ -435,9 +448,9 @@ items:
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_ADEPTAS]
     size: 0.15
     requiresBuy:
-     - STR_HAND_FLAMETHROWER_REQUISITION
+      - STR_HAND_FLAMETHROWER_REQUISITION
     costBuy: 5000
-    costSell: 2500
+    costSell: 2000
     weight: 9
     bigSprite: 2090
     floorSprite: 2070
@@ -459,8 +472,7 @@ items:
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_ADEPTAS]
     size: 0.1
     requiresBuy:
-     - STR_ADEPTAS
-     - STR_FAITHFUL_ARMORY
+      - STR_HAND_FLAMETHROWER_REQUISITION
     costBuy: 500
     costSell: 200
     weight: 3
@@ -880,6 +892,7 @@ items:
     bigSprite: 2028
     floorSprite: 2067
     handSprite: 2116
+    fireSound: 2137
     bulletSprite: {mod: 40k, index: 6}
     compatibleAmmo:
       - STR_RIFLE_CLIP
@@ -931,8 +944,8 @@ items:
   - type: STR_DOMINION_HALBERD #              3008           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ADEPTAS]
     requiresBuy:
-     - STR_DOMINION_HALBERD
-     - STR_ADEPTAS_MIDTIER
+      - STR_DOMINION_HALBERD
+      - STR_ADEPTAS_MIDTIER
     size: 0.3
     costBuy: 85000
     costSell: 12000
@@ -943,31 +956,71 @@ items:
     meleeAnimation: {mod: 40k, index: 4 }
     meleeSound: {mod: 40k, index: 753 }  #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 754 } #744 Powerswrod hit
-    power: 120 # melee
+    fireSound: { mod: 40k, index: 753 }
+    explosionHitSound: { mod: 40k, index: 101} #stabhit
+    hitAnimation: 2040 #Bloodgush sprite, X1.pck for ranged attacks, was 1070 #AOEMELEEGENE.png
+    hitAnimFrames: 8
+    powerForAnimation: 10
+    hitSound: { mod: 40k, index: 101} #stabhit
+    bulletSprite: 5
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    snapRange: 3
+    maxRange: 3
+    powerRangeThreshold: 4
+    powerRangeReduction: 99
+    battleType: 1
+    damageType: 5
+    meleeType: 5
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 30
+      energy: 10
+    accuracySnap: 80
+    accuracyMelee: 80
+    accuracyMultiplier:
+      melee: 0.9
+      strength: 0.1
+    meleeMultiplier:
+      melee: 0.9
+      strength: 0.1
+    power: 110
+    meleePower: 110
+    damageBonus:
+      strength: 0.4 #strength matters more than skill given weapon size in terms of damage scaling
+      melee: 0.2
+    meleeBonus:
+      strength: 0.4 #strength matters more than skill given weapon size in terms of damage scaling
+      melee: 0.2
+    costMelee:
+      time: 25
+      energy: 8 #heavy melee weapon
+    flatMelee:
+      time: true
+      energy: true
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.9
       ToArmorPre: 0.4
       ToHealth: 0.8
       RandomType: 2 #TFTD [50% - 150%]
       IgnoreSelfDestruct: false
-    damageType: 7
-    accuracyMelee: 80
+    meleeAlter:     #DA POWER
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.4
+      ToHealth: 0.8
+      RandomType: 2 #TFTD [50% - 150%]
+      IgnoreSelfDestruct: false
     twoHanded: true
-    oneHandedPenalty: 75
-    flatRate: true
-    tuMelee: 20
-    clipSize: -1
-    battleType: 3
-    invWidth: 2
-    invHeight: 3
+    oneHandedPenalty: 50
     attraction: 6
     armor: 200
-    skillApplied: true
-    meleeMultiplier:
-      melee: 1.0
-      flatHundred: 0.0
-    strengthApplied: false
     listOrder: 13400
+    tags:
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
   - type: STR_ADEPTAS_POWER_AXE #         3009           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ADEPTAS]
     size: 0.2
@@ -979,7 +1032,10 @@ items:
     meleeAnimation: {mod: 40k, index: 4 }
     meleeSound: {mod: 40k, index:  753 } #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index:  754 }  #744 Powerswrod hit
-    power: 120 # melee
+    power: 100 # melee
+    damageBonus:
+      strength: 0.3
+      melee: 0.2
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.5 #axe you a question
@@ -988,7 +1044,12 @@ items:
       IgnoreSelfDestruct: false
     damageType: 5
     accuracyMelee: 100
-    tuMelee: 15
+    costMelee:
+      time: 15
+      energy: 4 #heavy melee weapon
+    flatMelee:
+      time: true
+      energy: true
     clipSize: -1
     battleType: 3
     invWidth: 2
@@ -999,11 +1060,12 @@ items:
     armor: 300
     skillApplied: true
     meleeMultiplier:
-      melee: 1.0
-      flatHundred: 0.0
+      melee: 0.9
+      strength: 0.1
     strengthApplied: false
     attraction: 8
     listOrder: 15200
+
   - type: STR_ADEPTAS_ZWEIHANDER #              3008           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ADEPTAS]
     size: 0.3
@@ -1032,7 +1094,13 @@ items:
 
         add sprite_index sprite_offset; # add direction
         return sprite_index;
-    power: 200 # melee
+    power: 120 # melee
+    damageBonus:
+      strength: 0.6
+      melee: 0.2
+    meleeMultiplier:
+      melee: 0.8
+      strength: 0.2
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.4
@@ -1042,9 +1110,14 @@ items:
     damageType: 5
     accuracyMelee: 80
     twoHanded: true
-    oneHandedPenalty: 100
+    oneHandedPenalty: 75
     flatRate: true
-    tuMelee: 25
+    costMelee:
+      time: 25
+      energy: 8 #very heavy melee weapon
+    flatMelee:
+      time: true
+      energy: true
     clipSize: -1
     battleType: 3
     invWidth: 2
@@ -1052,10 +1125,7 @@ items:
     attraction: 6
     armor: 200
     skillApplied: true
-    meleeMultiplier:
-      melee: 1.0
-      flatHundred: 0.0
-    strengthApplied: true
+    strengthApplied: false
     listOrder: 13400
 
   - type: STR_REDEEMER_SHOTGUN #  ADEPTAS BOOMSTICK      10601                   MC
@@ -1850,15 +1920,14 @@ items:
     bulletSpeed: 50
     recover: false #it's Callidus only weaponry
     dropoff: 5
-    autoRange: 12
     snapRange: 14
-    aimRange: 16
+    aimRange: 17
     accuracySnap: 60
     accuracyAimed: 90
     tuSnap: 25
-    tuAimed: 50
+    tuAimed: 45
     clipSize: -1
-    power: 60
+    power: 70
     damageType: 6 #stun
     damageAlter: #DA GUASS
       RandomType: 6 #Gaussian/bell curve damage distribution
@@ -1866,7 +1935,7 @@ items:
       ToHealth: 0.2 #not very effective against enemies not wound-susceptible
       ToWound: 0.5 #shreds the target's brain
       RandomWound: false
-      ToMorale: 4.0 #it literally scrambles your brain
+      ToMorale: 10.0 #it literally scrambles your brain
       ToStun: 1.0 #disorienting/brain frying
       ToTime: 0.5 #disorienting
       ArmorEffectiveness: 0.4
@@ -1881,3 +1950,5 @@ items:
     kneelBonus: 110
     tags:
       REACTION_MULTIPLIER: 200 #pistol reaction bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 30 #Bonus to aimed shots; power of precision
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %

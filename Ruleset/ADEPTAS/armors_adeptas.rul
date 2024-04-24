@@ -692,11 +692,12 @@ armors:
 
   - type: STR_CALLIDUS_ASSASSIN_ARMOR    #ADEPTAS ASSASIN CALLIDUS Top Tier Assassin Armor
     camouflageAtDay: -25 # you need to be 10 tiles closer than max vision range to see this unit in the light
-    camouflageAtDark: -15 # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
+    camouflageAtDark: -16 # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
     visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 10
-    antiCamouflageAtDark: 10
+    visibilityAtDark: 35
+    antiCamouflageAtDay: 15
+    antiCamouflageAtDark: 15
+    heatVision: 40
     spriteSheet: XCOM_63Callidus.PCK
     spriteInv: MAN_43
     customArmorPreviewIndex: 65
@@ -732,7 +733,7 @@ armors:
       - 0.8 #PLASMA
       - 0.8 #STUN
       - 0.8 #MELEE
-      - 1.0 #ACID
+      - 0.8 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 0.8 #MELTA
@@ -748,12 +749,13 @@ armors:
       reactions: 0.3
     loftempsSet: [ 1 ]
     tags:
-      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 5
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-
-  - type: STR_DEATHCULT_ASSASSIN_ARMOR    #ADEPTAS Death cult ASSASIN
+  - &STR_DEATH_CULT_ASSASSIN_TEMPLATE
+    type: STR_DEATHCULT_ASSASSIN_ARMOR    #ADEPTAS Death cult ASSASIN
     camouflageAtDay: -22 # you need to be 8 tiles closer than max vision range to see this unit in the light
     camouflageAtDark: -14 # you need to be 6 tiles closer than max vision range (at night!) to see this unit in the dark
     visibilityAtDay: 40
@@ -775,12 +777,12 @@ armors:
       health: 20
       bravery: 10
       reactions: 10
-      firing: -10 #Melee focused assassin armor
+      firing: -20 #Melee focused assassin armor
       throwing: 10
       strength: 10
       psiStrength: 0
       psiSkill: 0
-      melee: 0
+      melee: 20 #melee focused assassin armor, +10 over repentia
     frontArmor: 60 #carapace equivalent so its an ugprade over early tiers
     sideArmor: 45
     rearArmor: 30
@@ -812,6 +814,14 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_DEATHCULT_ASSASSIN_ARMOR_NPC #enhanced armor for AI NPCS
+    refNode: *STR_DEATH_CULT_ASSASSIN_TEMPLATE
+    camouflageAtDay: 5
+    camouflageAtDark: 5
+    heatVision: 40
+    builtInWeapons:
+      - INV_NULL_3X3
 
   - type: STR_ADEPTAS_ARMORB_UC    #ADEPTAS ASSASIN
     camouflageAtDay: -22 # you need to be 8 tiles closer than max vision range to see this unit in the light
@@ -878,7 +888,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-  - type: STR_ASSASSINNEUTRAL_FEMSUIT    #IMPERIAL ASSASSIN SUIT
+  - &STR_FEMSUIT_ASSASSIN_TEMPLATE
+    type: STR_ASSASSINNEUTRAL_FEMSUIT    #IMPERIAL ASSASSIN SUIT
     camouflageAtDay: -22 # you need to be 8 tiles closer than max vision range to see this unit in the light
     camouflageAtDark: -14 # you need to be 6 tiles closer than max vision range (at night!) to see this unit in the dark
     visibilityAtDay: 40
@@ -937,6 +948,14 @@ armors:
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_ASSASSINNEUTRAL_FEMSUIT_NPC #enhanced armor for AI NPCS
+    refNode: *STR_FEMSUIT_ASSASSIN_TEMPLATE
+    camouflageAtDay: 5
+    camouflageAtDark: 5
+    heatVision: 40
+    builtInWeapons:
+      - INV_NULL_3X3
 
   - type: STR_ADEPTAS_ARMORA_UC    #ADEPTAS Apoth Hospitaller
     visibilityAtDay: 40
@@ -1549,8 +1568,6 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_ADEPTAS_MEDICAE_ARMOR    #ADEPTAS Medicae
-    tags:
-      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
     visibilityAtDay: 40
     visibilityAtDark: 20
     antiCamouflageAtDay: 5 #heartbeat sensor
@@ -2114,8 +2131,7 @@ armors:
       - STR_ADEPTAS_SUPERIOR
       - STR_ADEPTAS_REPENTIA_SUPERIOR
       - STR_ADEPTAS_NOVITIATE_SUPERIOR
-    builtInWeapons:
-      - STR_SKULL_SPAWNER
+    builtInWeapons: []
     loftempsSet: [ 3 ]
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 80
@@ -2241,7 +2257,7 @@ armors:
       - STR_ADEPTAS_REPENTIA_SUPERIOR
       - STR_ADEPTAS_NOVITIATE_SUPERIOR
     builtInWeapons:
-      - STR_SKULL_SPAWNER
+      - INV_NULL_3X3
     loftempsSet: [ 3 ]
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 80
@@ -2366,7 +2382,6 @@ armors:
       - STR_IMPERIAL_INQUISITOR
     builtInWeapons:
       - INV_NULL_3X3
-      - STR_SKULL_SPAWNER
     loftempsSet: [ 3 ]
     tags:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
@@ -3097,7 +3112,7 @@ armors:
       bravery: 10 #always multiples of 10
       reactions: 20 #+10 Slaanesh
       firing: 10
-      throwing: 5 -5 Slaanesh
+      throwing: 5 # -5 Slaanesh
       strength: 10
       psiStrength: 10
       psiSkill: 0

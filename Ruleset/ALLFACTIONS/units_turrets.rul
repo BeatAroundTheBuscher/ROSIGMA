@@ -94,6 +94,48 @@ units:
     stats:
       mana: 60
 
+  - type: STR_CORVUS_LEFT_ASSC_MOUNT 
+    refNode: *STR_CAS_UNIT #dependent on being in UNIT IG rul
+    armor: STR_CORVUS_LEFT_CANNON_ARMOR
+    stats:
+      mana: 30
+    standHeight: 8
+    kneelHeight: 8
+    deathSound: {mod: 40k, index: 23}
+    specab: 1
+    spawnUnit: STR_CORVUS_LEFT_CIV_MOUNT
+        
+  - type: STR_CORVUS_RIGHT_ASSC_MOUNT 
+    refNode: *STR_CAS_UNIT
+    armor: STR_CORVUS_RIGHT_CANNON_ARMOR
+    stats:
+      mana: 30
+    standHeight: 8
+    kneelHeight: 8
+    deathSound: {mod: 40k, index: 23}
+    specab: 1
+    spawnUnit: STR_CORVUS_RIGHT_CIV_MOUNT
+    
+  - type: STR_CORVUS_LEFT_CIV_MOUNT
+    refNode: *STR_CAS_UNIT
+    stats:
+      health: 200
+      mana: 0 #half the capacity of a turret
+    armor: STR_CORVUS_LEFT_CIV_ARMOR
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: true
+
+  - type: STR_CORVUS_RIGHT_CIV_MOUNT
+    refNode: *STR_CAS_UNIT
+    stats:
+      health: 200
+      mana: 0 #half the capacity of a turret
+    armor: STR_CORVUS_RIGHT_CIV_ARMOR
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: true
+    
   - type: STR_IMPULSOR_SHIELD
     refNode: *STR_TURRET_DEFAULT
 
@@ -316,6 +358,8 @@ units:
     refNode: *STR_TURRET_DEFAULT
     stats:
       health: 50
+      strength: 245 # 5 * 15 + 2 * 85
+    standHeight: 24
     value: 20
     energyRecovery: 10
     builtInWeaponSets:
@@ -340,9 +384,7 @@ units:
         - STR_GRENADE_LAUNCHER_TAUROS_SMOKE
         - STR_SMOKE_GRENADE_BELT_TAUROS
         - STR_PHOTON_GRENADE_BELT_TAUROS
-    stats:
-      strength: 245 # 5 * 15 + 2 * 85
-    standHeight: 24
+
 
   - type: STR_STORMBOLTER_TURRET
     refNode: *STR_TURRET_DEFAULT
@@ -358,7 +400,7 @@ units:
       psiStrength: 200
       psiSkill: 0
       melee: 0
-      mana: 100
+      mana: 60
     armor: STR_STORMBOLTER_TURRET_ARMOR
     standHeight: 14
     kneelHeight: 14
@@ -418,6 +460,30 @@ units:
     refNode: *STR_TURRET_DEFAULT
     stats:
       health: 50 #light turret
+
+  - &CHAOS_CASSIUM_BOLTER_TURRET_TEMPLATE
+    type: STR_CCASSIUM_BOLTER_LEFT1
+    refNode: *STR_TURRET_DEFAULT
+    builtInWeaponSets:
+      - - STR_CCASSIUM_BOLTER #chaos variant
+      - - STR_CCASSIUM_BOLTER
+      - - STR_CCASSIUM_BOLTER
+
+  - type: STR_CCASSIUM_BOLTER_LEFT2
+    refNode: *CHAOS_CASSIUM_BOLTER_TURRET_TEMPLATE
+
+  - type: STR_CCASSIUM_BOLTER_RIGHT1
+    refNode: *CHAOS_CASSIUM_BOLTER_TURRET_TEMPLATE
+
+  - type: STR_CCASSIUM_BOLTER_RIGHT2
+    refNode: *CHAOS_CASSIUM_BOLTER_TURRET_TEMPLATE
+
+  - type: STR_DROPPOD
+    refNode: *STR_TURRET_DEFAULT
+    stats:
+      reactions: 100
+      psiStrength: 200
+      mana: 80
 
   - type: STR_GORGON_HEAVY_STUBBER_LEFT
     moraleLossWhenKilled: 0
