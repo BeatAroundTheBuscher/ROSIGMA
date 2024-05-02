@@ -3,7 +3,8 @@ extended:
 
 items:
 
-  - type: STR_DIRE_DAEMONETTE_CLAWS
+  - &STR_SLAANESH_CORRUPTION_MELEE
+    type: STR_DIRE_DAEMONETTE_CLAWS
     weight: 3
     size: 0.2
     requires:
@@ -32,7 +33,10 @@ items:
       ToTime: 0.3
       FixRadius: 1
       ToWound: 0.04
+      RandomWound: false
       ToMana: 0.2
+      ToTile: 0.0
+      ToItem: 0.0
     fixedWeapon: true
     skillApplied: true
     strengthApplied: false
@@ -47,6 +51,32 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 5 #tiny chance of zombifying its victims
+
+  - type: STR_SLAANESH_CORRUPTING_TOUCH #For Slaanesh Saint
+    refNode: *STR_SLAANESH_CORRUPTION_MELEE
+    bigSprite: {mod: 40k, index: 624}
+    meleeAnimation: {mod: 40k, index: 60}
+    meleeSound: {mod: 40k, index: 834} #754 knif miss
+    meleeHitSound: {mod: 40k, index: 286} #773 knif hit
+    specialChance: 5
+    accuracyMelee: 100
+    power: 66
+    damageType: 1 #untyped
+    damageBonus:
+      psiSkill: 1.0
+    damageAlter:
+      IgnoreSelfDestruct: false
+      RandomType: 6
+      ArmorEffectiveness: 0.2 #doesn't really interact with armor
+      ToHealth: 0.05 #pure corruption
+      ToMorale: 10.0
+      ToStun: 1.0
+      ToTime: 1.0
+      ToMana: 1.0
+      ToArmor: 0.0
+      ToTile: 0.0
+      ToItem: 0.0
+      ToWound: 0.0
 
 
   - type: STR_SLAANGOR_CLAW_GIMPIFY #For Ritualist, zombifies
