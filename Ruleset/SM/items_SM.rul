@@ -576,10 +576,10 @@ items:
     clipSize: -1
     invWidth: 2
     invHeight: 3
-    snapRange: 3
-    maxRange: 3
-    powerRangeThreshold: 4
-    powerRangeReduction: 99
+    snapRange: 2
+    maxRange: 2
+    powerRangeThreshold: 3
+    powerRangeReduction: 200
     battleType: 1
     damageType: 11 #melta
     meleeType: 11
@@ -667,12 +667,12 @@ items:
     hitSound: { mod: 40k, index: 101} #stabhit
     bulletSprite: 5
     clipSize: -1
-    snapRange: 3
-    maxRange: 3
-    powerRangeThreshold: 4
-    powerRangeReduction: 99
-    power: 90 #lower base damage; compensated for by stat scaling
-    meleePower: 50
+    snapRange: 2
+    maxRange: 2
+    powerRangeThreshold: 3
+    powerRangeReduction: 200
+    power: 100 #lower base damage; compensated for by stat scaling
+    meleePower: 100
     battleType: 1
     damageType: 11 #melta damage; more effective against daemons
     meleeType: 11 #melta damage; more effective against daemons
@@ -680,24 +680,30 @@ items:
       name: STR_HALLEBARD_SNAPSHOT_LUNGE
       shots: 1
     costSnap:
-      time: 15
-      energy: 4
+      time: 25 #lunge costs more TU and energy
+      energy: 12
     accuracySnap: 90
+    accuracyMelee: 90
     accuracyMultiplier:
       firing: 0.0
-      melee: 1
-    skillApplied: true
+      melee: 0.8
+      strength: 0.2
+    meleeMultiplier:
+      firing: 0.0
+      melee: 0.8
+      strength: 0.2
+    skillApplied: false
     damageBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psi: 0.15 #infused by psychic power
+      psi: 0.01 #infused by psychic power
     meleeBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psi: 0.15 #infused by psychic power
-    tuMelee: 20
+      psi: 0.01 #infused by psychic power
     costMelee:
-      energy: 8 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+      time: 22
+      energy: 8 #very heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatRate: true
     tags:
       ITEM_STRENGTH_REQUIREMENT: 100
@@ -708,6 +714,14 @@ items:
     type: AUX_MEDI_KIT      #AUX MEDI KIT
     medikitTargetImmune: true
     tuMelee: 15 #Lower TU cost from Mastercrafting
+    bigSprite: {mod: 40k, index: 24}
+    floorSprite: {mod: 40k, index: 24}
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 709}
+    meleeAnimation: {mod: 40k, index: 44}
+    battleType: 6
+    invWidth: 2
+    invHeight: 3
     meleeBonus:
       strength: 0.2
       melee: 0.2
@@ -726,6 +740,9 @@ items:
     flatMelee:
       time: true
       energy: true
+    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
+    recover: false
+    fixedWeapon: true
 
   - type: AUX_MEDI_KIT_ADVANCED      #AUX MEDI KIT - Advanced Narthecium for Level 4/Paladin GK Apothecary Armor
     refNode: *STR_NARTHECIUM_TEMPLATE
