@@ -2586,6 +2586,18 @@ items:
       - STR_CARAPACE_ARMOR_IG
       - STR_IMPERIAL_GUARD_OPERATIONS
 
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_UFO_CONSTRUCTION #ceramite tier
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_UFO_CONSTRUCTION #ceramite tier
+
 armors: 
   - &STEELLEGION_FLAK_ARMOR_REF
     type: STR_STEELLEGION_FLAK_ARMOR
@@ -2619,7 +2631,7 @@ armors:
       - 1.0 #MELTA
     units:
       - STR_GUARDSM 
-      - STR_GUARDSL #Add Steel Legion Soldier Type? At least for their own strategy
+      - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
     stats:
       tu: 5
       stamina: 10
@@ -2666,7 +2678,7 @@ armors:
     storeItem: STR_AIRSTRIKE_VOX
     units:
       - STR_GUARDSM
-      - STR_GUARDSL #Add Steel Legion Soldier Type? At least for their own strategy
+      - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
 
   - type: STR_STEELLEGION_FLAK_ARMOR_OFFICER
     refNode: *STEELLEGION_FLAK_ARMOR_REF
@@ -2818,14 +2830,14 @@ armors:
     spriteSheet: SL_OFFICER_CARAPACE_BS.PCK
     spriteInv: SLOCA_33
     storeItem: STR_GUARD_ARMORH
+    drawingRoutine: 0
+    weight: 15
     corpseBattle:
       - STR_STEELLEGION_CARAPACE_OFFICER_CORPSE 
     frontArmor: 80 #+10 Officer improved carapace
     sideArmor: 70 #+10 Officer improved carapace
     rearArmor: 35 #+5 Officer improved carapace
     underArmor: 65 #+5 Officer improved carapace
-    drawingRoutine: 0
-    weight: 15
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -2844,7 +2856,6 @@ armors:
       stamina: -10
       strength: 5
       bravery: 10 #always multiples of 10
-    weight: 15
     units:
       - STR_GUARD_VETERAN
       - STR_GUARD_OFFICER_VETERAN
@@ -2856,6 +2867,75 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
 
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    spriteSheet: SL_CARAPACE_VOX_BS.PCK #change 
+    customArmorPreviewIndex: 812 #change  
+    corpseBattle:
+      - STR_STEELLEGION_CARAPACE_CORPSE #change
+    storeItem: STR_GUARD_ARMORH #change 
+    frontArmor: 90 #same as Scions 
+    sideArmor: 80 #reinforced armor 
+    rearArmor: 50 #same as Scions 
+    underArmor: 40 #same as Scions 
+    damageModifier: #SCION ARMOR
+      - 1.0 #none
+      - 0.9 #AP Steel Legion mechanized army 10% bonus 
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.7 #ACID STEEL LEGION 30% BONUS 
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_BAYONET #change? 
+    stats:
+      tu: -5 #heavy reinforced armor, even vs Scions 
+      stamina: -5 #heavy
+    builtInWeapons:
+      - STR_HELLGUN
+      - INV_NULL_STORM_TROOPER_BACKPACK
+    units:
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN 
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    spriteSheet: SL_CARAPACE_VOX_BS.PCK #change 
+    customArmorPreviewIndex: 821 #change  
+    corpseBattle:
+      - STR_STEELLEGION_CARAPACE_MEDIC_CORPSE #change
+    storeItem: STR_NONE #change?
+    frontArmor: 90 #same as Scions 
+    sideArmor: 80 #reinforced armor 
+    rearArmor: 50 #same as Scions 
+    underArmor: 40 #same as Scions 
+    damageModifier: #SCION ARMOR
+      - 1.0 #none
+      - 0.9 #AP Steel Legion mechanized army 10% bonus 
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.7 #ACID STEEL LEGION 30% BONUS 
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_GUARD_MEDI_KIT
+    builtInWeapons:
+      - INV_NULL_MEDI_KIT
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
+    units:
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN 
 
 
 #TURRETS AND SPONSONS
