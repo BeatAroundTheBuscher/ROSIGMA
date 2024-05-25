@@ -2481,7 +2481,10 @@ extended:
           var int noofmmsponsons;
           var int noofhullbolters;
           var int noofhulllas;
+          var int slstrat;
           var ptr RuleUnit turret_unit;
+          var ptr GeoscapeGame geo_game;
+          var ptr RuleResearch rule_research;
 
           unit.getTag turret Tag.Turret;
           if eq turret 1;
@@ -2490,9 +2493,16 @@ extended:
               sub noofspawns 1;
               battle_game.setTag Tag.NoOfSpawns noofspawns;
 
+              battle_game.getGeoscapeGame geo_game;
+              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
+              geo_game.isResearched slstrat rule_research;
+
               battle_game.getTag noofacturrets Tag.NoOfACTurrets;
               if gt noofacturrets 0;
                 rules.getRuleUnit turret_unit "STR_CHIMERA_AC_TURRET";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_CHIMERASL_AC_TURRET";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2513,6 +2523,9 @@ extended:
               battle_game.getTag noofboltturrets Tag.NoOfBoltTurrets;
               if gt noofboltturrets 0;
                 rules.getRuleUnit turret_unit "STR_CHIMERA_BOLTER_TURRET";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_CHIMERASL_BOLTER_TURRET";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2523,6 +2536,9 @@ extended:
               battle_game.getTag nooflasturrets Tag.NoOfLasTurrets;
               if gt nooflasturrets 0;
                 rules.getRuleUnit turret_unit "STR_CHIMERA_TURRET";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_CHIMERASL_MULTILAS_TURRET";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2543,10 +2559,16 @@ extended:
               sub nooflemanspawns 1;
               battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
 
+              battle_game.getGeoscapeGame geo_game;
+              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
+              geo_game.isResearched slstrat rule_research;
 
               battle_game.getTag noofcannonturrets Tag.NoOfCannonTurrets;
               if gt noofcannonturrets 0;
                 rules.getRuleUnit turret_unit "STR_LEMONRUSS";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_LEMANSL_BATTLECANNON_TURRET";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2557,6 +2579,9 @@ extended:
               battle_game.getTag noofexecutionerturrets Tag.NoOfExecutionerTurrets;
               if gt noofexecutionerturrets 0;
                 rules.getRuleUnit turret_unit "STR_LEMONRUSS_EXECUTIONER";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_LEMANSL_EXECUTIONER";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2594,9 +2619,17 @@ extended:
               sub noofsponsonspawns 1;
               battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
 
+              battle_game.getGeoscapeGame geo_game;
+              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
+              geo_game.isResearched slstrat rule_research;
+
+
               battle_game.getTag noofflamersponsons Tag.NoOfFlamerSponsons;
               if gt noofflamersponsons 0;
                 rules.getRuleUnit turret_unit "STR_SPONSON_FLAMER";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_SL_SPONSON_FLAMER";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2608,6 +2641,9 @@ extended:
               battle_game.getTag noofboltersponsons Tag.NoOfBolterSponsons;
               if gt noofboltersponsons 0;
                 rules.getRuleUnit turret_unit "STR_SPONSON_BOLTER";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_SL_SPONSON_BOLTER";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2636,11 +2672,19 @@ extended:
             battle_game.getTag noofhullspawns Tag.NoOfHullSpawns;
             if gt noofhullspawns 0;
               sub noofhullspawns 1;
+
+              battle_game.getGeoscapeGame geo_game;
+              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
+              geo_game.isResearched slstrat rule_research;
+
               battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
               battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
               #debug_log "createItem | offset 1 | advancedTurrets. ChimeraHull, noofhullbolters:" noofhullbolters;
               if gt noofhullbolters 0;
                 rules.getRuleUnit turret_unit "STR_CHIMERA_HULL_BOLTER";
+                if eq slstrat 1;
+                  rules.getRuleUnit turret_unit "STR_CHIMERASL_HULL_BOLTER";
+                end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
                 unit.setSpawnUnitInstantRespawn 1;
@@ -2654,11 +2698,19 @@ extended:
           unit.getTag lemanhull Tag.LemanHull;
           if eq lemanhull 1;
             sub noofhullspawns 1;
+
+            battle_game.getGeoscapeGame geo_game;
+            rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
+            geo_game.isResearched slstrat rule_research;
+
             battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
             battle_game.getTag noofhulllas Tag.NoOfHullLas;
             #debug_log "createItem | offset 1 | advancedTurrets. lemanhull, NoOfHullSpawns:" noofhullspawns;
             if gt noofhulllas 0;
               rules.getRuleUnit turret_unit "STR_LEMAN_HULL_LAS";
+              if eq slstrat 1;
+                rules.getRuleUnit turret_unit "STR_LEMANSL_HULL_LAS";
+              end;
               unit.setSpawnUnit turret_unit;
               unit.setSpawnUnitFaction FACTION_PLAYER;
               unit.setSpawnUnitInstantRespawn 1;
@@ -2670,6 +2722,9 @@ extended:
             battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
             if gt noofhullbolters 0;
               rules.getRuleUnit turret_unit "STR_LEMAN_HULL_BOLTER";
+              if eq slstrat 1;
+                rules.getRuleUnit turret_unit "STR_LEMANSL_HULL_BOLTER";
+              end;
               unit.setSpawnUnit turret_unit;
               unit.setSpawnUnitFaction FACTION_PLAYER;
               unit.setSpawnUnitInstantRespawn 1;
