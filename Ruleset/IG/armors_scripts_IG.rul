@@ -104,6 +104,42 @@ armors:
   - type: STR_GUARD_KRIEG_ARMORS_MOUNTED_HEAVY_BOLTER_UC
     refNode: *STR_GUARD_MOUNT_ARMOR
 
+  - &STR_STEELLEGION_MOUNT_ARMOR
+    type: STR_STEELLEGION_ARMORS_MOUNTED_HEAVY_BOLTER_UC
+    scripts:
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+      # 0 las, 1 auto, 2 heavy bolter
+      selectUnitSprite:
+        var int unitDirection;
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
   - type: STR_GUARD_KRIEG_ARMORS_MOUNTED_LASCANNON_UC
     refNode: *STR_GUARD_MOUNT_ARMOR
     scripts:
@@ -131,8 +167,23 @@ armors:
         add sprite_index sprite_offset;
         return sprite_index;
 
+
+  - type: STR_STEELLEGION_ARMORS_MOUNTED_LASCANNON_UC
+    refNode: *STR_STEELLEGION_MOUNT_ARMOR
+    scripts:
+      # 0 las, 1 auto, 2 heavy bolter, 3 mortar
+      selectUnitSprite:  
+        var int unitDirection;      
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+
+
   - type: STR_GUARD_KRIEG_ARMORS_MOUNTED_AUTOCANNON_UC
-    refNode: *STR_GUARD_MOUNT_ARMOR
+    refNode: *STR_STEELLEGION_MOUNT_ARMOR
     scripts:
       # 0 las, 1 auto, 2 heavy bolter, 3 mortar
       selectUnitSprite:
@@ -157,6 +208,18 @@ armors:
         add sprite_offset unitDirection;
         add sprite_index sprite_offset;
         return sprite_index;
+
+  - type: STR_STEELLEGION_ARMORS_MOUNTED_AUTOCANNON_UC
+    refNode: *STR_GUARD_MOUNT_ARMOR
+    scripts:
+      # 0 las, 1 auto, 2 heavy bolter, 3 mortar
+        var int unitDirection;      
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
 
   - type: STR_GUARD_KRIEG_ARMORS_MOUNTED_MORTAR_UC
     refNode: *STR_GUARD_MOUNT_ARMOR
