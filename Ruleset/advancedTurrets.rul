@@ -1322,6 +1322,8 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
+    tags:
+      SteelLegion: 1
 
   - type: STR_LEMONRUSS_SPAWNER
     spawnUnit: STR_LEMAN_COMMAND_TURRET
@@ -1336,6 +1338,8 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
+    tags:
+      SteelLegion: 1
 
   - type: STR_LEMONRUSS_SPONSON_SPAWNER
     spawnUnit: STR_LEMAN_SPONSON
@@ -1354,6 +1358,8 @@ items:
     battleType: 4
     hitAnimation: { mod: 40k, index: 1990 }
     armor: 255
+    tags:
+      SteelLegion: 1
 
   - &STR_LEMAN_RUSS_FINAL # DO NOT TOUCH; FINAL MISSION DOESN'T CARE ABOUT THIS SCRIPT
     type: STR_LEMONRUSS_SPAWNER_FINAL 
@@ -1384,6 +1390,8 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
+    tags:
+      SteelLegion: 1
 
   - type: STR_LEMONRUSS_HULL_SPAWNER
     spawnUnit: STR_LEMAN_HULL
@@ -2186,6 +2194,7 @@ extended:
       MMSponson: int
       HullBolter: int
       HullLas: int
+      SteelLegion: int
       TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
     BattleGame:
       NoOfBoltTurrets: int
@@ -2218,6 +2227,7 @@ extended:
       DeadMMSponsons: int
       DeadHullBolters: int
       DeadHullLas: int
+      ApplySteelLegion: int
     RuleArmor:
       Turret: int
       LemanTurret: int
@@ -2454,6 +2464,14 @@ extended:
           end;
           return;
 
+      - offset: 2
+        code: |
+          var int steellegion;
+          item.getTag steellegion Tag.SteelLegion;
+          if eq steellegion 1;
+            battle_game.setTag Tag.ApplySteelLegion 1;
+          end;
+          return;
 
     createUnit:
 
@@ -2483,8 +2501,6 @@ extended:
           var int noofhulllas;
           var int slstrat;
           var ptr RuleUnit turret_unit;
-          var ptr GeoscapeGame geo_game;
-          var ptr RuleResearch rule_research;
 
           unit.getTag turret Tag.Turret;
           if eq turret 1;
@@ -2493,9 +2509,7 @@ extended:
               sub noofspawns 1;
               battle_game.setTag Tag.NoOfSpawns noofspawns;
 
-              battle_game.getGeoscapeGame geo_game;
-              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
-              geo_game.isResearched slstrat rule_research;
+              battle_game.getTag slstrat Tag.ApplySteelLegion;
 
               battle_game.getTag noofacturrets Tag.NoOfACTurrets;
               if gt noofacturrets 0;
@@ -2523,8 +2537,9 @@ extended:
               battle_game.getTag noofboltturrets Tag.NoOfBoltTurrets;
               if gt noofboltturrets 0;
                 rules.getRuleUnit turret_unit "STR_CHIMERA_BOLTER_TURRET";
+                debug_log "test";
                 if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_CHIMERASL_BOLTER_TURRET";
+                  rules.getRuleUnit turret_unit "STR_CHIMERASL_TWIN_HB_TURRET";
                 end;
                 unit.setSpawnUnit turret_unit;
                 unit.setSpawnUnitFaction FACTION_PLAYER;
@@ -2559,9 +2574,8 @@ extended:
               sub nooflemanspawns 1;
               battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
 
-              battle_game.getGeoscapeGame geo_game;
-              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
-              geo_game.isResearched slstrat rule_research;
+
+              battle_game.getTag slstrat Tag.ApplySteelLegion;
 
               battle_game.getTag noofcannonturrets Tag.NoOfCannonTurrets;
               if gt noofcannonturrets 0;
@@ -2619,9 +2633,8 @@ extended:
               sub noofsponsonspawns 1;
               battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
 
-              battle_game.getGeoscapeGame geo_game;
-              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
-              geo_game.isResearched slstrat rule_research;
+
+              battle_game.getTag slstrat Tag.ApplySteelLegion;
 
 
               battle_game.getTag noofflamersponsons Tag.NoOfFlamerSponsons;
@@ -2673,9 +2686,8 @@ extended:
             if gt noofhullspawns 0;
               sub noofhullspawns 1;
 
-              battle_game.getGeoscapeGame geo_game;
-              rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
-              geo_game.isResearched slstrat rule_research;
+
+              battle_game.getTag slstrat Tag.ApplySteelLegion;
 
               battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
               battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
@@ -2699,9 +2711,8 @@ extended:
           if eq lemanhull 1;
             sub noofhullspawns 1;
 
-            battle_game.getGeoscapeGame geo_game;
-            rules.getRuleResearch rule_research "STR_STEEL_LEGION_STRATEGY";
-            geo_game.isResearched slstrat rule_research;
+
+            battle_game.getTag slstrat Tag.ApplySteelLegion;
 
             battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
             battle_game.getTag noofhulllas Tag.NoOfHullLas;
