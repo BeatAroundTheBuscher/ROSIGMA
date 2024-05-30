@@ -360,18 +360,80 @@ missionScripts:
     firstMonth: 6
     useTable: true
 
-  # no Orkz as starting enemy
-  - delete: gameStartOrk
+  # Orkz as starting enemy for SL 
+  - type: gameStartOrk
+    #conditionals: [-100, -101] #relates to gameStartTraitorGuard and gameStartCultist in 40k 
+    missionWeights:
+      0:
+        STR_ORK_BASE_START: 100
+    lastMonth: 0
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_ORK_MIDTIER_EVILSUNZ: 50
+    startDelay: 3000
+    executionOdds: 100
+    label: 102
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true #only triggers for steel legion  playthroughs       
 
   - type: gameStartCultist
     executionOdds: 75
     firstMonth: 2
     lastMonth: 2
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false 
+
+  - type: gameStartCultist_SL
+    executionOdds: 40 #was 75
+    firstMonth: 4 #was 2
+    lastMonth: 4 #was 2 
+    missionWeights:
+      0:
+        STR_CULTIST_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SECTOID: 33
+        STR_BLOODGOR_WARBAND: 5
+        STR_CULTISTS_NIGHT_LORDS: 5
+        STR_NURGLE_CULTISTS_RACELIST: 20
+        STR_SLAANGOR_MIXED: 10
+        STR_TZEENTCH_CULT: 5
+        STR_TZEENTCH_COVEN: 5
+        STR_TZEENTCH_TZAANGOR_WARBAND: 5
+        STR_TZEENTCH_SUBCULT: 5
+    startDelay: 3000
+    label: 100
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true 
 
   - type: gameStartTraitorGuard
     executionOdds: 75 # either Cultists or Traitor Guard
     firstMonth: 2
     lastMonth: 2
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false 
+
+  - type: gameStartTraitorGuard_SL
+    executionOdds: 75 # 
+    firstMonth: 3 #was 2 
+    lastMonth: 3 #was 2 
+    conditionals: [-100]
+    missionWeights:
+      0:
+        STR_TRAITOR_GUARD_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SNAKEMAN: 33
+        STR_TZEENTCH_TRAITOR_GUARD: 33
+        STR_SLAANESH_TRAITOR_GUARD_MID: 33
+        STR_HRUD_WARRIOR_FORCE: 10
+    startDelay: 3000
+    label: 101
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true 
 
   - &STR_START_MISSION
     type: gameStart # initial mission in player region
