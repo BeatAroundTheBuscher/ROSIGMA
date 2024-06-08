@@ -2833,13 +2833,33 @@ items:
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 10000
-    costSell: 500
+    costBuy: 7500
+    costSell: 1000
     weight: 6
     bigSprite: 911
     floorSprite: 2062
     handSprite: { mod: 40k, index: 352 } #Needs new
-    power: 100
+    power: 0
+    damageAlter: #high explosive
+      FixRadius: 0
+    spawnItem: STR_MORTAR_AMMO_HE_EXPLOSION
+    spawnItemChance: 100
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    listOrder: 11872
+
+  - &STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    type: STR_MORTAR_AMMO_HE_EXPLOSION #HE munition
+    size: 0.1
+    weight: 999
+    bigSprite: 100
+    floorSprite: 959
+    handSprite: 0
+    hitAnimation: 0
+    power: 120
     damageType: 3
     damageAlter: #high explosive
       ToArmorPre: 0.1
@@ -2851,6 +2871,36 @@ items:
       ToTile: 0.75 #high explosive
       ToItem: 0.75 #high explosive
       FixRadius: 10 #1 for hand grenade version
+    battleType: 4
+    invWidth: 0 #shouldn't be possible to pick up
+    invHeight: 0
+    isExplodingInHands: true
+    tuThrow: 9999
+    armor: 999
+    costUnprime:
+      time: 9999
+    inventoryMoveCost:
+      basePercent: 9999
+    recover: false
+    tags:
+      MUNITION_DELAY: 1
+
+  - type: STR_MORTAR_AMMO_FRAG #frag munition
+    size: 0.1
+    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 4000
+    costSell: 500
+    weight: 6
+    bigSprite: 917
+    floorSprite: 296
+    handSprite: { mod: 40k, index: 352 } #Needs new
+    power: 0
+    damageType: 1
+    damageAlter:
+      FixRadius: 0
+    spawnItem: STR_MORTAR_AMMO_FRAG_EXPLOSION
+    spawnItemChance: 100
     clipSize: 1
     battleType: 2
     invWidth: 1
@@ -2858,18 +2908,10 @@ items:
     armor: 200
     listOrder: 11872
 
-  - type: STR_MORTAR_AMMO_FRAG #frag munition
-    size: 0.1
-    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
-      - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
-    costSell: 500
-    weight: 6
-    bigSprite: 917
-    floorSprite: 296
-    handSprite: { mod: 40k, index: 352 } #Needs new
-    power: 100
-    damageType: 1
+  - type: STR_MORTAR_AMMO_FRAG_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 120
+    damageType: 3
     damageAlter:
       ToArmorPre: 0.05 #small ablation
       ArmorEffectiveness: 1.1 #armor helps vs shrapnel
@@ -2881,25 +2923,34 @@ items:
       ToWound: 0.4 #shrapnel
       RandomWound: false
       ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
-      FixRadius: 7
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+      FixRadius: 10
 
   - type: STR_MORTAR_AMMO_KRAK #krak munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 20000
+    costBuy: 10000
     costSell: 2000
     weight: 7
     bigSprite: 912
     floorSprite:  {mod: 40k, index: 70} #update with new
     handSprite:  {mod: 40k, index: 136} #update with new
-    power: 120 #handheld 40mm is 80 power
+    power: 0
+    damageType: 3
+    damageAlter:
+      FixRadius: 0
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    spawnItem: STR_MORTAR_AMMO_KRAK_EXPLOSION
+    spawnItemChance: 100
+    armor: 200
+    listOrder: 11872
+
+  - type: STR_MORTAR_AMMO_KRAK_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 140 #handheld 40mm is 80 power
     damageType: 3
     damageAlter:
       RandomType: 6 #gaussian
@@ -2909,20 +2960,15 @@ items:
       ToArmor: 0.3
       ArmorEffectiveness: 0.5
       FixRadius: 2 #1 for hand grenade version
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    powerForAnimation: 48 # 5 / 5 = 1
-    armor: 200
-    listOrder: 11872
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOSPHOR #phosphor munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
+    costBuy: 4000
     costSell: 500
     weight: 5
     bigSprite: 914
@@ -2930,7 +2976,22 @@ items:
     handSprite:  {mod: 40k, index: 336 } #update with new
     explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
     hitAnimation: {mod: 40k, index: 104 } #XSmoke
-    power: 100
+    power: 0
+    damageType: 8 #Acid burns
+    damageAlter:
+      FixRadius: 0
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    spawnItem: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION
+    spawnItemChance: 100
+    armor: 200
+    listOrder: 11872
+
+  - type: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 120
     damageType: 8 #Acid burns
     damageAlter:
       ToMorale: 1.0 #being savaged with white phosphorous is kinda demoralizing
@@ -2939,13 +3000,9 @@ items:
       ToHealth: 0.4
       ToStun: 0.4 #painful; agonizing even
       FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
-      FixRadius: 5
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+      FixRadius: 7
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_SMOKE
     size: 0.1
@@ -2960,47 +3017,69 @@ items:
     handSprite: {mod: 40k, index: 336 } #update with new
     explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
     hitAnimation: {mod: 40k, index: 104 } #XSmoke
-    power: 80
+    power: 0
     damageType: 9 #smoke
     damageAlter:
-      FixRadius: 6 #5 for hand grenade version
+      FixRadius: 0 #5 for hand grenade version
     blastRadius: 6
     clipSize: 1
     battleType: 2
     invWidth: 1
     invHeight: 3
+    spawnItem: STR_MORTAR_AMMO_SMOKE_EXPLOSION
+    spawnItemChance: 100
     armor: 200
     listOrder: 11872
+
+  - type: STR_MORTAR_AMMO_SMOKE_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 80
+    damageType: 9 #smoke
+    damageAlter:
+      FixRadius: 6 #5 for hand grenade version
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_ILLUMINATION
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 1000
+    costBuy: 500
     costSell: 100
     weight: 2
     bigSprite: 915
     floorSprite: 2060
     handSprite: { mod: 40k, index: 336 } #Needs new
-    power: 20
+    power: 0
     damageType: 2 #incendiary
     damageAlter:
-      FixRadius: 3
+      FixRadius: 0
     clipSize: 1
     battleType: 2
     invWidth: 1
     invHeight: 3
+    spawnItem: STR_MORTAR_AMMO_ILLUMINATION
+    spawnItemChance: 100
     armor: 200
     listOrder: 11872
+
+  - type: STR_MORTAR_AMMO_ILLUMINATION_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 30
+    damageType: 2 #incendiary
+    damageAlter:
+      FixRadius: 4
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOTON #photon munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
-    costSell: 100
+    costBuy: 4000
+    costSell: 1000
     weight: 2
     bigSprite: 916
     floorSprite: 2051 #update with new
@@ -3009,7 +3088,24 @@ items:
     hitAnimation: 2100
     #damageType: 2 #incendiary
     damageType: 6
-    power: 60
+    power: 0
+    damageAlter:
+      FixRadius: 0
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    spawnItem: STR_MORTAR_AMMO_PHOTON_EXPLOSION
+    spawnItemChance: 100
+    listOrder: 11872
+    armor: 200
+    tags:
+      ITEM_AMMO_COLOR: 3
+
+  - type: STR_MORTAR_AMMO_PHOTON_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    damageType: 6
+    power: 80
     damageAlter:
       ArmorEffectiveness: 0.5
       ToStun: 0.5 # was 0.2
@@ -3018,15 +3114,9 @@ items:
       ToHealth: 0.05
       ToWound: 0.00
       RandomWound: false
-      FixRadius: 7
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    listOrder: 11872
-    armor: 200
+      FixRadius: 8
     tags:
-      ITEM_AMMO_COLOR: 3
+      MUNITION_DELAY: 1
 
   - type: STR_GRENADE_LAUNCHER
     bigSprite: 257
@@ -5292,7 +5382,7 @@ items:
     costBuy: 5000
     costSell: 1250
     weight: 4
-    bigSprite: 924
+    bigSprite: 925
     floorSprite: 907
     handSprite: 968
     bulletSprite: {mod: 40k, index: 12}
@@ -5304,7 +5394,7 @@ items:
     tuAuto: 33
     tuSnap: 25
     snapRange: 14 #inferior snapfire range
-    autoRange: 10 #superior autofire range
+    autoRange: 11 #superior autofire range
     autoShots: 5 #superior autofire
 #    tuAimed: 50
     clipSize: 0
@@ -5325,6 +5415,7 @@ items:
     handSprite: 952
     weight: 3
     accuracySnap: 55
+    accuracyAuto: 40
     oneHandedPenalty: 75
     confSnap:
       shots: 2
@@ -5348,8 +5439,10 @@ items:
     confSnap:
       shots: 2
       name: STR_BURST_SNAP_SHOT
-    snapRange: 14
+    snapRange: 13
     autoRange: 9
+    accuracySnap: 60
+    accuracyAuto: 50
     compatibleAmmo:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
@@ -5391,8 +5484,8 @@ items:
       - STR_LASGUN_CLIP
       - STR_LASGUN_CLIP_HOTSHOT
     weight: 4
-    snapRange: 14 #improved snap range
-    autoRange: 12 #superior autofire range
+    snapRange: 15 #improved snap range
+    autoRange: 13 #superior autofire range
     accuracyAuto: 55 #better autofire accuracy
     accuracySnap: 65 #slightly better snap accuracy
 
@@ -5414,9 +5507,11 @@ items:
     weight: 5
     tuAimed: 60
     snapRange: 16
-    autoRange: 14
+    autoRange: 15
     aimRange: 20
     accuracyAimed: 100
+    accuracyAuto: 70 #slightly better autofire accuracy vs standard MC lasgun
+    accuracySnap: 75 #slightly worse snap accuracy vs standard MC lasgun
     tags:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
@@ -5424,7 +5519,7 @@ items:
   - type: STR_VOLLEYGUN_STEEL_LEGION
     categories: [STR_CAT_LASGUN]
     size: 0.2
-    dropoff: 5
+    dropoff: 6 #CQC focused; basically a laser automatic shotgun
     weight: 9
     bigSprite: 932
     floorSprite: 914
@@ -5434,7 +5529,7 @@ items:
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
     power: 75
-    damageType: 4
+    damageType: 1
     damageAlter:
       ArmorEffectiveness: 0.75
       ToArmorPre: 0.2
@@ -5466,7 +5561,7 @@ items:
   - type: STR_HELLGUN_STEEL_LEGION
     categories: [STR_CAT_LASGUN]
     size: 0.2
-    dropoff: 5
+    dropoff: 4 #scoped
     weight: 9
     bigSprite: 928
     floorSprite: 910
@@ -5476,7 +5571,7 @@ items:
     hitSound: {mod: 40k, index: 19}
     hitAnimation: {mod: 40k, index: 36}
     power: 75
-    damageType: 4
+    damageType: 1
     damageAlter:
       ArmorEffectiveness: 0.75
       ToArmorPre: 0.2
@@ -5489,9 +5584,9 @@ items:
     accuracyAimed: 90
     tuAuto: 34
     tuSnap: 25
-    aimRange: 20
+    aimRange: 25
     snapRange: 14 #inferior snapfire range
-    autoRange: 12 #superior autofire range
+    autoRange: 14 #superior autofire range
     autoShots: 5 #superior autofire
     clipSize: -1
     battleType: 1
@@ -5502,6 +5597,9 @@ items:
     recover: false
     fixedWeapon: true
     fixedWeaponShow: true
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
   - &STR_DISPOSABLE_LAUNCHER_STEEL_LEGION_TEMPLATE
     type: STR_KRAK_LAUNCHER_STEEL_LEGION
