@@ -160,6 +160,7 @@ items:
 
   - &STR_CHAINSWORD_TEMPLATE
     type: STR_CHAINSWORD #         12400            DA CHAIN
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
     armor: 200
     power: 60
     weight: 15
@@ -175,7 +176,14 @@ items:
       melee: 0.2
       strength: 0.2
     damageAlter:
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+      ToWound: 0.3
+      ToEnergy: 0.5
       RandomWound: false
+    clipSize: -1
+    battleType: 3
 
   - type: STR_CHAINSWORD_MC #       3007           DA CHAIN
     refNode: *STR_CHAINSWORD_TEMPLATE
@@ -196,6 +204,29 @@ items:
     damageBonus:
       melee: 0.3
       strength: 0.1
+    damageAlter:
+      RandomWound: false
+
+  - type: STR_CHAINSWORD_STEEL_LEGION #       3007           DA CHAIN
+    refNode: *STR_CHAINSWORD_TEMPLATE
+    costBuy: 5000
+    costSell: 1250
+    size: 0.2
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    invWidth: 1
+    invHeight: 3
+    bigSprite: 939
+    floorSprite: 919
+    handSprite: 1024
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 44}
+    weight: 12 #lighter
+    power: 45 #less damaging
+    damageBonus:
+      melee: 0.25
+      strength: 0.15
     damageAlter:
       RandomWound: false
 
@@ -479,6 +510,7 @@ items:
 
   - &STR_POWER_MELEE_WEAPON
     type: STR_MFIST_TEMPLATE
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
     armor: 200
     damageType: 5
     damageAlter:     #DA POWER
@@ -486,6 +518,8 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 6
+    clipSize: -1
+    battleType: 3
 
   - &STR_POWER_FIST_WEAPON
     type: STR_POWERFIST
@@ -505,6 +539,34 @@ items:
 
   - type: STR_MFIST
     refNode: *STR_POWER_FIST_WEAPON
+
+  - type: STR_POWERFIST_STEEL_LEGION
+    refNode: *STR_POWER_FIST_WEAPON
+    costBuy: 10000
+    costSell: 2500
+    invHeight: 2
+    invWidth: 2
+    size: 0.1
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    bigSprite: 938
+    floorSprite: 918
+    handSprite: 1032
+    meleeSound: {mod: 40k, index: 710} # 710 powerfist miss
+    meleeHitSound: {mod: 40k, index: 772} # 772 powerfist hit
+    meleeAnimation: {mod: 40k, index: 28} # 28 bolt anitmation
+    weight: 15
+    tuMelee: 22 #slow and cumbersome, but hard hitting; especially for terminators
+    costMelee:
+      energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    meleeMultiplier:
+      melee: 0.7
+      strength: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    flatMelee: true
+    power: 40
+    damageBonus: # meleeBonus: only works if this was a gun
+      strength: 1.2 #greatly magnifies your strength
+    accuracyMelee: 80
 
   - &STR_POWER_SWORD_WEAPON
     type: STR_POWER_SWORD
@@ -1378,5 +1440,5 @@ items:
     armor: 80
     battleType: 11
     recover: false
-    
+
 #dungeon specific end

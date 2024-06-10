@@ -1,0 +1,39 @@
+extended:
+  tags:
+    RuleItem:
+      MUNITION_DELAY: int #number of to prime the munition's delay to
+
+  scripts:
+    createItem:
+      - new: ROSIGMA_cI_prime_delayed_munition
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2; #turret reload turn data for right handed weapon
+          var int timer; #timer of right handed weapon
+          var ptr RuleItem leftHandWeaponRule;
+          var ptre BattleItem rightHandBattleItem; #right hand weapon
+
+          item.getTag timer Tag.MUNITION_DELAY;
+
+          #if unit has no delay variable, cancel out.
+          if lt timer 1;
+            #debug_log "Turret Reload Scripts; ROSIGMA_cI_prime_delayed_munition, offset 1: Item has no MUNITION_DELAY variable:" item;
+            return;
+          end;
+
+          item.isFuseEnabled temp;
+          if gt temp 0;
+            #debug_log "Turret Reload Scripts; ROSIGMA_cI_prime_delayed_munition, offset 1: Item fuse is already active:" temp;
+            return;
+          end;
+
+          item.setFuseEnabled 1;
+          item.setFuseTimer timer;
+          #if eq unit FACTION_HOSTILE; #enemy mortar rounds go off immediately because the AI is stupid as hell
+            #item.setFuseTimer 0;
+          #end;
+
+          #debug_log "Turret Reload Scripts; ROSIGMA_cI_prime_delayed_munition, offset 1: Item fuse activated. Item:" item;
+          #debug_log "Turret Reload Scripts; ROSIGMA_cI_prime_delayed_munition, offset 1: Item fuse activated. Timer count:" timer;
+          return;

@@ -3,6 +3,8 @@ extended:
     RuleItem:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_IS_BUFF_WEAPON: int
+    RuleArmor:
+      NO_BENEFIT_FROM_INSPIRE: int
 
   scripts:
     hitUnit:
@@ -22,12 +24,6 @@ extended:
 
           if neq damaging_type 0; #needs to be untyped damage
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking damage isn't untyped. damaging_type:" damaging_type;
-            return power part side;
-          end;
-
-          weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
-          if le temp 0; #if we're not a buff weapon, pass
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
             return power part side;
           end;
 
@@ -73,3 +69,38 @@ extended:
 
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
           return power part side;
+
+    damageUnit:
+      - new: ROSIGMA_dU_buffs
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var int faction;
+          var ptr RuleItem itemRule;
+          var ptr RuleArmor armorRule;
+
+          damaging_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if le temp 0; #if we're not a buff weapon, pass
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.NO_BENEFIT_FROM_INSPIRE;
+          if le temp 0;
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker can benefit from inspire:" temp;
+            return;
+          end;
+
+          if le to_time 0; #no recursive action economy multiplication
+            set to_time 0;
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Time unit restoration cancelled:" to_time;
+          end;
+
+          if le to_stun 0; #no recursive action economy multiplication
+            div to_stun 2;
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Stun cost halved:" to_stun;
+          end;
+
+          return;

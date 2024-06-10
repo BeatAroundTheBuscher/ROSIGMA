@@ -560,10 +560,41 @@ crafts:
     vehicles: 999
     maxLargeUnits: 0
 
+
+  - delete: STR_VALKYRIE #to make sure it's not dependant of 40K in case the blocker is defeated by submodding oddities
+
   - type: STR_VALKYRIE
+#ported from 40K due to the original having been deleted so there's no missing entries
+    requiresBuyBaseFunc: [HANGAR]    
+    marker: 36
+    sprite: 101
+    fuelMax: 1800
+    speedMax: 600
+    accel: 2
+    weapons: 3         #weapon number increased to 3.
+    weaponTypes:        #definition of allowed weapon types in craft. Max 4 different types per slot.
+      - 0               #slot 1 accepts weapons with type 0. This is default.
+      - 0               #slot 2 accepts weapons with type 0.
+      - [4, 5, 13]      #slot 3 accepts weapons with type 4, 5 and 13.
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    pilots: 2
+    costBuy: 600000
+    costRent: 400000 #TIER I
+    costSell: 400000
+    refuelRate: 200
+    transferTime: 96
+    score: 300
+    listOrder: 210
+    spacecraft: true
+#end ported from 40k
+#ported from other alertsounds_disable in case the deletion may break things
+    takeoffSound: -1 
+    selectSound: -1 
+#end of port from other alertsounds_disable
     craftInventoryTile: [4, 10, 0]
-    requires: !remove
-      - STR_GUARD_SUPORT
     requires:
       - STR_GUARD_AND_ARBITES
       - STR_NOT_STEEL_LEGION_STRATEGY      
@@ -677,13 +708,122 @@ crafts:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_NOT_STEEL_LEGION_STRATEGY 
 
+
+  - delete: STR_GORGON #to make sure it's not dependant of 40K in case the blocker is defeated by submodding oddities
+
   - type: STR_GORGON
+#ported from other alertsounds_disable in case the deletion may break things
+    takeoffSound: -1 
+    selectSound: -1 
+#end of port from other alertsounds_disable
     vehicles: 999
     maxLargeUnits: 4
     speedMax: 125 #was 75
     requires:
       - STR_IMPERIAL_GUARD_HIGHTIER
       - STR_NOT_STEEL_LEGION_STRATEGY   
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
+    sprite: 1008
+    fuelMax: 1000
+    damageMax: 1440
+    maxAltitude: 1
+    accel: 1
+    weapons: 1
+    weaponTypes:
+      - 3
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+    soldiers: 50
+    costBuy: 2400000
+    costRent: 1200000
+    costSell: 1200000
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    repairRate: 8
+    battlescapeTerrainData:
+      name: GORGON
+      mapDataSets:
+        - BLANKS
+        - GORGON
+      mapBlocks:
+        - name: GORGON
+          width: 10
+          length: 20
+          items:
+            STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_SPAWNER:
+              - [8, 13, 1]
+            STR_GORGON_HEAVY_FLAMER_BACK_LEFT_SPAWNER:
+              - [8, 10, 1]
+            STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER:
+              - [0, 13, 1]
+            STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_SPAWNER:
+              - [0, 10, 1]
+            STR_GORGON_HEAVY_STUBBER_LEFT_SPAWNER:
+              - [6, 6, 2]
+            STR_GORGON_HEAVY_STUBBER_RIGHT_SPAWNER:
+              - [2, 6, 2]
+          fuseTimers:
+            STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_BACK_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_STUBBER_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_STUBBER_RIGHT_SPAWNER: [0, 0]
+    deployment:
+      - [2, 6, 1, 0]
+      - [5, 6, 1, 0]
+      - [2, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [3, 6, 1, 0]
+      - [4, 6, 1, 0]
+      - [6, 6, 1, 0]
+      - [2, 7, 1, 0]
+      - [3, 7, 1, 0]
+      - [4, 7, 1, 0]
+      - [5, 7, 1, 0]
+      - [6, 7, 1, 0]
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [2, 9, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [2, 10, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [2, 11, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [2, 12, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [2, 13, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [2, 14, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0]
+      - [2, 15, 1, 0]
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0]
+    listOrder: 820
+    spacecraft: true
 
 
   - type: STR_GORGONSL                          #TIER V  Steel Legion version
@@ -795,16 +935,110 @@ crafts:
     listOrder: 820
     spacecraft: true
     
-  - type: STR_CASSIUM #Crassus Guard edition
+
+  - delete: STR_CASSIUM 
+
+  - type: STR_CASSIUM  #Crassus Guard edition
+    takeoffSound: -1
+    selectSound: -1
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
     requires:
       - STR_IMPERIAL_GUARD_MIDTIER #was high tier, but in rosigma it competes with the armor column
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    sprite: 1685
+    maxSkinIndex: 2            # default 0
+    skinSprites: [1686, 1687] # default empty, contains all sprites except for the first (index zero)
     fuelMax: 1000
-    refuelRate: 1000
-    repairRate: 10 # was 8
+    damageMax: 1440
     speedMax: 150 #was 75
+    maxAltitude: 1
+    accel: 1
+    weapons: 3         #weapon number increased to 3.
+    weaponTypes:        #definition of allowed weapon types in craft. Max 4 different types per slot.
+      - 0               #slot 1 accepts weapons with type 0. This is default.
+      - 0               #slot 2 accepts weapons with type 0.
+      - [4, 5, 13]      #slot 3 accepts weapons with type 4, 5 and 13.
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    fixedWeapons: [STR_CANNON_UC, STR_CANNON_UC]
+    soldiers: 28 #25?
     vehicles: 999
     maxLargeUnits: 4
-    soldiers: 28 #25?
+    costBuy: 1500000
+    costRent: 1000000 #TIER IV
+    costSell: 1000000
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    repairRate: 10 # was 8
+    battlescapeTerrainData:
+      name: CASSIUM
+      mapDataSets:
+        - BLANKS
+        - CASSIUM
+      mapBlocks:
+        - name: CASSIUM
+          width: 10
+          length: 20
+          items:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER:
+              - [1, 14, 1]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER:
+              - [3, 17, 1]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER:
+              - [8, 14, 1]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER:
+              - [6, 17, 1]
+          fuseTimers:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER: [0, 0]
+    deployment:
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0] #24
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0] #28
+      - [3, 16, 1, 0]
+      - [4, 16, 1, 0]
+      - [5, 16, 1, 0]
+      - [6, 16, 1, 0] #32
+      - [4, 17, 1, 0]
+      - [5, 17, 1, 0]
+      - [4, 17, 1, 0]
+    listOrder: 820
+    spacecraft: true
 
 
   - type: STR_CASSIUMSL                         #TIER IV
