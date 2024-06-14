@@ -810,7 +810,7 @@ armors:
       - 1.0 #MELTA
     units:
       - STR_GUARD_VETERAN
-      - STR_STORMTROOPER 
+      - STR_STORMTROOPER
     stats:
       tu: -5
       stamina: -15
@@ -3352,6 +3352,7 @@ armors:
 
   - &STR_STEEL_LEGION_CARAPACE_TEMPLATE # DAMAGE + STATS
     type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    heatVision: 20 #stormtroopers have basic thermals
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
     spriteSheet: SL_STORMTROOPER_BS.PCK
     spriteInv: SLSTA_33
@@ -3380,9 +3381,6 @@ armors:
     stats:
       tu: -5 #heavy reinforced armor, even vs Scions
       stamina: -5 #heavy
-    builtInWeapons:
-      - STR_HELLGUN_STEEL_LEGION
-      - INV_NULL_STORM_TROOPER_BACKPACK
     units:
       - STR_GUARDSL_VETERAN
       - STR_GUARDSL_OFFICER_VETERAN
@@ -3391,41 +3389,29 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
 
-
-  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_VOLLEY
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_VOLLEYGUN
     refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
     builtInWeapons:
       - STR_VOLLEYGUN_STEEL_LEGION
       - INV_NULL_STORM_TROOPER_BACKPACK
-    units:
-      - STR_GUARDSL_VETERAN
-      - STR_GUARDSL_OFFICER_VETERAN
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_HELLGUN
+    refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
+    builtInWeapons:
+      - STR_HELLGUN_STEEL_LEGION
+      - INV_NULL_STORM_TROOPER_BACKPACK
 
   - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
     refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
     spriteSheet: SL_STORMTROOPER_MEDIC_BS.PCK
     spriteInv: SLSTM_33M0.SPK
     customArmorPreviewIndex: 907
+    weight: 30 #medical gear + narthecium adds a lot of weight
     corpseBattle:
       - STR_STEELLEGION_STORMTROOPER_MEDIC_CORPSE
     storeItem: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
-    frontArmor: 90 #same as Scions
-    sideArmor: 80 #reinforced armor
-    rearArmor: 50 #same as Scions
-    underArmor: 40 #same as Scions
-    damageModifier: #SCION ARMOR
-      - 1.0 #none
-      - 0.9 #AP Steel Legion mechanized army 10% bonus
-      - 0.9 #FLAMES
-      - 0.9 #HE
-      - 0.8 #LASCANON
-      - 0.8 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 0.7 #ACID STEEL LEGION 30% BONUS
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
       - INV_NULL_MEDI_KIT
@@ -3433,14 +3419,6 @@ armors:
       tu: -10 #heavy
       stamina: -10 #heavy
       reactions: -10 #heavy
-    units:
-      - STR_GUARDSL_VETERAN
-      - STR_GUARDSL_OFFICER_VETERAN
-    loftempsSet: [ 3 ]
-    tags:
-      UNIT_TYPE_IMPERIUM: 1
-      UNIT_TYPE_LIVING: 1
-
 
 #TURRETS AND SPONSONS
   - type: STR_CHIMERA_TURRET_ARMOR
