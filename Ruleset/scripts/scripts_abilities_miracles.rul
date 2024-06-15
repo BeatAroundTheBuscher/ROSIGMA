@@ -71,6 +71,7 @@ extended:
       UNIT_EXP_PSISKILL: int
       UNIT_EXP_PSISTRENGTH: int
       UNIT_EXP_STRENGTH: int
+      UNIT_HAS_BEEN_MARTYRED: int
       #infection scripts
       CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
       CURRENT_INFECTION_TYPE: int
@@ -138,6 +139,11 @@ extended:
           return;
         end;
 
+        unit.getTag temp1 Tag.UNIT_HAS_BEEN_MARTYRED;
+        if gt temp1 0;
+          return;
+        end;
+
         unit.getHealth temp1;
         sub temp1 to_health;
 
@@ -155,6 +161,7 @@ extended:
           battle_game.setTag Tag.MIRACLE_POINTS temp2;
           battle_game.getTurn temp2;
           battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
+          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; #a unit can only be martyred once per combat
           battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
         end;
 
@@ -167,6 +174,8 @@ extended:
           var int temp;
           var int miraclePointsGained;
           var ptr RuleSoldier rSoldier;
+
+          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 0; #reset so we can benefit from Spirit of the Martyr again
 
           unit.getRuleSoldier rSoldier;
           rSoldier.getTag miraclePointsGained Tag.SOLDIER_MIRACLE_POINTS;

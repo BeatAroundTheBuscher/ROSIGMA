@@ -446,8 +446,8 @@ armors:
       UNIT_TYPE_LIVING: 1
 
   - type: STR_FELINIDGUARD_CARAPACE_SENSORS #Basic version
-    visibilityAtDay: 45 #Advanced optics
-    visibilityAtDark: 45 #Advanced optics
+    visibilityAtDay: 40 #Advanced optics
+    visibilityAtDark: 40 #Advanced optics
     antiCamouflageAtDay: 10 #Multi-spectral scanning
     antiCamouflageAtDark: 10 #Felinid bonus +3
     psiVision: 3 #I hear them breathing!
@@ -810,6 +810,7 @@ armors:
       - 1.0 #MELTA
     units:
       - STR_GUARD_VETERAN
+      - STR_STORMTROOPER
     stats:
       tu: -5
       stamina: -15
@@ -1467,6 +1468,9 @@ armors:
 
   - type: STR_GUARD_ARMORS_SENTINEL_MULTIMELTA_UC
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
+    stats:
+      mana: 60
+    specialWeapon: STR_TURRET_RELOAD
     tags:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
@@ -1624,6 +1628,9 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      mana: 60
     builtInWeapons:
       - STR_SENTINEL_MULTIMELTA #replace with a combi flamer melta
       - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
@@ -1642,7 +1649,7 @@ armors:
 
   - type: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE_UC #Heavy Armored Sentinel
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
-    spriteSheet: SL_HSENT2_ROCKET_BS.png
+    spriteSheet: SL_HSENT2_ROCKET_BS.pck
     #spriteInv: SLHSENTINELRINV
     customArmorPreviewIndex: [964, 965, 966]
     storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE
@@ -1693,7 +1700,7 @@ armors:
 
   - type: STR_STEELLEGION_ARMORS_HSENTINEL_LASC_UC #Heavy Armored Sentinel
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
-    spriteSheet: SL_HSENT_LASC_BS.png
+    spriteSheet: SL_HSENT_LASC_BS.PCK
     #spriteInv: SLHSENTINELLSINV
     customArmorPreviewIndex: [934, 935, 936]
     storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_LASC
@@ -1743,7 +1750,7 @@ armors:
 
   - type: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA_UC #Heavy Armored Sentinel
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
-    spriteSheet: SL_HSENT3_MELTA_BS.png
+    spriteSheet: SL_HSENT3_MELTA_BS.pck
     #spriteInv: SLHSENTINELMINV
     customArmorPreviewIndex: [968, 969, 970]
     storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA
@@ -1775,6 +1782,9 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      mana: 60
     builtInWeapons:
       - STR_SENTINEL_MULTIMELTA
       - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
@@ -3342,6 +3352,7 @@ armors:
 
   - &STR_STEEL_LEGION_CARAPACE_TEMPLATE # DAMAGE + STATS
     type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    heatVision: 20 #stormtroopers have basic thermals
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
     spriteSheet: SL_STORMTROOPER_BS.PCK
     spriteInv: SLSTA_33
@@ -3370,9 +3381,6 @@ armors:
     stats:
       tu: -5 #heavy reinforced armor, even vs Scions
       stamina: -5 #heavy
-    builtInWeapons:
-      - STR_HELLGUN_STEEL_LEGION
-      - INV_NULL_STORM_TROOPER_BACKPACK
     units:
       - STR_GUARDSL_VETERAN
       - STR_GUARDSL_OFFICER_VETERAN
@@ -3381,41 +3389,29 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
 
-
-  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_VOLLEY
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_VOLLEYGUN
     refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
     builtInWeapons:
       - STR_VOLLEYGUN_STEEL_LEGION
       - INV_NULL_STORM_TROOPER_BACKPACK
-    units:
-      - STR_GUARDSL_VETERAN
-      - STR_GUARDSL_OFFICER_VETERAN
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_HELLGUN
+    refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
+    builtInWeapons:
+      - STR_HELLGUN_STEEL_LEGION
+      - INV_NULL_STORM_TROOPER_BACKPACK
 
   - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
     refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
     spriteSheet: SL_STORMTROOPER_MEDIC_BS.PCK
     spriteInv: SLSTM_33M0.SPK
     customArmorPreviewIndex: 907
+    weight: 30 #medical gear + narthecium adds a lot of weight
     corpseBattle:
       - STR_STEELLEGION_STORMTROOPER_MEDIC_CORPSE
     storeItem: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
-    frontArmor: 90 #same as Scions
-    sideArmor: 80 #reinforced armor
-    rearArmor: 50 #same as Scions
-    underArmor: 40 #same as Scions
-    damageModifier: #SCION ARMOR
-      - 1.0 #none
-      - 0.9 #AP Steel Legion mechanized army 10% bonus
-      - 0.9 #FLAMES
-      - 0.9 #HE
-      - 0.8 #LASCANON
-      - 0.8 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 0.7 #ACID STEEL LEGION 30% BONUS
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
       - INV_NULL_MEDI_KIT
@@ -3423,14 +3419,6 @@ armors:
       tu: -10 #heavy
       stamina: -10 #heavy
       reactions: -10 #heavy
-    units:
-      - STR_GUARDSL_VETERAN
-      - STR_GUARDSL_OFFICER_VETERAN
-    loftempsSet: [ 3 ]
-    tags:
-      UNIT_TYPE_IMPERIUM: 1
-      UNIT_TYPE_LIVING: 1
-
 
 #TURRETS AND SPONSONS
   - type: STR_CHIMERA_TURRET_ARMOR
@@ -4096,6 +4084,7 @@ armors:
     storeItem: STR_GUARD_POWER_ARMOR_HULK
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
     spriteSheet: IG_GPOWER_ARMOR_BS.PCK
+    movementType: 1
     frontArmor: 120 #was 100
     sideArmor: 100 #was 80
     rearArmor: 75 #was 55
@@ -4125,6 +4114,8 @@ armors:
     units:
       - STR_GUARD_VETERAN
       - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
 
   - type: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
     refNode: *STR_GUARD_POWER_ARMOR_REF
@@ -4132,11 +4123,13 @@ armors:
     antiCamouflageAtDark: 5 #equivalent to Scion Officer gear
     heatVision: 25 #same as Chimera or Taurox + 5 bonus for officer
     spriteSheet: IG_GPOWER_ARMOR_BS.PCK
+    movementType: 1
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
     loftempsSet: [ 4 ]
     weight: 5
     units:
       - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
     storeItem: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
@@ -4173,6 +4166,7 @@ armors:
   - type: STR_KRIEG_POWER_ARMOR_HULK
     refNode: *STR_KRIEG_POWER_ARMOR_REF
     storeItem: STR_KRIEG_POWER_ARMOR_HULK
+    movementType: 1
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
     damageModifier: #POWER ARMOR
@@ -4204,6 +4198,7 @@ armors:
   - type: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
     refNode: *STR_GUARD_POWER_ARMOR_COMMISSAR_REF
     storeItem: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
+    movementType: 1
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
@@ -4253,20 +4248,20 @@ armors:
       - 0.3 #FLAMES
       - 0.4 #HE
       - 0.8 #LASCANON
-      - 0.8 #PLASMA
+      - 0.7 #PLASMA
       - 1.0 #STUN
-      - 0.9 #MELEE
+      - 0.8 #MELEE
       - 0.8 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
     stats:
       tu: -5 #was -10
-      stamina: 20 #was 10
+      stamina: 25 #was 10
       firing: 10 #was 10
       reactions: 0 #was -5
       bravery: 20 #was 10
-      strength: 25 #was 10
+      strength: 35 #was 10
       psiStrength: 5 #was 0
       psiSkill: 5 #was 0
     units:
@@ -4467,7 +4462,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_CORPSE
+      - STR_GORGONSL_HEAVY_FLAMER_FRONT_LEFT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 130
@@ -4511,7 +4506,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_FLAMER_BACK_LEFT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_FLAMER_BACK_LEFT_CORPSE
+      - STR_GORGONSL_HEAVY_FLAMER_BACK_LEFT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 130
@@ -4555,7 +4550,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_CORPSE
+      - STR_GORGONSL_HEAVY_FLAMER_FRONT_RIGHT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 130
@@ -4599,7 +4594,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_CORPSE
+      - STR_GORGONSL_HEAVY_FLAMER_BACK_RIGHT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 130
@@ -4640,7 +4635,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_STUBBER_LEFT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_STUBBER_LEFT_CORPSE
+      - STR_GORGONSL_HEAVY_STUBBER_LEFT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 50
@@ -4691,7 +4686,7 @@ armors:
     painImmune: true
     corpseGeo:  STR_GORGON_HEAVY_STUBBER_RIGHT_CORPSE
     corpseBattle:
-      - STR_GORGON_HEAVY_STUBBER_RIGHT_CORPSE
+      - STR_GORGONSL_HEAVY_STUBBER_RIGHT_CORPSE
     frontArmor: 130
     sideArmor: 130
     rearArmor: 50
