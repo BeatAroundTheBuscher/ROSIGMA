@@ -2807,6 +2807,7 @@ items:
     handSprite: 400
     bulletSprite: {mod: 40k, index: 0}
     fireSound:  {mod: 40k, index: 4}
+    hitAnimation: 2210
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     compatibleAmmo:
       - STR_MORTAR_AMMO_HE
@@ -2836,7 +2837,8 @@ items:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
       ITEM_HAS_BIPOD: 1
 
-  - type: STR_MORTAR_AMMO_HE #HE munition
+  - &STR_MORTAR_AMMO_TEMPLATE
+    type: STR_MORTAR_AMMO_HE #HE munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
@@ -2846,6 +2848,9 @@ items:
     bigSprite: 911
     floorSprite: 2062
     handSprite: { mod: 40k, index: 352 } #Needs new
+    explosionHitSound: {mod: 40k, index: 704}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
     power: 0
     damageAlter: #high explosive
       FixRadius: 0
@@ -2855,7 +2860,7 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 3
-    armor: 200
+    armor: 100
     listOrder: 11872
 
   - &STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
@@ -2893,32 +2898,19 @@ items:
       MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_FRAG #frag munition
-    size: 0.1
-    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
-      - STR_HEAVY_WEAPONS_IG
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     costBuy: 4000
     costSell: 500
-    weight: 6
     bigSprite: 917
     floorSprite: 296
     handSprite: { mod: 40k, index: 352 } #Needs new
-    power: 0
     damageType: 1
-    damageAlter:
-      FixRadius: 0
     spawnItem: STR_MORTAR_AMMO_FRAG_EXPLOSION
-    spawnItemChance: 100
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
 
   - type: STR_MORTAR_AMMO_FRAG_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
     power: 120
-    damageType: 3
+    damageType: 1
     damageAlter:
       ToArmorPre: 0.05 #small ablation
       ArmorEffectiveness: 1.1 #armor helps vs shrapnel
@@ -2933,27 +2925,14 @@ items:
       FixRadius: 10
 
   - type: STR_MORTAR_AMMO_KRAK #krak munition
-    size: 0.1
-    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
-      - STR_HEAVY_WEAPONS_IG
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     costBuy: 5000
     costSell: 1000
     weight: 7
     bigSprite: 912
     floorSprite:  {mod: 40k, index: 70} #update with new
     handSprite:  {mod: 40k, index: 136} #update with new
-    power: 0
-    damageType: 3
-    damageAlter:
-      FixRadius: 0
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
     spawnItem: STR_MORTAR_AMMO_KRAK_EXPLOSION
-    spawnItemChance: 100
-    armor: 200
-    listOrder: 11872
 
   - type: STR_MORTAR_AMMO_KRAK_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
@@ -2971,7 +2950,7 @@ items:
       MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOSPHOR #phosphor munition
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
@@ -2981,23 +2960,14 @@ items:
     bigSprite: 914
     floorSprite:  2060
     handSprite:  {mod: 40k, index: 336 } #update with new
-    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
-    hitAnimation: {mod: 40k, index: 104 } #XSmoke
-    power: 0
     damageType: 8 #Acid burns
-    damageAlter:
-      FixRadius: 0
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
     spawnItem: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION
     spawnItemChance: 100
-    armor: 200
-    listOrder: 11872
 
   - type: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
+    hitAnimation: {mod: 40k, index: 104 } #XSmoke
     power: 120
     damageType: 8 #Acid burns
     damageAlter:
@@ -3012,7 +2982,7 @@ items:
       MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_SMOKE
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
@@ -3022,24 +2992,13 @@ items:
     bigSprite: 913
     floorSprite: 2061
     handSprite: {mod: 40k, index: 336 } #update with new
-    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
-    hitAnimation: {mod: 40k, index: 104 } #XSmoke
-    power: 0
-    damageType: 9 #smoke
-    damageAlter:
-      FixRadius: 0 #5 for hand grenade version
-    blastRadius: 6
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
     spawnItem: STR_MORTAR_AMMO_SMOKE_EXPLOSION
     spawnItemChance: 100
-    armor: 200
-    listOrder: 11872
 
   - type: STR_MORTAR_AMMO_SMOKE_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
+    hitAnimation: {mod: 40k, index: 104 } #XSmoke
     power: 80
     damageType: 9 #smoke
     damageAlter:
@@ -3048,7 +3007,7 @@ items:
       MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_ILLUMINATION
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
@@ -3058,18 +3017,8 @@ items:
     bigSprite: 915
     floorSprite: 2060
     handSprite: { mod: 40k, index: 336 } #Needs new
-    power: 0
-    damageType: 2 #incendiary
-    damageAlter:
-      FixRadius: 0
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    spawnItem: STR_MORTAR_AMMO_ILLUMINATION
+    spawnItem: STR_MORTAR_AMMO_ILLUMINATION_EXPLOSION
     spawnItemChance: 100
-    armor: 200
-    listOrder: 11872
 
   - type: STR_MORTAR_AMMO_ILLUMINATION_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
@@ -3081,7 +3030,7 @@ items:
       MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOTON #photon munition
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
@@ -3091,21 +3040,11 @@ items:
     bigSprite: 916
     floorSprite: 2051 #update with new
     handSprite: 2020 #update with new
-    explosionHitSound: { mod: 40k, index: 803 }
-    hitAnimation: 2100
-    #damageType: 2 #incendiary
     damageType: 6
     power: 0
     damageAlter:
       FixRadius: 0
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
     spawnItem: STR_MORTAR_AMMO_PHOTON_EXPLOSION
-    spawnItemChance: 100
-    listOrder: 11872
-    armor: 200
     tags:
       ITEM_AMMO_COLOR: 3
 
@@ -3113,6 +3052,8 @@ items:
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
     damageType: 6
     power: 80
+    explosionHitSound: { mod: 40k, index: 803 }
+    hitAnimation: 2100
     damageAlter:
       ArmorEffectiveness: 0.5
       ToStun: 0.5 # was 0.2
@@ -5693,6 +5634,7 @@ items:
       ToWound: 0.05
       FireThreshold: 0.0
       RandomWound: false
+      FixRadius: 7
 
   - type: STR_HEAVY_FLAMER_STEEL_LEGION
     categories: [STR_CAT_FLAMER]
