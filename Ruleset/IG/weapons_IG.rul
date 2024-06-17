@@ -2807,6 +2807,7 @@ items:
     handSprite: 400
     bulletSprite: {mod: 40k, index: 0}
     fireSound:  {mod: 40k, index: 4}
+    hitSound: {mod: 40k, index: 704}
     hitAnimation: 2210
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     compatibleAmmo:
@@ -2851,8 +2852,14 @@ items:
     explosionHitSound: {mod: 40k, index: 704}
     hitSound: {mod: 40k, index: 704}
     hitAnimation: 2210
-    power: 0
+    power: 120
     damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToArmorPre: 0
       FixRadius: 0
     spawnItem: STR_MORTAR_AMMO_HE_EXPLOSION
     spawnItemChance: 100
@@ -5569,6 +5576,7 @@ items:
     bigSprite: 933
     floorSprite: 915
     handSprite: 1000
+    dropoff: 4
     bulletSprite: {mod: 40k, index: 0}
     fireSound: {mod: 40k, index: 52}
     battleType: 1
@@ -5728,3 +5736,159 @@ items:
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
+
+  - type: AUX_BOLTERBANE #STR_BANE_BOLTER_TURRET
+    dropoff: 4
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    costSnap:
+      time: 1
+      energy: 2
+      mana: 2
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    costAimed:
+      time: 1
+      energy: 2
+      mana: 1
+    autoRange: 10
+    snapRange: 16
+    aimRange: 20
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: AUX_BOLTERBANE_TYPE_II #STR_BANE_BOLTER_RIGHT || STR_BANE_BOLTER_LEFT
+    dropoff: 4
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    costSnap:
+      time: 1
+      energy: 2
+      mana: 2
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    costAimed:
+      time: 1
+      energy: 2
+      mana: 1
+    autoRange: 10
+    snapRange: 16
+    aimRange: 20
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: AUX_LASCANBANE #STR_BANE_LAS_TURRET
+    dropoff: 3
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 10
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 10
+    aimRange: 30
+    power: 220 #full power lascannon
+    damageType: 4
+    damageAlter: #DA LAS MELTA
+      RandomType: 6
+      ToArmorPre: 0.5
+      ToHealth: 0.8
+      ToArmor: 0.2
+      ToStun: 0.0
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_BANEBLADE_WEAPON #STR_4X4_TURRET
+    powerForAnimation: 0
+    dropoff: 3
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 50
+    costAuto:
+      time: 1
+      energy: 10
+      mana: 50
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 50
+    aimRange: 30
+    snapRange: 30
+    autoRange: 30
+    accuracySnap: 100
+    accuracyAimed: 100
+    accuracyAuto: 100
+    power: 220 #fragmentation shell; lower damage, massive aoe
+    damageType: 1
+    damageAlter: #fragmentation
+      ToArmorPre: 0.05 #small ablation
+      ArmorEffectiveness: 1.1 #armor helps vs shrapnel
+      ToHealth: 0.7 #much damage dealt in the form of debuffs
+      ToTime: 0.2 #staggering
+      ToStun: 0.4 #painful
+      ToMorale: 0.5 #painful
+      ToEnergy: 0.4 #painful
+      ToWound: 0.4 #shrapnel
+      RandomWound: false
+      ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
+      FixRadius: 20
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_BANEBLADE_AP #STR_4X4_TURRET
+    powerForAnimation: 20
+    power: 300
+    damageType: 3
+    damageAlter: #AP
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ToTile: 1.0
+      ToItem: 1.0
+      ArmorEffectiveness: 0.7
+      ResistType: 1
+      FixRadius: 2
+    clipSize: -1
+
+  - type: STR_BANEBLADE_EX #STR_4X4_TURRET
+    power: 250 #lower power, but massive area
+    damageType: 3
+    damageAlter: #AP
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 10
+    clipSize: -1
+
