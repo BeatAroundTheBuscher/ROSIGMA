@@ -659,6 +659,18 @@ extended:
             return;
           end;
 
+          target.getFire temp;
+          if eq temp 1; #have to extinguish fire before we can remove infection
+            #debug_log "Infection Scripts; healUnit, offset 22: Target is on fire; it must be extinguished first. Aborting." temp;
+            return;
+          end;
+
+          item.getTag temp Tag.ActivateFlight;
+          if eq temp 1; #prevents jetpacks from removing infection
+            #debug_log "Infection Scripts; healUnit, offset 22: Medikit is a jetpack. Aborting. ActivateFlight:" temp;
+            return;
+          end;
+
           battle_game.getTag researchLevel Tag.RESEARCH_LEVEL_CURE;
           #set our research level
           if lt researchLevel 20; #we don't care about setting this if we've maxed out our research level
