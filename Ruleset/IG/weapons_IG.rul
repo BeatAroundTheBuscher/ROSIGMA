@@ -1824,6 +1824,7 @@ items:
       ITEM_BLESS_FIRING_ACCURACY: 1
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_GUARD_PRIEST_BLESS
     categories: [STR_CAT_SPELLS]
@@ -1898,6 +1899,7 @@ items:
       ITEM_BLESS_MELEE_ACCURACY: 1
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 100
 
   - type: STR_LASER_RIFLE # blue one
     armor: 200 #to avoid item pile destruction
@@ -2447,7 +2449,13 @@ items:
     power: 200 # airstrike
     damageType: 3
     damageAlter:
-      ToArmorPre: 0.15 # default is 0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
       RadiusReduction: 5 # default is 10 # range is independent of RadiusReduction (= power / 20)
       FireThreshold: 150
 
@@ -2461,11 +2469,11 @@ items:
     accuracyAimed: 150
     accuracyMultiplier:
       flatHundred: 1.0
-    tuAimed: 40
+    tuAimed: 60
     arcingShot: true
     noLOSAccuracyPenalty: 100 #airstrike
     battleType: 1
-    minRange: 5
+    minRange: 10
     dropoff: 0
     recover: false
     fixedWeapon: true
@@ -3880,6 +3888,7 @@ items:
       ITEM_STRENGTH_REQUIREMENT: 30
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
 # Worked together with Tal'Raziid
   - type: STR_OFFICERS_CHAIN_SWORD
@@ -3969,6 +3978,7 @@ items:
       ITEM_STRENGTH_REQUIREMENT: 20
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
 # Don't like how that 50% training mechanism works. I'd prefer if experience was halved instead of having a 50% chance to get training points. Might not matter much on average but it annoys me anyway.
   - type: STR_AUTOGUN
@@ -3988,7 +3998,8 @@ items:
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
 # more meaty sound
-  - type: STR_GUARD_PRIMER
+  - &STR_GUARD_INSPIRE
+    type: STR_GUARD_PRIMER
     meleeSound: {mod: 40k, index: 754}
     meleeHitSound: {mod: 40k, index: 773}
     meleeAnimation: {mod: 40k, index: 4}
@@ -4020,6 +4031,7 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_BAYONET
     meleeSound: {mod: 40k, index: 754}
