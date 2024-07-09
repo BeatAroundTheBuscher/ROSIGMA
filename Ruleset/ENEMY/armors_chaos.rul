@@ -104,37 +104,37 @@ armors:
     visibilityAtDark: 30 #terminator sensors
     antiCamouflageAtDay: 5 #terminator sensors
     antiCamouflageAtDark: 5 #terminator sensors
-    heatVision: 30 #terminator sensors
+    heatVision: 35 #terminator sensors
     spriteSheet: IRONWARRIOR_TERMINATOR_BS.PCK
     spriteInv: IRON_TERMINATOR_INV.SPK
     corpseBattle:
       - STR_IRON_TERMINATOR_CORPSE
     frontArmor: 160 #+10
-    sideArmor: 145 #+5
+    sideArmor: 150
     rearArmor: 95
     underArmor: 160
     specialWeapon: AUX_MORTAR #cyclone
     moveSound: {mod: 40k, index: 700}
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
-      - 0.8 #AP
-      - 0.3 #FLAMES
-      - 0.5 #HE
-      - 0.8 #LASCANON
+      - 0.4 #AP; Iron Terminators get -0.3
+      - 0.1 #FLAMES; Iron Terminators get -0.2
+      - 0.4 #HE; Iron Terminators get -0.2
+      - 0.7 #LASCANON; Iron Terminators get -0.1
       - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.25 #MELEE Weakness
-      - 1.0 #ACID
+      - 0.8 #STUN
+      - 1.1 #MELEE; Iron Terminators get +0.3
+      - 1.0 #ACID; Iron Terminators get +0.2
       - 0.0 #SMOKE
       - 1.0 #IMPACT
-      - 1.1 #MELTA
+      - 1.0 #MELTA
     loftempsSet: [ 5 ]
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 60
       #ARMOR_ENERGY_SHIELD_PER_TURN: 10
       #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 12
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
-      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Tzeentch termies have better shields: (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
@@ -178,27 +178,28 @@ armors:
 
   - type: OBLITERATOR_ARMOR #
     visibilityAtDay: 40
-    visibilityAtDark: 30 #terminator sensor equivalent
+    visibilityAtDark: 40 #terminator sensor equivalent + daemonic senses
     antiCamouflageAtDay: 5 #terminator sensor equivalent
     antiCamouflageAtDark: 5 #terminator sensor equivalent
-    heatVision: 30 #terminator sensor equivalent
+    psiVision: 5 #daemonic senses
+    heatVision: 33 #daemonic senses
     allowInv: true
     frontArmor: 150
-    sideArmor: 130
+    sideArmor: 140
     rearArmor: 100
     underArmor: 150
     drawingRoutine: 4
     constantAnimation: false
-    damageModifier: #TERMINATOR ARMOR
+    damageModifier: #TERMINATOR ARMOR; baseline values
       - 1.0 #none
-      - 1.0 #AP
-      - 0.3 #FLAMES
-      - 0.7 #HE
+      - 0.6 #AP
+      - 0.1 #FLAMES
+      - 0.6 #HE
       - 0.8 #LASCANON
       - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 1.0 #ACID
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 0.5 #ACID; Obliterators are daemonic so they have halved acid vulnerability
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
@@ -307,25 +308,26 @@ armors:
     heatVision: 35 #terminator sensor equivalent
     frontArmor: 150
     sideArmor: 140
-    rearArmor: 95
+    rearArmor: 100
     underArmor: 150
-    damageModifier: #TERMINATOR ARMOR
+    damageModifier: #TERMINATOR ARMOR; baseline
       - 1.0 #none
-      - 1.0 #AP
-      - 0.4 #FLAMES
-      - 0.7 #HE
+      - 0.7 #AP
+      - 0.3 #FLAMES
+      - 0.6 #HE
       - 0.8 #LASCANON
       - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 1.0 #ACID
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 5 ]
+    specialWeapon: STR_CHAOS_CLAWS2
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 #chaos terminator shields
-      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Baseline terminator shields: (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
@@ -339,26 +341,26 @@ armors:
 #    psiVision: 12 # either mind control or psiVision, not both
     frontArmor: 160
     sideArmor: 150
-    rearArmor: 95
+    rearArmor: 110
     underArmor: 160
-    damageModifier: #TERMINATOR ARMOR
+    damageModifier: #TERMINATOR ARMOR + Artificer
       - 1.0 #none
-      - 1.0 #AP
-      - 0.3 #FLAMES
-      - 0.6 #HE
-      - 0.8 #LASCANON
-      - 0.8 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 1.0 #ACID
+      - 0.6 #AP
+      - 0.2 #FLAMES
+      - 0.5 #HE
+      - 0.7 #LASCANON
+      - 0.9 #PLASMA
+      - 0.7 #STUN
+      - 0.7 #MELEE
+      - 0.7 #ACID
       - 0.0 #SMOKE
-      - 0.2 #IMPACT
-      - 1.0 #MELTA
+      - 0.1 #IMPACT
+      - 0.9 #MELTA
     loftempsSet: [ 4 ]
     specialWeapon: STR_CHAOS_CLAWS
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 #chaos terminator shields
-      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #Superior terminator shields: (60 * 100 / 20) = 300. Regenerates from 60 (at 0) to 0 (at 300) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 20
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       INFECTION_RESIST: 50 #resistant
       INTIMIDATION_RESISTANCE: 50 #resistant
@@ -373,25 +375,26 @@ armors:
     heatVision: 35 #terminator sensor equivalent
     frontArmor: 150
     sideArmor: 140
-    rearArmor: 95
+    rearArmor: 100
     underArmor: 150
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
-      - 1.0 #AP
-      - 0.4 #FLAMES
-      - 0.7 #HE
+      - 0.7 #AP
+      - 0.3 #FLAMES
+      - 0.6 #HE
       - 0.8 #LASCANON
       - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
+      - 0.8 #STUN
+      - 0.8 #MELEE
       - 1.0 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 5 ]
+    specialWeapon: STR_CHAOS_CLAWS2
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 #chaos terminator shields
-      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Baseline terminator shields: (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
 
@@ -873,6 +876,8 @@ armors:
     tags:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Inferior terminator shields: (50 * 100 / 25) = 166. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 30
 
   - type: STR_CHAOS_SQUATS_ARMOR_LEADER
     visibilityAtDay: 40
