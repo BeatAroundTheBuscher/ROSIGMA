@@ -1489,7 +1489,8 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
 
-  - type: STR_ALPHA_GREYKNIGHT_ARMOR #Grey Knight disguise
+  - &STR_ALPHA_ARMOR_TEMPLATE
+    type: STR_ALPHA_GREYKNIGHT_ARMOR #Grey Knight disguise
     visibilityAtDay: 40
     visibilityAtDark: 32
     antiCamouflageAtDay: 15
@@ -1500,13 +1501,14 @@ armors:
     corpseBattle:
       - STR_GREYK_CORPSE
     corpseGeo: STR_ALPHA_LEGION_CORPSE
+    selfDestructItem: STR_ALPHA_LEGION_CORPSE
     movementType: 0 #Walking
     drawingRoutine: 0 #human soldier
     specialWeapon: STR_UNARMED_GAUNTLET_PLUS
     frontArmor: 100 #Weaker to emulate their disguise status
     sideArmor: 80 #reinforced for flanking
     rearArmor: 70 #reinforced for backstabs
-    underArmor: 80
+    underArmor: 100
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.8 #AP
@@ -1522,8 +1524,17 @@ armors:
       - 1.2 #MELTA
     loftempsSet: [ 3 ]
     tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
+
+  - type: STR_ALPHA_GREYKNIGHT_ARMOR_CATAPHRACT #Grey Knight disguise
+    refNode: *STR_ALPHA_ARMOR_TEMPLATE
+    specialWeapon: STR_MFIST
+    selfDestructItem: STR_ALPHA_LEGION_CORPSE_CATAPHRACT
+
 
   - type: MUTON_ARMORTZEENTCH                                     #TZEENTCH REGULAR
     heatVision: 25 #standard power armor thermals
@@ -1557,41 +1568,42 @@ armors:
 
   - type: STR_ALPHAcataphract_ARMOR
     visibilityAtDay: 40 #equivalent to Scion gear
-    visibilityAtDark: 30 #advanced sensors + daemonic senses
-    antiCamouflageAtDay: 5 #advanced sensors
-    antiCamouflageAtDark: 5
-    heatVision: 33 #per daemon senses
-    psiVision: 5
+    visibilityAtDark: 40 #advanced sensors
+    antiCamouflageAtDay: 10 #advanced sensors; AL counterintel
+    antiCamouflageAtDark: 10
+    camouflageAtDark: 12 #Alpha Legion active camo; less effective due to size of Cataphract Armor
+    camouflageAtDay: 8
+    heatVision: 40 #terminator heat vision + AL counter intel
     loftempsSet: [ 5 ]
     storeItem: STR_ALPHAcataphract_ARMOR
     spriteInv: ALPHAcataphractinvent.PCK
     spriteSheet: ALPHAcataphract_BS.PCK
     drawingRoutine: 0
-    frontArmor: 180
-    sideArmor: 150
-    rearArmor: 150
-    underArmor: 150
+    frontArmor: 170
+    sideArmor: 170
+    rearArmor: 170 #reinforced rear armor at the cost of lower frontal armor
+    underArmor: 180
     allowsKneeling: false
     allowsRunning: false
     corpseBattle:
       - STR_ALPHAcataphract_CORPSE_GEO
-    damageModifier: #cataphract ARMOR
+    damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
       - 1.0 #none
-      - 0.6 #AP
-      - 0.8 #FLAMES
-      - 0.6 #HE
-      - 1.0 #LASCANON
-      - 0.9 #PLASMA
-      - 0.9 #STUN
-      - 0.9 #MELEE
-      - 0.8 #ACID
+      - 0.5 #AP; Cataphract reduces by 0.2
+      - 0.3 #FLAMES
+      - 0.5 #HE; Cataphract reduces by 0.2
+      - 1.0 #LASCANON; Cataphract increases by 0.2
+      - 1.0 #PLASMA
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
       - 0.0 #SMOKE
-      - 0.5 #IMPACT
-      - 1.2 #MELTA
+      - 0.2 #IMPACT
+      - 1.1 #MELTA; Cataphract increases by 0.1
     specialWeapon: STR_MFIST
     tags:
+      ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
-      ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
-
-#dungeon specific end
