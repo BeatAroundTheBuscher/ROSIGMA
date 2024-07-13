@@ -1,0 +1,55 @@
+extended:
+  tags:
+    RuleArmor:
+      ARMOR_OVERWATCH_TU_RESTORED: int #0 to 100; what % of the unit's maximum TUs is restored at the start of each enemy/neutral turn?
+      ARMOR_OVERWATCH_RESTORATION_CUMULATIVE: int #1 or 0, True or False; Do we add the % of max TUs restored, or go with the highest value?
+
+  scripts:
+    newTurnUnit:
+      - new: ROSIGMA_nTU_Overwatch
+        offset: 1 #restores a % of the unit's max TUs on enemy/neutral turns.
+        code: |
+          var int currentTU;
+          var int maxTU;
+          var int percentTU;
+          var int overwatchTU;
+          var ptr RuleArmor armorRule;
+          var int temp;
+          var int temp2;
+
+          battle_game.getTurnSide temp;
+          unit.getFaction temp2;
+          if eq temp temp2;
+            #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Current turn equals faction turn; temp:" temp;
+            #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Current turn equals faction turn; temp2:" temp2;
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag percentTU Tag.ARMOR_OVERWATCH_TU_RESTORED;
+          if lt percentTU 1;
+            #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Target has no ARMOR_OVERWATCH_TU_RESTORED:" percentTU;
+            #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Target has no ARMOR_OVERWATCH_TU_RESTORED:" unit;
+            return;
+          end;
+
+          unit.getTimeUnitsMax maxTU;
+          set overwatchTU maxTU;
+          muldiv overwatchTU percentTU 100; #calculate the TUs granted by Overwatch
+
+          unit.getTimeUnits currentTU;
+          armorRule.getTag temp2 Tag.ARMOR_OVERWATCH_RESTORATION_CUMULATIVE;
+          if lt temp2 1; #check if our Overwatch TU stacks or overlaps with our existing TU
+            if gt overwatchTU currentTU; #TUs overlap, not stack; apply the higher of our current TUs or max TUs;
+              unit.setTimeUnits overwatchTU;
+              #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" overwatchTU;
+              #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
+            end;
+          else; #TUs stack
+            add overwatchTU currentTU;
+            limit_upper overwatchTU maxTU;
+            #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Stacking overwatchTU and currentTU:" overwatchTU;
+              #debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
+          end;
+
+          return;
