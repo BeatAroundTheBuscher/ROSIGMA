@@ -79,6 +79,50 @@ armors:
       UNIT_TYPE_KHORNE: 1
 
 #Nurgle Daemons
+  - type: STR_LESSER_PLAGUE_TOAD_ARMOR #Nurgle small green toad
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #sees in the dark
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5 #weak daemon, so not 10 psivision
+    spriteSheet: LESSER_TOAD_BS.PCK
+    allowInv: false
+    spriteInv: LESSER_TOAD_INV.SPK
+    corpseBattle:
+      - STR_LESSER_PLAGUE_TOAD_CORPSE #create code
+    bleedImmune: true #Plague Blessed don't bleed
+    zombiImmune: true #Plague Blessed can't be corrupted further
+    painImmune: true #Plague Blessed don't care about pain
+    recovery: #Plague Blessed slowly regenerate health
+      health:
+        healthCurrent: 0.1
+    frontArmor: 10 #20 Plaguebearer
+    sideArmor: 5 #15 Plaguebearer
+    rearArmor: 5 #10 Plaguebearer
+    underArmor: 5 #10 Plaguebearer
+    drawingRoutine: 4 #important
+    damageModifier: #NURGLE ARMOR
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.5 #AP Same resistances as plaguebearers; much lower health (which also means lower regen) and lower armor already makes them much less durable
+      - 1.5 #FLAMES
+      - 0.5 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - STR_NURGLING_CLAWS
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_DAEMONIC: 1
+
   - type: STR_NURGLE_ROTBEARER_ARMOR  #Nurgle Deamon
     visibilityAtDay: 40
     visibilityAtDark: 40 #Weaker night vision for lesser daemon
