@@ -12,6 +12,7 @@ extended:
       ITEM_ENERGY_SHIELD_PENETRATION_FLAT_AMOUNT: int
       ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: int
       ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT: int
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: int #overrides damage type bypassing if true
 
     BattleUnit:
 #*** Tags for handling energy shields on units ***
@@ -39,7 +40,12 @@ extended:
           if eq shieldHP 0;
             return power part side;
           else or eq damaging_type 0 eq damaging_type 9 eq damaging_type 10;
-            return power part side;
+            damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; #check to see whether the weapon or ammo ignores the damage type bypass
+            attackingAmmo.getTag frame Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS;
+            add temp frame;
+            if eq temp 0; #if we don't ignore the damage typing bypass, bypass
+              return power part side;
+            end;
           end;
 
           #check if our weapon or ammo ignores shields
