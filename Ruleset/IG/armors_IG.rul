@@ -1750,7 +1750,7 @@ armors:
 
   - type: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA_UC #Heavy Armored Sentinel
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
-    spriteSheet: SL_HSENT3_MELTA_BS.pck
+    spriteSheet: SL_HSENT3_MELTA_BS.PCK
     #spriteInv: SLHSENTINELMINV
     customArmorPreviewIndex: [968, 969, 970]
     storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA
@@ -2839,6 +2839,7 @@ armors:
       ARMOR_RESTEALTH_KILL_REQUIREMENT: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
     #tags:
       # ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       # ARMOR_ENERGY_SHIELD_DECAY: 50 # = 50% so shield value is 40 * 100%/50%
@@ -3201,6 +3202,8 @@ armors:
       strength: 5
       bravery: 10 #always multiples of 10
     units:
+      - STR_GUARDSM
+      - STR_GUARDSL
       - STR_GUARD_VETERAN
       - STR_GUARD_OFFICER_VETERAN
       - STR_GUARDSL_VETERAN
@@ -3291,6 +3294,8 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     units:
+      - STR_GUARDSM
+      - STR_GUARDSL
       - STR_GUARD_VETERAN
       - STR_GUARD_OFFICER_VETERAN
       - STR_GUARDSL_VETERAN
@@ -4084,7 +4089,6 @@ armors:
     storeItem: STR_GUARD_POWER_ARMOR_HULK
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
     spriteSheet: IG_GPOWER_ARMOR_BS.PCK
-    movementType: 1
     frontArmor: 120 #was 100
     sideArmor: 100 #was 80
     rearArmor: 75 #was 55
@@ -4116,6 +4120,14 @@ armors:
       - STR_GUARD_OFFICER_VETERAN
       - STR_GUARDSL_VETERAN
       - STR_GUARDSL_OFFICER_VETERAN
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    builtInWeapons:
+      - INV_NULL_3X3 #occupied by jumppack
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
 
   - type: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
     refNode: *STR_GUARD_POWER_ARMOR_REF
@@ -4123,19 +4135,19 @@ armors:
     antiCamouflageAtDark: 5 #equivalent to Scion Officer gear
     heatVision: 25 #same as Chimera or Taurox + 5 bonus for officer
     spriteSheet: IG_GPOWER_ARMOR_BS.PCK
-    movementType: 1
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
     loftempsSet: [ 4 ]
     weight: 5
     units:
       - STR_GUARD_OFFICER_VETERAN
       - STR_GUARDSL_OFFICER_VETERAN
+      - STR_STORMTROOPER_OFFICER
     storeItem: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
-    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL #Officer armor equipped with Vox caster
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #Officer armor equipped with Vox caster
     builtInWeapons:
-      - INV_NULL_AIRSTRIKE_VOX_DUMMY
+      - INV_NULL_3X3 #occupied by jumppack
     damageModifier: #POWER ARMOR
       - 1.0 #none
       - 0.9 #AP was 1.0
@@ -4162,11 +4174,14 @@ armors:
       strength: 15 #was 10
       psiStrength: 5 #was 0
       psiSkill: 5 #was 0
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
 
   - type: STR_KRIEG_POWER_ARMOR_HULK
     refNode: *STR_KRIEG_POWER_ARMOR_REF
     storeItem: STR_KRIEG_POWER_ARMOR_HULK
-    movementType: 1
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
     damageModifier: #POWER ARMOR
@@ -4186,6 +4201,7 @@ armors:
     sideArmor: 105 #was 85
     rearArmor: 70 #was 45
     underArmor: 90 #was 50
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
     stats:
       tu: -5 #was -10
       stamina: 15 #was 10
@@ -4194,11 +4210,14 @@ armors:
       bravery: 10 #was 10
       strength: 15 #was 10
       melee: 15 #was 5
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
 
   - type: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
     refNode: *STR_GUARD_POWER_ARMOR_COMMISSAR_REF
     storeItem: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
-    movementType: 1
     corpseBattle:
       - STR_GUARD_INDOMIT_CORPSE_GEO
     customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
@@ -4229,8 +4248,14 @@ armors:
       strength: 15 #was 10
       psiStrength: 5 #was 0
       psiSkill: 5 #was 0
+    builtInWeapons:
+      - INV_NULL_3X3 #occupied by jumppack
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
 
-  - type: STR_LE10_POWER_ARMOR_HULK
+  - type: STR_LE10_POWER_ARMOR_HULK #Vault Armor
     refNode: *STR_GUARD_POWER_ARMOR_REF
     storeItem: STR_LE10_POWER_ARMOR_HULK
     customArmorPreviewIndex: 858
@@ -4241,7 +4266,7 @@ armors:
     underArmor: 150
     corpseBattle:
       - STR_LE10_CORPSE_GEO
-    loftempsSet: [ 3 ]
+    loftempsSet: [ 4 ]
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
       - 0.6 #AP
@@ -4909,3 +4934,35 @@ armors:
       INTIMIDATION_RESISTANCE: 25
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BANEBLADE_TURRET_ARMOR
+    type: 4X4_ARMOR #STR_4X4_TURRET
+    specialWeapon: STR_TURRET_RELOAD
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: 4X4_ARMOR_SURROUND #
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BANEBLADE_TURRET_ARMOR_SMALL
+    type: STR_BANE_BOLTER_RIGHT_ARMOR #STR_BANE_BOLTER_RIGHT
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    refNode: *STR_BANEBLADE_TURRET_ARMOR
+
+  - type: STR_BANE_BOLTER_LEFT_ARMOR #STR_BANE_BOLTER_LEFT
+    refNode: *STR_BANEBLADE_TURRET_ARMOR_SMALL
+
+  - type: STR_BANE_BOLTER_ARMOR #STR_BANE_BOLTER_TURRET
+    refNode: *STR_BANEBLADE_TURRET_ARMOR
+
+  - type: STR_BANE_LAS_ARMOR #STR_BANE_LAS_TURRET
+    refNode: *STR_BANEBLADE_TURRET_ARMOR

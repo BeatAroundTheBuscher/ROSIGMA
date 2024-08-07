@@ -1,7 +1,7 @@
 extended:
   tags:
     RuleItem:
-      MUNITION_DELAY: int #number of to prime the munition's delay to
+      MUNITION_DELAY: int #number of to prime the munition's delay to; -1 sets it to 0. -2 activates the fuse only
 
   scripts:
     createItem:
@@ -17,7 +17,7 @@ extended:
           item.getTag timer Tag.MUNITION_DELAY;
 
           #if unit has no delay variable, cancel out.
-          if lt timer 1;
+          if eq timer 0;
             #debug_log "Turret Reload Scripts; ROSIGMA_cI_prime_delayed_munition, offset 1: Item has no MUNITION_DELAY variable:" item;
             return;
           end;
@@ -29,6 +29,11 @@ extended:
           end;
 
           item.setFuseEnabled 1;
+          if le timer -1;
+            item.setFuseTimer 0;
+            return;
+          end;
+
           item.setFuseTimer timer;
           #if eq unit FACTION_HOSTILE; #enemy mortar rounds go off immediately because the AI is stupid as hell
             #item.setFuseTimer 0;

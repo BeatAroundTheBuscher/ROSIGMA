@@ -268,6 +268,8 @@ items:
       psiStrength: 0.2 #profaned weapon
     damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
+      ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
+      IgnoreOverKill: true
       FireThreshold: 0.0 #flaming weapon
       ToArmorPre: 0.2
       ToArmor: 0.2
@@ -308,6 +310,8 @@ items:
     damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
       FireThreshold: 1 #fire enchanted
+      ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
+      IgnoreOverKill: true
       ToArmorPre: 0.2
       ToArmor: 0.2
       ToStun: 0.3
@@ -366,6 +370,8 @@ items:
     meleeAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
       FireThreshold: 1 #fire enchanted
+      ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
+      IgnoreOverKill: true
       ToArmorPre: 0.2
       ToArmor: 0.2
       ToStun: 0.3
@@ -396,6 +402,8 @@ items:
     damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
       FireThreshold: 1 #fire enchanted
+      ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
+      IgnoreOverKill: true
       ToArmorPre: 0.2
       ToArmor: 0.2
       ToStun: 0.3
@@ -584,7 +592,8 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: NURGLING_SPIT  #NURGLE SPIT less AOE for Nurglings
+  - &STR_PLAGUE_SPIT_TEMPLATE
+    type: NURGLING_SPIT  #NURGLE SPIT less AOE for Nurglings
     weight: 3
     dropoff: 7
     bigSprite: {mod: 40k, index: 1103}
@@ -600,7 +609,7 @@ items:
     vaporProbabilitySurface: 50
     power: 60
     damageAlter: #DA SPIT
-      RandomType: 2 #TFTD [50% - 150%]
+      RandomType: 6 #TFTD [50% - 150%]
       ToArmorPre: 0.5 #corrodes on the way in
       ToArmor: 0.0
       ToHealth: 0.1 #was 0.3, going for low direct health damage and more of a debuff attack. Slightly weaker than Plaguebearer spit
@@ -625,6 +634,51 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
+  - type: STR_LESSER_PLAGUE_TOAD_SPIT #STR_LESSER_PLAGUE_TOAD
+    bigSprite: {mod: xcom1, index: 60}
+    dropoff: 5
+    refNode: *STR_PLAGUE_SPIT_TEMPLATE
+    accuracySnap: 70
+    accuracyAuto: 70
+    tuAuto: 55
+    snapRange: 12
+    maxRange: 18
+    power: 50 #bumped up power to try to trick the AI into using it
+    damageAlter: #DA SPIT
+      ToMana: 0.1 #less corruption, more debuff
+      ToTime: 1.0 #sticky spit
+      ToMorale: 1.0
+      ToEnergy: 0.5
+      RadiusReduction: 20 #larger AoE but more aggressive reduction; 50/30
+      FixRadius: 2
+    autoShots: 3
+    minRange: 5
+    spawnItem: STR_PLAGUE_TOAD_MINE
+
+  - type: STR_GREATER_PLAGUE_TOAD_SPIT #STR_GREATER_PLAGUE_TOAD
+    bigSprite: {mod: xcom1, index: 60}
+    dropoff: 5
+    refNode: *STR_PLAGUE_SPIT_TEMPLATE
+    accuracySnap: 70
+    accuracyAuto: 70
+    tuAuto: 55
+    snapRange: 15
+    autoRange: 15
+    maxRange: 20
+    damageAlter: #DA SPIT
+      ToMana: 0.1 #less corruption, more debuff
+      ToTime: 1.0 #sticky spit
+      ToMorale: 1.0
+      ToEnergy: 0.5
+      FixRadius: 2
+    confSnap:
+      arcing: true
+      shots: 2
+    autoShots: 6
+    minRange: 5
+    spawnItem: STR_PLAGUE_TOAD_MINE
+
+
   - type: STR_NEVERBORN_WEAPON #Deamon Shredder
     weight: 10
     invWidth: 2
@@ -646,7 +700,7 @@ items:
       shots: 1
     costSnap:
       time: 15
-      energy: 6
+      energy: 4 #as per heavy melee weapon
     accuracySnap: 80
     damageType: 7
     damageBonus:
@@ -659,13 +713,14 @@ items:
       ToMorale: 1.0
       ToEnergy: 1.0
       ToWound: 0.3
+      RandomWound: false
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
       FixRadius: 2
       ToTile: 0.01
     accuracyMelee: 80
     costMelee:
       time: 8
-      energy: 10
+      energy: 1 #as per light melee weapon
     meleeType: 7
     meleeAlter:
       ArmorEffectiveness: 0.7
@@ -674,6 +729,7 @@ items:
       ToMorale: 1.0
       ToEnergy: 1.0
       ToWound: 0.3
+      RandomWound: false
       ToTile: 0.01
     clipSize: -1
     battleType: 1
@@ -690,6 +746,8 @@ items:
       flatHundred: 0.0
     recover: false
     hiddenOnMinimap: true
+    tags:
+      ITEM_DOESNT_HURT_USER: 1 #obviously
 
 
   - type: CHRYSSALID_WEAPON
@@ -762,7 +820,8 @@ items:
     recover: false
     flatRate: false
 
-  - type: STR_NURGLE_BOOM #blight
+  - &STR_BLIGHT_EXPLOSION_TEMPLATE
+    type: STR_NURGLE_BOOM #blight
     bulletSprite: {mod: 40k, index: 22}
     fireSound: 2415 #boom explosion
     bigSprite: 1043 #zombie attack
@@ -807,6 +866,31 @@ items:
       ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_PLAGUE_TOAD_MINE
+    refNode: *STR_BLIGHT_EXPLOSION_TEMPLATE
+    armor: 20 #you're supposed to be able to burn/destroy these
+    power: 60
+    battleType: 4 #proximity explosive
+    defaultInventorySlot: STR_GROUND
+    spawnUnitChance: 0
+    specialChance: 100
+    supportedInventorySections:
+      - STR_GROUND
+    damageAlter:
+      RandomType: 6 #gaussian damage
+      ToItem: 0.5 #to help avoid mine stacking issues; globs will reliably destroy each other
+      FixRadius: 2
+    fuseTriggerEvents:
+      proximityExplode: true
+    powerForAnimation: 48
+    tags:
+      MUNITION_DELAY: 3
+      ITEM_IS_BOMB: 0
+      ITEM_IS_BOMB_ON_DEATH: 0 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
 
   - type: STR_TZEENTCH_FIEND_CLAWS #For Tzeentch fiends
     categories: [STR_CAT_MELEE, STR_CAT_TZEENTCH]
@@ -1269,6 +1353,7 @@ items:
       FixRadius: 2
       RandomType: 6 #Gaussian damage
       ArmorEffectiveness: 0.05 #armor doesn't help against intimidation, 5% safety blanket; people need to learn strategies to deal with it; or just train bravery
+      RadiusReduction: 0.0
       ToHealth: 0.0
       ToArmor: 0.0
       ToStun: 0.0
@@ -1527,7 +1612,68 @@ items:
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
-  - type: STR_ROTBEARER_TENDRILS #Rotbearer melee weapon
+  - type: STR_DOOM_BOLTS
+    categories: [STR_CAT_TACTICAL, STR_CAT_SPELL]
+    size: 0.2
+    costSell: 0
+    weight: 1
+    vaporColorSurface: 16 #red warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 90
+    bigSprite: { mod: 40k, index: 1102 } #psyker_flamestrike.png ig
+    #floorSprite: { mod: 40k, index: 134 }
+    #handSprite: { mod: 40k, index: 424 }
+    bulletSprite: { mod: 40k, index: 5 }
+    fireSound: [2001, 2002, 2003, 2004]
+    explosionHitSound: { mod: 40k, index: 771 }
+    bulletSpeed: 25
+    hitAnimation: 2140 #pink fire impact
+    powerForAnimation: 16
+    accuracyAuto: 60
+    accuracySnap: 80
+    accuracyAimed: 100
+    tuSnap: 25
+    tuAuto: 35
+    tuAimed: 50
+    aimRange: 25
+    snapRange: 16
+    autoRange: 12
+    battleType: 1
+    twoHanded: false
+    power: 8
+    damageBonus:
+      psiSkill: 0.5
+      psiStrength: 0.5
+    damageType: 5 #plasma
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 0.5 #half passes through, other half savages armor
+      ToArmor: 0.0 #melts on the way in
+      FireBlastCalc: false
+      FixRadius: 1
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToHealth: 0.5
+      ToMorale: 1.0
+      ToTile: 1.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 1
+      IgnoreOverKill: true
+    clipSize: -1
+    dropoff: 4
+    powerRangeReduction: 5.0
+    powerRangeThreshold: 25.0
+    invWidth: 2
+    invHeight: 3
+    armor: 255
+    flatRate: false
+    fixedWeapon: true
+    recover: false
+    hiddenOnMinimap: true
+
+  - &STR_TENDRIL_TEMPLATE
+    type: STR_ROTBEARER_TENDRILS #Rotbearer melee weapon
     hitAnimation: 1030 #128 green from X1.pck
     hitSound: {mod: 40k, index: 832 }
     hitAnimFrames: 8
@@ -1585,8 +1731,7 @@ items:
       ToEnergy: 0.3
       ResistType: 8
     damageBonus:
-      strength: 0.7
-      melee: 0.3
+      strength: 1.0
     tuMelee: 7
     clipSize: -1
     battleType: 1
@@ -1601,3 +1746,31 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_LESSER_PLAGUE_TOAD_TONGUE
+    refNode: *STR_TENDRIL_TEMPLATE
+    meleeAlter: #Immobilizing plague tendrils
+      ToHealth: 0.4
+      ToMana: 0.5
+      ToTime: 1.0 #sticky tongue
+    damageAlter: #Immobilizing plague tendrils
+      ToHealth: 0.4
+      ToMana: 0.5
+      ToTime: 1.0 #sticky tongue
+      ToEnergy: 0.5 #sticky tongue
+
+  - type: STR_GREATER_PLAGUE_TOAD_TONGUE
+    refNode: *STR_TENDRIL_TEMPLATE
+    snapRange: 6
+    maxRange: 6 #has super reach
+    powerRangeThreshold: 6
+    powerRangeReduction: 99
+    meleeAlter: #Immobilizing plague tendrils
+      ToHealth: 0.4
+      ToMana: 0.6
+      ToTime: 1.0 #sticky tongue
+    damageAlter: #Immobilizing plague tendrils
+      ToHealth: 0.4
+      ToMana: 0.6
+      ToTime: 1.0 #sticky tongue
+      ToEnergy: 0.5 #sticky tongue

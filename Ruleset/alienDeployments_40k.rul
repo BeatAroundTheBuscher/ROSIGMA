@@ -163,7 +163,7 @@ alienDeployments:
       STR_GSC_TRUCK_CONVOY_PATROL_LARGE: 25
       STR_GSC_TAUROX_PATROL_LARGE: 30
       STR_GENE_INFILTRATION: 0 # inherited from OXCE_40k objective: 1 doesn't work properly for bases. Might also miss spawnZone
-      
+
     genMission: !remove
       STR_MONOLITH_PATROL: 50
     genMission: !remove
@@ -3435,16 +3435,6 @@ alienDeployments:
     width: 60
     length: 60
 
-  - type: STR_BATTLESHIP_S # not used assets
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_K
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_T
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_N
-    refNode: *STR_BATTLESHIP
-
-
   - type: STR_HELLS                     # RANK0  # RANK1
     data: *BATTLESHIP
     missionBountyItem: ""
@@ -4061,7 +4051,7 @@ alienDeployments:
     height: 9
     terrains:
       - ALART
-    shade: 15
+#    shade: 15 #surface base shouldn't be night only
     script: BASEASSAULT
     nextStage: STR_ALIEN_BASE_ASSAULT2_HARD
     briefing:
@@ -4218,8 +4208,8 @@ alienDeployments:
     length: 50
     height: 9
     terrains:
-      - ALART
-    shade: 15
+      - NURGALART
+#    shade: 15 #surface base shouldn't be night only
     script: BASEASSAULT
     nextStage: STR_ALIEN_BASE_ASSAULT2_NURGLE
     briefing:
@@ -4303,8 +4293,8 @@ alienDeployments:
     length: 50
     height: 2
     terrains:
-      - UBASE
-    shade: 15
+      - NURGUBASE
+#    shade: 15 #it is nurgle guys so it is hard enough without forcing night time
     script: ALIENBASE
     briefing:
       title: STR_ALIEN_BASE_ASSAULT2
@@ -4674,7 +4664,7 @@ alienDeployments:
       music: GMGEO19
       showTarget: false
 
-  - type: STR_MARS_THE_FINAL_ASSAULT_STEELLEGION #STEEL LEGION PHASE 3 FINAL MISSION 
+  - type: STR_MARS_THE_FINAL_ASSAULT_STEELLEGION #STEEL LEGION PHASE 3 FINAL MISSION
     enviroEffects: STR_INSIDE_ENVIRO
     data:
       - alienRank: 0
@@ -4729,14 +4719,14 @@ alienDeployments:
     winCutscene: winGame
     loseCutscene: loseGame
     briefing:
-      title: STR_FINAL_TITLE 
+      title: STR_FINAL_TITLE
       desc: STR_FINAL_DESC_SL
       textOffset: -16
       palette: 6
       music: FATE
       showTarget: false
       showCraft: false
-      background: BACK01.SCR 
+      background: BACK01.SCR
     script: BOSSBATTLE1
     objectiveType: 14
     objectivesRequired: 1
@@ -12030,6 +12020,72 @@ alienDeployments:
             dQty: 0
             percentageOutsideUfo: 0
             itemSets: [[], [], []]
+      - type: P5HulkerReinforcement4
+        briefing:
+          music: SH95
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS3_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 15
+        maxTurn: 15
+        executionOdds: 100
+        maxRuns: -1 #never end from now
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 7
+            highQty: 7
+            dQty: 7
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
     width: 60 # was 30
     length: 60
     height: 7
@@ -12043,9 +12099,12 @@ alienDeployments:
       palette: 4
       background: WARPED1.SCR
     markerName: STR_HULKERARTIFACT_SITE
+    objectiveType: 14
+    objectivesRequired: 1 # only destroy 1 of 8 tiles
+    objectiveComplete: [STR_HULKATMOSPHERE_DESTROYED, 1000]
     objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
     missionBountyItem: STR_WARPED_HULK_LOOT # item added after successful mission
     alienBase: true    # this is only to tell new battle mode what to do with this deployment
     unlockedResearch: STR_LOCKER_VAULT_RESEARCH
-    
+
 #dungeon specific end

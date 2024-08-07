@@ -640,7 +640,7 @@ extended:
 
     healUnit:
       - new: ROSIGMA_healU_infections
-        offset: 22 # heal infections
+        offset: 19 # heal infections; must execute before the fire extinguishing script
         code: |
           var ptr GeoscapeGame geoScape;
           var ptr RuleResearch researchTopic;
@@ -656,6 +656,18 @@ extended:
           #if we have no infection, cancel out
           target.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
           if le infectionDamage 0;
+            return;
+          end;
+
+          target.getFire temp;
+          if eq temp 1; #have to extinguish fire before we can remove infection
+            #debug_log "Infection Scripts; healUnit, offset 19: Target is on fire; it must be extinguished first. Aborting." temp;
+            return;
+          end;
+
+          item.getTag temp Tag.ActivateFlight;
+          if eq temp 1; #prevents jetpacks from removing infection
+            #debug_log "Infection Scripts; healUnit, offset 19: Medikit is a jetpack. Aborting. ActivateFlight:" temp;
             return;
           end;
 
@@ -681,10 +693,10 @@ extended:
           end;
 
           #reduce infection level in proportion to research level
-          #debug_log "Infection Scripts; healUnit, offset 22: Heal Amount:" researchLevel;
-          #debug_log "Infection Scripts; healUnit, offset 22: Infection Amount Before Heal:" infectionDamage;
+          #debug_log "Infection Scripts; healUnit, offset 19: Heal Amount:" researchLevel;
+          #debug_log "Infection Scripts; healUnit, offset 19: Infection Amount Before Heal:" infectionDamage;
           sub infectionDamage researchLevel;
-          #debug_log "Infection Scripts; healUnit, offset 22: Infection Amount After Heal:" infectionDamage;
+          #debug_log "Infection Scripts; healUnit, offset 19: Infection Amount After Heal:" infectionDamage;
           limit_lower infectionDamage 0;
 
           #let the player know infection was treated, and if there's remaining contamination

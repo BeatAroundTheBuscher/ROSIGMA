@@ -256,9 +256,9 @@ armors:
       - 1.0 #HE
       - 1.0 #LASCAN
       - 1.1 #PLASMA
-      - 0.1 #STUN
+      - 0.0 #STUN
       - 1.0 #MELEE
-      - 0.2 #ACID
+      - 0.1 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.3 #MELTA
@@ -303,9 +303,9 @@ armors:
       - 1.0 #HE
       - 1.0 #LASCAN
       - 1.1 #PLASMA
-      - 0.1 #STUN
+      - 0.0 #STUN
       - 1.0 #MELEE
-      - 0.2 #ACID
+      - 0.1 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.3 #MELTA
@@ -355,7 +355,7 @@ armors:
       - 1.0 #PLASMA
       - 0.8 #STUN
       - 0.9 #MELEE
-      - 0.2 #ACID
+      - 0.1 #ACID
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.3 #MELTA
@@ -368,6 +368,8 @@ armors:
       UNIT_TYPE_DAEMONIC: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10 #a bit more fragile than other Nurgle Daemons
 
   - type: STR_NURGLE_CULTIST_LIGHT_ARMOR     #NURGLE CULTIST ARMOR
     visibilityAtDay: 30
@@ -795,18 +797,10 @@ armors:
     loftempsSet: [ 3 ]
 
   - type: STR_NURGLECHEM_SUIT    #ADEPTAS Nurgle Chem Trooper Cultist
-    tags:
-      #ARMOR_ENERGY_SHIELD_CAPACITY: 30
-      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 4
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50
-      ARMOR_ENERGY_SHIELD_DECAY: 83
-      INFECTION_RESIST: 100 #infection immune
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_NURGLE: 1
     visibilityAtDay: 40
     visibilityAtDark: 35 #assassin nvs
+    antiCamouflageAtDay: 5 #assassin optics
+    antiCamouflageAtDark: 5
     heatVision: 30 #assassin thermals
     camouflageAtDay: 12
     camouflageAtDark: 7
@@ -854,6 +848,18 @@ armors:
       - INV_NULL_3X3
     specialWeapon: CELATID_WEAPON
     loftempsSet: [ 3 ]
+    tags:
+      #ARMOR_ENERGY_SHIELD_CAPACITY: 30
+      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 4
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50
+      ARMOR_ENERGY_SHIELD_DECAY: 83
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10 #has feel no pain, but not as durable as most Nurgle daemons; less dodge than most assassins
 
   - type: STR_NURGLE_ADEPTAS_FILTHY_ARMOR     #ADEPTAS Filthy
     tags:
@@ -1022,8 +1028,8 @@ armors:
 
   - type: STR_DEATHGUARD_SPEWER_ARMOR  # NURGLE PUTRIFIER ARMOR
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
-      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #standard terminator shields
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
@@ -1032,7 +1038,7 @@ armors:
       DIEHARD_TEMP_MODIFIER_INCREMENT: -20
     visibilityAtDay: 40
     visibilityAtDark: 30 #terminator superior sensors/NV
-    heatVision: 30 #terminator heat vision
+    heatVision: 35 #terminator heat vision
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     spriteSheet: NURGLE_PUTRIFIER_BS.PCK
@@ -1040,10 +1046,10 @@ armors:
     allowInv: true
     corpseBattle:
       - STR_DEATHGUARD_SPEWER_CORPSE
-    frontArmor: 140
-    sideArmor: 130
+    frontArmor: 150
+    sideArmor: 140
     rearArmor: 100
-    underArmor: 140
+    underArmor: 150
     drawingRoutine: 0
     bleedImmune: true #Plague Marines don't bleed
     zombiImmune: true #Plague Marines can't be corrupted further
@@ -1053,17 +1059,17 @@ armors:
         healthCurrent: 0.2
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
-      - 1.0 #AP
-      - 0.3 #FLAMES; terminator armor
-      - 0.6 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 0.1 #ACID
+      - 0.5 #AP; Nurgle Terminators add -0.2
+      - 0.6 #FLAMES
+      - 0.5 #HE
+      - 0.7 #LASCANON; Nurgle Terminators add -0.1
+      - 1.1 #PLASMA; Nurgle Terminators add +0.1
+      - 0.5 #STUN; Nurgle Terminators add -0.5
+      - 0.7 #MELEE; Nurgle Terminators add -0.3
+      - 0.1 #ACID; Nurgle Terminators are basically immune.
       - 0.0 #SMOKE
       - 0.2 #IMPACT
-      - 1.2 #MELTA
+      - 1.1 #MELTA; Nurgle Terminators add +0.1
     loftempsSet: [ 4 ]
     specialWeapon: STR_NURGLING_CLAWS
     scripts:
@@ -1239,8 +1245,8 @@ armors:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 50
       #ARMOR_ENERGY_SHIELD_PER_TURN: 10
       #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 4
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
-      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #standard Terminator shields
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
@@ -1249,13 +1255,13 @@ armors:
       DIEHARD_TEMP_MODIFIER_INCREMENT: -20
     visibilityAtDay: 40
     visibilityAtDark: 30 #terminator superior sensors/NV
-    heatVision: 30 #terminator heat vision
+    heatVision: 35 #terminator heat vision
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
-    frontArmor: 140
-    sideArmor: 130
+    frontArmor: 150
+    sideArmor: 140
     rearArmor: 100
-    underArmor: 140
+    underArmor: 150
     bleedImmune: true #Plague Marines don't bleed/suffer wounds
     zombiImmune: true #Plague Marines can't be corrupted further
     painImmune: true #Plague Marines don't care about pain
@@ -1264,27 +1270,27 @@ armors:
         healthCurrent: 0.2
     damageModifier: #TERMINATOR ARMOR
       - 1.0 #none
-      - 1.0 #AP
-      - 0.3 #FLAMES; terminator power armor
-      - 0.6 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.0 #MELEE
-      - 0.1 #ACID
+      - 0.5 #AP; Nurgle Terminators add -0.2
+      - 0.6 #FLAMES
+      - 0.5 #HE
+      - 0.7 #LASCANON; Nurgle Terminators add -0.1
+      - 1.1 #PLASMA; Nurgle Terminators add +0.1
+      - 0.5 #STUN; Nurgle Terminators add -0.5
+      - 0.7 #MELEE; Nurgle Terminators add -0.3
+      - 0.1 #ACID; Nurgle Terminators are basically immune.
       - 0.0 #SMOKE
       - 0.2 #IMPACT
-      - 1.2 #MELTA
+      - 1.1 #MELTA; Nurgle Terminators add +0.1
     loftempsSet: [ 5 ]
-    specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON
+    specialWeapon: STR_NURGLING_CLAWS
 
   - type: STR_MUTON_ARMORNURGLEC #TER NURGLE CHAMPION
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 80
       #ARMOR_ENERGY_SHIELD_PER_TURN: 10
       #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 4
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 30
-      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than normal shields due to being a commander
+      ARMOR_ENERGY_SHIELD_DECAY: 20
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
@@ -1293,13 +1299,13 @@ armors:
       DIEHARD_TEMP_MODIFIER_INCREMENT: -10
     visibilityAtDay: 40
     visibilityAtDark: 40 #artificer terminator armor for nurgle champion
-    heatVision: 50
+    heatVision: 40
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 10
-    frontArmor: 150
-    sideArmor: 140
+    frontArmor: 160
+    sideArmor: 150
     rearArmor: 110
-    underArmor: 150
+    underArmor: 160
     bleedImmune: true #Plague Marines don't bleed/suffer wounds
     zombiImmune: true #Plague Marines can't be corrupted further
     painImmune: true #Plague Marines don't care about pain
@@ -1308,19 +1314,19 @@ armors:
         healthCurrent: 0.4
     damageModifier: #TERMINATOR ARMOR; heightened resistances due to being Nurgle Champion
       - 1.0 #none
-      - 0.9 #AP
-      - 0.2 #FLAMES; artificer terminator armor
+      - 0.4 #AP
+      - 0.5 #FLAMES
       - 0.4 #HE
-      - 0.7 #LASCANON
-      - 0.9 #PLASMA
-      - 0.9 #STUN
-      - 0.9 #MELEE
-      - 0.1 #ACID
+      - 0.6 #LASCANON
+      - 1.0 #PLASMA
+      - 0.4 #STUN
+      - 0.6 #MELEE
+      - 0.0 #ACID
       - 0.0 #SMOKE
-      - 0.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 4 ]
-    specialWeapon: STR_NURGLE_DAEMONETTE_WEAPON
+    specialWeapon: STR_NURGLING_CLAWS
 
   - type: NURGLE_BLIGHT_HAULER_ARMOR
     visibilityAtDay: 40
@@ -1341,8 +1347,8 @@ armors:
     deathMale: [{mod: 40k, index: 859}, {mod: 40k, index: 860}]
     deathFemale: [{mod: 40k, index: 859}, {mod: 40k, index: 860}]
     frontArmor: 180
-    sideArmor: 160
-    rearArmor: 90
+    sideArmor: 170
+    rearArmor: 100
     underArmor: 180
     moveSound: {mod: 40k, index: 14}
     drawingRoutine: 5
@@ -1363,13 +1369,13 @@ armors:
         healthCurrent: 0.2
     damageModifier: #VEHICLE ARMOR LARGE
       - 1.0 #none
-      - 0.8 #AP
+      - 0.5 #AP
       - 0.5 #FLAMES; heavily armored vehicle but more vulnerable to burning than normal
-      - 0.8  #HE
-      - 1.4 #LASCANON
+      - 0.5 #HE
+      - 1.4 #LASCANON; the preferred way to destroy vehicles
       - 1.2 #PLASMA
       - 0.0 #STUN; it's a vehicle; stun immune
-      - 1.1 #MELEE
+      - 0.8 #MELEE
       - 0.1 #ACID #plague daemonengine; we don't really care about chem weapons
       - 0.0 #SMOKE
       - 0.0 #IMPACT
