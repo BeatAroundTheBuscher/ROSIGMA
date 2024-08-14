@@ -2,25 +2,37 @@ items:
   - type: STR_STUN_BOMB
     tags:
       GravPercentage: 4
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
+
   - type: STR_GRAVGUN_MC
     tags:
       GravPercentage: 5
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
+
   - type: AUX_CENTURION_GRAVGUN
     tags:
       GravPercentage: 6
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
 
   - type: STR_GRAVGUN_AOE_AMMO
     tags:
       GravPercentage: 4
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
+
   - type: STR_GRAVGUN_AOE_AMMO_SHOTGUN
     tags:
       GravPercentage: 4
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
+
   - type: STR_GRAVPISTOL_AMMO
     tags:
       GravPercentage: 4
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
+
   - type: STR_GRAVCANNON_AMMO
     tags:
       GravPercentage: 6
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: 1
 
 extended:
   tags:
@@ -38,6 +50,11 @@ extended:
           var int weaponpercentage;
           var int ammopercentage;
           var ptre BattleItem ammo;
+
+          set temp to_health;
+          if lt temp 1; #if no damage gets through the shield, abort; sanity check.
+            return;
+          end;
 
           damaging_item.getAmmoItem ammo;
 
