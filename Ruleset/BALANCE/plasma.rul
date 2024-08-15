@@ -2,27 +2,8 @@ items:
 
 ## Pistols
 
-  - type: STR_MCPLASMA_PISTOL # done # MC
-    dropoff: 5
-    autoRange: 0
-    snapRange: 13
-    aimRange: 13
-
-    accuracyAuto: 0
-    accuracySnap: 80
-    accuracyAimed: 80
-    tuAuto: 0
-    tuSnap: 25
-    tuAimed: 25
-
-    confAimed:
-      spendPerShot: 4
-      name: STR_MAXIMAL_SHOT
-
-    tags:
-      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
-
-  - type: STR_PLASMA_PISTOL_TERRAN # done
+  - &STR_PLASMA_PISTOL_WEAPON
+    type: STR_PLASMA_PISTOL_TERRAN # done
     dropoff: 6
     autoRange: 0
     snapRange: 12
@@ -43,15 +24,18 @@ items:
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
 
   - type: STR_PLASMA_PISTOL # done
-    dropoff: 6
-    autoRange: 0
-    snapRange: 12
-    aimRange: 12
+    refNode: *STR_PLASMA_PISTOL_WEAPON
 
-    accuracyAuto: 0
-    accuracySnap: 60
-    accuracyAimed: 60
-    tuAuto: 0
+    accuracySnap: 55 #less accurate due to no cooldown
+    accuracyAimed: 55
+
+  - type: STR_PRIMARIS_EXTERMINATOR # done
+    refNode: *STR_PLASMA_PISTOL_WEAPON
+    snapRange: 13
+    aimRange: 13
+
+    accuracySnap: 70
+    accuracyAimed: 70
     tuSnap: 25
     tuAimed: 25
 
@@ -61,6 +45,25 @@ items:
 
     tags:
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_MCPLASMA_PISTOL # done # MC
+    refNode: *STR_PLASMA_PISTOL_WEAPON
+    dropoff: 5
+    snapRange: 13
+    aimRange: 13
+
+    accuracySnap: 80
+    accuracyAimed: 80
+    tuSnap: 25
+    tuAimed: 25
+
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+
+    tags:
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
 
 ## Rifles
 
@@ -87,6 +90,7 @@ items:
     accuracyAuto: 55
     accuracySnap: 70
     accuracyAimed: 70
+
     tuAuto: 40
     tuSnap: 30
     tuAimed: 30
@@ -109,6 +113,7 @@ items:
     accuracyAuto: 75
     accuracySnap: 90
     accuracyAimed: 90
+
     tuAuto: 40
     tuSnap: 30
     tuAimed: 30
@@ -118,10 +123,6 @@ items:
 
     accuracySnap: 65 #less accurate because no cooldown mechanics
     accuracyAimed: 65
-
-  - type: STR_PLASMA_INC_TERRAN # done
-    refNode: *STR_PLASMA_RIFLE_WEAPON
-    autoShots: 5
 
   - type: STR_PLASMA_RIFLE_ADEPTAS # done; more CQC/Assault/overwatch oriented
     refNode: *STR_PLASMA_RIFLE_WEAPON
@@ -279,6 +280,34 @@ items:
     accuracySnap: 65
     accuracyAimed: 65
     tuAuto: 30
+
+
+  - &STR_PRIMARIS_PLASMA_INCINERATOR_TEMPLATE
+    type: STR_PLASMA_INC_TERRAN #Plasma Incinerator
+    costSell: 50500
+    weight: 30
+
+    autoRange: 10
+    snapRange: 16
+    aimRange: 16
+
+    accuracyAuto: 70
+    accuracySnap: 80
+    accuracyAimed: 80
+
+    tuAuto: 45
+    tuSnap: 33
+    tuAimed: 33
+
+    autoShots: 3
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+
+  - type: STR_PRIMARIS_INCINERATOR_POWER_PACK
+    refNode: *STR_PRIMARIS_PLASMA_INCINERATOR_TEMPLATE
+    weight: 40
+
 
   - type: STR_INQ_PLASMA #Inquisition Dekker Twincore Plasma
     dropoff: 4
