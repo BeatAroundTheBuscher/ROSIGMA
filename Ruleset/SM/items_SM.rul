@@ -1555,7 +1555,7 @@ items:
       name: STR_BURST_SNAP_SHOT
       shots: 2
     tags:
-      REACTION_MULTIPLIER: 125 #multiplies base reaction score by this amount divided by 100
+      REACTION_MULTIPLIER: 150 #multiplies base reaction score by this amount divided by 100
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle aimed shot bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_RECOIL: 40
@@ -1985,3 +1985,85 @@ items:
     tags:
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - &STR_PRIMARIS_VOLKITE_TEMPLATE
+    type: STR_PRIMARIS_VOLKITE_CHARGER
+    categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
+    twoHanded: true
+    battleType: 1
+    tuSnap: 24
+    snapRange: 14
+    accuracySnap: 75
+    confSnap:
+      name: STR_PULSED_FIRE_SNAP_SHOT
+      shots: 3
+    bulletSpeed: 200
+    power: 45 #individual shots are weak, but the full pulse is lethal
+    dropoff: 5
+    powerRangeThreshold: 20
+    powerRangeReduction: 5
+    damageType: 11 #melta; this is the closest thing
+    damageAlter: #DA GUASS
+      ArmorEffectiveness: 0.9 #mostly destroys armor; has limited penetration
+      ToArmorPre: 0.5 #volkite weapons have substantial armor deflagrating
+      FireThreshold: 0 #ignites
+      ToHealth: 1.5 #high health damage
+      ToMorale: 1.0 #highly painful
+      ToStun: 0.5 #highly painful
+      ToArmor: 0.0 #all the armor damage is done on the way in
+      ToTile: 0.5 #burns away cover
+      ToWound: 0.02 #disintegrates rather than causing ugly wounds.
+      RandomWound: false
+      IgnoreOverKill: false
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    bulletSprite: {mod: 40k, index: 23}
+    bigSprite: 1046
+    floorSprite: 975
+    handSprite: 1132
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 110 }
+    scripts:
+      vaporParticleAmmo: |
+        var int temp;
+        var int randMax;
+
+        set randMax subvoxel_scale;
+        muldiv randMax 3 2;
+        random.randomRangeSymmetric temp randMax;
+        subvoxel_offset.setX temp;
+        random.randomRangeSymmetric temp randMax;
+        subvoxel_offset.setY temp;
+        random.randomRangeSymmetric temp randMax;
+        subvoxel_offset.setZ temp;
+        set temp 320;
+        sub temp particle_density;
+        subvoxel_velocity.setZ temp;
+        return;
+    clipSize: -1
+    explosionSpeed: 5
+    listOrder: 18011
+    size: 0.4
+    costSell: 50000
+    weight: 20
+    invHeight: 3
+    invWidth: 2
+    attraction: 7
+    tags:
+      REACTION_MULTIPLIER: 150 #Carbine weapon
+
+  - type: STR_PRIMARIS_VOLKITE_CALIVER
+    refNode: *STR_PRIMARIS_VOLKITE_TEMPLATE
+    weight: 30
+    power: 50 #individual shots are weak, but the full pulse is lethal
+    dropoff: 4
+    powerRangeThreshold: 25 #beam decoheres over a longer range
+    powerRangeReduction: 4
+    bigSprite: 1045
+    floorSprite: 974
+    handSprite: 1124
+    tuSnap: 30
+    snapRange: 17
+    tags:
+      REACTION_MULTIPLIER: 0
