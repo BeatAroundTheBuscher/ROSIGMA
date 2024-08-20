@@ -3743,6 +3743,21 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_LEFT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_RIGHT_CANNON_ARMOR #armor Adeptas/Inq, Crovus right assault cannon
     refNode: *STR_CAS_ARMOR
@@ -3777,6 +3792,21 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_RIGHT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_LEFT_CIV_ARMOR
     visibilityAtDay: 40
