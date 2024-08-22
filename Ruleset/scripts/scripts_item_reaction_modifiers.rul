@@ -25,7 +25,7 @@ extended:
 
           unit.getTag reactionBonus Tag.UNIT_REACTION_BASE_REACTIONS_BONUS;
 
-          if le reactionBonus 0;
+          if eq reactionBonus 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" reactionBonus;
             return;
           end;
@@ -57,7 +57,7 @@ extended:
           end;
 
           unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
-          if gt temp 0;
+          if neq temp 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
             return;
           end;
@@ -77,7 +77,7 @@ extended:
             set temp temp2;
           end;
 
-          if gt temp 0;
+          if neq temp 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
             set temp2 baseReactions;
             muldiv temp2 temp 100;
@@ -100,17 +100,20 @@ extended:
             set temp temp2;
           end;
 
-          if gt temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
-            unit.Stats.getReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
-            add temp2 temp;
-            unit.Stats.setReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
-            sub temp2 baseReactions;
-            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          if eq temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. REACTION_FLAT_BONUS_OR_PENALTY is null." temp;
+            return;
           end;
+
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+          unit.Stats.getReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+          add temp2 temp;
+          unit.Stats.setReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+          sub temp2 baseReactions;
+          unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
 
           return;
 
@@ -122,13 +125,13 @@ extended:
 
           unit.getFaction temp;
           battle_game.getTurnSide temp2;
-          if neq temp temp2; #if it's not our turn, abort; we only reset when it's not our turn.
+          if neq temp temp2; #if it's not our turn, abort; we only reset when it's our turn.
             #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. Faction turn doesn't equal unit turn.";
             return;
           end;
 
           unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
-          if le temp 0;
+          if eq temp 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" temp;
             return;
           end;
@@ -161,7 +164,7 @@ extended:
           end;
 
           unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
-          if gt temp 0;
+          if neq temp 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
             return;
           end;
@@ -181,7 +184,7 @@ extended:
             set temp temp2;
           end;
 
-          if gt temp 0;
+          if neq temp 0;
             #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
             set temp2 baseReactions;
             muldiv temp2 temp 100;
@@ -204,16 +207,19 @@ extended:
             set temp temp2;
           end;
 
-          if gt temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
-            unit.Stats.getReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
-            add temp2 temp;
-            unit.Stats.setReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
-            sub temp2 baseReactions;
-            unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          if eq temp 0;
+            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Total REACTION_FLAT_BONUS_OR_PENALTY value is null:" temp;
+            return;
           end;
+
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+          unit.Stats.getReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+          add temp2 temp;
+          unit.Stats.setReactions temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+          sub temp2 baseReactions;
+          unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
+          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
 
           return;
