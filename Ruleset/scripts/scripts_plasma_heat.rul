@@ -14,9 +14,11 @@ extended:
       ITEM_SNAP_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_AUTO_ACCURACY_POWER_BONUS: int #percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_POWER_BONUS_PERCENTILE: int #0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
+      ITEM_OVERHEAT_DAMAGE: int #how much damage we apply on average direct to the target's HP.
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
       ITEM_HEAT_PREVIOUS_AMMO_COUNT: int
+      ITEM_HEAT_CRITICAL: int #have we gone critical?
   scripts:
     reactionUnitReaction: # do not react at max heat
       # but doesn't work perfectly yet as how value for getAmmoQuantity isn't being updated
@@ -47,6 +49,7 @@ extended:
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
+
           reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           add previousAmmoCount reaction_count; # assumes that snap will always use one ammo per shot
           div previousAmmoCount temp;
@@ -69,6 +72,7 @@ items:
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_OVERHEAT_DAMAGE: 100 #average damage dealt directly to the wielder's HP modified by plasma resistance if the weapon overheats
 
     tuUnload: 999 # DO NOT UNLOAD WEAPONS, THEY ARE LIKELY TO BE HOT
     isExplodingInHands: true # won't explode though as it's not a grenade
@@ -84,9 +88,11 @@ items:
         var int currentHeat;
         var int maxHeat;
 
+
         var int previousAmmoCount;
         var int currentAmmoCount;
         var ptr BattleItem ammoItem;
+        var ptr BattleItem ammoItem2;
 
         battle_game.getTurn temp;
         if eq temp 0;
@@ -132,7 +138,6 @@ items:
         var int currentHeat;
         var int maxHeat;
 
-
         var int previousAmmoCount;
         var int currentAmmoCount;
         var ptr BattleItem ammoItem;
@@ -146,7 +151,6 @@ items:
 
           item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
           item.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-
           item.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
           item.getAmmoItem ammoItem;
           ammoItem.getAmmoQuantity currentAmmoCount;
@@ -173,13 +177,15 @@ items:
           end;
         end;
 
-        add_shade new_pixel shade; 
+        add_shade new_pixel shade;
         return new_pixel;
 
       newTurnItem: | # dissipate/increase heat level
         var int temp;
+        var int temp2;
         var int currentHeat;
         var int maxHeat;
+
 
         var int currentAmmoCount;
         var int previousAmmoCount;
@@ -187,11 +193,33 @@ items:
         var ptre BattleItem ammoItem;
         var ptre BattleUnit bUnit;
 
-        if neq side FACTION_PLAYER;
+        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+        if lt maxHeat 1;
+          return; #don't bother running this script if we don't have a heat level
+        end;
+
+        item.getTag temp Tag.ITEM_HEAT_CRITICAL;
+        #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon item:" item;
+        #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon self-destructing:" temp;
+        if eq temp 1;
+          item.getOwner bUnit;
+          item.getTag maxHeat Tag.ITEM_OVERHEAT_DAMAGE;
+          battle_game.randomRange temp 0 maxHeat;
+          battle_game.randomRange temp2 0 maxHeat;
+          add temp temp2;
+          bUnit.getHealth temp2;
+          sub temp2 temp;
+          bUnit.reduceByResistance temp2 6; #reduce (or increase) the damage by our plasma resistance
+          bUnit.setHealthWithOverkill temp2; #apply damage direct to health; oh yeah you're gonna burn alright
+          #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon detonation. Damage:" temp;
+          bUnit.setFire 1;
+          battle_game.flashMessage "STR_OVERHEATING_EXPLOSION_NOTICE";
           return;
         end;
 
-        item.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+        if neq side FACTION_PLAYER;
+          return;
+        end;
 
         item.getAmmoItem ammoItem;
         ammoItem.getAmmoQuantity currentAmmoCount;
@@ -222,9 +250,12 @@ items:
             ammoItem.setAmmoQuantity 1; # 0 isn't possible # todo add check if ammo is already 0 (ammoItem should be null?)
           end;
           item.setFuseEnabled 1; # destroy weapon
-          item.setFuseTimer 0;
-
-          # item.getOwner bUnit; # maybe damage unit
+          item.setFuseTimer 1;
+          item.getOwner bUnit;
+          bUnit.setFire 1; #set wielder on fire
+          battle_game.flashMessage "STR_OVERHEATING_FLASH_NOTICE";
+          item.setTag Tag.ITEM_HEAT_CRITICAL 1;
+          #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon self-destructing:" item;
         else;
           item.getTag temp Tag.ITEM_HEAT_DISSIPATION_PER_TURN;
           if le currentHeat temp; # dissipate
@@ -239,49 +270,49 @@ items:
 
         return;
 
-    accuracyMultiplier: |
-      var int temp;
-      var int previousAmmoCount;
-      var int currentAmmoCount;
+      accuracyMultiplier: |
+        var int temp;
+        var int previousAmmoCount;
+        var int currentAmmoCount;
 
-      var int currentHeat;
-      var int maxHeat;
-      var ptr BattleItem ammoItem;
+        var int currentHeat;
+        var int maxHeat;
+        var ptr BattleItem ammoItem;
 
-      # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
-      # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
-      mul bonus 1000;
-      unit.firingBonusStats bonus 1000000 0 0 0;
-      if ge bonus 0; add bonus 500; else; sub bonus 500; end;
-      div bonus 1000;
+        # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
+        # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
+        mul bonus 1000;
+        unit.firingBonusStats bonus 1000000 0 0 0;
+        if ge bonus 0; add bonus 500; else; sub bonus 500; end;
+        div bonus 1000;
 
-      weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
+        weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
-      weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
-      weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
+        weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
+        weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
 
-      weapon.getAmmoItem ammoItem;
-      ammoItem.getAmmoQuantity currentAmmoCount;
+        weapon.getAmmoItem ammoItem;
+        ammoItem.getAmmoQuantity currentAmmoCount;
 
-      if le currentAmmoCount previousAmmoCount;
-        sub previousAmmoCount currentAmmoCount;
-      end;
+        if le currentAmmoCount previousAmmoCount;
+          sub previousAmmoCount currentAmmoCount;
+        end;
 
-      weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-      div previousAmmoCount temp;
+        weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
+        div previousAmmoCount temp;
 
-      # bonus - bonus * currentHeat / maxHeat / 2
-      set temp bonus;
-      add currentHeat previousAmmoCount; # delta
-      if gt currentHeat maxHeat;
-        set currentHeat maxHeat;
-      end;
-      muldiv temp currentHeat maxHeat;
-      div temp 2;
+        # bonus - bonus * currentHeat / maxHeat / 2
+        set temp bonus;
+        add currentHeat previousAmmoCount; # delta
+        if gt currentHeat maxHeat;
+          set currentHeat maxHeat;
+        end;
+        muldiv temp currentHeat maxHeat;
+        div temp 2;
 
-      sub bonus temp;
+        sub bonus temp;
 
-      return bonus;
+        return bonus;
 
   - type: STR_PLASMA_PISTOL_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
@@ -302,6 +333,7 @@ items:
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_OVERHEAT_DAMAGE: 150 #average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_MCPLASMA_RIFLE
     refNode: *STR_OVERHEATING_PLASMA
@@ -330,6 +362,7 @@ items:
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_OVERHEAT_DAMAGE: 150 #average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_HEAVY_LASGUN_LUCIUS_XIV
     refNode: *STR_OVERHEATING_PLASMA
@@ -338,6 +371,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4
+      ITEM_OVERHEAT_DAMAGE: 50 #average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_INQ_PLASMA #Inq Dekker Twincore Plasma
     refNode: *STR_OVERHEATING_PLASMA
@@ -358,6 +392,7 @@ items:
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_OVERHEAT_DAMAGE: 150 #average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_PLASMA_RIFLE_SEQUANA
     refNode: *STR_OVERHEATING_PLASMA
@@ -382,6 +417,45 @@ items:
       ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
+  - type: STR_PRIMARIS_INCINERATOR_POWER_PACK
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 373
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 7 #Primaris heat dissipation
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_PLASMA_INC_TERRAN #Plasma Incinerator
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 381
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 7 #Primaris heat dissipation
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_PRIMARIS_EXTERMINATOR
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 389
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 6
+      ITEM_HEAT_DISSIPATION_PER_TURN: 6 #Primaris heat dissipation
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_PRIMARIS_EXTERMINATOR_POWER_PACK
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 396
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 6
+      ITEM_HEAT_DISSIPATION_PER_TURN: 6 #Primaris heat dissipation
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
 #items:
 #  - type: STR_RIFLE
@@ -391,7 +465,7 @@ items:
 #      if ge bonus 0; add bonus 500; else; sub bonus 500; end;
 #      div bonus 1000;
 #      return bonus;
-#      debug_log "local accuracyMultiplierBonusStats";
+#      #debug_log "local accuracyMultiplierBonusStats";
 #      return 0;
 
 

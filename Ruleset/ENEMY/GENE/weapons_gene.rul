@@ -142,7 +142,7 @@ items:
     requires:
       - STR_XENO_ONLY
     size: 0.2
-    dropoff: 5
+    dropoff: 3 #light sniper rifle; scoped
     costSell: 20000
     weight: 10
     bigSprite: 2716 #needler bigob
@@ -152,20 +152,23 @@ items:
     fireSound: 2419 #silentshot
     hitSound: {mod: 40k, index: 101} #stabhit
     hitAnimation: 2190 #purple juice
-    power: 30
+    power: 40
     accuracySnap: 50
-    accuracyAimed: 80
+    accuracyAimed: 90
     tuSnap: 45
     tuAimed: 70
-    snapRange: 18
+    snapRange: 16
     aimRange: 25
     damageType: 8 #acid
     damageAlter:
       ArmorEffectiveness: 0.5 #low power but high penetration
       ToHealth: 0.7
       ToWound: 0.05
+      RandomWound: false
       ToArmor: 0.05
-      ToTime: 0.6
+      ToTime: 0.6 #sedatives + viral payload
+      ToStun: 1.0 #sedatives + viral payload
+      ToEnergy: 1.0 #sedatives + viral payload
       RandomType: 6 #gaussian
     battleType: 1
     twoHanded: true
@@ -175,14 +178,15 @@ items:
     invHeight: 3
     clipSize: -1
     kneelBonus: 130
+    minRange: 7 #sniper weapon
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 2 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #sniper weapon; aimed shots target vitals
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #sniper weapon; aimed shots target vitals
       ITEM_POWER_BONUS_PERCENTILE: 1
-    specialChance: 10 #low chance of zombifying its victims
+    specialChance: 1 #low chance of zombifying its victims
 
     bulletSpeed: 15
     listOrder: 6940
@@ -206,6 +210,7 @@ items:
       ToArmorPre: 0.3 #apothecary saws
       ToTime: 0.3
       ToHealth: 0.2
+      ToMana: 0.5
       ToArmor: 0.15
       ToStun: 1.0 #sedatives + retrovirus
       ToWound: 0.05
@@ -707,3 +712,135 @@ items:
     clipSize: -1
     recover: false
     hiddenOnMinimap: true
+
+#dungeon specific start
+
+  - type: STR_GENOCLAWS
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
+    size: 0.2
+    weight: 15
+    #floorSprite: 188
+    bigSprite: 2732
+    handSprite: 3408
+    meleeSound: { mod: 40k, index: 101} #stabhit
+    meleeHitSound: { mod: 40k, index: 101}
+    meleeAnimation: { mod: 40k, index: 4} #melee white
+    power: 80
+    damageAlter:
+      #RandomType: 2 #TFTD [50% - 150%]
+      IgnoreSelfDestruct: false
+      ArmorEffectiveness: 0.5 #50% armor pierce
+      ToArmorPre: 0.6 #Rending, 30% or 18 armor points of damage per hit
+      ToWound: 0.1 #Slashing Barbed Talons + Toxin wounds
+      ToHealth: 0.8
+    damageType: 7
+    accuracyMelee: 100
+    tuMelee: 10
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    recover: false
+    fixedWeapon: true
+
+  - type: STR_GENOCLAWS_END
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
+    size: 0.2
+    weight: 15
+    #floorSprite: 188
+    bigSprite: 2732
+    handSprite: 3408
+    meleeSound: { mod: 40k, index: 101} #stabhit
+    meleeHitSound: { mod: 40k, index: 101}
+    meleeAnimation: { mod: 40k, index: 4} #melee white
+    power: 90
+    damageAlter:
+      #RandomType: 2 #TFTD [50% - 150%]
+      IgnoreSelfDestruct: false
+      ArmorEffectiveness: 0.4 #50% armor pierce
+      ToArmorPre: 0.8 #Rending, 30% or 18 armor points of damage per hit
+      ToWound: 0.2 #Slashing Barbed Talons + Toxin wounds
+      ToHealth: 0.9
+    damageType: 7
+    accuracyMelee: 100
+    tuMelee: 10
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 20
+    skillApplied: true
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    recover: false
+    fixedWeapon: true
+
+  - type: CTHULHU_GENE_WEAK  #TYRANID SPIT
+    weight: 3
+    bigSprite: 2736
+    handSprite: 3408
+    bulletSprite: { mod: 40k_ROSIGMA_edits, index: 5}
+    fireSound: { mod: 40k_ROSIGMA_edits, index: 2172} #clawswipe
+    hitSound: { mod: 40k, index: 101} #stabhit
+    hitAnimation: { mod: 40k_ROSIGMA_edits, index: 2040}
+    power: 80
+    damageAlter: #DA SPIT
+      RandomType: 2 #TFTD [50% - 150%]
+      ToArmorPre: 0.8 #was 0.3
+      ToHealth: 0.9
+      ToWound: 0.2 #wasn't here
+      ToStun: 0.3
+      ArmorEffectiveness: 0.5
+    damageType: 8
+    accuracySnap: 60
+    accuracyAimed: 90
+    tuSnap: 20
+    tuAimed: 40
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+    arcingShot: false
+    bulletSpeed: 10
+
+  - type: CTHULHU_GENE  #TYRANID SPIT
+    weight: 3
+    bigSprite: 2736
+    handSprite: 3408
+    bulletSprite: { mod: 40k_ROSIGMA_edits, index: 5}
+    fireSound: { mod: 40k_ROSIGMA_edits, index: 2172} #clawswipe
+    hitSound: { mod: 40k, index: 101} #stabhit
+    hitAnimation: { mod: 40k_ROSIGMA_edits, index: 2040}
+    power: 100 #was 90
+    damageAlter: #DA SPIT
+      RandomType: 2 #TFTD [50% - 150%]
+      ToArmorPre: 0.8 #was 0.3
+      ToHealth: 0.9
+      ToWound: 0.2 #wasn't here
+      ToStun: 0.3
+      ArmorEffectiveness: 0.5
+    damageType: 8
+    accuracySnap: 60
+    accuracyAimed: 90
+    tuSnap: 20
+    tuAimed: 40
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+    arcingShot: false
+    bulletSpeed: 10
+
+#dungeon specific end

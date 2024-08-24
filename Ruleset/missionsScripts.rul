@@ -6,6 +6,71 @@ missionScripts:
         STR_CIVILIAN_TERROR_GSC: 30
     researchTriggers: !add
       STR_CHAMBERMILITANT: false
+      STR_STEEL_LEGION_STRATEGY: false 
+
+  - type: firstMonthOrkTerror #for Steel Legion 
+    missionWeights:
+      0:
+        STR_ORK_TERROR: 100 
+    researchTriggers: 
+      STR_STEEL_LEGION_STRATEGY: true
+    executionOdds: 100
+    lastMonth: 0
+    useTable: false
+    startDelay: 3000
+
+  - type: recurringOrkTerror #for Steel Legion 
+    missionWeights:
+      0:
+        STR_ORK_TERROR: 100 
+      4:
+        STR_ORK_TERROR: 100
+        STR_ALIEN_TERROR: 16
+        STR_NURGLE_TERROR: 16
+        STR_ALIEN_TERROR_TZEENTCH: 16
+        STR_TERROR_MISSION_SLAAN: 16
+        STR_CIVILIAN_TERROR: 30
+        STR_SHRINE_TERROR: 10
+        STR_CIVILIAN_SHRINE_TERROR_NOVICES: 10
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 8
+        STR_CIVILIAN_TERROR_GSC: 30
+      6:
+        STR_ORK_TERROR: 100 
+        STR_ALIEN_TERROR: 25
+        STR_NURGLE_TERROR: 20
+        STR_TERROR_MISSION_SLAAN: 25
+        STR_ALIEN_TERROR_TZEENTCH: 15
+        STR_CIVILIAN_TERROR: 30
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 25
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 35
+        STR_CIVILIAN_TERROR_GSC: 25
+    executionOdds: 80
+    firstMonth: 1
+    lastMonth: 99
+    useTable: false
+    startDelay: 150
+    researchTriggers: 
+      STR_STEEL_LEGION_STRATEGY: true
+
+  - type: recurringOrkTerrorHard #For SL 
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ORK_TERROR: 100 
+        STR_ALIEN_TERROR_HARD: 25
+        STR_NURGLE_TERROR: 20
+        STR_ALIEN_TERROR_TZEENTCH: 15
+        STR_TERROR_MISSION_SLAAN: 25
+        STR_SHRINE_TERROR: 10
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 25
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 15
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true
+      STR_HARDER_MISSIONS: true
+      STR_ALIENS_ONLY: false
+    useTable: false
+    startDelay: 150
 
   - type: recurringTerror
     executionOdds: 80
@@ -42,6 +107,7 @@ missionScripts:
     researchTriggers: !add
       STR_CHAMBERMILITANT: false # GK shouldn't get Guardsmen from Terror missions
       STR_HARDER_MISSIONS: false
+      STR_STEEL_LEGION_STRATEGY: false #get their own ork tilted list 
 
   - type: recurringTerrorHard
     executionOdds: 80
@@ -60,6 +126,7 @@ missionScripts:
       STR_HARDER_MISSIONS: true
       STR_CHAMBERMILITANT: false
       STR_ARBITES: false
+      STR_STEEL_LEGION_STRATEGY: false 
     useTable: false
     startDelay: 150
 
@@ -360,18 +427,80 @@ missionScripts:
     firstMonth: 6
     useTable: true
 
-  # no Orkz as starting enemy
-  - delete: gameStartOrk
+  # Orkz as starting enemy for SL 
+  - type: gameStartOrk
+    #conditionals: [-100, -101] #relates to gameStartTraitorGuard and gameStartCultist in 40k 
+    missionWeights:
+      0:
+        STR_ORK_BASE_START: 100
+    lastMonth: 0
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_ORK_MIDTIER_EVILSUNZ: 50
+    startDelay: 3000
+    executionOdds: 100
+    label: 102
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true #only triggers for steel legion  playthroughs       
 
   - type: gameStartCultist
     executionOdds: 75
     firstMonth: 2
     lastMonth: 2
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false 
+
+  - type: gameStartCultist_SL
+    executionOdds: 40 #was 75
+    firstMonth: 4 #was 2
+    lastMonth: 4 #was 2 
+    missionWeights:
+      0:
+        STR_CULTIST_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SECTOID: 33
+        STR_BLOODGOR_WARBAND: 5
+        STR_CULTISTS_NIGHT_LORDS: 5
+        STR_NURGLE_CULTISTS_RACELIST: 20
+        STR_SLAANGOR_MIXED: 10
+        STR_TZEENTCH_CULT: 5
+        STR_TZEENTCH_COVEN: 5
+        STR_TZEENTCH_TZAANGOR_WARBAND: 5
+        STR_TZEENTCH_SUBCULT: 5
+    startDelay: 3000
+    label: 100
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true 
 
   - type: gameStartTraitorGuard
     executionOdds: 75 # either Cultists or Traitor Guard
     firstMonth: 2
     lastMonth: 2
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false 
+
+  - type: gameStartTraitorGuard_SL
+    executionOdds: 75 # 
+    firstMonth: 3 #was 2 
+    lastMonth: 3 #was 2 
+    conditionals: [-100]
+    missionWeights:
+      0:
+        STR_TRAITOR_GUARD_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SNAKEMAN: 33
+        STR_TZEENTCH_TRAITOR_GUARD: 33
+        STR_SLAANESH_TRAITOR_GUARD_MID: 33
+        STR_HRUD_WARRIOR_FORCE: 10
+    startDelay: 3000
+    label: 101
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: true 
 
   - &STR_START_MISSION
     type: gameStart # initial mission in player region
@@ -434,3 +563,134 @@ missionScripts:
     startDelay: 150
     targetBaseOdds: 100
     useTable: false
+
+#Final Mission 
+
+  - type: finalMissionGuard
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_IMPERIAL_GUARD_OPERATIONS: true
+      STR_STEEL_LEGION_STRATEGY: false
+
+  - type: finalMissionGuard_SL
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_GUARD_SL: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_STEEL_LEGION_STRATEGY: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionGuard
+
+    
+#dungeon specific start
+
+  - type: HULKERMarines
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_MARINES_STRATEGY: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERMarines
+
+  - type: HULKERGuards
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_IMPERIAL_GUARD_OPERATIONS: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERGuards
+
+  - type: HULKERAdeptas
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_ADEPTAS: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERAdeptas
+
+  - type: HULKERArbites
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_ARBITES: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERArbites
+
+  - type: HULKERDeathwatch
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_CHAMBERMILITANT: true
+      STR_DEATHWATCH: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERDeathwatch
+
+  - type: HULKERInquisition
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+         REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_CHAMBERMILITANT: true
+      STR_STR_GREYKNIGHTS: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 1440 # 1 day
+    useTable: false
+    maxRuns: 1
+    varName: HULKERInquisition
+
+#dungeon specific end

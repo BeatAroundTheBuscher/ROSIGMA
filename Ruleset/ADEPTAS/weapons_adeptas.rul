@@ -209,6 +209,18 @@ items:
     handSprite:  2156
     bulletSprite: {mod: 40k, index: 11 }
     fireSound: {mod: 40k, index: 861 }
+    dropoff: 5
+    power: 30
+    damageType:  3
+    damageAlter: #DA Sound
+      ToHealth: 1.5
+      ArmorEffectiveness: 0.2
+      RandomType: 2 #TFTD [50% - 150%]
+      ToStun: 1.0
+      ToEnergy: 1.0
+      ToMorale: 1.0
+    accuracySnap: 65
+    tuSnap: 33
     clipSize: -1
     explosionHitSound: 2118
     hitAnimation: {mod: 40k, index: 96 } #XSOUND
@@ -285,7 +297,7 @@ items:
     flatRate: true
     clipSize: -1
     battleType: 1
-    maxRange: 3
+    maxRange: 3 #has super reach
     powerRangeThreshold: 4
     powerRangeReduction: 99
     twoHanded: false
@@ -966,9 +978,9 @@ items:
     clipSize: -1
     invWidth: 2
     invHeight: 3
-    snapRange: 3
-    maxRange: 3
-    powerRangeThreshold: 4
+    snapRange: 2 #has reach
+    maxRange: 2
+    powerRangeThreshold: 3
     powerRangeReduction: 99
     battleType: 1
     damageType: 5
@@ -1932,6 +1944,8 @@ items:
     damageAlter: #DA GUASS
       RandomType: 6 #Gaussian/bell curve damage distribution
       ToArmor: 0.0 #doesn't really interact with armor
+      ToTile: 0.0
+      ToItem: 0.0
       ToHealth: 0.2 #not very effective against enemies not wound-susceptible
       ToWound: 0.5 #shreds the target's brain
       RandomWound: false
@@ -1952,3 +1966,52 @@ items:
       REACTION_MULTIPLIER: 200 #pistol reaction bonus
       ITEM_AIMED_ACCURACY_POWER_BONUS: 30 #Bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_HEALS #Saint Lay on Hands
+    power: 0
+    damageType: 0
+    accuracyMelee: 100
+    battleType: 1
+    skillApplied: true
+    strengthApplied: false
+    fixedWeapon: true
+    attraction: 1
+    damageBonus:
+      psiSkill: 1.0 #incorporeal weapon
+    meleeBonus:
+      psiSkill: 1.0 #incorporeal weapon
+    damageAlter:
+      RandomType: 6
+      ToHealth: 0.0
+      ToTime: 0.0
+      ToStun: 0.0
+      ToEnergy: 0.0
+      ToArmor: 0.0
+      ToWound: 0.0
+      ToItem: 0.0
+      ToTile: 0.0
+      RandomWound: false
+      ArmorEffectiveness: 0.0
+    meleeAlter:
+      RandomType: 6
+      ToHealth: 0.0
+      ToTime: 0.0
+      ToStun: 0.0
+      ToEnergy: 0.0
+      ToArmor: 0.0
+      ToWound: 0.0
+      ToItem: 0.0
+      ToTile: 0.0
+      RandomWound: false
+      ArmorEffectiveness: 0.0
+    flatRate: true
+    costMelee:
+      time: 25
+      energy: 50
+    tags:
+      ITEM_MENDS_WOUNDS: 1
+      ITEM_MEND_HEAL_CAP_PERCENT: 60
+      ITEM_MEND_HARMS_ENEMIES: 0
+      ITEM_MEND_STUN_PERCENT: 50
+      ITEM_MEND_ENERGY_PERCENT: 50
+      ITEM_MEND_TIME_PERCENT: 50

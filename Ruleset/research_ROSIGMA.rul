@@ -71,6 +71,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_NAVY_COMUNICATIONS
       - STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE
+      - STR_NOT_STEEL_LEGION_STRATEGY
 
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH0_COMPLETE
     cost: 0
@@ -227,6 +228,7 @@ research:
       - STR_PRIMARIS
     unlocks:
       - STR_MEDI_KIT_PREREQ
+
     lookup: STR_MEDI_KIT_PREREQ
   - name: STR_APOTHECARY_GK # apothecary for GREY KNIGHTS
     cost: 210
@@ -1883,7 +1885,7 @@ research:
       - STR_UFO_CONSTRUCTION # Ceramite Plates
       - STR_GENERALLOCK
 
-  - name: STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE # This will be available later as a mission unlock
+  - name: STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE ##TAUROS craft access and Jump Armor, This will be available later as a mission unlock
     cost: 250 # 0
     points: 0
     dependencies:
@@ -1906,6 +1908,7 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_MIDTIER_PREREQ
+      - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_GENERALLOCK
 
   ### SOLDIERS
@@ -1914,6 +1917,13 @@ research:
     points: 0
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GENERALLOCK
+
+  - name: STR_STEELLEGION_GUARDSMEN
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_STEEL_LEGION_STRATEGY
       - STR_GENERALLOCK
 
   - name: STR_PENITENT_GUARD
@@ -2048,6 +2058,7 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_UFO_CONSTRUCTION
       - STR_BASIC_SENTINEL
+      - STR_NOT_STEEL_LEGION_STRATEGY
     unlocks:
       - STR_HFLAMER_FUEL_MANUFACTURING
 
@@ -2244,6 +2255,9 @@ research:
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_IGS
     refNode: *STR_LOCKED
+  - name: STR_CHOSEN_STEELLEGION
+    refNode: *STR_LOCKED
+
   - name: STR_CHOSEN_ELDAR
     refNode: *STR_LOCKED
 
@@ -2253,6 +2267,8 @@ research:
   - name: STR_NOT_ELITE_STRATEGY
     refNode: *STR_LOCKED
   - name: STR_NOT_ABHUMAN_STRATEGY
+    refNode: *STR_LOCKED
+  - name: STR_NOT_STEEL_LEGION_STRATEGY
     refNode: *STR_LOCKED
 
   ## FACTIONS + STRATEGIES
@@ -2275,6 +2291,7 @@ research:
       - STR_BASIC_SENTINEL_MISSILE
       - STR_PILOT_GUARDSMEN
       - STR_IMPERIUM_RESEARCH
+      - STR_NOT_STEEL_LEGION_STRATEGY
     disables:
       - STR_CYDONIA_OR_BUST
       - STR_MARINES_STRATEGY
@@ -2673,6 +2690,7 @@ research:
       - STR_NORMAL_STRATEGY_IG
       - STR_ELITE_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
       # - STR_MOTION_SCANNER
       # - STR_LASER_WEAPONS
       # - STR_SMOKE
@@ -2714,9 +2732,11 @@ research:
       - STR_PILOT_GUARDSMEN
       - STR_NOT_ELITE_STRATEGY
       - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
     disables:
       - STR_ELITE_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
 
   - name: STR_ELITE_STRATEGY_IG
     points: 0
@@ -2730,11 +2750,17 @@ research:
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
       - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_CARAPACE_ARMOR_IG
       - STR_SMOKE
       - STR_REGIMENT_OFFICERS
       - STR_TAUROX_IG
+      - STR_VALKYRIE_GRAV_DROP_IG
       - STR_TANITH_REQUISITIONS
-      - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE
+      - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE #TAUROS craft access and Jump Armor
+      - STR_ELYSIAN_JUMP_ARMOR_REQUISITION
+      - STR_JUMP_CARAPACE_DEP1
+      - STR_AIRSTRIKE_REQUISITION
+      - STR_JUMP_CARAPACE_REQUISITION
       #      - STR_GUARD_AND_ARBITES
       - STR_IMPERIAL_GUARD_MISSIONS
       - STR_KRIEG_GUARDSMEN
@@ -2743,9 +2769,11 @@ research:
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
       - STR_NOT_NORMAL_STRATEGY
       - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
     disables:
       - STR_NORMAL_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
 
   - name: STR_ABHUMAN_STRATEGY_IG
     points: 0
@@ -2773,9 +2801,45 @@ research:
       - STR_CHIMERA_LIGHT_IG
       - STR_NOT_NORMAL_STRATEGY
       - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
     disables:
       - STR_NORMAL_STRATEGY_IG
       - STR_ELITE_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
+
+  - name: STR_STEEL_LEGION_STRATEGY
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    lookup: STR_CHOSEN_STEELLEGION
+    spawnedEvent: STR_STEELLEGION_OFFICERS_EVENT
+    unlocks:
+      - STR_STEELLEGION_GUARDSMEN
+      - STR_SQUAT_GUARDSMEN #Steel Legion link
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_GUARD_BARRACKS
+      - STR_REGIMENT_OFFICERS
+      - STR_PENITENT_GUARD
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_CHIMERASL
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      #- STR_BASIC_SENTINEL SL has their own purchase and manufacturing topics
+      - STR_BASIC_SENTINEL_MISSILE #so they can buy missiles
+      - STR_PILOT_GUARDSMEN
+      #- STR_VALKYRIE_GRAV_DROP_IG #Ground focused Mechanzied strategy
+      - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_NORMAL_STRATEGY
+    disables:
+      - STR_ELITE_STRATEGY_IG
+      - STR_ABHUMAN_STRATEGY_IG
+      - STR_NORMAL_STRATEGY_IG
+      - STR_NOT_STEEL_LEGION_STRATEGY
 
   - name: STR_MIDTIER_GUARDSMEN
     dependencies:
@@ -2793,7 +2857,7 @@ research:
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_BASIC_PSYKERS_IG
       - STR_VULTURE_IG_REQUISITION
-      - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE
+      - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE #TAUROS craft access and Jump Armor
       - STR_HARDER_MISSIONS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
 
@@ -2803,10 +2867,8 @@ research:
       - STR_IMPERIAL_GUARD_MIDTIER
     unlocks:
       - STR_GUARDSMEN
-      - STR_CARAPACE_ARMOR_IG
       - STR_HEAVY_WEAPONS_IG
       - STR_GUARD_PRIEST_REQUISITION
-      - STR_AIRSTRIKE_REQUISITION
       - STR_BASIC_PSYKERS_IG
       - STR_VULTURE_IG_REQUISITION
       - STR_BASIC_SENTINEL
@@ -2828,6 +2890,26 @@ research:
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
       - STR_ABHUMAN_VETERAN
 
+  - name: STR_STEEL_LEGION_STRATEGY_MIDTIER
+    dependencies:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_IMPERIAL_GUARD_MIDTIER
+    unlocks:
+      - STR_CARAPACE_ARMOR_IG #change?
+      #- STR_TAUROX_IG
+      #- STR_FELINID_GUARDSMEN
+      #- STR_BEASTMEN_GUARDSMEN
+      - STR_GUARDSMEN_VETERAN #Insert Steel Legion replacement? So normal Veterans are not available to SL
+      - STR_GUARD_PRIEST_REQUISITION
+      - STR_AIRSTRIKE_REQUISITION #no air?
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      - STR_BASIC_PSYKERS_IG
+      #- STR_VULTURE_IG_REQUISITION #no air?
+      #- STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE
+      - STR_HARDER_MISSIONS
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE
+
+
   - name: STR_CERAMITE_TIER_GUARDSMEN
     dependencies:
       - STR_MIDTIER_GUARDSMEN
@@ -2842,6 +2924,12 @@ research:
     unlocks:
       - STR_GUARD_IMPERIAL_ASSASSIN_REQUISITION
 
+  - name: STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+    dependencies:
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+      - STR_UFO_CONSTRUCTION
+    unlocks:
+      - STR_GUARD_IMPERIAL_ASSASSIN_REQUISITION
   - name: STR_GUARD_BARRACKS
     dependencies:
       - STR_MIDTIER_PREREQ
@@ -2862,7 +2950,6 @@ research:
     lookup: STR_CHOSEN_GREYKNIGHTS
     getOneFree:
       - STR_HB
-      - STR_HALLEBARD
     unlocks:
       - STR_MOTION_SCANNER
       - STR_APOTHECARY_GK
@@ -3426,6 +3513,11 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
 
+  - name: STR_CHIMERASL
+    dependencies:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GENERALLOCK
+
   - name: STR_CHIMERA_LIGHT_IG
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -3897,6 +3989,7 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_MIDTIER_PREREQ
+      - STR_NOT_STEEL_LEGION_STRATEGY
     unlocks:
       - STR_ROTOR_CANNON_RESEARCH
 
@@ -4600,7 +4693,7 @@ research:
     cost: 300
     points: 30
     dependencies:
-      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_STORMTROOPER_REQUISITION
       - STR_GENERALLOCK
 
   - name: STR_LIGHT_BOLTERS_LOWTIER
@@ -5062,7 +5155,7 @@ research:
     cost: 100
     points: 15
     needItem: true
-  - name: STR_GREEN_FIRE
+  - name: STR_GREEN_FIRE_WEAPON
     cost: 100
     points: 15
     needItem: true
@@ -9225,12 +9318,35 @@ research:
       - STR_NURGLE_ZOMBIE
     destroyItem: true
 
+  - name: STR_LESSER_PLAGUE_TOAD
+    cost: 50
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_GREATER_PLAGUE_TOAD
+    destroyItem: true
+
+  - name: STR_GREATER_PLAGUE_TOAD
+    cost: 50
+    points: 25
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_LESSER_PLAGUE_TOAD
+    destroyItem: true
+
   - name: STR_NURGLE_DAEMONETTE
     cost: 50
     points: 25
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
       - STR_CHAOS_PATH
       - STR_PSI_LAB
     getOneFree:
@@ -9243,6 +9359,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
       - STR_CHAOS_PATH
       - STR_PSI_LAB
     getOneFree:
@@ -9317,6 +9434,21 @@ research:
     getOneFree:
       - STR_NURGLE_CULTIST_HEAVY
       - STR_NURGLE_OGRYN
+    destroyItem: true
+
+  - name: STR_NURGLE_CULTIST_LEADER_RITUALIST
+    cost: 75
+    points: 20
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+    getOneFree:
+      - STR_NURGLE_CULTIST_LEADER
     destroyItem: true
 
   # Captives Eldar
@@ -9443,6 +9575,9 @@ research:
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_KHORNE_SISTERASS_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_KHORNE_DREADNOUGHT_CORPSE_GEO
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_SLAANESH_SISTERPALATINE_CORPSE
@@ -10193,3 +10328,132 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_CHAMBERMILITANT
       - STR_APOC_BAY
+
+#dungeon specific start
+
+  - name: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_GUARD_POWER_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_KRIEG_POWER_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_SIGNAL_ARMOR_UC_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_LE10_POWER_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_ARLE10_POWER_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_INTERITUS_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_EXPULSUM_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_SATURNINE_ARMOR_HULK
+    needItem: true
+    destroyItem: false
+    cost: 25
+    points: 25
+
+  - name: STR_WARPED_VAULT
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_LOCKER_VAULT_RESEARCH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_RES_WARPED_HULK_LOOT_SM
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_MARINES_STRATEGY
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+  - name: STR_RES_WARPED_HULK_LOOT_IG
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+  - name: STR_RES_WARPED_HULK_LOOT_SIS
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_ADEPTAS
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+  - name: STR_RES_WARPED_HULK_LOOT_JUDGE
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_ARBITES
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+  - name: STR_RES_WARPED_HULK_LOOT_DEATH
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_DEATHWATCH
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+  - name: STR_RES_WARPED_HULK_LOOT_CHAMB
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_GREYKNIGHTS
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
+
+
+#dungeon specific end

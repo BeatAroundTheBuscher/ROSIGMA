@@ -542,6 +542,7 @@ armors:
     tags:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      UNIT_TYPE_DECOY: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
 
@@ -626,70 +627,6 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-
-  - type: STR_ADEPTAS_CALLIDUS_SUIT    #Kept for dodge script baseline
-    camouflageAtDay: -25 # you need to be 10 tiles closer than max vision range to see this unit in the light
-    camouflageAtDark: -15 # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 10
-    antiCamouflageAtDark: 10
-    spriteSheet: XCOM_63Callidus.PCK
-    spriteInv: MAN_43
-    customArmorPreviewIndex: 65
-    spriteFaceGroup: 6
-    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
-    spriteHairGroup: 9
-    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
-    corpseBattle:
-      - STR_ADEPTAS_CALLIDUSCORPSE
-    storeItem: STR_NONE
-    stats:
-      tu: 20
-      stamina: 20
-      health: 20
-      bravery: 10
-      reactions: 10
-      firing: 10
-      throwing: 0
-      strength: 0
-      psiStrength: 0
-      psiSkill: 0
-      melee: 10
-    frontArmor: 50
-    sideArmor: 45
-    rearArmor: 40
-    underArmor: 40
-    damageModifier: #Artificer Assassin Bodyglove
-      - 1.0 #NONE
-      - 0.8 #AP
-      - 0.8 #FLAMES
-      - 0.8 #HE
-      - 0.8 #LASCANNON
-      - 0.8 #PLASMA
-      - 0.8 #STUN
-      - 0.8 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 0.2 #IMPACT
-      - 0.8 #MELTA
-    units:
-      - STR_ADEPTAS_CALLIDUS
-    builtInWeapons:
-      - STR_NEURAL_SHREDDER
-      - STR_PHASE_BLADE
-      - INV_NULL_3X3
-      - INV_NULL_2X1_RL
-      - INV_NULL_2X1_LL
-    meleeDodge: #temple assassin
-      reactions: 0.3
-    loftempsSet: [ 1 ]
-    tags:
-      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_IMPERIUM: 1
-
-
   - type: STR_CALLIDUS_ASSASSIN_ARMOR    #ADEPTAS ASSASIN CALLIDUS Top Tier Assassin Armor
     camouflageAtDay: -25 # you need to be 10 tiles closer than max vision range to see this unit in the light
     camouflageAtDark: -16 # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
@@ -753,6 +690,7 @@ armors:
       ARMOR_RESTEALTH_KILL_REQUIREMENT: 5
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
 
   - &STR_DEATH_CULT_ASSASSIN_TEMPLATE
     type: STR_DEATHCULT_ASSASSIN_ARMOR    #ADEPTAS Death cult ASSASIN
@@ -1131,6 +1069,7 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
 
   - type: STR_ADEPTAS_ARMOR_REPSUPERIOR     #ADEPTAS Repentia Superior Armor
     visibilityAtDay: 40
@@ -1185,6 +1124,7 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
 
   - type: STR_ADEPTAS_ARMOR_NOVSUPERIOR     #ADEPTAS Novitiate Superior Armor
     visibilityAtDay: 40
@@ -1239,6 +1179,7 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
 
   - type: STR_ADEPTAS_ARMOR_UC     #ADEPTAS
     visibilityAtDay: 40
@@ -1398,6 +1339,63 @@ armors:
       - 1.0 #STUN
       - 1.0 #MELEE
       - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_ADEPTAS
+      - STR_ADEPTAS_VETERAN
+      - STR_ADEPTAS_SUPERIOR
+      - STR_ADEPTAS_REPENTIA_SUPERIOR
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR
+      - STR_CANONESS
+    loftempsSet: [ 3 ]
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_ADEPTAS_BLOODYROSE_ELOHIM    #Bloody Rose Elohim variant
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
+    spriteSheet: BLOODYROSE_ELOHIM.PCK
+    spriteInv: BLOODYROSEELOHIM_33
+    customArmorPreviewIndex: 127 #replace?
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_ADEPTAS_BLOODYROSE_ELOHIM_CORPSE
+    stats:
+       tu: 15
+       stamina: 20
+       health: 10
+       bravery: 10 #always multiples of 10
+       reactions: 15 #more
+       firing: 5 #less
+       throwing: 5 #less
+       strength: 15 #more
+       psiStrength: 0
+       psiSkill: 6 #less
+       melee: 15 #more
+    storeItem: STR_ADEPTAS_ARMOR_ELOHIM
+    frontArmor: 120 #BR bonus 5 points
+    sideArmor: 100 #BR malus 5 points
+    rearArmor: 65 #BR malus 5 points
+    underArmor: 80
+    damageModifier: #MARINE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.6 #FLAMES
+      - 0.8 #HE
+      - 0.8 #LASCANON
+      - 1.1 #PLASMA
+      - 1.0 #STUN
+      - 0.9 #MELEE BR bonus
+      - 0.7 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.0 #MELTA
@@ -2328,6 +2326,7 @@ armors:
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
 
   - type: STR_ADEPTAS_ARMORI_UC    #ADEPTAS INQUISITOR
     visibilityAtDay: 40
@@ -2393,8 +2392,12 @@ armors:
     visibilityAtDark: 40
     antiCamouflageAtDay: 20
     antiCamouflageAtDark: 20
+    psiVision: 5 #daemonic
+    heatVision: 33 #daemonic
     instantWoundRecovery: true
-    bleedImmune: false
+    fearImmune: true
+    zombiImmune: true
+    bleedImmune: true
     spriteSheet: CELSUP.PCK
     spriteInv: MAN_48
     customArmorPreviewIndex: [73, 74, 75]
@@ -2443,7 +2446,7 @@ armors:
     frontArmor: 150
     sideArmor: 140
     rearArmor: 100
-    underArmor: 100
+    underArmor: 150
     drawingRoutine: 20
     constantAnimation: false
     movementType: 1
@@ -3205,3 +3208,84 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TZEENTCH: 1
       UNIT_TYPE_PSYKER: 1 #counts as psyker due to psivision
+
+#dungeon specific start
+
+  - type: STR_INTERITUS_ARMOR_HULK
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 25
+    heatVision: 20 #same as Chimera or Taurox
+    antiCamouflageAtDay: 4 #equivalent to Scion gear
+    antiCamouflageAtDark: 4 #equivalent to Scion gear
+    loftempsSet: [ 4 ]
+    storeItem: STR_INTERITUS_ARMOR_HULK
+    customArmorPreviewIndex: 858
+    spriteSheet: INTERITUS_ARMOR_BS.PCK
+    frontArmor: 140
+    sideArmor: 140
+    rearArmor: 120
+    underArmor: 120
+    corpseBattle:
+      - STR_INTERITUS_CORPSE_GEO
+    damageModifier:
+      - 1.0 #none
+      - 0.6 #AP
+      - 0.4 #FLAMES
+      - 0.5 #HE
+      - 0.6 #LASCANON
+      - 0.8 #PLASMA
+      - 0.7 #STUN
+      - 0.8 #MELEE
+      - 0.7 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.7 #MELTA
+    stats:
+      tu: 15
+      stamina: 35
+      health: 50
+      bravery: 50 #always multiples of 10
+      reactions: 5
+      firing: 30
+      throwing: 5
+      strength: 40
+      psiStrength: 25
+      psiSkill: 50
+      melee: 10
+    specialWeapon: AUX_MORTAR
+    units:
+      - STR_CANONESS
+      - STR_ADEPTAS_SUPERIOR
+      - STR_ADEPTAS_REPENTIA_SUPERIOR
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+    layersDefaultPrefix: 0
+    layersSpecificPrefix:
+      1: ADEPTAS
+    layersDefinition:
+      M0: ["0", "INTERITUS_ARMOR_INV"]
+      M1: ["0", "INTERITUS_ARMOR_INV"]
+      M2: ["0", "INTERITUS_ARMOR_INV"]
+      M3: ["0", "INTERITUS_ARMOR_INV"]
+      M4: ["0", "INTERITUS_ARMOR_INV"]
+      M5: ["0", "INTERITUS_ARMOR_INV"]
+      M6: ["0", "INTERITUS_ARMOR_INV"]
+      M7: ["0", "INTERITUS_ARMOR_INV"]
+      M8: ["0", "INTERITUS_ARMOR_INV"]
+      M9: ["0", "INTERITUS_ARMOR_INV"]
+      F0: ["0", "INTERITUS_ARMOR_INV"]
+      F1: ["0", "INTERITUS_ARMOR_INV"]
+      F2: ["0", "INTERITUS_ARMOR_INV"]
+      F3: ["0", "INTERITUS_ARMOR_INV"]
+      F4: ["0", "INTERITUS_ARMOR_INV"]
+      F5: ["0", "INTERITUS_ARMOR_INV"]
+      F6: ["0", "INTERITUS_ARMOR_INV"]
+      F8: ["0", "INTERITUS_ARMOR_INV"]
+      F9: ["0", "INTERITUS_ARMOR_INV"]
+
+#dungeon specific end

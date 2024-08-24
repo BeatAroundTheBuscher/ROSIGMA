@@ -11,6 +11,7 @@ soldierTransformation:
     allowsWoundedSoldiers: false
     allowedSoldierTypes:
       - STR_GUARDSM
+      - STR_GUARDSL
     transferTime: 336 # 2 weeks
     flatOverallStatChange:
       reactions: 10
@@ -21,6 +22,7 @@ soldierTransformation:
     requires:
       - STR_REGIMENT_OFFICERS
       - STR_GUARDSMEN_VETERAN
+      - STR_NOT_STEEL_LEGION_STRATEGY
     producedSoldierType: STR_GUARD_OFFICER_VETERAN
     producedSoldierArmor: STR_STORMTROOPER_OFFICER_CARAPACE_ARMOR
     allowsDeadSoldiers: false
@@ -41,6 +43,7 @@ soldierTransformation:
   - name: STR_PROMOTE_OFFICER
     requires:
       - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
     requiredItems:
       # STR_KILLPOINT_TOKEN: 60 # not changed because of officer sword
       STR_OFFICER_COMMISSION: 1
@@ -82,6 +85,44 @@ soldierTransformation:
       bravery: 50
       tu: 1
 
+  - &STR_OFFICER_PROMOTION_SL
+    name: STR_PROMOTE_VETERAN_OFFICER_SL
+    requires:
+      - STR_REGIMENT_OFFICERS
+      - STR_GUARDSMEN_VETERAN #research topic 
+      - STR_STEEL_LEGION_STRATEGY
+    producedSoldierType: STR_GUARDSL_OFFICER_VETERAN 
+    producedSoldierArmor: STR_STEELLEGION_CARAPACE_ARMOR_OFFICER
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARDSL_VETERAN
+    # cost: 50000
+    requiredItems:
+      # STR_KILLPOINT_TOKEN: 60 # not changed because of officer sword
+      STR_OFFICER_COMMISSION: 1
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+    requiredMinStats:
+      bravery: 50
+      tu: 1
+
+  - name: STR_PROMOTE_OFFICER_VETERAN_SL
+    refNode: *STR_OFFICER_PROMOTION_SL
+    allowedSoldierTypes:
+      - STR_GUARDSL_OFFICER
+    cost: 50000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 100
+      # STR_VETERAN_PROMOTION: 1
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+      STR_BATTLE_TESTED: 0
+    requiredMinStats:
+      bravery: 50
+      tu: 1
+
   - name: STR_VETERAN_PROMOTION
     requiredMinStats:
       tu: 1
@@ -91,7 +132,26 @@ soldierTransformation:
       - STR_GUARDSMEN_VETERAN
     requiredItems:
       STR_KILLPOINT_TOKEN: 50
-      
+
+  - name: STR_VETERAN_PROMOTION_SL
+    requiredMinStats:
+      tu: 1
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requires:
+      - STR_GUARDSMEN_VETERAN
+      - STR_STEEL_LEGION_STRATEGY
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+    producedSoldierType: STR_GUARDSL_VETERAN
+    producedSoldierArmor: STR_STEELLEGION_CARAPACE_ARMOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARDSL
+
+
   - name: STR_FELINID_VETERAN_PROMOTION
     requiredMinStats:
       tu: 1
@@ -141,6 +201,22 @@ soldierTransformation:
     requiredCommendations:
       STR_LONG_SERVICE_TIME: 0
 
+  - name: STR_PARDON_PENITENT_SL
+    requires:
+      - STR_PENITENT_GUARD
+      - STR_STEEL_LEGION_STRATEGY 
+    producedSoldierType: STR_GUARDSL
+    cost: 15000
+    keepSoldierArmor: False
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: false
+    allowedSoldierTypes:
+      - STR_PENITENT_GUARD
+    transferTime: 0
+    requiredCommendations:
+      STR_LONG_SERVICE_TIME: 0
+
   - name: STR_RETIRE_HERO
     producedItem: STR_RETIREE
     requires:
@@ -160,12 +236,16 @@ soldierTransformation:
       - STR_GUARD_KRIEG_GRENADIER
       - STR_GUARD_OFFICER
       - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_OFFICER
+      - STR_GUARDSL_OFFICER_VETERAN
       - STR_GUARD_PRIEST
       - STR_GUARDSM
       - STR_GUARDSM_KRIEG
+      - STR_GUARDSL
       - STR_GUARD_SQUAT
       - STR_GUARD_TANITH
       - STR_GUARD_VETERAN
+      - STR_GUARDSL_VETERAN
       - STR_LORD_COMMISSAR
       - STR_LORD_COMMISSAR_YARRICK
       - STR_PENITENT_GUARD
@@ -195,13 +275,17 @@ soldierTransformation:
       - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
       - STR_GUARD_PRIEST
       - STR_GUARDSM
+      - STR_GUARDSL
       - STR_GUARD_VETERAN
+      - STR_GUARDSL_VETERAN
       - STR_PSYKER
       - STR_STORMTROOPER
       - STR_STORMTROOPER_OFFICER
-      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARD_OFFICER
+      - STR_GUARDSL_OFFICER
       - STR_COMMISSAR
       - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
       - STR_PENITENT_GUARD
       - STR_PILOT_GUARD
       - STR_GUARDSM_KRIEG

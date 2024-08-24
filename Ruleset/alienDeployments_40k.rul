@@ -163,7 +163,7 @@ alienDeployments:
       STR_GSC_TRUCK_CONVOY_PATROL_LARGE: 25
       STR_GSC_TAUROX_PATROL_LARGE: 30
       STR_GENE_INFILTRATION: 0 # inherited from OXCE_40k objective: 1 doesn't work properly for bases. Might also miss spawnZone
-      
+
     genMission: !remove
       STR_MONOLITH_PATROL: 50
     genMission: !remove
@@ -365,7 +365,7 @@ alienDeployments:
     abortPenalty: 500
     width: 60 # was 30
     length: 60
-    missionBountyItem: STR_REQUISITION_BOUNTY_500K
+    missionBountyItem: [STR_REQUISITION_BOUNTY_500K, 4]
     objectiveType: 14
     objectivesRequired: 1 # only destroy 1 of 8 tiles
     briefing:
@@ -540,7 +540,7 @@ alienDeployments:
             highQty: 0
             dQty: 1
             itemSets: *emptyItemSets
-    missionBountyItem: ""
+    missionBountyItem: [STR_REQUISITION_BOUNTY_500K, 2]
     unlockedResearch: STR_MONOLITH
 
   - type: STR_DOOMSDAY_MONOLITH    #NECRON
@@ -716,7 +716,7 @@ alienDeployments:
             highQty: 0
             dQty: 1
             itemSets: *emptyItemSets
-    missionBountyItem: ""
+    missionBountyItem: [STR_REQUISITION_BOUNTY_500K, 3]
     unlockedResearch: STR_DOOMSDAY_MONOLITH
 
   - type: STR_NECRON_RETALIATION
@@ -3435,16 +3435,6 @@ alienDeployments:
     width: 60
     length: 60
 
-  - type: STR_BATTLESHIP_S # not used assets
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_K
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_T
-    refNode: *STR_BATTLESHIP
-  - type: STR_BATTLESHIP_N
-    refNode: *STR_BATTLESHIP
-
-
   - type: STR_HELLS                     # RANK0  # RANK1
     data: *BATTLESHIP
     missionBountyItem: ""
@@ -4061,7 +4051,7 @@ alienDeployments:
     height: 9
     terrains:
       - ALART
-    shade: 15
+#    shade: 15 #surface base shouldn't be night only
     script: BASEASSAULT
     nextStage: STR_ALIEN_BASE_ASSAULT2_HARD
     briefing:
@@ -4218,8 +4208,8 @@ alienDeployments:
     length: 50
     height: 9
     terrains:
-      - ALART
-    shade: 15
+      - NURGALART
+#    shade: 15 #surface base shouldn't be night only
     script: BASEASSAULT
     nextStage: STR_ALIEN_BASE_ASSAULT2_NURGLE
     briefing:
@@ -4303,8 +4293,8 @@ alienDeployments:
     length: 50
     height: 2
     terrains:
-      - UBASE
-    shade: 15
+      - NURGUBASE
+#    shade: 15 #it is nurgle guys so it is hard enough without forcing night time
     script: ALIENBASE
     briefing:
       title: STR_ALIEN_BASE_ASSAULT2
@@ -4557,6 +4547,189 @@ alienDeployments:
         percentageOutsideUfo: 50
         itemSets: *emptyItemSets
     race: STR_CHAOS_FINAL_UNITED_EASY
+
+  - type: STR_MARS_CYDONIA_LANDING_GUARD_SL
+    music:
+      - INMYSPIRIT #change?
+    data:
+      - alienRank: 5
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 5
+        percentageOutsideUfo: 70
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 2 #0
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 2 #0
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 3
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 3
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    width: 70
+    length: 50
+    height: 7
+    terrains:
+      - FINALGUARD_SL
+    startingCondition: STR_FINAL_MISSION_GUARD
+    race: STR_ORK
+    script: FINAL01S
+    shade: 7
+    nextStage: STR_MARS_CYDONIA_ENTRANCE_GUARD_SL
+    loseCutscene: loseGame
+    briefing:
+      title: STR_FINALLAND_TITLE_SL
+      desc: STR_FINALLAND_DESC_SL
+      cutscene: c4
+      textOffset: -16
+      palette: 6
+      music: GMGEO19
+      showTarget: false
+    markerIcon: 57
+    markerName: STR_FINAL_BASE
+    finalDestination: false
+
+  - type: STR_MARS_CYDONIA_ENTRANCE_GUARD_SL
+    music:
+      - GMGEO19
+    data:
+      - alienRank: 5
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 5
+        percentageOutsideUfo: 60
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 4 #3
+        highQty: 4 #5
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 0
+        lowQty: 4 #3
+        highQty: 4 #5
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 3 #2
+        highQty: 3 #4
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    race: STR_ORK
+    width: 50
+    length: 70
+    height: 7
+    terrains:
+      - MARSGUARD_SL
+    script: FINAL02S_GUARD
+    shade: 15
+    nextStage: STR_MARS_THE_FINAL_ASSAULT_STEELLEGION
+    loseCutscene: loseGame
+    abortCutscene: loseGame
+    briefing:
+      title: STR_FINALENTRANCE_TITLE_SL
+      desc: STR_FINALENTRANCE_DESC_SL
+      textOffset: -16
+      palette: 6
+      music: GMGEO19
+      showTarget: false
+
+  - type: STR_MARS_THE_FINAL_ASSAULT_STEELLEGION #STEEL LEGION PHASE 3 FINAL MISSION
+    enviroEffects: STR_INSIDE_ENVIRO
+    data:
+      - alienRank: 0
+        lowQty: 3 #2
+        highQty: 3 #4
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 4 #1
+        highQty: 4 #3
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 4 #3
+        highQty: 4 #5
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 5 #3
+        highQty: 5 #5
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 3 #3
+        highQty: 3 #5
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 8 #3
+        highQty: 8 #5
+        dQty: 6
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 3 #1
+        highQty: 3 #4
+        dQty: 4 #0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    race: STR_ORK
+    width: 60
+    length: 60
+    height: 2
+    terrains:
+      - UBASE_SL
+    shade: 5
+    winCutscene: winGame
+    loseCutscene: loseGame
+    briefing:
+      title: STR_FINAL_TITLE
+      desc: STR_FINAL_DESC_SL
+      textOffset: -16
+      palette: 6
+      music: FATE
+      showTarget: false
+      showCraft: false
+      background: BACK01.SCR
+    script: BOSSBATTLE1
+    objectiveType: 14
+    objectivesRequired: 1
 
   - type: STR_MARS_CYDONIA_LANDING_ADEPTAS
     data:
@@ -10173,6 +10346,28 @@ alienDeployments:
 
 #NURGLE SHIP DEPLOYMENTS
 
+  - type: STR_NURGLE_INTERCEPTOR
+    briefing:
+      cutscene: VERYSMALL
+      music: gmstory2
+    data:
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets:
+          -
+            []
+          -
+            []
+          -
+            []
+    width: 40
+    length: 40
+    height: 9
+    missionBountyItem: STR_HELLT_DATA
+
   - type: STR_NURGLE_SMALL_SCOUT
     data:
       - alienRank: 5
@@ -10884,3 +11079,1035 @@ alienDeployments:
     width: 60
     length: 60
     height: 9
+
+#dungeon specific start
+
+  - type: STR_SPACERHULKER_SITE_P1
+    music:
+      - ALITRI
+    markerIcon: 8
+    enviroEffects: STR_INSIDE_ENVIRO
+    data:
+      - alienRank: 0
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 1
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 2
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 20
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 1 #0
+        percentageOutsideUfo: 20
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 1
+        percentageOutsideUfo: 70
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: [[], [], []]
+    width: 50
+    length: 50
+    height: 2
+    terrains:
+      - WARPUSTART
+    script: HULKER_P1
+    shade: 2
+    nextStage: STR_SPACERHULKER_SITE_P2
+    briefing:
+      cutscene: HULK1
+      music: gmstory2
+      title: STR_HULKER_CONTACT_SITE_MISSION
+      palette: 4
+    alert: STR_HULKER_ACTIVITY_DETECTED
+    alertBackground: WARPED1.SCR
+    alertSound: 52
+    markerName: STR_HULKERARTIFACT_SITE
+    duration: [50000, 100000]
+    despawnPenalty: 500
+    objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
+    alienBase: true    # this is only to tell new battle mode what to do with this deployment
+    abortPenalty: 50
+
+  - type: STR_SPACERHULKER_SITE_P2                    #STR_INSIDE_ENVIRO
+    music:
+      - SH93
+    enviroEffects: STR_INSIDE_ENVIRO
+    shade: 2
+    data:
+      - alienRank: 0
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 1
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 2
+        lowQty: 0
+        highQty: 0
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 2
+        highQty: 2
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 3
+        highQty: 3 #2
+        dQty: 3 #0
+        percentageOutsideUfo: 20
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 5
+        percentageOutsideUfo: 70
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 3 #1
+        highQty: 3 #3
+        dQty: 3
+        percentageOutsideUfo: 50
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 4 #1
+        highQty: 4 #3
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: [[], [], []]
+    width: 50
+    length: 50
+    height: 2
+    terrains:
+      - WARPUBASE
+    shade: 5
+    script: HULKER_P2
+    nextStage: STR_SPACERHULKER_SITE_P3
+    briefing:
+      music: gmdefend
+      title: STR_HULKER_CONTACT_SITE_MISSION
+      palette: 4
+      background: WARPED1.SCR
+    markerName: STR_HULKERARTIFACT_SITE
+    objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
+    alienBase: true    # this is only to tell new battle mode what to do with this deployment
+    abortPenalty: 50
+
+  - type: STR_SPACERHULKER_SITE_P3                    #STR_INSIDE_ENVIRO
+    music:
+      - SHSC
+    enviroEffects: STR_INSIDE_ENVIRO
+    data:
+      - alienRank: 0
+        lowQty: 0 #was 1
+        highQty: 0 #was 1
+        dQty: 0 #was 1
+        percentageOutsideUfo: 70
+        itemSets: [[], [], []]
+      - alienRank: 1
+        lowQty: 10
+        highQty: 10 #3
+        dQty: 10 #1
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 2
+        lowQty: 0 #8
+        highQty: 0 #12
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 0 #8
+        highQty: 0 #12
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 0 #4
+        highQty: 0 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+    reinforcements:
+      - type: P3HulkerReinforcement1
+        briefing:
+          music: SHSC
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 4
+        maxTurn: 4
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 10
+            highQty: 10
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P3HulkerReinforcement2
+        briefing:
+          music: SHSC
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 8
+        maxTurn: 8
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 10
+            highQty: 10
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P3HulkerReinforcement3
+        briefing:
+          music: SHSC
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS2_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 12
+        maxTurn: 12
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 15
+            highQty: 15
+            dQty: 15
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+    width: 50
+    length: 50
+    height: 2
+    terrains:
+      - WARPSCUBASE
+    shade: 7
+    script: HULKER_P3
+    nextStage: STR_SPACERHULKER_SITE_P4
+    briefing:
+      music: gmdefend
+      title: STR_HULKER_CONTACT_SITE_MISSION
+      palette: 4
+      background: WARPED1.SCR
+    markerName: STR_HULKERARTIFACT_SITE
+    objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
+    alienBase: true    # this is only to tell new battle mode what to do with this deployment
+    abortPenalty: 50
+
+  - type: STR_SPACERHULKER_SITE_P4                    #STR_INSIDE_ENVIRO
+    music:
+      - SH93AM
+    enviroEffects: STR_INSIDE_ENVIRO
+    data:
+      - alienRank: 0
+        lowQty: 0 #was 1
+        highQty: 0 #was 1
+        dQty: 0 #was 1
+        percentageOutsideUfo: 70
+        itemSets: [[], [], []]
+      - alienRank: 1
+        lowQty: 0
+        highQty: 0 #3
+        dQty: 0 #1
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 2
+        lowQty: 10 #8
+        highQty: 10 #12
+        dQty: 10
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 0 #8
+        highQty: 0 #12
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 0 #4
+        highQty: 0 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+    reinforcements:
+      - type: P4HulkerReinforcement1
+        briefing:
+          music: SH93AM
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 4
+        maxTurn: 4
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 10
+            highQty: 10
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P4HulkerReinforcement2
+        briefing:
+          music: SH93AM
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 8
+        maxTurn: 8
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 10
+            highQty: 10
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P4HulkerReinforcement3
+        briefing:
+          music: SH93AM
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS2_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 12
+        maxTurn: 12
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 15
+            highQty: 15
+            dQty: 15
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+    width: 50
+    length: 50
+    height: 2
+    terrains:
+      - WARP93UBASE
+    shade: 6
+    script: HULKER_P4
+    nextStage: STR_SPACERHULKER_SITE_P5
+    briefing:
+      music: gmdefend
+      title: STR_HULKER_CONTACT_SITE_MISSION
+      palette: 4
+      background: WARPED1.SCR
+    markerName: STR_HULKERARTIFACT_SITE
+    objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
+    alienBase: true    # this is only to tell new battle mode what to do with this deployment
+    abortPenalty: 50
+
+  - type: STR_SPACERHULKER_SITE_P5                    #STR_INSIDE_ENVIRO
+    music:
+      - SH95
+    enviroEffects: STR_INSIDE_ENVIRO
+    data:
+      - alienRank: 0
+        lowQty: 10 #was 1
+        highQty: 10 #was 1
+        dQty: 10 #was 1
+        percentageOutsideUfo: 70
+        itemSets: [[], [], []]
+      - alienRank: 1
+        lowQty: 0
+        highQty: 0 #3
+        dQty: 0 #1
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 2
+        lowQty: 0 #8
+        highQty: 0 #12
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 0 #8
+        highQty: 0 #12
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 0 #4
+        highQty: 0 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 0 #4
+        highQty: 0 #8
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: [[], [], []]
+    reinforcements:
+      - type: P5HulkerReinforcement1
+        briefing:
+          music: SH95
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 4
+        maxTurn: 4
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 15
+            highQty: 15
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P5HulkerReinforcement2
+        briefing:
+          music: SH95
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 8
+        maxTurn: 8
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 15
+            highQty: 15
+            dQty: 5
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P5HulkerReinforcement3
+        briefing:
+          music: SH95
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS2_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 12
+        maxTurn: 12
+        executionOdds: 100
+        maxRuns: 1
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 15
+            highQty: 15
+            dQty: 15
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+      - type: P5HulkerReinforcement4
+        briefing:
+          music: SH95
+          palette: 4
+          textOffset: -32
+          title: STR_HULKER_REINFORCEMENTS_TITLE
+          desc: STR_HULKER_REINFORCEMENTS3_DESC
+          background: WARPEDRF.SCR
+          cutscene: ""
+          showCraft: false
+          showTarget: false
+        minTurn: 15
+        maxTurn: 15
+        executionOdds: 100
+        maxRuns: -1 #never end from now
+        mapBlockFilterType: 0 # all blocks, just go by node placement
+        minDistanceFromXcomUnits: 10
+        data:
+          - alienRank: 0
+            lowQty: 7
+            highQty: 7
+            dQty: 7
+            percentageOutsideUfo: 0 # must be 0 to be enemy
+            itemSets: [[], [], []]
+          - alienRank: 1
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 2
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 3
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 4
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 5
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 6
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+          - alienRank: 7
+            lowQty: 0
+            highQty: 0
+            dQty: 0
+            percentageOutsideUfo: 0
+            itemSets: [[], [], []]
+    width: 60 # was 30
+    length: 60
+    height: 7
+    terrains:
+      - W05TOMB
+    shade: 3
+    script: HULKER_P5
+    briefing:
+      music: gmdefend
+      title: STR_HULKER_CONTACT_SITE_MISSION
+      palette: 4
+      background: WARPED1.SCR
+    markerName: STR_HULKERARTIFACT_SITE
+    objectiveType: 14
+    objectivesRequired: 1 # only destroy 1 of 8 tiles
+    objectiveComplete: [STR_HULKATMOSPHERE_DESTROYED, 1000]
+    objectiveFailed: [STR_ALIEN_SYNOMIUM_DEVICE_FAILED, -750]
+    missionBountyItem: STR_WARPED_HULK_LOOT # item added after successful mission
+    alienBase: true    # this is only to tell new battle mode what to do with this deployment
+    unlockedResearch: STR_LOCKER_VAULT_RESEARCH
+
+#dungeon specific end

@@ -921,7 +921,7 @@ items:
 
   - type: STR_HEAVY_SNIPER_RIFLEG # GUARD autocannon based sniper rifle
     categories: [STR_CAT_SNIPER]
-    dropoff: 3
+    dropoff: 3 #scoped sniper rifle
     weight: 50
     size: 0.4
     requiresBuy:
@@ -953,8 +953,8 @@ items:
     tuAuto: 0
     tuSnap: 45
     tuAimed: 60
-    autoShots: 1
     listOrder: 10775
+    tuLoad: 30
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
     kneelBonus: 150
@@ -1324,6 +1324,7 @@ items:
       spendPerShot: 2
     followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     confAimed:
+      name: STR_FULL_AUTO
       shots: 25
       spendPerShot: 2
       followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
@@ -1391,6 +1392,7 @@ items:
       arcing: false
       followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     confAimed:
+      name: STR_FULL_AUTO
       shots: 25
       spendPerShot: 2
       ammoSlot: 0
@@ -1600,8 +1602,35 @@ items:
       - STR_IMPERIAL_GUARD_MIDTIER
       - STR_BASIC_SENTINEL
 
+#STEEL LEGION sentinels
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_LASC
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_LASCAN
+    size: 2
+    costBuy: 320000
+    costSell: 100000
+    transferTime: 50
+    listOrder: 6799
 
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_MISSILE
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    size: 2
+    costBuy: 320000
+    costSell: 100000
+    transferTime: 50
+    listOrder: 6799
 
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_MULTIMELTA #flamer+melta combo weapon
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_ELERIUM_115 # Promethium
+    size: 2
+    costBuy: 320000
+    costSell: 100000
+    transferTime: 50
+    listOrder: 6799
 
 
   - type: STR_EXPLOSIVE_COLLAR #frag                #4006
@@ -1795,6 +1824,7 @@ items:
       ITEM_BLESS_FIRING_ACCURACY: 1
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_GUARD_PRIEST_BLESS
     categories: [STR_CAT_SPELLS]
@@ -1869,6 +1899,7 @@ items:
       ITEM_BLESS_MELEE_ACCURACY: 1
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 100
 
   - type: STR_LASER_RIFLE # blue one
     armor: 200 #to avoid item pile destruction
@@ -1891,6 +1922,8 @@ items:
       energy: true
 
   - type: STR_LASER_RIFLEG #LASGUN GUARD
+    requiresBuy:
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 8
     bigSprite: 207
     armor: 200 #to avoid item pile destruction
@@ -1918,6 +1951,7 @@ items:
     requiresBuy:
       - STR_MIDTIER_PREREQ
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     costBuy: 20000 #3500 for basic, so more expensive, longlas is still more expensive.
     costSell: 1500
     weight: 8
@@ -1962,6 +1996,10 @@ items:
       energy: true
 
   - type: STR_LASCARBINE
+    requiresBuy:
+      - STR_LASER_WEAPONS
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     armor: 200 #to avoid item pile destruction
     meleePower: 50
     meleeBonus:
@@ -2411,7 +2449,13 @@ items:
     power: 200 # airstrike
     damageType: 3
     damageAlter:
-      ToArmorPre: 0.15 # default is 0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
       RadiusReduction: 5 # default is 10 # range is independent of RadiusReduction (= power / 20)
       FireThreshold: 150
 
@@ -2425,11 +2469,11 @@ items:
     accuracyAimed: 150
     accuracyMultiplier:
       flatHundred: 1.0
-    tuAimed: 40
+    tuAimed: 60
     arcingShot: true
     noLOSAccuracyPenalty: 100 #airstrike
     battleType: 1
-    minRange: 5
+    minRange: 10
     dropoff: 0
     recover: false
     fixedWeapon: true
@@ -2771,6 +2815,8 @@ items:
     handSprite: 400
     bulletSprite: {mod: 40k, index: 0}
     fireSound:  {mod: 40k, index: 4}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     compatibleAmmo:
       - STR_MORTAR_AMMO_HE
@@ -2781,8 +2827,8 @@ items:
       - STR_MORTAR_AMMO_PHOTON
       - STR_MORTAR_AMMO_FRAG
     accuracyAimed: 30 #was 50, reduced for the waypoint system
-    tuLoad: 30 #a bit of work to reload
-    tuAimed: 50 #two grenades per turn+some turn adjustment, or reload cost?
+    tuLoad: 20 #a bit of work to reload
+    tuAimed: 80 #two grenades per turn+some turn adjustment, or reload cost?
     reloadSound: 2427
     autoRange: 0
     snapRange: 0 #no snap, to prevent reactions
@@ -2800,17 +2846,47 @@ items:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
       ITEM_HAS_BIPOD: 1
 
-  - type: STR_MORTAR_AMMO_HE #HE munition
+  - &STR_MORTAR_AMMO_TEMPLATE
+    type: STR_MORTAR_AMMO_HE #HE munition
     size: 0.1
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 10000
-    costSell: 500
+    costBuy: 7500
+    costSell: 1000
     weight: 6
     bigSprite: 911
     floorSprite: 2062
     handSprite: { mod: 40k, index: 352 } #Needs new
-    power: 100
+    explosionHitSound: {mod: 40k, index: 704}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
+    power: 120
+    damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToArmorPre: 0
+      FixRadius: 0
+    spawnItem: STR_MORTAR_AMMO_HE_EXPLOSION
+    spawnItemChance: 100
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 100
+    listOrder: 11872
+
+  - &STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    type: STR_MORTAR_AMMO_HE_EXPLOSION #HE munition
+    size: 0.1
+    weight: 999
+    bigSprite: 100
+    floorSprite: 959
+    handSprite: 0
+    hitAnimation: 0
+    power: 120
     damageType: 3
     damageAlter: #high explosive
       ToArmorPre: 0.1
@@ -2822,24 +2898,34 @@ items:
       ToTile: 0.75 #high explosive
       ToItem: 0.75 #high explosive
       FixRadius: 10 #1 for hand grenade version
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+    battleType: 4
+    invWidth: 0 #shouldn't be possible to pick up
+    invHeight: 0
+    isExplodingInHands: true
+    tuThrow: 9999
+    armor: 999
+    costUnprime:
+      time: 9999
+    inventoryMoveCost:
+      basePercent: 9999
+    recover: false
+    defaultInventorySlot: STR_GROUND
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_FRAG #frag munition
-    size: 0.1
-    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
-      - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
+    costBuy: 4000
     costSell: 500
-    weight: 6
     bigSprite: 917
     floorSprite: 296
     handSprite: { mod: 40k, index: 352 } #Needs new
-    power: 100
+    damageType: 1
+    spawnItem: STR_MORTAR_AMMO_FRAG_EXPLOSION
+
+  - type: STR_MORTAR_AMMO_FRAG_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 120
     damageType: 1
     damageAlter:
       ToArmorPre: 0.05 #small ablation
@@ -2852,25 +2938,21 @@ items:
       ToWound: 0.4 #shrapnel
       RandomWound: false
       ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
-      FixRadius: 7
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+      FixRadius: 10
 
   - type: STR_MORTAR_AMMO_KRAK #krak munition
-    size: 0.1
-    requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
-      - STR_HEAVY_WEAPONS_IG
-    costBuy: 20000
-    costSell: 2000
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
+    costBuy: 5000
+    costSell: 1000
     weight: 7
     bigSprite: 912
     floorSprite:  {mod: 40k, index: 70} #update with new
     handSprite:  {mod: 40k, index: 136} #update with new
-    power: 120 #handheld 40mm is 80 power
+    spawnItem: STR_MORTAR_AMMO_KRAK_EXPLOSION
+
+  - type: STR_MORTAR_AMMO_KRAK_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 140 #handheld 40mm is 80 power
     damageType: 3
     damageAlter:
       RandomType: 6 #gaussian
@@ -2879,29 +2961,30 @@ items:
       ToArmorPre: 0.3
       ToArmor: 0.3
       ArmorEffectiveness: 0.5
-      FixRadius: 2 #1 for hand grenade version
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    powerForAnimation: 48 # 5 / 5 = 1
-    armor: 200
-    listOrder: 11872
+      FixRadius: 3 #1 for hand grenade version
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOSPHOR #phosphor munition
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
+    costBuy: 4000
     costSell: 500
     weight: 5
     bigSprite: 914
     floorSprite:  2060
     handSprite:  {mod: 40k, index: 336 } #update with new
+    damageType: 8 #Acid burns
+    spawnItem: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION
+    spawnItemChance: 100
+
+  - type: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
     explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
     hitAnimation: {mod: 40k, index: 104 } #XSmoke
-    power: 100
+    power: 120
     damageType: 8 #Acid burns
     damageAlter:
       ToMorale: 1.0 #being savaged with white phosphorous is kinda demoralizing
@@ -2910,16 +2993,12 @@ items:
       ToHealth: 0.4
       ToStun: 0.4 #painful; agonizing even
       FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
-      FixRadius: 5
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+      FixRadius: 7
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_SMOKE
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
@@ -2929,58 +3008,68 @@ items:
     bigSprite: 913
     floorSprite: 2061
     handSprite: {mod: 40k, index: 336 } #update with new
+    spawnItem: STR_MORTAR_AMMO_SMOKE_EXPLOSION
+    spawnItemChance: 100
+
+  - type: STR_MORTAR_AMMO_SMOKE_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
     explosionHitSound: {mod: 40k, index: 792 } #792 Smoke
     hitAnimation: {mod: 40k, index: 104 } #XSmoke
     power: 80
     damageType: 9 #smoke
     damageAlter:
       FixRadius: 6 #5 for hand grenade version
-    blastRadius: 6
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_ILLUMINATION
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 1000
+    costBuy: 500
     costSell: 100
     weight: 2
     bigSprite: 915
     floorSprite: 2060
     handSprite: { mod: 40k, index: 336 } #Needs new
-    power: 20
+    spawnItem: STR_MORTAR_AMMO_ILLUMINATION_EXPLOSION
+    spawnItemChance: 100
+
+  - type: STR_MORTAR_AMMO_ILLUMINATION_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    power: 30
     damageType: 2 #incendiary
     damageAlter:
-      FixRadius: 3
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    armor: 200
-    listOrder: 11872
+      FixRadius: 4
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_MORTAR_AMMO_PHOTON #photon munition
-    size: 0.1
+    refNode: *STR_MORTAR_AMMO_TEMPLATE
     requiresBuy: #what tech is required for the item to be visible in the Hire/Purchase screen.
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_IG
-    costBuy: 5000
-    costSell: 100
+    costBuy: 4000
+    costSell: 1000
     weight: 2
     bigSprite: 916
     floorSprite: 2051 #update with new
     handSprite: 2020 #update with new
+    damageType: 6
+    power: 0
+    damageAlter:
+      FixRadius: 0
+    spawnItem: STR_MORTAR_AMMO_PHOTON_EXPLOSION
+    tags:
+      ITEM_AMMO_COLOR: 3
+
+  - type: STR_MORTAR_AMMO_PHOTON_EXPLOSION #HE munition
+    refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
+    damageType: 6
+    power: 80
     explosionHitSound: { mod: 40k, index: 803 }
     hitAnimation: 2100
-    #damageType: 2 #incendiary
-    damageType: 6
-    power: 60
     damageAlter:
       ArmorEffectiveness: 0.5
       ToStun: 0.5 # was 0.2
@@ -2989,15 +3078,9 @@ items:
       ToHealth: 0.05
       ToWound: 0.00
       RandomWound: false
-      FixRadius: 7
-    clipSize: 1
-    battleType: 2
-    invWidth: 1
-    invHeight: 3
-    listOrder: 11872
-    armor: 200
+      FixRadius: 8
     tags:
-      ITEM_AMMO_COLOR: 3
+      MUNITION_DELAY: 1
 
   - type: STR_GRENADE_LAUNCHER
     bigSprite: 257
@@ -3100,7 +3183,7 @@ items:
     damageAlter:
       ToArmorPre: 0.05
       ArmorEffectiveness: 0.90
-    clipSize: 125
+    clipSize: 150
     battleType: 2
     invWidth: 1
     invHeight: 3
@@ -3111,6 +3194,7 @@ items:
       ITEM_AMMO_SHADE: -3
 
   - type: STR_HEAVY_STUBBER_CLIP
+    clipSize: 150
     armor: 200
     tags:
       ITEM_AMMO_COLOR: 6
@@ -3806,6 +3890,7 @@ items:
       ITEM_STRENGTH_REQUIREMENT: 30
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
 # Worked together with Tal'Raziid
   - type: STR_OFFICERS_CHAIN_SWORD
@@ -3895,6 +3980,7 @@ items:
       ITEM_STRENGTH_REQUIREMENT: 20
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
 # Don't like how that 50% training mechanism works. I'd prefer if experience was halved instead of having a 50% chance to get training points. Might not matter much on average but it annoys me anyway.
   - type: STR_AUTOGUN
@@ -3914,7 +4000,8 @@ items:
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
 # more meaty sound
-  - type: STR_GUARD_PRIMER
+  - &STR_GUARD_INSPIRE
+    type: STR_GUARD_PRIMER
     meleeSound: {mod: 40k, index: 754}
     meleeHitSound: {mod: 40k, index: 773}
     meleeAnimation: {mod: 40k, index: 4}
@@ -3946,6 +4033,7 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_BAYONET
     meleeSound: {mod: 40k, index: 754}
@@ -4146,7 +4234,9 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
     accuracyMelee: 80
-    tuMelee: 10
+    costMelee:
+      time: 12
+      energy: 2
     flatRate: true
     clipSize: -1
     strengthApplied: false
@@ -4265,6 +4355,7 @@ items:
     invWidth: 1
     invHeight: 3
     listOrder: 12179
+
 
   - type: STR_FLECHETTE_PISTOL   #Delaque ceramite tier pistol
     categories: [STR_CAT_AUTO]
@@ -5247,3 +5338,571 @@ items:
     tags:
       ITEM_IS_PSYCHIC_POWER: 1
       ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+#STEEL LEGION
+
+  - &STR_LASGUN_STEEL_LEGION_TEMPLATE
+    type: STR_LASGUN_STEEL_LEGION #LASGUN Steel Legion
+    categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [IMPERIUM]
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    armor: 200
+    size: 0.2
+    dropoff: 5
+    costBuy: 5000
+    costSell: 1250
+    weight: 4
+    bigSprite: 925
+    floorSprite: 907
+    handSprite: 968
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 741}
+    damageType: 4
+    accuracyAuto: 45 #slightly better autofire accuracy
+    accuracySnap: 60 #slightly worse snap accuracy
+#    accuracyAimed: 100
+    tuAuto: 33
+    tuSnap: 25
+    snapRange: 14 #inferior snapfire range
+    autoRange: 11 #superior autofire range
+    autoShots: 5 #superior autofire
+#    tuAimed: 50
+    clipSize: 0
+    listOrder: 10911
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 50
+    invWidth: 2 #bigob
+    invHeight: 3
+    bulletSpeed: 50
+
+  - type: STR_LASCARBINE_STEEL_LEGION #LASCARBINE Steel Legion; CQC/Overwatch focus
+    refNode: *STR_LASGUN_STEEL_LEGION_TEMPLATE
+    bigSprite: 924
+    floorSprite: 906
+    handSprite: 952
+    invWidth: 1 #bigob
+    weight: 3
+    accuracySnap: 55
+    accuracyAuto: 40
+    oneHandedPenalty: 75
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 12
+    autoRange: 7
+    tags:
+      REACTION_MULTIPLIER: 150
+
+  - type: STR_LASCARBINE_STEEL_LEGION_MID #LASCARBINE Steel Legion; CQC/Overwatch focus
+    refNode: *STR_LASGUN_STEEL_LEGION_TEMPLATE
+    bigSprite: 926
+    floorSprite: 908
+    handSprite: 960
+    costBuy: 20000
+    costSell: 5000
+    invWidth: 1 #bigob
+    weight: 4
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 13
+    autoRange: 9
+    accuracySnap: 60
+    accuracyAuto: 50
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    tags:
+      REACTION_MULTIPLIER: 150
+    #*** Melee bayonet
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: 0
+    meleeType: 7
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+    accuracyMelee: 110
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    costMelee:
+      time: 14
+      energy: 2
+    flatMelee:
+      time: true
+      energy: true
+    oneHandedPenalty: 75
+
+  - type: STR_LASGUN_STEEL_LEGION_MID #LASGUN Steel Legion Mid Tier
+    refNode: *STR_LASGUN_STEEL_LEGION_TEMPLATE
+    bigSprite: 927
+    floorSprite: 909
+    handSprite: 976
+    costBuy: 30000
+    costSell: 6000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    weight: 4
+    snapRange: 15 #improved snap range
+    autoRange: 13 #superior autofire range
+    accuracyAuto: 55 #better autofire accuracy
+    accuracySnap: 65 #slightly better snap accuracy
+
+  - type: STR_LASGUN_STEEL_LEGION_HIGH #LASGUN Steel Legion Mid Tier; Scoped
+    refNode: *STR_LASGUN_STEEL_LEGION_TEMPLATE
+    bigSprite: 929
+    floorSprite: 911
+    handSprite: 984
+    costBuy: 200000
+    costSell: 50000
+    requiresBuyBaseFunc: [TRADE] #Market exclusive
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    dropoff: 4 #scoped; battle rifle
+    weight: 5
+    tuAimed: 60
+    snapRange: 16
+    autoRange: 15
+    aimRange: 20
+    accuracyAimed: 100
+    accuracyAuto: 70 #slightly better autofire accuracy vs standard MC lasgun
+    accuracySnap: 75 #slightly worse snap accuracy vs standard MC lasgun
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_VOLLEYGUN_STEEL_LEGION
+    categories: [STR_CAT_LASGUN]
+    size: 0.2
+    dropoff: 6 #CQC focused; basically a laser automatic shotgun
+    weight: 9
+    bigSprite: 932
+    floorSprite: 914
+    handSprite: 992
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 741}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    power: 75
+    damageType: 1
+    damageAlter:
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0 # hardly makes a difference
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+    accuracyAuto: 60
+    accuracySnap: 65
+    snapRange: 13
+    autoRange: 13
+    tuAuto: 35
+    tuSnap: 30
+    confAuto:
+      shots: 10
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+    clipSize: -1
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+
+  - type: STR_HELLGUN_STEEL_LEGION
+    categories: [STR_CAT_LASGUN]
+    size: 0.2
+    dropoff: 4 #scoped
+    weight: 9
+    bigSprite: 928
+    floorSprite: 910
+    handSprite: 1040
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 741}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 36}
+    power: 75
+    damageType: 1
+    damageAlter:
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0 # hardly makes a difference
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+    accuracyAuto: 70
+    accuracySnap: 75
+    accuracyAimed: 90
+    tuAuto: 35
+    tuSnap: 25
+    tuAimed: 70
+    aimRange: 25
+    snapRange: 14 #inferior snapfire range
+    autoRange: 14 #superior autofire range
+    autoShots: 5 #superior autofire
+    clipSize: -1
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - &STR_DISPOSABLE_LAUNCHER_STEEL_LEGION_TEMPLATE
+    type: STR_KRAK_LAUNCHER_STEEL_LEGION
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.4
+    requiresBuyBaseFunc: [TRADE] #Market exclusive
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+      - STR_HEAVY_WEAPONS_IG
+    costBuy: 20000
+    costSell: 5000
+    weight: 15
+    bigSprite: 933
+    floorSprite: 915
+    handSprite: 1000
+    dropoff: 4
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    battleType: 1
+    explosionHitSound: 5
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0 }
+    clipSize: 1
+    twoHanded: false
+    blockBothHands: true
+    oneHandedPenalty: 25
+    armor: 100
+    invWidth: 2
+    invHeight: 3
+    listOrder: 12180
+
+    autoRange: 0
+    snapRange: 12 # Pistol range
+    aimRange: 20
+
+    accuracyAuto: 0
+    accuracySnap: 50
+    accuracyAimed: 90
+    tuAuto: 0
+    tuSnap: 55
+    tuAimed: 80
+
+    power: 180 #tank killer; +50 more power than normal disposable
+    powerForAnimation: 16 # 5 / 5 = 1
+    maxRange: 200 # ROSIGMA 1.06Beta2 12
+    damageType: 1 # AP instead of HE
+    damageAlter:
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ToTile: 1.0
+      ToItem: 1.0
+      ArmorEffectiveness: 0.7
+      FixRadius: 1 #1 for hand grenade version
+
+    kneelBonus: 130 #heavy weapon
+    minRange: 7 #cumbersome and big
+
+  - type: STR_MELTA_LAUNCHER_STEEL_LEGION
+    refNode: *STR_DISPOSABLE_LAUNCHER_STEEL_LEGION_TEMPLATE
+    costBuy: 40000
+    costSell: 10000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+      - STR_HEAVY_WEAPONS_IG
+    damageType: 11
+    powerForAnimation: 0
+    bigSprite: 934
+    power: 150
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 1.0 #it's a melta grenade; it will melt armor
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmor: 0.0 #melts armor on the way in
+      ToHealth: 0.7
+      ToWound: 0.05
+      FireThreshold: 0.0
+      RandomWound: false
+      FixRadius: 7
+
+  - type: STR_HEAVY_FLAMER_STEEL_LEGION
+    categories: [STR_CAT_FLAMER]
+    requiresBuyBaseFunc: [TRADE] #Market exclusive
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+      - STR_HEAVY_WEAPONS_IG
+    size: 1.0
+    costBuy: 150000
+    costSell: 35000
+    weight: 70
+    bigSprite: 937
+    floorSprite: 917
+    handSprite: 1008
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    compatibleAmmo:
+      - STR_HFLAMER_CLIP
+    costThrow:
+      energy: 20
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 100
+    dropoff: 4
+
+    autoRange: 8
+    snapRange: 15 # HW but considered as Rifle in the model for range
+    aimRange: 0
+
+    accuracyAuto: 20
+    accuracySnap: 30
+    accuracyAimed: 0
+    tuSnap: 25
+    tuAuto: 45
+    tuLoad: 50
+
+    maxRange: 20
+    autoShots: 4
+    arcingShot: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+
+    minRange: 5
+    kneelBonus: 130
+    attraction: 12
+    bulletSpeed: 80
+    twoHanded: true
+    oneHandedPenalty: 100
+    experienceTrainingMode: 6
+    listOrder: 13301
+    tags:
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_GRENADE_LAUNCHER_STEEL_LEGION
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    requiresBuyBaseFunc: [IMPERIUM]
+    categories: [STR_CAT_ROCKETL]
+    size: 0.4
+    dropoff: 4
+    costBuy: 30000
+    costSell: 7000
+    weight: 15
+    bigSprite: 936
+    floorSprite: {mod: 40k, index: 1005}
+    handSprite: 1016
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 4}
+    compatibleAmmo:
+      - STR_FRAG_GRENADE_DRUM
+      - STR_KRAK_GRENADE_DRUM
+      - STR_INCENDIARY_GRENADE_DRUM
+      - STR_SMOKE_GRENADE_DRUM
+      - STR_PHOTON_GRENADE_DRUM
+    accuracySnap: 55 #much less accurate snap to offset autofire
+    accuracyAuto: 50
+    tuSnap: 45
+    tuAuto: 60
+    snapRange: 20
+    autoRange: 16
+    battleType: 1
+    arcingShot: true
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 100
+    listOrder: 11851
+    minRange: 5
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+
+  - type: AUX_BOLTERBANE #STR_BANE_BOLTER_TURRET
+    dropoff: 4
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    costSnap:
+      time: 1
+      energy: 2
+      mana: 2
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    costAimed:
+      time: 1
+      energy: 2
+      mana: 1
+    autoRange: 10
+    snapRange: 16
+    aimRange: 20
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: AUX_BOLTERBANE_TYPE_II #STR_BANE_BOLTER_RIGHT || STR_BANE_BOLTER_LEFT
+    dropoff: 4
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    costSnap:
+      time: 1
+      energy: 2
+      mana: 2
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    costAimed:
+      time: 1
+      energy: 2
+      mana: 1
+    autoRange: 10
+    snapRange: 16
+    aimRange: 20
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: AUX_LASCANBANE #STR_BANE_LAS_TURRET
+    dropoff: 3
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 10
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 10
+    aimRange: 30
+    power: 220 #full power lascannon
+    damageType: 4
+    damageAlter: #DA LAS MELTA
+      RandomType: 6
+      ToArmorPre: 0.5
+      ToHealth: 0.8
+      ToArmor: 0.2
+      ToStun: 0.0
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_BANEBLADE_WEAPON #STR_4X4_TURRET
+    powerForAnimation: 0
+    dropoff: 3
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 50
+    costAuto:
+      time: 1
+      energy: 10
+      mana: 50
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 50
+    aimRange: 30
+    snapRange: 30
+    autoRange: 30
+    accuracySnap: 100
+    accuracyAimed: 100
+    accuracyAuto: 100
+    power: 220 #fragmentation shell; lower damage, massive aoe
+    damageType: 1
+    damageAlter: #fragmentation
+      ToArmorPre: 0.05 #small ablation
+      ArmorEffectiveness: 1.1 #armor helps vs shrapnel
+      ToHealth: 0.7 #much damage dealt in the form of debuffs
+      ToTime: 0.2 #staggering
+      ToStun: 0.4 #painful
+      ToMorale: 0.5 #painful
+      ToEnergy: 0.4 #painful
+      ToWound: 0.4 #shrapnel
+      RandomWound: false
+      ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
+      FixRadius: 20
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_BANEBLADE_AP #STR_4X4_TURRET
+    powerForAnimation: 20
+    power: 300
+    damageType: 3
+    damageAlter: #AP
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ToTile: 1.0
+      ToItem: 1.0
+      ArmorEffectiveness: 0.7
+      ResistType: 1
+      FixRadius: 2
+    clipSize: -1
+
+  - type: STR_BANEBLADE_EX #STR_4X4_TURRET
+    power: 250 #lower power, but massive area
+    damageType: 3
+    damageAlter: #AP
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 10
+    clipSize: -1
+

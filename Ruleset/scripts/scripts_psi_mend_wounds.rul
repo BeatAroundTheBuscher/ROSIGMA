@@ -33,14 +33,17 @@ items:
     damageAlter:
       ResistType: 0 # SUPPORT
       RandomType: 6
-      ToStun: 0
-      ToHealth: 0
+      ToStun: 0.0
+      ToTime: 0.0
+      ToEnergy: 0.0
+      ToHealth: 0.0
       ArmorEffectiveness: 0.0
       ToArmor: 0
       ToWound: 0
       ToTile: 0
       ToItem: 0
       ToMorale: 0
+      RandomWound: false
     recover: false
     fixedWeapon: true
     specialIconSprite: {mod: 40k, index: 105}
@@ -53,12 +56,21 @@ items:
     tags:
       ITEM_MENDS_WOUNDS: 1
       ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_MEND_HEAL_CAP_PERCENT: 50
+      ITEM_MEND_STUN_PERCENT: 50
+      ITEM_MEND_ENERGY_PERCENT: 100
+      ITEM_MEND_TIME_PERCENT: 50
       ITEM_PSYCHIC_POWER_MODIFIER: 5
 
 extended:
   tags:
     RuleItem:
       ITEM_MENDS_WOUNDS: int
+      ITEM_MEND_HEAL_CAP_PERCENT: int #max % this heals up to
+      ITEM_MEND_HARMS_ENEMIES: int
+      ITEM_MEND_STUN_PERCENT: int #percent of rolled power removed from target stun
+      ITEM_MEND_ENERGY_PERCENT: int #percent of rolled power removed from target energy
+      ITEM_MEND_TIME_PERCENT: int #percent of rolled power removed from target TU
     RuleArmor:
       ARMOR_REGENERATES_WOUNDS: int #do we regenerate wounds? If so, how many?
       ARMOR_WOUND_REGENERATE_MAX_PERCENT: int #what's the max % we can regenerate up to?
@@ -234,12 +246,12 @@ extended:
           var int rulePower;
           var int targetFaction;
           var int attackerFaction;
+          var int statModifier;
           var ptr RuleItem ruleItem;
           var ptr RuleArmor armorRule;
 
           weapon_item.getRuleItem ruleItem;
           ruleItem.getTag temp Tag.ITEM_MENDS_WOUNDS;
-
           if eq temp 0;
             #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: No ITEM_MENDS_WOUNDS Tag. Aborting. temp:" temp;
             return;
@@ -269,10 +281,6 @@ extended:
           set rulePower orig_power; #power refernece
           if eq attackerFaction targetFaction; #if attacker faction = the target faction heal instead of harm
 
-            div rulePower 2; #half power vs allies since there's no resistance to reduce its power
-            set to_stun rulePower; #restoring health is tiring
-            set to_energy rulePower;
-            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Stamina and Stun restored, rulePower:" rulePower;
             set temp rulePower;
             div temp 4; #define the number of wounds we heal
             begin;
@@ -299,25 +307,60 @@ extended:
             end;
 
             unit.getHealthMax temp;
-            div temp 2;
+            ruleItem.getTag temp2 Tag.ITEM_MEND_HEAL_CAP_PERCENT;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: ITEM_MEND_HEAL_CAP_PERCENT:" temp2;
+            muldiv temp temp2 100;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Mend wounds upper limit:" temp;
             unit.getHealth temp2;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Mend wounds current health:" temp2;
             if ge temp2 temp; #we don't heal above half max HP; cancel out
-              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally, target HP above half max; aborting. Health, temp2:" temp2;
+              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally, target HP already above ITEM_MEND_HEAL_CAP_PERCENT; aborting. Health, temp2:" temp2;
               return;
+            end;
+
+            ruleItem.getTag statModifier Tag.ITEM_MEND_STUN_PERCENT;
+            if neq statModifier 0;
+              set rulePower orig_power;
+              muldiv rulePower statModifier 100;
+              set to_stun rulePower;
+              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Stun damage:" to_stun;
+            end;
+
+            ruleItem.getTag statModifier Tag.ITEM_MEND_ENERGY_PERCENT;
+            if neq statModifier 0;
+              set rulePower orig_power;
+              muldiv rulePower statModifier 100;
+              set to_energy rulePower;
+              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Energy damage:" to_energy;
+            end;
+
+            ruleItem.getTag statModifier Tag.ITEM_MEND_TIME_PERCENT;
+            if neq statModifier 0;
+              set rulePower orig_power;
+              muldiv rulePower statModifier 100;
+              set to_time rulePower;
+              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Time damage:" to_time;
             end;
 
             set rulePower orig_power;
             div rulePower 2;
             add temp2 rulePower;
-            if gt temp2 temp; #cap our healing at half maximum
+
+            if gt temp2 temp; #cap our healing
               limit_upper temp2 temp;
+              set to_health 0;
               unit.setHealth temp2;
-              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Healing capped at half max HP. temp2:" temp2;
+              #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Healing capped at temp2% HP. temp2:" temp2;
             else;
-              mul rulePower -1; #we heal instead of harm
               set to_health rulePower;
               #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally, per rulePower:" rulePower;
             end;
+            return;
+          end;
+
+          ruleItem.getTag temp Tag.ITEM_MEND_HARMS_ENEMIES;
+          if eq temp 0;
+            #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: No ITEM_MEND_HARMS_ENEMIES Tag. Aborting. temp:" temp;
             return;
           end;
 
@@ -332,13 +375,22 @@ extended:
             return;
           end;
           #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Initial rulePower:" rulePower;
-          set to_health rulePower;
-          set to_energy rulePower;
-          set to_stun rulePower;
-          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Health, Stamina and Stun damage, rulePower:" rulePower;
-          set temp rulePower;
-          div temp 2;
-          set to_wound temp;
-          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Wound damage, temp:" temp;
+          sub to_energy temp;
+          limit_lower to_energy 0;
+          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Energy damage:" to_energy;
+          sub to_stun temp;
+          limit_lower to_stun 0;
+          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Stun damage:" to_stun;
+          sub to_time temp;
+          limit_lower to_time 0;
+          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Time damage:" to_time;
+          mul to_health -1; #invert as we're targeting enemies
+          sub to_health temp;
+          limit_lower to_health 0;
+          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Health damage:" to_health;
+          set to_wound to_health;
+          div to_wound 4;
+          #debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Wound damage:" to_wound;
 
           return;
+

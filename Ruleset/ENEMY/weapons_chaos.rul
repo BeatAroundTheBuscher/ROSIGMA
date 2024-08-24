@@ -281,7 +281,7 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.3
-    dropoff: 5
+    dropoff: 4
     #costBuy: 9000
     costSell: 1000
     compatibleAmmo:
@@ -298,13 +298,17 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 60
-    autoRange: 14
-    snapRange: 19
-    autoShots: 10
+    autoRange: 18
+    snapRange: 22
     followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
-    confSnap:
+    confSnap: #5 shot burst
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
       shots: 5
+    minRange: 8
     sprayWaypoints: 2
+    autoShots: 15
+    kneelBonus: 150 #heavy weapon
     listOrder: 10762
 
   - type: STR_CLASCAN #CHAOS LASCANON
@@ -779,37 +783,7 @@ items:
       ToStun: 0.0
     recover: false
     fixedWeapon: true
-  - type: STR_FIXED_SONIC_CANON # CHAOSBEHEMOTH
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_HEAVY_PLASMA_DEP1
-    size: 0.3
-    dropoff: 5
-    costSell: 45800
-    weight: 10
-    clipSize: -1
-    power: 40
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.2
-      RandomType: 6
-      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
-      FixRadius: 3
-    accuracySnap: 75
-    tuSnap: 30
-    battleType: 1
-    twoHanded: false
-    bulletSpeed: 80
-    invWidth: 2
-    invHeight: 3
-    recover: false
-    fixedWeapon: true
-    armor: 50
+
   - type: SECTOPOD_WEAPON #Chaos Dread PLASMA
     vaporColorSurface: {mod: 40k, index: 2}
     vaporDensitySurface: 6
@@ -1280,7 +1254,7 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    specialChance: 5 #tiny chance of zombifying its victims
+    specialChance: 1 #tiny chance of zombifying its victims
 
 
   - type: STR_ACIDRUST_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
@@ -1798,7 +1772,7 @@ items:
       energy: true
     clipSize: -1
     battleType: 3
-    invWidth: 2
+    invWidth: 1
     invHeight: 3
     flatRate: true
     armor: 100
@@ -1953,7 +1927,8 @@ items:
     flatRate: true
     skillApplied: true
 
-  - type: STR_CASSC                                                             #13210
+  - &STR_ASSAULT_CANNON_TEMPLATE
+    type: STR_CASSC                                                             #13210
     categories: [STR_CAT_TERMINATOR]
     requires:
       - STR_ALIENS_ONLY
@@ -1984,45 +1959,57 @@ items:
     attraction: 8
     listOrder: 13210
 
-  - type: STR_ASSCTZ                                                            #1050         TZEENTCH
-    categories: [STR_CAT_TERMINATOR, STR_CAT_CHAOS]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.6
-    dropoff: 4
-    costSell: 20000
-    weight: 50
-    compatibleAmmo:
-      - STR_ASSC_CLIP
-    accuracyAuto: 50
-    tuAuto: 45
-    accuracySnap: 60
-    tuSnap: 33
-    confSnap:
-      name: STR_BURST_SNAP_SHOT
-      shots: 3
-    battleType: 1
-    twoHanded: true
-    oneHandedPenalty: 100
-    damageBonus:
-      flatHundred: 0.15 #15% power bonus
-    invWidth: 2
-    invHeight: 3
-    armor: 30
-    autoRange: 18
-    snapRange: 22
-    autoShots: 9
-    sprayWaypoints: 2
-    bulletSpeed: 50
-    attraction: 8
-    listOrder: 13220
-
-  - type: STR_IW_AUTOCANNON #CASSC                                                             #13210
+  - type: STR_CASSC_DREADNOUGHT                                                             #13210
     categories: [STR_CAT_TERMINATOR]
     requires:
       - STR_ALIENS_ONLY
     size: 0.6
-    dropoff: 4
+    dropoff: 3 #superior stabilization due to Dreadnought mount
+    costSell: 20000
+    weight: 100
+    bigSprite: {mod: 40k, index: 333}
+    floorSprite: {mod: 40k, index: 196}
+    handSprite: {mod: 40k, index: 648}
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 12}
+    hitAnimation: 26
+    accuracyAuto: 50
+    tuAuto: 33
+    accuracySnap: 60
+    tuSnap: 25
+    snapRange: 22
+    autoRange: 17
+    confSnap:
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+    autoShots: 10
+    battleType: 1
+    clipSize: -1
+    power: 120
+    damageType: 1
+    damageAlter: # between normal and mastercraft ammo
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.85
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    fixedWeapon: true
+    recover: false
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    sprayWaypoints: 2
+    bulletSpeed: 100
+    attraction: 8
+    listOrder: 13211
+
+  - type: STR_IW_AUTOCANNON #CASSC                                                             #13210; IRON WARRIOR AC is very slow firing but more powerful and accurate
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    dropoff: 3 #especially long ranged/stabilized
     costSell: 20000
     weight: 100
     bigSprite: 2880
@@ -2032,20 +2019,24 @@ items:
     fireSound: {mod: 40k, index: 12}
     compatibleAmmo:
       - STR_ASSC_CLIP
-    accuracySnap: 65
-    accuracyAuto: 55 #+5 IW bonus
+    accuracySnap: 70
+    accuracyAuto: 60
     tuSnap: 38
     tuAuto: 45
     battleType: 1
     twoHanded: true
     oneHandedPenalty: 100
     damageBonus:
-      flatHundred: 0.1 #10% power bonus
+      flatHundred: 0.2 #20% power bonus
     invWidth: 2
     invHeight: 3
     armor: 30
-    autoRange: 16
-    autoShots: 6 #+1, IW bonus
+    snapRange: 24
+    autoRange: 18
+    autoShots: 4
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
     sprayWaypoints: 2
     bulletSpeed: 50
     attraction: 8
@@ -2629,13 +2620,15 @@ items:
       ToHealth: 0.5
       ToMana: 0.5
       ToTime: 0.2
+      ToEnergy: 0.3
+      ToStun: 0.3
     accuracyMultiplier: #light weapon; relies on speed as well as skill
       melee: 0.7
       reactions: 0.3
     damageBonus:
       strength: 0.1
       reactions: 0.2
-      melee: 0.2
+      melee: 0.3
       psiSkill: 0.2 #profaned weapon
     damageType: 7
     accuracyMelee: 95
@@ -2651,8 +2644,6 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    specialChance: 15 #low chance of insta zombifying
-
 
   - type: STR_TRAITOR_CHIMERA_MULTI_LASER
     size: 1.0
@@ -2683,51 +2674,6 @@ items:
     invHeight: 3
     clipSize: -1
     recover: false
-
-  - type: STR_SLAANESH_CHIMERA_WEAPON_SONIC_CANON #                        11790
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_HEAVY_PLASMA_DEP1
-    size: 1.0
-    bigSprite: {mod: 40k, index: 454}
-    bulletSprite: {mod: 40k, index: 11}
-    fireSound: {mod: 40k, index: 861}
-    explosionHitSound: {mod: 40k, index: 863} #Sound
-    hitAnimation: {mod: 40k, index: 96} #XSOUND
-    dropoff: 5 # chaos
-    weight: 100
-    clipSize: -1
-    accuracyAuto: 40
-    confAuto:
-      shots: 2
-    battleType: 1
-    autoRange: 15
-    maxRange: 25
-    costAuto:
-      time: 1
-      energy: 50
-    flatUse:
-      time: true
-      energy: true
-    power: 40
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.2
-      RandomType: 6
-      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
-      FixRadius: 3
-    bulletSpeed: 80
-    invWidth: 2
-    invHeight: 3
-    recover: false
-    fixedWeapon: true
-    armor: 50
 
   - type: STR_TZEENTCH_CHIMERA_WEAPON_FLAMER
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
@@ -3047,167 +2993,6 @@ items:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
 
-  - type: STR_SONIC_CANON #                        11790
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_HEAVY_PLASMA_DEP1
-    size: 0.3
-    dropoff: 5 # chaos
-    costSell: 45800
-    weight: 40
-    clipSize: -1
-    power: 40
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.2
-      RandomType: 6
-      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
-      FixRadius: 3
-    accuracySnap: 75
-    tuSnap: 30
-    battleType: 1
-    twoHanded: true
-    bulletSpeed: 80
-    invWidth: 2
-    invHeight: 3
-    recoveryPoints: 5
-    armor: 50
-    listOrder: 11790
-
-  - type: STR_SONIC_GRENADE  #4010
-    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_ALIEN_GRENADE
-    size: 0.1
-    costSell: 250
-    weight: 3
-    bigSprite: 2313
-    floorSprite: 2420
-    handSprite: 2390
-    explosionHitSound: 2118 #Sonichit
-    hitAnimation: {mod: 40k, index: 96 }
-    power: 40
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.3
-      RandomType: 6
-      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
-      FixRadius: 3
-    battleType: 4
-    recoveryPoints: 1
-    invWidth: 1
-    invHeight: 2
-    listOrder: 15300
-    throwRange: 16
-
-  - type: STR_SONICKOMBI_CHARGE
-    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.1
-    costSell: 150
-    weight: 3
-    bigSprite: 2317
-    floorSprite: {mod: 40k, index: 2 }
-    handSprite: {mod: 40k, index: 464 }
-    fireSound: {mod: 40k, index: 861}
-    explosionHitSound: {mod: 40k, index: 863} #Sound
-    bulletSprite: {mod: 40k, index: 11}
-    hitAnimation: {mod: 40k, index: 96}
-    power: 25
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.3
-      RandomType: 6
-      FixRadius: 3
-    bulletSpeed: 80
-    clipSize: -1
-    battleType: 2
-    armor: 30
-    invWidth: 1
-    invHeight: 2
-    listOrder: 10460
-
-  - type: STR_SONIC_MISSILE_PACK #                         12160
-    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.2
-    costSell: 2500
-    weight: 6
-    bigSprite: 2326
-    floorSprite: 2431
-    handSprite: {mod: 40k, index: 448}
-    power: 40
-    damageType: 3
-    damageAlter: #DA Sound
-      ToHealth: 1.0
-      ToTime: 1.0
-      ToStun: 2.0
-      ToEnergy: 2.0
-      ToMorale: 2.0
-      ArmorEffectiveness: 0.3
-      RandomType: 6
-      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
-      FixRadius: 3
-    clipSize: 6
-    battleType: 2
-    invWidth: 2
-    invHeight: 2
-    blastRadius: 4
-    hitSound: 2124 #soniccharge
-    explosionHitSound: 2118 #sonic
-    hitAnimation: {mod: 40k, index: 96}
-    listOrder: 12152
-
-  - type: STR_DAEMONETTE_MISSILE_PACK            #Deamonette spawner
-    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.1
-    costSell: 3000
-    weight: 1
-    bigSprite: 2327
-    floorSprite: 2429
-    handSprite: {mod: 40k, index: 448}
-    clipSize: 3
-    specialChance: 66 #66% chance of summoning a daemonette per missile
-    power: 50
-    damageAlter:
-      ToMorale: 1.5
-      ToEnergy: 1.5
-      ToStun: 0.5
-      ToHealth: 0.1
-    damageType: 7
-    battleType: 2
-    blastRadius: 3
-    spawnUnit: STR_CHRYSSALID_TERRORIST
-    spawnUnitFaction: -1
-    invWidth: 2
-    invHeight: 2
-    recover: false
-    hitSound: 2123 #sizzlebamf
-    explosionHitSound: [{mod: 40k, index: 832}, 2119]  #splat+daemonettelaughter
-    hitAnimation: 1020
-    listOrder: 12152
-
   - type: STR_HEAVY_PLASMA # CHAOS
     costSell: 45000
     accuracySnap: 70
@@ -3248,19 +3033,6 @@ items:
     tuAuto: 33
     autoRange: 12
     autoShots: 2
-
-  - type: STR_CHOIR_GUN # Adeptas Hymn Choir Weapon Projector    11790
-    dropoff: 5
-    power: 20
-    damageType:  3
-    damageAlter: #DA Sound
-      ToHealth: 1.5
-      ArmorEffectiveness: 0.2
-      RandomType: 2 #TFTD [50% - 150%]
-      ToStun: 1.0
-      ToEnergy: 1.0
-    accuracySnap: 65
-    tuSnap: 33
 
   - type: STR_BLIGHT_HAULER_MULTI_MELTA
     categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
@@ -3309,6 +3081,9 @@ items:
     accuracyAimed: 0
     accuracySnap: 85
     accuracyAuto: 70
+    vaporColorSurface: 12
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
     tuAimed: 0
     tuSnap: 25
     tuAuto: 33
@@ -3387,6 +3162,68 @@ items:
       ToTime: 0.3 #concussive
       ToTile: 0.75 #caustic + high explosive
       ToItem: 0.75 #caustic + high explosive
+      SmokeThreshold: 0.0 #plague gasssss
+      ResistType: 8 #explosive but tests against acid resistance
+      FixRadius: 8
+    powerForAnimation: 240 #Fix radius * 32 - 16.
+    clipSize: -1
+    spawnUnit: STR_NURGLINGS
+    spawnUnitFaction: -1
+    spawnUnitChance: 25
+    explosionHitSound: {mod: 40k, index: 832}
+    hitAnimation: {mod: 40k, index: 120 } #Green EX
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_BLIGHT_HAULER_MULTI_MISSILE_LAUNCHER
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
+    requires:
+      - STR_ALIENS_ONLY
+    dropoff: 4
+    size: 0.1
+    weight: 1
+    bigSprite: 2631
+    floorSprite: {mod: 40k, index: 0}
+    handSprite: {mod: 40k, index: 0}
+    bulletSprite: 0
+    fireSound: {mod: 40k, index: 52}
+    vaporColorSurface: 12
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    accuracyAuto: 67
+    accuracySnap: 77
+    tuAuto: 60
+    autoRange: 17
+    tuSnap: 35
+    snapRange: 20
+    confSnap:
+      shots: 2
+    autoShots: 4
+    fixedWeapon: true
+    recover: false
+    arcingShot: false
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    listOrder: 12120
+    power: 80
+    damageType: 3
+    damageAlter: #DA BLIGHT
+      RandomType: 6 #gaussian
+      ToArmorPre: 0.6 #caustic + high explosive; melts on the way in
+      ToArmor: 0.0
+      ToHealth: 0.1 #infectious blight
+      ToMana: 0.6 #infectious blight
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.5 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #caustic + high explosive
+      ToItem: 0.75 #caustic + high explosive
+      SmokeThreshold: 0.0 #plague gasssss
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 8
     powerForAnimation: 240 #Fix radius * 32 - 16.
@@ -3419,7 +3256,7 @@ items:
     accuracyAimed: 127
     tuSnap: 30
     tuAimed: 60
-    snapRange: 17
+    snapRange: 20
     aimRange: 27
     fixedWeapon: true
     recover: false
@@ -3445,7 +3282,7 @@ items:
       ToItem: 0.75 #caustic + high explosive
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 10
-    powerForAnimation: 304 #Fix radius * 32 - 16.
+    powerForAnimation: 272 #Fix radius * 32 - 16.
     clipSize: -1
     explosionHitSound: {mod: 40k, index: 832}
     hitAnimation: {mod: 40k, index: 120 } #Green EX
@@ -3470,7 +3307,7 @@ items:
     meleeHitSound: {mod: 40k, index: 754} #744 Powersword hit
     meleeAnimation: {mod: 40k, index: 12}
     power: 58
-    damageType: 7
+    damageType: 5
     costSell: 0
     damageBonus:
       reactions: 0.1
@@ -3481,13 +3318,14 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       ToWound: 0.5 #rip and tear
+      RandomWound: false
       ToEnergy: 0.4 #rip and tear
       ToStun: 0.4 #painful
       ToMorale: 1.0 #rip and scare
-    accuracyMelee: 80
+    accuracyMelee: 88
     costMelee:
-      time: 20
-      energy: 10
+      time: 12
+      energy: 2
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -3913,7 +3751,6 @@ items:
     listOrder: 11872
     tags:
       ITEM_COLOR_CHANGES_WITH_AMMO: 14
-      ITEM_HAS_BIPOD: 1
 
   - type: STR_NURGLE_NEEDLER_RIFLE
     categories: [STR_CAT_CHAOS, STR_CAT_NURGLE, STR_CAT_SNIPER]
@@ -3945,7 +3782,7 @@ items:
       ToEnergy: 1.0 #sedative cocktail
       ToStun: 1.0 #sedative cocktail
       ToTime: 0.5 #higher than normal TU depletion
-      ToWound: 0.0 #precision needler weapon; leaves no terminal wounds
+      ToWound: 0.01 #precision needler weapon; leaves no terminal wounds
       RandomWound: false
       RandomType: 6 #gaussian
     damageBonus: #sniper weapon; power scales with accuracy
@@ -3964,7 +3801,7 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 100 #sniper weapon; aimed shots target vitals
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #sniper weapon; aimed shots target vitals
       ITEM_POWER_BONUS_PERCENTILE: 1
     bulletSpeed: 15
     listOrder: 6940
@@ -4075,7 +3912,6 @@ items:
       INFECTION_DAMAGE_PERCENT: 25
       INFECTION_TYPE: 1
 
-
   - type: STR_BLIGHT_GRENADE                #4010
     categories: [STR_CAT_TACTICAL, STR_CAT_NURGLE, STR_CAT_GRENADES]
     requires:
@@ -4130,3 +3966,61 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100
       INFECTION_TYPE: 1
+
+  - &STR_KHORNE_DREADNOUGHT_CHAIN_FIST_TEMPLATE
+    type: STR_KHORNE_DREADNOUGHT_CHAIN_FIST_L #Khorne Dreadnought Chain fist
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_KHORNE]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.2
+    weight: 30
+    bigSprite: 2971
+    meleeSound: {mod: 40k, index: 808, 2136} #753 Powersword miss
+    meleeHitSound: [3963, 3964] #super chain hit
+    meleeAnimation: {mod: 40k, index: 48}
+    power: 88
+    damageAlter: #DA CHAIN; if you get hit with this you will fucking die
+      RandomType: 6 #Gaussian damage
+      ArmorEffectiveness: 0.7 #this is a power weapon
+      ToArmorPre: 0.5 #shreds armor
+      ToHealth: 0.9
+      ToWound: 0.4 #spills blood
+      ToMorale: 1.0 #I got hit by a giant dreadnought sized chain fist and barely survived; don't ask me if I'm fine.
+      ToEnergy: 0.5
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+      RandomWound: false
+    damageBonus:
+      strength: 1
+      melee: 0.2
+    damageType: 7
+    accuracyMelee: 108
+    tuMelee: 15
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    recover: false
+    skillApplied: true
+    strengthApplied: false
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    fixedWeapon: true
+    tags: #Khorne Berserker Chainaxe is vampiric, granting them power as they spill blood for Khorne
+      TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
+      TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
+      TAG_TIME_RETURNED_ON_KILL: 8 #regains 8 TU on kill
+      TAG_MORALE_RETURNED_ON_KILL: 88 #regains 88 Morale on kill
+      TAG_STUN_RETURNED_ON_KILL: 88 #regains 88 Stun on kill
+      YTAG_DAMAGE_RETURNED_AS_TIME: 8 #regain 8% of damage dealt in TUs; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_HP: 8 #regain 8% of damage dealt in HP; Sacred Khorne Number
+      YTAG_DAMAGE_RETURNED_AS_ENERGY: 8
+      YTAG_DAMAGE_RETURNED_AS_MORALE: 8
+      YTAG_DAMAGE_RETURNED_AS_STUN: 8
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
+
+  - type: STR_KHORNE_DREADNOUGHT_CHAIN_FIST_R #Khorne Dreadnought Chain fist
+    bigSprite: 2972
+    refNode: *STR_KHORNE_DREADNOUGHT_CHAIN_FIST_TEMPLATE

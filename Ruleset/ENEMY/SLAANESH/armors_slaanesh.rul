@@ -415,11 +415,11 @@ armors:
 
   - type: STR_SLAANESH_DEMONPRINCESSARMOR     #Demon Princess
     visibilityAtDay: 40
-    visibilityAtDark: 30
+    visibilityAtDark: 40
     antiCamouflageAtDay: 15
     antiCamouflageAtDark: 15
-    heatVision: 30
-#    psiVision: 15 # either mind control or psiVision, not both
+    heatVision: 33 #daemonic senses
+    psiVision: 6
     tags:
       #ARMOR_ENERGY_SHIELD_CAPACITY: 180
       #ARMOR_ENERGY_SHIELD_PER_TURN: 20
@@ -427,12 +427,15 @@ armors:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 150
       ARMOR_ENERGY_SHIELD_DECAY: 75
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      INFECTION_RESIST: 100 #daemonic
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_SLAANESH: 1
       UNIT_TYPE_DAEMONIC: 1
       UNIT_TYPE_PSYKER: 1
     bleedImmune: true
+    painImmune: true
+    zombiImmune: true
     specialWeapon: ALIEN_PSI_WEAPON
     spriteSheet: DEMONPRINCESS.PCK
     spriteInv: ADaemonPrincessS.SPK
@@ -464,21 +467,21 @@ armors:
       - SLAANSUP_CORPSE3
       - SLAANSUP_CORPSE4
     stats:
-       tu: 20
-       stamina: 40
-       health: 50
-       bravery: 20 #always multiples of 10
-       reactions: 10
-       firing: 10
-       throwing: 10
-       strength: 30
-       psiStrength: 30
-       psiSkill: 0
-       melee: 10
+      tu: 20
+      stamina: 40
+      health: 50
+      bravery: 20 #always multiples of 10
+      reactions: 10
+      firing: 10
+      throwing: 10
+      strength: 30
+      psiStrength: 30
+      psiSkill: 30
+      melee: 10
     frontArmor: 140
     sideArmor: 140
     rearArmor: 100
-    underArmor: 100
+    underArmor: 140
     drawingRoutine: 20
     constantAnimation: false
     movementType: 1
@@ -493,7 +496,7 @@ armors:
       - 0.8 #PLASMA
       - 0.8 #STUN
       - 1.1 #MELEE
-      - 0.9 #ACID
+      - 0.5 #ACID
       - 0.0 #SMOKE
       - 0.2 #IMPACT
       - 1.1 #MELTA
@@ -503,7 +506,7 @@ armors:
       - INV_NULL_2X1_LL
       - INV_NULL_4X2
       - STR_POWER_SWORD_SUP
-      - STR_HEALS
+      - STR_SLAANESH_CORRUPTING_TOUCH
     loftempsSet: [ 92, 89, 90, 91 ]
 
   - type: STR_SLAANCELESTIAN_ARMOR    #SLAANESH CELESTIAN
@@ -1469,7 +1472,7 @@ armors:
     corpseBattle:
       - STR_SLAANANOINTED_CORPSE
     frontArmor: 145
-    sideArmor: 120
+    sideArmor: 135
     rearArmor: 90
     underArmor: 145
     moveSound: {mod: 40k, index: 0}
@@ -1482,8 +1485,10 @@ armors:
       - 1.0 #PLASMA
       - 0.8 #STUN
       - 1.2 #MELEE
-      - 1.0 #ACID
+      - 0.5 #ACID #daemonic so naturally resistant to acid
       - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
     loftempsSet: [ 4 ]
     tags:
       UNIT_TYPE_CHAOS: 1
@@ -1770,3 +1775,47 @@ armors:
       - 0.2 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 92, 89, 90, 91 ]
+
+#dungeon specific start
+
+  - type: STR_SLAANESHcataphract_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #advanced sensors
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 5
+    heatVision: 35 #per daemon senses
+    loftempsSet: [ 5 ]
+    storeItem: STR_SLAANESHcataphract_ARMOR
+    spriteInv: SLAANESHcataphractinvent.PCK
+    spriteSheet: SLAANESHcataphract_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 180
+    sideArmor: 170
+    rearArmor: 150
+    underArmor: 180
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_SLAANESHcataphract_CORPSE_GEO
+    damageModifier: #cataphract ARMOR; use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.5 #AP; Cataphract reduces by another 0.2
+      - 0.3 #FLAMES
+      - 0.3 #HE; Slaanesh armor resistant; reduces by 0.2; Cataphract reduces by another 0.2
+      - 1.1 #LASCANON; Slaanesh armor vulnerable; increases by 0.2; Cataphract increases by 0.1
+      - 1.0 #PLASMA
+      - 0.5 #STUN; Slaanesh armor high resistant; reduces by 0.3
+      - 0.7 #MELEE; Slaanesh armor resistant; reduces by 0.1
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA; Cataphract increases by 0.1
+    specialWeapon: STR_MFIST
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_SLAANESH: 1
+
+#dungeon specific end

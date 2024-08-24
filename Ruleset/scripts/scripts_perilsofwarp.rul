@@ -84,6 +84,12 @@ extended:
           #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
 
           damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER; #increment our Perils of the Warp chance
+          unit.getRuleArmor rArmor;
+          rArmor.getSize temp2; #divide increment by 4
+          if gt temp2 1;
+            div temp 4;
+          end;
+
           attacker.getTag temp2 Tag.UNIT_PERILS_MODIFIER;
           add temp2 temp;
           attacker.setTag Tag.UNIT_PERILS_MODIFIER temp2;
@@ -196,6 +202,48 @@ extended:
           end;
 
           return power part side;
+
+    damageUnit:
+      - new: ROSIGMA_dU_perils
+        offset: 1
+        code: |
+          var int randomNumber;
+          var int temp;
+          var int temp2;
+          var int perilsMagnitude;
+          var int perilsModifier;
+          var ptr RuleArmor rArmor;
+          var ptr RuleUnit myRuleUnit;
+
+          attacker.getFaction temp;
+          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
+            #debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
+            return;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
+          if eq temp 0;
+            #debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
+            return;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER;
+          unit.getRuleArmor rArmor;
+          rArmor.getSize temp2;
+          if gt temp2 1; #if our target is large, divide the psychic ability's power by 4 after armor
+            div to_armor 4;
+            div to_energy 4;
+            div to_health 4;
+            div to_mana 4;
+            div to_morale 4;
+            div to_stun 4;
+            div to_time 4;
+            div to_transform 4;
+            div to_wound 4;
+          end;
+
+          return;
+
 
     newTurnUnit: #reset our Perils modifier
       - new: ROSIGMA_nTU_perils

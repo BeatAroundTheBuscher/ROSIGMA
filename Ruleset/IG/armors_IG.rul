@@ -40,6 +40,65 @@ items:
 #    requiresBuy:
 #      - STR_IMPERIAL_GUARD_MIDTIER
 
+#STEEL LEGION
+  - type: STR_STEELLEGION_FLAK_ARMOR
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+
+  - type: STR_STEELLEGION_FLAK_ARMOR_MEDIC
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    costBuy: 15000
+    costSell: 7500
+    transferTime: 10
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    costBuy: 20000
+    costSell: 10000
+    transferTime: 10
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR_MEDIC
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    costBuy: 35000
+    costSell: 12500
+    transferTime: 10
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
+    requiresBuy:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_LASC
+    size: 2
+    #costBuy: 420000
+    costSell: 184000
+    transferTime: 50
+    listOrder: 6860
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE
+    size: 2
+    #costBuy: 420000
+    costSell: 184000
+    transferTime: 50
+    listOrder: 6860
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA
+    size: 2
+    #costBuy: 420000
+    costSell: 184000
+    transferTime: 50
+    listOrder: 6860
+
 armors:
   - &STR_GUARD_ARMOR_FLAK_DAMAGE
     type: STR_GUARD_ARMORSM #DR10 SPACE MARINE SUPORT
@@ -387,8 +446,8 @@ armors:
       UNIT_TYPE_LIVING: 1
 
   - type: STR_FELINIDGUARD_CARAPACE_SENSORS #Basic version
-    visibilityAtDay: 45 #Advanced optics
-    visibilityAtDark: 45 #Advanced optics
+    visibilityAtDay: 40 #Advanced optics
+    visibilityAtDark: 40 #Advanced optics
     antiCamouflageAtDay: 10 #Multi-spectral scanning
     antiCamouflageAtDark: 10 #Felinid bonus +3
     psiVision: 3 #I hear them breathing!
@@ -751,6 +810,7 @@ armors:
       - 1.0 #MELTA
     units:
       - STR_GUARD_VETERAN
+      - STR_STORMTROOPER
     stats:
       tu: -5
       stamina: -15
@@ -1408,6 +1468,9 @@ armors:
 
   - type: STR_GUARD_ARMORS_SENTINEL_MULTIMELTA_UC
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
+    stats:
+      mana: 60
+    specialWeapon: STR_TURRET_RELOAD
     tags:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
@@ -1440,6 +1503,305 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+#STEEL LEGION SENTINELS
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_MISSILE_UC #Light Open Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_OPEN
+    spriteSheet: SL_SENT2_BS.PCK
+    #spriteInv: SLLSENTINELRINV
+    customArmorPreviewIndex: [941, 942, 943]
+    storeItem: STR_STEELLEGION_ARMORS_LSENTINEL_MISSILE
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    builtInWeapons:
+      - STR_SENTINEL_MISSILE_LAUNCHER
+      - AUX_SENTINEL_STOMP
+      - INV_NULL_SENTINEL_BACK_MISSILE
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+      - INV_NULL_1X2_BACKPACK # doesn't work so well
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_LASC_UC #Light Open Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_OPEN
+    spriteSheet: SL_SENT_BS.PCK
+    #spriteInv: SLLSENTINELLSINV
+    customArmorPreviewIndex: [938, 939, 940]
+    storeItem: STR_STEELLEGION_ARMORS_LSENTINEL_LASC
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    builtInWeapons:
+      - STR_MOUNTED_LASCANNON
+      - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
+      - INV_NULL_SENTINEL_BACK_LASER
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_LSENTINEL_MULTIMELTA_UC #Light Open Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_OPEN
+    spriteSheet: SL_SENT3_BS.PCK
+    #spriteInv: SLLSENTINELMINV
+    customArmorPreviewIndex: [950, 951, 952]
+    storeItem: STR_STEELLEGION_ARMORS_LSENTINEL_MULTIMELTA
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      mana: 60
+    builtInWeapons:
+      - STR_SENTINEL_MULTIMELTA #replace with a combi flamer melta
+      - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
+      - INV_NULL_SENTINEL_BACK_MULTIMELTA
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE_UC #Heavy Armored Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
+    spriteSheet: SL_HSENT2_ROCKET_BS.pck
+    #spriteInv: SLHSENTINELRINV
+    customArmorPreviewIndex: [964, 965, 966]
+    storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    frontArmor: 150 #+10, Steel Legion Sentinel Bonus
+    sideArmor: 140 #+20, Steel Legion Sentinel Bonus
+    rearArmor: 100
+    underArmor: 120
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    builtInWeapons:
+      - STR_SENTINEL_MISSILE_LAUNCHER
+      - AUX_SENTINEL_STOMP
+      - INV_NULL_SENTINEL_BACK_MISSILE
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+      - INV_NULL_1X2_BACKPACK # doesn't work so well
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_LASC_UC #Heavy Armored Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
+    spriteSheet: SL_HSENT_LASC_BS.PCK
+    #spriteInv: SLHSENTINELLSINV
+    customArmorPreviewIndex: [934, 935, 936]
+    storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_LASC
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    frontArmor: 150 #+10, Steel Legion Sentinel Bonus
+    sideArmor: 140 #+20, Steel Legion Sentinel Bonus
+    rearArmor: 100
+    underArmor: 120
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    builtInWeapons:
+      - STR_MOUNTED_LASCANNON
+      - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
+      - INV_NULL_SENTINEL_BACK_LASER
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA_UC #Heavy Armored Sentinel
+    refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
+    spriteSheet: SL_HSENT3_MELTA_BS.PCK
+    #spriteInv: SLHSENTINELMINV
+    customArmorPreviewIndex: [968, 969, 970]
+    storeItem: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA
+    corpseGeo:  STR_BIKE_CORPSE
+    corpseBattle:
+      - 5_SENT1
+      - 5_SENT2
+      - 5_SENT3
+      - 5_SENT4
+    frontArmor: 150 #+10, Steel Legion Sentinel Bonus
+    sideArmor: 140 #+20, Steel Legion Sentinel Bonus
+    rearArmor: 100
+    underArmor: 120
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 20
+    allowsKneeling: false
+    damageModifier:
+      - 1.0 #none
+      - 0.7 #AP 20% Steel Legion Doctrine bonus
+      - 0.4 #FLAMES
+      - 0.9 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID STEEL LEGION ARMAGEDDON PROOFING
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      mana: 60
+    builtInWeapons:
+      - STR_SENTINEL_MULTIMELTA
+      - AUX_SENTINEL_STOMP #INV_NULL_SENTINEL_LH
+      - INV_NULL_SENTINEL_BACK_MULTIMELTA
+      - INV_NULL_SENTINEL_BELT
+      - INV_NULL_SENTINEL_LL
+      - INV_NULL_2X1_RL
+    weight: -40
+    units:
+      - STR_GUARDSL
+      - STR_PILOT_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+
 
   - &STR_GUARD_ARMOR_MOUNTED # DAMAGE + STATS
     type: STR_GUARD_ARMORS_MOUNTED_LASCANNON_UC
@@ -1590,6 +1952,96 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+
+  - type: STR_STEELLEGION_ARMORS_MOUNTED_HEAVY_BOLTER_UC
+    spriteSheet: SL_MOUNTED_GUNS_BS.PCK
+    #spriteInv: GUARD_MOUNTED_LASCANNON #uses layering system SLMOUNT_HEAVY_BOLTER__8__Prop
+    customArmorPreviewIndex: [830, 831] #change
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    corpseBattle:
+      - GUARD_MOUNT_CORPSE1
+      - GUARD_MOUNT_CORPSE2
+      - GUARD_MOUNT_CORPSE3
+      - GUARD_MOUNT_CORPSE4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_HEAVY_BOLTER
+    size: 2
+    drawingRoutine: 20
+    units:
+      - STR_GUARDSM
+    loftempsSet: [ 92, 89, 90, 91 ]
+    moveSound: {mod: 40k, index: 14}
+    refNode: *STR_GUARD_ARMOR_MOUNTED
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_HEAVY_BOLTER
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+#STEEL LEGION MOUNTED GUNS ARMOR
+  - &STR_STEELLEGION_MOUNTED_ARMOR
+    type: STR_STEELLEGION_ARMORS_MOUNTED_HEAVY_BOLTER_UC
+    spriteSheet: SL_MOUNTED_GUNS_BS.PCK
+    #spriteInv: GUARD_MOUNTED_LASCANNON #uses layering system SLMOUNT_HEAVY_BOLTER__8__Prop
+    customArmorPreviewIndex: [930, 931]
+    corpseBattle:
+      - GUARD_MOUNT_CORPSE1
+      - GUARD_MOUNT_CORPSE2
+      - GUARD_MOUNT_CORPSE3
+      - GUARD_MOUNT_CORPSE4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_HEAVY_BOLTER #?
+    size: 2
+    drawingRoutine: 20
+    units:
+      - STR_GUARDSL
+      - STR_GUARDSL_VETERAN
+    loftempsSet: [ 92, 89, 90, 91 ]
+    moveSound: {mod: 40k, index: 14}
+    refNode: *STR_GUARD_ARMOR_MOUNTED
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_HEAVY_BOLTER
+    recovery:
+      morale:
+        bravery: 1
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_MOUNTED_LASCANNON_UC
+    refNode: *STR_STEELLEGION_MOUNTED_ARMOR
+    customArmorPreviewIndex: [930, 931]
+    storeItem: STR_GUARD_ARMORS_MOUNTED_LASCANNON
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_LASCANNON
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_STEELLEGION_ARMORS_MOUNTED_AUTOCANNON_UC
+    refNode: *STR_STEELLEGION_MOUNTED_ARMOR
+    customArmorPreviewIndex: [932, 933]
+    storeItem: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_AUTOCANNON_GUARD
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
 
 #*** Guard officer armors ***
   - &STR_GUARD_ARMOR_FLAK_OFFICER # DAMAGE + STATS
@@ -2322,6 +2774,7 @@ armors:
       - STR_GUARD_OFFICER
       - STR_GUARD_OFFICER_VETERAN
       - STR_GUARD_VETERAN
+      - STR_STORMTROOPER
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -2386,6 +2839,7 @@ armors:
       ARMOR_RESTEALTH_KILL_REQUIREMENT: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
     #tags:
       # ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       # ARMOR_ENERGY_SHIELD_DECAY: 50 # = 50% so shield value is 40 * 100%/50%
@@ -2393,6 +2847,8 @@ armors:
 #*** Commissar outfits ***
   - type: STR_COMMISSAR_UC
     refNode: *STR_GUARD_ARMOR_FLAK_DAMAGE
+    spriteSheet: COMMISSAR_KRIS_BS.PCK
+    spriteInv: COMMISSAR_33
     stats:
       tu: 5
       stamina: 10
@@ -2409,6 +2865,8 @@ armors:
 
   - type: STR_COMMISSAR_CARAPACE_UC
     refNode: *STR_GUARD_ARMOR_CARAPACE
+    spriteSheet: COMMISSAR_CARAPACE_KRIS_BS.PCK
+    spriteInv: COMMISSARCARAPACE_33
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     psiDefence:
@@ -2458,6 +2916,7 @@ armors:
       INTIMIDATION_RESISTANCE: 50 #Resistant to intimidation
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
 
   - type: STR_COMMISSAR_YARRICK_UC # Unique
     refNode: *STR_COMMISSAR_CLAW
@@ -2566,6 +3025,407 @@ armors:
     units:
       - STR_STORMTROOPER
 
+  - &STEELLEGION_FLAK_ARMOR_REF
+    type: STR_STEELLEGION_FLAK_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    antiCamouflageAtDay: 0
+    antiCamouflageAtDark: 0
+    customArmorPreviewIndex: 900
+    spriteSheet: SL_FLAK_BS.PCK
+    # spriteInv: SLFLAK_33
+    corpseBattle:
+      - STR_STEELLEGION_FLAK_CORPSE
+    storeItem: STR_NONE #change?
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 20 # higher because flak vest
+    drawingRoutine: 0
+    size: 0.2
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 0.9 #ACID #STEEL LEGION 10% FLAK BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_GUARDSM
+      - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
+    stats:
+      tu: 5
+      stamina: 10
+      bravery: -10 #always multiples of 10
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_FLAK_ARMOR_MEDIC
+    refNode: *STEELLEGION_FLAK_ARMOR_REF
+    spriteSheet: SL_FLAK_MEDIC_BS.PCK
+    # spriteInv: SLMFLAK_33
+    storeItem: STR_GUARD_ARMORS_MEDIC
+    corpseBattle:
+      - STR_STEELLEGION_FLAK_MEDIC_CORPSE
+    frontArmor: 40 #Medic heavy flak
+    sideArmor: 30 #Medic heavy flak
+    rearArmor: 20 #Medic a bit heavier
+    underArmor: 25 #medic
+    weight: 15 #heavier
+    customArmorPreviewIndex: 902
+    stats:
+      tu: 0 #heavy
+      stamina: 0 #heavy
+      bravery: 10 #always multiples of 10
+    specialWeapon: STR_GUARD_MEDI_KIT
+    builtInWeapons:
+      - INV_NULL_MEDI_KIT
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_FLAK_ARMOR_VOX
+    refNode: *STR_GUARD_VOX_OPERATOR_FLAK
+    ufopediaType: STR_GUARD_ARMORSM
+    spriteSheet: SL_FLAK_VOX_BS.PCK
+    #spriteInv: SLFLAK_33 #change to VOX inventory later? Or layer system overwrite
+    customArmorPreviewIndex: 901
+    storeItem: STR_AIRSTRIKE_VOX
+    corpseBattle:
+      - STR_STEELLEGION_FLAK_VOX_CORPSE #STR_GUARD_CORPSE_GEO?
+    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL
+    builtInWeapons:
+      - INV_NULL_AIRSTRIKE_VOX_DUMMY
+    storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_GUARDSM
+      - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_FLAK_ARMOR_VOX_NOAIRSTRIKE
+    ufopediaType: STR_GUARD_ARMORSM
+    spriteSheet: SL_FLAK_VOX_BS.PCK
+    customArmorPreviewIndex: 901
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    storeItem: STR_TRANSFORMED_ARMOR
+    units:
+      - STR_VOX_ARMOR_DUMMY
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_BACK_SIGNAL
+    corpseGeo: STR_AIRSTRIKE_VOX
+    weight: 5 #voxcaster weight
+    corpseBattle:
+      - STR_GUARD_CORPSE_GEO
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+
+  - type: STR_STEELLEGION_FLAK_ARMOR_OFFICER
+    refNode: *STEELLEGION_FLAK_ARMOR_REF
+    antiCamouflageAtDay: 2
+    antiCamouflageAtDark: 2
+    ufopediaType: STR_OFFICER_FLAK_ARMOR #40k reference
+    spriteSheet: SL_OFFICER_FLAK_BS.PCK
+    spriteInv: SLOFLAK_33
+    customArmorPreviewIndex: 908
+    storeItem: STR_NONE
+    corpseBattle:
+      -  STR_STEELLEGION_FLAK_OFFICER_CORPSE
+    frontArmor: 40 #+10, Officers improved flak
+    sideArmor: 30 #+10, Officers improved flak
+    rearArmor: 20 #+5, Officers improved flak
+    underArmor: 25 #+5, Officers improved flak
+    stats:
+      tu: 5
+      stamina: 10
+      bravery: 10
+    specialWeapon: ""
+    units:
+      - STR_GUARD_OFFICER
+      - STR_GUARDSL_OFFICER #For Steel Legion strategy
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - &STR_STEELLEGION_VETERAN
+    type: STR_STEELLEGION_CARAPACE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 2
+    antiCamouflageAtDark: 2
+    customArmorPreviewIndex: 903
+    ufopediaType: STR_STORMTROOPER_CARAPACE_ARMOR
+    spriteSheet: SL_CARAPACE_BS.PCK
+    spriteInv: SLCA_33
+    storeItem: STR_GUARD_ARMORH
+    corpseBattle:
+      - STR_STEELLEGION_CARAPACE_CORPSE
+    frontArmor: 70
+    sideArmor: 60
+    rearArmor: 30
+    underArmor: 60
+    drawingRoutine: 0
+    weight: 15
+    size: 0.4
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 0.8 #ACID #STEEL LEGION 20% CARAPACE BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    stats:
+      tu: -5
+      stamina: -10
+      strength: 5
+      bravery: 10 #always multiples of 10
+    units:
+      - STR_GUARDSM
+      - STR_GUARDSL
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_BAYONET #change to Steel legion hellgun
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR_VOX
+    refNode: *STR_STEELLEGION_VETERAN
+    spriteSheet: SL_CARAPACE_VOX_BS.PCK
+    customArmorPreviewIndex: 904
+    specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL
+    builtInWeapons:
+      - INV_NULL_AIRSTRIKE_VOX_DUMMY
+    storeItem: STR_AIRSTRIKE_VOX
+    units:
+      - STR_GUARDSM
+      - STR_GUARDSL
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR_VOX_NOAIRSTRIKE
+    refNode: *STR_GUARD_VOX_OPERATOR_FLAK
+    ufopediaType: STR_GUARD_ARMORSM
+    spriteSheet: SL_CARAPACE_VOX_BS.PCK
+    customArmorPreviewIndex: 904
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    storeItem: STR_TRANSFORMED_ARMOR
+    units:
+      - STR_VOX_ARMOR_DUMMY
+    loftempsSet: [ 3 ]
+    builtInWeapons:
+      - INV_NULL_BACK_SIGNAL
+    corpseGeo: STR_AIRSTRIKE_VOX
+    weight: 5 #voxcaster weight
+    corpseBattle:
+      - STR_GUARD_CORPSE_GEO
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR_MEDIC
+    refNode: *STR_STEELLEGION_VETERAN
+    spriteSheet: SL_CARAPACE_MEDIC_BS.PCK
+    spriteInv: SLMCA_33
+    customArmorPreviewIndex: 905
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    corpseBattle:
+      - STR_STEELLEGION_CARAPACE_MEDIC_CORPSE
+    storeItem: STR_MEDIC_CARAPACE_ARMOR
+    frontArmor: 70
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 60
+    weight: 20
+    stats:
+      tu: -5
+      stamina: -10
+      reactions: -10
+      strength: 5
+      bravery: 10 #always multiples of 10
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 0.8 #ACID #STEEL LEGION 20% CARAPACE BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_GUARDSM
+      - STR_GUARDSL
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_GUARD_MEDI_KIT
+    builtInWeapons:
+      - INV_NULL_MEDI_KIT
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_CARAPACE_ARMOR_OFFICER
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
+    customArmorPreviewIndex: 909
+    ufopediaType: STR_STORMTROOPER_CARAPACE_ARMOR
+    spriteSheet: SL_OFFICER_CARAPACE_BS.PCK
+    spriteInv: SLOCA_33
+    storeItem: STR_GUARD_ARMORH
+    drawingRoutine: 0
+    weight: 15
+    corpseBattle:
+      - STR_STEELLEGION_CARAPACE_OFFICER_CORPSE
+    frontArmor: 80 #+10 Officer improved carapace
+    sideArmor: 70 #+10 Officer improved carapace
+    rearArmor: 35 #+5 Officer improved carapace
+    underArmor: 65 #+5 Officer improved carapace
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 0.8 #ACID #STEEL LEGION 20% CARAPACE BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    stats:
+      tu: -5
+      stamina: -10
+      strength: 5
+      bravery: 10 #always multiples of 10
+    units:
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_BAYONET #change?
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - &STR_STEEL_LEGION_CARAPACE_TEMPLATE # DAMAGE + STATS
+    type: STR_STEELLEGION_STORMTROOPER_ARMOR
+    heatVision: 20 #stormtroopers have basic thermals
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    spriteSheet: SL_STORMTROOPER_BS.PCK
+    spriteInv: SLSTA_33
+    customArmorPreviewIndex: 906
+    corpseBattle:
+      - STR_STEELLEGION_STORMTROOPER_CORPSE
+    storeItem: STR_STEELLEGION_STORMTROOPER_ARMOR
+    frontArmor: 90 #same as Scions
+    sideArmor: 80 #reinforced armor
+    rearArmor: 50 #same as Scions
+    underArmor: 50 #same as Scions
+    damageModifier: #SCION ARMOR
+      - 1.0 #none
+      - 0.9 #AP Steel Legion mechanized army 10% bonus
+      - 0.9 #FLAMES
+      - 0.9 #HE
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.7 #ACID STEEL LEGION 30% BONUS
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_BAYONET #change?
+    stats:
+      tu: -5 #heavy reinforced armor, even vs Scions
+      stamina: -5 #heavy
+    units:
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+    loftempsSet: [ 3 ]
+    tags:
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_VOLLEYGUN
+    refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
+    builtInWeapons:
+      - STR_VOLLEYGUN_STEEL_LEGION
+      - INV_NULL_STORM_TROOPER_BACKPACK
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_HELLGUN
+    refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    weight: 20 #powerpack adds weight
+    builtInWeapons:
+      - STR_HELLGUN_STEEL_LEGION
+      - INV_NULL_STORM_TROOPER_BACKPACK
+
+  - type: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
+    refNode: *STR_STEEL_LEGION_CARAPACE_TEMPLATE
+    spriteSheet: SL_STORMTROOPER_MEDIC_BS.PCK
+    spriteInv: SLSTM_33M0.SPK
+    customArmorPreviewIndex: 907
+    weight: 30 #medical gear + narthecium adds a lot of weight
+    corpseBattle:
+      - STR_STEELLEGION_STORMTROOPER_MEDIC_CORPSE
+    storeItem: STR_STEELLEGION_STORMTROOPER_ARMOR_MEDIC
+    specialWeapon: STR_GUARD_MEDI_KIT
+    builtInWeapons:
+      - INV_NULL_MEDI_KIT
+    stats:
+      tu: -10 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
+
+#TURRETS AND SPONSONS
   - type: STR_CHIMERA_TURRET_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -2853,7 +3713,7 @@ armors:
   - type: STR_CORVUS_LEFT_CANNON_ARMOR #armor Adeptas/Inq, Crovus left assault cannon
     refNode: *STR_CAS_ARMOR
     spriteSheet: LEFT_CORVUS_ASSC.PCK
-    allowInv: false    
+    allowInv: false
     builtInWeapons:
       - STR_CAS_ASSCANNON
     specialWeapon: STR_TURRET_RELOAD
@@ -2864,7 +3724,7 @@ armors:
     sideArmor: 100
     rearArmor: 100
     underArmor: 100
-    camouflageAtDay: -1 
+    camouflageAtDay: -1
     camouflageAtDark: -1
     personalLight: 0 #
     allowsKneeling: false #
@@ -2883,11 +3743,26 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_LEFT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_RIGHT_CANNON_ARMOR #armor Adeptas/Inq, Crovus right assault cannon
     refNode: *STR_CAS_ARMOR
     spriteSheet: RIGHT_CORVUS_ASSC.PCK
-    allowInv: false    
+    allowInv: false
     builtInWeapons:
       - STR_CAS_ASSCANNON
     specialWeapon: STR_TURRET_RELOAD
@@ -2898,7 +3773,7 @@ armors:
     sideArmor: 100
     rearArmor: 100
     underArmor: 100
-    camouflageAtDay: -1 
+    camouflageAtDay: -1
     camouflageAtDark: -1
     personalLight: 0 #
     allowsKneeling: false #
@@ -2917,6 +3792,21 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_RIGHT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_LEFT_CIV_ARMOR
     visibilityAtDay: 40
@@ -3005,7 +3895,7 @@ armors:
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
-      
+
   - &STR_TANITH_ARMOR
     type: STR_TANITH_CAMO_ARMOR
     storeItem: STR_NONE
@@ -3220,6 +4110,241 @@ armors:
       INTIMIDATION_RESISTANCE: 50
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+      NO_BENEFIT_FROM_INSPIRE: 1
+
+#dungeon specific start
+
+  - type: STR_GUARD_POWER_ARMOR_HULK
+    refNode: *STR_GUARD_POWER_ARMOR_REF
+    storeItem: STR_GUARD_POWER_ARMOR_HULK
+    customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
+    spriteSheet: IG_GPOWER_ARMOR_BS.PCK
+    frontArmor: 120 #was 100
+    sideArmor: 100 #was 80
+    rearArmor: 75 #was 55
+    underArmor: 100 #was 80
+    corpseBattle:
+      - STR_GUARD_INDOMIT_CORPSE_GEO
+    damageModifier: #POWER ARMOR
+      - 1.0 #none
+      - 0.9 #AP #was 1.0
+      - 0.5 #FLAMES #was 0.6
+      - 0.7 #HE #was 0.8
+      - 0.7 #LASCANON #was 0.8
+      - 1.0 #PLASMA #was 1.1
+      - 0.9 #STUN #was 1.0
+      - 0.9 #MELEE #was 1.0
+      - 0.7 #ACID #was 0.8
+      - 0.0 #SMOKE #was 0.0
+      - 0.2 #IMPACT #was 0.2
+      - 0.9 #MELTA #was 1.0
+    stats:
+      tu: -5 #was -10
+      stamina: 15 #was 10
+      firing: 15 #was 10
+      reactions: 0 #was -5
+      bravery: 20 #was 10
+      strength: 15 #was 10
+    units:
+      - STR_GUARD_VETERAN
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    builtInWeapons:
+      - INV_NULL_3X3 #occupied by jumppack
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
+
+  - type: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
+    refNode: *STR_GUARD_POWER_ARMOR_REF
+    antiCamouflageAtDay: 5 #equivalent to Scion Officer gear
+    antiCamouflageAtDark: 5 #equivalent to Scion Officer gear
+    heatVision: 25 #same as Chimera or Taurox + 5 bonus for officer
+    spriteSheet: IG_GPOWER_ARMOR_BS.PCK
+    customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
+    loftempsSet: [ 4 ]
+    weight: 5
+    units:
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+      - STR_STORMTROOPER_OFFICER
+    storeItem: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
+    corpseBattle:
+      - STR_GUARD_INDOMIT_CORPSE_GEO
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #Officer armor equipped with Vox caster
+    builtInWeapons:
+      - INV_NULL_3X3 #occupied by jumppack
+    damageModifier: #POWER ARMOR
+      - 1.0 #none
+      - 0.9 #AP was 1.0
+      - 0.5 #FLAMES Hazard protected was 0.6
+      - 0.7 #HE Hazard protected was 0.8
+      - 0.7 #LASCANON was 0.8
+      - 0.9 #PLASMA was 1.1
+      - 0.9 #STUN was 1.0
+      - 0.9 #MELEE was 1.0
+      - 0.7 #ACID Hazard protected was 0.7
+      - 0.0 #SMOKE was 0.0
+      - 0.2 #IMPACT was 0.2
+      - 0.9 #MELTA was 1.0
+    frontArmor: 130 #was 100
+    sideArmor: 100 #was 80
+    rearArmor: 80 #was 55
+    underArmor: 100 #was 80
+    stats:
+      tu: 0 #was -10
+      stamina: 15 #was 10
+      firing: 15 #was 10
+      reactions: 0 #was -5
+      bravery: 20 #was 10
+      strength: 15 #was 10
+      psiStrength: 5 #was 0
+      psiSkill: 5 #was 0
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
+
+  - type: STR_KRIEG_POWER_ARMOR_HULK
+    refNode: *STR_KRIEG_POWER_ARMOR_REF
+    storeItem: STR_KRIEG_POWER_ARMOR_HULK
+    corpseBattle:
+      - STR_GUARD_INDOMIT_CORPSE_GEO
+    damageModifier: #POWER ARMOR
+      - 1.0 #none
+      - 0.9 #AP was 1.0
+      - 0.5 #FLAMES Hazard protected was 0.6
+      - 0.7 #HE Hazard protected was 0.8
+      - 0.7 #LASCANON was 0.8
+      - 0.9 #PLASMA was 1.1
+      - 0.9 #STUN was 1.0
+      - 0.9 #MELEE was 1.0
+      - 0.7 #ACID Hazard protected was 0.7
+      - 0.0 #SMOKE was 0.0
+      - 0.2 #IMPACT was 0.2
+      - 0.9 #MELTA was 1.0
+    frontArmor: 140 #was 105
+    sideArmor: 105 #was 85
+    rearArmor: 70 #was 45
+    underArmor: 90 #was 50
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    stats:
+      tu: -5 #was -10
+      stamina: 15 #was 10
+      firing: 10 #was 5
+      reactions: 0 #was -5
+      bravery: 10 #was 10
+      strength: 15 #was 10
+      melee: 15 #was 5
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
+
+  - type: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
+    refNode: *STR_GUARD_POWER_ARMOR_COMMISSAR_REF
+    storeItem: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
+    corpseBattle:
+      - STR_GUARD_INDOMIT_CORPSE_GEO
+    customArmorPreviewIndex: { mod: 40k_ROSIGMA_edits, index: 858 }
+    spriteSheet: IG_GPOWER_ARMOR_BS.PCK
+    damageModifier: #POWER ARMOR
+      - 1.0 #none
+      - 0.9 #AP was 1.0
+      - 0.5 #FLAMES Hazard protected was 0.6
+      - 0.7 #HE Hazard protected was 0.8
+      - 0.7 #LASCANON was 0.8
+      - 0.9 #PLASMA was 1.1
+      - 0.9 #STUN was 1.0
+      - 0.9 #MELEE was 1.0
+      - 0.7 #ACID Hazard protected was 0.7
+      - 0.0 #SMOKE was 0.0
+      - 0.2 #IMPACT was 0.2
+      - 0.9 #MELTA was 1.0
+    frontArmor: 120 #was 100
+    sideArmor: 110 #was 80
+    rearArmor: 75 #was 55
+    underArmor: 100 #was 80
+    stats:
+      tu: 0 #was -5
+      stamina: 15 #was 10
+      firing: 20 #was 15
+      reactions: 5 #was 0
+      bravery: 20 #was 10
+      strength: 15 #was 10
+      psiStrength: 5 #was 0
+      psiSkill: 5 #was 0
+    builtInWeapons:
+      - INV_NULL_3X3 #occupied by jumppack
+    specialWeapon: STR_JUMP_GAUNTLET_PLUS #to activate flight
+    tags:
+      MaxFlight: 2
+      MaxCooldown: 1
+
+  - type: STR_LE10_POWER_ARMOR_HULK #Vault Armor
+    refNode: *STR_GUARD_POWER_ARMOR_REF
+    storeItem: STR_LE10_POWER_ARMOR_HULK
+    customArmorPreviewIndex: 858
+    spriteSheet: LE10_POWER_ARMOR_BS.PCK
+    frontArmor: 170
+    sideArmor: 140
+    rearArmor: 100
+    underArmor: 150
+    corpseBattle:
+      - STR_LE10_CORPSE_GEO
+    loftempsSet: [ 4 ]
+    damageModifier: #TERMINATOR ARMOR
+      - 1.0 #none
+      - 0.6 #AP
+      - 0.3 #FLAMES
+      - 0.4 #HE
+      - 0.8 #LASCANON
+      - 0.7 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    stats:
+      tu: -5 #was -10
+      stamina: 25 #was 10
+      firing: 10 #was 10
+      reactions: 0 #was -5
+      bravery: 20 #was 10
+      strength: 35 #was 10
+      psiStrength: 5 #was 0
+      psiSkill: 5 #was 0
+    units:
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+      - STR_GUARD_PRIEST
+      - STR_GUARDSM
+      - STR_GUARDSL
+      - STR_GUARD_VETERAN
+      - STR_GUARDSL_VETERAN
+      - STR_PSYKER
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+      - STR_GUARD_OFFICER
+      - STR_GUARDSL_OFFICER
+      - STR_COMMISSAR
+      - STR_GUARD_OFFICER_VETERAN
+      - STR_GUARDSL_OFFICER_VETERAN
+      - STR_PENITENT_GUARD
+      - STR_PILOT_GUARD
+      - STR_GUARDSM_KRIEG
+      - STR_LORD_COMMISSAR
+      - STR_GUARD_TANITH
+      - STR_GUARD_KRIEG_GRENADIER
+      - STR_GUARDPD
+      - STR_JUDGE
+
+#dungeon specific end
 
   - type: STR_CHIMEDON_ARMOR
     allowsKneeling: false
@@ -3266,7 +4391,8 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
 
-  - type: STR_CHIMERA_TWIN_HB_TURRET_ARMOR
+  - &STR_CHIMERA_TURRET_REF
+    type: STR_CHIMERA_TWIN_HB_TURRET_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
     antiCamouflageAtDay: 6
@@ -3344,8 +4470,315 @@ armors:
         return sprite_index;
     tags:
       INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+
+
+  - type: STR_CHIMERASL_TWIN_HB_TURRET_ARMOR #Steel Legion
+    refNode: *STR_CHIMERA_TURRET_REF
+    spriteSheet: SL_CHIMERA_HBTURRET_BS.PCK #twin HB
+    spriteInv: CHIMPD.SPK #doesnt show up
+    corpseGeo:  STR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_CHIMERA_TURRET_CORPSE_1 #will need yellow replacement
+      - STR_CHIMERA_TURRET_CORPSE_2
+      - STR_CHIMERA_TURRET_CORPSE_3
+      - STR_CHIMERA_TURRET_CORPSE_4
+    size: 2
+    specialWeapon: STR_TURRET_RELOAD
+
+  - type: STR_CHIMERASL_MULTILAS_TURRET_ARMOR #Steel Legion
+    refNode: *STR_CHIMERA_TURRET_REF
+    spriteSheet: SL_CHIMERA_MLTURRET_BS.PCK
+    spriteInv: CHIMPD.SPK #doesnt show up
+    corpseGeo:  STR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_CHIMERA_TURRET_CORPSE_1
+      - STR_CHIMERA_TURRET_CORPSE_2
+      - STR_CHIMERA_TURRET_CORPSE_3
+      - STR_CHIMERA_TURRET_CORPSE_4
+    size: 2
+    specialWeapon: STR_TURRET_RELOAD
+
+#SL GORGON TURRETS
+  - type: STR_GORGONSL_HEAVY_FLAMER_FRONT_LEFT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    heatVision: 30 #chimera+
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_FLAMER_FRONT_LEFT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_FLAMER_FRONT_LEFT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_GORGONSL_HEAVY_FLAMER_BACK_LEFT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    heatVision: 30 #chimera+
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_FLAMER_BACK_LEFT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_FLAMER_BACK_LEFT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_FLAMER_BACK_LEFT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_GORGONSL_HEAVY_FLAMER_FRONT_RIGHT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    heatVision: 30 #chimera+
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_FLAMER_FRONT_RIGHT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_FLAMER_FRONT_RIGHT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_GORGONSL_HEAVY_FLAMER_BACK_RIGHT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    heatVision: 30 #chimera+
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_FLAMER_BACK_RIGHT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_FLAMER_BACK_RIGHT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_GORGONSL_HEAVY_STUBBER_LEFT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_STUBBER_LEFT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_STUBBER_LEFT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_STUBBER_LEFT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 50
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    recovery:
+      time:
+        tu: 0.0
+      stun:
+        flatOne: 0.0
+    psiDefence:
+      flatHundred: 10.0
+    meleeDodge:
+      flatHundred: -1.0
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_IS_CREWED_WEAPON: 1
+
+  - type: STR_GORGONSL_HEAVY_STUBBER_RIGHT_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: GORGONSL_HEAVY_STUBBER_RIGHT.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo:  STR_GORGON_HEAVY_STUBBER_RIGHT_CORPSE
+    corpseBattle:
+      - STR_GORGONSL_HEAVY_STUBBER_RIGHT_CORPSE
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 50
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    recovery:
+      time:
+        tu: 0.0
+      stun:
+        flatOne: 0.0
+    psiDefence:
+      flatHundred: 10.0
+    meleeDodge:
+      flatHundred: -1.0
+    tags:
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_IS_CREWED_WEAPON: 1
 
 #CHAOS PLAYER GUARD ARMORS
   - type: STR_IRON_GUARD_ARMOR_PLAYER
@@ -3531,3 +4964,35 @@ armors:
       INTIMIDATION_RESISTANCE: 25
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BANEBLADE_TURRET_ARMOR
+    type: 4X4_ARMOR #STR_4X4_TURRET
+    specialWeapon: STR_TURRET_RELOAD
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: 4X4_ARMOR_SURROUND #
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BANEBLADE_TURRET_ARMOR_SMALL
+    type: STR_BANE_BOLTER_RIGHT_ARMOR #STR_BANE_BOLTER_RIGHT
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    refNode: *STR_BANEBLADE_TURRET_ARMOR
+
+  - type: STR_BANE_BOLTER_LEFT_ARMOR #STR_BANE_BOLTER_LEFT
+    refNode: *STR_BANEBLADE_TURRET_ARMOR_SMALL
+
+  - type: STR_BANE_BOLTER_ARMOR #STR_BANE_BOLTER_TURRET
+    refNode: *STR_BANEBLADE_TURRET_ARMOR
+
+  - type: STR_BANE_LAS_ARMOR #STR_BANE_LAS_TURRET
+    refNode: *STR_BANEBLADE_TURRET_ARMOR

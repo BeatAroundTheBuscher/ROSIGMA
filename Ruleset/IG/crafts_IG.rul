@@ -189,11 +189,15 @@ crafts:
     listOrder: 240
 
 
-  # move item pile to the back
+  # moved item pile to the back
   - type: STR_CHIMERA
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     speedMax: 150 # was 90
     repairRate: 10 # was 1
     craftInventoryTile: [1, 5, 0]
+    maxSkinIndex: 0
     battlescapeTerrainData:
       name: CHIMERA
       mapDataSets:
@@ -222,7 +226,87 @@ crafts:
     vehicles: 999
     maxLargeUnits: 2
 
+  - type: STR_CHIMERASL #Steel Legion version
+    marker: 30
+    requiresBuyBaseFunc: [HANGAR]
+    sprite: 203
+    fuelMax: 1000
+    damageMax: 1000
+    speedMax: 250 # was 150, steel legion chimeras are zoom zoom tuned
+    repairRate: 10 # was 1
+    vehicles: 999
+    maxLargeUnits: 2
+    accel: 2
+    weapons: 1
+    weaponTypes:
+      - 3
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+    soldiers: 24
+    costBuy: 700000 #Was 900000, SL Chimera doctrine discount
+    costRent: 350000 #was 400k, SL Chimera doctrine discount
+    costSell: 350000 #was 400k, SL Chimera doctrine discount
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    craftInventoryTile: [1, 5, 0]
+    battlescapeTerrainData:
+      name: CHIMERASL
+      mapDataSets:
+        - BLANKS
+        - CHIMERASL
+        - HIDRA
+        - LEMONSL
+        - REPULSOR
+      mapBlocks:
+        - name: CHIMERA_SMALL_NON_HYDRASL # CHIMERA
+          width: 10
+          length: 20
+          items:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER:
+              - [1, 4, 1]
+              - [7, 9, 1]
+              - [2, 16, 1]
+            STR_CHIMERASL_HULL_SPAWNER:
+              - [8,11,0]
+              - [2,6,0]
+              - [3,18,0]
+          fuseTimers:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER: [0,0]
+            STR_CHIMERASL_HULL_SPAWNER: [0,0]
+    deployment:
+      - [1, 2, 0, 0]
+      - [2, 2, 0, 0]
+      - [1, 3, 0, 0]
+      - [2, 3, 0, 0]
+      - [2, 14, 0, 0]
+      - [3, 14, 0, 0]
+      - [2, 15, 0, 0]
+      - [3, 15, 0, 0]
+      - [7, 7, 0, 0]
+      - [8, 7, 0, 0]
+      - [7, 8, 0, 0]
+      - [8, 8, 0, 0]
+      - [1, 4, 0, 0]
+      - [2, 4, 0, 0]
+      - [1, 5, 0, 0]
+      - [2, 5, 0, 0]
+      - [2, 16, 0, 0]
+      - [3, 16, 0, 0]
+      - [2, 17, 0, 0]
+      - [3, 17, 0, 0]
+      - [7, 9, 0, 0]
+      - [8, 9, 0, 0]
+      - [7, 10, 0, 0]
+      - [8, 10, 0, 0]
+    fixedWeapons: ["STR_CRAFT_MULTILASER_UC"]
+    listOrder: 800
+    spacecraft: true
+
   - type: STR_ARMOR_COLUMN
+    requires:
+      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_NOT_STEEL_LEGION_STRATEGY
     vehicles: 999
     maxLargeUnits: 1
     speedMax: 150 # was 90
@@ -273,14 +357,98 @@ crafts:
             STR_LEMONRUSS_HULL_SPAWNER: [0,0]
             STR_CHIMERA_HULL_SPAWNER: [0,0]
     deployment:
-      - [1, 2, 0, 0]
-      - [2, 2, 0, 0]
+      - [1, 5, 0, 0] # chimera 1 back
+      - [2, 5, 0, 0]
+      - [1, 4, 0, 0]
+      - [2, 4, 0, 0]
       - [1, 3, 0, 0]
       - [2, 3, 0, 0]
+      - [1, 2, 0, 0]
+      - [2, 2, 0, 0] # chimera 1 front
+      - [7, 10, 0, 0] # chimera 2 back
+      - [8, 10, 0, 0]
+      - [7, 9, 0, 0]
+      - [8, 9, 0, 0]
+      - [7, 8, 0, 0]
+      - [8, 8, 0, 0]
+      - [7, 7, 0, 0]
+      - [8, 7, 0, 0] # chimera 2 front
+      - [5, 8, 0, 0] #side of chimera 2
+      - [5, 9, 0, 0] #side of chimera 2
+      - [2, 13, 0, 0] #behind Leman
+      - [3, 13, 0, 0] #behind Leman
       - [1, 2, 1, 0] #roof of chimera 1
       - [2, 2, 1, 0] #roof of chimera 1
       - [1, 3, 1, 0] #roof of chimera 1
       - [2, 3, 1, 0] #roof of chimera 1
+      - [7, 7, 1, 0] #roof of chimera 2
+      - [8, 7, 1, 0] #roof of chimera 2
+      - [7, 8, 1, 0] #roof of chimera 2
+      - [8, 8, 1, 0] #roof of chimera 2
+
+  - type: STR_ARMOR_COLUMNSL_NORIDERS
+    marker: 30
+    requiresBuyBaseFunc: [HANGAR]
+    sprite: 204
+    fuelMax: 1000
+    damageMax: 1500
+    vehicles: 999
+    maxLargeUnits: 1
+    speedMax: 200 # Steel Legion armor bonus
+    maxAltitude: 1
+    craftInventoryTile: [1, 5, 0]
+    soldiers: 16 #no tank riders
+    costBuy: 1000000 #1200000, SL chimera discount
+    costRent: 600000 #was 640000 with 16 soldiers + SL chimera discount
+    repairRate: 10 # was 6
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    weapons: 2
+    weaponTypes:
+      - 3
+      - 1
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+      - STR_THUNDER_CANNON
+    fixedWeapons: ["STR_CRAFT_MULTILASER_UC", "STR_THUNDER_CANNON_UC"]
+    battlescapeTerrainData:
+      name: CHIMERA
+      mapDataSets:
+        - BLANKS
+        - CHIMERASL
+        - HIDRA
+        - LEMONSL
+        - REPULSOR
+      mapBlocks:
+        - name: CHIMERA_LEMAN_NON_HYDRASL #advanced turrets
+          width: 10
+          length: 20
+          items:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER:
+              - [1, 4, 1]
+              - [7, 9, 1]
+            STR_LEMANSL_COMMAND_TURRET_SPAWNER:
+              - [2, 16, 1]
+            STR_LEMANSL_SPONSON_SPAWNER:
+              - [0,16,0]
+              - [5,16,0]
+            STR_LEMANSL_HULL_SPAWNER:
+              - [3,18,0]
+            STR_CHIMERASL_HULL_SPAWNER:
+              - [8,11,0]
+              - [2,6,0]
+          fuseTimers:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER: [0, 0]
+            STR_LEMANSL_COMMAND_TURRET_SPAWNER: [0, 0]
+            STR_LEMANSL_SPONSON_SPAWNER: [0,0]
+            STR_LEMANSL_HULL_SPAWNER: [0,0]
+            STR_CHIMERASL_HULL_SPAWNER: [0,0]
+    deployment:
+      - [1, 2, 0, 0]
+      - [2, 2, 0, 0]
+      - [1, 3, 0, 0]
+      - [2, 3, 0, 0]
       - [7, 7, 0, 0]
       - [8, 7, 0, 0]
       - [7, 8, 0, 0]
@@ -293,15 +461,98 @@ crafts:
       - [8, 9, 0, 0]
       - [7, 10, 0, 0]
       - [8, 10, 0, 0]
-      - [2, 13, 0, 0] #behind Leman
-      - [3, 13, 0, 0] #behind Leman
+    listOrder: 801
+    spacecraft: true
+
+  - type: STR_ARMOR_COLUMNSL #steel legion version with rider slots
+    marker: 30
+    requiresBuyBaseFunc: [HANGAR]
+    sprite: 222
+    fuelMax: 1000
+    damageMax: 1500
+    vehicles: 999
+    maxLargeUnits: 1
+    speedMax: 200 # Steel Legion armor bonus
+    maxAltitude: 1
+    craftInventoryTile: [1, 5, 0]
+    soldiers: 28
+    costBuy: 1000000 #1200000, SL chimera discount
+    costRent: 800000 #was 640000 with 16 soldiers + SL chimera discount
+    repairRate: 10 # was 6
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    weapons: 2
+    weaponTypes:
+      - 3
+      - 1
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+      - STR_THUNDER_CANNON
+    fixedWeapons: ["STR_CRAFT_MULTILASER_UC", "STR_THUNDER_CANNON_UC"]
+    battlescapeTerrainData:
+      name: CHIMERA
+      mapDataSets:
+        - BLANKS
+        - CHIMERASL
+        - HIDRA
+        - LEMONSL
+        - REPULSOR
+      mapBlocks:
+        - name: CHIMERA_LEMAN_NON_HYDRASL #advanced turrets
+          width: 10
+          length: 20
+          items:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER:
+              - [1, 4, 1]
+              - [7, 9, 1]
+            STR_LEMANSL_COMMAND_TURRET_SPAWNER:
+              - [2, 16, 1]
+            STR_LEMANSL_SPONSON_SPAWNER:
+              - [0,16,0]
+              - [5,16,0]
+            STR_LEMANSL_HULL_SPAWNER:
+              - [3,18,0]
+            STR_CHIMERASL_HULL_SPAWNER:
+              - [8,11,0]
+              - [2,6,0]
+          fuseTimers:
+            STR_CHIMERASL_COMMAND_TURRET_SPAWNER: [0, 0]
+            STR_LEMANSL_COMMAND_TURRET_SPAWNER: [0, 0]
+            STR_LEMANSL_SPONSON_SPAWNER: [0,0]
+            STR_LEMANSL_HULL_SPAWNER: [0,0]
+            STR_CHIMERASL_HULL_SPAWNER: [0,0]
+    deployment:
+      - [1, 5, 0, 0] # chimera 1 back
+      - [2, 5, 0, 0]
+      - [1, 4, 0, 0]
+      - [2, 4, 0, 0]
+      - [1, 3, 0, 0]
+      - [2, 3, 0, 0]
+      - [1, 2, 0, 0]
+      - [2, 2, 0, 0] # chimera 1 front
+      - [7, 10, 0, 0] # chimera 2 back
+      - [8, 10, 0, 0]
+      - [7, 9, 0, 0]
+      - [8, 9, 0, 0]
+      - [7, 8, 0, 0]
+      - [8, 8, 0, 0]
+      - [7, 7, 0, 0]
+      - [8, 7, 0, 0] # chimera 2 front
       - [5, 8, 0, 0] #side of chimera 2
       - [5, 9, 0, 0] #side of chimera 2
-      - [7, 8, 1, 0] #roof of chimera 2
-      - [8, 8, 1, 0] #roof of chimera 2
+      - [2, 13, 0, 0] #behind Leman
+      - [3, 13, 0, 0] #behind Leman
+      - [1, 2, 1, 0] #roof of chimera 1
+      - [2, 2, 1, 0] #roof of chimera 1
+      - [1, 3, 1, 0] #roof of chimera 1
+      - [2, 3, 1, 0] #roof of chimera 1
       - [7, 7, 1, 0] #roof of chimera 2
       - [8, 7, 1, 0] #roof of chimera 2
-
+      - [7, 8, 1, 0] #roof of chimera 2
+      - [8, 8, 1, 0] #roof of chimera 2
+    listOrder: 802
+    spacecraft: true
 
   - type: STR_TAUROX
     craftInventoryTile: [5, 5, 1]
@@ -310,14 +561,49 @@ crafts:
     vehicles: 999
     maxLargeUnits: 0
 
+
+  - delete: STR_VALKYRIE #to make sure it's not dependant of 40K in case the blocker is defeated by submodding oddities
+
   - type: STR_VALKYRIE
+#ported from 40K due to the original having been deleted so there's no missing entries
+    requiresBuyBaseFunc: [HANGAR]
+    marker: {mod: 40k, index:36}
+    sprite: 1922
+    fuelMax: 1800
+    speedMax: 600
+    accel: 2
+    weapons: 3         #weapon number increased to 3.
+    weaponTypes:        #definition of allowed weapon types in craft. Max 4 different types per slot.
+      - 0               #slot 1 accepts weapons with type 0. This is default.
+      - 0               #slot 2 accepts weapons with type 0.
+      - [4, 5, 13]      #slot 3 accepts weapons with type 4, 5 and 13.
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    pilots: 2
+    costBuy: 600000
+    costRent: 400000 #TIER I
+    costSell: 400000
+    refuelRate: 200
+    transferTime: 96
+    score: 300
+    listOrder: 210
+    spacecraft: true
+#end ported from 40k
+#ported from other alertsounds_disable in case the deletion may break things
+    takeoffSound: -1
+    selectSound: -1
+#end of port from other alertsounds_disable
     craftInventoryTile: [4, 10, 0]
-    requires: !remove
-      - STR_GUARD_SUPORT
+    requires:
+      - STR_GUARD_AND_ARBITES
+      - STR_NOT_STEEL_LEGION_STRATEGY
     soldiers: 16
     vehicles: 999
     maxLargeUnits: 1
-    repairRate: 5 #was 1
+    repairRate: 6 #was 1, and +1 bonus vs fancy high tech Inq Valk version.
+    damageMax: 450 #+50 Guard armor plating, Inq version is squishier but faster.
     battlescapeTerrainData:
       name: VALK
       mapDataSets:
@@ -419,21 +705,444 @@ crafts:
   - type: STR_LIGHTNING_INTERCEPTOR
     avoidBonus: 10
     repairRate: 5 #was 1
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+
+
+  - delete: STR_GORGON #to make sure it's not dependant of 40K in case the blocker is defeated by submodding oddities
 
   - type: STR_GORGON
+#ported from other alertsounds_disable in case the deletion may break things
+    takeoffSound: -1
+    selectSound: -1
+#end of port from other alertsounds_disable
     vehicles: 999
     maxLargeUnits: 4
+    speedMax: 125 #was 75
+    requires:
+      - STR_IMPERIAL_GUARD_HIGHTIER
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
+    sprite: 1008
+    fuelMax: 1000
+    damageMax: 1440
+    maxAltitude: 1
+    accel: 1
+    weapons: 1
+    weaponTypes:
+      - 3
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+    soldiers: 50
+    costBuy: 2400000
+    costRent: 1200000
+    costSell: 1200000
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    repairRate: 8
+    battlescapeTerrainData:
+      name: GORGON
+      mapDataSets:
+        - BLANKS
+        - GORGON_40k
+      mapBlocks:
+        - name: GORGON
+          width: 10
+          length: 20
+          items:
+            STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_SPAWNER:
+              - [8, 13, 1]
+            STR_GORGON_HEAVY_FLAMER_BACK_LEFT_SPAWNER:
+              - [8, 10, 1]
+            STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER:
+              - [0, 13, 1]
+            STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_SPAWNER:
+              - [0, 10, 1]
+            STR_GORGON_HEAVY_STUBBER_LEFT_SPAWNER:
+              - [6, 6, 2]
+            STR_GORGON_HEAVY_STUBBER_RIGHT_SPAWNER:
+              - [2, 6, 2]
+          fuseTimers:
+            STR_GORGON_HEAVY_FLAMER_FRONT_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_BACK_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_FLAMER_BACK_RIGHT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_STUBBER_LEFT_SPAWNER: [0, 0]
+            STR_GORGON_HEAVY_STUBBER_RIGHT_SPAWNER: [0, 0]
+    deployment:
+      - [2, 6, 1, 0]
+      - [5, 6, 1, 0]
+      - [2, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [3, 6, 1, 0]
+      - [4, 6, 1, 0]
+      - [6, 6, 1, 0]
+      - [2, 7, 1, 0]
+      - [3, 7, 1, 0]
+      - [4, 7, 1, 0]
+      - [5, 7, 1, 0]
+      - [6, 7, 1, 0]
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [2, 9, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [2, 10, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [2, 11, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [2, 12, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [2, 13, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [2, 14, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0]
+      - [2, 15, 1, 0]
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0]
+    listOrder: 820
+    spacecraft: true
 
-  - type: STR_CASSIUM #Crassus Guard edition
+
+  - type: STR_GORGONSL                          #TIER V  Steel Legion version
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
+    requires:
+      - STR_STEEL_LEGION_STRATEGY_CERAMITETIER
+    sprite: 206
+    fuelMax: 1000
+    damageMax: 1440
+    speedMax: 150 #SL speed bonus (small)
+    maxAltitude: 1
+    accel: 1
+    weapons: 1
+    weaponTypes:
+      - 3
+    weaponStrings:
+      - STR_ANTI_AIR_WEAPONS
+    soldiers: 50
+    vehicles: 999
+    maxLargeUnits: 4
+    costBuy: 2400000
+    costRent: 1200000
+    costSell: 1200000
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    repairRate: 8
+    battlescapeTerrainData:
+      name: GORGONSL
+      mapDataSets:
+        - BLANKS
+        - GORGONSL
+      mapBlocks:
+        - name: GORGONSL
+          width: 10
+          length: 20
+          items:
+            STR_GORGONSL_HEAVY_FLAMER_FRONT_LEFT_SPAWNER:
+              - [8, 13, 1]
+            STR_GORGONSL_HEAVY_FLAMER_BACK_LEFT_SPAWNER:
+              - [8, 10, 1]
+            STR_GORGONSL_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER:
+              - [0, 13, 1]
+            STR_GORGONSL_HEAVY_FLAMER_BACK_RIGHT_SPAWNER:
+              - [0, 10, 1]
+            STR_GORGONSL_HEAVY_STUBBER_LEFT_SPAWNER:
+              - [6, 6, 2]
+            STR_GORGONSL_HEAVY_STUBBER_RIGHT_SPAWNER:
+              - [2, 6, 2]
+          fuseTimers:
+            STR_GORGONSL_HEAVY_FLAMER_FRONT_LEFT_SPAWNER: [0, 0]
+            STR_GORGONSL_HEAVY_FLAMER_BACK_LEFT_SPAWNER: [0, 0]
+            STR_GORGONSL_HEAVY_FLAMER_FRONT_RIGHT_SPAWNER: [0, 0]
+            STR_GORGONSL_HEAVY_FLAMER_BACK_RIGHT_SPAWNER: [0, 0]
+            STR_GORGONSL_HEAVY_STUBBER_LEFT_SPAWNER: [0, 0]
+            STR_GORGONSL_HEAVY_STUBBER_RIGHT_SPAWNER: [0, 0]
+    deployment:
+      - [2, 6, 1, 0]
+      - [5, 6, 1, 0]
+      - [2, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [3, 6, 1, 0]
+      - [4, 6, 1, 0]
+      - [6, 6, 1, 0]
+      - [2, 7, 1, 0]
+      - [3, 7, 1, 0]
+      - [4, 7, 1, 0]
+      - [5, 7, 1, 0]
+      - [6, 7, 1, 0]
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [2, 9, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [2, 10, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [2, 11, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [2, 12, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [2, 13, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [2, 14, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0]
+      - [2, 15, 1, 0]
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0]
+    listOrder: 820
+    spacecraft: true
+
+
+  - delete: STR_CASSIUM
+
+  - type: STR_CASSIUM  #Crassus Guard edition
+    takeoffSound: -1
+    selectSound: -1
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
     requires:
       - STR_IMPERIAL_GUARD_MIDTIER #was high tier, but in rosigma it competes with the armor column
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    sprite: 1924
+    maxSkinIndex: 2            # default 0
+    skinSprites: [1925, 1926] # default empty, contains all sprites except for the first (index zero)
     fuelMax: 1000
-    refuelRate: 1000
-    repairRate: 10 # was 8
+    damageMax: 1440
     speedMax: 150 #was 75
+    maxAltitude: 1
+    accel: 1
+    weapons: 3         #weapon number increased to 3.
+    weaponTypes:        #definition of allowed weapon types in craft. Max 4 different types per slot.
+      - 0               #slot 1 accepts weapons with type 0. This is default.
+      - 0               #slot 2 accepts weapons with type 0.
+      - [4, 5, 13]      #slot 3 accepts weapons with type 4, 5 and 13.
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    fixedWeapons: [STR_CANNON_UC, STR_CANNON_UC]
+    soldiers: 28 #25?
     vehicles: 999
     maxLargeUnits: 4
-    soldiers: 28 #25?
+    costBuy: 1500000
+    costRent: 1000000 #TIER IV
+    costSell: 1000000
+    refuelRate: 1000
+    transferTime: 96
+    score: 250
+    repairRate: 10 # was 8
+    battlescapeTerrainData:
+      name: CASSIUM
+      mapDataSets:
+        - BLANKS
+        - CASSIUM
+      mapBlocks:
+        - name: CASSIUM
+          width: 10
+          length: 20
+          items:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER:
+              - [1, 14, 1]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER:
+              - [3, 17, 1]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER:
+              - [8, 14, 1]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER:
+              - [6, 17, 1]
+          fuseTimers:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER: [0, 0]
+    deployment:
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0] #24
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0] #28
+      - [3, 16, 1, 0]
+      - [4, 16, 1, 0]
+      - [5, 16, 1, 0]
+      - [6, 16, 1, 0] #32
+      - [4, 17, 1, 0]
+      - [5, 17, 1, 0]
+      - [4, 17, 1, 0]
+    listOrder: 820
+    spacecraft: true
+
+
+  - type: STR_CASSIUMSL                         #TIER IV
+    marker: 42
+    requiresBuyBaseFunc: [HANGAR]
+    requires:
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    sprite: 223
+    fuelMax: 1000
+    damageMax: 1440
+    speedMax: 200 #was 150, Steel Legion zoom zoom
+    maxAltitude: 1
+    accel: 1
+    weapons: 3         #weapon number increased to 3.
+    weaponTypes:        #definition of allowed weapon types in craft. Max 4 different types per slot.
+      - 0               #slot 1 accepts weapons with type 0. This is default.
+      - 0               #slot 2 accepts weapons with type 0.
+      - [4, 5, 13]      #slot 3 accepts weapons with type 4, 5 and 13.
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    fixedWeapons: [STR_CANNON_UC, STR_CANNON_UC]
+    soldiers: 28
+    vehicles: 999
+    maxLargeUnits: 4
+    costBuy: 1500000
+    costRent: 1000000 #TIER IV
+    costSell: 1000000
+    refuelRate: 1000
+    repairRate: 10 # was 8
+    transferTime: 96
+    score: 250
+    battlescapeTerrainData:
+      name: CASSIUM_SL
+      mapDataSets:
+        - BLANKS
+        - CASSIUM_SL
+      mapBlocks:
+        - name: CASSIUMSL
+          width: 10
+          length: 20
+          items:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER:
+              - [1, 14, 1]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER:
+              - [3, 17, 1]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER:
+              - [8, 14, 1]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER:
+              - [6, 17, 1]
+          fuseTimers:
+            STR_CASSIUM_BOLTER_LEFT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_LEFT2_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT1_SPAWNER: [0, 0]
+            STR_CASSIUM_BOLTER_RIGHT2_SPAWNER: [0, 0]
+    deployment:
+      - [3, 8, 1, 0]
+      - [4, 8, 1, 0]
+      - [5, 8, 1, 0]
+      - [6, 8, 1, 0]
+      - [3, 9, 1, 0]
+      - [4, 9, 1, 0]
+      - [5, 9, 1, 0]
+      - [6, 9, 1, 0]
+      - [3, 10, 1, 0]
+      - [4, 10, 1, 0]
+      - [5, 10, 1, 0]
+      - [6, 10, 1, 0]
+      - [3, 11, 1, 0]
+      - [4, 11, 1, 0]
+      - [5, 11, 1, 0]
+      - [6, 11, 1, 0]
+      - [3, 12, 1, 0]
+      - [4, 12, 1, 0]
+      - [5, 12, 1, 0]
+      - [6, 12, 1, 0]
+      - [3, 13, 1, 0]
+      - [4, 13, 1, 0]
+      - [5, 13, 1, 0]
+      - [6, 13, 1, 0]
+      - [3, 14, 1, 0]
+      - [4, 14, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0] #24
+      - [3, 15, 1, 0]
+      - [4, 15, 1, 0]
+      - [5, 15, 1, 0]
+      - [6, 15, 1, 0] #28
+      - [3, 16, 1, 0]
+      - [4, 16, 1, 0]
+      - [5, 16, 1, 0]
+      - [6, 16, 1, 0] #32
+      - [4, 17, 1, 0]
+      - [5, 17, 1, 0]
+      - [4, 17, 1, 0]
+    listOrder: 820
+    spacecraft: true
+
+  - type: STR_BANEBLADE
+    takeoffSound: -1
+    selectSound: -1
+    speedMax: 150 #was 75, now somewhat useable
 
   - type: STR_THUNDERBOLT_INTERCEPTOR
     armor: 2 #was 0; gets some armor in lieu of the Lightning's higher avoid bonus
@@ -441,3 +1150,101 @@ crafts:
     repairRate: 3 #was 1
     accel: 4 #was 5; heavier and takes a bit more time to get up to speed
     fuelMax: 1500 #was 1000
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+
+  - type: STR_LIGHTNING_SL_INTERCEPTOR           #Steel Legion Lightning
+    requires:
+      - STR_STEEL_LEGION_STRATEGY
+    requiresBuyBaseFunc: [HANGAR]
+    marker: 39
+    maxSkinIndex: 3              # default 0
+    skinSprites: [1586,1587,1588]   # default empty, contains all sprites except for the first (index zero)
+    sprite: 205
+    fuelMax: 1000
+    damageMax: 150
+    speedMax: 2400
+    avoidBonus: 10
+    repairRate: 5 #was 1
+    accel: 5
+    weapons: 3
+    weaponTypes:
+      - 0
+      - 0
+      - [4, 5, 13]
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    costBuy: 700000 #+200k, Steel Legion air malus
+    costRent: 300000 #+50k, Steel Legion air malus
+    costSell: 250000
+    soldiers: 1
+    vehicles: 0
+    refuelRate: 200
+    transferTime: 96
+    score: 250
+    pilots: 1
+    battlescapeTerrainData:
+      name: VOSS3
+      mapDataSets:
+        - BLANKS
+        - VOSS2
+      mapBlocks:
+        - name: VOSS3
+          width: 10
+          length: 20
+    deployment:
+      - [5, 15, 0, 4]
+    spacecraft: true
+    allowLanding: false
+    listOrder: 210
+
+  - type: STR_THUNDERBOLT_SL_INTERCEPTOR          #Steel Legion Thunderbolt
+    requires:
+      - STR_STEEL_LEGION_STRATEGY
+    requiresBuyBaseFunc: [HANGAR]
+    marker: 40
+    maxSkinIndex: 6              # default 0
+    skinSprites: [1479,1480,1481,1482,1483,1484]   # default empty, contains all sprites except for the first (index zero)
+    sprite: 207
+    fuelMax: 1500 #was 1000
+    damageMax: 450
+    speedMax: 2000
+    avoidBonus: 5
+    repairRate: 3 #was 1
+    armor: 2 #was 0; gets some armor in lieu of the Lightning's higher avoid bonus
+    accel: 4 #was 5; heavier and takes a bit more time to get up to speed
+    weapons: 3
+    weaponTypes:
+      - 0
+      - 0
+      - [4, 5, 13]
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+    costBuy: 900000 #+200k, Steel Legion air malus
+    costRent: 500000 #+100k, Steel Legion air malus
+    costSell: 400000
+    soldiers: 1
+    vehicles: 0
+    refuelRate: 200
+    transferTime: 96
+    score: 250
+    pilots: 1
+    battlescapeTerrainData:
+      name: THUNDERBOLTW
+      mapDataSets:
+        - BLANKS
+        - THUNDERBOLTW
+      mapBlocks:
+        - name: THUNDERBOLTW
+          width: 10
+          length: 20
+    deployment:
+      - [4, 12, 0, 4]
+    spacecraft: true
+    allowLanding: false
+    listOrder: 240

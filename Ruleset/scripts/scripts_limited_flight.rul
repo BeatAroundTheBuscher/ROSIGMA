@@ -32,7 +32,7 @@ items:
     meleeHitSound: 101
     meleeAnimation: 0
     meleeType: 7
-    meleePower: 40
+    meleePower: 55
     meleeBonus:
       strength: 0.2
       melee: 0.2
@@ -42,14 +42,17 @@ items:
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 10
+    costMelee:
+      time: 12
+      energy: 2
     flatMelee:
       time: true
+      energy: true
     clipSize: -1
     specialUseEmptyHand: true
 
   - type: STR_JUMP_CLAWS
-    medikitTargetMatrix: 0  
+    medikitTargetMatrix: 0
     medikitType: 1
     medikitActionName: STR_ACTIVATE_FLIGHT
     medikitTargetSelf: true
@@ -68,16 +71,19 @@ items:
     meleePower: 40
     meleeBonus:
       strength: 0.2
-      melee: 0.2
+      melee: 0.3
     meleeAlter:
       ArmorEffectiveness: 0.95
     accuracyMelee: 80
     meleeMultiplier:
-      flatHundred: 0.5
+      reactions: 0.5
       melee: 0.5
-    tuMelee: 8
+    costMelee:
+      time: 10
+      energy: 1
     flatMelee:
       time: true
+      energy: true
     clipSize: -1
     specialUseEmptyHand: true
 
@@ -95,17 +101,29 @@ items:
     tags:
       ActivateFlight: 1
     #*** Melee punch
-    flatMelee:
-      time: true
     clipSize: -1
     meleeHitSound: {mod: 40k,index: 100}
     meleeAnimation: 0
-    meleePower: 50
+    power: 20
     meleeType: 7
+    meleeBonus:
+      strength: 0.3
+      melee: 0.3
+    meleeAlter:
+      RandomType: 1
+      IgnoreDirection: false
+      ToStun: 0.5
+      ToHealth: 1.0
     accuracyMelee: 90
     meleeMultiplier:
-      melee: 1.0
-    tuMelee: 12
+      reactions: 0.25
+      melee: 0.75
+    costMelee:
+      time: 10
+      energy: 1
+    flatMelee:
+      time: true
+      energy: true
     specialUseEmptyHand: true
 
 armors:
@@ -241,6 +259,8 @@ extended:
           end;
           if eq currentTurn 1;
             unit.setMovementType movement_type_walk;
+            unit.setTag Tag.CooldownTime 0; # reset flight cooldown
+            unit.setTag Tag.FlightTime 0;
           end;
         end;
         return;
@@ -278,7 +298,7 @@ extended:
           end;
 
           actor.setMovementType movement_type_fly;
-          actor.MoveCost.setBaseFlyTimePercent 50;
+          actor.MoveCost.setBaseFlyTimePercent 75;
           set cooldownTime turn;
           add cooldownTime maxCooldown;
           add cooldownTime maxFlight;

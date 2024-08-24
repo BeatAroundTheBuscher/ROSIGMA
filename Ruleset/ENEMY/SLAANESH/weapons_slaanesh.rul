@@ -3,7 +3,8 @@ extended:
 
 items:
 
-  - type: STR_DIRE_DAEMONETTE_CLAWS
+  - &STR_SLAANESH_CORRUPTION_MELEE
+    type: STR_DIRE_DAEMONETTE_CLAWS
     weight: 3
     size: 0.2
     requires:
@@ -32,7 +33,10 @@ items:
       ToTime: 0.3
       FixRadius: 1
       ToWound: 0.04
+      RandomWound: false
       ToMana: 0.2
+      ToTile: 0.0
+      ToItem: 0.0
     fixedWeapon: true
     skillApplied: true
     strengthApplied: false
@@ -47,6 +51,32 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 5 #tiny chance of zombifying its victims
+
+  - type: STR_SLAANESH_CORRUPTING_TOUCH #For Slaanesh Saint
+    refNode: *STR_SLAANESH_CORRUPTION_MELEE
+    bigSprite: {mod: 40k, index: 624}
+    meleeAnimation: {mod: 40k, index: 60}
+    meleeSound: {mod: 40k, index: 834} #754 knif miss
+    meleeHitSound: {mod: 40k, index: 286} #773 knif hit
+    specialChance: 5
+    accuracyMelee: 100
+    power: 66
+    damageType: 1 #untyped
+    damageBonus:
+      psiSkill: 1.0
+    damageAlter:
+      IgnoreSelfDestruct: false
+      RandomType: 6
+      ArmorEffectiveness: 0.2 #doesn't really interact with armor
+      ToHealth: 0.05 #pure corruption
+      ToMorale: 10.0
+      ToStun: 1.0
+      ToTime: 1.0
+      ToMana: 1.0
+      ToArmor: 0.0
+      ToTile: 0.0
+      ToItem: 0.0
+      ToWound: 0.0
 
 
   - type: STR_SLAANGOR_CLAW_GIMPIFY #For Ritualist, zombifies
@@ -1061,7 +1091,6 @@ items:
      1:
       compatibleAmmo: [STR_SONICKOMBI_CHARGE]
     confAuto: #Sonic
-
       ammoSlot: 1 #Sonic
       name: STR_SONIC_FIRE
     accuracyAuto: 50
@@ -1177,7 +1206,7 @@ items:
     tuSnap: 34
     confSnap:
       shots: 2
-    tuAuto: 69
+    tuAuto: 55
     autoShots: 3
     snapRange: 18
     autoRange: 12
@@ -1259,3 +1288,224 @@ items:
     recoveryPoints: 2
     armor: 50
     listOrder: 11791
+
+
+  - &STR_SONIC_WEAPON_TEMPLATE
+    type: STR_SONIC_CANON #                        11790
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_HEAVY_PLASMA_DEP1
+    size: 0.3
+    dropoff: 5 # chaos
+    costSell: 45800
+    weight: 40
+    clipSize: -1
+    power: 50
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.0
+      ToTime: 1.0
+      ToStun: 2.0
+      ToEnergy: 2.0
+      ToMorale: 2.0
+      ToTile: 0.75
+      ArmorEffectiveness: 0.2
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
+    accuracySnap: 75
+    tuSnap: 30
+    battleType: 1
+    twoHanded: true
+    bulletSpeed: 80
+    invWidth: 2
+    invHeight: 3
+    recoveryPoints: 5
+    armor: 50
+    listOrder: 11790
+
+  - type: STR_FIXED_SONIC_CANON # CHAOSBEHEMOTH
+    refNode: *STR_SONIC_WEAPON_TEMPLATE
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_HEAVY_PLASMA_DEP1
+    size: 0.3
+    dropoff: 4 #mounted weapon
+    damageAlter: #DA Sound
+      FixRadius: 4
+    costSell: 45800
+    weight: 10
+    clipSize: -1
+    power: 60 #mounted weapon
+    accuracySnap: 75
+    tuSnap: 30
+    battleType: 1
+    twoHanded: false
+    bulletSpeed: 80
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    fixedWeapon: true
+    armor: 50
+
+  - type: STR_SLAANESH_CHIMERA_WEAPON_SONIC_CANON #                        11790
+    refNode: *STR_SONIC_WEAPON_TEMPLATE
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_HEAVY_PLASMA_DEP1
+    size: 1.0
+    bigSprite: {mod: 40k, index: 454}
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 861}
+    explosionHitSound: {mod: 40k, index: 863} #Sound
+    hitAnimation: {mod: 40k, index: 96} #XSOUND
+    dropoff: 4 # mounted weapon
+    weight: 100
+    clipSize: -1
+    accuracyAuto: 40
+    confAuto:
+      shots: 2
+    battleType: 1
+    autoRange: 15
+    snapRange: 20
+    maxRange: 25
+    costAuto:
+      time: 1
+      energy: 50
+    flatUse:
+      time: true
+      energy: true
+    power: 60 #mounted weapon
+    damageAlter: #DA Sound
+      FixRadius: 4
+    bulletSpeed: 80
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    fixedWeapon: true
+    armor: 50
+
+  - &STR_SONIC_MUNITION_TEMPLATE
+    type: STR_SONIC_GRENADE  #4010
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_ALIEN_GRENADE
+    size: 0.1
+    costSell: 250
+    weight: 3
+    bigSprite: 2313
+    floorSprite: 2420
+    handSprite: 2390
+    power: 50
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.0
+      ToTime: 1.0
+      ToStun: 2.0
+      ToEnergy: 2.0
+      ToMorale: 2.0
+      ToTile: 0.75
+      ArmorEffectiveness: 0.2
+      RandomType: 6
+      RadiusReduction: 5.0 #halved aoe falloff due to low initial power
+      FixRadius: 3
+    explosionHitSound: 2118 #Sonichit
+    hitAnimation: {mod: 40k, index: 96 }
+    battleType: 4
+    recoveryPoints: 1
+    invWidth: 1
+    invHeight: 2
+    listOrder: 15300
+    throwRange: 16
+
+  - type: STR_SONICKOMBI_CHARGE
+    refNode: *STR_SONIC_MUNITION_TEMPLATE
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 150
+    weight: 3
+    bigSprite: 2317
+    floorSprite: {mod: 40k, index: 2 }
+    handSprite: {mod: 40k, index: 464 }
+    fireSound: {mod: 40k, index: 861}
+    explosionHitSound: {mod: 40k, index: 863} #Sound
+    bulletSprite: {mod: 40k, index: 11}
+    hitAnimation: {mod: 40k, index: 96}
+    power: 40
+    damageAlter: #DA Sound
+      FixRadius: 2
+    bulletSpeed: 80
+    clipSize: -1
+    battleType: 2
+    armor: 30
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10460
+
+  - type: STR_SONIC_MISSILE_PACK #                         12160
+    refNode: *STR_SONIC_MUNITION_TEMPLATE
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_SLAANESH ]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.2
+    costSell: 2500
+    weight: 3
+    bigSprite: 2326
+    floorSprite: 2431
+    handSprite: {mod: 40k, index: 448}
+    power: 66
+    damageAlter: #DA Sound
+      FixRadius: 4
+    clipSize: 6
+    battleType: 2
+    invWidth: 2
+    invHeight: 2
+    hitSound: 2124 #soniccharge
+    explosionHitSound: 2118 #sonic
+    hitAnimation: {mod: 40k, index: 96}
+    listOrder: 12152
+
+  - type: STR_DAEMONETTE_MISSILE_PACK            #Deamonette spawner
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_SLAANESH ]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 3000
+    weight: 3
+    bigSprite: 2327
+    floorSprite: 2429
+    handSprite: {mod: 40k, index: 448}
+    clipSize: 6
+    power: 66 #unleashes a blast of warp energy direct from a portal to Slaanesh's realm
+    damageAlter:
+      ArmorEffectiveness: 0.5
+      ToMorale: 1.5
+      ToEnergy: 1.5
+      ToStun: 0.5
+      ToTime: 1.0
+      ToHealth: 0.1
+      ToMana: 0.4
+      ToWound: 0.0
+      RandomWound: false
+      FixRadius: 4
+    powerForAnimation: 80
+    damageType: 5
+    battleType: 2
+    spawnUnitChance: 66 #66% chance of summoning a daemonette per missile
+    spawnUnit: STR_CHRYSSALID_TERRORIST
+    spawnUnitFaction: -1
+    invWidth: 2
+    invHeight: 2
+    recover: false
+    hitSound: 2123 #sizzlebamf
+    explosionHitSound: [ {mod: 40k, index: 832}, 2119]  #splat+daemonettelaughter
+    hitAnimation: 1020
+    listOrder: 12152
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch

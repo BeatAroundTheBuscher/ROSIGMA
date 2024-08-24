@@ -160,6 +160,7 @@ items:
 
   - &STR_CHAINSWORD_TEMPLATE
     type: STR_CHAINSWORD #         12400            DA CHAIN
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
     armor: 200
     power: 60
     weight: 15
@@ -175,7 +176,14 @@ items:
       melee: 0.2
       strength: 0.2
     damageAlter:
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+      ToWound: 0.3
+      ToEnergy: 0.5
       RandomWound: false
+    clipSize: -1
+    battleType: 3
 
   - type: STR_CHAINSWORD_MC #       3007           DA CHAIN
     refNode: *STR_CHAINSWORD_TEMPLATE
@@ -196,6 +204,29 @@ items:
     damageBonus:
       melee: 0.3
       strength: 0.1
+    damageAlter:
+      RandomWound: false
+
+  - type: STR_CHAINSWORD_STEEL_LEGION #       3007           DA CHAIN
+    refNode: *STR_CHAINSWORD_TEMPLATE
+    costBuy: 5000
+    costSell: 1250
+    size: 0.2
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    invWidth: 1
+    invHeight: 3
+    bigSprite: 939
+    floorSprite: 919
+    handSprite: 1024
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 44}
+    weight: 12 #lighter
+    power: 45 #less damaging
+    damageBonus:
+      melee: 0.25
+      strength: 0.15
     damageAlter:
       RandomWound: false
 
@@ -349,6 +380,7 @@ items:
       ToWound: 0.05
       RandomWound: false
       TileDamageMethod: 2
+      FireThreshold: 16
     shotgunBehavior: 1
     shotgunPellets: 10
     shotgunSpread: 0
@@ -479,6 +511,7 @@ items:
 
   - &STR_POWER_MELEE_WEAPON
     type: STR_MFIST_TEMPLATE
+    categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
     armor: 200
     damageType: 5
     damageAlter:     #DA POWER
@@ -486,6 +519,8 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 6
+    clipSize: -1
+    battleType: 3
 
   - &STR_POWER_FIST_WEAPON
     type: STR_POWERFIST
@@ -505,6 +540,34 @@ items:
 
   - type: STR_MFIST
     refNode: *STR_POWER_FIST_WEAPON
+
+  - type: STR_POWERFIST_STEEL_LEGION
+    refNode: *STR_POWER_FIST_WEAPON
+    costBuy: 10000
+    costSell: 2500
+    invHeight: 2
+    invWidth: 2
+    size: 0.1
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY_MIDTIER
+    bigSprite: 938
+    floorSprite: 918
+    handSprite: 1032
+    meleeSound: {mod: 40k, index: 710} # 710 powerfist miss
+    meleeHitSound: {mod: 40k, index: 772} # 772 powerfist hit
+    meleeAnimation: {mod: 40k, index: 28} # 28 bolt anitmation
+    weight: 15
+    tuMelee: 22 #slow and cumbersome, but hard hitting; especially for terminators
+    costMelee:
+      energy: 4 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    meleeMultiplier:
+      melee: 0.7
+      strength: 0.3 #need strength as well as skill to wield this cumbersome weapon
+    flatMelee: true
+    power: 40
+    damageBonus: # meleeBonus: only works if this was a gun
+      strength: 1.2 #greatly magnifies your strength
+    accuracyMelee: 80
 
   - &STR_POWER_SWORD_WEAPON
     type: STR_POWER_SWORD
@@ -563,12 +626,72 @@ items:
       reactions: 0.3
     accuracyMelee: 100
 
-  - type: STR_POWER_SWORD_SUP
+  - type: STR_POWER_SWORD_SUP #saint sword
     refNode: *STR_POWER_SWORD_WEAPON
     weight: 15 #lighter
+    fireSound: { mod: 40k, index: 753 }
+    explosionHitSound: { mod: 40k, index: 101} #stabhit
+    hitAnimation: 2040 #Bloodgush sprite, X1.pck for ranged attacks, was 1070 #AOEMELEEGENE.png
+    hitAnimFrames: 8
+    powerForAnimation: 10
+    hitSound: { mod: 40k, index: 101} #stabhit
+    bulletSprite: 5
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    snapRange: 2
+    maxRange: 2
+    powerRangeThreshold: 3
+    powerRangeReduction: 200
+    battleType: 1
+    damageType: 11 #melta
+    meleeType: 11
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 20
+      energy: 4
+    accuracySnap: 80
+    accuracyMelee: 80
+    accuracyMultiplier:
+      melee: 0.6
+      psiSkill: 0.4
+    meleeMultiplier:
+      melee: 0.6
+      psiSkill: 0.4
+    power: 10
+    meleePower: 10
+    damageBonus:
+      psi: 0.01 #incorporeal/spiritual weapon
+    meleeBonus:
+      psi: 0.01 #incorporeal/spiritual weapon
     costMelee:
       time: 12 #swings faster
       energy: 2 #light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee:
+      time: true
+      energy: true
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.5
+      FireThreshold: 0.0
+      ToHealth: 0.7
+      ToMorale: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomType: 6
+      IgnoreSelfDestruct: false
+    meleeAlter:     #DA POWER
+      ArmorEffectiveness: 0.5
+      FireThreshold: 0.0
+      ToHealth: 0.75
+      ToMorale: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomType: 6
+      IgnoreSelfDestruct: false
+    tags:
+      REACTION_MULTIPLIER: 200
 
   - type: STR_POWER_SWORD_MC
     refNode: *STR_POWER_SWORD_WEAPON
@@ -607,12 +730,12 @@ items:
     hitSound: { mod: 40k, index: 101} #stabhit
     bulletSprite: 5
     clipSize: -1
-    snapRange: 3
-    maxRange: 3
-    powerRangeThreshold: 4
-    powerRangeReduction: 99
-    power: 90 #lower base damage; compensated for by stat scaling
-    meleePower: 50
+    snapRange: 2
+    maxRange: 2
+    powerRangeThreshold: 3
+    powerRangeReduction: 200
+    power: 100 #lower base damage; compensated for by stat scaling
+    meleePower: 100
     battleType: 1
     damageType: 11 #melta damage; more effective against daemons
     meleeType: 11 #melta damage; more effective against daemons
@@ -620,24 +743,30 @@ items:
       name: STR_HALLEBARD_SNAPSHOT_LUNGE
       shots: 1
     costSnap:
-      time: 15
-      energy: 4
+      time: 25 #lunge costs more TU and energy
+      energy: 12
     accuracySnap: 90
+    accuracyMelee: 90
     accuracyMultiplier:
       firing: 0.0
-      melee: 1
-    skillApplied: true
+      melee: 0.8
+      strength: 0.2
+    meleeMultiplier:
+      firing: 0.0
+      melee: 0.8
+      strength: 0.2
+    skillApplied: false
     damageBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psi: 0.15 #infused by psychic power
+      psi: 0.01 #infused by psychic power
     meleeBonus:
       strength: 0.3 #strength matters more than skill given weapon size in terms of damage scaling
       melee: 0.2
-      psi: 0.15 #infused by psychic power
-    tuMelee: 20
+      psi: 0.01 #infused by psychic power
     costMelee:
-      energy: 8 #heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+      time: 22
+      energy: 8 #very heavy melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
     flatRate: true
     tags:
       ITEM_STRENGTH_REQUIREMENT: 100
@@ -648,6 +777,14 @@ items:
     type: AUX_MEDI_KIT      #AUX MEDI KIT
     medikitTargetImmune: true
     tuMelee: 15 #Lower TU cost from Mastercrafting
+    bigSprite: {mod: 40k, index: 24}
+    floorSprite: {mod: 40k, index: 24}
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 709}
+    meleeAnimation: {mod: 40k, index: 44}
+    battleType: 6
+    invWidth: 2
+    invHeight: 3
     meleeBonus:
       strength: 0.2
       melee: 0.2
@@ -666,6 +803,15 @@ items:
     flatMelee:
       time: true
       energy: true
+    woundRecovery: 1
+    healthRecovery: 3
+    stunRecovery: 4
+    energyRecovery: 10
+    tuUse: 10
+    accuracyMelee: 70
+    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
+    recover: false
+    fixedWeapon: true
 
   - type: AUX_MEDI_KIT_ADVANCED      #AUX MEDI KIT - Advanced Narthecium for Level 4/Paladin GK Apothecary Armor
     refNode: *STR_NARTHECIUM_TEMPLATE
@@ -678,9 +824,13 @@ items:
 
   - type: AUX_MEDI_KIT_MC      #AUX MEDI KIT - Mastercrafted Narthecium for Level 5/Captain GK Apothecary Armor
     refNode: *STR_NARTHECIUM_TEMPLATE
-    painKiller: 50 #More uses from Mastercrafting
-    heal: 50 #More uses from Mastercrafting
-    stimulant: 50 #More uses from Mastercrafting
+    painKiller: 40 #More uses from Mastercrafting
+    heal: 40 #More uses from Mastercrafting
+    stimulant: 40 #More uses from Mastercrafting
+    healthRecovery: 5 #+2 HP recovery
+    stunRecovery: 6 #+2 Stun recovery
+    energyRecovery: 15 #+5 Energy recovery
+    tuUse: 8 #faster
     accuracyMelee: 90 #Improved accuracy from Mastercrafting
     costMelee:
       time: 14 #reduced TU cost from Mastercrafting
@@ -828,11 +978,11 @@ items:
 
   - type: STR_UNARMED_GAUNTLET_PLUS
     specialIconSprite: {mod: 40k, index: 4}
-    power: 10
+    power: 20
     damageType: 7
     damageBonus:
-      strength: 0.25
-      melee: 0.25
+      strength: 0.3
+      melee: 0.3
     damageAlter:
       RandomType: 1
       IgnoreDirection: false
@@ -971,7 +1121,7 @@ items:
     armor: 100
     listOrder: 19925
 
-#Blood Ravens Corpse items 
+#Blood Ravens Corpse items
   - type: STR_MK7_BLOODRAVENS_CORPSE #CORPSE
     size: 0.4
     costSell: 0
@@ -980,7 +1130,7 @@ items:
     floorSprite: 2970
     invWidth: 2
     invHeight: 3
-    recover: false 
+    recover: false
     battleType: 11
     armor: 80
 
@@ -992,7 +1142,7 @@ items:
     floorSprite: 2970
     invWidth: 2
     invHeight: 3
-    recover: false #true? For kill tokens, potentially. 
+    recover: false #true? For kill tokens, potentially.
     battleType: 11
     armor: 80
 
@@ -1073,6 +1223,7 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_PATCHMORAL #SPEED                           9001
     damageBonus:
@@ -1099,6 +1250,7 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 100
       ITEM_PSYCHIC_POWER_MODIFIER: 5
 
   - type: STR_PATCHSMOKE #SPEED                           9001
@@ -1218,6 +1370,7 @@ items:
     tags:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
   - type: STR_THUNDERFIRE_P
     compatibleAmmo:
@@ -1288,3 +1441,649 @@ items:
 
   - type: STR_GK_HB_MC
     bigSprite: 2521
+
+#dungeon specific start
+
+  - type: STR_SIGNAL_CORPSE_HULK
+    name: STR_CORPSE
+    weight: 40
+    bigSprite: 2737
+    floorSprite: 2742
+    invWidth: 2
+    invHeight: 3
+    armor: 80
+    battleType: 11
+    recover: false
+
+  - type: AUX_PRAEDATOR
+    weight: 10
+    bigSprite: {mod: 40k, index: 262}
+    bulletSprite: {mod: 40k, index: 22}
+    fireSound: {mod: 40k, index: 1225}
+    clipSize: 1
+    accuracyAimed: 200
+    tuAimed: 30
+    confAimed:
+      name: STR_PRAEDAT_POSITION
+    hitSound: 0
+    hitAnimation: 0
+    power: 150
+    damageType: 3
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    arcingShot: true
+    bulletSpeed: -10
+    minRange: 5
+    dropoff: 0
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: 993
+    specialUseEmptyHand: false
+
+#dungeon specific end
+
+#Primaris
+
+  - &STR_PRIMARIS_CARBINE_TEMPLATE
+    type: STR_PRIMARIS_CARBINE #BOLTER #        10330  TYPE RIFLE
+    requiresBuy:
+      - STR_PRIMARIS
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.3
+    dropoff: 5
+    costBuy: 30000
+    costSell: 7500
+    weight: 20
+    bigSprite: 1050
+    floorSprite: 979
+    handSprite: 1164
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+    autoRange: 5
+    snapRange: 13
+    aimRange: 0
+    accuracyAuto: 60
+    accuracySnap: 70
+    accuracyAimed: 0
+    tuAuto: 33
+    tuSnap: 22
+    tuAimed: 0
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 25
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    autoShots: 5
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 10330
+    tags:
+      REACTION_MULTIPLIER: 150 #multiplies base reaction score by this amount divided by 100
+      ITEM_RECOIL: 40
+
+  - type: STR_PRIMARIS_OCCULUS_CARBINE
+    refNode: *STR_PRIMARIS_CARBINE_TEMPLATE
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 60000
+    costSell: 15000
+    dropoff: 4 #battle rifle dropoff
+    bigSprite: 1051
+    floorSprite: 980
+    handSprite: 1172
+    weight: 25
+    accuracyAimed: 90
+    snapRange: 15
+    aimRange: 20
+    tuAuto: 40
+    tuSnap: 25
+    tuAimed: 45
+    autoShots: 3
+    oneHandedPenalty: 50
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    tags:
+      REACTION_MULTIPLIER: 150 #multiplies base reaction score by this amount divided by 100
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle aimed shot bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_RECOIL: 40
+
+  - &STR_PRIMARIS_RIFLE_TEMPLATE
+    type: STR_RIFLED #BOLTER #        10330  TYPE RIFLE
+    requiresBuy:
+      - STR_PRIMARIS
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.3
+    dropoff: 4
+    costBuy: 30000
+    costSell: 7500
+    weight: 25
+    bigSprite: {mod: 40k, index: 350}
+    floorSprite: {mod: 40k, index: 204}
+    handSprite: {mod: 40k, index: 1576}
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+    accuracyAuto: 66
+    accuracySnap: 80
+    accuracyAimed: 0
+    tuAuto: 40
+    tuSnap: 25
+    tuAimed: 0
+    autoRange: 7
+    snapRange: 16
+    aimRange: 0
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    autoShots: 5
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 10330
+    tags:
+      ITEM_RECOIL: 40
+
+  - type: STR_PRIMARIS_CAWL_UNDERSLUNG #BOLTER #        10330  TYPE RIFLE
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    requiresBuyBaseFunc: [TRADE]
+    requiresBuy:
+      - STR_PRIMARIS
+      - STR_MIDTIER_PREREQ
+    bigSprite: 1058
+    floorSprite: 983
+    handSprite: 1196
+    costBuy: 40000
+    costSell: 10000
+    weight: 30
+    aimRange: 16 # GL; snapshot accuracy
+    accuracyAimed: 80
+    tuAimed: 40
+    ammo:
+      0:
+        compatibleAmmo: [STR_RIFLE_CLIP, STR_RIFLE_CLIP_MC, STR_RIFLE_CLIP_AP, STR_RIFLE_CLIP_EX]
+      1:
+        compatibleAmmo: [STR_INCENDIARY_GRENADE40, STR_PENITENCE_GRENADE40, STR_KRAK_GRENADE40, STR_MELTA_GRENADE40]
+    confAimed: #Grenade launcher 40mm
+      ammoSlot: 1 #Grenades
+      name: STR_LAUNCH_GRENADE
+      shortName: STR_LAUNCH_GRENADE_SHORT
+      arcing: true
+    listOrder: 10331
+
+  - type: STR_PRIMARIS_HEAVY_BOLT_PISTOL
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    costBuy: 20000
+    costSell: 5000
+    dropoff: 6 #pistol
+    bigSprite: 1052
+    floorSprite: 981
+    handSprite: 1180
+    weight: 20
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+      - STR_PISTOL_CLIP
+      - STR_PISTOL_CLIP_MC
+      - STR_PISTOL_CLIP_AP
+      - STR_PISTOL_CLIP_EX
+    autoRange: 0
+    snapRange: 14
+    aimRange: 0
+    autoShots: 0
+    accuracyAuto: 0
+    accuracyAimed: 0
+    accuracySnap: 80
+    tuAimed: 0
+    tuAuto: 0
+    tuSnap: 20
+    tuLoad: 10
+    invWidth: 1
+    invHeight: 2
+    twoHanded: false
+    kneelBonus: 110
+    tags:
+      ITEM_RECOIL: 40
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_PRIMARIS_ABSOLVER_PISTOL
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    costBuy: 60000
+    costSell: 15000
+    dropoff: 6 #pistol
+    bigSprite: 1047
+    floorSprite: 976
+    handSprite: 1140
+    weight: 25
+    requiresBuyBaseFunc: [TRADE]
+    requiresBuy:
+      - STR_PRIMARIS
+      - STR_MIDTIER_PREREQ
+    compatibleAmmo: #loads full sized ammo only
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+    autoRange: 0
+    snapRange: 15
+    aimRange: 17
+    accuracyAuto: 0
+    accuracyAimed: 100
+    accuracySnap: 80
+    tuAuto: 0
+    tuAimed: 40
+    tuSnap: 20
+    tuLoad: 10
+    invWidth: 1
+    invHeight: 2
+    twoHanded: false
+    kneelBonus: 110
+    tags:
+      ITEM_RECOIL: 50
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle aimed shot bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - type: STR_PRIMARIS_HEAVY_BOLT_RIFLE #BOLTER #        10330  TYPE RIFLE
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    requiresBuyBaseFunc: [TRADE]
+    bigSprite: 1053
+    floorSprite: 982
+    handSprite: 1188
+    costBuy: 100000
+    costSell: 25000
+    weight: 35
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+      - STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM
+      - STR_PRIMARIS_HEAVY_BOLT_RIFLE_MC_DRUM
+      - STR_PRIMARIS_HEAVY_BOLT_RIFLE_EX_DRUM
+      - STR_PRIMARIS_HEAVY_BOLT_RIFLE_AP_DRUM
+    autoRange: 10
+    autoShots: 10
+    accuracyAuto: 70
+    accuracySnap: 75
+    tuAuto: 45
+    tuSnap: 33
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 3
+    oneHandedPenalty: 25
+    kneelBonus: 130
+    tuLoad: 30 #drummag feed; takes longer
+    tags:
+      ITEM_RECOIL: 50
+
+
+  - type: STR_PRIMARIS_STALKER_BOLTER #Designated marksman rifle
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    requiresBuyBaseFunc: [TRADE]
+    dropoff: 3 #marksmanrifle
+    bigSprite: 1059
+    floorSprite: 984
+    handSprite: 1204
+    costBuy: 100000
+    costSell: 25000
+    weight: 30
+    snapRange: 18
+    aimRange: 25
+    accuracyAuto: 60
+    accuracySnap: 85
+    accuracyAimed: 110
+    tuAuto: 40
+    tuSnap: 33
+    tuAimed: 50
+    autoShots: 3
+    oneHandedPenalty: 25
+    kneelBonus: 130
+    tags:
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 15 #marksman rifle snap shot bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 30 #marksman rifle aimed shot bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+
+  - &STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM_TEMPLATE
+    type: STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM #            10410                      ToStun
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    size: 0.1
+    costBuy: 1000
+    costSell: 250
+    weight: 6
+    bigSprite: 1054
+    floorSprite: {mod: 40k, index: 2} #placeholder
+    handSprite: {mod: 40k, index: 464} #placeholder
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    requiresBuy:
+      - STR_PRIMARIS
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    explosionSpeed: 5
+    power: 65
+    damageType: 1
+    clipSize: 60
+    battleType: 2
+    armor: 100
+    invWidth: 1
+    invHeight: 2
+    listOrder: 10410
+
+  - type: STR_PRIMARIS_HEAVY_BOLT_RIFLE_EX_DRUM #         10430     EXPLOSIVE        ToStun
+    refNode: *STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM_TEMPLATE
+    costBuy: 3000
+    costSell: 750
+    bigSprite: 1055
+    damageType: 3
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 1.2 #increasing this because it targets under armor and is AoE
+      RandomType: 6 #gaussian as it's AoE
+      ToArmor: 0.1
+      ToHealth: 1.5 #hollow point + fragmentation
+      ToStun: 0.6 #hollow point + fragmentation
+      ToEnergy: 0.4 #hollow point + fragmentation
+      ToWound: 0.3 #hollow point + fragmentation
+      IgnoreDirection: false
+      RandomWound: false
+      FixRadius: 1
+    blastRadius: 1
+    listOrder: 10430
+
+  - type: STR_PRIMARIS_HEAVY_BOLT_RIFLE_AP_DRUM #         10440     AP++++++++       ToStun
+    refNode: *STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM_TEMPLATE
+    costBuy: 4000
+    costSell: 1000
+    bigSprite: 1056
+    damageAlter: #DA BOLTER AP+
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.02
+      ToArmor: 0.05
+      ToHealth: 0.9 #armor piercing; good penetration, much less stopping power
+      ToStun: 0.3
+      ToEnergy: 0.1
+    listOrder: 10440
+
+
+  - type: STR_PRIMARIS_HEAVY_BOLT_RIFLE_MC_DRUM #         10420     MCA              ToStun
+    refNode: *STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM_TEMPLATE
+    costBuy: 0 #gotta make these
+    costSell: 2000
+    bigSprite: 1057
+    floorSprite: {mod: 40k, index: 2} #placeholder
+    handSprite: {mod: 40k, index: 464} #placeholder
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.15 # was 0.05
+      ArmorEffectiveness: 0.8 # was 0.9
+      ToArmor: 0.15
+      ToHealth: 1.15
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    power: 85
+    listOrder: 10420
+
+  - type: STR_PRIMARIS_MELTA_RIFLE #MELTAGUN
+    categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
+    size: 0.5
+    dropoff: 6
+    costSell: 50000
+    weight: 35
+    bigSprite: 1049
+    floorSprite: 978
+    handSprite: 1156
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    compatibleAmmo:
+      - STR_MELTA_AMMO
+    damageBonus:
+      flatHundred: 0.2 #20% power bonus
+    accuracySnap: 80
+    accuracyAimed: 100
+    snapRange: 14
+    aimRange: 18
+    tuSnap: 40
+    tuAimed: 60
+    maxRange: 25
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 25
+    invWidth: 2
+    invHeight: 3
+    listOrder: 11101
+
+  - &STR_PRIMARIS_EXTERMINATOR_TEMPLATE
+    type: STR_PRIMARIS_EXTERMINATOR
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
+    size: 0.1
+    dropoff: 6
+    costSell: 50000
+    weight: 20
+    floorSprite: 971
+    handSprite: 1100
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 18}
+    compatibleAmmo:
+      - STR_PLASMA_PISTOL_CLIP
+    autoRange: 0
+    snapRange: 13
+    aimRange: 13
+    accuracyAuto: 0
+    accuracySnap: 70
+    accuracyAimed: 70
+    tuAuto: 0
+    tuSnap: 25
+    tuAimed: 25
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+    battleType: 1
+    invWidth: 2
+    invHeight: 2
+    armor: 200
+    attraction: 1
+    listOrder: 11201
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_PRIMARIS_EXTERMINATOR_POWER_PACK
+    refNode: *STR_PRIMARIS_EXTERMINATOR_TEMPLATE
+    compatibleAmmo: []
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    power: 90
+    damageType: 5
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.1 #melts some armor on the way in
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70 #can ignite at high damage
+      ToArmor: 0.1
+    powerRangeReduction: 5
+    powerRangeThreshold: 20.0 #plasma decoheres at longer ranges
+    clipSize: 200
+
+  - type: STR_PRIMARIS_INCINERATOR_POWER_PACK
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
+    size: 0.2
+    dropoff: 5
+    costSell: 100000
+    weight: 40
+    floorSprite: 973
+    handSprite: 1116
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 18}
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    autoRange: 10
+    snapRange: 16
+    aimRange: 16
+    accuracyAuto: 70
+    accuracySnap: 80
+    accuracyAimed: 80
+    tuAuto: 45
+    tuSnap: 33
+    tuAimed: 33
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+    power: 100
+    damageType: 5
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.1 #melts some armor on the way in
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70 #can ignite at high damage
+      ToArmor: 0.1
+    powerRangeReduction: 5
+    powerRangeThreshold: 20.0 #plasma decoheres at longer ranges
+    clipSize: 200
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 25
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    attraction: 1
+    listOrder: 11401
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Maximal Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
+  - &STR_PRIMARIS_VOLKITE_TEMPLATE
+    type: STR_PRIMARIS_VOLKITE_CHARGER
+    categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
+    twoHanded: true
+    battleType: 1
+    tuSnap: 24
+    snapRange: 14
+    accuracySnap: 75
+    confSnap:
+      name: STR_PULSED_FIRE_SNAP_SHOT
+      shots: 3
+    bulletSpeed: 200
+    power: 45 #individual shots are weak, but the full pulse is lethal
+    dropoff: 5
+    powerRangeThreshold: 20
+    powerRangeReduction: 5
+    damageType: 11 #melta; this is the closest thing
+    damageAlter: #DA GUASS
+      ArmorEffectiveness: 0.9 #mostly destroys armor; has limited penetration
+      ToArmorPre: 0.5 #volkite weapons have substantial armor deflagrating
+      FireThreshold: 0 #ignites
+      ToHealth: 1.5 #high health damage
+      ToMorale: 1.0 #highly painful
+      ToStun: 0.5 #highly painful
+      ToArmor: 0.0 #all the armor damage is done on the way in
+      ToTile: 0.5 #burns away cover
+      ToWound: 0.02 #disintegrates rather than causing ugly wounds.
+      RandomWound: false
+      IgnoreOverKill: false
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    bulletSprite: {mod: 40k, index: 23}
+    bigSprite: 1046
+    floorSprite: 975
+    handSprite: 1132
+    fireSound: {mod: 40k, index: 18}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: 2120 #fireballhitex
+    explosionHitSound: {mod: 40k, index: 690} # heavy plasma blast
+    powerForAnimation: 5
+    scripts:
+      vaporParticleAmmo: |
+        var int temp;
+
+        set subvoxel_velocity subvoxel_trajectory_forward;
+        muldiv subvoxel_velocity -3 2;
+
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addX temp;
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addY temp;
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addZ temp;
+
+        begin;
+          var int last 6000;
+          sub last subvoxel_trajectory_distance_max;
+          add last subvoxel_trajectory_distance;
+
+          if gt last 0;
+            set temp 100;
+            muldiv temp last 6000;
+            random.randomChance temp;
+            if gt temp 0;
+              muldiv subvoxel_velocity last 6000;
+            end;
+          else lt subvoxel_trajectory_distance 6000;
+            muldiv subvoxel_velocity subvoxel_trajectory_distance 6000;
+          end;
+        end;
+        subvoxel_velocity.addZ 200;
+        return;
+    clipSize: -1
+    explosionSpeed: 1
+    listOrder: 18011
+    size: 0.4
+    costSell: 50000
+    weight: 20
+    invHeight: 3
+    invWidth: 2
+    attraction: 7
+    tags:
+      REACTION_MULTIPLIER: 150 #Carbine weapon
+
+  - type: STR_PRIMARIS_VOLKITE_CALIVER
+    refNode: *STR_PRIMARIS_VOLKITE_TEMPLATE
+    weight: 30
+    power: 50 #individual shots are weak, but the full pulse is lethal
+    dropoff: 4
+    powerRangeThreshold: 25 #beam decoheres over a longer range
+    powerRangeReduction: 4
+    bigSprite: 1045
+    floorSprite: 974
+    handSprite: 1124
+    tuSnap: 30
+    snapRange: 17
+    tags:
+      REACTION_MULTIPLIER: 0

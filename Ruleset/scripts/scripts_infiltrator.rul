@@ -122,6 +122,18 @@ extended:
           var int temp2;
           var ptr RuleArmor myRuleArmor;
 
+          unit.getFaction temp;
+          attacker.getFaction temp2;
+          if eq temp temp2;
+            #debug_log "ROSIGMA_dU_infiltration_increment_kill_counter; damageUnit, offset 10: Aborting. Target is friendly/same faction.";
+            return;
+          end;
+
+          if eq temp2 FACTION_NEUTRAL;
+            #debug_log "ROSIGMA_dU_infiltration_increment_kill_counter; damageUnit, offset 10: Aborting. Target is neutral faction.";
+            return;
+          end;
+
           attacker.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_KILL_REQUIREMENT; #get the unit's infiltrator value
 

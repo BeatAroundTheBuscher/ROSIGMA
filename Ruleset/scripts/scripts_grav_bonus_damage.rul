@@ -1,26 +1,39 @@
 items:
-  - type: STR_STUN_BOMB
-    tags:
-      GravPercentage: 3
-  - type: STR_GRAVGUN_MC
+  - &STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
+    type: STR_STUN_BOMB
     tags:
       GravPercentage: 4
-  - type: AUX_CENTURION_GRAVGUN
+
+  - type: STR_GRAVGUN_MC
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 3
+      GravPercentage: 5
+
+  - type: AUX_CENTURION_GRAVGUN
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
+    tags:
+      GravPercentage: 6
 
   - type: STR_GRAVGUN_AOE_AMMO
-    tags:
-      GravPercentage: 3
-  - type: STR_GRAVGUN_AOE_AMMO_SHOTGUN
-    tags:
-      GravPercentage: 3
-  - type: STR_GRAVPISTOL_AMMO
-    tags:
-      GravPercentage: 2
-  - type: STR_GRAVCANNON_AMMO
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
       GravPercentage: 4
+
+  - type: STR_GRAVGUN_AOE_AMMO_SHOTGUN
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
+    tags:
+      GravPercentage: 4
+
+  - type: STR_GRAVPISTOL_AMMO
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
+    tags:
+      GravPercentage: 4
+
+  - type: STR_GRAVCANNON_AMMO
+    refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
+    tags:
+      GravPercentage: 6
+
 
 extended:
   tags:
@@ -38,6 +51,11 @@ extended:
           var int weaponpercentage;
           var int ammopercentage;
           var ptre BattleItem ammo;
+
+          set temp to_health;
+          if lt temp 1; #if no damage gets through the shield, abort; sanity check.
+            return;
+          end;
 
           damaging_item.getAmmoItem ammo;
 
