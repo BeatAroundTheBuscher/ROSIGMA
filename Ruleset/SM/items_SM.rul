@@ -2024,27 +2024,45 @@ items:
     bigSprite: 1046
     floorSprite: 975
     handSprite: 1132
+    fireSound: {mod: 40k, index: 18}
     hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 110 }
+    hitAnimation: 2120 #fireballhitex
+    explosionHitSound: {mod: 40k, index: 690} # heavy plasma blast
+    powerForAnimation: 5
     scripts:
       vaporParticleAmmo: |
         var int temp;
-        var int randMax;
 
-        set randMax subvoxel_scale;
-        muldiv randMax 3 2;
-        random.randomRangeSymmetric temp randMax;
-        subvoxel_offset.setX temp;
-        random.randomRangeSymmetric temp randMax;
-        subvoxel_offset.setY temp;
-        random.randomRangeSymmetric temp randMax;
-        subvoxel_offset.setZ temp;
-        set temp 320;
-        sub temp particle_density;
-        subvoxel_velocity.setZ temp;
+        set subvoxel_velocity subvoxel_trajectory_forward;
+        muldiv subvoxel_velocity -3 2;
+
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addX temp;
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addY temp;
+        random.randomRangeSymmetric temp 100;
+        subvoxel_velocity.addZ temp;
+
+        begin;
+          var int last 6000;
+          sub last subvoxel_trajectory_distance_max;
+          add last subvoxel_trajectory_distance;
+
+          if gt last 0;
+            set temp 100;
+            muldiv temp last 6000;
+            random.randomChance temp;
+            if gt temp 0;
+              muldiv subvoxel_velocity last 6000;
+            end;
+          else lt subvoxel_trajectory_distance 6000;
+            muldiv subvoxel_velocity subvoxel_trajectory_distance 6000;
+          end;
+        end;
+        subvoxel_velocity.addZ 200;
         return;
     clipSize: -1
-    explosionSpeed: 5
+    explosionSpeed: 1
     listOrder: 18011
     size: 0.4
     costSell: 50000
