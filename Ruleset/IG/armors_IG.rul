@@ -2044,6 +2044,10 @@ armors:
 #*** Stormtrooper Carapace ***
   - &STR_GUARD_ARMOR_CARAPACE_VETERAN # DAMAGE + STATS
     type: STR_STORMTROOPER_CARAPACE_ARMOR
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163, 160, 160, 163, 163]
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 144, 96, 245, 164, 164, 245, 245, 245, 245, 245, 245, 245, 245]
     visibilityAtDay: 40
     visibilityAtDark: 20
     antiCamouflageAtDay: 3
@@ -4269,7 +4273,7 @@ armors:
       - 0.6 #AP
       - 0.3 #FLAMES
       - 0.4 #HE
-      - 0.8 #LASCANON
+      - 0.9 #LASCANON
       - 0.7 #PLASMA
       - 1.0 #STUN
       - 0.8 #MELEE
@@ -4974,117 +4978,98 @@ armors:
     camouflageAtDay: -30
     camouflageAtDark: -25
     heatVision: 10
-    psiVision: 3
+    psiVision: 5 #preternatural senses
     loftempsSet: [ 3 ]
     storeItem: STR_SLY_MARBO_ARMOR
     spriteInv: SLY_MARBOinvent.PCK
     spriteSheet: SLY_MARBObattle.PCK
     drawingRoutine: 0
-    frontArmor: 180
-    sideArmor: 150
-    rearArmor: 150
-    underArmor: 150
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
     allowsKneeling: true
     allowsRunning: true
+    units:
+      - STR_SLY_MARBO
     corpseBattle:
       - STR_SLY_MARBO_CORPSE_GEO
     damageModifier: # SLY ARMOR
       - 1.0 #none
-      - 0.6 #AP
-      - 0.8 #FLAMES
-      - 0.7 #HE
-      - 0.9 #LASCANON
-      - 0.8 #PLASMA
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
       - 0.5 #STUN
       - 0.5 #MELEE
-      - 0.8 #ACID
+      - 0.5 #ACID
       - 0.0 #SMOKE
       - 0.5 #IMPACT
-      - 1.0 #MELTA
+      - 0.5 #MELTA
     specialWeapon: STR_MARBOKNIFE  #one day
     tags:
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+
 
 #catachan
 
-  - type: STR_CATACHAN_FIGHTER_ARMOR
+  - &STR_CATACHAN_FIGHTER_ARMOR_REF
+    type: STR_CATACHAN_FIGHTER_ARMOR
     spriteFaceGroup: 6
     spriteFaceColor: [164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 96, 164, 96, 96]
     #spriteHairGroup: 9
     #spriteHairColor: [144, 144, 164, 164, 245, 245, 164, 164] # M0 F0 M1 F1 M2 F2 M3 F3
     visibilityAtDay: 40
-    visibilityAtDark: 40
-    antiCamouflageAtDay: 20
-    antiCamouflageAtDark: 25
+    visibilityAtDark: 15 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 5 #keen eyes
+    antiCamouflageAtDark: 5
     camouflageAtDay: -15
     camouflageAtDark: -10
-    heatVision: 6
+    heatVision: 0
     psiVision: 0
     loftempsSet: [ 3 ]
     storeItem: STR_CATACHAN_FIGHTER_ARMOR
     spriteInv: CATAFIGHTERinvent.PCK
     spriteSheet: CATAFIGHTERbattle.PCK
     drawingRoutine: 0
-    frontArmor: 70
-    sideArmor: 60
-    rearArmor: 30
-    underArmor: 50
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 20 # higher because flak vest
     allowsKneeling: true
     allowsRunning: true
+    units:
+      - STR_CATACHAN_FIGHTER
     corpseBattle:
       - STR_CATACHAN_FIGHTER_CORPSE_GEO
-    damageModifier:
+    damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
-      - 1.1 #FLAMES
-      - 0.9 #HE
+      - 1.2 #FLAMES
+      - 1.0 #HE
       - 0.8 #LASCANON
-      - 0.9 #PLASMA
-      - 0.8 #STUN
-      - 0.9 #MELEE
-      - 0.9 #ACID
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
       - 0.0 #SMOKE
-      - 0.9 #IMPACT
-      - 1.1 #MELTA
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
     specialWeapon: STR_CATAKNIFE  #one day
     tags:
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100 #they only get one second chance
 
   - type: STR_CATACHAN_FIGHTER_ARMOR_AI
-    visibilityAtDay: 40
-    visibilityAtDark: 40
-    antiCamouflageAtDay: 20
-    antiCamouflageAtDark: 25
-    camouflageAtDay: -15
-    camouflageAtDark: -10
-    heatVision: 6
-    psiVision: 0
-    loftempsSet: [ 3 ]
-    storeItem: STR_CATACHAN_FIGHTER_ARMOR
-    spriteInv: CATAFIGHTERinvent.PCK
-    spriteSheet: CATAFIGHTERbattle.PCK
-    drawingRoutine: 0
-    frontArmor: 70
-    sideArmor: 60
-    rearArmor: 30
-    underArmor: 50
-    allowsKneeling: true
-    allowsRunning: true
-    corpseBattle:
-      - STR_CATACHAN_FIGHTER_CORPSE_GEO
-    damageModifier:
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.1 #FLAMES
-      - 0.9 #HE
-      - 0.8 #LASCANON
-      - 0.9 #PLASMA
-      - 0.8 #STUN
-      - 0.9 #MELEE
-      - 0.9 #ACID
-      - 0.0 #SMOKE
-      - 0.9 #IMPACT
-      - 1.1 #MELTA
-    specialWeapon: STR_CATAKNIFE  #one day
-    tags:
-      UNIT_TYPE_LIVING: 1
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
