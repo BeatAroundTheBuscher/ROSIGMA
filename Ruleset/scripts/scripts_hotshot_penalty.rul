@@ -21,14 +21,14 @@ extended:
           ammo.getTag temp2 Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER;
 
           if and lt temp 1 lt temp2 1;
-            debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Temp and Temp 2 null. Aborting";
+            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Temp and Temp 2 null. Aborting";
             return bonus; # final accuracy
           end;
 
           set multiplier temp; #get the highest fallout multiplier
           if gt temp2 multiplier;
             set multiplier temp2;
-            debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp2 is higher than temp1. multiplier:" multiplier;
+            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp2 is higher than temp1. multiplier:" multiplier;
           end;
 
           ammo.getTag temp Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_PRIOR_AMMO_COUNT;
@@ -36,15 +36,15 @@ extended:
 
           sub temp temp2;
           if lt temp 1;
-            debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp is null or negative. Weapon reloaded?:" temp;
+            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp is null or negative. Weapon reloaded?:" temp;
             return bonus;
           end;
 
           mul temp multiplier;
-          debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Accuracy penalty, temp:" temp;
-          debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Original accuracy, bonus:" bonus;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Accuracy penalty, temp:" temp;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Original accuracy, bonus:" bonus;
           sub bonus temp;
-          debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | New accuracy set, bonus:" bonus;
+          #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | New accuracy set, bonus:" bonus;
           return bonus; # final accuracy
 
     newTurnItem:
