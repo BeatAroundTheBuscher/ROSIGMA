@@ -2754,14 +2754,14 @@ items:
     accuracyAimed: 90
     tuAuto: 33
     tuSnap: 25
-    tuAimed: 50
+    tuAimed: 45
     confAuto:
       shots: 2
       name: STR_BURST_SNAP_SHOT
     kneelBonus: 110
     tags:
-      ITEM_SNAP_ACCURACY_POWER_BONUS: 15
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 30 #highly accurate for a pistol
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 25
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #highly accurate for a pistol
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       REACTION_MULTIPLIER: 200
 
@@ -5908,7 +5908,8 @@ items:
 
 #unique
 
-  - type: STR_MARBOKNIFE #special
+  - &STR_CATACHAN_KNIFE_TEMPLATE
+    type: STR_CATAKNIFE #special
     weight: 0
     bigSprite: {mod: 40k, index: 228}
     floorSprite: {mod: 40k, index: 113}
@@ -5916,15 +5917,31 @@ items:
     meleeSound: {mod: 40k, index: 754}
     meleeHitSound: {mod: 40k, index: 773}
     meleeAnimation: 4
-    power: 110
-    damageAlter:     #DA POWER
-      ArmorEffectiveness: 0.8
-      ToArmorPre: 0.2
-      ToHealth: 0.9
+    power: 25
+    damageBonus:
+      strength: 0.1
+      melee: 0.4 #finesse over strength
+    accuracyMelee: 110
+    meleeMultiplier:
+      melee: 0.7
+      reactions: 0.3 #need speed as well as skill to land effective blows
     damageType: 7
-    accuracyMelee: 100
-    tuMelee: 10
-    flatRate: true
+    damageAlter:     #DA POWER
+      ResistType: 8 #poisoned
+      ArmorEffectiveness: 0.8
+      ToArmorPre: 0.05
+      ToHealth: 0.8
+      ToWound: 0.5 #poisoned
+      RandomWound: false
+      ToEnergy: 0.5 #poisoned
+      ToStun: 0.5 #poisoned
+      ToTime: 0.5 #poisoned
+    costMelee:
+      time: 10 #fast attack
+      energy: 1 #light melee
+    flatMelee:
+      time: true
+      energy: true
     clipSize: -1
     battleType: 3
     twoHanded: false
@@ -5935,34 +5952,16 @@ items:
     specialIconSprite: 2778
     specialUseEmptyHand: false
     experienceTrainingMode: 13
+
+  - type: STR_MARBOKNIFE #special
+    refNode: *STR_CATACHAN_KNIFE_TEMPLATE
+    power: 110
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.5
+    damageType: 7
+    accuracyMelee: 130
 
 #catachan
 
-  - type: STR_CATAKNIFE #special
-    weight: 0
-    bigSprite: {mod: 40k, index: 228}
-    floorSprite: {mod: 40k, index: 113}
-    handSprite: {mod: 40k, index: 304}
-    meleeSound: {mod: 40k, index: 754}
-    meleeHitSound: {mod: 40k, index: 773}
-    meleeAnimation: 4
-    power: 90
-    damageAlter:     #DA POWER
-      ArmorEffectiveness: 0.6
-      ToArmorPre: 0.1
-      ToHealth: 0.8
-    damageType: 7
-    accuracyMelee: 90
-    tuMelee: 10
-    flatRate: true
-    clipSize: -1
-    battleType: 3
-    twoHanded: false
-    skillApplied: true
-    strengthApplied: false
-    recover: false
-    fixedWeapon: true
-    specialIconSprite: 2778
-    specialUseEmptyHand: false
-    experienceTrainingMode: 13
+
 
