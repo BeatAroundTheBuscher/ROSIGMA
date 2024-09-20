@@ -57,6 +57,12 @@ armors:
           return power part side;
         end;
 
+        unit.getTag temp Tag.DugInBonus;
+        if eq temp 1; #don't bother if we don't have the dug-in bonus
+          # debug_log "hitUnit | dodge scripts | unit dug in; cannot dodge. Aborting:" temp;
+          return power part side;
+        end;
+
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
         damageType.getResistType temp;
@@ -1111,22 +1117,22 @@ armors:
   - type: STR_SLY_MARBO_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 40
-      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
 #catachan
 
   - type: STR_CATACHAN_FIGHTER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 25
-      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_CATACHAN_FIGHTER_ARMOR_AI
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 25
-      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
 #ORKS
   - type: STR_WEIRDORK_ARMOR
