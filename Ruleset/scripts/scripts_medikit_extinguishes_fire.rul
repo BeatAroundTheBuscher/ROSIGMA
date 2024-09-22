@@ -18,9 +18,36 @@ extended:
             return;
           end;
           if and eq medikit_action_type medikit_action_heal gt temp 0;
-            set wound_recovery 0; 
+            set wound_recovery 0;
             set health_recovery 0;
             target.setFire 0;
           end;
+
+          return;
+
+      - new: ROSIGMA_healU_medikit_no_pain_or_stim_mechanical_units #prevents stimming/painkilling mechanical units
+        offset: 1
+        code: |
+          var int isMechanical;
+          var ptr RuleArmor armorRule;
+
+          target.getRuleArmor armorRule;
+          armorRule.getTag isMechanical Tag.UNIT_TYPE_MECHANICAL;
+
+          if le isMechanical 0; #abort if we don't have the mechanical tag; we don't care
+            debug_log "healUnit | ROSIGMA_healU_medikit_no_pain_or_stim_mechanical_units | offset: 1 | isMechanical null. Aborting." isMechanical;
+            return;
+          end;
+
+          if eq medikit_action_type medikit_action_heal; #abort if we're trying to heal, not stim or use painkillers; we don't care
+            debug_log "healUnit | ROSIGMA_healU_medikit_no_pain_or_stim_mechanical_units | offset: 1 | medikit_action_type is medikit_action_heal. Aborting" medikit_action_heal;
+            return;
+          end;
+
+          battle_game.flashMessage "Can't use stims or painkillers on mechanical targets!";
+          set stun_recovery 0;
+          set energy_recovery 0;
+          set painkiller_recovery 0;
+          set morale_recovery 0;
 
           return;
