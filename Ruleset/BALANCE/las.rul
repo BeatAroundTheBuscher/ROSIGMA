@@ -136,6 +136,9 @@ items:
     tuAuto: 0
     tuSnap: 33 #2x snap shot, slightly higher TU cost
     tuAimed: 65 #slightly worse than Tanith longlas
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
 
   - type: STR_LASCARBINE # done # Carbine # Make it different from Lasgun
     dropoff: 5
@@ -153,26 +156,31 @@ items:
     autoShots: 4
     confSnap:
       shots: 2
+      name: STR_BURST_SNAP_SHOT
 
     tags:
       REACTION_MULTIPLIER: 150 #carbine
 
   - type: STR_LASGUN_VOSS # done # Carbine # Benefit 1x2 size
-    dropoff: 4
-    autoRange: 0
-    snapRange: 13 # actually autoRange
+    dropoff: 5
+    autoRange: 5
+    snapRange: 10 # actually autoRange
     aimRange: 0
 
-    accuracyAuto: 0 # 40k 50
-    accuracySnap: 60 # 40k 70
+    accuracyAuto: 40 # 40k 50
+    accuracySnap: 55 # 40k 70
     accuracyAimed: 0
-    tuAuto: 0 # 40k 34
-    tuSnap: 30 # 40k 22
+    tuAuto: 33 # 40k 34
+    tuSnap: 25 # 40k 22
     tuAimed: 0
 
-    autoShots: 3
+    autoShots: 6 #laser uzi
     confSnap:
-      shots: 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+
+    tags:
+      REACTION_MULTIPLIER: 175 #light carbine
 
   - type: STR_LASGUN_TANITH # done # more accurate
     dropoff: 3 #-1 DMR role
@@ -205,13 +213,14 @@ items:
     autoShots: 4
     confSnap:
       shots: 2
+      name: STR_BURST_SNAP_SHOT
 
     tags:
       REACTION_MULTIPLIER: 150 #carbine
 
   - type: STR_LASGUN_VOSTROYA # done # long barrel
     dropoff: 3 #-1
-    autoRange: 13
+    autoRange: 9
     snapRange: 22
     aimRange: 30 #make it a option vs longlas, slightly worse at the sniping role
 
@@ -223,6 +232,12 @@ items:
     tuAimed: 65
 
     autoShots: 2 #because this gun is otherwise way too good
+    minRange: 7 #long arm; unwieldy in CQC
+    oneHandedPenalty: 25 #too long and unwieldy to use effectively one-handed
+
+    tags:
+      REACTION_MULTIPLIER: 75 #awkward long arm
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
   - type: STR_LASGUN_LUCIUS # done # power shot
     dropoff: 4
@@ -245,8 +260,8 @@ items:
       shortName: STR_POWER_SHOT_COUNT
 
     tags:
-      ITEM_SNAP_FLAT_POWER_BONUS: 10
-      ITEM_AIMED_FLAT_POWER_BONUS: 50
+      ITEM_SNAP_FLAT_POWER_BONUS: 10 #higher yield/higher damage
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #power shot
       ITEM_WEAPON_REPEATED_ACCURACY_FALLOFF_MULTIPLIER: 1 #lucius lasguns get hot
 
   - type: STR_MCLASER_RIFLE # done # MC
@@ -312,7 +327,8 @@ items:
       RandomWound: false
 
     confSnap:
-      shots: 3 # 40k 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
     confAuto:
       shots: 7 # 40k 4
 
@@ -472,7 +488,8 @@ items:
 
 ## Snipers
 
-  - type: STR_LONGLAS # done STR_CAT_SNIPER
+  - &STR_LONGLAS_TEMPLATE
+    type: STR_LONGLAS # done STR_CAT_SNIPER
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     dropoff: 2 #proper sniper rifle with scope
     autoRange: 0
@@ -481,44 +498,35 @@ items:
 
     accuracyAuto: 0
     accuracySnap: 50
-    accuracyAimed: 75
+    accuracyAimed: 85
     tuAuto: 0
     tuSnap: 35
     tuAimed: 65
-    kneelBonus: 130 #sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
+    kneelBonus: 140 #light sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
     minRange: 7 #medium sniper rilfe
+    twoHanded: true
+    blockBothHands: true
 
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
 
     tags:
+      REACTION_MULTIPLIER: 50 #sniper; effective reactions are halved unless kneeling
+      REACTION_PENALTY_KNEELING_BYPASS: 1
       ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_IS_HEAVY_WEAPON: 1
 
-  - type: STR_LONGLAS_TANITH # done STR_CAT_SNIPER
-    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
-    dropoff: 2 #proper sniper rifle with scope
-    autoRange: 0
-    snapRange: 22
-    aimRange: 33
+  - type: STR_LONGLAS_TANITH # a little more cumbersome, slower to fire and worse at hip fire than a standard longlas, but better accuracy and effective range
+    refNode: *STR_LONGLAS_TEMPLATE
+    snapRange: 25
+    aimRange: 35
 
-    accuracyAuto: 0
-    accuracySnap: 50
+    accuracySnap: 40
     accuracyAimed: 95
-    tuAuto: 0
-    tuSnap: 35
-    tuAimed: 60
-    kneelBonus: 130 #sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
-    minRange: 7 #medium sniper rilfe
 
-    accuracyMultiplier: #sniper rifle accuracy
-      firing: [0.5, 0.005]
-
-    tags:
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
-      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
-      ITEM_IS_HEAVY_WEAPON: 1
+    tuSnap: 45
+    tuAimed: 75
 
 ## Vehicles (Sentinels, etc.)
 
