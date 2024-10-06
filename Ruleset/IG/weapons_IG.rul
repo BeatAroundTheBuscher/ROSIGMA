@@ -2370,6 +2370,127 @@ items:
     recover: false
     defaultInventorySlot: STR_BACK_PACK
 
+  - type: STR_CAS_AIRSTRIKE_DESIGNATOR
+    dropoff: 999
+    minRange: 10
+    autoRange: 30
+    snapRange: 0
+    aimRange: 0
+    maxRange: 30
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        return;
+    accuracyAuto: 200
+    accuracySnap: 0
+    accuracyAimed: 0
+    accuracyMultiplier:
+      flatHundred: 1.0
+    tuSnap: 0
+    tuAimed: 0
+    tuAuto: 90
+    confAuto:
+      name: STR_DESIGNATE_AIRSTRIKE
+      spendPerShot: 9 # setAmmoQuantity can't be set to 0 as the item would disappear (sanity check)
+    autoShots: 1
+    noLOSAccuracyPenalty: 100 #airstrike
+    bigSprite: 240
+    handSprite: 240
+    floorSprite: {mod: 40k, index: 157}
+    invWidth: 1
+    invHeight: 1
+    bulletSprite: {mod: 40k, index: 22}
+    fireSound: {mod: 40k, index: 491}
+    bulletSpeed: 50
+    explosionHitSound: {mod: 40k, index: 704}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
+    #
+    power: 180
+    damageAlter: #high explosive
+      ArmorEffectiveness: 0
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+    spawnItem: STR_CAS_AIRSTRIKE_BLAST
+    spawnItemChance: 100
+    #
+    battleType: 1
+    recover: false
+    tuLoad: 999
+    tuUnload: 999
+    clipSize: 10
+    tags:
+      ITEM_IS_AIRSTRIKE_DESIGNATOR: 1
+      ITEM_AMMO_TURN_COOLDOWN: 4
+
+  - type: STR_CAS_AIRSTRIKE_AMMO #HE munition
+    size: 0.1
+    weight: 0
+    bigSprite: 911
+    explosionHitSound: {mod: 40k, index: 704}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
+    power: 200
+    damageAlter: #high explosive
+      ArmorEffectiveness: 0
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+    spawnItem: STR_CAS_AIRSTRIKE_BLAST
+    spawnItemChance: 100
+    clipSize: 1
+    battleType: 2
+    invWidth: 1
+    invHeight: 3
+    armor: 255
+    recover: false
+
+  - type: STR_CAS_AIRSTRIKE_BLAST #HE munition
+    size: 0.0
+    weight: 999
+    floorSprite: 959
+    handSprite: 0
+    hitAnimation: 0
+    power: 200
+    damageType: 3
+    damageAlter: #high explosive
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FireThreshold: 180
+    battleType: 4
+    invWidth: 0 #shouldn't be possible to pick up
+    invHeight: 0
+    isExplodingInHands: true
+    tuThrow: 9999
+    armor: 999
+    costUnprime:
+      time: 9999
+    inventoryMoveCost:
+      basePercent: 9999
+    recover: false
+    defaultInventorySlot: STR_GROUND
+    tags:
+      MUNITION_DELAY: 1
 
   - type: STR_AIRSTRIKE_VOX # backwards compatibility and inventory item
     requires:
