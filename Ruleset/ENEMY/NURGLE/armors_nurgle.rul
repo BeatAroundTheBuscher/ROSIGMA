@@ -1363,6 +1363,9 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_NURGLE: 1
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit
     painImmune: true
     recovery: #Plague Daemons regenerate health
       health:
@@ -1376,7 +1379,7 @@ armors:
       - 1.2 #PLASMA
       - 0.0 #STUN; it's a vehicle; stun immune
       - 0.8 #MELEE
-      - 0.1 #ACID #plague daemonengine; we don't really care about chem weapons
+      - 0.0 #ACID #plague daemonengine; we don't really care about chem weapons
       - 0.0 #SMOKE
       - 0.0 #IMPACT
       - 1.4 #MELTA
@@ -1752,27 +1755,34 @@ armors:
     underArmor: 180
     allowsKneeling: false
     allowsRunning: false
+    painImmune: true
+    fearImmune: true
+    bleedImmune: true
     corpseBattle:
       - STR_NURGLcataphract_CORPSE_GEO
     damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
       - 1.0 #none
-      - 0.5 #AP; Cataphract reduces by 0.2
-      - 0.3 #FLAMES
-      - 0.5 #HE; Cataphract reduces by 0.2
-      - 1.0 #LASCANON; Cataphract increases by 0.2
+      - 0.2 #AP; Cataphract reduces by 0.2 + nurgle resist
+      - 0.5 #FLAMES; Cataphract reduces by 0.7 + nurgle vulnerability
+      - 0.2 #HE; Cataphract reduces by 0.2 + nurgle resist
+      - 1.1 #LASCANON; Cataphract increases by 0.2
       - 1.0 #PLASMA
-      - 0.8 #STUN
-      - 0.8 #MELEE
-      - 1.0 #ACID
+      - 0.7 #STUN; nurgle resist
+      - 0.7 #MELEE; nurgle resist
+      - 0.0 #ACID; Nurgle immunity
       - 0.0 #SMOKE
       - 0.2 #IMPACT
-      - 1.1 #MELTA; Cataphract increases by 0.1
-    specialWeapon: STR_MFIST
+      - 1.2 #MELTA; Cataphract increases by 0.1 + nurgle vulnerability
+    specialWeapon: STR_NURGLING_CLAWS
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
       ARMOR_ENERGY_SHIELD_DECAY: 20
-      UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10
+
 
   - type: STR_SATURNINEnurgle_ARMOR
     visibilityAtDay: 40 #equivalent to Scion gear
@@ -1792,30 +1802,35 @@ armors:
     underArmor: 200
     allowsKneeling: false
     allowsRunning: false
-    corpseBattle:
-      - STR_SATURNINEnurgle_CORPSE_GEO
-    damageModifier:
-      - 1.0 #none
-      - 0.6 #AP
-      - 0.1 #FLAMES #Armor is fireproof + Rubric have no flesh to burn
-      - 0.4 #HE
-      - 0.8 #LASCANON
-      - 0.8 #PLASMA
-      - 0.0 #STUN; #Rubric are stun proof
-      - 0.8 #MELEE
-      - 0.5 #ACID #Rubric have no flesh to burn/poison is ineffective
-      - 0.0 #SMOKE
-      - 0.2 #IMPACT
-      - 0.9 #MELTA
-    specialWeapon: DW_SATAUTOCAN
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 80 #Tzeentch Sat have better shields: (80 * 100 / 20) = 400. Regenerates from 80 (at 0) to 0 (at 400) / Turn
-      ARMOR_ENERGY_SHIELD_DECAY: 20
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_TZEENTCH: 1
     painImmune: true
     fearImmune: true
     bleedImmune: true
+    corpseBattle:
+      - STR_SATURNINEnurgle_CORPSE_GEO
+    damageModifier: #Saturnine ARMOR; Nurgle acid immune, +0.1 resist to all but melta, plasma and flames. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.2 #AP; Cataphract reduces by 0.2 + nurgle resist
+      - 0.5 #FLAMES; Cataphract reduces by 0.7 + nurgle vulnerability
+      - 0.2 #HE; Cataphract reduces by 0.2 + nurgle resist
+      - 1.0 #LASCANON; Cataphract increases by 0.2 + nurgle resist
+      - 1.0 #PLASMA
+      - 0.7 #STUN; nurgle resist
+      - 0.7 #MELEE; nurgle resist
+      - 0.0 #ACID; Nurgle immunity
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA; Cataphract increases by 0.1 + nurgle vulnerability
+    specialWeapon: NURGLE_SATAUTOCAN
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit

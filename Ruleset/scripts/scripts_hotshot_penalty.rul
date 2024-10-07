@@ -19,17 +19,14 @@ extended:
 
           weapon.getTag temp Tag.ITEM_WEAPON_REPEATED_ACCURACY_FALLOFF_MULTIPLIER;
           ammo.getTag temp2 Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_MULTIPLIER;
+          add temp temp2; #add the weapon and ammo multipliers
 
-          if and lt temp 1 lt temp2 1;
+          if lt temp 1;
             #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | Temp and Temp 2 null. Aborting";
             return bonus; # final accuracy
           end;
 
           set multiplier temp; #get the highest fallout multiplier
-          if gt temp2 multiplier;
-            set multiplier temp2;
-            #debug_log "accuracyMultiplierBonusStats | ROSIGMA_aMBS_repeated_accuracy_penalty | offset: 10 | temp2 is higher than temp1. multiplier:" multiplier;
-          end;
 
           ammo.getTag temp Tag.ITEM_AMMO_REPEATED_ACCURACY_FALLOFF_PRIOR_AMMO_COUNT;
           ammo.getAmmoQuantity temp2;

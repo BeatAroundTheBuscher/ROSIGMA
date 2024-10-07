@@ -1859,10 +1859,10 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyMelee: 80
+    accuracyMelee: 90
     costMelee:
-      time: 12
-      energy: 2
+      time: 10 #fast attacking
+      energy: 1
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -1876,6 +1876,7 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+
   - type: STR_CHAOS_CLAWS2 #                       DA POWER
     weight: 10
     power: 55
@@ -1889,13 +1890,13 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyMelee: 80
+    accuracyMelee: 90
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
     costMelee:
-      time: 12
-      energy: 2
+      time: 10 #fast attacking
+      energy: 1
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -1904,28 +1905,34 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+
   - type: STR_OBLITERATOR_MELEE_WEAPON #DA POWER
     weight: 3
     clipSize: -1
     strengthApplied: false
-    power: 120
+    power: 0
+    damageBonus: #it's a power fist
+      strength: 1.5
+      melee: 0.0
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false
     damageType: 5 #these are power weapons
-    accuracyMelee: 80
+    accuracyMelee: 70
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
-    tuMelee: 15
+    costMelee:
+      time: 20 #fast attacking
+      energy: 4
+    flatRate: true
     battleType: 3
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
     recover: false
-    flatRate: true
     skillApplied: true
 
   - &STR_ASSAULT_CANNON_TEMPLATE
@@ -3111,7 +3118,7 @@ items:
       ToTile: 0.6 #corrosive
       ToStun: 0.6 #increased stun damage from virulent payload
       ToEnergy: 0.6 #increased energy damage from virulent payload
-      ToWound: 0.05 #debilitates and infects instead of wounds
+      ToWound: 0.02 #debilitates and infects instead of wounds
       RandomWound: false
       FixRadius: 1
     powerForAnimation: 16 #Fix radius * 32 - 16.
@@ -3121,6 +3128,55 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 40 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: NURGLE_SATAUTOCAN
+    weight: 10
+    bigSprite: 1034
+    floorSprite: 949
+    handSprite: 864
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    hitSound: { mod: 40k, index: 708 }
+    explosionHitSound: {mod: 40k, index: 832}
+    hitAnimation: {mod: 40k, index: 120 } #Green EX
+    explosionSpeed: 10
+    bulletSpeed: 50
+    clipSize: 200
+    accuracyAuto: 60
+    tuAuto: 55
+    autoShots: 10
+    sprayWaypoints: 3
+    confAuto:
+      name: DW_SATAUTOCAN_AUTO
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    power: 110
+    damageType: 8
+    damageAlter: #DA BLIGHT
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
+      ToTime: 0.2
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.02 #debilitates and infects instead of wounds
+      RandomWound: false
+      FixRadius: 1
+    powerForAnimation: 16 #Fix radius * 32 - 16.
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    minRange: 7
+    autoRange: 20
+    dropoff: 4
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: 994
+    specialUseEmptyHand: false
+
 
   - type: STR_BLIGHT_HAULER_MORTAR
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
