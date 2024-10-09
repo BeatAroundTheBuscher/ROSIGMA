@@ -34,6 +34,12 @@ extended:
           var int currentAmmoCount;
           var ptr BattleItem ammoItem;
 
+          reaction_unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
+            #ignore if we're not a player unit.
+            return reaction_chance;
+          end;
+
           reaction_weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
           if eq maxHeat 0;
@@ -198,6 +204,13 @@ items:
           return; #don't bother running this script if we don't have a heat level
         end;
 
+        item.getOwner bUnit;
+        bUnit.getFaction temp;
+        if neq temp FACTION_PLAYER;
+          #ignore if we're not a player unit.
+          return;
+        end;
+
         item.getTag temp Tag.ITEM_HEAT_CRITICAL;
         #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon item:" item;
         #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon self-destructing:" temp;
@@ -281,6 +294,12 @@ items:
         var int currentHeat;
         var int maxHeat;
         var ptr BattleItem ammoItem;
+
+        unit.getFaction temp;
+        if neq temp FACTION_PLAYER;
+          #ignore if we're not a player unit.
+          return bonus;
+        end;
 
         # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
         # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0

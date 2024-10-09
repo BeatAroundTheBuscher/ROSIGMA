@@ -73,6 +73,7 @@ extended:
 #reaction modifier tags
       REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
       REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
+      REACTION_PENALTY_KNEELING_BYPASS: int #does kneeling bypass the reaction penalty this applies?
       ITEM_IS_HEAVY_WEAPON: int
     RuleArmor:
       HAS_EXTENDED_FRONT_SHIELD: int
@@ -222,6 +223,13 @@ extended:
           rule.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
           if gt temp 0;
             stats_state.addIntRow "STR_REACTION_FLAT_BONUS_OR_PENALTY_STATS_FOR_NERDS" temp;
+          end;
+          rule.getTag temp Tag.REACTION_PENALTY_KNEELING_BYPASS;
+          if eq temp 1;
+            stats_state.addTextRow "STR_REACTION_PENALTY_KNEELING_BYPASS_STATS_FOR_NERDS" "STR_TRUE";
+          end;
+          if gt temp 0;
+            stats_state.addIntRow "STR_REACTION_PENALTY_KNEELING_BYPASS_STATS_FOR_NERDS" temp;
           end;
           rule.getTag temp Tag.ITEM_IS_HEAVY_WEAPON;
           if gt temp 0;

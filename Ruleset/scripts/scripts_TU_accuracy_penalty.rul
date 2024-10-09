@@ -145,14 +145,14 @@ extended:
 
           var ptr RuleItem rItem;
 
-          weapon.getRuleItem rItem;
-          rItem.getTag temp Tag.ITEM_IS_HEAVY_WEAPON;
-          if eq temp 0;
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER; #don't bother for AI
             return bonus; # final accuracy
           end;
 
-          unit.getFaction temp;
-          if eq temp FACTION_HOSTILE; #don't bother for AI
+          weapon.getRuleItem rItem;
+          rItem.getTag temp Tag.ITEM_IS_HEAVY_WEAPON;
+          if eq temp 0;
             return bonus; # final accuracy
           end;
 
