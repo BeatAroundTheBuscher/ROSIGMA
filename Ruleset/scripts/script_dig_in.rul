@@ -16,6 +16,8 @@ extended:
         code: |
           var int MaxTu;
           var int CurrentTu;
+          var int MaxEnergy;
+          var int CurrentEnergy;
           var int HasBonus;
           var int DigIn;
           var int locX;
@@ -28,14 +30,41 @@ extended:
             return;
           end;
 
+          actor.Stats.getTimeUnits MaxTu;
+          actor.getTimeUnits CurrentTu;
+          muldiv MaxTu 1 2; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
+
+          actor.Stats.getStamina MaxEnergy;
+          actor.getEnergy CurrentEnergy;
+          muldiv MaxEnergy 3 10; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
+
           actor.getTag HasBonus Tag.DugInBonus;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: DugInBonus:" HasBonus;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: CurrentTu:" CurrentTu;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: MaxTu:" MaxTu;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: CurrentEnergy:" CurrentEnergy;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: MaxEnergy:" MaxEnergy;
           if eq HasBonus 1;
-            #debug_log "Dig In Scripts; skillUseUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
-            actor.setTag Tag.DugInBonus 0;
-            actor.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
-            actor.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
-            battle_game.flashMessage "Unit No Longer Dug In!";
-            return;
+            if ge CurrentTu MaxTu;
+              if ge CurrentEnergy MaxEnergy;
+                #debug_log "Dig In Scripts; skillUseUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
+                sub CurrentTu MaxTu;
+                sub CurrentEnergy MaxEnergy;
+                actor.setEnergy CurrentEnergy;
+                actor.setTimeUnits CurrentTu;
+                actor.setTag Tag.DugInBonus 0;
+                actor.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+                actor.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+                battle_game.flashMessage "Unit No Longer Dug In!";
+                return;
+              else;
+                battle_game.flashMessage "Not Enough Energy to Undeploy!";
+                return;
+              end;
+            else;
+              battle_game.flashMessage "Not Enough Time Units to Undeploy!";
+              return;
+            end;
           end;
 
           actor.isKneeled isKneeling;
@@ -45,25 +74,28 @@ extended:
             return;
           end;
 
-          actor.Stats.getTimeUnits MaxTu;
-          actor.getTimeUnits CurrentTu;
-          muldiv MaxTu 1 2; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
-
-          if gt CurrentTu MaxTu;
-            sub CurrentTu MaxTu;
-            actor.setTimeUnits CurrentTu;
-            actor.setTag Tag.DugInBonus 1;
-            actor.getPosition.getX locX;
-            actor.getPosition.getY locY;
-            actor.getPosition.getZ locZ;
-            actor.setTag Tag.LocX locX;
-            actor.setTag Tag.LocY locY;
-            actor.setTag Tag.LocZ locZ;
-            actor.MoveCost.setBaseNormalTimePercent 1000; #unit energy and move costs increased by 10x
-            actor.MoveCost.setBaseNormalEnergyPercent 1500; #unit energy and move costs increased by 10x
-            #debug_log "Dig In Scripts; skillUseUnit, offset 1: Dig In successfully activated.";
+          if ge CurrentTu MaxTu;
+            if ge CurrentEnergy MaxEnergy;
+              sub CurrentTu MaxTu;
+              sub CurrentEnergy MaxEnergy;
+              actor.setEnergy CurrentEnergy;
+              actor.setTimeUnits CurrentTu;
+              actor.setTag Tag.DugInBonus 1;
+              actor.getPosition.getX locX;
+              actor.getPosition.getY locY;
+              actor.getPosition.getZ locZ;
+              actor.setTag Tag.LocX locX;
+              actor.setTag Tag.LocY locY;
+              actor.setTag Tag.LocZ locZ;
+              actor.MoveCost.setBaseNormalTimePercent 9999; #unit energy and move costs increased by 10x
+              actor.MoveCost.setBaseNormalEnergyPercent 9999; #unit energy and move costs increased by 10x
+              battle_game.flashMessage "Dug In!";
+              #debug_log "Dig In Scripts; skillUseUnit, offset 1: Dig In successfully activated.";
+            else;
+              battle_game.flashMessage "Not Enough Energy to Dig In!";
+            end;
           else;
-            battle_game.flashMessage "Not Enough Time Units!";
+            battle_game.flashMessage "Not Enough Time Units to Dig In!";
           end;
 
           return;
@@ -132,8 +164,8 @@ extended:
           #muldiv maxTu 75 100;
           #unit.setTimeUnits maxTu;
           unit.setTag Tag.TimesHit 0;
-          unit.MoveCost.setBaseNormalTimePercent 1000; #unit energy and move costs increased by 10x
-          unit.MoveCost.setBaseNormalEnergyPercent 1500; #unit energy and move costs increased by 10x
+          unit.MoveCost.setBaseNormalTimePercent 9999; #unit energy and move costs increased by 10x
+          unit.MoveCost.setBaseNormalEnergyPercent 9999; #unit energy and move costs increased by 10x
           return;
 
     hitUnit:
@@ -220,7 +252,7 @@ extended:
             add NoTimesHit 1; #Decrement Dug In success chance only when we succeed.
             unit.setTag Tag.TimesHit NoTimesHit;
             #debug_log "Dig In Scripts; hitUnit, offset 1: Dug in triggered! New NoTimesHit:" NoTimesHit;
-            battle_game.flashMessage "Dug in!";
+            battle_game.flashMessage "Dug In!";
           end;
 
           return power part side;
@@ -263,5 +295,6 @@ skills:
   - type: STR_DIG_IN
     costUse:
       time: 50
+      energy: 30
     tags:
       DigIn: 1
