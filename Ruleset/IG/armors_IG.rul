@@ -40,6 +40,12 @@ items:
 #    requiresBuy:
 #      - STR_IMPERIAL_GUARD_MIDTIER
 
+  - type: STR_SCION_HEAVYCARAPACE_ARMOR
+    size: 0.2
+    costSell: 100000
+    listOrder: 6680
+    transferTime: 10
+    
 #STEEL LEGION
   - type: STR_STEELLEGION_FLAK_ARMOR
     requiresBuy:
@@ -2317,6 +2323,50 @@ armors:
     loftempsSet: [ 3 ]
     spriteSheet: SCION_CARAPACE_MEDIC.PCK
     customArmorPreviewIndex: 821 #521
+
+  - &STR_GUARD_ARMOR_HEAVYCARAPACE_SCION # DAMAGE + STATS
+    type: STR_SCION_HEAVYCARAPACE_ARMOR #without hellgun
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
+    drawingRoutine: 0
+    size: 0.2
+    customArmorPreviewIndex: 813 #placeholder normal scion armor
+    spriteSheet: SCION_CARAPACE.PCK #don't have a heavy version
+    spriteInv: SCIONHEAVY_33 #spk non layered
+    corpseBattle:
+      - STR_STORMTROOPER_CORPSE
+    frontArmor: 100 #+10
+    sideArmor: 90 #+20
+    rearArmor: 60 #+10
+    underArmor: 50 #+10
+    damageModifier: #SCION ARMOR
+      - 1.0 #none
+      - 0.9 #AP 10% improvement vs normal scion armor
+      - 0.8 #FLAMES 10% improvement vs normal scion armor
+      - 0.8 #HE 10% improvement vs normal scion armor
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA
+      - 1.0 #STUN
+      - 0.9 #MELEE #HE 10% improvement vs normal scion armor
+      - 0.9 #ACID #HE 10% improvement vs normal scion armor
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    stats:
+      firing: 10
+      reactions: 5 #-5 vs normal scion armor due to weight
+      bravery: 10
+    units:
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
 
   - &STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
     type: STR_OGRYN_UC
