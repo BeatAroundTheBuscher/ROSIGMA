@@ -1424,3 +1424,70 @@ mapScripts:
       size: 1
       executions: 6
     - type: fillArea
+
+#catachan monthly
+
+  - type: STR_CATACHHILL_DEFENSE
+    commands:
+    - type: addCraft
+      rects:
+        - [0, 5, 1, 2]
+    - type: addBlock
+      size: [3, 7, 5]
+      verticalLevels:
+        - type: ground
+          size: [3, 7, 1]
+          groups: 1
+        - type: ceiling
+          size: [3, 7, 4]
+          groups: 2
+          terrain: CATACHHILL_EMPLACEMENTS
+
+  - type: STR_CATACHSURROUNDED_DEFENSE
+    commands:
+    - type: resize
+      size: [7, 7, 9]
+    - type: addLine
+      label: 1
+      direction: vertical
+      executionChances: 50
+      rects:
+        - [1, 1, 7, 1]
+      terrain: CATACHWAR_GROUND
+    - type: addLine
+      label: 2
+      conditionals: -1
+      executionChances: 50
+      direction: horizontal
+      rects:
+        - [1, 1, 1, 7]
+      terrain: CATACHWAR_GROUND
+    - type: addLine
+      conditionals: [-1, -2]
+      direction: both
+      rects:
+        - [1, 1, 7, 7]
+      terrain: CATACHWAR_GROUND
+    - type: removeBlock
+      rects:
+        - [2, 2, 3, 3]
+    - type: removeBlock
+      rects:
+        - [3, 0, 1, 7]
+    - type: addBlock
+      rects:
+        - [2, 2, 3, 3]
+      size: 3
+    - type: fillArea
+      rects:
+        - [3, 0, 1, 7]
+      groups: [1]
+      terrain: CATACHWAR_GROUND
+    - type: addBlock
+      size: 2
+      executions: 5
+      terrain: CATACHWAR_GROUND
+    - type: fillArea
+      groups: [0]
+      terrain: CATACHWAR_GROUND
+
