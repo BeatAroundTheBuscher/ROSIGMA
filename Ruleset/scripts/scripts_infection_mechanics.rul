@@ -591,19 +591,65 @@ extended:
         code: |
           var int infectionDamage;
           var int infectionType;
+          var int INFECTION_LOW_THRESHOLD;
+          var int INFECTION_MID_THRESHOLD;
+          var int INFECTION_HIGH_THRESHOLD;
 
           unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
           unit.getTag infectionType Tag.CURRENT_INFECTION_TYPE;
 
           if gt infectionDamage 0;
+            set INFECTION_LOW_THRESHOLD 20;
+            set INFECTION_MID_THRESHOLD 40;
+            set INFECTION_HIGH_THRESHOLD 70;
+            #NURGLE INFECTION
             if eq infectionType 1;
               set_color new_pixel COLOR_X1_GREEN0; #Nurgle infection
+              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                add_shade new_pixel 1;
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                add_shade new_pixel 2;
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                add_shade new_pixel 3;
+              else; #very high level infection
+                add_shade new_pixel 5;
+              end;
+            #GSC INFECTION
             else eq infectionType 2;
               set_color new_pixel COLOR_X1_PURPLE0; #GSC infection
+              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                add_shade new_pixel 1;
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                add_shade new_pixel 2;
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                add_shade new_pixel 3;
+              else; #very high level infection
+                add_shade new_pixel 5;
+              end;
+            #SLAANESH INFECTION
             else eq infectionType 3;
-              set_color new_pixel COLOR_X1_PURPLE1; #Slaanesh infection
+              set_color new_pixel COLOR_X1_PURPLE1;
+              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                add_shade new_pixel 1;
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                add_shade new_pixel 2;
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                add_shade new_pixel 3;
+              else; #very high level infection
+                add_shade new_pixel 5;
+              end;
+            #TZEENTCH INFECTION
             else eq infectionType 4;
               set_color new_pixel COLOR_X1_BLUE1; #Tzeentch infection
+              if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                add_shade new_pixel 1;
+              else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                add_shade new_pixel 2;
+              else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                add_shade new_pixel 3;
+              else; #very high level infection
+                add_shade new_pixel 5;
+              end;
             end;
           end;
 
@@ -617,6 +663,9 @@ extended:
           var int infectionDamage; # would be cool if I could get the offset so I could change specific pixels to show a number
           var int infectionType;
           var ptr BattleUnit myUnit;
+          var int INFECTION_LOW_THRESHOLD;
+          var int INFECTION_MID_THRESHOLD;
+          var int INFECTION_HIGH_THRESHOLD;
 
           if or eq blit_part blit_item_big eq blit_part blit_item_floor;
             item.getBattleUnit myUnit;
@@ -624,14 +673,56 @@ extended:
               myUnit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
               myUnit.getTag infectionType Tag.CURRENT_INFECTION_TYPE;
               if gt infectionDamage 0;
+                set INFECTION_LOW_THRESHOLD 20;
+                set INFECTION_MID_THRESHOLD 40;
+                set INFECTION_HIGH_THRESHOLD 70;
                 if eq infectionType 1;
                   set_color new_pixel COLOR_X1_GREEN0; #Nurgle infection
+                  if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                    add_shade new_pixel 1;
+                  else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                    add_shade new_pixel 2;
+                  else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                    add_shade new_pixel 3;
+                  else; #very high level infection
+                    add_shade new_pixel 5;
+                  end;
+                #GSC INFECTION
                 else eq infectionType 2;
                   set_color new_pixel COLOR_X1_PURPLE0; #GSC infection
+                  if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                    add_shade new_pixel 1;
+                  else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                    add_shade new_pixel 2;
+                  else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                    add_shade new_pixel 3;
+                  else; #very high level infection
+                    add_shade new_pixel 5;
+                  end;
+                #SLAANESH INFECTION
                 else eq infectionType 3;
-                  set_color new_pixel COLOR_X1_PURPLE1; #Slaanesh infection
+                  set_color new_pixel COLOR_X1_PURPLE1;
+                  if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                    add_shade new_pixel 1;
+                  else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                    add_shade new_pixel 2;
+                  else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                    add_shade new_pixel 3;
+                  else; #very high level infection
+                    add_shade new_pixel 5;
+                  end;
+                #TZEENTCH INFECTION
                 else eq infectionType 4;
                   set_color new_pixel COLOR_X1_BLUE1; #Tzeentch infection
+                  if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
+                    add_shade new_pixel 1;
+                  else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
+                    add_shade new_pixel 2;
+                  else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+                    add_shade new_pixel 3;
+                  else; #very high level infection
+                    add_shade new_pixel 5;
+                  end;
                 end;
               end;
             end;
