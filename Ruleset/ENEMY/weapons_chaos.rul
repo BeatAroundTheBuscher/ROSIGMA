@@ -16,7 +16,7 @@ items:
     explosionHitSound: {mod: 40k, index: 776} #776: Resources/Sound/SPELLFAIL.wav
     hitAnimation: 1020 #X1 Pink skullsplosion
     power: 100
-    damageType: 3
+    damageType: 8
     damageAlter: #DA SPOOKY GAS
       ToHealth: 0.01
       ToEnergy: 0.3
@@ -2737,8 +2737,8 @@ items:
     weight: 100
     bulletSpeed: 100
     explosionSpeed: 5
-    power: 50
-    damageType: 4
+    power: 60
+    damageType: 1
     accuracyAuto: 35
     costAuto:
       time: 1
@@ -2749,18 +2749,29 @@ items:
     autoRange: 20
     autoShots: 10
     sprayWaypoints: 2
-    dropoff: 5
+    dropoff: 3
     battleType: 1
     damageAlter:
       ToArmorPre: 0.2
       ToHealth: 1.0
       ToArmor: 0.0
-      ToStun: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
     clipSize: -1
     recover: false
+    #laser sfx
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        return;
 
   - type: STR_TZEENTCH_CHIMERA_WEAPON_FLAMER
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
