@@ -34,6 +34,12 @@ extended:
           var int currentAmmoCount;
           var ptr BattleItem ammoItem;
 
+          reaction_unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
+            #ignore if we're not a player unit.
+            return reaction_chance;
+          end;
+
           reaction_weapon.getTag maxHeat Tag.ITEM_HEAT_MAX_LEVEL;
 
           if eq maxHeat 0;
@@ -198,22 +204,32 @@ items:
           return; #don't bother running this script if we don't have a heat level
         end;
 
+        item.getOwner bUnit;
+        bUnit.getFaction temp;
+        if neq temp FACTION_PLAYER;
+          #ignore if we're not a player unit.
+          return;
+        end;
+
         item.getTag temp Tag.ITEM_HEAT_CRITICAL;
         #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon item:" item;
         #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon self-destructing:" temp;
         if eq temp 1;
           item.getOwner bUnit;
           item.getTag maxHeat Tag.ITEM_OVERHEAT_DAMAGE;
-          battle_game.randomRange temp 0 maxHeat;
+          battle_game.randomRange temp 0 maxHeat; #randomize damage by adding 2 damage rolls.
           battle_game.randomRange temp2 0 maxHeat;
           add temp temp2;
+          bUnit.reduceByResistance temp 6; #reduce (or increase) the damage by our plasma resistance
           bUnit.getHealth temp2;
           sub temp2 temp;
-          bUnit.reduceByResistance temp2 6; #reduce (or increase) the damage by our plasma resistance
           bUnit.setHealthWithOverkill temp2; #apply damage direct to health; oh yeah you're gonna burn alright
           #debug_log "ROSIGMA_nTI_plasma_overheat Scripts; newTurnItem, offset 90: Plasma weapon detonation. Damage:" temp;
           bUnit.setFire 1;
           battle_game.flashMessage "STR_OVERHEATING_EXPLOSION_NOTICE";
+          item.setTag Tag.ITEM_HEAT_CRITICAL 0;
+          item.setTag Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT 0;
+          item.setTag Tag.ITEM_HEAT_CURRENT_LEVEL 0; #null these
           return;
         end;
 
@@ -278,6 +294,12 @@ items:
         var int currentHeat;
         var int maxHeat;
         var ptr BattleItem ammoItem;
+
+        unit.getFaction temp;
+        if neq temp FACTION_PLAYER;
+          #ignore if we're not a player unit.
+          return bonus;
+        end;
 
         # https://discord.com/channels/292085473890009088/312950346102079489/884719451709276181 # standard implementation see at the end of the file
         # bonus starts at 0 so next line seems redundant. Maybe there are cases where bonus doesn't start at 0
@@ -369,8 +391,10 @@ items:
     bigSprite: 342
     tags:
       ITEM_HEAT_MAX_LEVEL: 7
-      ITEM_HEAT_DISSIPATION_PER_TURN: 1
-      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 4
+      ITEM_HEAT_DISSIPATION_PER_TURN: 2
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 5
+      ITEM_AUTO_FLAT_POWER_BONUS: 20 #power shot
+      ITEM_AIMED_FLAT_POWER_BONUS: 60 #maximal
       ITEM_OVERHEAT_DAMAGE: 50 #average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_INQ_PLASMA #Inq Dekker Twincore Plasma
@@ -404,6 +428,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS: 0 #No maximal Shot Bonus
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle multiplier on aimed shots; this is a precision shot bonus, not maximal mode
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 

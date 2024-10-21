@@ -1,0 +1,188 @@
+extended: #WIP
+  tags:
+    RuleItem:
+      IS_DRUG: int #is this a drug?
+      DRUG_DOSE_STIMM_ITEM: int #how many doses does this count as? Normally 1
+      DRUG_STAMINA_INITIAL_REGAIN_PERCENT: int #what percentage of max Stamina do we regain immediately? Other stats to be expanded upon later
+      DRUG_STAMINA_INITIAL_REGAIN_FLAT: int #what flat amount of Stamina do we regain immediately?
+      DRUG_STAMINA_RECURRING_REGAIN_PERCENT: int #what percent of max Stamina do we regain at the start of each of our turns?
+      DRUG_STAMINA_RECURRING_REGAIN_FLAT: int #what flat amount of max Stamina do we regain at the start of each of our turns?
+      DRUG_HEALTH_INITIAL_COST_PERCENT: int #what percentage of max Health do we lose immediately?
+      DRUG_HEALTH_INITIAL_COST_FLAT: int #what flat amount of Health do we lose immediately?
+      DRUG_STUN_INITIAL_COST_PERCENT: int #what percentage of max Stun do we gain immediately?
+      DRUG_STUN_INITIAL_COST_FLAT: int #what flat amount of Stun do we gain immediately?
+      DRUG_MORALE_INITIAL_REGAIN_FLAT: int #what flat amount of Morale do we regain immediately?
+      DRUG_MORALE_INITIAL_COST_FLAT: int #what flat amount of Morale do we lose immediately?
+      DRUG_DURATION: int #how long does the drug last in user Turns?
+      DRUG_DOSE_LIMIT: int #how many doses can we endure without conseqeunces?
+      DRUG_DOSE_DECAY_RATE: int #how many doses 'decay' at the start of each unit turn?
+      DRUG_CRASH_STUN_LOSS_PERCENT: int #what percent of max Stun do we lose when the drug effect ends?
+      DRUG_CRASH_STUN_LOSS_FLAT: int #what flat amount of Stun do we lose when the drug effect ends?
+      DRUG_CRASH_HEALTH_LOSS_PERCENT: int #what percent of max Health do we lose when the drug effect ends?
+      DRUG_CRASH_HEALTH_LOSS_FLAT: int #what flat amount of Health do we lose when the drug effect ends?
+      DRUG_CRASH_MORALE_LOSS_FLAT: int #what flat amount of Morale do we lose when the drug effect ends?
+      DRUG_OVERDOSE_HEALTH_DAMAGE: int #how much damage do we take for overdosing? This doubles for each subsequent overdose.
+      DRUG_OVERDOSE_MULTIPLIER: int #how much is the overdose damage multiplied by for each overdose level after the first?
+    RuleUnit:
+      DRUG_DOSE_STIMM_UNIT: int
+
+  scripts: #to be expanded
+    healUnit:
+      - new: ROSIGMA_healU_apply_drug_effects
+        offset: 20
+        code: |
+          var int temp;
+          var int temp2; #used to determine the cumulative cost/benefit from a drug
+          var int drugDoseCount;
+          var int maxStamina;
+          var int maxHealth;
+          var int currentStamina;
+          var int currentHealth;
+          var int currentStun;
+          var int maxStun;
+          var int currentMorale;
+
+          item.getTag drugDoseCount Tag.IS_DRUG;
+          if lt drugDoseCount 1;
+            return;
+          end;
+
+          #set our variables
+          target.getHealthMax maxHealth;
+          target.getHealth currentHealth;
+
+          #first, calculate and apply health costs; if our health is too low, abort (i.e. the damage would kill us we can't proceed)
+          item.getTag temp Tag.DRUG_HEALTH_INITIAL_COST_PERCENT;
+          if gt temp 0;
+            muldiv temp2 maxHealth 100;
+          end;
+
+          item.getTag temp Tag.DRUG_HEALTH_INITIAL_COST_FLAT;
+          if gt temp 0;
+            add temp2 temp;
+          end;
+
+          if gt temp2 0;
+            if ge temp2 currentHealth; #if health cost is too high, abort
+              battle_game.flashMessage "Unit Health Too Low To Take This Drug!";
+              return;
+            end;
+            mul temp2 -1; #apply health costs
+            add temp2 currentHealth;
+            target.setHealthWithOverkill temp2;
+          end;
+
+          #then, calculate and apply stun costs; if our stun is too low, abort (i.e. the damage would KO us we can't proceed)
+          target.getStunMax maxStun;
+          target.getStun currentStun;
+          set temp2 0;
+          item.getTag temp Tag.DRUG_STUN_INITIAL_COST_PERCENT;
+          if gt temp 0;
+            muldiv temp2 maxHealth 100;
+          end;
+
+          item.getTag temp Tag.DRUG_STUN_INITIAL_COST_FLAT;
+          if gt temp 0;
+            add temp2 temp;
+          end;
+
+          if gt temp2 0;
+            add temp2 currentStun;
+            if ge temp2 maxStun; #if stun cost is too high, abort
+              battle_game.flashMessage "Unit Stun Too High To Take This Drug!";
+              return;
+            end;
+            target.setStun temp2; #apply stun
+          end;
+
+          #first, calculate and apply morale costs
+          set temp2 0;
+          item.getTag temp Tag.DRUG_MORALE_INITIAL_COST_FLAT;
+          if gt temp 0;
+            add temp2 temp;
+            #debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | temp2 after getting DRUG_MORALE_INITIAL_COST_FLAT." temp2;
+          end;
+
+          if gt temp2 0;
+            mul temp2 -1;
+            #debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | temp2 after negative inversion." temp2;
+            target.getMorale currentMorale;
+            add temp2 currentMorale;
+            limit_lower temp2 0;
+            #debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | temp2 final." temp2;
+            target.setMorale temp2;
+          end;
+
+          #then, calculate and apply stamina gains;
+          target.getEnergy currentStamina;
+          target.getEnergyMax maxStamina;
+          set temp2 0;
+          item.getTag temp Tag.DRUG_STAMINA_INITIAL_REGAIN_PERCENT;
+          if gt temp 0;
+            muldiv temp2 maxStamina 100;
+          end;
+
+          item.getTag temp Tag.DRUG_STAMINA_INITIAL_REGAIN_FLAT;
+          if gt temp 0;
+            add temp2 temp;
+          end;
+
+          if gt temp2 0;
+            add temp2 currentStamina;
+            limit_upper temp2 maxStamina;
+            target.setEnergy temp2; #apply stamina
+          end;
+
+          #first, calculate and apply morale gains
+          target.getMorale currentMorale;
+          set temp2 0;
+
+          item.getTag temp Tag.DRUG_MORALE_INITIAL_REGAIN_FLAT;
+          if gt temp 0;
+            add temp2 temp;
+          end;
+
+          if gt temp2 0;
+            add temp2 currentMorale;
+            limit_upper temp2 100;
+            target.setMorale temp2;
+          end;
+
+          #apply drug doses; TBD
+          #STIMM DRUG; add others as needed
+          #item.getTag temp Tag.DRUG_DOSE_STIMM;
+          #if gt temp 0;
+          #  target.setTag Tag.DRUG_DOSE_STIMM_UNIT temp; #set the unit's dosage of this drug
+            #check for overdose and apply consequences
+          #  item.getTag temp2 Tag.DRUG_DOSE_LIMIT; #check tolerance
+          #  if gt temp temp2;
+          #    sub temp temp2;
+          #    sub temp;
+          #    item.getTag temp2 Tag.DRUG_OVERDOSE_EXPONENT;
+          #    sub temp 1;
+          #    mul temp2 temp2;
+          #    mul temp temp2;
+          #    add temp currentHealth;
+          #    target.setHealthWithOverkill temp;
+          #  end;
+          #end;
+
+          return;
+
+
+    #newTurnUnit: TBD
+      #- offset: 99
+        #code: |
+          #var int TurnSide;
+          #var int HasBonus;
+          #var int kneeling;
+          #var int maxTu;
+
+          #battle_game.getTurnSide TurnSide;
+          #if neq TurnSide FACTION_PLAYER; #don't bother if it's not our turn.
+            #debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Not the player's turn. TurnSide:" FACTION_PLAYER;
+            #return;
+          #end;
+
+          #unit.getTag temp Tag.DRUG_DOSE_STIMM;
+          #target.setTag Tag.DRUG_DOSE_STIMM_UNIT temp; #set the unit's dosage of this drug

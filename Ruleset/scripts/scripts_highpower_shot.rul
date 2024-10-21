@@ -28,6 +28,7 @@ extended:
         code: |
           var int weaponPower;
           var int powerBonus;
+          var int flatBonus;
           var int accuracyBonus;
           var int temp;
           var ptr RuleItem rItem;
@@ -36,53 +37,58 @@ extended:
           weapon_item.getRuleItem rItem;
 
           if eq battle_action battle_action_snapshot;
-            rItem.getTag powerBonus Tag.ITEM_SNAP_FLAT_POWER_BONUS;
+            rItem.getTag flatBonus Tag.ITEM_SNAP_FLAT_POWER_BONUS;
             rItem.getTag accuracyBonus Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_autoshoot;
-            rItem.getTag powerBonus Tag.ITEM_AUTO_FLAT_POWER_BONUS;
+            rItem.getTag flatBonus Tag.ITEM_AUTO_FLAT_POWER_BONUS;
             rItem.getTag accuracyBonus Tag.ITEM_AUTO_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_aimshoot;
-            rItem.getTag powerBonus Tag.ITEM_AIMED_FLAT_POWER_BONUS;
+            rItem.getTag flatBonus Tag.ITEM_AIMED_FLAT_POWER_BONUS;
             rItem.getTag accuracyBonus Tag.ITEM_AIMED_ACCURACY_POWER_BONUS;
           end;
 
           if eq battle_action battle_action_hit;
-            rItem.getTag powerBonus Tag.ITEM_MELEE_POWER_BONUS;
+            rItem.getTag flatBonus Tag.ITEM_MELEE_POWER_BONUS;
           end;
 
-          if gt accuracyBonus 0; #if we're scaling the bonus with firing accuracy, we define the bonus here
-            attacker.Stats.getFiring temp; #get attacker's firing accuracy
-            #debug_log "ROSIGMA_hU_highpower_shot, line 59: Attacker's firing accuracy." temp;
-            #debug_log "ROSIGMA_hU_highpower_shot, line 60: Attacker's accuracy power bonus." accuracyBonus;
-            muldiv accuracyBonus temp 100;
-            #debug_log "ROSIGMA_hU_highpower_shot, line 62: Attacker's adjusted firing accuracy power flat bonus, plus % damage bonus." accuracyBonus;
-            add powerBonus accuracyBonus;
-          end;
-
-          if eq powerBonus 0; #cancel out if our powerBonus is undefined
-            #debug_log "ROSIGMA_hU_highpower_shot, line 67: No power bonus detected; aborting.";
+          if and eq flatBonus 0 eq accuracyBonus 0;
+            #debug_log "ROSIGMA_hU_highpower_shot, line 59: No flatBonus or accuracyBonus detected; aborting.";
             return power part side;
           end;
 
+          #debug_log "ROSIGMA_hU_highpower_shot, line 85: Base Power" power;
+          if gt accuracyBonus 0; #if we're scaling the bonus with firing accuracy, we define the bonus here
+            attacker.Stats.getFiring temp; #get attacker's firing accuracy
+            #debug_log "ROSIGMA_hU_highpower_shot, line 59: Attacker's firing accuracy." temp;
+            muldiv accuracyBonus temp 100;
+            #debug_log "ROSIGMA_hU_highpower_shot, line 60: Attacker's accuracy power bonus." accuracyBonus;
 
-          rItem.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE; #check whether we're using a percentile or flat bonus
-
-          if ge temp 1;
-            muldiv powerBonus power 100; #we deal powerBonus % more damage relative to the base power;
-            #debug_log "ROSIGMA_hU_highpower_shot, line 76: Percentile damage bonus." powerBonus;
-            if ge temp 2; #if it's 2+ we use both flat and percentile, adding them together
-              add powerBonus accuracyBonus; #add the applicable % of firing accuracy as a flat damage bonus in addition to the percentile bonus
-              #debug_log "ROSIGMA_hU_highpower_shot, line 79: Firing accuracy scaled flat damage bonus." powerBonus;
+            rItem.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE; #check whether we're using a percentile (1), flat bonus (2) or both (3)
+            if gt temp 0;
+              if or eq temp 1 eq temp 3;
+                muldiv accuracyBonus power 100; #we deal powerBonus % more damage relative to the base power;
+                #debug_log "ROSIGMA_hU_highpower_shot, line 76: Percentile damage bonus." accuracyBonus;
+                add powerBonus accuracyBonus;
+              end;
+              if or eq temp 2 eq temp 3;
+                #debug_log "ROSIGMA_hU_highpower_shot, line 82: Flat damage bonuses only." accuracyBonus;
+                add powerBonus accuracyBonus;
+              end;
             end;
-          else;
-            #debug_log "ROSIGMA_hU_highpower_shot, line 82: Flat damage bonuses only." powerBonus;
           end;
 
-          #debug_log "ROSIGMA_hU_highpower_shot, line 85: Old Power" power;
+          if gt flatBonus 0; #add the flat bonus
+            add powerBonus flatBonus;
+          end;
+
+          if eq powerBonus 0; #cancel out if our powerBonus is undefined
+            #debug_log "ROSIGMA_hU_highpower_shot, line 67: No power bonus detected; aborting." powerBonus;
+            return power part side;
+          end;
 
           add power powerBonus;
 

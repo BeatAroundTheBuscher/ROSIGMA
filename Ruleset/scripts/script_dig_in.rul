@@ -4,7 +4,7 @@ extended:
     BattleUnit:
       TimesHit: int
       DugInBonus: int
-      LocX: int 
+      LocX: int
       LocY: int
       LocZ: int
     RuleSkill:
@@ -16,24 +16,69 @@ extended:
         code: |
           var int MaxTu;
           var int CurrentTu;
+          var int MaxEnergy;
+          var int CurrentEnergy;
           var int HasBonus;
           var int DigIn;
           var int locX;
           var int locY;
-          var int locZ; 
+          var int locZ;
+          var int isKneeling;
 
           skill.getTag DigIn Tag.DigIn;
-          if eq DigIn 1;
-            actor.Stats.getTimeUnits MaxTu;
-            actor.getTimeUnits CurrentTu;
-            muldiv MaxTu 1 2; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
-            actor.getTag HasBonus Tag.DugInBonus;
-            if eq HasBonus 1;
-              actor.setTag Tag.DugInBonus 0;
+          if neq DigIn 1;
+            return;
+          end;
+
+          actor.Stats.getTimeUnits MaxTu;
+          actor.getTimeUnits CurrentTu;
+          muldiv MaxTu 1 2; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
+
+          actor.Stats.getStamina MaxEnergy;
+          actor.getEnergy CurrentEnergy;
+          muldiv MaxEnergy 3 10; #Edit second value to edit cost, formula is MaxTimeUnits/SecondValue
+
+          actor.getTag HasBonus Tag.DugInBonus;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: DugInBonus:" HasBonus;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: CurrentTu:" CurrentTu;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: MaxTu:" MaxTu;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: CurrentEnergy:" CurrentEnergy;
+          #debug_log "Dig In Scripts; skillUseUnit, offset 1: MaxEnergy:" MaxEnergy;
+          if eq HasBonus 1;
+            if ge CurrentTu MaxTu;
+              if ge CurrentEnergy MaxEnergy;
+                #debug_log "Dig In Scripts; skillUseUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
+                sub CurrentTu MaxTu;
+                sub CurrentEnergy MaxEnergy;
+                actor.setEnergy CurrentEnergy;
+                actor.setTimeUnits CurrentTu;
+                actor.setTag Tag.DugInBonus 0;
+                actor.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+                actor.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+                battle_game.flashMessage "Unit No Longer Dug In!";
+                return;
+              else;
+                battle_game.flashMessage "Not Enough Energy to Undeploy!";
+                return;
+              end;
+            else;
+              battle_game.flashMessage "Not Enough Time Units to Undeploy!";
               return;
             end;
-            if gt CurrentTu MaxTu;
+          end;
+
+          actor.isKneeled isKneeling;
+          if neq isKneeling 1;
+            #debug_log "Dig In Scripts; skillUseUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
+            battle_game.flashMessage "Unit Must Be Kneeling To Dig In!";
+            return;
+          end;
+
+          if ge CurrentTu MaxTu;
+            if ge CurrentEnergy MaxEnergy;
               sub CurrentTu MaxTu;
+              sub CurrentEnergy MaxEnergy;
+              actor.setEnergy CurrentEnergy;
               actor.setTimeUnits CurrentTu;
               actor.setTag Tag.DugInBonus 1;
               actor.getPosition.getX locX;
@@ -42,10 +87,17 @@ extended:
               actor.setTag Tag.LocX locX;
               actor.setTag Tag.LocY locY;
               actor.setTag Tag.LocZ locZ;
+              actor.MoveCost.setBaseNormalTimePercent 9999; #unit energy and move costs increased by 10x
+              actor.MoveCost.setBaseNormalEnergyPercent 9999; #unit energy and move costs increased by 10x
+              battle_game.flashMessage "Dug In!";
+              #debug_log "Dig In Scripts; skillUseUnit, offset 1: Dig In successfully activated.";
             else;
-              battle_game.flashMessage "Not Enough Time Units!";
+              battle_game.flashMessage "Not Enough Energy to Dig In!";
             end;
+          else;
+            battle_game.flashMessage "Not Enough Time Units to Dig In!";
           end;
+
           return;
 
     newTurnUnit:
@@ -57,47 +109,63 @@ extended:
           var int maxTu;
           var int locX;
           var int locY;
-          var int locZ; 
+          var int locZ;
           var int currentX;
           var int currentY;
           var int currentZ;
 
-          unit.setTag Tag.TimesHit 0;
-
           battle_game.getTurnSide TurnSide;
-          unit.getTag HasBonus Tag.DugInBonus;
-          
-          if and eq TurnSide FACTION_PLAYER eq  HasBonus 1;
-            unit.isKneeled kneeling;
-            if eq kneeling 1;
-            
-            unit.getPosition.getX currentX;
-            unit.getPosition.getY currentY;
-            unit.getPosition.getZ currentZ;
-            unit.getTag locX Tag.LocX;
-            unit.getTag locY Tag.LocY;
-            unit.getTag locZ Tag.LocZ;
-            if neq locX currentX;
-              unit.setTag Tag.DugInBonus 0;
-              return;
-            end;
-            if neq locY currentY;
-              unit.setTag Tag.DugInBonus 0;
-              return;
-            end;
-            if neq locZ currentZ;
-              unit.setTag Tag.DugInBonus 0;
-              return;
-            end;
-
-            unit.getTimeUnitsMax maxTu;
-            muldiv maxTu 75 100;
-            unit.setTimeUnits maxTu;
+          if neq TurnSide FACTION_PLAYER; #don't bother if it's not our turn.
+            #debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Not the player's turn. TurnSide:" FACTION_PLAYER;
             return;
-            end;
-            unit.setTag Tag.DugInBonus 0;
           end;
-          
+
+          unit.getTag HasBonus Tag.DugInBonus;
+          if neq HasBonus 1; #don't bother if we don't have the dug-in bonus
+            #debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Unit doesn't have Dig-In Bonus. HasBonus:" HasBonus;
+            return;
+          end;
+
+          unit.isKneeled kneeling;
+          if neq kneeling 1;
+            #debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Unit doesn't have Dig-In Bonus. HasBonus:" HasBonus;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return;
+          end;
+
+          unit.getPosition.getX currentX;
+          unit.getPosition.getY currentY;
+          unit.getPosition.getZ currentZ;
+          unit.getTag locX Tag.LocX;
+          unit.getTag locY Tag.LocY;
+          unit.getTag locZ Tag.LocZ;
+          if neq locX currentX;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return;
+          end;
+          if neq locY currentY;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return;
+          end;
+          if neq locZ currentZ;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return;
+          end;
+
+          #unit.getTimeUnitsMax maxTu;
+          #muldiv maxTu 75 100;
+          #unit.setTimeUnits maxTu;
+          unit.setTag Tag.TimesHit 0;
+          unit.MoveCost.setBaseNormalTimePercent 9999; #unit energy and move costs increased by 10x
+          unit.MoveCost.setBaseNormalEnergyPercent 9999; #unit energy and move costs increased by 10x
           return;
 
     hitUnit:
@@ -106,50 +174,85 @@ extended:
           var int HasBonus;
           var int NoTimesHit;
           var int TriggerChance;
+          var int HitChanceDecrement;
           var int locX;
           var int locY;
-          var int locZ; 
+          var int locZ;
           var int currentX;
           var int currentY;
           var int currentZ;
+          var int isKneeling;
 
           unit.getTag HasBonus Tag.DugInBonus;
+          if neq HasBonus 1; #don't bother if we don't have the dug-in bonus
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit doesn't have Dig-In Bonus. HasBonus:" HasBonus;
+            return power part side;
+          end;
 
-          if and eq HasBonus 1 eq side SIDE_FRONT;
+          unit.isKneeled isKneeling;
+          if neq isKneeling 1;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return power part side;
+          end;
 
-            unit.getPosition.getX currentX;
-            unit.getPosition.getY currentY;
-            unit.getPosition.getZ currentZ;
-            unit.getTag locX Tag.LocX;
-            unit.getTag locY Tag.LocY;
-            unit.getTag locZ Tag.LocZ;
-            if neq locX currentX;
-              return power part side;
-            end;
-            if neq locY currentY;
-              return power part side;
-            end;
-            if neq locZ currentZ;
-              return power part side;
-            end;
+          if or eq side SIDE_REAR eq side SIDE_UNDER;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit hit from the rear or under. side:" side;
+            return power part side;
+          end;
 
+          unit.getPosition.getX currentX;
+          unit.getPosition.getY currentY;
+          unit.getPosition.getZ currentZ;
+          unit.getTag locX Tag.LocX;
+          unit.getTag locY Tag.LocY;
+          unit.getTag locZ Tag.LocZ;
+          if neq locX currentX;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentX:" currentX;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return power part side;
+          end;
+          if neq locY currentY;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentY:" currentY;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return power part side;
+          end;
+          if neq locZ currentZ;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentZ:" currentZ;
+            unit.setTag Tag.DugInBonus 0;
+            unit.MoveCost.setBaseNormalTimePercent 100; #revert move cost to normal
+            unit.MoveCost.setBaseNormalEnergyPercent 100; ##revert move cost to normal
+            return power part side;
+          end;
 
-            unit.getTag NoTimesHit Tag.TimesHit;
-            add NoTimesHit 1;
+          unit.getTag NoTimesHit Tag.TimesHit;
+          #debug_log "Dig In Scripts; hitUnit, offset 1: Number of times Dug In successfully triggered. NoTimesHit:" NoTimesHit;
+          set HitChanceDecrement NoTimesHit;
+          mul HitChanceDecrement 10; #Edit times hit penalty multiplier
+
+          set TriggerChance 50; #Edit base trigger chance, value is in %, note that the value will always be reduced by atleast 1 times hit penalty
+          sub TriggerChance HitChanceDecrement; #Chance formula: Base trigger chance - (Times hit * times hit penalty multiplier)
+          if lt TriggerChance 1;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. No chance for Dig In to trigger. TriggerChance:" TriggerChance;
+            return power part side;
+          else neq side SIDE_FRONT; #if we got hit from the side, halve our negation chance.
+            div TriggerChance 2;
+          end;
+
+          #debug_log "Dig In Scripts; hitUnit, offset 1: Dig In Rolling. TriggerChance:" TriggerChance;
+          battle_game.randomChance TriggerChance;
+          if eq TriggerChance 1;
+            set power 0;
+            add NoTimesHit 1; #Decrement Dug In success chance only when we succeed.
             unit.setTag Tag.TimesHit NoTimesHit;
-
-            set TriggerChance 60; #Edit base trigger chance, value is in %, note that the value will always be reduced by atleast 1 times hit penalty
-            mul NoTimesHit 10; #Edit times hit penalty multiplier
-            sub TriggerChance NoTimesHit; #Chance formula: Base trigger chance - (Times hit * times hit penalty multiplier)
-            if lt TriggerChance 0;
-              set TriggerChance 0;
-            end;
-            #debug_log "chance" TriggerChance;
-            battle_game.randomChance TriggerChance;
-            if eq TriggerChance 1;
-              set power 0;
-              battle_game.flashMessage "Dug in!";
-            end;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Dug in triggered! New NoTimesHit:" NoTimesHit;
+            battle_game.flashMessage "Dug In!";
           end;
 
           return power part side;
@@ -161,7 +264,7 @@ extended:
           var int kneeling;
           var int locX;
           var int locY;
-          var int locZ; 
+          var int locZ;
           var int currentX;
           var int currentY;
           var int currentZ;
@@ -190,7 +293,8 @@ extended:
 ###
 skills:
   - type: STR_DIG_IN
-    costUse: 
-      time: 50 
+    costUse:
+      time: 50
+      energy: 30
     tags:
       DigIn: 1

@@ -136,40 +136,55 @@ items:
     tuAuto: 0
     tuSnap: 33 #2x snap shot, slightly higher TU cost
     tuAimed: 65 #slightly worse than Tanith longlas
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
 
   - type: STR_LASCARBINE # done # Carbine # Make it different from Lasgun
-    dropoff: 4
-    autoRange: 0
+    dropoff: 5
+    autoRange: 7
     snapRange: 13 # actually autoRange
     aimRange: 0
 
-    accuracyAuto: 0 # 40k 50
+    accuracyAuto: 50 # 40k 50
     accuracySnap: 60 # 40k 70
     accuracyAimed: 0
-    tuAuto: 0 # 40k 34
+    tuAuto: 35 # 40k 34
     tuSnap: 30 # 40k 22
     tuAimed: 0
 
-    autoShots: 3
+    autoShots: 4
     confSnap:
       shots: 2
+      name: STR_BURST_SNAP_SHOT
+
+    tags:
+      REACTION_MULTIPLIER: 150 #carbine
 
   - type: STR_LASGUN_VOSS # done # Carbine # Benefit 1x2 size
-    dropoff: 4
-    autoRange: 0
-    snapRange: 13 # actually autoRange
+    dropoff: 6
+    autoRange: 5
+    snapRange: 10 # actually autoRange
     aimRange: 0
 
-    accuracyAuto: 0 # 40k 50
-    accuracySnap: 60 # 40k 70
+    accuracyAuto: 40 # 40k 50
+    accuracySnap: 55 # 40k 70
     accuracyAimed: 0
-    tuAuto: 0 # 40k 34
-    tuSnap: 30 # 40k 22
+    tuAuto: 33 # 40k 34
+    tuSnap: 25 # 40k 22
     tuAimed: 0
 
-    autoShots: 3
+    autoShots: 6 #laser uzi
     confSnap:
-      shots: 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+
+    tags:
+      REACTION_MULTIPLIER: 175 #light carbine
+
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
 
   - type: STR_LASGUN_TANITH # done # more accurate
     dropoff: 3 #-1 DMR role
@@ -186,26 +201,39 @@ items:
 
     autoShots: 2 #marksman/sniper rifle have reduced autofire rates
 
+    minRange: 5 #awkward longarm
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+
   - type: STR_LASGUN_ACCATRAN # done # Carbine # more accurate # higher firing rate
-    dropoff: 4
-    autoRange: 0
+    dropoff: 5
+    autoRange: 8
     snapRange: 13 # actually autoRange
     aimRange: 0
 
-    accuracyAuto: 0 # 40k 50
+    accuracyAuto: 55 # 40k 50
     accuracySnap: 80 # 40k 70
     accuracyAimed: 0
-    tuAuto: 0 # 40k 30
+    tuAuto: 33 # 40k 30
     tuSnap: 22 # 40k 22
     tuAimed: 0
 
-    autoShots: 3
+    autoShots: 4
     confSnap:
       shots: 2
+      name: STR_BURST_SNAP_SHOT
+
+    tags:
+      REACTION_MULTIPLIER: 150 #carbine
+
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
 
   - type: STR_LASGUN_VOSTROYA # done # long barrel
     dropoff: 3 #-1
-    autoRange: 13
+    autoRange: 9
     snapRange: 22
     aimRange: 30 #make it a option vs longlas, slightly worse at the sniping role
 
@@ -217,6 +245,12 @@ items:
     tuAimed: 65
 
     autoShots: 2 #because this gun is otherwise way too good
+    minRange: 7 #long arm; unwieldy in CQC
+    oneHandedPenalty: 25 #too long and unwieldy to use effectively one-handed
+
+    tags:
+      REACTION_MULTIPLIER: 75 #awkward long arm
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
   - type: STR_LASGUN_LUCIUS # done # power shot
     dropoff: 4
@@ -225,18 +259,96 @@ items:
     aimRange: 16 # Powershot
     accuracyAuto: 0 # 40k 50
     accuracySnap: 70 # 40k 70
-    accuracyAimed: 65
+    accuracyAimed: 70
     tuAuto: 0 # 40k 50
-    tuSnap: 33
+    tuSnap: 25
     tuAimed: 33
+    confSnap:
+      shots: 1
+      spendPerShot: 2
     confAimed:
       shots: 1
-      spendPerShot: 4
+      spendPerShot: 10
       name: STR_POWER_SHOT
       shortName: STR_POWER_SHOT_COUNT
 
     tags:
-      ITEM_AIMED_FLAT_POWER_BONUS: 20
+      ITEM_SNAP_FLAT_POWER_BONUS: 10 #higher yield/higher damage
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #power shot
+      ITEM_WEAPON_REPEATED_ACCURACY_FALLOFF_MULTIPLIER: 1 #lucius lasguns get hot
+
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT #the accuracy falloff with this is gonna be intense
+
+  - type: STR_LASGUN_STEEL_LEGION
+    dropoff: 4
+    accuracyAuto: 45 #slightly better autofire accuracy
+    accuracySnap: 60 #slightly worse snap accuracy
+#    accuracyAimed: 100
+    tuAuto: 33
+    tuSnap: 25
+    snapRange: 14 #inferior snapfire range
+    autoRange: 11 #superior autofire range
+    autoShots: 5 #superior autofire
+#    tuAimed: 50
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+
+  - type: STR_LASCARBINE_STEEL_LEGION #LASCARBINE Steel Legion; CQC/Overwatch focus
+    dropoff: 5
+    accuracySnap: 55
+    accuracyAuto: 40
+    oneHandedPenalty: 75
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 12
+    autoRange: 7
+    tags:
+      REACTION_MULTIPLIER: 150
+
+  - type: STR_LASCARBINE_STEEL_LEGION_MID #LASCARBINE Steel Legion; CQC/Overwatch focus
+    dropoff: 5
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    snapRange: 13
+    autoRange: 9
+    accuracySnap: 60
+    accuracyAuto: 50
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    tags:
+      REACTION_MULTIPLIER: 150
+
+  - type: STR_LASGUN_STEEL_LEGION_MID #LASGUN Steel Legion Mid Tier
+    dropoff: 4
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    snapRange: 15 #improved snap range
+    autoRange: 13 #superior autofire range
+    accuracyAuto: 55 #better autofire accuracy
+    accuracySnap: 65 #slightly better snap accuracy
+
+  - type: STR_LASGUN_STEEL_LEGION_HIGH #LASGUN Steel Legion Mid Tier; Scoped
+    dropoff: 3 #scoped; battle rifle
+    compatibleAmmo:
+      - STR_LASGUN_CLIP
+      - STR_LASGUN_CLIP_HOTSHOT
+    tuAimed: 60
+    snapRange: 16
+    autoRange: 15
+    aimRange: 20
+    accuracyAimed: 100
+    accuracyAuto: 70 #slightly better autofire accuracy vs standard MC lasgun
+    accuracySnap: 75 #slightly worse snap accuracy vs standard MC lasgun
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
 
   - type: STR_MCLASER_RIFLE # done # MC
     dropoff: 4
@@ -276,6 +388,32 @@ items:
       ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
 
+  - type: STR_HELLGUN_STEEL_LEGION
+    dropoff: 3 #scoped
+    weight: 9
+    power: 75
+    damageType: 1
+    damageAlter:
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0 # hardly makes a difference
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+    accuracyAuto: 70
+    accuracySnap: 75
+    accuracyAimed: 90
+    tuAuto: 35
+    tuSnap: 25
+    tuAimed: 70
+    aimRange: 25
+    snapRange: 14 #inferior snapfire range
+    autoRange: 14 #superior autofire range
+    autoShots: 5 #superior autofire
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
   - type: STR_HOTSHOT_VOLLEY_GUN # done # Power Pack
     dropoff: 4
     autoRange: 9
@@ -301,20 +439,44 @@ items:
       RandomWound: false
 
     confSnap:
-      shots: 3 # 40k 2
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
     confAuto:
       shots: 7 # 40k 4
 
+  - type: STR_VOLLEYGUN_STEEL_LEGION
+    dropoff: 6 #CQC focused; basically a laser automatic shotgun
+    power: 75
+    damageAlter:
+      ArmorEffectiveness: 0.75
+      ToArmorPre: 0.2
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0 # hardly makes a difference
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+    accuracyAuto: 60
+    accuracySnap: 65
+    snapRange: 13
+    autoRange: 13
+    tuAuto: 35
+    tuSnap: 30
+    confAuto:
+      shots: 10
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+
+
   - type: STR_HEAVY_LASGUN_LUCIUS_XIV # done # Power Pack
     dropoff: 4
-    autoRange: 16 # Power shot
-    snapRange: 16
-    aimRange: 16 # POWER SHOT
+    autoRange: 18 # Power shot
+    snapRange: 18
+    aimRange: 18 # POWER SHOT
     # maxRange: 26
 
-    accuracyAuto: 60 # reduced accuracy as the codex says
-    accuracySnap: 65
-    accuracyAimed: 50
+    accuracyAuto: 70
+    accuracySnap: 70
+    accuracyAimed: 70
     tuAuto: 33
     tuSnap: 33
     tuAimed: 33
@@ -324,18 +486,19 @@ items:
       spendPerShot: 1
     confAuto:
       shots: 1
-      spendPerShot: 4 # + 1 heat
+      spendPerShot: 5 # + 1 heat
       name: STR_POWER_SHOT
       shortName: STR_POWER_SHOT_COUNT
     confAimed:
       shots: 1
-      spendPerShot: 8 # + 2 heat
+      spendPerShot: 20 # + 4 heat
       name: STR_POWER_SHOT_2
       shortName: STR_POWER_SHOT_2_COUNT
 
     clipSize: 900 # shouldn't deplete
+    kneelBonus: 120 #medium/heavy
 
-    power: 65
+    power: 70 #hellgun traits
     damageType: 1
     damageAlter:
       ToArmorPre: 0.3
@@ -347,7 +510,7 @@ items:
       RandomWound: false
     tags:
       ITEM_AUTO_FLAT_POWER_BONUS: 20
-      ITEM_AIMED_FLAT_POWER_BONUS: 30
+      ITEM_AIMED_FLAT_POWER_BONUS: 60
 
 ## Heavy Weapons
 
@@ -369,7 +532,12 @@ items:
     tuAimed: 90
 
     tuLoad: 40 #reloading this heavy weapon is a PITA
-    armor: 200   
+    armor: 200
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
 
   - type: STR_CHAOS_LASCANNON_HANDHELD #basically the light Malthus Lascan for Chaos
     dropoff: 4 #heavy weapon platform, not a sniper weapon
@@ -418,6 +586,11 @@ items:
     tuLoad: 30 #reloading this heavy weapon is a PITA
     armor: 200
 
+    tags:
+      REACTION_MULTIPLIER: 75
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+
   - type: STR_LASCAN_DW #LASCANON ARTIFEX
     dropoff: 4 #heavy weapon platform, not a sniper weapon
     autoRange: 0
@@ -436,6 +609,11 @@ items:
 
     tuLoad: 40 #reloading this heavy weapon is a PITA
     armor: 200
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
 
 ## Heavy Weapons - Bipod
 
@@ -457,10 +635,16 @@ items:
 
     tuLoad: 40 #reloading this heavy weapon is a PITA
     armor: 200
-    
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+
 ## Snipers
 
-  - type: STR_LONGLAS # done STR_CAT_SNIPER
+  - &STR_LONGLAS_TEMPLATE
+    type: STR_LONGLAS # done STR_CAT_SNIPER
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     dropoff: 2 #proper sniper rifle with scope
     autoRange: 0
@@ -469,44 +653,35 @@ items:
 
     accuracyAuto: 0
     accuracySnap: 50
-    accuracyAimed: 75
+    accuracyAimed: 85
     tuAuto: 0
     tuSnap: 35
     tuAimed: 65
-    kneelBonus: 130 #sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
+    kneelBonus: 140 #light sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
     minRange: 7 #medium sniper rilfe
+    twoHanded: true
+    blockBothHands: true
 
     accuracyMultiplier: #sniper rifle accuracy
       firing: [0.5, 0.005]
 
     tags:
+      REACTION_MULTIPLIER: 50 #sniper; effective reactions are halved unless kneeling
+      REACTION_PENALTY_KNEELING_BYPASS: 1
       ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_IS_HEAVY_WEAPON: 1
 
-  - type: STR_LONGLAS_TANITH # done STR_CAT_SNIPER
-    categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
-    dropoff: 2 #proper sniper rifle with scope
-    autoRange: 0
-    snapRange: 22
-    aimRange: 33
+  - type: STR_LONGLAS_TANITH # a little more cumbersome, slower to fire and worse at hip fire than a standard longlas, but better accuracy and effective range
+    refNode: *STR_LONGLAS_TEMPLATE
+    snapRange: 25
+    aimRange: 35
 
-    accuracyAuto: 0
-    accuracySnap: 50
+    accuracySnap: 40
     accuracyAimed: 95
-    tuAuto: 0
-    tuSnap: 35
-    tuAimed: 60
-    kneelBonus: 130 #sniper weapon, cumbersome and bulky, even if you have the strength to wield it standing; need to kneel to use this effectively
-    minRange: 7 #medium sniper rilfe
 
-    accuracyMultiplier: #sniper rifle accuracy
-      firing: [0.5, 0.005]
-
-    tags:
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 50 #Sniper rifle bonus to aimed shots; power of precision
-      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
-      ITEM_IS_HEAVY_WEAPON: 1
+    tuSnap: 45
+    tuAimed: 75
 
 ## Vehicles (Sentinels, etc.)
 
@@ -673,3 +848,68 @@ items:
     tuAuto: 0
     tuSnap: 40
     tuAimed: 70
+
+  - type: STR_HAND_MULTILASER_PAI #INQ Stormie Multilas
+    accuracySnap: 55
+    accuracyAuto: 45 # -5 vs volleygun, +5 vs rotorcannon
+    accuracyAimed: 0
+    tuSnap: 30
+    tuAuto: 45
+    tuAimed: 0
+    dropoff: 4
+    autoShots: 12 #-3 vs Rotorcannon, +5 vs volleygun
+    autoRange: 12 #Hellgun +2
+    snapRange: 16
+    aimRange: 0
+    confSnap: #3 shot burst
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+    kneelBonus: 150 #big accuracy benefit from deploying
+    power: 60 #-5 vs Hotshot volleygun, higher ROF instead
+    damageType: 1 # AP instead of LAS
+    damageAlter: #Hotshot
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+  - type: STR_INQ_LONGLAS #Inquisition Longlas
+    dropoff: 3 #scoped sniper rifle
+    weight: 10
+    accuracySnap: 50
+    accuracyAimed: 110
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    kneelBonus: 130 #sniper weapon gains additional accuracy from kneeling
+    snapRange: 24
+    aimRange: 38
+    tuSnap: 50
+    tuAimed: 75
+    power: 50
+    damageType: 4
+    damageAlter: #hellgun properties
+      RandomType: 6 #gaussian; consistent damage with the chance to critically hit/miss
+      ToArmorPre: 0.3
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+    twoHanded: true
+    blockBothHands: true
+    minRange: 7 #medium sniper weapon
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #Precision Shot Bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+      ITEM_IS_HEAVY_WEAPON: 1 #Sniper platform
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1

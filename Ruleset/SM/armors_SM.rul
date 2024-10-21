@@ -123,6 +123,7 @@ armors:
     visibilityAtDark: 30
     antiCamouflageAtDay: 3
     antiCamouflageAtDark: 3
+    heatVision: 20 #basic heat vision
     stats:
       tu: 10
       stamina: 20
@@ -163,7 +164,7 @@ armors:
     refNode: *STR_MARINE_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
-    heatVision: 20
+    heatVision: 25
     spriteSheet: MK7-ARMOR_BLOODRAVENS_BS.PCK
     spriteInv: BLOOD_RAVEN_TATICALM_INV.SPK
     storeItem: STR_TATICAL_ARMOR
@@ -173,17 +174,17 @@ armors:
     movementType: 0 #Walking
     drawingRoutine: 0 #human soldier
     stats:
-       tu: 10
-       stamina: 20
-       health: 5
-       bravery: 10
-       reactions: 10
-       firing: 10
-       throwing: 5
-       strength: 20
-       psiStrength: 0
-       psiSkill: 0
-       melee: 15
+      tu: 10
+      stamina: 20
+      health: 5
+      bravery: 10
+      reactions: 10
+      firing: 10
+      throwing: 5
+      strength: 20
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15
     frontArmor: 125
     sideArmor: 115
     rearArmor: 85
@@ -221,6 +222,19 @@ armors:
     sideArmor: 130
     rearArmor: 90
     underArmor: 90
+    heatVision: 20 #basic heat vision
+    stats:
+      tu: 10
+      stamina: 20
+      health: 30
+      bravery: 10 #always multiples of 10
+      reactions: 20
+      firing: 20
+      throwing: 0
+      strength: 30
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20
     damageModifier: #MARINE ARMOR
       - 1.0 #none
       - 0.8 #AP was 1.0
@@ -239,24 +253,6 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
-  - type: STR_SIGNALFALSE_ARMOR_UC #HONOR Sergeant
-    antiCamouflageAtDay: 5
-    antiCamouflageAtDark: 5
-    stats:
-      tu: 10
-      stamina: 20
-      health: 30
-      bravery: 10 #always multiples of 10
-      reactions: 20
-      firing: 20
-      throwing: 0
-      strength: 30
-      psiStrength: 0
-      psiSkill: 0
-      melee: 20
-    tags:
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_SIGNAL_ARMOR_UC #HONOR Sergeant
     refNode: *STR_MARINE_OFFICER_ARMOR
@@ -560,7 +556,7 @@ armors:
       - 0.6 #AP
       - 0.3 #FLAMES
       - 0.4 #HE
-      - 0.8 #LASCANON
+      - 0.9 #LASCANON
       - 0.8 #PLASMA
       - 1.0 #STUN
       - 0.9 #MELEE
@@ -617,27 +613,13 @@ armors:
     visibilityAtDark: 40
     antiCamouflageAtDay: 8
     antiCamouflageAtDark: 8
+    camouflageAtDay: -7 # you need to be 7 tiles closer than max vision range to see this unit in the light
+    camouflageAtDark: -5 # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
+    heatVision: 25
     frontArmor: 80
     sideArmor: 60
     rearArmor: 40
     underArmor: 60
-    damageModifier:
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 0.2 #IMPACT
-    tags:
-      UNIT_TYPE_IMPERIUM: 1
-      UNIT_TYPE_LIVING: 1
-
-  - type: STR_SCOUT_UC #SCOUT
     stats:
       tu: 30
       stamina: 0
@@ -650,6 +632,18 @@ armors:
       psiStrength: 0
       psiSkill: 0
       melee: 0
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 0.2 #IMPACT
     tags:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
@@ -1757,4 +1751,43 @@ armors:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_ULTRAcataphract_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #advanced sensors
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 5
+    heatVision: 20 #per daemon senses
+    loftempsSet: [ 5 ]
+    storeItem: STR_ULTRAcataphract_ARMOR
+    spriteInv: ULTRAcataphractinvent.PCK
+    spriteSheet: ULTRAcataphract_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 180
+    sideArmor: 170
+    rearArmor: 170
+    underArmor: 180
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_ULTRAcataphract_CORPSE_GEO
+    damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.5 #AP; Cataphract reduces by 0.2
+      - 0.3 #FLAMES
+      - 0.5 #HE; Cataphract reduces by 0.2
+      - 1.0 #LASCANON; Cataphract increases by 0.2
+      - 1.0 #PLASMA
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA; Cataphract increases by 0.1
+    specialWeapon: STR_MFIST
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
