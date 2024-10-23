@@ -363,7 +363,8 @@ items:
     tuSnap: 25
     tuAimed: 0
 
-  - type: STR_HELLGUN # done # Power Pack
+  - &STR_HELLGUN_TEMPLATE
+    type: STR_HELLGUN # done # Power Pack
     dropoff: 4
     autoRange: 9
     snapRange: 16
@@ -387,6 +388,34 @@ items:
       ToStun: 0.3 #painful las burns
       ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
+    #melee profile
+    meleePower: 50
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.9
+      RandomType: 1
+    accuracyMelee: 80
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    costMelee:
+      time: 12
+      energy: 2
+    flatMelee: true
+    #lasgun aesthetics
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        return;
+
+  - type: STR_CHAOS_HELLGUN
+    refNode: *STR_HELLGUN_TEMPLATE
 
   - type: STR_HELLGUN_STEEL_LEGION
     dropoff: 3 #scoped
@@ -415,8 +444,9 @@ items:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
-  - type: STR_HOTSHOT_VOLLEY_GUN # done # Power Pack
-    dropoff: 4
+  - &STR_HOTSHOT_VOLLEY_GUN_TEMPLATE
+    type: STR_HOTSHOT_VOLLEY_GUN # done # Power Pack
+    dropoff: 5 #CQC focused; basically a laser automatic shotgun
     autoRange: 9
     snapRange: 16
     aimRange: 0
@@ -454,6 +484,9 @@ items:
       vaporParticleAmmo: |
         # noting
         return;
+
+  - type: STR_CHAOS_VOLLEYGUN
+    refNode: *STR_HOTSHOT_VOLLEY_GUN_TEMPLATE
 
 
   - type: STR_VOLLEYGUN_STEEL_LEGION
@@ -859,7 +892,8 @@ items:
 
 ## Mounted (Chimera turrets and similar count as mounted)
 
-  - type: STR_MOUNTED_LASCANNON # done
+  - &STR_MOUNTED_LASCANNON_TEMPLATE
+    type: STR_MOUNTED_LASCANNON # done
     dropoff: 3
     autoRange: 0
     snapRange: 25
@@ -870,6 +904,29 @@ items:
     tuAuto: 0
     tuSnap: 40
     tuAimed: 70
+    #lasgun aesthetics
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        return;
+
+  - type: STR_MOUNTED_HEAVY_LASCANNON # done
+    refNode: *STR_MOUNTED_LASCANNON_TEMPLATE
+    snapRange: 27
+    aimRange: 38
+    accuracySnap: 95
+    accuracyAimed: 150
+    tuSnap: 60
+    tuAimed: 85
+    confSnap:
+      spendPerShot: 2 #expends more energy per shot
+    tags:
+      ITEM_SNAP_FLAT_POWER_BONUS: 100 #+100 damage
+      ITEM_AIMED_FLAT_POWER_BONUS: 100
 
   - type: STR_HAND_MULTILASER_PAI #INQ Stormie Multilas
     accuracySnap: 55
