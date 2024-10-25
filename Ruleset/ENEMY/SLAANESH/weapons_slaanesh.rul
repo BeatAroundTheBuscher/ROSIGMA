@@ -55,20 +55,22 @@ items:
   - type: STR_SLAANESH_CORRUPTING_TOUCH #For Slaanesh Saint
     refNode: *STR_SLAANESH_CORRUPTION_MELEE
     bigSprite: {mod: 40k, index: 624}
-    meleeAnimation: {mod: 40k, index: 60}
-    meleeSound: {mod: 40k, index: 834} #754 knif miss
-    meleeHitSound: {mod: 40k, index: 286} #773 knif hit
-    specialChance: 5
-    accuracyMelee: 100
+    meleeAnimation: 52
+    meleeSound: {mod: 40k, index: 834}
+    meleeHitSound: {mod: 40k, index: 833}
+    accuracyMelee: 110
+    meleeBonus: #just need to touch
+      reactions: 0.5
+      melee: 0.5
     power: 66
-    damageType: 1 #untyped
+    damageType: 12 #untyped
     damageBonus:
-      psiSkill: 1.0
+      psi: 0.01
     damageAlter:
       IgnoreSelfDestruct: false
       RandomType: 6
       ArmorEffectiveness: 0.2 #doesn't really interact with armor
-      ToHealth: 0.05 #pure corruption
+      ToHealth: 0.01 #pure corruption
       ToMorale: 10.0
       ToStun: 1.0
       ToTime: 1.0
@@ -77,6 +79,17 @@ items:
       ToTile: 0.0
       ToItem: 0.0
       ToWound: 0.0
+      RandomWound: false
+    costMelee:
+      time: 10
+      energy: 1
+    flatMelee:
+      time: true
+      energy: true
+    specialChance: 6 #tiny chance of zombifying its victims
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
 
   - type: STR_SLAANGOR_CLAW_GIMPIFY #For Ritualist, zombifies
@@ -358,6 +371,7 @@ items:
     compatibleAmmo:
       - STR_LASGUN_CLIP_SLAAN
       - STR_LASGUN_CLIP_HOTSHOT
+      - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -418,6 +432,18 @@ items:
     invHeight: 1
     armor: 70
     listOrder: 11060
+    #lasgun aesthetics
+    fireSound: [3981]
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 17 #purple laser
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_LASCARBINE_SLAAN #Bray/ungor weapon
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -442,6 +468,8 @@ items:
     autoRange: 10
     compatibleAmmo:
       - STR_LASPISTOL_CLIP_SLAAN #smaller, less damage
+      - STR_LASPISTOL_CLIP
+      - STR_LASPISTOL_CLIP_HOTSHOT
     battleType: 1
     twoHanded: true
     invWidth: 1
@@ -473,6 +501,8 @@ items:
     tuMelee: 14
     flatMelee:
       time: true
+    tags:
+      REACTION_MULTIPLIER: 150
 
   - type: STR_LASGUN_SLAANESH_ESCHER #flexible, but no melee.
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -503,6 +533,7 @@ items:
       - STR_LASPISTOL_CLIP_SLAAN
       - STR_LASGUN_CLIP_SLAAN
       - STR_LASGUN_CLIP_HOTSHOT
+      - STR_LASGUN_CLIP_HOTSHOT_CHAOS
     confSnap:
       shots: 2 #double tap
       name: STR_BURST_SNAP_SHOT
@@ -573,6 +604,19 @@ items:
     vaporColor: 2
     vaporDensity: 5
     listOrder: 10850
+    #lasgun aesthetics
+    fireSound: [3981]
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 17 #purple laser
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
 
   - type: STR_HEAVY_STUBBER_SLAAN
     categories: [STR_CAT_AUTO]
@@ -754,7 +798,7 @@ items:
 
   - type: STR_PLASMA_PISTOL_CLIP_SLAAN #                  11310
     categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
-    vaporColorSurface: {mod: 40k, index: 2}
+    vaporColorSurface: 17
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
     requires:
@@ -840,6 +884,9 @@ items:
     requires:
       - STR_ALIENS_ONLY
       - STR_ALIEN_GRENADE
+    vaporColorSurface: 18
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
     size: 0.1
     costSell: 250
     weight: 3
@@ -1249,6 +1296,9 @@ items:
     explosionHitSound: 2122
     hitAnimation: 1020
     listOrder: 12152
+    vaporColorSurface: 18 #purple haze
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
 
   - type: STR_SONIC_GUN
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
@@ -1509,3 +1559,6 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 3 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    vaporColorSurface: 18 #purple haze
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100

@@ -958,6 +958,22 @@ armors:
       UNIT_TYPE_LIVING: 1
       ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
 
+  - type: STR_ALPHAOFF_ARMOR #REGULAR
+    refNode: *STR_ALPHA_ARMOR_TEMPLATE
+    spriteSheet: ALPHAOFFBS.PCK
+    spriteInv: ALPHAOFF_INV.SPK
+    corpseBattle:
+      - STR_ALPHAOFF_LEGION_CORPSE
+    corpseGeo: STR_ALPHAOFF_LEGION_CORPSE
+    selfDestructItem: STR_ALPHAOFF_LEGION_CORPSE
+    tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
+
   - type: STR_ALPHA_ARMOR_POSSESSED
     refNode: *STR_ALPHA_ARMOR_TEMPLATE
     visibilityAtDay: 40
@@ -972,6 +988,58 @@ armors:
       INFECTION_RESIST: 100 #infection immune
       INTIMIDATION_RESISTANCE: 50 #intimidation resistant
       ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
+
+  - type: STR_ALPHAterminator_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #Nightlords have superior night vision
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 15 #Nightlords have superior night detection
+    camouflageAtDark: -20 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 50 #terminator sensor equivalent; Nightlords have superior heat vision
+    loftempsSet: [ 5 ]
+    storeItem: STR_ALPHAterminator_ARMOR
+    spriteInv: ALPHAterminatorinvent.PCK
+    spriteSheet: ALPHAterminator_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 150
+    sideArmor: 140
+    rearArmor: 100
+    underArmor: 150
+    painImmune: true #it's a berserker it doesn't care
+    fearImmune: true #it's a berserker it doesn't care
+    psiDefence:
+      moraleCurrent: 1.0
+      flatHundred: 1.0 #Khorne protects against pitiful psykers
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_ALPHAterminator_CORPSE_GEO
+    corpseGeo: STR_ALPHAterminator_CORPSE_GEO
+    selfDestructItem: STR_ALPHAterminator_CORPSE_GEO
+    damageModifier: #TERMINATOR ARMOR
+      - 1.0 #none
+      - 0.6 #AP;
+      - 0.3 #FLAMES;
+      - 0.6 #HE
+      - 0.9 #LASCANON
+      - 1.0 #PLASMA
+      - 0.5 #STUN; Nightlord terminator resistant -0.2
+      - 0.5 #MELEE; Nightlord terminator resistant -0.2
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Khorne termies have standard shields: (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+
 
   - &STR_ALPHA_ARMOR_CORVUS_TEMPLATE
     type: STR_ALPHA_CORVUS_ARMOR #Beakie
@@ -1342,8 +1410,11 @@ armors:
 
   - type: STR_NIGHTLORD_CSM_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 30 #Nightlord bonus
-    heatVision: 20
+    visibilityAtDark: 35 #Nightlords have superior night vision
+    antiCamouflageAtDark: 10 #Nightlords have superior night detection
+    camouflageAtDark: -25 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 35 #Nightlords have superior heat vision
     spriteSheet: NIGHTLORDS_CSM_BS.PCK
     spriteInv: NIGHTLORD_CSM_SOLDIER_INV.SPK
     corpseBattle:
@@ -1352,6 +1423,7 @@ armors:
     sideArmor: 105
     rearArmor: 70
     underArmor: 105
+    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -1359,11 +1431,11 @@ armors:
       - 0.6 #HE
       - 1.0 #LASCANON
       - 1.1 #PLASMA
-      - 1.1 #STUN
-      - 1.0 #MELEE Weakness
+      - 0.9 #STUN; Nightlord resistant -0.2
+      - 0.8 #MELEE; Nightlord resistant -0.2
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
     tags:
@@ -1372,8 +1444,12 @@ armors:
 
   - type: STR_NIGHTLORD_CSM_LEADER_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 30 #Nightlord bonus
-    heatVision: 30
+    visibilityAtDark: 40 #Nightlords have superior night vision + officer armor
+    antiCamouflageAtDark: 15 #Nightlords have superior night detection + officer
+    antiCamouflageAtDay: 5
+    camouflageAtDark: -30 #Nightlords have superior night camo + officer
+    camouflageAtDay: -10
+    heatVision: 45 #Nightlords have superior heat vision + officer
     spriteSheet: NIGHTLORDS_CSM_LEADER_BS.PCK
     spriteInv: NIGHTLORD_CSM_LEADER_INV.SPK
     corpseBattle:
@@ -1382,6 +1458,7 @@ armors:
     sideArmor: 115
     rearArmor: 80
     underArmor: 115
+    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -1389,11 +1466,11 @@ armors:
       - 0.6 #HE
       - 1.0 #LASCANON
       - 1.1 #PLASMA
-      - 1.1 #STUN
-      - 1.0 #MELEE Weakness
+      - 0.9 #STUN; Nightlord resistant -0.2
+      - 0.8 #MELEE; Nightlord resistant -0.2
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 4 ]
     tags:
@@ -1402,8 +1479,11 @@ armors:
 
   - type: STR_NIGHTLORD_RAPTOR_ARMOR0
     visibilityAtDay: 40
-    visibilityAtDark: 30
-    heatVision: 25
+    visibilityAtDark: 35 #Nightlords have superior night vision
+    antiCamouflageAtDark: 10 #Nightlords have superior night detection
+    camouflageAtDark: -25 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 40 #Nightlords have superior heat vision
     spriteSheet: raptor_nightlords_bs.PCK
     spriteInv: raptor_nightlord_inv.SPK
     corpseBattle:
@@ -1414,6 +1494,7 @@ armors:
     underArmor: 110
     drawingRoutine: 0
     movementType: 1
+    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.9 #AP
@@ -1421,11 +1502,11 @@ armors:
       - 0.8 #HE
       - 0.8 #LASCANON
       - 1.2 #PLASMA
-      - 1.1 #STUN
-      - 1.2 #MELEE
+      - 0.9 #STUN; Nightlord resistant -0.2
+      - 1.0 #MELEE; Nightlord resistant -0.2
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 3 ]
     tags:
@@ -1434,8 +1515,12 @@ armors:
 
   - type: STR_NIGHTLORD_RAPTOR_ARMOR2 #officer
     visibilityAtDay: 40
-    visibilityAtDark: 30
-    heatVision: 30
+    visibilityAtDark: 40 #Nightlords have superior night vision + officer armor
+    antiCamouflageAtDark: 15 #Nightlords have superior night detection + officer
+    antiCamouflageAtDay: 5
+    camouflageAtDark: -30 #Nightlords have superior night camo + officer
+    camouflageAtDay: -10
+    heatVision: 50 #Nightlords have superior heat vision + officer
     spriteSheet: raptor_nightlords_com_bs.PCK
     spriteInv: raptor_nightlordcom_inv.SPK
     corpseBattle:
@@ -1446,7 +1531,7 @@ armors:
     underArmor: 115
     drawingRoutine: 0
     movementType: 1
-    #specialWeapon: STR_NIGHT_LORDS_PANIC
+    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.85 #AP
@@ -1454,11 +1539,11 @@ armors:
       - 0.8 #HE
       - 0.8 #LASCANON
       - 1.2 #PLASMA
-      - 1.1 #STUN
-      - 1.1 #MELEE
+      - 0.9 #STUN; Nightlord resistant -0.2
+      - 0.9 #MELEE; Nightlord resistant -0.2
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 3 ] #NIGHT LORDS BONUS
     tags:
@@ -1467,8 +1552,11 @@ armors:
 
   - type: STR_NIGHTLORDS_WARPTALON_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 30
-    heatVision: 33
+    visibilityAtDark: 35 #Nightlords have superior night vision
+    antiCamouflageAtDark: 10 #Nightlords have superior night detection
+    camouflageAtDark: -25 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 40 #Nightlords have superior heat vision
     spriteSheet: warptalon_nightlord_bs.PCK
     spriteInv: warptalon_nightlord_inv.SPK
     corpseBattle:
@@ -1479,6 +1567,7 @@ armors:
     underArmor: 100
     drawingRoutine: 0
     movementType: 1
+    specialWeapon: STR_INTIMIDATION_WEAPON
     damageModifier: #CHAOS ARMOR
       - 1.0 #none
       - 0.8 #AP
@@ -1486,11 +1575,11 @@ armors:
       - 0.7 #HE
       - 0.8 #LASCANON
       - 1.2 #PLASMA
-      - 1.1 #STUN
-      - 1.2 #MELEE
+      - 0.9 #STUN; Nightlord resistant -0.2
+      - 1.0 #MELEE; Nightlord resistant -0.2
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 2 ] #warping
     tags:
@@ -1613,5 +1702,135 @@ armors:
       ARMOR_REINFORCEMENT_TU_PERCENT: 50 #more than normal since they spend so much of their time disguised
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
       ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+
+
+  - type: STR_BLACKLEGcataphract_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #advanced sensors
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 5
+    heatVision: 35 #per daemon senses
+    loftempsSet: [ 5 ]
+    storeItem: STR_BLACKLEGcataphract_ARMOR
+    spriteInv: BLACKLEGcataphractinvent.PCK
+    spriteSheet: BLACKLEGcataphract_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 180
+    sideArmor: 170
+    rearArmor: 170
+    underArmor: 180
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_BLACKLEGcataphract_CORPSE_GEO
+    damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.5 #AP; Cataphract reduces by 0.2
+      - 0.3 #FLAMES
+      - 0.5 #HE; Cataphract reduces by 0.2
+      - 1.0 #LASCANON; Cataphract increases by 0.2
+      - 1.0 #PLASMA
+      - 0.8 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA; Cataphract increases by 0.1
+    specialWeapon: STR_MFIST
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_NIGHTLORDterminator_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #Nightlords have superior night vision
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 15 #Nightlords have superior night detection
+    camouflageAtDark: -20 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 50 #terminator sensor equivalent; Nightlords have superior heat vision
+    loftempsSet: [ 5 ]
+    storeItem: STR_NIGHTLORDterminator_ARMOR
+    spriteInv: NIGHTLORDterminatorinvent.PCK
+    spriteSheet: NIGHTLORDterminator_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 150
+    sideArmor: 140
+    rearArmor: 100
+    underArmor: 150
+    painImmune: true #it's a berserker it doesn't care
+    fearImmune: true #it's a berserker it doesn't care
+    psiDefence:
+      moraleCurrent: 1.0
+      flatHundred: 1.0 #Khorne protects against pitiful psykers
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_NIGHTLORDterminator_CORPSE_GEO
+    damageModifier: #TERMINATOR ARMOR
+      - 1.0 #none
+      - 0.6 #AP;
+      - 0.3 #FLAMES;
+      - 0.6 #HE
+      - 0.9 #LASCANON
+      - 1.0 #PLASMA
+      - 0.5 #STUN; Nightlord terminator resistant -0.2
+      - 0.5 #MELEE; Nightlord terminator resistant -0.2
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_INTIMIDATION_WEAPON
+    tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 #Khorne termies have standard shields: (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      INTIMIDATION_RESISTANCE: 100 #too crazy to intimidate
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+
+  - type: STR_NIGHTLORDcataphract_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #Nightlords have superior night vision
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 15 #Nightlords have superior night detection
+    camouflageAtDark: -20 #Nightlords have superior night camo
+    camouflageAtDay: -10
+    heatVision: 50 #terminator sensor equivalent; Nightlords have superior heat vision
+    loftempsSet: [ 5 ]
+    storeItem: STR_NIGHTLORDcataphract_ARMOR
+    spriteInv: NIGHTLORDcataphractinvent.PCK
+    spriteSheet: NIGHTLORDcataphract_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 180
+    sideArmor: 170
+    rearArmor: 170
+    underArmor: 180
+    allowsKneeling: false
+    allowsRunning: false
+    corpseBattle:
+      - STR_NIGHTLORDcataphract_CORPSE_GEO
+    damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.5 #AP; Cataphract reduces by 0.2
+      - 0.3 #FLAMES
+      - 0.5 #HE; Cataphract reduces by 0.2
+      - 1.0 #LASCANON; Cataphract increases by 0.2
+      - 1.0 #PLASMA
+      - 0.6 #STUN; Nightlord terminator resistant -0.2
+      - 0.6 #MELEE; Nightlord terminator resistant -0.2
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.1 #MELTA; Cataphract increases by 0.1
+    specialWeapon: STR_INTIMIDATION_WEAPON
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      INTIMIDATION_RESISTANCE: 100 #too crazy to intimidate
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1

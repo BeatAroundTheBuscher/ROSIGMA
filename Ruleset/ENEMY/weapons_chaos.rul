@@ -16,7 +16,7 @@ items:
     explosionHitSound: {mod: 40k, index: 776} #776: Resources/Sound/SPELLFAIL.wav
     hitAnimation: 1020 #X1 Pink skullsplosion
     power: 100
-    damageType: 3
+    damageType: 8
     damageAlter: #DA SPOOKY GAS
       ToHealth: 0.01
       ToEnergy: 0.3
@@ -111,9 +111,12 @@ items:
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 12
+    costMelee:
+      time: 12
+      energy: 2
     flatMelee:
       time: true
+      energy: true
 
   - type: STR_LIGHT_BOLTER_CHAOS #Chaos Phobos Light Bolter
     categories: [STR_CAT_BOLTER]
@@ -329,12 +332,25 @@ items:
     invHeight: 3
     bulletSpeed: 100
     damageType: 4
-    damageAlter: #LASCAN 50-150%
-      RandomType: 2
-      ToArmorPre: 0.4
-      ToHealth: 0.7
-      ToArmor: 0.20
+    damageAlter: #DA LAS MELTA
+      RandomType: 6
+      ToArmorPre: 0.5
+      ToHealth: 0.8
+      ToArmor: 0.2
       ToStun: 0.0
+    #lasgun aesthetics
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CHAOS_LASCANNON_HANDHELD
     categories: [STR_CAT_LASGUN]
@@ -346,10 +362,7 @@ items:
     bigSprite: 2805
     floorSprite: 2809
     handSprite: 2730
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 742 }
     hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     powerRangeThreshold: 14
     powerRangeReduction: 5
     dropoff: 4 #handheld heavy weapon
@@ -376,6 +389,19 @@ items:
     invHeight: 3
     bulletSpeed: 100
     armor: 30
+    #lasgun aesthetics
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CHAOS_LASCANNON_BIPOD
     categories: [STR_CAT_LASGUN]
@@ -387,10 +413,7 @@ items:
     bigSprite: 2804
     floorSprite: 2809
     handSprite: 2730
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 742 }
     hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     bulletSpeed: 100
     powerRangeThreshold: 18
     powerRangeReduction: 5
@@ -401,11 +424,11 @@ items:
     clipSize: -1
     power: 130
     damageType: 4
-    damageAlter: #LASCAN 50-150%
-      RandomType: 2
-      ToArmorPre: 0.3
+    damageAlter: #DA LAS MELTA
+      RandomType: 6
+      ToArmorPre: 0.5
       ToHealth: 0.8
-      ToArmor: 0.15
+      ToArmor: 0.2
       ToStun: 0.0
     accuracyAimed: 95 #35
     accuracyAuto: 50
@@ -419,6 +442,19 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 30
+    #lasgun aesthetics
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CHAOS_HELLGUN
     categories: [STR_CAT_LASGUN]
@@ -430,15 +466,12 @@ items:
     bigSprite: 2809
     floorSprite: 2803
     handSprite: 2710
-    bulletSprite:  {mod: 40k, index: 12}
-    fireSound:  {mod: 40k, index: 741}
     hitSound:  {mod: 40k, index: 19}
-    hitAnimation:  {mod: 40k, index: 36}
-    power: 70 # 80
-    damageType: 4
+    power: 75 # 80
+    damageType: 1
     damageAlter:
       ToArmorPre: 0.3
-      ArmorEffectiveness: 0.85
+      ArmorEffectiveness: 0.75
       ToHealth: 0.9
       ToArmor: 0.05
       ToStun: 0.0
@@ -462,7 +495,7 @@ items:
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
     meleeType: 7
-    meleePower: 40
+    meleePower: 55
     meleeBonus:
       strength: 0.2
       melee: 0.2
@@ -472,32 +505,45 @@ items:
     meleeMultiplier:
       flatHundred: 0.5
       melee: 0.5
-    tuMelee: 14
-    flatMelee:
-      time: true
+    costMelee:
+      time: 14
+      energy: 2
+    flatMelee: true
+    #lasgun aesthetics
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CHAOS_VOLLEYGUN
     categories: [STR_CAT_LASGUN]
     size: 0.2
-    dropoff: 8
+    dropoff: 5
     weight: 9
     powerRangeThreshold: 13
     powerRangeReduction: 10
     bigSprite: 2810
     floorSprite: 2804
     handSprite: 2720
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 741}
     hitSound: {mod: 40k, index: 19}
-    hitAnimation: 36
-    power: 90
-    damageType: 4
+    power: 65
+    damageType: 1
     damageAlter:
       ToArmorPre: 0.3
-      ArmorEffectiveness: 0.85
-      ToHealth: 0.9
-      ToArmor: 0.0
-      ToStun: 0.0
+      ArmorEffectiveness: 0.75
+      ToHealth: 1.0
+      ToArmor: 0.1 # 40k 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     accuracyAuto: 55
     accuracySnap: 65
     snapRange: 16
@@ -506,9 +552,9 @@ items:
     tuAuto: 30
     tuSnap: 25
     confAuto:
-      shots: 4
+      shots: 7
     confSnap:
-      shots: 2
+      shots: 3
     clipSize: -1
     battleType: 1
     twoHanded: true
@@ -518,6 +564,19 @@ items:
     recover: false
     fixedWeapon: true
     fixedWeaponShow: true
+    #lasgun aesthetics
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CSERVITOR_MILAUNCHER #                12120
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
@@ -778,12 +837,26 @@ items:
     bulletSpeed: 100
     damageType: 4
     damageAlter: #DA LAS
-      ToArmorPre: 0.2
-      ToHealth: 1.0
-      ToArmor: 0.0
+      RandomType: 6
+      ToArmorPre: 0.5
+      ToHealth: 0.8
+      ToArmor: 0.2
       ToStun: 0.0
     recover: false
     fixedWeapon: true
+    #lasgun aesthetics
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: SECTOPOD_WEAPON #Chaos Dread PLASMA
     vaporColorSurface: {mod: 40k, index: 2}
@@ -1788,9 +1861,26 @@ items:
     listOrder: 15100
 
   - type: STR_AXE #                 3011           DA CHAIN
-    power: 100
-    damageAlter:
+    power: 66
+    damageAlter: #DA CHAIN
+      RandomType: 1
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      ToWound: 0.3
+      ToMorale: 0.4 #demoralizing and painful
+      ToEnergy: 0.5
       RandomWound: false
+    strengthApplied: false
+    damageBonus:
+      strength: 0.3
+      melee: 0.2
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    costMelee:
+      time: 15
+      energy: 2
+    flatMelee: true
 
   - type: STR_KHORNE_BERSERKER_AXE #Khorne Berserker Axe
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
@@ -1806,7 +1896,7 @@ items:
     meleeAnimation: {mod: 40k, index: 48}
     power: 88
     damageAlter: #DA CHAIN
-      RandomType: 6 #Gaussian damage
+      RandomType: 1
       ToArmorPre: 0.4 #shreds armor
       ToHealth: 0.9
       ToWound: 0.4 #spills blood
@@ -1815,8 +1905,8 @@ items:
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
       RandomWound: false
     damageBonus:
-      strength: 0.25
-      melee: 0.25
+      strength: 0.3
+      melee: 0.2
     damageType: 7
     accuracyMelee: 108
     tuMelee: 15
@@ -1859,10 +1949,10 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyMelee: 80
+    accuracyMelee: 90
     costMelee:
-      time: 12
-      energy: 2
+      time: 10 #fast attacking
+      energy: 1
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -1876,6 +1966,7 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+
   - type: STR_CHAOS_CLAWS2 #                       DA POWER
     weight: 10
     power: 55
@@ -1889,13 +1980,13 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
-    accuracyMelee: 80
+    accuracyMelee: 90
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
     costMelee:
-      time: 12
-      energy: 2
+      time: 10 #fast attacking
+      energy: 1
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -1904,28 +1995,93 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+
+  - type: STR_NIGHTLORD_COMBICLAW #masterwork weapon with masterwork ammo
+    bigSprite: 1101
+    weight: 15
+    meleePower: 66
+    meleeType: 5 #these are power weapons
+    meleeBonus:
+      strength: 0.3
+      melee: 0.3
+    meleeAlter:     #DA POWER
+      RandomType: 1
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+    accuracyMelee: 110
+    meleeMultiplier:
+      melee: 1.0
+      flatHundred: 0.0
+    costMelee:
+      time: 10 #fast attacking
+      energy: 1
+    flatMelee: true
+    twoHanded: false
+    fixedWeapon: true
+    battleType: 1
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    #ranged component:
+    dropoff: 4
+    autoRange: 11
+    snapRange: 16
+    aimRange: 0
+    accuracyAuto: 70
+    accuracySnap: 90
+    accuracyAimed: 0
+    tuAuto: 30
+    tuSnap: 25
+    tuAimed: 0
+    damageType: 1
+    power: 95
+    damageAlter: #DA BOLTER  DOUBLE SHOT
+      RandomType: 1
+      ToArmorPre: 0.2
+      ArmorEffectiveness: 0.8
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5 # was 1.0
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    shotgunSpread: 1 # 1/100; hit together
+    shotgunBehavior: 1 # new behaviour
+    shotgunPellets: 2
+    tags:
+      REACTION_MULTIPLIER: 150 #carbine tier
+
+
   - type: STR_OBLITERATOR_MELEE_WEAPON #DA POWER
     weight: 3
     clipSize: -1
     strengthApplied: false
-    power: 120
+    power: 0
+    damageBonus: #it's a power fist
+      strength: 1.5
+      melee: 0.0
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
       ToHealth: 0.9
       IgnoreSelfDestruct: false
     damageType: 5 #these are power weapons
-    accuracyMelee: 80
+    accuracyMelee: 70
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
-    tuMelee: 15
+    costMelee:
+      time: 20 #fast attacking
+      energy: 4
+    flatRate: true
     battleType: 3
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
     recover: false
-    flatRate: true
     skillApplied: true
 
   - &STR_ASSAULT_CANNON_TEMPLATE
@@ -2326,6 +2482,19 @@ items:
     invHeight: 3
     listOrder: 12210
     bulletSpeed: 100
+    #lasgun aesthetics
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_CHAOSHARMONIC_MELTAGUN #CHAOS BEAMER MELTAGUN                    2019
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
@@ -2651,8 +2820,8 @@ items:
     weight: 100
     bulletSpeed: 100
     explosionSpeed: 5
-    power: 50
-    damageType: 4
+    power: 60
+    damageType: 1
     accuracyAuto: 35
     costAuto:
       time: 1
@@ -2663,18 +2832,31 @@ items:
     autoRange: 20
     autoShots: 10
     sprayWaypoints: 2
-    dropoff: 5
+    dropoff: 3
     battleType: 1
     damageAlter:
       ToArmorPre: 0.2
       ToHealth: 1.0
       ToArmor: 0.0
-      ToStun: 0.0
+      ToStun: 0.3 #painful las burns
+      ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
     fixedWeapon: true
     invWidth: 2
     invHeight: 3
     clipSize: -1
     recover: false
+    #laser sfx
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_TZEENTCH_CHIMERA_WEAPON_FLAMER
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH]
@@ -3111,7 +3293,7 @@ items:
       ToTile: 0.6 #corrosive
       ToStun: 0.6 #increased stun damage from virulent payload
       ToEnergy: 0.6 #increased energy damage from virulent payload
-      ToWound: 0.05 #debilitates and infects instead of wounds
+      ToWound: 0.02 #debilitates and infects instead of wounds
       RandomWound: false
       FixRadius: 1
     powerForAnimation: 16 #Fix radius * 32 - 16.
@@ -3121,6 +3303,55 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 40 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: NURGLE_SATAUTOCAN
+    weight: 10
+    bigSprite: 1034
+    floorSprite: 949
+    handSprite: 864
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    hitSound: { mod: 40k, index: 708 }
+    explosionHitSound: {mod: 40k, index: 832}
+    hitAnimation: {mod: 40k, index: 120 } #Green EX
+    explosionSpeed: 10
+    bulletSpeed: 50
+    clipSize: 200
+    accuracyAuto: 60
+    tuAuto: 55
+    autoShots: 10
+    sprayWaypoints: 3
+    confAuto:
+      name: DW_SATAUTOCAN_AUTO
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    power: 110
+    damageType: 8
+    damageAlter: #DA BLIGHT
+      ToArmorPre: 0.4
+      ToArmor: 0.1
+      ToHealth: 0.6 #much less health damage; instead debilitates, infects and corrodes armor
+      ToTime: 0.2
+      ToMorale: 1.0 #morale loss from virulent payload
+      ToTile: 0.6 #corrosive
+      ToStun: 0.6 #increased stun damage from virulent payload
+      ToEnergy: 0.6 #increased energy damage from virulent payload
+      ToWound: 0.02 #debilitates and infects instead of wounds
+      RandomWound: false
+      FixRadius: 1
+    powerForAnimation: 16 #Fix radius * 32 - 16.
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    minRange: 7
+    autoRange: 20
+    dropoff: 4
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: 994
+    specialUseEmptyHand: false
+
 
   - type: STR_BLIGHT_HAULER_MORTAR
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]

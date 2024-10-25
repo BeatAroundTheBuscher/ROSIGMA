@@ -185,6 +185,7 @@ items:
       RandomWound: false
       ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
       ToItem: 0.25
+    hitAnimation: {mod: 40k, index: 104 }
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
   - type: STR_PENITENCE_GRENADE40 #frag munition; penitence so melee
@@ -417,12 +418,13 @@ items:
     flatPrime:
       time: false
       energy: true
-    damageType: 3
+    damageType: 5
     power: 80
     damageAlter: #DA PLASMA
       RandomType: 6
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.2
+      ToArmorPre: 0.2 #melts some armor on the way in
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70 #can ignite at high damage
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
 ## MELTA
@@ -442,8 +444,8 @@ items:
     flatPrime:
       time: false
       energy: true
+    damageType: 11
     damageAlter:
-      ResistType: 11
       RandomType: 6
       ToArmorPre: 1.0 #it's a melta grenade; it will melt armor
       ToTile: 1.0
@@ -451,8 +453,8 @@ items:
       ToArmor: 0.0 #melts armor on the way in
       ToHealth: 0.7
       ToWound: 0.05
-      FireThreshold: 0.0
       RandomWound: false
+      FireThreshold: 0.0
 
   - type: STR_HIGH_EXPLOSIVE #melta bomb    4009 #melta munition
     primeActionName: STR_PRIME_CHARGE
@@ -473,15 +475,17 @@ items:
       time: false
       energy: true
     power: 200 #deadly
+    damageType: 11
     damageAlter:
-      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
-      ResistType: 11
       RandomType: 6
       ToArmorPre: 1.0
       ToTile: 1.0
       ToItem: 1.0
       ToArmor: 0
       ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
 
   - type: STR_ELDAR_MGRENADE
     throwRange: 15
@@ -500,25 +504,31 @@ items:
       time: false
       energy: true
     power: 110
+    damageType: 11
     damageAlter:
-      ResistType: 11
       RandomType: 6
-      ToArmorPre: 0.5
+      ToArmorPre: 1.0
       ToTile: 1.0
       ToItem: 1.0
       ToArmor: 0
       ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
 
   - type: STR_MELTA_GRENADE40 #Hellspite underslung grenade #melta munition
     power: 90
-    damageType: 3
+    damageType: 11
     damageAlter: #DA MELTA WEAKER THAN HAND HELD
-      ResistType: 11
       RandomType: 6
-      ToArmorPre: 0.5
+      ToArmorPre: 1.0
       ToTile: 1.0
+      ToItem: 1.0
       ToArmor: 0
       ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
     clipSize: 3
     blastRadius: 2
 
@@ -532,14 +542,14 @@ items:
     weight: 2 #Light grenade
     costThrow:
       energy: 5
-      time: 30
+      time: 55
     costPrime:
-      time: 30
+      time: 1
     costUnprime:
-      time: 15
+      time: 1
     unprimeActionName: STR_UNPRIME_GRENADE
     flatPrime:
-      time: false
+      time: true
       energy: true
     tuAimed: 0
     accuracyAimed: 0
@@ -564,33 +574,63 @@ items:
     weight: 3
     costThrow:
       energy: 10
-      time: 40
+      time: 60
     costPrime:
-      time: 30
+      time: 1
     costUnprime:
-      time: 15
+      time: 1
     unprimeActionName: STR_UNPRIME_GRENADE
     flatPrime:
-      time: false
+      time: true
       energy: true
+    power: 90
+    damageType: 3
+    damageAlter: #high explosive properties plus extra Pre ablation due to blight
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 9
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
   - type: STR_SCARE_GRENADE #Scare Gas Grenade, pink gas
     throwRange: 18
+    fuseType: -2
     primeSound: 2424
     weight: 2
     costThrow:
       energy: 5
-      time: 30
+      time: 55
     costPrime:
-      time: 30
+      time: 1
     costUnprime:
-      time: 15
+      time: 1
     unprimeActionName: STR_UNPRIME_GRENADE
     flatPrime:
-      time: false
+      time: true
       energy: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
+    power: 100
+    damageType: 8
+    damageAlter: #DA SPOOKY GAS
+      RandomType: 6
+      ToHealth: 0.01
+      ToWound: 0.0
+      RandomWound: false
+      ToTile: 0.0 #doesn't damage tiles
+      ToItem: 0.0 #doesn't damage items
+      ToArmor: 0.0 #doesn't damage armor
+      ToEnergy: 0.3
+      ToStun: 0.3
+      ToMorale: 4.0 #even with high bravery this will fuck you up
+      ArmorEffectiveness: 0.4
+      FixRadius: 10
+      SmokeThreshold: 0 #scare gas creates smoke which now synergizes with Night Lords
 
   - type: STR_SONIC_GRENADE #Scare Gas Grenade, pink gas
     throwRange: 18
@@ -598,14 +638,14 @@ items:
     weight: 2
     costThrow:
       energy: 5
-      time: 30
+      time: 55
     costPrime:
-      time: 30
+      time: 1
     costUnprime:
-      time: 15
+      time: 1
     unprimeActionName: STR_UNPRIME_GRENADE
     flatPrime:
-      time: false
+      time: true
       energy: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
@@ -615,18 +655,53 @@ items:
     weight: 2
     costThrow:
       energy: 5
-      time: 30
+      time: 55
     costPrime:
-      time: 30
+      time: 1
     costUnprime:
-      time: 15
+      time: 1
     unprimeActionName: STR_UNPRIME_GRENADE
     flatPrime:
-      time: false
+      time: true
       energy: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
-
+  - type: STR_BLIGHT_GRENADE                #4010
+    power: 90
+    damageType: 8
+    damageAlter:
+      ArmorEffectiveness: 0.7 #bypasses armor
+      RandomType: 6
+      ToArmorPre: 0.5 #rots armor
+      ToArmor: 0.0 #does armor damage on the way in
+      ToHealth: 0.1 #going for low health damage, mainly armor and corruption threat.
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToEnergy: 0.5
+      ToStun: 0.5
+      ToTime: 0.5 #sticky goo; also so it's still relevant vs mechanical/corruption immune enemies
+      ToTile: 0.5 #acidic
+      ToWound: 0.05
+      SmokeThreshold: 0.0
+      RandomWound: false
+      FixRadius: 9
+    throwRange: 15
+    weight: 3
+    costThrow:
+      energy: 10
+      time: 60
+    costPrime:
+      time: 1
+    costUnprime:
+      time: 1
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatPrime:
+      time: true
+      energy: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100
+      INFECTION_TYPE: 1
 
 ## Unsorted
 

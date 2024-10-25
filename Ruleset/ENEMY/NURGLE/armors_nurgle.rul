@@ -246,6 +246,7 @@ armors:
     bleedImmune: true #Plague Daemons don't bleed
     zombiImmune: true #Plague Daemons can't be corrupted further
     painImmune: true #Plague Daemons don't care about pain
+    allowsRunning: false #poxwalkers can't run; mostly matters for Brutal AI
     recovery: #Plague Daemons regenerate health
       health:
         healthCurrent: 0.2
@@ -293,6 +294,7 @@ armors:
     bleedImmune: true #Plague Daemons don't bleed
     zombiImmune: true #Plague Daemons can't be corrupted further
     painImmune: true #Plague Daemons don't care about pain
+    allowsRunning: false #poxwalkers can't run; mostly matters for Brutal AI
     recovery: #Plague Daemons regenerate health
       health:
         healthCurrent: 0.2
@@ -1363,6 +1365,9 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_NURGLE: 1
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit
     painImmune: true
     recovery: #Plague Daemons regenerate health
       health:
@@ -1376,7 +1381,7 @@ armors:
       - 1.2 #PLASMA
       - 0.0 #STUN; it's a vehicle; stun immune
       - 0.8 #MELEE
-      - 0.1 #ACID #plague daemonengine; we don't really care about chem weapons
+      - 0.0 #ACID #plague daemonengine; we don't really care about chem weapons
       - 0.0 #SMOKE
       - 0.0 #IMPACT
       - 1.4 #MELTA
@@ -1734,3 +1739,100 @@ armors:
       - 0.2 #IMPACT
       - 1.1 #MELTA
     loftempsSet: [ 3 ]
+
+  - type: STR_NURGLcataphract_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #advanced sensors
+    antiCamouflageAtDay: 5 #advanced sensors
+    antiCamouflageAtDark: 5
+    heatVision: 35 #per daemon senses
+    loftempsSet: [ 5 ]
+    storeItem: STR_NURGLcataphract_ARMOR
+    spriteInv: NURGLcataphractinvent.PCK
+    spriteSheet: NURGLcataphract_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 180
+    sideArmor: 170
+    rearArmor: 170
+    underArmor: 180
+    allowsKneeling: false
+    allowsRunning: false
+    painImmune: true
+    fearImmune: true
+    bleedImmune: true
+    corpseBattle:
+      - STR_NURGLcataphract_CORPSE_GEO
+    damageModifier: #cataphract ARMOR; AL gets no special modifiers. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.2 #AP; Cataphract reduces by 0.2 + nurgle resist
+      - 0.5 #FLAMES; Cataphract reduces by 0.7 + nurgle vulnerability
+      - 0.2 #HE; Cataphract reduces by 0.2 + nurgle resist
+      - 1.1 #LASCANON; Cataphract increases by 0.2
+      - 1.0 #PLASMA
+      - 0.7 #STUN; nurgle resist
+      - 0.7 #MELEE; nurgle resist
+      - 0.0 #ACID; Nurgle immunity
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA; Cataphract increases by 0.1 + nurgle vulnerability
+    specialWeapon: STR_NURGLING_CLAWS
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60 #50% better than standard terminator shielding
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10
+
+
+  - type: STR_SATURNINEnurgle_ARMOR
+    visibilityAtDay: 40 #equivalent to Scion gear
+    visibilityAtDark: 40 #advanced sensors + daemonic senses
+    antiCamouflageAtDay: 7 #advanced sensors + daemonic senses
+    antiCamouflageAtDark: 7
+    heatVision: 40 #superior termie sensors
+    psiVision: 5
+    loftempsSet: [ 5 ]
+    storeItem: STR_SATURNINEnurgle_ARMOR
+    spriteInv: SATNURGLEinvent.PCK
+    spriteSheet: SATURNINEnurgle_ARMOR_BS.PCK
+    drawingRoutine: 0
+    frontArmor: 200
+    sideArmor: 180
+    rearArmor: 160
+    underArmor: 200
+    allowsKneeling: false
+    allowsRunning: false
+    painImmune: true
+    fearImmune: true
+    bleedImmune: true
+    corpseBattle:
+      - STR_SATURNINEnurgle_CORPSE_GEO
+    damageModifier: #Saturnine ARMOR; Nurgle acid immune, +0.1 resist to all but melta, plasma and flames. Use Terminator as a base; more vulnerable to Lascannon and Melta, less vulnerable to AP and HE
+      - 1.0 #none
+      - 0.2 #AP; Cataphract reduces by 0.2 + nurgle resist
+      - 0.5 #FLAMES; Cataphract reduces by 0.7 + nurgle vulnerability
+      - 0.2 #HE; Cataphract reduces by 0.2 + nurgle resist
+      - 1.0 #LASCANON; Cataphract increases by 0.2 + nurgle resist
+      - 1.0 #PLASMA
+      - 0.7 #STUN; nurgle resist
+      - 0.7 #MELEE; nurgle resist
+      - 0.0 #ACID; Nurgle immunity
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA; Cataphract increases by 0.1 + nurgle vulnerability
+    specialWeapon: NURGLE_SATAUTOCAN
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50
+      ARMOR_ENERGY_SHIELD_DECAY: 20
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1 #used for bomberman scripts; kamikazis on hit

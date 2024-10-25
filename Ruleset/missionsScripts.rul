@@ -4,9 +4,11 @@ missionScripts:
       0:
         STR_CIVILIAN_TERROR: 70
         STR_CIVILIAN_TERROR_GSC: 30
-    researchTriggers: !add
+    researchTriggers:
       STR_CHAMBERMILITANT: false
       STR_STEEL_LEGION_STRATEGY: false 
+      STR_ALIENS_ONLY: false
+      STR_ARBITES: false
 
   - type: firstMonthOrkTerror #for Steel Legion 
     missionWeights:
@@ -104,10 +106,12 @@ missionScripts:
         STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 25
         STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 35
         STR_CIVILIAN_TERROR_GSC: 25
-    researchTriggers: !add
+    researchTriggers:
       STR_CHAMBERMILITANT: false # GK shouldn't get Guardsmen from Terror missions
       STR_HARDER_MISSIONS: false
       STR_STEEL_LEGION_STRATEGY: false #get their own ork tilted list 
+      STR_ALIENS_ONLY: false
+      STR_ARBITES: false
 
   - type: recurringTerrorHard
     executionOdds: 80
@@ -256,8 +260,9 @@ missionScripts:
         STR_SUPPORT_PDF_ASSAULT: 33 # PDF assaulting chaos base of cult or traitor guard
         STR_ALIEN_ARTIFACT: 20       
       7:
-        STR_ELDAR_ARTIFACT: 50
-        STR_SUPPORT_MARINE_ASSAULT: 33 # Marines assaulting chaos base of traitor marines or raptors
+        STR_ELDAR_ARTIFACT: 40
+        STR_SUPPORT_MARINE_ASSAULT: 20 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_CATAMARINE_ASSAULT: 20 # Marines Cataphractii assaulting chaos base of traitor marines or raptors
         STR_ALIEN_ARTIFACT: 20    
     regionWeights:
       0:
@@ -290,7 +295,8 @@ missionScripts:
       7:
         STR_ELDAR_ARTIFACT: 30
         STR_CATACOMBS: 20
-        STR_SUPPORT_MARINE_ASSAULT: 15 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_MARINE_ASSAULT: 10 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_CATAMARINE_ASSAULT: 5 # Marines Cataphractii assaulting chaos base of traitor marines or raptors
         STR_ALIEN_ARTIFACT: 10 
         STR_ADEPTAS_WAR: 25 
 
@@ -330,12 +336,13 @@ missionScripts:
         STR_CATACOMBS: 40
         STR_ALIEN_ARTIFACT: 20
       3: 
-        STR_ELDAR_ARTIFACT: 40
+        STR_ELDAR_ARTIFACT: 30
         STR_CATACOMBS: 10
         STR_ALIEN_ARTIFACT: 20
         STR_ALIEN_WAR: 10
         STR_SUPPORT_PDF_ASSAULT: 10 # PDF assaulting chaos base of cult or traitor guard
         STR_SUPPORT_MARINE_ASSAULT: 10 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_CATAMARINE_ASSAULT: 10 # Marines Cataphractii assaulting chaos base of traitor marines or raptors
     firstMonth: 2 #was 0
     lastMonth: 12
     researchTriggers:
@@ -685,7 +692,7 @@ missionScripts:
          REGION_HULK_SITES: 100
     researchTriggers:
       STR_CHAMBERMILITANT: true
-      STR_STR_GREYKNIGHTS: true
+      STR_GREYKNIGHTS: true
       STR_WARPED_VAULT: true
     firstMonth: 0
     startDelay: 1440 # 1 day
@@ -699,13 +706,14 @@ missionScripts:
 
   - type: MARBOPrologue
     retaliationOdds: 0
+    executionOdds: 30 # so it's not always on the 1st month
     missionWeights:
       0:
         STR_MARBO_VALKYRIE: 100
     regionWeights:
       0:
          REGION_HULK_SITES: 100
-    firstMonth: 1
+    firstMonth: 2 # delay 1 more month for balancing other mission of the chain will follow it anyways
     startDelay: 1440 # 1 day
     useTable: false
     maxRuns: 1
@@ -758,3 +766,42 @@ missionScripts:
     useTable: false
     maxRuns: 1
     varName: MARBO3
+
+#terrorcatachan
+
+  - type: CATACH_TERROR
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_CATACH_TERROR_GO: 20
+        STR_CATACH_TERROR_GO2: 20
+        STR_CATACH_TERROR_GO3: 10
+        STR_JUNGLETEMPLE_TERROR: 20
+        STR_JUNGLETEMPLE_TERROR2: 10
+        STR_DESERTTEMPLE_TERROR: 10
+        STR_DESERTTEMPLE_TERROR2: 10
+    researchTriggers:
+      STR_CATACHAN_GEN: true
+    executionOdds: 25
+    firstMonth: 0
+    startDelay: 1000 # 1 day
+    useTable: false
+    maxRuns: -1
+    varName: CATACH_TERROR
+
+#catachan monthly
+
+  - type: CATACH_DEFENSE
+    retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_CATACH_OUTPOST_DEFENSE: 100
+    researchTriggers:
+      STR_CATACHAN_REQ: true
+    executionOdds: 100
+    firstMonth: 1
+    startDelay: 1500
+    randomDelay: 11500
+    useTable: false
+    maxRuns: -1
+    varName: CATACH_DEFENSE

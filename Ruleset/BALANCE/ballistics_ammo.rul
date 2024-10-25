@@ -359,30 +359,45 @@ items:
     shotgunSpread: 25
     power: 40
     damageType: 7 #melee penance
-    damageAlter: #DA BLIGHT
-      ArmorEffectiveness: 1.1
-      ToArmorPre: 0.1
-      ToArmor: 0.1
-      ToHealth: 0.8
-      ToStun: 0.3
-      ToWound: 0.1
-      ToEnergy: 0.2
+    damageAlter: #frag properties
+      FixRadius: 1
+      ToArmorPre: 0.05 #small ablation
+      ArmorEffectiveness: 1.1 #concussive + shrapnel everywhere
+      ToHealth: 0.7 #much damage dealt in the form of debuffs
+      ToTime: 0.2 #painful
+      ToStun: 0.4 #painful
+      ToMorale: 0.5 #painful
+      ToEnergy: 0.4 #painful
+      ToWound: 0.4 #shrapnel
+      RandomWound: false
+      ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
+      ToItem: 0.25
     clipSize: 8
     shotgunPellets: 6
 
-  - type: STR_SHOTGUN_SHELLS #                        10710
+  - &STR_SHOTGUN_AMMO_TEMPLATE
+    type: STR_SHOTGUN_SHELLS #                        10710
     shotgunBehavior: 1   #*** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
+    shotgunPellets: 6
     power: 40
     damageType: 1
     clipSize: 8
-    shotgunPellets: 6
     damageAlter:
+      ToArmorPre: 0.02
       ToTime: 0.2 #shotguns have impact shock
       ToEnergy: 0.2 #impact shock
       ToStun: 0.4 #impact shock
 
+  - type: STR_SHOTGUN_DRUM
+    refNode: *STR_SHOTGUN_AMMO_TEMPLATE
+    clipSize: 32
+
   - type: STR_SHOTGUN_SHELLS_AP
+
+  - type: STR_SHOTGUN_SHELLS_MC
+    refNode: *STR_SHOTGUN_AMMO_TEMPLATE
+    power: 60
 
   - type: STR_SHOTGUN_SHELLS_INC
     refNode: *STR_BOLTER_AMMO_INCENDIARY
@@ -396,9 +411,7 @@ items:
       FireBlastCalc: false
       IgnoreSelfDestruct: false
       IgnoreDirection: false
-      FixRadius: 2
-
-  - type: STR_SHOTGUN_SHELLS_MC
+      FixRadius: 1
 
   - type: STR_AC_AP_ADEPTAS_AMMO #HEAVYBOLTER adeptas ap belt                 12010                           ToStun
     refNode: *STR_BOLTER_AMMO
