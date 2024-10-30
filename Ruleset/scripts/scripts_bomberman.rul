@@ -1,13 +1,15 @@
 extended:
   tags:
     RuleItem:
+      ITEM_IS_KAMIKAZI_TRIGGER: int #does attacking with this trigger bombs to activate?
       ITEM_IS_BOMB: int #does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_BOMB_ON_DEATH: int #does this blow up on death? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_RANDOM_FUSE: int #sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
       ITEM_IS_KAMIKAZI_BOMB: int #damage from this will kill the source if they have the Kamikazi armor tag.
     RuleArmor:
-      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
+      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate? If > 1 we don't trigger on lethal damage; mainly for relying on native selfDestruct
       ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
+      ARMOR_FORCE_DEATH_ON_KAMIKAZI: int #do we force a death if we kamikazi?
       ARMOR_IS_DUMMY: int #is this a dummy we immediately kill off and trigger the bomb for?
       ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS: int #if true, melee type damage bypasses the self-destruct
 
@@ -27,11 +29,18 @@ extended:
             return power part side;
           end;
 
+          #if our weapon doesn't have the kamikazi tag, cancel out
+          weapon_item.getTag temp Tag.ITEM_IS_KAMIKAZI_TRIGGER; #we check the weapon for this tag to avoid having to cycle through items every time we damage something
+          if lt temp 1;
+            #debug_log "Bomberman Scripts; hitUnit, offset 44: Aborted. No ITEM_IS_KAMIKAZI_TRIGGER Tag Detected";
+            return power part side;
+          end;
+
           #if our armor doesn't have the kamikazi tag, cancel out
           attacker.getRuleArmor armorRule;
           armorRule.getTag temp Tag.ARMOR_IS_KAMIKAZI; #we check the armor for this tag to avoid having to cycle through items every time we damage something
 
-          if le temp 0;
+          if lt temp 1;
             #debug_log "Bomberman Scripts; hitUnit, offset 44: Aborted. No ARMOR_IS_KAMIKAZI Tag Detected";
             return power part side;
           end;
@@ -42,8 +51,9 @@ extended:
             attacker.getInventoryItem someItem i;
             someItem.getTag temp Tag.ITEM_IS_BOMB; #get the bomb timer
             someItem.isFuseEnabled fuseEnabled; #don't bother if the fuse is already active
+            #debug_log "Bomberman Scripts; hitUnit, offset 44: Current item in inventory:" someItem;
             # attacker.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
-            if and ge temp 1 le fuseEnabled 0;
+            if and ge temp 1 lt fuseEnabled 1;
               someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
               if gt randomFuse 0;
                 battle_game.randomRange temp 0 randomFuse;
@@ -55,8 +65,13 @@ extended:
               someItem.setFuseEnabled 1;
               #debug_log "Bomberman Scripts; hitUnit, offset 44: Successful. Bomb Triggered. Bomb Item:" someItem;
               #debug_log "Bomberman Scripts; hitUnit, offset 44: Successful. Bomb Fuse. Fuse Timer:" temp;
-              return power part side;
             end;
+          end;
+
+          armorRule.getTag temp Tag.ARMOR_FORCE_DEATH_ON_KAMIKAZI; #we check the armor for this tag to avoid having to cycle through items every time we damage something
+          if gt temp 0;
+            attacker.setHealthWithOverkill -1; #kill our kamikazi unit
+            #debug_log "Bomberman Scripts; hitUnit, offset 44: self-destructing kamikazi unit: ARMOR_FORCE_DEATH_ON_KAMIKAZI Tag Detected";
           end;
 
           return power part side;
@@ -69,6 +84,7 @@ extended:
           var ptr RuleItem ruleItem;
           var int temp;
           var int fuseEnabled;
+          var int deathBombs;
           var ptre BattleItem someItem;
           var int numInventoryItems;
           var int remainingHealth;
@@ -78,7 +94,7 @@ extended:
           #if our armor doesn't have the kamikazi tag, cancel out
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; #we check the armor for this tag to avoid having to cycle through items every time we damage something
-          if le temp 0;
+          if eq temp 1;
             #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. No ARMOR_IS_EXPLODE_ON_DEATH Tag Detected";
             return;
           end;
@@ -95,11 +111,12 @@ extended:
           unit.getInventoryItem.size numInventoryItems;
           #debug_log "numInventoryItems" numInventoryItems;
           loop var i numInventoryItems;
+            add deathBombs 1; #increment the number of death bombs
             unit.getInventoryItem someItem i;
             someItem.getTag temp Tag.ITEM_IS_BOMB_ON_DEATH; #get the bomb timer
             someItem.isFuseEnabled fuseEnabled; #don't bother if the fuse is already active
             # unit.setTag Tag.UNIT_TURNED_TRAITOR 1; # doesn't recolor fast enough
-            if and ge temp 1 le fuseEnabled 0;
+            if and ge temp 1 lt fuseEnabled 1;
               someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
               if ge randomFuse 1;
                 battle_game.randomRange temp 0 randomFuse;
@@ -112,10 +129,11 @@ extended:
               someItem.setFuseEnabled 1;
               #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Triggered. Bomb Item:" someItem;
               #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Fuse. Fuse Timer:" temp;
-              return;
             end;
           end;
-          #debug_log "Bomberman Scripts; damageUnit, offset 24: Failed. No Kamikazi Bomb detected. Item:";
+          if lt deathBombs 1;
+            #debug_log "Bomberman Scripts; damageUnit, offset 24: Failed. No Kamikazi Bomb detected. Item:";
+          end;
           return;
 
     damageSpecialUnit:
@@ -175,7 +193,6 @@ extended:
 
           return;
 
-    #blow up our bomb if we're killed
     createUnit:
       - new: ROSIGMA_cU_bomberman
         offset: 10

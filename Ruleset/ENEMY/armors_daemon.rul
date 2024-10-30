@@ -632,7 +632,7 @@ armors:
     psiVision: 5 #daemonic psi sense
     spriteSheet: pinkhorror_bs.PCK
     spriteInv: PINKHORROR_INV.SPK
-    allowInv: false
+    allowInv: true
     corpseBattle:
       - STR_PINKHORROR_CORPSE
     frontArmor: 30
@@ -676,7 +676,7 @@ armors:
     psiVision: 5 #daemonic psi sense
     spriteSheet: bluehorror_bs.PCK
     spriteInv: BLUEHORROR_INV.SPK #create in extrasprites
-    allowInv: false
+    allowInv: true
     corpseBattle:
       - STR_BLUEHORROR_CORPSE
     frontArmor: 20
@@ -706,10 +706,60 @@ armors:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
       ARMOR_ENERGY_SHIELD_DECAY: 50
       INFECTION_RESIST: 100 #infection immune
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
       UNIT_TYPE_DAEMONIC: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_PSYKER: 1
       UNIT_TYPE_TZEENTCH: 1
+
+  - type: STR_BRIMSTONE_HORROR_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemons have perfect NV
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5 #daemonic psi sense
+    spriteSheet: BRIMSTONE_HORROR_BS.PCK
+    spriteInv: BRIMSTONE_HORROR_INV.SPK #create in extrasprites
+    allowInv: true
+    corpseBattle:
+      - STR_BRIMSTONE_HORROR_CORPSE
+    frontArmor: 9
+    sideArmor: 9
+    rearArmor: 9
+    underArmor: 9
+    drawingRoutine: 4
+    constantAnimation: true
+    specialWeapon: STR_BRIMSTONE_HORROR_CLAWS #fiery claws
+    damageModifier: #DAEMON ARMOR; Blue Horror resists physical, Pink Horror resists energy
+      - 1.0 #none
+      - 0.9 #AP
+      - 0.0 #FLAMES; Immune to fire
+      - 1.0 #HE
+      - 0.5 #LASCANNON; Highly resistant to heat based weapons
+      - 0.5 #PLASMA; Highly resistant to heat based weapons
+      - 0.5 #STUN
+      - 1.0 #MELEE
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA; Highly resistant to heat based weapons
+    loftempsSet: [ 2 ]
+    painImmune: true #daemon; pain immune
+    zombiImmune: true #daemon; zombie immune
+    bleedImmune: true #living fire
+    allowsRunning: false #NPC limits for BAI
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 #low grade shield that slowly regenerates
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+      INFECTION_RESIST: 100 #infection immune
+      ARMOR_FORCE_DEATH_ON_KAMIKAZI: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 2 #this unit relies on its self-destruct; only trigger the death bombs on melee
+      ARMOR_IS_KAMIKAZI: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_PSYKER: 1
+      UNIT_TYPE_TZEENTCH: 1
+
 
 #Undivided Daemons
   - type: STR_NEVERBORN_TERRORIST_ARMOR                        #Undivided Deamon
