@@ -41,6 +41,12 @@ extended:
             return;
           end;
 
+          unit.getHealth temp;
+          if lt temp 1;
+            #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Unit is destroyed. Aborting." temp;
+            return;
+          end;
+
           unit.getLeftHandWeapon leftHandBattleItem;
           #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: leftHandBattleItem." leftHandBattleItem;
           leftHandBattleItem.getRuleItem leftHandWeaponRule;
@@ -112,7 +118,7 @@ extended:
 
     recolorUnitSprite:
       - new: ROSIGMA_rUS_turret_reload
-        offset: 22 # change unit color to green so player knows who's infected
+        offset: 22 # change unit colour so unit knows it's reloading
         code: |
           var int temp;
 

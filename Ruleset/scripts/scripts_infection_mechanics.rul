@@ -97,6 +97,7 @@ extended:
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
             #debug_log "Infection Scripts; damageUnit, offset 22: armorSize 2x2. Aborting:" temp;
+            set to_mana 0;
             return;
           end;
           #debug_log "Infection Scripts; damageUnit, offset 22: armorSize:" temp;
@@ -112,12 +113,14 @@ extended:
             weapon_item.getTag infectionType Tag.INFECTION_TYPE;
             if le infectionType 0; #if we *still* have no infection type, cancel out
               #debug_log "Infection Scripts; damageUnit, offset 22: No infection type detected; aborting.";
+              set to_mana 0;
               return;
             end;
           end;
 
           set infectionDamage to_health;
           add infectionDamage to_mana;
+          set to_mana 0;
 
           if le infectionDamage 0; # only proceed if we actually do damage
             return;
@@ -371,16 +374,18 @@ extended:
           else eq infectionType 4; #if Tzeentch
             if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 34;
+              if lt temp 26;
+                rules.getRuleUnit myRuleUnit "STR_BRIMSTONE_HORROR";
+              else lt temp 51;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_MUTANT";
-              else lt temp 67;
+              else lt temp 76;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_WARP_THRALL";
               else;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               end;
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 34;
+              if lt temp 51;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               else;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
@@ -551,16 +556,18 @@ extended:
           else eq infectionType 4; #if Tzeentch
             if le infectionDamage INFECTION_LOW_THRESHOLD; #low level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 34;
+              if lt temp 26;
+                rules.getRuleUnit myRuleUnit "STR_BRIMSTONE_HORROR";
+              else lt temp 51;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_MUTANT";
-              else lt temp 67;
+              else lt temp 76;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_WARP_THRALL";
               else;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               end;
             else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 34;
+              if lt temp 51;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               else;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
