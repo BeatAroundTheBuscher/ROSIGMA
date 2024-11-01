@@ -46,6 +46,13 @@ extended:
             return 0 part side;
           end;
 
+          unit.getRuleSoldier targetSoldier;
+          targetSoldier.getTag temp Tag.SOLDIER_IS_LONE_WOLF;
+          if eq temp 1; # don't bother with lone wolves
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is a lone wolf. Hit power set to 0. Temp:" faction;
+            return 0 part side;
+          end;
+
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.UNIT_TYPE_MECHANICAL;
           if eq temp 1; #for handling mechanical units
