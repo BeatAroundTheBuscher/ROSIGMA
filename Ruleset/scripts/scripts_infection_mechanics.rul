@@ -97,7 +97,6 @@ extended:
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
             #debug_log "Infection Scripts; damageUnit, offset 22: armorSize 2x2. Aborting:" temp;
-            set to_mana 0;
             return;
           end;
           #debug_log "Infection Scripts; damageUnit, offset 22: armorSize:" temp;
@@ -113,14 +112,12 @@ extended:
             weapon_item.getTag infectionType Tag.INFECTION_TYPE;
             if le infectionType 0; #if we *still* have no infection type, cancel out
               #debug_log "Infection Scripts; damageUnit, offset 22: No infection type detected; aborting.";
-              set to_mana 0;
               return;
             end;
           end;
 
           set infectionDamage to_health;
           add infectionDamage to_mana;
-          set to_mana 0;
 
           if le infectionDamage 0; # only proceed if we actually do damage
             return;
