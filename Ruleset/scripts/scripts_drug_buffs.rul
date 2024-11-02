@@ -39,7 +39,6 @@ extended: #WIP
           var int currentStamina;
           var int currentHealth;
           var int currentStun;
-          var int maxStun;
           var int currentMorale;
 
           item.getTag drugDoseCount Tag.IS_DRUG;
@@ -70,10 +69,10 @@ extended: #WIP
             mul temp2 -1; #apply health costs
             add temp2 currentHealth;
             target.setHealthWithOverkill temp2;
+            set currentHealth temp2;
           end;
 
           #then, calculate and apply stun costs; if our stun is too low, abort (i.e. the damage would KO us we can't proceed)
-          target.getStunMax maxStun;
           target.getStun currentStun;
           set temp2 0;
           item.getTag temp Tag.DRUG_STUN_INITIAL_COST_PERCENT;
@@ -88,7 +87,9 @@ extended: #WIP
 
           if gt temp2 0;
             add temp2 currentStun;
-            if ge temp2 maxStun; #if stun cost is too high, abort
+            #debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Max stun:" currentHealth;
+            #debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Pending stun:" temp2;
+            if ge temp2 currentHealth; #if stun cost is too high, abort
               battle_game.flashMessage "Unit Stun Too High To Take This Drug!";
               return;
             end;
