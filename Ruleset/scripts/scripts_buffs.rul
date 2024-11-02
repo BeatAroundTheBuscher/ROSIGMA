@@ -15,6 +15,7 @@ extended:
           var int temp;
           var int temp2;
           var int faction;
+          var ptr RuleSoldier targetSoldier;
           var ptr RuleItem itemRule;
           var ptr RuleArmor armorRule;
 
@@ -32,6 +33,13 @@ extended:
           if le temp 0; #if we're not a buff weapon, pass
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
             return power part side;
+          end;
+
+          unit.getRuleSoldier targetSoldier;
+          targetSoldier.getTag temp Tag.SOLDIER_IS_LONE_WOLF;
+          if eq temp 1; # don't bother with lone wolves
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is a lone wolf. Hit power set to 0. Temp:" faction;
+            return 0 part side;
           end;
 
           if eq attacker unit;
