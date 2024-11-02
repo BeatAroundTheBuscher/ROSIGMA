@@ -187,7 +187,7 @@ extended:
         code: |
           var int temp;
           var int temp2; #turret reload turn data for right handed weapon
-          var ptr RuleItem weaponRule;
+          var ptr RuleItem itemRule;
           var ptre BattleItem battleItem;
 
           if le to_mana 0; #if we aren't doing mana damage, cancel out; we don't care
@@ -195,25 +195,24 @@ extended:
           end;
 
           unit.getRightHandWeapon battleItem;
-          battleItem.getRuleItem weaponRule;
+          battleItem.getRuleItem itemRule;
           #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: Right Hand: ruleItem." battleItem;
-          battleItem.getTag temp Tag.TURRET_RELOAD_TURNS;
-          set temp temp2;
+          itemRule.getTag temp Tag.TURRET_RELOAD_TURNS;
 
           unit.getLeftHandWeapon battleItem;
-          battleItem.getRuleItem weaponRule;
+          battleItem.getRuleItem itemRule;
           #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: Left Hand: ruleItem." battleItem;
-          battleItem.getTag temp2 Tag.TURRET_RELOAD_TURNS;
+          itemRule.getTag temp2 Tag.TURRET_RELOAD_TURNS;
           add temp temp2;
 
           unit.getSpecialItem battleItem 1;
-          battleItem.getRuleItem weaponRule;
+          battleItem.getRuleItem itemRule;
           #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 99: Special Hand: ruleItem." battleItem;
-          battleItem.getTag temp2 Tag.TURRET_RELOAD_TURNS;
+          itemRule.getTag temp2 Tag.TURRET_RELOAD_TURNS;
           add temp temp2;
 
           #if weapon lacks the reload tag, cancel out and do mana damage as normal
-          if le temp 0;
+          if lt temp 1;
             #debug_log "Turret Reload Scripts; ROSIGMA_dU_turret_reload, offset 22: No TURRET_RELOAD_TURNS detected. Aborting. temp" temp;
             return;
           end;
