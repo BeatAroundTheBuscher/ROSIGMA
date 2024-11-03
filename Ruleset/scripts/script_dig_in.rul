@@ -203,6 +203,12 @@ extended:
             return power part side;
           end;
 
+          # Dig In doesn't ignore melee, panic and mind control.
+          if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Battle action bypasses Dig In." side;
+            return power part side;
+          end;
+
           unit.getPosition.getX currentX;
           unit.getPosition.getY currentY;
           unit.getPosition.getZ currentZ;
