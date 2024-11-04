@@ -461,7 +461,7 @@ items:
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     size: 0.3
     power: 140
-    powerForAnimation: 16 # Power / 5 = tiles of explosion
+    powerForAnimation: 32 # Power / 5 = tiles of explosion
     damageType: 1
     damageAlter:
       ResistType: 1
@@ -472,7 +472,7 @@ items:
       ToTile: 1.0
       ToItem: 1.0
       ArmorEffectiveness: 0.5
-      FixRadius: 1 #1 for hand grenade version
+      FixRadius: 2 #1 for hand grenade version
     requiresBuy:
       - STR_MIDTIER_PREREQ
     costBuy: 40000 #Expensive
@@ -832,11 +832,12 @@ items:
     hitSound: {mod: 40k, index: 22}
     hitAnimation: {mod: 40k, index: 26}
     explosionSpeed: 5
-    power: 60
+    power: 50
     damageType: 1
     damageAlter:
-      ToArmorPre: 0.075
-      ArmorEffectiveness: 0.70
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.5
+      ToHealth: 0.8
     clipSize: 40
     battleType: 2
     armor: 200
@@ -4055,11 +4056,14 @@ items:
     meleeAnimation: {mod: 40k, index: 4} # was 0
     hidePower: true
     armor: 200 #to avoid item pile destruction
+    accuracyAimed: 200
+    accuracyMultiplier:
+      flatHundred: 1.0
+    arcingShot: false
     damageType: 0
     damageBonus:
-      bravery: 0.2
-      psiSkill: 0.1
-      rank: [0.0, 2.5]
+      bravery: 0.5
+      psiSkill: 0.2
     damageAlter:
       ResistType: 0
       RandomType: 3
@@ -4099,12 +4103,16 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 6
-    powerRangeThreshold: 3
-    powerRangeReduction: 5
-    maxRange: 7
+    dropoff: 999
+    aimRange: 5
+    maxRange: 5
+    powerRangeThreshold: 5
+    powerRangeReduction: 999.0
     tags:
       ITEM_STRENGTH_REQUIREMENT: 30
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_OFFICER_ONLY: 1
+      ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
@@ -4122,9 +4130,8 @@ items:
     power: 0
     damageType: 0
     damageBonus:
-      bravery: 0.2
-      psiSkill: 0.1
-      rank: [0.0, 2.5]
+      bravery: 0.5
+      psiSkill: 0.25
     damageAlter:
       ResistType: 0
       RandomType: 3
@@ -4151,14 +4158,9 @@ items:
       energy: false
     accuracyAimed: 100
     accuracyMultiplier:
-      firing: 0.0
-      bravery: 1.4
-      rank: [0.0, 2.0]
-    arcingShot: true
+      flatHundred: 2.0
+    arcingShot: false
     noLOSAccuracyPenalty: 100 #buff
-    maxRange: 7
-    powerRangeThreshold: 2
-    powerRangeReduction: 5.0
     bulletSpeed: 80
     experienceTrainingMode: 19
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
@@ -4192,9 +4194,16 @@ items:
     invHeight: 3
     armor: 200
     listOrder: 12960
+    dropoff: 999
+    aimRange: 5
+    maxRange: 5
+    powerRangeThreshold: 5
+    powerRangeReduction: 999.0
     tags:
       ITEM_STRENGTH_REQUIREMENT: 20
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_OFFICER_ONLY: 1
+      ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
@@ -6317,7 +6326,8 @@ items:
 
   - type: STR_MARBOKNIFE #special
     refNode: *STR_CATACHAN_KNIFE_TEMPLATE
-    power: 110
+    power: 40
+    damageType: 7
     damageAlter:     #DA POWER
       ResistType: 8 #poisoned
       ArmorEffectiveness: 0.5
@@ -6328,7 +6338,6 @@ items:
       ToEnergy: 0.5 #poisoned
       ToStun: 0.5 #poisoned
       ToTime: 0.5 #poisoned
-    damageType: 7
     accuracyMelee: 130
 
 #catachan
