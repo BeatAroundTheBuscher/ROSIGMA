@@ -1,0 +1,33 @@
+extended:
+  scripts:
+    recolorUnitSprite:
+      - offset: 99
+        code: |
+          var int altpressed;
+          var int faction;
+          var int tu;
+          var int maxtu;
+
+          battle_game.isAltPressed altpressed;
+          unit.getFaction faction;
+          if and eq altpressed 1 eq faction FACTION_PLAYER;
+              unit.getTimeUnits tu;
+              unit.getTimeUnitsMax maxtu;
+
+              muldiv tu 100 maxtu;
+              if gt tu 50;
+                set_color new_pixel COLOR_X1_GREEN0;
+                return new_pixel;
+              else gt tu 25;
+                set_color new_pixel COLOR_X1_YELLOW;
+                return new_pixel;
+              else gt tu 10;
+                set_color new_pixel COLOR_X1_BROWN1;
+                return new_pixel;
+              else;
+                set_color new_pixel COLOR_X1_RED;
+                return new_pixel;
+              end;
+
+          end;
+          return new_pixel;

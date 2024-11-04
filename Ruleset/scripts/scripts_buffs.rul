@@ -4,8 +4,12 @@ extended:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_DAMAGE_PERCENT_VS_PILOTED: int
       ITEM_IS_BUFF_WEAPON: int
+      ITEM_IS_OFFICER_ONLY: int #can only offers use this effectively? Mostly for IG
+      ITEM_NON_OFFICER_PENALTY_PERCENT: int #what percent do we use instead of 100% if the user is not an officer
     RuleArmor:
       NO_BENEFIT_FROM_INSPIRE: int
+    RuleSoldier:
+      SOLDIER_IS_OFFICER: int #do we count as an officer?
 
   scripts:
     hitUnit:
@@ -52,6 +56,22 @@ extended:
           if neq faction temp;
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker isn't player faction. Hit power set to 0" faction;
             return 0 part side;
+          end;
+
+          weapon_item.getTag temp Tag.ITEM_IS_OFFICER_ONLY;
+          if gt temp 0; #if we work with officers, check the user
+            targetSoldier.getTag temp2 Tag.SOLDIER_IS_OFFICER;
+            if lt temp2 1;
+              weapon_item.getTag temp Tag.ITEM_NON_OFFICER_PENALTY_PERCENT;
+              if gt temp 0;
+                muldiv power temp 100; #apply the penalty
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_REDUCED_EFFECT!" temp;
+              else;
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_NULL_EFFECT!";
+                return power part side; #if no define penalty, abort
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is not an officer and penalty percent is null. ITEM_NON_OFFICER_PENALTY_PERCENT:" temp;
+              end;
+            end;
           end;
 
           unit.getRuleArmor armorRule;
