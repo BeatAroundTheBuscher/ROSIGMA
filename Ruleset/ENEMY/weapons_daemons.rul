@@ -973,14 +973,24 @@ items:
   - type: STR_PLAGUE_TOAD_MINE
     refNode: *STR_BLIGHT_EXPLOSION_TEMPLATE
     armor: 20 #you're supposed to be able to burn/destroy these
-    power: 60
     battleType: 4 #proximity explosive
     defaultInventorySlot: STR_GROUND
     spawnUnitChance: 0
     specialChance: 100
     supportedInventorySections:
       - STR_GROUND
-    damageAlter:
+    power: 60
+    damageType: 8
+    damageAlter: ## Plague-inflicting weapon
+      ArmorEffectiveness: 0.7
+      SmokeThreshold: 0.0
+      ToArmorPre: 0.75 #higher than normal plague weapons
+      ToArmor: 0.0 #damages armor on the way in
+      ToHealth: 0.1
+      ToMana: 0.9 #mana counts as health damage for the purposes of infection
+      ToTile: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5 #sticky goo; also makes it decent vs infection immune/mechanical units
       RandomType: 6 #gaussian damage
       ToItem: 0.5 #to help avoid mine stacking issues; globs will reliably destroy each other
       FixRadius: 2
