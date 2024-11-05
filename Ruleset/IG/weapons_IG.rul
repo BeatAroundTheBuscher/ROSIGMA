@@ -5081,6 +5081,8 @@ items:
         set particle_lifetime 1;
         set subvoxel_drift 0;
         return;
+    tags:
+      TURRET_RELOAD_TURNS: 1
 
 # By Firaa
 # https://openxcom.org/forum/index.php/topic,7443.0.html
@@ -6417,3 +6419,63 @@ items:
       spendPerShot: 2
     confAimed:
       spendPerShot: 2
+
+  - type: STR_SATCHEL_CHARGE #remote det charge
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    size: 0.2
+    costBuy: 40000
+    costSell: 10000
+    weight: 10
+    bigSprite: 2974
+    floorSprite: 2992
+    handSprite: {mod: 40k, index: 344}
+    power: 160
+    damageType: 3
+    damageAlter: #High Explosive
+      FireThreshold: 100
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixedRadius: 14
+    battleType: 4
+    invWidth: 2
+    invHeight: 2
+    fuseType: 2
+    fuseTrigger:
+      throwExplode: false
+    listOrder: 14001
+    throwRange: 10
+    tags:
+      ITEM_IS_REMOTE_DETONATED: 1
+
+  - type: STR_SATCHEL_DETONATOR
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 500
+    costSell: 100
+    size: 0.05
+    bigSprite: 2975
+    floorSprite: 2993
+    handSprite: 1318
+    woundRecovery: 0
+    healthRecovery: 0
+    medikitType: 1
+    medikitActionName: STR_SATCHEL_DETONATE
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6 # not used as medikit
+    tuUse: 10
+    flatUse: true
+    hitSound: 3987
+    invWidth: 1
+    invHeight: 2
+    listOrder: 14002
+    tags:
+      ITEM_IS_REMOTE_DETONATOR: 1
