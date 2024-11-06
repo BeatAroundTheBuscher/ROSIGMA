@@ -57,6 +57,10 @@ items:
     blastRadius: 1
     maxRange: 200 # ROSIGMA 1.06Beta2 12
 
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
   - type: STR_ADEPTAS_HABORYM # done
     dropoff: 5
     autoRange: 0
@@ -80,6 +84,10 @@ items:
       RandomType: 2 #50%-150%
     blastRadius: 4
     maxRange: 200 # ROSIGMA 1.06Beta2 12
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
   - type: STR_DISPOSABLE_LAUNCHER_KRAK # done
     dropoff: 5
@@ -108,32 +116,26 @@ items:
       ArmorEffectiveness: 0.7
       FixRadius: 1 #1 for hand grenade version
 
-  - type: STR_SMALL_ROCKET #                          12130
-    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
-    size: 0.2
-    costBuy: 5000
-    costSell: 2000
-    weight: 5 #was 6
-    power: 80 #was 10
-    damageType: 3
-    clipSize: 1
-    battleType: 2
-    invWidth: 2
-    invHeight: 1
-    blastRadius: 6 #10 for heavy version
-    listOrder: 12130
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
 ## SMOKE
 
   - type: STR_SMOKE_GRENADE #frag munition
     primeSound: 2424
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -147,18 +149,23 @@ items:
     primeSound: 2424
     throwRange: 18
     weight: 2 #Guardsmen should be able to throw these a reasonable distance
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
     damageType: 1
+    power: 80
     damageAlter:
       FixRadius: 5
       ToArmorPre: 0.05 #small ablation
@@ -172,6 +179,7 @@ items:
       RandomWound: false
       ToTile: 0.25 #it's shrapnel; deals relatively little damage to the terrain.
       ToItem: 0.25
+    hitAnimation: {mod: 40k, index: 104 }
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
   - type: STR_PENITENCE_GRENADE40 #frag munition; penitence so melee
@@ -243,7 +251,7 @@ items:
 
 ## KRAK
 
-  - type: STR_LARGE_ROCKET #krak munition
+  - type: STR_LARGE_ROCKET #KRAK
     power: 110 #heavy version now has 140
     powerForAnimation: 16 # 5 / 5 = 1
     weight: 6 #was 8
@@ -260,6 +268,21 @@ items:
       ToItem: 1.0
       ArmorEffectiveness: 0.5
       FixRadius: 1 #1 for hand grenade version
+
+  - type: STR_HEAVY_ROCKET_KRAK #KRAK
+    power: 140
+    powerForAnimation: 16 # Power / 5 = tiles of explosion
+    damageType: 1
+    damageAlter:
+      ResistType: 1
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ToTile: 1.0
+      ToItem: 1.0
+      ArmorEffectiveness: 0.5
+      FixRadius: 2 #1 for hand grenade version
 
   - type: STR_SENTINEL_KRAKK_MISSILES #krak munition
     damageType: 3 # inherit from HE
@@ -281,14 +304,18 @@ items:
     primeSound: 2424
     throwRange: 15
     weight: 3 #Guardsmen should be able to throw these a reasonable distance
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 10
-      time: 40
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -327,6 +354,19 @@ items:
     costBuy: 4000 #reduced
     costSell: 2000
     weight: 5 #was 8
+    power: 90
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 6
+      ToHealth: 2
+      ArmorEffectiveness: 1.0
+      ToMorale: 1.0
+      ToItem: 0.3
+      RandomWound: false
+      ToWound: 0.05
+      FixRadius: 5
 
   - type: STR_SENTINEL_INC_MISSILES
     clipSize: 4
@@ -336,14 +376,14 @@ items:
       # IgnoreSelfDestruct: false
       IgnoreDirection: false
       FireBlastCalc: false
-      RandomType: 2
+      RandomType: 6
       ToHealth: 2
       ArmorEffectiveness: 1.0
-      ToMorale: 0.5
+      ToMorale: 1.0
       ToItem: 0.3
       RandomWound: false
       ToWound: 0.05
-    blastRadius: 5
+      FixRadius: 5
 
   - type: STR_PHOSPHOR_GRENADE                #4001; #phosphor munition
     power: 80
@@ -351,14 +391,18 @@ items:
     primeSound: 2424
     throwRange: 18
     weight: 2 #Light grenade
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -393,44 +437,38 @@ items:
     weight: 2
     primeSound: 2426
     throwRange: 18
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
-    damageType: 3
+    damageType: 5
     power: 80
     damageAlter: #DA PLASMA
       RandomType: 6
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.2
+      ToArmorPre: 0.2 #melts some armor on the way in
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70 #can ignite at high damage
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
 ## MELTA
 
-  - type: STR_MGRENADE #melta grenade      #4008 #melta munition
-    throwRange: 15
-    primeSound: 2424
-    weight: 3
-    costThrow:
-      energy: 10
-      time: 40
-    costPrime:
-      time: 30
-    costUnprime:
-      time: 15
-    unprimeActionName: STR_UNPRIME_GRENADE
-    flatPrime:
-      time: false
-      energy: true
+
+  - type: STR_HEAVY_ROCKET #Melta
+    power: 150
+    powerForAnimation: 80 # 25 / 5 = 5
+    damageType: 11
     damageAlter:
-      ResistType: 11
       RandomType: 6
       ToArmorPre: 1.0 #it's a melta grenade; it will melt armor
       ToTile: 1.0
@@ -438,8 +476,45 @@ items:
       ToArmor: 0.0 #melts armor on the way in
       ToHealth: 0.7
       ToWound: 0.05
-      FireThreshold: 0.0
       RandomWound: false
+      FireThreshold: 0.0
+      FixRadius: 3
+
+  - type: STR_MGRENADE #melta grenade      #4008 #melta munition
+    throwRange: 15
+    primeSound: 2424
+    weight: 3
+    fuseType: -2
+    costThrow:
+      time: 55
+      energy: 10
+    costPrime:
+      time: 5
+    costUnprime:
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    flatUnprime:
+      time: false
+      energy: true
+    power: 110
+    damageType: 11
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 1.0 #it's a melta grenade; it will melt armor
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmor: 0.0 #melts armor on the way in
+      ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0.0
+      FixRadius: 4
 
   - type: STR_HIGH_EXPLOSIVE #melta bomb    4009 #melta munition
     primeActionName: STR_PRIME_CHARGE
@@ -449,63 +524,126 @@ items:
     primeSound: 2425
     weight: 30 #heavy; this is an explosive charge
     costThrow:
-      energy: 40
       time: 80
+      energy: 40
     costPrime:
-      time: 40
-    costUnprime:
       time: 20
+    costUnprime:
+      time: 10
     isExplodingInHands: true
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
+    flatUnprime:
+      time: false
+      energy: true
     power: 200 #deadly
+    damageType: 11
     damageAlter:
-      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
-      ResistType: 11
       RandomType: 6
       ToArmorPre: 1.0
       ToTile: 1.0
       ToItem: 1.0
       ToArmor: 0
       ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
+      FixRadius: 10
+
+  - type: STR_SATCHEL_CHARGE
+    primeActionName: STR_PRIME_CHARGE
+    primeActionMessage: STR_PRIME_CHARGE_MESSAGE
+    unprimeActionName: STR_UNPRIME_CHARGE
+    throwRange: 10
+    primeSound: 2425
+    weight: 8 #heavy, but actually capable of being thrown
+    costThrow:
+      time: 65
+      energy: 20
+    costPrime:
+      time: 5
+    costUnprime:
+      time: 5
+    isExplodingInHands: true
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    flatUnprime:
+      time: false
+      energy: true
+    power: 160
+    damageType: 3
+    damageAlter: #High Explosive
+      FireThreshold: 110
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixedRadius: 10
+
 
   - type: STR_ELDAR_MGRENADE
     throwRange: 15
     primeSound: 2426
     weight: 4
+    fuseType: -2
     costThrow:
+      time: 60
       energy: 20
-      time: 50
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
-    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
-    power: 110
+    flatUnprime:
+      time: false
+      energy: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    power: 140
+    damageType: 11
     damageAlter:
-      ResistType: 11
       RandomType: 6
-      ToArmorPre: 0.5
+      ToArmorPre: 1.0 #it's a melta grenade; it will melt armor
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmor: 0.0 #melts armor on the way in
+      ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0.0
+      FixRadius: 5
+
+  - type: STR_MELTA_GRENADE40 #Hellspite underslung grenade #melta munition
+    power: 90
+    damageType: 11
+    damageAlter: #DA MELTA WEAKER THAN HAND HELD
+      RandomType: 6
+      ToArmorPre: 1.0
       ToTile: 1.0
       ToItem: 1.0
       ToArmor: 0
       ToHealth: 0.7
-
-  - type: STR_MELTA_GRENADE40 #Hellspite underslung grenade #melta munition
-    power: 90
-    damageType: 3
-    damageAlter: #DA MELTA WEAKER THAN HAND HELD
-      ResistType: 11
-      RandomType: 6
-      ToArmorPre: 0.5
-      ToTile: 1.0
-      ToArmor: 0
-      ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0 #even if it doesn't penetrate your armor you're still gonna burn alright
     clipSize: 3
     blastRadius: 2
 
@@ -517,14 +655,18 @@ items:
     primeSound: 2424
     throwRange: 18
     weight: 2 #Light grenade
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -549,48 +691,89 @@ items:
     throwRange: 15
     primeSound: 2424
     weight: 3
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 10
-      time: 40
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
+    power: 90
+    damageType: 3
+    damageAlter: #high explosive properties plus extra Pre ablation due to blight
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 9
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
   - type: STR_SCARE_GRENADE #Scare Gas Grenade, pink gas
     throwRange: 18
     primeSound: 2424
     weight: 2
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
+    power: 100
+    damageType: 8
+    damageAlter: #DA SPOOKY GAS
+      RandomType: 6
+      ToHealth: 0.01
+      ToWound: 0.0
+      RandomWound: false
+      ToTile: 0.0 #doesn't damage tiles
+      ToItem: 0.0 #doesn't damage items
+      ToArmor: 0.0 #doesn't damage armor
+      ToEnergy: 0.3
+      ToStun: 0.3
+      ToMorale: 4.0 #even with high bravery this will fuck you up
+      ArmorEffectiveness: 0.4
+      FixRadius: 10
+      SmokeThreshold: 0 #scare gas creates smoke which now synergizes with Night Lords
 
   - type: STR_SONIC_GRENADE #Scare Gas Grenade, pink gas
     throwRange: 18
     primeSound: 2424
     weight: 2
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -600,20 +783,63 @@ items:
     throwRange: 18
     primeSound: 2426
     weight: 2
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
     unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
 
-
+  - type: STR_BLIGHT_GRENADE                #4010
+    power: 90
+    damageType: 8
+    damageAlter:
+      ArmorEffectiveness: 0.7 #bypasses armor
+      RandomType: 6
+      ToArmorPre: 0.5 #rots armor
+      ToArmor: 0.0 #does armor damage on the way in
+      ToHealth: 0.1 #going for low health damage, mainly armor and corruption threat.
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToEnergy: 0.5
+      ToStun: 0.5
+      ToTime: 0.5 #sticky goo; also so it's still relevant vs mechanical/corruption immune enemies
+      ToTile: 0.5 #acidic
+      ToWound: 0.05
+      SmokeThreshold: 0.0
+      RandomWound: false
+      FixRadius: 9
+    throwRange: 15
+    weight: 3
+    fuseType: -2
+    costThrow:
+      time: 55
+      energy: 10
+    costPrime:
+      time: 5
+    costUnprime:
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100
+      INFECTION_TYPE: 1
 
 ## Unsorted
 
@@ -637,12 +863,20 @@ items:
       ArmorEffectiveness: 1
     clipSize: 4 #2 less than IG, larger calibre
 
-  - type: STR_LIGHT_ROCKET #Throne Light Missile Adeptas
+  - type: STR_LIGHT_ROCKET #Throne Light Missile Adeptas; INC
     power: 70
-    damageAlter:
-      RandomType: 2 #50%-150%
-      ArmorEffectiveness: 1
     damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 6
+      ToHealth: 2
+      ArmorEffectiveness: 1.0
+      ToMorale: 1.0
+      ToItem: 0.3
+      RandomWound: false
+      ToWound: 0.05
+      FixRadius: 4
     clipSize: 6
 
   - type: STR_HOLOGRAM_GRENADE
@@ -650,13 +884,18 @@ items:
     throwRange: 18
     primeSound: 2425
     weight: 2
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -678,19 +917,47 @@ items:
       time: false
       energy: true
 
+  - type: STR_SMALL_ROCKET #HE
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    size: 0.2
+    costBuy: 5000
+    costSell: 2000
+    weight: 5 #was 6
+    power: 90
+    damageType: 3
+    damageAlter:
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 6
+    clipSize: 1
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    listOrder: 12130
 
   - type: STR_PROXIMITY_GRENADE
-    unprimeActionName: STR_UNPRIME_GRENADE
     throwRange: 15
     primeSound: 2425
     weight: 3
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 10
-      time: 40
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true
@@ -729,17 +996,21 @@ items:
   - type: STR_SKULL_SPAWNER
     primeActionName: STR_PRIME_SKULL
     primeActionMessage: STR_PRIME_SKULL_MESSAGE
-    unprimeActionName: STR_UNPRIME_SKULL
     primeSound: 2425
     throwRange: 18
     weight: 2
+    fuseType: -2
     costThrow:
+      time: 55
       energy: 5
-      time: 30
     costPrime:
-      time: 30
+      time: 5
     costUnprime:
-      time: 15
+      time: 5
+    unprimeActionName: STR_UNPRIME_SKULL
+    flatThrow:
+      time: false
+      energy: true
     flatPrime:
       time: false
       energy: true

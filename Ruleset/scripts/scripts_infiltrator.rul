@@ -81,6 +81,7 @@ extended:
           end;
 
           unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp; #set our stealth counter to the Infiltrator value
+          battle_game.flashMessage "STR_SCRIPT_INFILTRATION_UNIT_STEALTHED" temp;
           #debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | Current Turn:" turn;
           #debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | UNIT_STEALTH_IS_ACTIVE. temp." temp;
           return;
@@ -209,6 +210,10 @@ extended:
           actor.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_KILL_REQUIREMENT; #get the number of kills required
           actor.getTag temp2 Tag.UNIT_LIKE_A_SHADOW_COUNTER;
+          if le temp2 0;
+            battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK_NO_RESTEALTH" temp;
+            #debug_log "skillUseUnit | ROSIGMA_sUU_infiltration | offset: 1 | Unit cannot regain infiltration. Aborting.";
+          end;
           sub temp temp2; #calculate kills remaining
           limit_lower temp 0; #negatives look ugly when displayed.
 
@@ -216,7 +221,7 @@ extended:
             battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK" temp;
           else le temp 0;
             if le have_tu 0;
-              #debug_log "newTurnUnit | ROSIGMA_sUU_infiltration | offset: 1 | Unit lacks adequate TU. Aborting.";
+              #debug_log "skillUseUnit | ROSIGMA_sUU_infiltration | offset: 1 | Unit lacks adequate TU. Aborting.";
               return;
             end;
             actor.getTimeUnits temp;

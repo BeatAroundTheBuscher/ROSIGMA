@@ -40,33 +40,26 @@ items:
 #    requiresBuy:
 #      - STR_IMPERIAL_GUARD_MIDTIER
 
+  - type: STR_SCION_HEAVYCARAPACE_ARMOR
+    size: 0.2
+    costSell: 100000
+    listOrder: 6680
+    transferTime: 10
+
+  - type: STR_SCION_OFFICER_HEAVYCARAPACE_ARMOR
+    size: 0.2
+    costSell: 150000
+    listOrder: 6681
+    transferTime: 10
+
+  - type: STR_SCION_JUMP_ARMOR
+    size: 0.2
+    costSell: 75000
+    listOrder: 6682
+    transferTime: 10
+
+
 #STEEL LEGION
-  - type: STR_STEELLEGION_FLAK_ARMOR
-    requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-
-  - type: STR_STEELLEGION_FLAK_ARMOR_MEDIC
-    requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    costBuy: 15000
-    costSell: 7500
-    transferTime: 10
-
-  - type: STR_STEELLEGION_CARAPACE_ARMOR
-    requiresBuy:
-      - STR_CARAPACE_ARMOR_IG
-      - STR_STEEL_LEGION_STRATEGY_MIDTIER
-    costBuy: 20000
-    costSell: 10000
-    transferTime: 10
-
-  - type: STR_STEELLEGION_CARAPACE_ARMOR_MEDIC
-    requiresBuy:
-      - STR_CARAPACE_ARMOR_IG
-      - STR_STEEL_LEGION_STRATEGY_MIDTIER
-    costBuy: 35000
-    costSell: 12500
-    transferTime: 10
 
   - type: STR_STEELLEGION_STORMTROOPER_ARMOR
     requiresBuy:
@@ -873,39 +866,6 @@ armors:
     specialWeapon: STR_CARAPACE_AUSPEX
     builtInWeapons:
       - INV_NULL_AUSPEX #Sorry, backpack is full of fancy equipment now.
-    tags:
-      UNIT_TYPE_IMPERIUM: 1
-      UNIT_TYPE_LIVING: 1
-
-  - &STR_GUARD_ARMOR_CARAPACE # DAMAGE + STATS
-    type: STR_GUARD_ARMORH_UC
-    visibilityAtDay: 40
-    visibilityAtDark: 20
-    antiCamouflageAtDay: 2
-    antiCamouflageAtDark: 2
-    frontArmor: 70
-    sideArmor: 60
-    rearArmor: 30
-    underArmor: 60
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
-    stats:
-      tu: -5
-      stamina: -10
-      strength: 5
-      bravery: 10 #always multiples of 10
-    weight: 15
     tags:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
@@ -1841,6 +1801,22 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
 
+  - type: STR_GUARD_ARMORS_MOUNTED_HEAVY_LASCANNON_UC
+    refNode: *STR_GUARD_ARMOR_MOUNTED
+    visibilityAtDay: 40
+    visibilityAtDark: 20 #NV targeting scope
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 5
+    heatVision: 25 #basic HV
+    frontArmor: 180
+    sideArmor: 160
+    rearArmor: 40
+    underArmor: 40
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
   - type: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON_UC
     refNode: *STR_GUARD_ARMOR_MOUNTED
     tags:
@@ -2077,6 +2053,10 @@ armors:
 #*** Stormtrooper Carapace ***
   - &STR_GUARD_ARMOR_CARAPACE_VETERAN # DAMAGE + STATS
     type: STR_STORMTROOPER_CARAPACE_ARMOR
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163, 160, 160, 163, 163]
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 144, 96, 245, 164, 164, 245, 245, 245, 245, 245, 245, 245, 245]
     visibilityAtDay: 40
     visibilityAtDark: 20
     antiCamouflageAtDay: 3
@@ -2215,12 +2195,14 @@ armors:
     type: STR_SCION_CARAPACE_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
+    heatVision: 20 #basic thermals
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
+    weight: 10
     frontArmor: 90
     sideArmor: 70
     rearArmor: 50
-    underArmor: 40
+    underArmor: 70
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -2232,7 +2214,7 @@ armors:
       - 1.0 #MELEE
       - 1.0 #ACID
       - 0.0 #SMOKE
-      - 1.0 #IMPACT
+      - 0.2 #IMPACT
       - 1.0 #MELTA
     stats:
       firing: 10
@@ -2244,15 +2226,72 @@ armors:
 
   - type: STR_SCION_CARAPACE_ARMOR_HELLGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    weight: 20
     corpseGeo: STR_HELLGUN_BASE_INVENTORY
     corpseBattle:
       - STR_STORMTROOPER_CORPSE_GEO
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
 
   - type: STR_SCION_CARAPACE_ARMOR_VOLLEYGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    weight: 20
     corpseGeo: STR_VOLLEYGUN_BASE_INVENTORY
     corpseBattle:
       - STR_STORMTROOPER_CORPSE_GEO
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
+
+  - type: STR_SCION_JUMP_ARMOR
+    refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    spriteSheet: SCION_JUMPTROOPER_BS.PCK
+    spriteInv: SCIONJUMP_33
+    customArmorPreviewIndex: 912
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    corpseBattle:
+      - STR_STORMTROOPER_CORPSE
+    storeItem: STR_SCION_JUMP_ARMOR
+    frontArmor: 80
+    sideArmor: 60
+    rearArmor: 40
+    underArmor: 60
+    weight: 20
+    damageModifier: #SCION ADV ARMOR
+      - 1.0 #none
+      - 0.9 #AP 10% improvement vs normal scion armor
+      - 0.8 #FLAMES 10% improvement vs normal scion armor
+      - 0.8 #HE 10% improvement vs normal scion armor
+      - 0.8 #LASCANON
+      - 0.8 #PLASMA
+      - 1.0 #STUN
+      - 0.9 #MELEE #HE 10% improvement vs normal scion armor
+      - 0.9 #ACID #HE 10% improvement vs normal scion armor
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    loftempsSet: [ 3 ]
+    stats:
+      tu: -5 #jump pack
+      stamina: -15 #jump pack
+      firing: 10 #scion bonus
+      reactions: 5 #-5 vs normal scion armor due to bulk
+      bravery: 10 #always multiples of 10
+    builtInWeapons:
+      - INV_NULL_1X3
 
   - &STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     type: STR_SCION_OFFICER_CARAPACE_ARMOR
@@ -2276,7 +2315,13 @@ armors:
   - type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLGUN
-    weight: 10
+    weight: 20
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
     builtInWeapons:
       - STR_HELLGUN
       - INV_NULL_STORM_TROOPER_BACKPACK
@@ -2287,7 +2332,13 @@ armors:
   - type: STR_SCION_OFFICER_CARAPACE_ARMOR_VOLLEYGUN
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_VOLLEYGUN
-    weight: 10
+    weight: 20
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
     builtInWeapons:
       - STR_HOTSHOT_VOLLEY_GUN
       - INV_NULL_STORM_TROOPER_BACKPACK
@@ -2298,7 +2349,13 @@ armors:
   - type: STR_SCION_OFFICER_CARAPACE_ARMOR_HELLPISTOL
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
-    weight: 10
+    weight: 15
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
     builtInWeapons:
       - STR_HELLPISTOL_BUILTIN
       - INV_NULL_STORM_TROOPER_BACKPACK
@@ -2309,11 +2366,16 @@ armors:
   - type: STR_SCION_CARAPACE_ARMOR_HELLPISTOL
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
-    weight: 10
+    weight: 15
+    specialWeapon: STR_TURRET_RELOAD
+    stats:
+      firing: 10
+      reactions: 10
+      bravery: 10
+      mana: 100 #for the reload system
     builtInWeapons:
       - STR_HELLPISTOL_BUILTIN
       - INV_NULL_STORM_TROOPER_BACKPACK
-    specialWeapon: STR_BAYONET
     units:
       - STR_STORMTROOPER
 
@@ -2324,9 +2386,9 @@ armors:
     spriteSheet: SCION_CARAPACE.PCK
     customArmorPreviewIndex: 813 #513
 
-
   - type: STR_SCION_MEDIC_CARAPACE_ARMOR
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
+    weight: 30
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
       - INV_NULL_MEDI_KIT
@@ -2344,6 +2406,76 @@ armors:
     loftempsSet: [ 3 ]
     spriteSheet: SCION_CARAPACE_MEDIC.PCK
     customArmorPreviewIndex: 821 #521
+
+  - &STR_GUARD_ARMOR_HEAVYCARAPACE_SCION # DAMAGE + STATS
+    type: STR_SCION_HEAVYCARAPACE_ARMOR #without hellgun
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
+    heatVision: 20 #basic thermals
+    weight: 20
+    drawingRoutine: 0
+    size: 0.2
+    customArmorPreviewIndex: 911
+    spriteSheet: HEAVY_SCION_BS.PCK
+    spriteInv: SCIONHEAVY_33 #spk non layered
+    corpseBattle:
+      - STR_STORMTROOPER_CORPSE
+    storeItem: STR_SCION_HEAVYCARAPACE_ARMOR
+    frontArmor: 110 #+20
+    sideArmor: 90 #+20
+    rearArmor: 60 #+10
+    underArmor: 90 #+20
+    damageModifier: #SCION ARMOR
+      - 1.0 #none
+      - 0.9 #AP 10% improvement vs normal scion armor
+      - 0.8 #FLAMES 10% improvement vs normal scion armor
+      - 0.8 #HE 10% improvement vs normal scion armor
+      - 0.8 #LASCANON
+      - 0.7 #PLASMA 10% improvement vs normal scion armor
+      - 0.9 #STUN 10% improvement vs normal scion armor
+      - 0.9 #MELEE #HE 10% improvement vs normal scion armor
+      - 0.9 #ACID #HE 10% improvement vs normal scion armor
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 0.9 #MELTA 10% improvement vs normal scion armor
+    stats:
+      tu: -5
+      stamina: -5
+      firing: 10
+      reactions: 5 #-5 vs normal scion armor due to weight
+      bravery: 10
+    units:
+      - STR_STORMTROOPER
+      - STR_STORMTROOPER_OFFICER
+    loftempsSet: [ 3 ]
+    specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_SCION_OFFICER_HEAVYCARAPACE_ARMOR
+    refNode: *STR_GUARD_ARMOR_HEAVYCARAPACE_SCION
+    antiCamouflageAtDay: 8 #+3 vs normal scion officer
+    antiCamouflageAtDark: 8 #+3 vs normal scion officer
+    customArmorPreviewIndex: 913
+    spriteSheet: SCION_HEAVYCARAPACE_OFFICER.PCK #tempestus_scion_hvy_officer.png
+    spriteInv: SCIONHEAVYOFFICER_33
+    corpseBattle:
+      - STR_STORMTROOPER_CORPSE
+    storeItem: STR_SCION_OFFICER_HEAVYCARAPACE_ARMOR
+    frontArmor: 115 #+25
+    sideArmor: 95 #+25
+    rearArmor: 70 #+20
+    underArmor: 95 #+25
+    units:
+      - STR_STORMTROOPER_OFFICER
+    specialWeapon: STR_OFFICER_BASIC_VOX
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
 
   - &STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
     type: STR_OGRYN_UC
@@ -2804,6 +2936,7 @@ armors:
     antiCamouflageAtDay: 20 #best possible Imperium anti-camo
     antiCamouflageAtDark: 20
     heatVision: 50 #best possible Imperial thermals
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
     stats:
       reactions: 10 #electronic aim assistance/sensor arrays
       firing: 10 #electronic aim assistance/sensor arrays
@@ -3743,6 +3876,21 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_LEFT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_RIGHT_CANNON_ARMOR #armor Adeptas/Inq, Crovus right assault cannon
     refNode: *STR_CAS_ARMOR
@@ -3777,6 +3925,21 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+    scripts:
+      damageUnit: |
+        var int health;
+        var ptr RuleUnit turret_unit;
+
+        unit.getHealth health; #abort unless we take lethal damage
+        if lt to_health health;
+          return;
+        end;
+
+        rules.getRuleUnit turret_unit "STR_CORVUS_RIGHT_CIV_MOUNT";
+        unit.setSpawnUnit turret_unit;
+        unit.setSpawnUnitFaction FACTION_NEUTRAL;
+        unit.setSpawnUnitInstantRespawn 1;
+        return;
 
   - type: STR_CORVUS_LEFT_CIV_ARMOR
     visibilityAtDay: 40
@@ -4272,7 +4435,7 @@ armors:
       - 0.6 #AP
       - 0.3 #FLAMES
       - 0.4 #HE
-      - 0.8 #LASCANON
+      - 0.9 #LASCANON
       - 0.7 #PLASMA
       - 1.0 #STUN
       - 0.8 #MELEE
@@ -4290,6 +4453,11 @@ armors:
       psiStrength: 5 #was 0
       psiSkill: 5 #was 0
     units:
+      - STR_ADEPTAS
+      - STR_ADEPTAS_VETERAN
+      - STR_ADEPTAS_SUPERIOR
+      - STR_ADEPTAS_REPENTIA_SUPERIOR
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR
       - STR_ADEPTAS_FRATERIS_MILITIA
       - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
       - STR_GUARD_PRIEST
@@ -4909,7 +5077,7 @@ armors:
     frontArmor: 140
     sideArmor: 130
     rearArmor: 60
-    underArmor: 60
+    underArmor: 80
     recovery:
       morale:
         psiSkill: 0.2 #morale recovery scales with devotion
@@ -4966,3 +5134,580 @@ armors:
 
   - type: STR_BANE_LAS_ARMOR #STR_BANE_LAS_TURRET
     refNode: *STR_BANEBLADE_TURRET_ARMOR
+
+#unique
+
+  - type: STR_SLY_MARBO_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 30
+    camouflageAtDay: -30
+    camouflageAtDark: -25
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    heatVision: 10
+    psiVision: 5 #Marbo Sense tingling
+    loftempsSet: [ 3 ]
+    storeItem: STR_SLY_MARBO_ARMOR
+    spriteInv: SLY_MARBOinvent.PCK
+    spriteSheet: SLY_MARBObattle.PCK
+    customArmorPreviewIndex: 888
+    drawingRoutine: 0
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    zombiImmune: true #you can't corrupt Sly Marbo
+    painImmune: true #Sly Marbo feels no pain; pain feels Sly Marbo
+    allowsKneeling: true
+    allowsRunning: true
+    instantWoundRecovery: true #Marbo doesn't have time to bleed
+    units:
+      - STR_SLY_MARBO
+    corpseBattle:
+      - STR_SLY_MARBO_CORPSE_GEO
+    damageModifier: # SLY ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    overKill: 500 #should not be possible then to disintegrate him as it would break a bonus mission
+    specialWeapon: STR_MARBOKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+
+
+#catachan
+
+  - &STR_CATACHAN_FIGHTER_ARMOR_REF
+    type: STR_CATACHAN_FIGHTER_ARMOR
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 164, 164, 96, 96, 160, 160, 160, 160]
+    #spriteHairGroup: 9
+    #spriteHairColor: [144, 144, 164, 164, 245, 245, 164, 164] # M0 F0 M1 F1 M2 F2 M3 F3
+    visibilityAtDay: 40
+    visibilityAtDark: 15 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 5 #keen eyes
+    antiCamouflageAtDark: 5
+    camouflageAtDay: -15
+    camouflageAtDark: -10
+    heatVision: 0
+    psiVision: 0
+    loftempsSet: [ 3 ]
+    storeItem: STR_CATACHAN_FIGHTER_ARMOR
+    spriteInv: CATAFIGHTERinvent.PCK
+    spriteSheet: CATAFIGHTERbattle.PCK
+    customArmorPreviewIndex: 859
+    drawingRoutine: 0
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 20 # higher because flak vest
+    allowsKneeling: true
+    allowsRunning: true
+    units:
+      - STR_CATACHAN_FIGHTER
+    corpseBattle:
+      - STR_CATACHAN_FIGHTER_CORPSE_GEO
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    specialWeapon: STR_CATAKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100 #they only get one second chance
+
+  - type: STR_CATACHAN_FIGHTER_ARMOR_AI
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
+    storeItem: STR_CATACHAN_FIGHTER_ARMOR_AI
+
+  - type: STR_CATACHANVET_FIGHTER_ARMOR
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
+    storeItem: STR_CATACHANVET_FIGHTER_ARMOR
+    spriteInv: CATAFIGHTERVETinvent.PCK
+    spriteSheet: CATAFIGHTERVETbattle.PCK
+    customArmorPreviewIndex: 886
+    units:
+      - STR_CATACHANVET_FIGHTER
+    corpseBattle:
+      - STR_CATACHANVET_FIGHTER_CORPSE_GEO
+    visibilityAtDark: 17 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 7 #keen eyes
+    antiCamouflageAtDark: 7
+    camouflageAtDay: -18
+    camouflageAtDark: -12
+    frontArmor: 40 # 10 more armor everywhere for vet catachan
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 0.9 #AP #was 1.0 for non vet catachan
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100 #they only get one second chance
+      ARMOR_OVERWATCH_TU_RESTORED: 25
+
+
+  - type: STR_CATACHANVET_FIGHTER_ARMOR_AI
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
+    storeItem: STR_CATACHANVET_FIGHTER_ARMOR_AI
+    spriteInv: CATAFIGHTERVETinvent.PCK
+    spriteSheet: CATAFIGHTERVETbattle.PCK
+    customArmorPreviewIndex: 886
+    corpseBattle:
+      - STR_CATACHANVET_FIGHTER_CORPSE_GEO
+    visibilityAtDark: 17 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 7 #keen eyes
+    antiCamouflageAtDark: 7
+    camouflageAtDay: -18
+    camouflageAtDark: -12
+    frontArmor: 40 # 10 more armor everywhere for vet catachan
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 0.9 #AP #was 1.0 for non vet catachan
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -90 #they only get one second chance
+      ARMOR_OVERWATCH_TU_RESTORED: 25
+
+  - type: STR_CATACHANTOP_FIGHTER_ARMOR
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
+    storeItem: STR_CATACHANTOP_FIGHTER_ARMOR
+    spriteInv: CATAFIGHTERTOPinvent.PCK
+    spriteSheet: CATAFIGHTERTOPbattle.PCK
+    customArmorPreviewIndex: 887
+    units:
+      - STR_CATACHANTOP_FIGHTER
+    corpseBattle:
+      - STR_CATACHANTOP_FIGHTER_CORPSE_GEO
+    visibilityAtDark: 20 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 10 #keen eyes
+    antiCamouflageAtDark: 10
+    camouflageAtDay: -20
+    camouflageAtDark: -15
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    frontArmor: 50 # 10 more armor everywhere for vet officer
+    sideArmor: 40
+    rearArmor: 35
+    underArmor: 40
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 0.8 #AP #was 0.9 for vet catachan
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -80 #they only get one second chance
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+
+  - type: STR_CATACHANTOP_FIGHTER_ARMOR_AI
+    refNode: *STR_CATACHAN_FIGHTER_ARMOR_REF
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
+    storeItem: STR_CATACHANTOP_FIGHTER_ARMOR_AI
+    spriteInv: CATAFIGHTERTOPinvent.PCK
+    spriteSheet: CATAFIGHTERTOPbattle.PCK
+    customArmorPreviewIndex: 887
+    corpseBattle:
+      - STR_CATACHANTOP_FIGHTER_CORPSE_GEO
+    visibilityAtDark: 20 #better unassisted NV than normal humans
+    antiCamouflageAtDay: 10 #keen eyes
+    antiCamouflageAtDark: 10
+    camouflageAtDay: -20
+    camouflageAtDark: -15
+    frontArmor: 50 # 10 more armor everywhere for vet officer
+    sideArmor: 40
+    rearArmor: 35
+    underArmor: 40
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 0.8 #AP #was 0.9 for vet catachan
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 0.8 #MELEE
+      - 0.8 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -80 #they only get one second chance
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+
+#marbostory
+
+  - type: STR_SLY_MARBOM1_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 30
+    camouflageAtDay: -30
+    camouflageAtDark: -25
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    heatVision: 10
+    psiVision: 5 #preternatural senses
+    loftempsSet: [ 3 ]
+    storeItem: STR_SLY_MARBO_ARMOR
+    spriteInv: SLY_MARBOM1invent.PCK
+    spriteSheet: SLY_MARBOM1battle.PCK
+    drawingRoutine: 0
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    allowsKneeling: true
+    allowsRunning: true
+    corpseBattle: [STR_TRICK_MARBOM1]
+    selfDestructItem: STR_TRICK_MARBOM1
+    specab: 1
+    damageModifier: # SLY ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.0 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    overKill: 500 #should not be possible then to disintegrate him as it would break a bonus mission
+    specialWeapon: STR_MARBOKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      UNIT_IS_DIEHARD: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+      ARMOR_IS_KAMIKAZI: 1 # this to avoid melee breaking the system
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+
+  - type: STR_SLY_MARBOM2_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 30
+    camouflageAtDay: -30
+    camouflageAtDark: -25
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    heatVision: 10
+    psiVision: 5 #preternatural senses
+    loftempsSet: [ 3 ]
+    storeItem: STR_SLY_MARBO_ARMOR
+    spriteInv: SLY_MARBOM2invent.PCK
+    spriteSheet: SLY_MARBOM2battle.PCK
+    drawingRoutine: 0
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    allowsKneeling: true
+    allowsRunning: true
+    corpseBattle: [STR_TRICK_MARBOM2]
+    selfDestructItem: STR_TRICK_MARBOM2
+    specab: 1
+    damageModifier: # SLY ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.0 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    overKill: 500 #should not be possible then to disintegrate him as it would break a bonus mission
+    specialWeapon: STR_MARBOKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      UNIT_IS_DIEHARD: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+      ARMOR_IS_KAMIKAZI: 1 # this to avoid melee breaking the system
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+
+  - type: STR_SLY_MARBOM3_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 30
+    camouflageAtDay: -30
+    camouflageAtDark: -25
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    heatVision: 10
+    psiVision: 5 #preternatural senses
+    loftempsSet: [ 3 ]
+    storeItem: STR_SLY_MARBO_ARMOR
+    spriteInv: SLY_MARBOM3invent.PCK
+    spriteSheet: SLY_MARBOM3battle.PCK
+    drawingRoutine: 0
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    allowsKneeling: true
+    allowsRunning: true
+    corpseBattle: [STR_TRICK_MARBOM3]
+    selfDestructItem: STR_TRICK_MARBOM3
+    specab: 1
+    damageModifier: # SLY ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.0 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    overKill: 500 #should not be possible then to disintegrate him as it would break a bonus mission
+    specialWeapon: STR_MARBOKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      UNIT_IS_DIEHARD: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+      ARMOR_IS_KAMIKAZI: 1 # this to avoid melee breaking the system
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+
+  - type: STR_SLY_MARBOEND_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 30
+    camouflageAtDay: -30
+    camouflageAtDark: -25
+    psiCamouflage: 1 #can only be detected by psy while adjacent; mainly so infiltrator can work
+    heatVision: 10
+    psiVision: 5 #preternatural senses
+    loftempsSet: [ 3 ]
+    storeItem: STR_SLY_MARBO_ARMOR
+    spriteInv: SLY_MARBOM3invent.PCK
+    spriteSheet: SLY_MARBOM3battle.PCK
+    drawingRoutine: 0
+    frontArmor: 40 #Marbo dodges
+    sideArmor: 30
+    rearArmor: 25
+    underArmor: 30
+    allowsKneeling: true
+    allowsRunning: true
+    corpseBattle:
+      - STR_SLY_MARBOEND_CORPSE_GEO
+    damageModifier: # SLY ARMOR
+      - 1.0 #none
+      - 0.5 #AP
+      - 0.5 #FLAMES
+      - 0.5 #HE
+      - 0.5 #LASCANON
+      - 0.5 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.5 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 0.5 #MELTA
+    overKill: 500 #should not be possible then to disintegrate him as it would break a bonus mission
+    specialWeapon: STR_MARBOKNIFE  #one day
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      INFECTION_RESIST: 100 #you can't corrupt Sly Marbo
+      INTIMIDATION_RESISTANCE: 100 #Sly Marbo intimidates you
+      UNIT_IS_DIEHARD: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -1 #Sly Marbo feels no pain; pain feels Sly Marbo
+      ARMOR_IS_INFILTRATOR: 2 #2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 #cannot be traitor
+
+#*** Guard mounted weapon armors ***
+  - type: STR_GUARD_ARMORS_MOUNTED_HEAVY_LASCANNON_UC
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 25
+    spriteSheet: GUARD_MOUNTED_HEAVY_LASCANNON.PCK
+    spriteInv: MOUNTED_HEAVY_LASCANNON_INV.PCK
+    customArmorPreviewIndex: [830, 831] #to update
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    corpseBattle:
+      - GUARD_MOUNT_CORPSE1
+      - GUARD_MOUNT_CORPSE2
+      - GUARD_MOUNT_CORPSE3
+      - GUARD_MOUNT_CORPSE4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_HEAVY_LASCANNON
+    frontArmor: 180
+    sideArmor: 160
+    rearArmor: 40
+    underArmor: 40
+    size: 2
+    weight: -110
+    drawingRoutine: 5
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.9 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 1.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    stats:
+      tu: -15
+      firing: 20
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    units: #make it available to all these units for now until they get regiment specific ones
+      - STR_GUARDSM
+      - STR_GUARD_VETERAN
+      - STR_GUARDSL
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSM_KRIEG
+      - STR_GUARD_KRIEG_GRENADIER
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_HEAVY_LASCANNON
+    loftempsSet: [ 92, 89, 90, 91 ]
+    moveSound: 14
+    #*** Drawing routine - first add to sprite_index picks mount type: ***
+    #***     0 = Lascannon
+    #***     1 = Autocannon
+    scripts:
+      selectUnitSprite:
+        var int isFemale;
+        var int unitDirection;
+
+        add sprite_index 0;
+
+        unit.getGender isFemale;
+
+        if neq 0 isFemale;
+
+          set sprite_offset 168;
+
+        else;
+
+          set sprite_offset 0;
+
+        end;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+    allowsKneeling: false

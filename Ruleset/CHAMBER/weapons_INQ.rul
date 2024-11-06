@@ -13,11 +13,7 @@ items:
     bigSprite: 2510
     floorSprite: 2510
     handSprite: 708
-    fireSound: 2261 #chunky Nihilus sound
-    hitSound: {mod: 40k, index: 19}
-    bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 50
-    hitAnimation: {mod: 40k, index: 36}
     clipSize: -1
     battleType: 1
     twoHanded: true
@@ -73,6 +69,20 @@ items:
     tags:
       ITEM_SNAP_FLAT_POWER_BONUS: 10 #INQ BONUS
       ITEM_AIMED_FLAT_POWER_BONUS: 20 #INQ BONUS
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_HAND_MULTILASER_PAI #Inquisition version, for the codex to function
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -86,11 +96,7 @@ items:
     bigSprite: 910 #multilaser black
     floorSprite: 922
     handSprite: 650
-    bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 100
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -129,6 +135,24 @@ items:
     fixedWeapon: true #armor attached specialWeapon
     fixedWeaponShow: true #armor attached specialWeapon
     listOrder: 10761
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_INQ_FLAMER #Special Inquisition Stormtrooper only flamer
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL]
@@ -215,13 +239,9 @@ items:
     categories: [STR_CAT_LASGUN, STR_CAT_SNIPER]
     dropoff: 4 #scoped
     weight: 10
-    fireSound: 2261 #chunky Nihilus sound
     bigSprite: 1011
     handSprite: 716
-    hitSound: {mod: 40k, index: 19}
-    bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 50
-    hitAnimation: {mod: 40k, index: 36}
     accuracySnap: 50
     accuracyAimed: 125
     accuracyMultiplier:
@@ -245,9 +265,6 @@ items:
       ToStun: 0.3 #painful las burns
       ToWound: 0.05 #cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
-    vaporColor: 2
-    vaporDensity: 8
-    vaporProbabilitySurface: 50
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -262,6 +279,22 @@ items:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 150 #Precision Shot Bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
       ITEM_IS_HEAVY_WEAPON: 1 #Sniper platform
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
 
   - type: STR_INQ_PLASMA #Inquisition Dekker Twincore Plasma
@@ -445,7 +478,6 @@ items:
     weight: 5
     bigSprite: 208 #{mod: 40k, index: 570}
     handSprite: 208 # {mod: 40k, index: 552} # {mod: 40k, index: 950}
-    bulletSprite: {mod: 40k, index: 13}
     bulletSpeed: 50
     fireSound: {mod: 40k, index: 740}
     battleType: 1
@@ -456,8 +488,6 @@ items:
     snapRange: 15 #+2 range
     accuracySnap: 80 #+10 vs base hellpistol
     tuSnap: 20
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     power: 75
     damageType: 1
     damageAlter:
@@ -474,6 +504,19 @@ items:
     listOrder: 10768
     tags:
       ITEM_CHANGES_SPRITE_WITH_ARMOR: 1
+    #lasgun aesthetics
+    hitSound: [3986]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_INQ_AUTOCANNON
     categories: [STR_CAT_AUTO]
@@ -493,8 +536,8 @@ items:
     snapRange: 23
     aimRange: 0
 
-    accuracySnap: 80 #Better accuracy than standard autocannon or dekker plasma
-    accuracyAuto: 70
+    accuracySnap: 60 #Meant to be used while kneeling
+    accuracyAuto: 50
     accuracyAimed: 0
     tuAuto: 60
     tuSnap: 40
@@ -511,7 +554,14 @@ items:
     armor: 30
     autoShots: 4 #Slightly improved fire rate, though you can still only do one auto salvo per turn
     bulletSpeed: 50
+    minRange: 7 #cumbersome heavy weapon
     listOrder: 10775
+    kneelBonus: 150 #heavy weapon
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
 
   - type: STR_INQ_LIGHT_LASCANNON
     categories: [STR_CAT_LASGUN, STR_CAT_ADEPTAS]
@@ -520,8 +570,6 @@ items:
     bigSprite: 1032
     floorSprite: 947
     handSprite:  848
-    bulletSprite: {mod: 40k, index: 12 }
-    fireSound: {mod: 40k, index: 742 }
     clipSize: -1
     battleType: 1
     recover: false
@@ -559,6 +607,24 @@ items:
     tuAimed: 80
     minRange: 5 #light lascannon
     kneelBonus: 120
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_INQ_MELTACUTTER #Close quarters melta weapon
     defaultInventorySlot: STR_RIGHT_HAND
@@ -652,6 +718,7 @@ items:
     sprayWaypoints: 3
     confAuto:
       name: DW_SATAUTOCAN_AUTO
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     hitSound: 0
     hitAnimation: 0
     power: 110

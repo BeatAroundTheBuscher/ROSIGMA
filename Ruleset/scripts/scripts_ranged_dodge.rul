@@ -57,6 +57,12 @@ armors:
           return power part side;
         end;
 
+        unit.getTag temp Tag.DugInBonus;
+        if eq temp 1; #don't bother if we don't have the dug-in bonus
+          # debug_log "hitUnit | dodge scripts | unit dug in; cannot dodge. Aborting:" temp;
+          return power part side;
+        end;
+
         damaging_item.getRuleItem damagingItem;
         damagingItem.getDamageType damageType;
         damageType.getResistType temp;
@@ -789,6 +795,26 @@ armors:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
+#kharn
+
+  - type: STR_KHARN_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 33
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  - type: STR_KHARN_ARMOR2
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 33
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  - type: STR_KHARN_ARMOR3
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 33
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
 #psykers
 
   - type: STR_DIVINER
@@ -834,10 +860,16 @@ armors:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-  - type: STR_FLAMER_ARMOR
+  - type: STR_EXALTED_FLAMER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_FLAMER_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_SCREAMER_ARMOR
@@ -850,6 +882,12 @@ armors:
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 100
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_BRIMSTONE_HORROR_ARMOR #tiny and evasive little shit
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
 #Nurgle
@@ -869,23 +907,23 @@ armors:
   - type: STR_NIGHTLORD_RAPTOR_ARMOR0
     refNode: *STR_DODGE_ARMOR #50%
     tags:
-      DODGE_CHANCE: 0
-      FLIGHT_DODGE_CHANCE: 15
-      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      DODGE_CHANCE: 15
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_NIGHTLORD_RAPTOR_ARMOR2
     refNode: *STR_DODGE_ARMOR #50%
     tags:
-      DODGE_CHANCE: 0
-      FLIGHT_DODGE_CHANCE: 20
-      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      DODGE_CHANCE: 20
+      FLIGHT_DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_NIGHTLORDS_WARPTALON_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
-      DODGE_CHANCE: 0
-      FLIGHT_DODGE_CHANCE: 25
-      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      DODGE_CHANCE: 20
+      FLIGHT_DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_FLOATER_ARMOR0
     refNode: *STR_DODGE_ARMOR #50%
@@ -922,6 +960,13 @@ armors:
       FLIGHT_DODGE_CHANCE: 0
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
+  - type: STR_ALPHAOFF_ARMOR
+    refNode: *STR_DODGE_ARMOR #50%
+    tags:
+      DODGE_CHANCE: 5
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
   - type: STR_ALPHA_CORVUS_ARMOR
     refNode: *STR_DODGE_ARMOR #50%
     tags:
@@ -935,6 +980,12 @@ armors:
     tags:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1 #chaff units, so not too many dodges allowed
+
+  - type: STR_PATRIARCH_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 50 #psychic prescience + agility
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
   - type: GENE_ARMOR
     refNode: *STR_DODGE_ARMOR
@@ -1028,78 +1079,178 @@ armors:
 
 #dungeon specific start
 
-  - type: HULKERGENE_ARMOR2
+  - type: STR_HULKERGENE_ARMOR2
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: HULKERGENE_ARMOR2a
+  - type: STR_HULKERGENE_ARMOR2a
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: HULKERGENE_ARMOR4
+  - type: STR_HULKERGENE_ARMOR4
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: HULKERGENE_ARMOR4a
+  - type: STR_HULKERGENE_ARMOR4a
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: HULKERGENE_ARMOR6
+  - type: STR_HULKERGENE_ARMOR6
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: HULKERGENE_ARMOR6a
+  - type: STR_HULKERGENE_ARMOR6a
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: HULKERCARNI_ARMOR
+  - type: STR_HULKERCARNI_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 5
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_GUARD_POWER_ARMOR_HULK
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_GUARD_POWER_ARMOR_OFFICER_VOX_HULK
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_KRIEG_POWER_ARMOR_HULK
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_GUARD_POWER_ARMOR_COMMISSAR_HULK
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_EXPULSUM_ARMOR_HULK
+    refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
 #dungeon specific end
+
+#uniques
+
+  - type: STR_SLY_MARBO_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+
+#marbostory
+  - type: STR_SLY_MARBOM1_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+
+  - type: STR_SLY_MARBOM2_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+
+  - type: STR_SLY_MARBOM3_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+
+  - type: STR_SLY_MARBOEND_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
+
+#catachan
+
+  - type: STR_CATACHAN_FIGHTER_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_CATACHAN_FIGHTER_ARMOR_AI
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_CATACHANVET_FIGHTER_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_CATACHANVET_FIGHTER_ARMOR_AI
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_CATACHANTOP_FIGHTER_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  - type: STR_CATACHANTOP_FIGHTER_ARMOR_AI
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  - type: STR_CATACHAN_TRAITOR_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_CATACHAN_TRAITOR_ARMOR2
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_CATACHAN_TRAITORVET_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_CATACHAN_TRAITORTOP_ARMOR
+    refNode: *STR_DODGE_ARMOR
+    tags:
+      DODGE_CHANCE: 40
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
 #ORKS
   - type: STR_WEIRDORK_ARMOR

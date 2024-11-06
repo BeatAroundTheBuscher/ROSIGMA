@@ -13,9 +13,9 @@ items:
   # higher snap accuracy to compensate
   - &STR_SHOTGUN
     type: STR_SHOTGUN # done
-    dropoff: 5
+    dropoff: 6
     autoRange: 0
-    snapRange: 9
+    snapRange: 12
     aimRange: 0
 
     accuracyAuto: 0
@@ -25,24 +25,51 @@ items:
     tuSnap: 20 # 40k 25 # ROSIGMA 1.06Beta2 20
     tuAimed: 0 # 40k 33 # ROSIGMA 1.06Beta2 35 # get rid of aimed
 
+    tags:
+      REACTION_MULTIPLIER: 150
+
   - type: STR_SHOTGUN_CHAOS
     refNode: *STR_SHOTGUN
+
+  - type: STR_AUTOSHOTGUN
+    accuracyAuto: 45
+    accuracySnap: 65
+    accuracyAimed: 0
+
+    tuSnap: 25
+    tuAimed: 0
+    tuAuto: 30
+
+    twoHanded: true
+    oneHandedPenalty: 25
+
+    autoShots: 4 #Can empty a standard mag in one turn
+    sprayWaypoints: 2
+    snapRange: 12
+    autoRange: 6
+    dropoff: 6
+
+    tags:
+      REACTION_MULTIPLIER: 150
 
   - type: STR_MCSHOTGUN # done
     dropoff: 5
     autoRange: 0
-    snapRange: 10
+    snapRange: 13
     aimRange: 0
 
     accuracyAuto: 0
     accuracySnap: 85
     accuracyAimed: 0
     tuAuto: 0
-    tuSnap: 25
+    tuSnap: 20
     tuAimed: 0 # had no aimed
 
+    tags:
+      REACTION_MULTIPLIER: 150
+
   - type: STR_RIPPER_GUN # done
-    dropoff: 5
+    dropoff: 6
     autoRange: 5
     snapRange: 9
     aimRange: 0
@@ -177,39 +204,55 @@ items:
     autoRange: 8
     aimRange: 0
 
-    accuracyAuto: 46
+    accuracyAuto: 45
     accuracySnap: 65
     accuracyAimed: 0
-    tuSnap: 33
+    tuSnap: 30
     tuAuto: 40
     tuAimed: 0
+
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+
+    confAuto:
+      shots: 6
+
+    sprayWaypoints: 2
+
+    compatibleAmmo:
+      - STR_AUTOGUN_CLIP
+      - STR_AUTOGUN_CLIP_DRUM
+      - STR_AUTOGUN_CLIP_DRUM_KRAKEN
 
   - type: STR_AUTOGUN_CHAOS
     refNode: *STR_AUTOGUN
 
 
-  - type: STR_BOLTER_ENFORCER # done # Carbine # Make it different from Locke
+  - type: STR_BOLTER_ENFORCER # done #double tap burst fire; specialized in overwatch and mid-range fighting
     dropoff: 5
     autoRange: 0
-    snapRange: 14
+    snapRange: 16
     aimRange: 0
 
     accuracyAuto: 0 # 40k 66 # ROSIGMA 1.06Beta2 85
     accuracySnap: 80 # 40k 90 # ROSIGMA 1.06Beta2 100
     accuracyAimed: 0
     tuAuto: 0
-    tuSnap: 40 # 40k 25 # ROSIGMA 1.06Beta2 20
+    tuSnap: 35 # 40k 25 # ROSIGMA 1.06Beta2 20
     tuAimed: 0 # 40k 35 # ROSIGMA 1.06Beta2 30
 
     autoShots: 0
     confSnap:
       shots: 2
+      name: STR_BURST_SNAP_SHOT
 
     compatibleAmmo:
       - STR_LIGHT_BOLTER_AMMO
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_AP
       - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_PEN
 
   - type: STR_BOLTER_LOCKE # done
     dropoff: 5
@@ -224,15 +267,17 @@ items:
     tuSnap: 25 # 40k 25 # ROSIGMA 1.06Beta2 20
     tuAimed: 0
 
-    autoShots: 3 # 40k 3 # ROSIGMA 1.06Beta2 4
+    autoShots: 4 # 40k 3 # ROSIGMA 1.06Beta2 4
+    sprayWaypoints: 2
 
     compatibleAmmo:
       - STR_LIGHT_BOLTER_AMMO
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_AP
       - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_PEN
 
-  - type: STR_BOLTER_LIGHT_ULTRA # done # same as LOCKE
+  - type: STR_BOLTER_LIGHT_ULTRA # done # same as LOCKE except high accuracy with autofire 3
     dropoff: 5
     autoRange: 7
     snapRange: 14
@@ -337,6 +382,10 @@ items:
     confSnap:
       shots: 4
 
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
   - type: STR_HEAVY_STUBBER_HANDHELD
     refNode: *STR_HEAVY_STUBBER_HANDHELD
 
@@ -358,21 +407,39 @@ items:
     tuAimed: 45 #Can launch two grenades in one turn, or fire a grenade and mop up with snap.
 
     autoShots: 10
+    tags:
+      REACTION_MULTIPLIER: 75 #cumbersome, but easier to wield than its unmodified counterpart
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
 ## Heavy Weapons - Bipod
 
   - type: STR_HEAVY_STUBBER # done
-    dropoff: 4
+    dropoff: 4 #heavy weapon
     autoRange: 18 # + 3 for tuAuto > 50 %
-    snapRange: 0
+    snapRange: 22
     aimRange: 0
 
     accuracyAuto: 45
-    accuracySnap: 0
+    accuracySnap: 60
     accuracyAimed: 0
 
-    tuAuto: 85
-    tuSnap: 0
+    tuAuto: 45
+    tuSnap: 30
     tuAimed: 0
+
+    confSnap: #5 shot burst
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 5
+
+    minRange: 8
+    sprayWaypoints: 2
+    autoShots: 15
+    kneelBonus: 150 #heavy weapon
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
   - type: STR_BOLTER_LIGHT_LMG #ACCATRAN AIRBORNE LIGHT BOLTER W BIPOD
     dropoff: 5
@@ -387,20 +454,35 @@ items:
     tuSnap: 35 #Worse vs tactical light bolters, from being a deployable weapon
     tuAimed: 0
 
+    tags:
+      REACTION_MULTIPLIER: 75
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
   - type: STR_HEAVY_BOLTER_GUARD # done
     dropoff: 4
     autoRange: 17 # + 3 for tuAuto > 50 %
     snapRange: 23
     aimRange: 0
 
-    accuracyAuto: 50
-    accuracySnap: 60
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+
+    accuracyAuto: 45
+    accuracySnap: 55
     accuracyAimed: 0
-    tuAuto: 60
-    tuSnap: 20
+    tuAuto: 75
+    tuSnap: 33
     tuAimed: 0
 
-    autoShots: 7
+    minRange: 7
+    kneelBonus: 150 #heavy weapon; meant for deployment rather than skirmishing
+
+    autoShots: 10
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
   - type: STR_BOLTER_HEAVY_SOLAR
     dropoff: 4
@@ -409,19 +491,23 @@ items:
     aimRange: 0
 
     accuracyAuto: 40 #Same as light bolters
-    accuracySnap: 70 #Same as light bolters
+    accuracySnap: 65 #Same as light bolters
     accuracyAimed: 0
     tuAuto: 60 #could lower to 50 for 2x autofire bursts, total of 6 rounds
-    tuSnap: 48 #3 shot burst
+    tuSnap: 40 #3 shot burst
     tuAimed: 0
 
     confSnap:
       name: STR_BURST_SNAP_SHOT
       shots: 3
 
+    autoShots: 5
     minRange: 7 #hefty, cumbersome weapon; bad in close quarters
+    kneelBonus: 130 #heavy weapon; bit lighter and more skirmish friendly than the godwyn
 
     tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
       ITEM_RECOIL: 60
       ITEM_HAS_BIPOD: 1
 
@@ -438,6 +524,10 @@ items:
     tuSnap: 40
     tuAimed: 0
 
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
   - type: STR_HEAVY_STUBBER_KRIEG # done
     dropoff: 4
     autoRange: 18 # + 3 for tuAuto > 50 %
@@ -452,6 +542,10 @@ items:
     tuAimed: 0
 
     autoShots: 3
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
 
 ## Snipers
 

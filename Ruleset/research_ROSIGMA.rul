@@ -196,6 +196,7 @@ research:
       - STR_PERSONAL_ARMOR
     disables:
       - STR_GREYKNIGHTS
+      - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CHAOS_PATH
     spawnedEvent: STR_DEATHWATCH_CARE_PACKAGE
   - name: STR_CHOSEN_DEATHWATCH
@@ -210,6 +211,9 @@ research:
     points: 20
     dependencies:
       - STR_GENERALLOCK
+    unlocks:
+      - STR_CATACHAN_GENLOCK
+
   - name: STR_MEDI_KIT # apothecary for marines
     cost: 210
     points: 20
@@ -228,6 +232,7 @@ research:
       - STR_PRIMARIS
     unlocks:
       - STR_MEDI_KIT_PREREQ
+
     lookup: STR_MEDI_KIT_PREREQ
   - name: STR_APOTHECARY_GK # apothecary for GREY KNIGHTS
     cost: 210
@@ -567,13 +572,16 @@ research:
       - STR_GENERALLOCK
 
   - name: STR_RADICAL_INQUISITOR_STRATEGY
-    cost: 100
+    cost: 5
     points: -1000
     dependencies:
       - STR_CHAMBERMILITANT
     getOneFree: #new
       - STR_CORVUS_RESEARCH
     spawnedEvent: STR_REINFORCEMENTS_RADICAL_EVENT
+    disables:
+      - STR_GREYKNIGHTS
+      - STR_DEATHWATCH
 
   - name: STR_HERETICAL_INQUISITOR_STRATEGY #For later, requires some CHAOS Soldiers.
     cost: 100
@@ -1085,6 +1093,8 @@ research:
       - STR_CASSC
     unlocks:
       - STR_CONVINCE_CHAOS_RESEARCH
+    getOneFree:
+      - STR_ALIENS_ONLY
 
   - name: STR_CHAMBER_CHAOS_PATH #Inquisition Chaos Path got the most freedom
     cost: 150
@@ -1247,7 +1257,7 @@ research:
     cost: 2000
     points: -250
     dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_DEATHWATCH
       - STR_GAUSS_BLASTER
       - STR_HYPERPHASESWORD
       - STR_SYNAPTIC_DISINTEGRATOR
@@ -1918,6 +1928,13 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
 
+  - name: STR_CATACHAN_GUARDSMEN
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GENERALLOCK
+
   - name: STR_STEELLEGION_GUARDSMEN
     cost: 0
     points: 0
@@ -2352,6 +2369,7 @@ research:
     disables:
       - STR_PERSONAL_ARMOR
       - STR_DEATHWATCH
+      - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CHAOS_PATH
     spawnedEvent: STR_REINFORCEMENTS_GK
 
@@ -2431,7 +2449,7 @@ research:
       - STR_MOTION_SCANNER
       - STR_MEDI_KIT_PREREQ
       - STR_CHAMBERMILITANT
-      # - STR_GREYKNIGHTS
+      - STR_GREYKNIGHTS
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_ASSC
@@ -2442,12 +2460,29 @@ research:
     spawnedEvent: ""
     # spawnedEvent: STR_REINFORCEMENTS_GK_3
 
+  - name: STR_MT_RAD #mid tier Radical Roadists
+    cost: 500
+    points: 200
+    dependencies:
+      - STR_HEAVY_LASER
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAMBERMILITANT
+      - STR_RADICAL_INQUISITOR_STRATEGY
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_ASSC
+      - STR_SIDEOPERATIONS
+    cutscene: c2
+    spawnedEvent: ""
+
   - name: STR_GK_HIGHTIER # GREY KNIGHTS chapter hightier
     cost: 900
     points: 30
     dependencies:
       - STR_MIDTIER_PREREQ
-      # - STR_GREYKNIGHTS
+      - STR_GREYKNIGHTS
       - STR_CYDONIA_OR_BUST
       - STR_CHAMBERMILITANT
     unlocks:
@@ -2455,12 +2490,23 @@ research:
     getOneFree:
       - STR_HAMMER
 
+  - name: STR_RADICAL_HIGHTIER # Radical Road high tier
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_CYDONIA_OR_BUST
+      - STR_CHAMBERMILITANT
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+
   - name: STR_DEFENSE_CORRIDORGK #facility OTHER FACTIONS BLACK
     cost: 100
     points: 15
     dependencies:
       - STR_MOTION_SCANNER
-      # - STR_GREYKNIGHTS
+      - STR_GREYKNIGHTS
       - STR_CHAMBERMILITANT
 
   - name: STR_CHAMBERMILITANT
@@ -2721,6 +2767,7 @@ research:
       - STR_GUARD_BARRACKS
       - STR_REGIMENT_OFFICERS
       - STR_KRIEG_GUARDSMEN
+      - STR_CATACHAN_GUARDSMEN
       - STR_PENITENT_GUARD
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
       - STR_GUARDSMEN
@@ -2763,6 +2810,7 @@ research:
       #      - STR_GUARD_AND_ARBITES
       - STR_IMPERIAL_GUARD_MISSIONS
       - STR_KRIEG_GUARDSMEN
+      - STR_CATACHAN_GUARDSMEN
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_PILOT_GUARDSMEN
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
@@ -3337,7 +3385,7 @@ research:
   - name: STR_STORMRAVEN_GK #Stormraven
     dependencies:
       - STR_UFO_CONSTRUCTION
-      # - STR_GREYKNIGHTS
+      - STR_GREYKNIGHTS
       - STR_CHAMBERMILITANT
 
   - name: STR_THUNDERHAWK_GK_REQ # GREYKNIGHTS
@@ -3345,8 +3393,20 @@ research:
     points: 30
     dependencies:
       # - STR_GK_HIGHTIER
-      # - STR_GREYKNIGHTS
+      - STR_GREYKNIGHTS
       # - STR_HIGHTIER_PREREQ
+      - STR_ELERIUM_115
+      - STR_MIDTIER_PREREQ
+      - STR_CHAMBERMILITANT
+
+  - name: STR_THUNDERHAWK_RAD_REQ # for radical roadist
+    cost: 900
+    points: 30
+    dependencies:
+      # - STR_GK_HIGHTIER
+      #- STR_GREYKNIGHTS
+      # - STR_HIGHTIER_PREREQ
+      - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_ELERIUM_115
       - STR_MIDTIER_PREREQ
       - STR_CHAMBERMILITANT
@@ -3356,9 +3416,9 @@ research:
     points: 25
     listOrder: 5050
     dependencies:
-      # - STR_GK_HIGHTIER
-      # - STR_GREYKNIGHTS
-      # - STR_HIGHTIER_PREREQ
+      - STR_GK_HIGHTIER
+      - STR_GREYKNIGHTS
+      - STR_HIGHTIER_PREREQ
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
       - STR_ELERIUM_115
@@ -7242,6 +7302,16 @@ research:
       - STR_SLAANESH_ANOINTED
     destroyItem: true
 
+  - name: STR_CHAOS_BASIC_BEHEMOTH   # SLANESH
+    cost: 192
+    points: 500
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_CHAOS_PATH
+
   #Iron Warriors
   - name: STR_IRON_MAIDEN_SISTER
     cost: 100
@@ -7748,6 +7818,22 @@ research:
     destroyItem: true
 
   #Tzeentch cult
+  - name: STR_EXALTED_FLAMER_TERRORIST
+    cost: 200
+    points: 50
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_FLAMER_TERRORIST
+    destroyItem: true
+
+  - name: STR_EXALTED_FLAMER_CORPSE
+    cost: 100
+    points: 50
+    needItem: true
+
   - name: STR_PINK_HORROR_TERRORIST
     cost: 200
     points: 50
@@ -7768,6 +7854,17 @@ research:
       - STR_THREAT_ONE
     getOneFree:
       - STR_PINK_HORROR_TERRORIST
+    destroyItem: true
+
+  - name: STR_BRIMSTONE_HORROR
+    cost: 100
+    points: 20
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_BLUE_HORROR_TERRORIST
     destroyItem: true
 
   - name: STR_TZAANGOR
@@ -9435,6 +9532,21 @@ research:
       - STR_NURGLE_OGRYN
     destroyItem: true
 
+  - name: STR_NURGLE_CULTIST_LEADER_RITUALIST
+    cost: 75
+    points: 20
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+    getOneFree:
+      - STR_NURGLE_CULTIST_LEADER
+    destroyItem: true
+
   # Captives Eldar
   ##########################################
   # Section: Captives
@@ -9684,6 +9796,9 @@ research:
   - name: STR_BLUEHORROR_CORPSE
     refNode: *STR_CORPSE_BASIC
 
+  - name: STR_BRIMSTONE_HORROR_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
   - name: STR_TZAANGOR_CORPSE
     refNode: *STR_CORPSE_BASIC
 
@@ -9929,7 +10044,6 @@ research:
 
   - name: STR_ZOMBIE_CORPSE
     refNode: *STR_CORPSE_BASIC
-    lookup: STR_ZOMBIE_AUTOPSY
 
   - name: STR_SECTOID_CORPSE
     refNode: *STR_CORPSE_BASIC
@@ -10207,6 +10321,20 @@ research:
   - name: STR_HRUD_SNIPER_CORPSE
     refNode: *STR_CORPSE_BASIC
 
+  # Corpses Traitor Catachan
+  ##########################################
+  # Section: Corpses
+  # Faction: Catachan (Traitor Guard)
+  ##########################################
+  - name: STR_CATACHAN_TRAITOR_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CATACHAN_TRAITORVET_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CATACHAN_TRAITORTOP_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
   # Facilities General
   ##########################################
   # Section: Facilities
@@ -10439,5 +10567,164 @@ research:
     neededItem: STR_WARPED_HULK_LOOT
     destroyItem: false
 
+  - name: STR_RES_WARPED_HULK_LOOT_RAD
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
 
 #dungeon specific end
+
+  - name: STR_CATACHAN_GENLOCK
+    dependencies:
+      - STR_GENERALLOCK
+
+#catachan
+  - name: STR_CATACHAN_GEN
+    cost: 50
+    points: 10
+    dependencies:
+      - STR_CATACHAN_GENLOCK
+
+  - name: STR_CATACHAN_REQ
+    cost: 70
+    points: 10
+    dependencies:
+      - STR_CATACHAN_GEN
+
+#marbostory
+
+  - name: STR_MARBO1_LOCK_RESEARCH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_MARBO_ALPHA_DATA
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_MARBO1_LOCK_RESEARCH
+    neededItem: STR_MARBO_CLUE1
+    destroyItem: true
+
+  - name: STR_MARBO2_LOCK_RESEARCH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_MARBO_BETA_DATA
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_MARBO2_LOCK_RESEARCH
+    neededItem: STR_MARBO_CLUE2
+    destroyItem: true
+
+  - name: STR_MARBO3_LOCK_RESEARCH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_MARBO_GAMMA_DATA
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_MARBO3_LOCK_RESEARCH
+    neededItem: STR_MARBO_CLUE3
+    destroyItem: true
+
+  - name: STR_MARBO4_LOCK_RESEARCH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_MARBO_DELTA_DATA
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_MARBO4_LOCK_RESEARCH
+    neededItem: STR_MARBO_CLUE4
+    destroyItem: true
+
+  - name: STR_MARBO_CONTACT
+    cost: 150
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_MARBO_DELTA_DATA
+
+#Catachen Traitor Guard
+
+  - &STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+    name: STR_CATACHAN_FIGHTER_TRAITOR
+    cost: 100
+    points: 50
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+    destroyItem: true
+
+  - name: STR_CATACHAN_FIGHTER_TRAITOR2
+    refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTER_TRAITOR3
+    refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTER_TRAITOR4
+    refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTER_TRAITOR5
+    refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTER_TRAITOR6
+    refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
+
+  - &STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+    name: STR_CATACHAN_FIGHTERVET_TRAITOR
+    cost: 200
+    points: 100
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    destroyItem: true
+
+  - name: STR_CATACHAN_FIGHTERVET_TRAITOR2
+    refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERVET_TRAITOR3
+    refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERVET_TRAITOR4
+    refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERVET_TRAITOR5
+    refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERVET_TRAITOR6
+    refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
+
+  - &STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+    name: STR_CATACHAN_FIGHTERTOP_TRAITOR
+    cost: 250
+    points: 150
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    destroyItem: true
+
+  - name: STR_CATACHAN_FIGHTERTOP_TRAITOR2
+    refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERTOP_TRAITOR3
+    refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERTOP_TRAITOR4
+    refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERTOP_TRAITOR5
+    refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+
+  - name: STR_CATACHAN_FIGHTERTOP_TRAITOR6
+    refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE

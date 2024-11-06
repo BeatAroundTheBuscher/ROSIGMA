@@ -10,7 +10,7 @@ extended:
   scripts:
     damageUnit:
       - new: ROSIGMA_dU_alpha_infiltration
-        offset: 90
+        offset: 21
         code: |
           var int faction;
           var int temp;
@@ -21,6 +21,7 @@ extended:
           var int randomNumber;
           var ptr RuleArmor armorRule;
           var ptr GeoscapeGame geoScape;
+          var ptr BattleItem ammoItem;
 
           #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: weapon_item" weapon_item;
 
@@ -97,7 +98,16 @@ extended:
             return;
           end;
 
-          if or eq damaging_type 0 eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
+          if or eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
+            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
+            return;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; #check to see whether the weapon is a grav gun
+          damaging_item.getAmmoItem ammoItem;
+          ammoItem.getTag rollBonus Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS;
+          add temp rollBonus;
+          if and eq damaging_type 0 lt temp 1;
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
             return;
           end;
