@@ -20,6 +20,7 @@ extended:
           var int temp2;
           var int faction;
           var ptr RuleSoldier targetSoldier;
+          var ptr RuleSoldier attackerSoldier;
           var ptr RuleItem itemRule;
           var ptr RuleArmor armorRule;
 
@@ -59,16 +60,20 @@ extended:
           end;
 
           weapon_item.getTag temp Tag.ITEM_IS_OFFICER_ONLY;
-          if gt temp 0; #if we work with officers, check the user
-            targetSoldier.getTag temp2 Tag.SOLDIER_IS_OFFICER;
+          if gt temp 0; #if we work with officers, check the attacker
+            attacker.getRuleSoldier attackerSoldier;
+            attackerSoldier.getTag temp2 Tag.SOLDIER_IS_OFFICER;
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Item is for officers:" weapon_item;
             if lt temp2 1;
               weapon_item.getTag temp Tag.ITEM_NON_OFFICER_PENALTY_PERCENT;
               if gt temp 0;
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power pre-penalty:" power;
                 muldiv power temp 100; #apply the penalty
-                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_REDUCED_EFFECT!" temp;
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_REDUCED_EFFECT" temp;
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power post-penalty:" power;
               else;
-                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_NULL_EFFECT!";
-                return power part side; #if no define penalty, abort
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_NULL_EFFECT";
+                return 0 part side; #if no define penalty, abort
                 #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is not an officer and penalty percent is null. ITEM_NON_OFFICER_PENALTY_PERCENT:" temp;
               end;
             end;
@@ -101,6 +106,7 @@ extended:
           end;
 
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
+          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff successful. Final power:" power;
           return power part side;
 
     damageUnit:

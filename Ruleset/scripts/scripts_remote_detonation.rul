@@ -35,6 +35,11 @@ extended:
             return;
           end;
 
+          if eq side FACTION_PLAYER;
+            battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE 0; #clear the frequency during the player's turn
+            return;
+          end;
+
           item.getTag itemFrequency Tag.ITEM_IS_REMOTE_DETONATED;
           if lt itemFrequency 1;
             return;
@@ -61,7 +66,5 @@ extended:
             #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Frequency doesn't match ITEM_IS_REMOTE_DETONATED. Frequency:" itemFrequency;
             item.setFuseTimer 30;
           end;
-
-          battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE 0; #clear the frequency
 
           return;
