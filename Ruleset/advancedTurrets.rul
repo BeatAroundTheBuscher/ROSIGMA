@@ -34,14 +34,14 @@
   - type: STR_CHIMERASL_COMMAND_TURRET # Steel Legion Chimera turret
     refNode: *STR_ADV_TURRET_DEFAULT
     race: STR_CHIMERA_TURRET
-    armor: STR_COMMAND_TURRET_ARMOR #replace with SL version
+    armor: STR_CHIMERASL_COMMAND_TURRET_ARMOR 
 
   - type: STR_LEMANSL_COMMAND_TURRET  # Steel Legion Leman Rus turret
     refNode: *STR_ADV_TURRET_DEFAULT
     race: STR_LEMONRUSS
     stats:
       mana: 0 #half the capacity of a turret
-    armor: STR_LEMAN_TURRET_ARMOR  #replace with SL version
+    armor: STR_LEMANSL_COMMAND_TURRET_ARMOR  
 
   - type: STR_LEMAN_COMMAND_TURRET
     race: STR_LEMONRUSS
@@ -201,7 +201,7 @@
       - - STR_LEMONRUSS_WEAPON
         - STR_LEMANRUSS_BOLTER
 
-  - type: STR_LEMONRUSS_EXECUTIONER
+  - type: STR_EXECUTIONER_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -223,7 +223,7 @@
     builtInWeaponSets:
       - - STR_EXECUTIONER_CANNON
 
-  - type: STR_LEMONRUSS_PUNISHER
+  - type: STR_PUNISHER_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -234,7 +234,7 @@
     builtInWeaponSets:
       - - STR_PUNISHER_CANNON
 
-  - type: STR_LEMONRUSS_LASCANNON
+  - type: STR_LASCANNON_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -325,6 +325,7 @@
     armor: STR_CHIMERA_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_CHIMERA_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -339,6 +340,7 @@
     armor: STR_CHIMERASL_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_CHIMERASL_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -353,6 +355,7 @@
     armor: STR_LEMAN_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_LEMAN_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -367,6 +370,7 @@
     armor: STR_LEMANSL_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_LEMANSL_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -379,7 +383,7 @@
       mana: 20 #half the capacity of a turret
     value: 20
     armor: STR_LEMAN_HULL_LAS_ARMOR
-    spawnUnit: STR_LEMANSL_HULL
+    spawnUnit: STR_LEMAN_HULL
     standHeight: 20
     kneelHeight: 20
     ignoredByAI: false
@@ -1171,6 +1175,7 @@ armors:
     tags:
       TurretUnit: 1
       TurretId: 200
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1185,6 +1190,7 @@ armors:
     tags:
       TurretUnit: 1
       TurretId: 1200
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1236,6 +1242,7 @@ armors:
     tags:
       TurretUnit: 1
       TurretId: 400
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1250,6 +1257,7 @@ armors:
     tags:
       TurretUnit: 1
       TurretId: 1400
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1299,6 +1307,7 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     tags:
       TurretUnit: 1
+      Hull: 1
       TurretId: 401
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
@@ -1314,6 +1323,7 @@ armors:
     tags:
       TurretUnit: 1
       TurretId: 1401
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1834,7 +1844,7 @@ items:
       TurretItem: 3
       ItemId: 301
 
-  - type: STR_CANNON_TURRET
+  - type: STR_LEMONRUSS
     ufopediaType: STR_LEMONRUSS_WEAPON
     size: 0.1
     costBuy: 150000
@@ -2734,8 +2744,6 @@ extended:
       TurretItem: int
       ItemId: int
       TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
-    BattleGame:
-      NoOfTurrets: int
     RuleArmor:
       Turret: int
       Sponson: int
@@ -2753,12 +2761,47 @@ extended:
     BattleItem:
       TurretActive: int
 
+### Refactored Modular Turret Script Documentation###
+# The STR of the dummy item (i.e. the item that triggers the spawn of the turret) must be the same as the STR of the turret unit
+# Tags explanation
+# Turret: int # signifies that unit is the dummy unit that will be transformed into a actual turret (e.g. chimera command turrets, blank hull pieces)
+              # Every unique unit must have a different number
+                # Current index:
+                # 1: Chimera Turrets
+                # 2: Chimera Hull Turrets
+                # 3: Leman Russ Turrets
+                # 4: Leman Russ Hull Turrets
+                # 5: Leman Russ Sponsons
+                # 11: SL Chimera Turrets
+                # 12: SL Chimera Hull Turrets
+                # 13: SL Leman Russ Turrets
+                # 14: SL Leman Russ Hull Turrets
+                # 15: SL Leman Russ Sponsons
+# Sponson: 1  # Always a 1, signifies a leman russ sponson, only used in script to make west sponson have a blank sprite
+# Hull 1      # Always a 1, siginifes hull turret, used to make the spawned-on-death blank hull be on the neutral/civilian faction
+# TurretUnit: 1 # Always a 1, signifies that the unit is a turret unit that the script applies to
+# TurretItem: int # signifies that the item is a turret dummy item, INT MUST CORRESPOND TO THE CORRECT TURRET: INT TAG, i.e. a turret dummy item that triggers the transformation of a leman russ turret has the TurretItem tag be 3
+# ItemId: int   # Unique Id for this turret type
+# TurretId: int # Unique Id for this turret type, must correspond to ItemId
+                # Currently ids are formated to correspond to Turret: int number, this isnt a requirement, just makes it easier to keep track of them
+                # Current Ids:
+                  # 100: Chimera Turrets
+                  # 200: Chimera Hull Turrets
+                  # 300: Leman Russ Turrets
+                  # 400: Leman Russ Hull Turrets
+                  # 500: Leman Russ Sponsons
+                  # 1100: SL Chimera Turrets
+                  # 1200: SL Chimera Hull Turrets
+                  # 1300: SL Leman Russ Turrets
+                  # 1400: SL Leman Russ Hull Turrets
+                  # 1500: SL Leman Russ Sponsons
 
   scripts:
 
     createUnit:
 
-      - offset: 1
+      - new: ROSIGMA_cU_adv_turret_setSpawnUnit1 #sets and forces turret spawn units based on dummy item names
+        offset: 1
         code: |
           var int turret;
           var int turretitem;
@@ -2794,7 +2837,7 @@ extended:
           return;
 
 
-      - new: ROSIGMA_cU_adv_turret_set_standard_tags3
+      - new: ROSIGMA_cU_adv_turret_set_sponson_resprite3 #checks if unit is west sponson 
         offset: 3
         code: |
 
@@ -2830,9 +2873,20 @@ extended:
           end;
           return;
 
+      - new: ROSIGMA_cU_adv_turret_set_hull_neutral4 #sets dead hulls to be civilian faction
+        offset: 4
+        code: |
+          var int hull;
+
+          unit.getTag hull Tag.Hull;
+          if eq hull 1;
+            #debug_log "createUnit | offset 4 | advanced_turrets: hullbolterunit or hulllasunit detected.";
+            unit.setSpawnUnitFaction FACTION_NEUTRAL;
+          end;
+          return;
  
 
-      - new: ROSIGMA_cU_adv_turret_set_standard_tags99
+      - new: ROSIGMA_cU_adv_turret_set_startingtimeunits99 #ensures turrets spawn with full time units
         offset: 99
         code: |
           var int turretunit;
@@ -2846,7 +2900,7 @@ extended:
           return;
 
     damageUnit:
-      - new: ROSIGMA_dU_adv_turret_set_standard_tags1
+      - new: ROSIGMA_dU_adv_turret_prime_dummy_items #primes dummy items when corresponding turret is killed
         offset: 1
         code: |
           var int turretunit;
@@ -2884,10 +2938,9 @@ extended:
 
           return;
 
-    newTurnItem:
 
     newTurnUnit:
-      - new: ROSIGMA_nTU_adv_turret_set_standard_tags3
+      - new: ROSIGMA_nTU_adv_turret_set_sponson_resprite3 #cchecks if unit is west sponson (i honestly cant remember why there is a nTU and cU script for this same function)
         offset: 3
         code: |
 
@@ -2924,7 +2977,7 @@ extended:
           return;
 
     selectUnitSprite:
-      - new: ROSIGMA_sUS_adv_turret_set_standard_tags1
+      - new: ROSIGMA_sUS_resprite_sponsons1 #switches west sponson sprite to a blank one
         offset: 1
         code: |
           var int resprite;
@@ -3177,49 +3230,6 @@ extraSprites:
 
 extraStrings:
 
-  - type: en-US
-    strings:
-      STR_CHIMERA_AC_TURRET: "Auto-Cannon Turret"
-      STR_CHIMERA_COMMAND_TURRET: "Chimera Turret"
-      STR_CHIMERA_BOLTER_TURRET: "Bolter Turret"
-      STR_CHIMERA_FLAMER_TURRET: "Flamer Turret"
-      STR_CHIMERA_TURRET: "Multilas Turret"
-      STR_CHIMERA_HB: "Heavy Bolter Turret"
-      STR_CANNON_TURRET: "Battle Cannon Turret"
-      STR_EXECUTIONER_TURRET: "Executioner Turret"
-      STR_LEMONRUSS_EXECUTIONER: "Leman Russ Executioner"
-      STR_EXECUTIONER_CANNON: "Executioner Cannon"
-      STR_LEMAN_COMMAND_TURRET: "Leman Russ Turret"
-      STR_TWIN_LINK_LASCANNON: "Twin-Linked Lascannon"
-      STR_PUNISHER_CANNON: "Punisher Cannon"
-      STR_PUNISHER_TURRET: "Punisher Turret"
-      STR_LASCANNON_TURRET: "Annihilator Turret"
-      STR_SPONSON_HEAVY_FLAMER: "Heavy Flamer Sponson"
-      STR_FLAMER_SPONSON: "Heavy Flamer Sponson"
-      STR_SPONSON_FLAMER: "Heavy Flamer Sponson"
-      STR_BOLTER_SPONSON: "Heavy Bolter Sponson"
-      STR_SPONSON_HB: "Heavy Bolter Sponson"
-      STR_SPONSON_BOLTER: "Heavy Bolter Sponson"
-      STR_MULTIMELTA_SPONSON: "Multi-Melta Sponson"
-      STR_HULL_BOLTER: "Hull-Mounted Bolter"
-      STR_HULL_LAS: "Hull-Mounted Lascannon"
-      STR_LEMAN_HULL_BOLTER: "Hull-Mounted Bolter"
-      STR_LEMAN_HULL_LAS: "Hull-Mounted Lascannon"
-      STR_HULL_LASCANNON: "Lascannon"
-      STR_CHIMERA_HULL_BOLTER: "Hull-Mounted Bolter"
-      STR_SPONSON_MULTIMELTA: "Multi-Melta Sponson"
-      STR_LEMONRUSS_LASCANNON: "Annhilator Turret"
-      STR_LEMONRUSS_PUNISHER: "Punisher Turret"
-      STR_CHIMERA_HULL: "Vehicle Hull"
-      STR_LEMAN_HULL: "Vehicle Hull"
-      STR_LEMAN_SPONSON: "Vehicle Sponson"
-      STR_MULTI_LASER: "Multi-Laser"
-      STR_PUNISHER_CANNON_UFOPEDIA: "{NEWLINE} The Punisher Gatling Cannon is a large rotary ballistic weapon, and one of the fastest-firing slug throwers in the Imperium's arsenal. The Punisher can shred even the heaviest of infantry units with punitive ease."
-      STR_LEMONRUSS_LASCANNON_UFOPEDIA: "{NEWLINE} The Annhilator is a twin-linked heavy lascannon turret designed to destroy hostile armor and reduce the risks and logistics footprint of handling solid ammunition."
-      STR_LEMONRUSS_WEAPON_UFOPEDIA: "{NEWLINE} The standard Leman Russ battlecannon fires a 120mm shell that can destroy buildings and enemy armor alike."
-      STR_SPONSON_MULTIMELTA_WEAPON: "Multi-Melta"
-      STR_TWIN_AUTOCANNON_TURRET: "Twin Autocannon Turret"
-      STR_TWIN_LASCANNON_TURRET: "Twin Lascannon Turret"
 
 
   - type: ru
