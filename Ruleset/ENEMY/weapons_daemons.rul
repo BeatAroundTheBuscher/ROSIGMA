@@ -211,7 +211,8 @@ items:
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
-  - type: STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles            #4006;  this is intended as an aoe debuff/debilitation spell
+  - &STR_TZEENTCH_MAGIC_MISSILE_TEMPLATE
+    type: STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles            #4006;  this is intended as an aoe debuff/debilitation spell
     categories: [STR_CAT_PLASMA, STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
     size: 0.2
     costSell: 0
@@ -270,6 +271,48 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
+
+  - type: STR_PINK_FIRE_MAGIC_MISSILE #can spawn Brimstone Horrors; currently only used by Tzeentch Sorcerer
+    refNode: *STR_TZEENTCH_MAGIC_MISSILE_TEMPLATE
+    tuAimed: 20 #spammable
+    spawnUnit: STR_BRIMSTONE_HORROR
+    spawnUnitFaction: 1
+    spawnUnitChance: 25
+    vaporColorSurface: 15 #pink warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 90
+    bigSprite: { mod: 40k, index: 1102 } #psyker_flamestrike.png ig
+    #floorSprite: { mod: 40k, index: 134 }
+    #handSprite: { mod: 40k, index: 424 }
+    bulletSprite: { mod: 40k, index: 5 }
+    fireSound: [2001, 2002, 2003, 2004]
+    explosionHitSound: { mod: 40k, index: 771 }
+    bulletSpeed: 25
+    hitAnimation: 2140 #pink fire impact
+    power: 39
+    damageType: 5 #plasma
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 1.0 #melts armor
+      ToArmor: 0.0 #melts on the way in
+      FireBlastCalc: false
+      FixRadius: 2
+      RadiusReduction: 0 #minimal aoe falloff
+      IgnoreDirection: false
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 5.0 #was set to 1000% - Tzeentch attacks assail the mind and are stunning
+      ToEnergy: 2.0
+      ToStun: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToMana: 0.3 #corruption damage
+      ToTime: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.7 #damage is mostly spiritual
+      ToItem: 1.0 #was 5.0
+      ToTile: 5.0
+      ToWound: 0.00
+      RandomWound: false
+      TileDamageMethod: 1
+      IgnoreOverKill: true
 
   - type: STR_RED_FIRE  #RED FIRE Tzeentch magic         #4006
     categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
@@ -1051,7 +1094,9 @@ items:
     fixedWeapon: true
     flatMelee: true
 
-  - type: STR_TZEENTCH_FLAMER_WEAPON_PINK #built in flamer
+
+  - &STR_TZEENTCH_FLAMER_TEMPLATE
+    type: STR_TZEENTCH_FLAMER_WEAPON_PINK #built in flamer
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
     weight: 0
     vaporColorSurface: 15 #pink warpfire
@@ -1072,10 +1117,10 @@ items:
     arcingShot: true
     noLOSAccuracyPenalty: 75 #indirect fire weapon
     confSnap:
-      shots: 1
-    autoRange: 7
-    snapRange: 9 #longer than normal range
-    maxRange: 12
+      shots: 2
+    autoRange: 9
+    snapRange: 12 #longer than normal range
+    maxRange: 15
     dropoff: 5
     invWidth: 2
     invHeight: 3
@@ -1111,6 +1156,36 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_TZEENTCH_FLAMER_WEAPON_PINK_LESSER #built in flamer
+    refNode: *STR_TZEENTCH_FLAMER_TEMPLATE
+    confSnap:
+      shots: 1
+    autoRange: 7
+    snapRange: 9 #longer than normal range
+    maxRange: 12
+    power: 69
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ToArmorPre: 0.2
+      RandomArmorPre: true #random armor degradation
+      ArmorEffectiveness: 0.6 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.5 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      ToTile: 2.0
+      ToItem: 0.5
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: true
 
   - type: STR_TZEENTCH_FLAMER_WEAPON_BLUE #built in melta
     categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
@@ -1167,6 +1242,7 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
 
   - type: STR_TZEENTCH_GLIMMERING_WEAPON_SCATTER #built in long range shotgun melta
     categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
