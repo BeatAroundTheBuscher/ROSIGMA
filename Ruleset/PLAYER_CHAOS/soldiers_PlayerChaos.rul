@@ -889,9 +889,7 @@ soldiers:
     #costBuy: 45000
     costSalary: 5000
     requires:
-      - STR_ADEPTAS
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-      - STR_IRON_WARRIOR_WARSMITH
+      - STR_CREATE_IRON_MAIDEN_RESEARCH
     minStats:
       tu: 40
       stamina: 60
@@ -964,7 +962,9 @@ soldiers:
 # Chaos Guard
   - type: STR_IRON_GUARDSMAN
     flagOffset: 42
-    #costBuy: 25000 #can only be made
+    costBuy: 25000
+    requires:
+      -STR_IRON_GUARD_LOWTIER_REQUISITIONS
     costSalary: 5000
     minStats:
       tu: 40
@@ -988,7 +988,7 @@ soldiers:
       firing: 80
       throwing: 65
       strength: 45
-      psiStrength: 0
+      psiStrength: 100
       psiSkill: 0
       melee: 40
       mana: 0
@@ -1005,20 +1005,20 @@ soldiers:
       psiSkill: 0
       melee: 70
       mana: 0
-    trainingStatCaps: # can't train
-      tu: 0
-      stamina: 0
-      health: 0
-      firing: 0
-      throwing: 0
-      strength: 0
-      psiStrength: 0
-      psiSkill: 0
-      melee: 0
+    trainingStatCaps: # changed to be identical to standard guardsmen
+      tu: 60
+      stamina: 70
+      health: 30
+      firing: 70
+      throwing: 65
+      strength: 30
+      psiStrength: 100
+      psiSkill: 50
+      melee: 50
       mana: 0
-    armor: STR_IRON_GUARD_ARMOR_PLAYER
-    allowPiloting: false
+    armor: STR_IRON_GUARD_FLAK_ARMOR_PLAYER
     allowPromotion: false
+    allowPiloting: false
     standHeight: 22
     kneelHeight: 14
     femaleFrequency: 10
@@ -1030,9 +1030,76 @@ soldiers:
     deathMale: [{mod: 40k, index: 376}, {mod: 40k, index: 377}, {mod: 40k, index: 378}, {mod: 40k, index: 379}]
     deathFemale: [2258, 2259, 2260]
     rankStrings:
-      - STR_PENITENT_RANK_0 #something else?
+      - STR_IRONGUARD_RANK_0
     rankSprite: {mod: 40k, index: 868} #needs new
     rankBattleSprite: {mod: 40k, index: 251} #needs new
     rankTinySprite: {mod: 40k, index: 163} #needs new
     moraleLossWhenKilled: 0
     value: 1
+
+  - type: STR_BLACKGUARD
+    flagOffset: 42
+    costSalary: 30000
+    minStats: 
+      tu: 50
+      stamina: 90
+      health: 45
+      bravery: 110
+      reactions: 40
+      firing: 70
+      throwing: 55
+      strength: 40
+      psiStrength: 0
+      psiSkill: 0
+      melee: 50
+      mana: 0
+    maxStats:
+      tu: 55
+      stamina: 90
+      health: 60
+      bravery: 110
+      reactions: 50
+      firing: 80
+      throwing: 65
+      strength: 50
+      psiStrength: 100
+      psiSkill: 6
+      melee: 60
+      mana: 0
+    statCaps:
+      tu: 75
+      stamina: 120
+      firing: 140 
+      strength: 65
+      health: 75
+      reactions: 60
+      mana: 0
+    trainingStatCaps:
+      stamina: 100
+      health: 50
+      firing: 80
+      throwing: 70
+      strength: 55
+      mana: 0
+    rankStrings:
+      - STR_BLACKGUARD_RANK_0
+      - STR_BLACKGUARD_RANK_1
+      - STR_BLACKGUARD_RANK_2
+      - STR_BLACKGUARD_RANK_3
+    armor: STR_BLACKGUARD_FLAK_ARMOR_PLAYER
+    allowPiloting: false
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 10
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    soldierNames:
+      - delete
+      - Names/ironguard.nam
+    deathMale: [{mod: 40k, index: 376}, {mod: 40k, index: 377}, {mod: 40k, index: 378}, {mod: 40k, index: 379}]
+    deathFemale: [2258, 2259, 2260]
+    rankSprite: {mod: 40k, index: 868} #needs new
+    rankBattleSprite: {mod: 40k, index: 251} #needs new
+    rankTinySprite: {mod: 40k, index: 163} #needs new
+    moraleLossWhenKilled: 50 # Iron Guard don't care for each other, but seeing a black guard killed represents a battle going poorly.
+    value: 20 # Considered an asset
