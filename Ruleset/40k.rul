@@ -185,7 +185,7 @@ units:
       psiSkill: 0
 
 #CHAOS
-  - type: STR_CHAOS_BEHEMOTH #Chaos BEHEMOTH
+  - type: STR_CHAOS_BEHEMOTH #Chaos BEHEMOTH COMMANDER
     race: STR_CHAOS_BEHEMOTH
     rank: STR_LIVE_COMMANDER
     stats:
@@ -194,20 +194,20 @@ units:
       health: 180
       bravery: 110
       reactions: 65
-      firing: 70
+      firing: 90
       throwing: 0
       strength: 100
       psiStrength: 100
       psiSkill: 0
-      melee: 80
+      melee: 90
     armor: BEHEMOTH_ARMOR
     intelligence: 4
     aggression: 2
-    moraleLossWhenKilled: 120
+    moraleLossWhenKilled: 150
     canPanic: false
     value: 50
     canBeMindControlled: false
-    energyRecovery: 50
+    energyRecovery: 80
     livingWeapon: true
     meleeWeapon: STR_DREAD_MELEE_WEAPON
     builtInWeaponSets:
@@ -215,15 +215,44 @@ units:
       - - STR_SONIC_GRENADE
       - - STR_DAEMONETTESPAWNER_GRENADE
 
-  - type: STR_FLAMER_TERRORIST
+  - type: STR_CHAOS_BASIC_BEHEMOTH
+    race: STR_SLAANESH
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 62
+      stamina: 90
+      health: 160
+      bravery: 110
+      reactions: 64
+      firing: 70
+      throwing: 0
+      strength: 100
+      psiStrength: 100
+      psiSkill: 0
+      melee: 80
+    armor: BASIC_BEHEMOTH_ARMOR
+    standHeight: 23
+    kneelHeight: 16
+    value: 30
+    deathSound: [{mod: 40k, index: 859}, {mod: 40k, index: 860}]
+    intelligence: 2
+    aggression: 2
+    canPanic: false
+    value: 40
+    energyRecovery: 70
+    moveSound: {mod: 40k, index: 700}
+    livingWeapon: true
+    meleeWeapon: STR_DREAD_MELEE_WEAPON
+
+  - type: STR_FLAMER_TERRORIST #Lesser Daemon Flamer
     race: STR_TZEENTCH
     rank: STR_LIVE_TERRORIST
     stats:
-      tu: 80
+      tu: 70
       stamina: 80
-      health: 120
+      health: 100
       bravery: 110
-      reactions: 79
+      reactions: 50
       firing: 69
       throwing: 0
       strength: 100
@@ -241,6 +270,41 @@ units:
     canBeMindControlled: false
     moraleLossWhenKilled: 75
     energyRecovery: 40
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_TZEENTCH_FLAMER_WEAPON_PINK_LESSER
+      - - STR_TZEENTCH_FLAMER_WEAPON_PINK_LESSER
+      - - STR_TZEENTCH_FLAMER_WEAPON_PINK_LESSER
+        - STR_TZEENTCH_GLIMMERING_WEAPON_SCATTER
+
+  - type: STR_EXALTED_FLAMER_TERRORIST
+    race: STR_TZEENTCH
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 80
+      stamina: 80
+      health: 140
+      bravery: 110
+      reactions: 79
+      firing: 69
+      throwing: 0
+      strength: 100
+      psiStrength: 50
+      psiSkill: 1
+      melee: 80
+    armor: STR_EXALTED_FLAMER_ARMOR
+    standHeight: 21
+    kneelHeight: 16
+    value: 25
+    deathSound: [{mod: 40k, index: 686}, {mod: 40k, index: 687}]
+    spotter: 1
+    sniper: 50
+    intelligence: 2
+    aggression: 8 #aggressive lesser daemon
+    canBeMindControlled: false
+    canPanic: false
+    avoidsFire: false
+    energyRecovery: 60
     livingWeapon: true
     builtInWeaponSets:
       - - STR_TZEENTCH_FLAMER_WEAPON_PINK
@@ -266,7 +330,7 @@ units:
       psiSkill: 59
       melee: 69
     armor: STR_PINKHORROR_ARMOR
-    standHeight: 20
+    standHeight: 18
     kneelHeight: 15
     value: 20
     deathSound: [{mod: 40k, index: 686},{mod: 40k, index: 687}]
@@ -275,7 +339,6 @@ units:
     berserkChance: 99
     spotter: 1
     sniper: 50
-    spawnUnit: STR_BLUE_HORROR_TERRORIST
     canPanic: false
     canBeMindControlled: false
     moraleLossWhenKilled: 75
@@ -284,11 +347,14 @@ units:
     builtInWeaponSets:
       - - STR_PINK_HORROR_CORUSCATING_FLAMES #Indigo fire Horror Mutator
         - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
+        - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
       - - STR_PINK_HORROR_CORUSCATING_FLAMES
         - STR_RED_FIRE
         - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
+        - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
       - - STR_PINK_HORROR_CORUSCATING_FLAMES
         - STR_BLUE_FIRE_WEAPON
+        - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
         - STR_PINK_HORROR_DEATH_GRENADE #spawns Blue Horror on death
 
   - type: STR_BLUE_HORROR_TERRORIST
@@ -307,7 +373,7 @@ units:
       psiSkill: 19
       melee: 59
     armor: STR_BLUEHORROR_ARMOR
-    standHeight: 20
+    standHeight: 15
     kneelHeight: 15
     value: 10
     deathSound: [{mod: 40k, index: 686},{mod: 40k, index: 687}]
@@ -321,13 +387,61 @@ units:
     moraleLossWhenKilled: 50
     energyRecovery: 69
     livingWeapon: true
-    specab: 1
     builtInWeaponSets:
       - - BLUE_HORROR_WEAPON #Indigo fire Horror Mutator
+        - STR_BLUE_HORROR_DEATH_GRENADE
+        - STR_BLUE_HORROR_DEATH_GRENADE
       - - STR_TZEENTCH_GLIMMERING_WEAPON_SCATTER
         - BLUE_HORROR_WEAPON #Indigo fire Horror Mutator
+        - STR_BLUE_HORROR_DEATH_GRENADE
+        - STR_BLUE_HORROR_DEATH_GRENADE
       - - STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles
         - BLUE_HORROR_WEAPON #Indigo fire Horror Mutator
+        - STR_BLUE_HORROR_DEATH_GRENADE
+        - STR_BLUE_HORROR_DEATH_GRENADE
+
+  - type: STR_BRIMSTONE_HORROR
+    race: STR_TZEENTCH
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 99 #quick but fragile
+      stamina: 79
+      health: 19
+      bravery: 110
+      reactions: 69
+      firing: 49
+      throwing: 49
+      strength: 29
+      psiStrength: 59
+      psiSkill: 0
+      melee: 59
+    armor: STR_BRIMSTONE_HORROR_ARMOR
+    standHeight: 12
+    kneelHeight: 12
+    value: 1 #suicidal troops
+    deathSound: [{mod: 40k, index: 686},{mod: 40k, index: 687}]
+    intelligence: 1
+    aggression: 8
+    avoidsFire: false #immune to fire; it doesn't care
+    isLeeroyJenkins: true #rushes players
+    berserkChance: 99
+    spotter: 1
+    canPanic: false
+    canBeMindControlled: false
+    moraleLossWhenKilled: 1 #no one cares; miserable little suicide daemon
+    energyRecovery: 69
+    livingWeapon: true
+    specab: 3
+    builtInWeaponSets:
+      - - STR_BRIMSTONE_HORROR_FIRE #for reaction fire
+        - STR_BRIMSTONE_HORROR_CLAWS
+        - STR_BRIMSTONE_HORROR_DEATH_GRENADE
+      - - STR_BRIMSTONE_HORROR_FIRE #for reaction fire
+        - STR_BRIMSTONE_HORROR_CLAWS
+        - STR_BRIMSTONE_HORROR_DEATH_GRENADE
+      - - STR_BRIMSTONE_HORROR_FIRE #for reaction fire
+        - STR_BRIMSTONE_HORROR_CLAWS
+        - STR_BRIMSTONE_HORROR_DEATH_GRENADE
 
   - type: STR_SCREAMER_TERRORIST
     race: STR_TZEENTCH
@@ -1851,6 +1965,115 @@ units:
       - - STR_KHORNE_VALKIA_WEAPON_MELEE_ONLY
         - STR_INTIMIDATION_WEAPON
 
+#kharn start
+
+  - type: STR_KHARN
+    race: STR_KHORNE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 150
+      stamina: 180
+      health: 200
+      bravery: 100
+      reactions: 70
+      firing: 100
+      throwing: 80
+      strength: 200
+      psiStrength: 100
+      psiSkill: 0
+      melee: 180
+    armor: STR_KHARN_ARMOR
+    avoidsFire: false #doesn't really care
+    intelligence: 4
+    aggression: 8
+    spotter: 2
+    sniper: 75
+    value: 30
+    livingWeapon: true
+    energyRecovery: 60
+    standHeight: 21
+    isLeeroyJenkins: true
+    builtInWeaponSets:
+      - - STR_GORECHILD_AXE
+        - STR_INTIMIDATION_KHARN
+      - - STR_GORECHILD_AXE
+        - STR_INTIMIDATION_KHARN
+      - - STR_GORECHILD_AXE
+        - STR_INTIMIDATION_KHARN
+
+  - type: STR_KHARN2
+    race: STR_KHORNE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 150
+      stamina: 180
+      health: 200
+      bravery: 100
+      reactions: 70
+      firing: 100
+      throwing: 80
+      strength: 200
+      psiStrength: 100
+      psiSkill: 0
+      melee: 180
+    armor: STR_KHARN_ARMOR2
+    avoidsFire: false #doesn't really care
+    intelligence: 4
+    aggression: 8
+    spotter: 2
+    sniper: 75
+    value: 30
+    livingWeapon: true
+    energyRecovery: 60
+    standHeight: 21
+    builtInWeaponSets:
+      - - STR_GORECHILD_AXE
+        - STR_PLASMA_PISTOL
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+      - - STR_GORECHILD_AXE
+        - STR_PLASMA_PISTOL
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+      - - STR_GORECHILD_AXE
+        - STR_PLASMA_PISTOL
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+        - STR_PLASMA_PISTOL_CLIP
+
+  - type: STR_KHARN3
+    race: STR_KHORNE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 150
+      stamina: 180
+      health: 200
+      bravery: 100
+      reactions: 70
+      firing: 100
+      throwing: 80
+      strength: 200
+      psiStrength: 100
+      psiSkill: 0
+      melee: 180
+    armor: STR_KHARN_ARMOR3
+    avoidsFire: false #doesn't really care
+    intelligence: 4
+    aggression: 8
+    spotter: 2
+    sniper: 75
+    value: 30
+    livingWeapon: true
+    energyRecovery: 60
+    standHeight: 21
+    builtInWeaponSets:
+      - - STR_GORECHILD_AXE_CHAINTHROW # the throwing version
+      - - STR_GORECHILD_AXE_CHAINTHROW # the throwing version
+      - - STR_GORECHILD_AXE_CHAINTHROW # the throwing version
+
+#kharn end
 
   - type: STR_KHORNE_UNGOR      #Khorngors Early                                 # RANK 5 weapons done
     race: STR_KHRONE
@@ -4585,46 +4808,42 @@ units:
         - STR_MGRENADE
         - STR_MGRENADE
 
-  - type: STR_ULTRA_CATAPHRACT_AI
+  - type: STR_BLACKLEG_SATURNINE #these are basically the best of the best among Chaos forces
     race: STR_ETHEREAL
     rank: STR_LIVE_SOLDIER
     stats:
       tu: 60
       stamina: 180
-      health: 180
+      health: 200
       bravery: 110
-      reactions: 70 #
+      reactions: 50
       firing: 110
-      throwing: 80
-      strength: 180
-      psiStrength: 100
+      throwing: 90
+      strength: 200
+      psiStrength: 110
       psiSkill: 0
-      melee: 100
-    armor: STR_ULTRAcataphract_ARMOR
+      melee: 110
+    armor: STR_BLACKLEGsaturn_ARMOR
+    aggroSound: {mod: 40k, index: 805}
+    deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, { mod: 40k, index: 725}, { mod: 40k, index: 726}, { mod: 40k, index: 727}, { mod: 40k, index: 728}, { mod: 40k, index: 729}, { mod: 40k, index: 730}, { mod: 40k, index: 731}, { mod: 40k, index: 732}]
     avoidsFire: false #doesn't really care
     intelligence: 5
-    aggression: 6
+    aggression: 8
     spotter: 2
-    sniper: 60
+    sniper: 90
     value: 30
     livingWeapon: true
     energyRecovery: 60
     standHeight: 21
     builtInWeaponSets:
-      - - STR_LASCAN
-        - STR_LASCAN_CLIP
-        - STR_LASCAN_CLIP
-      - - STR_LASCAN
-        - STR_LASCAN_CLIP
-        - STR_LASCAN_CLIP
+      - - STR_CHAOS_LASCANNON_HANDHELD
+      - - STR_CHAOS_LASCANNON_HANDHELD
         - STR_MGRENADE
       - - STR_HEAVY_PLASMA
         - STR_HEAVY_PLASMA_CLIP
         - STR_HEAVY_PLASMA_CLIP
         - STR_MGRENADE
         - STR_MGRENADE
-
-
 
 #dungeon specific end
 
@@ -4840,7 +5059,7 @@ units:
         - STR_FLAMERSPAWNER_GRENADE
         - STR_PINKHORRORSPAWNER_GRENADE
         - STR_PINKHORRORSPAWNER_GRENADE
-      - - STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE
+      - - STR_PINK_FIRE_MAGIC_MISSILE
         - STR_TZEENTCH_BOLT_OF_CHANGE
         - STR_PINKHORRORSPAWNER_GRENADE
         - STR_PINKHORRORSPAWNER_GRENADE
@@ -5067,7 +5286,7 @@ units:
       firing: 48
       throwing: 48
       strength: 118 #Bloodletters are superhumanly strong.
-      psiStrength: 110 #Bloodletters are protected by Khorne
+      psiStrength: 118 #Bloodletters are protected by Khorne
       psiSkill: 0
       melee: 118 #these are Bloodletters; their Melee Skill is very high
     armor: STR_SILACOID_ARMORT
@@ -5086,6 +5305,49 @@ units:
     livingWeapon: true
     builtInWeaponSets:
       - - STR_SILACOID_WEAPON
+      - - STR_SILACOID_WEAPON
+      - - STR_SILACOID_WEAPON
+
+  - type: STR_BLOODREAPER #khorne Deamon; Bloodreaper; exalted Bloodletter
+    race: STR_SILACOID
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 118 #Increased from 80. Why did Bloodletters have less TUs than Plaguebearers? These guys are fast; not quite as fast as Daemonettes though
+      stamina: 188 #tireless
+      health: 188
+      bravery: 120 #stronger intimidate
+      reactions: 108 #Increased from 40; Bloodletters have high reactions. Beyond this it helps them avoid being mowed down before they close ranks.
+      firing: 48
+      throwing: 48
+      strength: 148 #Bloodletters are superhumanly strong; especially the greatest among them
+      psiStrength: 188 #Bloodletters are protected by Khorne
+      psiSkill: 0
+      melee: 148 #these are Bloodletters; their Melee Skill is very high; especially the greatest among them
+    standHeight: 10
+    kneelHeight: 10
+    armor: STR_BLOODREAPER_ARMOR
+    intelligence: 2
+    aggression: 8 #maximum aggression; it's a Bloodletter
+    aggroSound: [2413, 2414] #bloodlust
+    deathSound: {mod: 40k, index: 737}
+    moveSound: -1
+    berserkChance: 99
+    energyRecovery: 88 #tireless
+    canPanic: false
+    value: 28
+    canBeMindControlled: false
+    moraleLossWhenKilled: 188
+    isLeeroyJenkins: true
+    avoidsFire: false
+    specab: 2
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_SILACOID_WEAPON
+        - STR_INTIMIDATION_WEAPON #basic loadouts
+      - - STR_SILACOID_WEAPON
+        - STR_INTIMIDATION_WEAPON #basic loadouts
+      - - STR_SILACOID_WEAPON
+        - STR_INTIMIDATION_WEAPON #basic loadouts
 
   - type: STR_KHORNE_DEMIBLOODLETTERIN #khorne valkyria
     race: STR_KHORNE_SISTER
@@ -6518,6 +6780,7 @@ units:
   - type: STR_ALPHA_SOLDIER_ULTRA #Alpha Legionnaire disguised as Ultramarine
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
     rank: STR_LIVE_SOLDIER
+    liveAlien: ""
     stats:
       tu: 80
       stamina: 96
@@ -6565,6 +6828,7 @@ units:
   - type: STR_ALPHA_SCOUT_ULTRA  #Alpha Legionnaire disguised as Ultramarine
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
     rank: STR_LIVE_SOLDIER
+    liveAlien: ""
     stats:
       tu: 80
       stamina: 96
@@ -6613,6 +6877,7 @@ units:
   - type: STR_ALPHA_SARGE_ULTRA #Alpha Legionnaire disguised as Ultramarine
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
     rank: STR_LIVE_LEADER
+    liveAlien: ""
     stats:
       tu: 80
       stamina: 96
@@ -6659,6 +6924,7 @@ units:
   - type: STR_ALPHA_DEV_ULTRA #Alpha Legionnaire disguised as Ultramarine Devastator
     race: STR_ALPHA_SOLDIER_ULTRA #Loyalist Marine fakeout
     rank: STR_LIVE_LEADER
+    liveAlien: ""
     stats:
       tu: 80
       stamina: 96
@@ -6865,6 +7131,7 @@ units:
 
   - type: STR_ALPHA_GREYKNIGHT_CATAPHRACT #FAKE GREY KNIGHT                     RANK 5 weapons done
     refNode: *STR_ALPHA_GK_TEMPLATE
+    liveAlien: ""
     stats:
       tu: 60
       stamina: 170
@@ -6879,132 +7146,6 @@ units:
       melee: 100
     armor: STR_ALPHA_GREYKNIGHT_ARMOR_CATAPHRACT
     intelligence: 5
-
-  - type: STR_DARK_APOSTLE_ALPHA #Alpha Legionnaire disguised as Cult Leader
-    race: STR_SECTOID
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 80
-      stamina: 96
-      health: 45 #decoy health is half normal health
-      bravery: 100
-      reactions: 75
-      firing: 100
-      throwing: 80
-      strength: 60
-      psiStrength: 70
-      psiSkill: 0
-      melee: 80
-    armor: STR_DARK_APOSTLE_ALPHA_ARMOR
-    intelligence: 4
-    aggression: 1
-    berserkChance: 70
-    standHeight: 20
-    kneelHeight: 15
-    spotter: 4
-    sniper: 90
-    energyRecovery: 60
-    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    #spawnUnitFaction: -1
-    value: 10 #these don't actually die
-    moraleLossWhenKilled: 50 #these don't actually die
-    livingWeapon: true
-    builtInWeaponSets:
-          - - STR_STUB_RIFLE_CHAOS
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_AP
-            - STR_KRAK_GRENADE
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_ALIEN_GRENADE
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_MGRENADE
-
-  - type: STR_DARK_APOSTLE_ALPHA_RITUALIST #Alpha Legionnaire disguised as Cult Leader
-    race: STR_SECTOID
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 80
-      stamina: 96
-      health: 45 #decoy health is half normal health
-      bravery: 100
-      reactions: 85
-      firing: 80
-      throwing: 80
-      strength: 60
-      psiStrength: 70
-      psiSkill: 0
-      melee: 90
-    armor: STR_DARK_APOSTLE_ALPHA_RITUALIST_ARMOR
-    intelligence: 4
-    aggression: 1
-    berserkChance: 70
-    standHeight: 20
-    kneelHeight: 15
-    spotter: 4
-    sniper: 50
-    energyRecovery: 60
-    deathSound: {mod: 40k, index: 826} #need a suitable decloaking noise right now its Feel the Hand of Chaos
-    value: 10 #these don't actually die
-    moraleLossWhenKilled: 50 #these don't actually die
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_CPOWER_DAGGER
-      - - STR_CPOWER_DAGGER
-        - STR_STUB_GUN_CHAOS
-        - STR_STUB_GUN_AMMO
-      - - STR_CPOWER_DAGGER
-        - STR_LASER_PISTOLC
-        - STR_LASPISTOL_CLIP
-        - STR_ALIEN_GRENADE
-
-  - type: STR_SECTOID_DARKDISCIPLE_ALPHA     #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO ALPHA BEAKIE
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 80
-      stamina: 96
-      health: 45 #decoy health is half normal health
-      bravery: 100
-      reactions: 85
-      firing: 80
-      throwing: 80
-      strength: 60
-      psiStrength: 70
-      psiSkill: 0
-      melee: 90
-    armor: STR_DARK_DISCIPLE_ARMOR_ALPHA
-    standHeight: 20
-    kneelHeight: 15
-    value: 10 #these don't actually die
-    moraleLossWhenKilled: 50 #these don't actually die
-    deathSound: {mod: 40k, index: 540} #Female Stealth Mode Engaged
-    #spawnUnitFaction: -1
-    intelligence: 4
-    aggression: 8
-    berserkChance: 66
-    energyRecovery: 40
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_BOLTER_HERETIC_DEAZ
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_LIGHT_BOLTER_AMMO
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-        - STR_ALIEN_GRENADE
-      - - STR_GRAVGUN_AOE_CHAOS
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_ALIEN_GRENADE
 
   - type: STR_CHRYSSALID_TERRORIST #Daemonette
     race: STR_CHRYSSALID
@@ -9255,14 +9396,14 @@ units:
       tu: 128
       stamina: 128
       health: 148
-      bravery: 120
+      bravery: 120 #stronger intimidate
       reactions: 98
       firing: 88
       throwing: 88
-      strength: 138
+      strength: 188 #terminator armor
       psiStrength: 188
       psiSkill: 0
-      melee: 138
+      melee: 148
     armor: STR_KHORNECHAMP_ARMOR
     intelligence: 4
     aggression: 8
@@ -9285,7 +9426,7 @@ units:
         - STR_PLASMA_PISTOL_CLIP
         - STR_BLOODLETTERSPAWNER_GRENADE
         - STR_MGRENADE
-      - - STR_KHORNE_BERSERKER_AXE
+      - - STR_SILACOID_WEAPON
         - STR_CHB
         - STR_HB_CLIP_MC
         - STR_HB_CLIP_MC
@@ -9293,407 +9434,6 @@ units:
         - STR_BLOODLETTERSPAWNER_GRENADE
         - STR_MGRENADE
         - STR_MGRENADE
-
-  - type: STR_SECTOID_ENGINEER
-    armor: STR_CULTIST_ARMOR
-    standHeight: 21
-    kneelHeight: 16
-    value: 10
-    deathSound: [{mod: 40k, index: 733}, {mod: 40k, index: 734}, {mod: 40k, index: 735}, {mod: 40k, index: 736}]
-    intelligence: 1
-    aggression: 2
-    spotter: 1
-    moveSound: -1
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_STUB_GUN_CHAOS
-        - STR_STUB_GUN_AMMO
-        - STR_STUB_GUN_AMMO
-        - STR_KNIF
-        - STR_SMOKE_GRENADE
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_BOLTPISTOL_CHAOS
-        - STR_PISTOL_CLIP
-        - STR_PISTOL_CLIP
-        - STR_PISTOL_CLIP
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-  - type: STR_SECTOID_MEDIC
-    stats:
-      tu: 54
-      stamina: 90
-      health: 40
-      bravery: 80
-      reactions: 50
-      firing: 40
-      throwing: 58
-      strength: 30
-      psiStrength: 40
-      psiSkill: 0
-      melee: 76
-    armor: STR_SECTOID_ARMOR0
-    intelligence: 1
-    aggression: 1
-    spotter: 1
-    value: 5
-    livingWeapon: true
-    builtInWeaponSets:
-          - - STR_STUN_ROD
-            - STR_SMOKE_GRENADE
-            - STR_SMOKE_GRENADE
-          - - STR_STUB_GUN_CHAOS
-            - STR_STUB_GUN_AMMO
-            - STR_STUB_GUN_AMMO
-            - STR_KNIF
-            - STR_SMOKE_GRENADE
-            - STR_MAKESHIFT_GRENADE
-          - - STR_STUB_RIFLE_CHAOS
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_AP
-            - STR_SMOKE_GRENADE
-            - STR_MAKESHIFT_GRENADE
-  - type: STR_SECTOID_NAVIGATOR                                         # RANK 4 weapons done
-    stats:
-      tu: 54
-      stamina: 90
-      health: 30
-      bravery: 80
-      reactions: 55
-      firing: 45
-      throwing: 58
-      strength: 30
-      psiStrength: 40
-      psiSkill: 0
-      melee: 76
-    armor: STR_CULTIST_ARMOR
-    intelligence: 1
-    aggression: 2
-    spotter: 1
-    value: 8
-    livingWeapon: true
-    builtInWeaponSets:
-          -
-            - STR_STUB_RIFLE_CHAOS
-            - STR_STUB_GUN_AMMO_WOUND
-            - STR_STUB_GUN_AMMO_WOUND
-            - STR_MAKESHIFT_GRENADE
-          -
-            - STR_LASER_RIFLEC
-            - STR_LASGUN_CLIP
-            - STR_LASGUN_CLIP
-            - STR_GRENADE
-          -
-            - STR_AUTOGUN_CHAOS
-            - STR_AUTOGUN_CLIP
-            - STR_AUTOGUN_CLIP
-            - STR_MAKESHIFT_PIPEBOMB
-            - STR_MAKESHIFT_PIPEBOMB
-  - type: STR_SECTOID_LEADER                                            # RANK 1 weapons done
-    armor: STR_SECTOID_ARMORP
-    stats:
-      tu: 58
-      stamina: 90
-      health: 40
-      bravery: 80
-      reactions: 55
-      firing: 55
-      throwing: 58
-      strength: 40
-      psiStrength: 50
-      psiSkill: 0 #50
-      melee: 76
-    intelligence: 7
-    aggression: 3
-    spotter: 2
-    sniper: 75
-    value: 15
-    livingWeapon: true
-    builtInWeaponSets:
-          - - STR_STUB_RIFLE_CHAOS
-            - STR_STUB_GUN_AMMO_AP
-            - STR_STUB_GUN_AMMO_HP
-            - STR_STUB_GUN_AMMO_WOUND
-            - STR_MAKESHIFT_PIPEBOMB
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_KRAK_GRENADE
-          - - STR_SNIPER_CHAOS
-            - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_HC_AP_AMMO
-            - STR_MGRENADE
-  - type: STR_SECTOID_COMMANDER                                         # RANK0 weapons done
-    stats:
-      tu: 54
-      stamina: 90
-      health: 50
-      bravery: 90
-      reactions: 60
-      firing: 52
-      throwing: 58
-      strength: 40
-      psiStrength: 50
-      psiSkill: 30
-      melee: 76
-    armor: STR_SECTOID_ARMORP
-    moraleLossWhenKilled: 150 #Heavy morale loss for cult leader death, 150%
-    intelligence: 5
-    aggression: 0
-    spotter: 2
-    value: 20
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_SNIPER_CHAOS
-        - STR_HC_AP_AMMO #only 3 shots per, so we have 4 units for 12 shots total.
-        - STR_HC_AP_AMMO
-        - STR_HC_AP_AMMO
-        - STR_HC_AP_AMMO
-        - STR_BLOODLETTERSPAWNER_GRENADE
-        - STR_DAEMONETTESPAWNER_GRENADE
-        - STR_FLAMERSPAWNER_GRENADE
-        - STR_PLAGUEBEARERSPAWNER_GRENADE
-  - type: STR_SECTOID_SOLDIER                                           # RANK5 weapons done
-    stats:
-      tu: 54
-      stamina: 90
-      health: 30
-      bravery: 80
-      reactions: 50
-      firing: 40
-      throwing: 50
-      strength: 30
-      psiStrength: 40
-      psiSkill: 0
-      melee: 76
-    armor: STR_SECTOID_ARMOR0
-    moraleLossWhenKilled: 50 #chaff cultists
-    intelligence: 0
-    aggression: 2
-    value: 3
-    livingWeapon: true
-    builtInWeaponSets:
-          -
-            - STR_STUB_GUN_CHAOS
-            - STR_STUB_GUN_AMMO
-            - STR_STUB_GUN_AMMO
-            - STR_STUB_GUN_AMMO
-            - STR_KNIF
-            - STR_SMOKE_GRENADE
-            - STR_MAKESHIFT_GRENADE
-          -
-            - STR_LASER_PISTOLC
-            - STR_LASPISTOL_CLIP
-            - STR_LASPISTOL_CLIP
-            - STR_KNIF
-            - STR_MAKESHIFT_GRENADE
-          - - STR_AUTOGUN_CHAOS
-            - STR_AUTOGUN_CLIP
-            - STR_SMOKE_GRENADE
-            - STR_MAKESHIFT_PIPEBOMB
-  - type: STR_SECTOID_ASPIRING_CHAMPION       #Elite Sectoid Cultist Soldier
-    race: STR_SECTOID
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 65
-      stamina: 95
-      health: 60
-      bravery: 90
-      reactions: 68
-      firing: 60
-      throwing: 62
-      strength: 50
-      psiStrength: 65
-      psiSkill: 0
-      melee: 80
-    armor: STR_CULTIST_ASPIRING_ARMOR
-    standHeight: 21
-    kneelHeight: 16
-    deathSound: [{mod: 40k, index: 733}, {mod: 40k, index: 734},{mod: 40k, index: 735}, {mod: 40k, index: 736}]
-    intelligence: 2
-    aggression: 4
-    berserkChance: 70
-    spotter: 2
-    sniper: 25
-    energyRecovery: 40
-    value: 12
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_LASER_RIFLEC
-        - STR_LASGUN_CLIP
-        - STR_LASGUN_CLIP
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_LASER_RIFLEC
-        - STR_LASGUN_CLIP_HOTSHOT_CHAOS
-        - STR_LASGUN_CLIP_HOTSHOT_CHAOS
-        - STR_GRENADE
-      - - STR_CHAOS_RIPPERGUN
-        - STR_RIPPER_GUN_CLIP
-        - STR_RIPPER_GUN_CLIP
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_CHAOS_HELLGUN
-        - STR_KRAK_GRENADE
-
-
-  - type: STR_SECTOID_FEMCULTIST     #CHAOS FEMALE CULTIST FANATIC
-    race: STR_SECTOID
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 70
-      stamina: 90
-      health: 40
-      bravery: 90
-      reactions: 64
-      firing: 58
-      throwing: 45
-      strength: 40
-      psiStrength: 75
-      psiSkill: 0
-      melee: 75
-    armor: STR_FEM_CULTIST_ARMOR
-    standHeight: 20
-    kneelHeight: 15
-    value: 8
-    deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
-    intelligence: 0
-    aggression: 2
-    berserkChance: 66
-    energyRecovery: 40
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_CHAOS_ROCKET_LAUNCHER
-        - STR_INCENDIARY_ROCKET
-        - STR_INCENDIARY_ROCKET
-        - STR_SMALL_ROCKET
-      - - STR_CHAOS_LASCANNON_HANDHELD
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_CHAOS_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_MAKESHIFT_PIPEBOMB
-
-  - type: STR_SECTOID_DARKDISCIPLE     #CHAOS FEMALE CULTIST DARK DISCIPLE
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 65
-      stamina: 90
-      health: 50
-      bravery: 90
-      reactions: 64
-      firing: 62
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 75
-    armor: STR_DARK_DISCIPLE_ARMOR
-    standHeight: 20
-    kneelHeight: 15
-    value: 15
-    deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
-    intelligence: 1
-    aggression: 2
-    berserkChance: 66
-    energyRecovery: 40
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_BOLTER_HERETIC_DEAZ
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_MAKESHIFT_GRENADE
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-        - STR_MAKESHIFT_PIPEBOMB
-      - - STR_GRAVGUN_AOE_CHAOS
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_ALIEN_GRENADE
-
-  - type: STR_SECTOID_DARK_DISCIPLE_DAEMONETTE  #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO DAEMONETTE
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 65
-      stamina: 90
-      health: 30
-      bravery: 90
-      reactions: 64
-      firing: 62
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 75
-    armor: STR_DARK_DISCIPLE_ARMOR_DAEMONETTE
-    standHeight: 20
-    kneelHeight: 15
-    value: 15
-    deathSound: [2021, 2022]
-    spawnUnit: STR_CHRYSSALID_TERRORISTSELENE
-    #spawnUnitFaction: -1
-    intelligence: 3
-    aggression: 6
-    berserkChance: 66
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_CPOWER_DAGGER
-        - STR_ALIEN_GRENADE
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_KNIF
-      - - STR_CHAOS_MELTAGUN
-        - STR_MELTA_AMMO
-        - STR_MELTA_AMMO
-        - STR_KNIF
-
-  - type: STR_SECTOID_DARK_DISCIPLE_NEVERBORN  #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO NEVERBORN
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 65
-      stamina: 90
-      health: 30
-      bravery: 90
-      reactions: 64
-      firing: 62
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 75
-    armor: STR_DARK_DISCIPLE_ARMOR_NEVERBORN
-    standHeight: 20
-    kneelHeight: 15
-    value: 15
-    deathSound: [2021, 2022]
-    spawnUnit: STR_NEVERBORN_TERRORIST
-    #spawnUnitFaction: -1
-    intelligence: 3
-    aggression: 6
-    berserkChance: 66
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_KNIF
-      - - STR_CHAOS_MELTAGUN
-        - STR_MELTA_AMMO
-        - STR_MELTA_AMMO
-        - STR_KNIF
-      - - STR_CPOWER_DAGGER
-
-        - STR_ALIEN_GRENADE
 
   - type: STR_NEVERBORN_TERRORIST #CHAOS UNDIVIDED DAEMON NEVERBORN
     race: STR_NEVERBORN
@@ -9726,37 +9466,6 @@ units:
       - - STR_NEVERBORN_WEAPON
       - - STR_NEVERBORN_WEAPON
 
-  - type: STR_SECTOID_DARK_DISCIPLE_NEVERBORN_RITUALIST  #CHAOS FEMALE CULTIST DARK DISCIPLE TRANSFORMS INTO NEVERBORN
-    race: STR_SECTOID
-    rank: STR_LIVE_MEDIC
-    stats:
-      tu: 65
-      stamina: 90
-      health: 30
-      bravery: 90
-      reactions: 64
-      firing: 62
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 75
-    armor: STR_DARK_DISCIPLE_ARMOR_NEVERBORN_RITUALIST
-    standHeight: 20
-    kneelHeight: 15
-    value: 15
-    deathSound: [2021, 2022]
-    spawnUnit: STR_NEVERBORN_TERRORIST
-    intelligence: 3
-    aggression: 6
-    berserkChance: 66
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_KNIF
-      - - STR_KNIF
-      - - STR_KNIF
-
   - type: STR_CENTURION
     race: STR_CENTURION
     stats:
@@ -9777,130 +9486,6 @@ units:
       - - AUX_CENTURION_GRAVGUN
       - - AUX_CENTURION_GRAVGUN
       - - AUX_CENTURION_GRAVGUN
-
-  - type: STR_CULTIST_SQUATS #CHORF
-    race: STR_SECTOID
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 45
-      stamina: 95
-      health: 90
-      bravery: 90
-      reactions: 50
-      firing: 60
-      throwing: 50
-      strength: 45
-      psiStrength: 80
-      psiSkill: 0
-      melee: 60
-    armor: STR_CULTIST_SQUATS_ARMOR
-    standHeight: 16
-    kneelHeight: 12
-    deathSound: [{mod: 40k, index: 733}, {mod: 40k, index: 734}, {mod: 40k, index: 735}, {mod: 40k, index: 736}] #[2150, 2151, 2152, 2153]
-    moveSound: -1
-    moraleLossWhenKilled: 75
-    intelligence: 2
-    aggression: 2
-    spotter: 2
-    value: 15
-    sniper: 10
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_FLAMETHROWER_CHAOS
-        - STR_FLAMETHROWER_CLIP
-        - STR_FLAMETHROWER_CLIP
-      - - STR_CHAOS_RIPPERGUN
-        - STR_RIPPER_GUN_CLIP
-        - STR_RIPPER_GUN_CLIP
-      - - STR_CHAOS_MELTAGUN
-        - STR_MELTA_AMMO
-        - STR_MELTA_AMMO
-
-  - type: STR_CULTIST_SQUAT_HEAVY #CHORF
-    race: STR_SECTOID
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 40
-      stamina: 90
-      health: 95
-      bravery: 90
-      reactions: 45
-      firing: 60
-      throwing: 50
-      strength: 55
-      psiStrength: 80
-      psiSkill: 0
-      melee: 60
-    armor: STR_CULTIST_SQUATS_ARMOR
-    standHeight: 16
-    kneelHeight: 12
-    deathSound: [{mod: 40k, index: 733}, {mod: 40k, index: 734}, {mod: 40k, index: 735}, {mod: 40k, index: 736}] #[2150, 2151, 2152, 2153]
-    moveSound: -1
-    intelligence: 2
-    aggression: 2
-    spotter: 2
-    sniper: 75
-    value: 20
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_CHAOS_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_SMALL_ROCKET
-        - STR_SMALL_ROCKET
-      - - STR_CHAOS_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_LARGE_ROCKET
-      - - STR_CHAOS_ROCKET_LAUNCHER
-        - STR_LARGE_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_LARGE_ROCKET
-
-  - type: STR_CULTIST_SQUATS_LEADER #CHORF
-    race: STR_SECTOID
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 60
-      stamina: 100
-      health: 110
-      bravery: 110
-      reactions: 55
-      firing: 65
-      throwing: 60
-      strength: 60
-      psiStrength: 95
-      psiSkill: 0
-      melee: 70
-    armor: STR_CULTIST_SQUATS_ARMOR_LEADER
-    standHeight: 16
-    kneelHeight: 12
-    canPanic: false
-    deathSound: [{mod: 40k, index: 733}, {mod: 40k, index: 734}, {mod: 40k, index: 735}, {mod: 40k, index: 736}] #[2150, 2151, 2152, 2153]
-    moveSound: -1
-    canBeMindControlled: false
-    moraleLossWhenKilled: 110
-    intelligence: 4
-    aggression: 1
-    value: 25
-    spotter: 2
-    sniper: 50
-    energyRecovery: 50
-    livingWeapon: true
-    builtInWeaponSets:
-      - - STR_LIGHT_BOLTER_CHAOS
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_LIGHT_BOLTER_AMMO
-        - STR_KRAK_GRENADE
-      - - STR_SMALL_LAUNCHER
-        - STR_STUN_BOMB
-        - STR_STUN_BOMB
-        - STR_KRAK_GRENADE
-      - - STR_GRAVGUN_AOE_CHAOS
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_GRAVGUN_AOE_AMMO
-        - STR_MGRENADE
 
   - type: STR_TRAITOR_SQUATS #CHORF
     race: STR_SNAKEMAN
@@ -10238,7 +9823,7 @@ units:
 
   - type: STR_CATACHAN_FIGHTER_TRAITOR2 # flamer - melta
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 80
       stamina: 80
@@ -10279,7 +9864,7 @@ units:
 
   - type: STR_CATACHAN_FIGHTER_TRAITOR3 # heavy gun
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_NAVIGATOR
     stats:
       tu: 80
       stamina: 80
@@ -10295,9 +9880,8 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITOR_ARMOR2
-    avoidsFire: false #doesn't really care
     intelligence: 2
-    aggression: 1 #hangs back to provide fire support
+    aggression: 2 #hangs back to provide fire support
     spotter: 1
     sniper: 80
     value: 10
@@ -10321,7 +9905,7 @@ units:
 
   - type: STR_CATACHAN_FIGHTER_TRAITOR4 # explosion
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 80
       stamina: 80
@@ -10337,34 +9921,33 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITOR_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 2
-    aggression: 1 #hangs back
+    aggression: 2 #hangs back to provide fire support
     spotter: 1
     sniper: 80
     value: 10
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_MORTAR_PORTABLE_CHAOS
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
+      - - STR_ACCATRAN_ROCKET_LAUNCHER
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_PHOSPHOR_GRENADE
+      - - STR_ACCATRAN_ROCKET_LAUNCHER
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_LARGE_ROCKET
+      - - STR_ACCATRAN_ROCKET_LAUNCHER
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
         - STR_MGRENADE
-      - - STR_MORTAR_PORTABLE_CHAOS
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
-        - STR_MGRENADE
-      - - STR_MORTAR_PORTABLE_CHAOS
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
-        - STR_MORTAR_AMMO_HE
-        - STR_MGRENADE
+        - STR_PHOSPHOR_GRENADE
 
   - type: STR_CATACHAN_FIGHTER_TRAITOR5 # explosion
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 80
       stamina: 80
@@ -10380,25 +9963,24 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITOR_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 2
-    aggression: 8
+    aggression: 1 #hangs back to provide fire support
     spotter: 1
     sniper: 80
     value: 10
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_GRENADE_LAUNCHER
+      - - STR_GRENADE_LAUNCHER_CHAOS
         - STR_FRAG_GRENADE_DRUM
         - STR_FRAG_GRENADE_DRUM
         - STR_FRAG_GRENADE_DRUM
-      - - STR_GRENADE_LAUNCHER
+      - - STR_GRENADE_LAUNCHER_CHAOS
         - STR_PHOSPHOR_GRENADE_DRUM
         - STR_PHOSPHOR_GRENADE_DRUM
         - STR_PHOSPHOR_GRENADE_DRUM
         - STR_KRAK_GRENADE
-      - - STR_GRENADE_LAUNCHER
+      - - STR_GRENADE_LAUNCHER_CHAOS
         - STR_KRAK_GRENADE_DRUM
         - STR_KRAK_GRENADE_DRUM
         - STR_KRAK_GRENADE_DRUM
@@ -10452,8 +10034,7 @@ units:
         - STR_KRAK_GRENADE
         - STR_MGRENADE
 
-
-  - type: STR_CATACHAN_FIGHTERVET_TRAITOR # rifle - shotgun
+  - type: STR_CATACHAN_FIGHTERVET_TRAITOR #Veteran rifle - shotgun
     race: STR_ALIEN
     rank: STR_LIVE_SOLDIER
     stats:
@@ -10480,24 +10061,23 @@ units:
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_AUTOCARBINE_NAVY
-        - STR_AUTOGUN_CLIP_DRUM
-        - STR_AUTOGUN_CLIP_DRUM
+      - - STR_SHOTGUN_CHAOS
+        - STR_SHOTGUN_SHELLS
+        - STR_SHOTGUN_SHELLS
+        - STR_SHOTGUN_SHELLS
         - STR_GRENADE
       - - STR_AUTOCARBINE_NAVY
-        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
-        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
-        - STR_MGRENADE
+        - STR_AUTOGUN_CLIP_DRUM
+        - STR_AUTOGUN_CLIP_DRUM
         - STR_KRAK_GRENADE
       - - STR_AUTOCARBINE_NAVY
         - STR_AUTOGUN_CLIP_DRUM_KRAKEN
         - STR_AUTOGUN_CLIP_DRUM_KRAKEN
         - STR_MGRENADE
-        - STR_MGRENADE
 
-  - type: STR_CATACHAN_FIGHTERVET_TRAITOR2 # flamer - melta
+  - type: STR_CATACHAN_FIGHTERVET_TRAITOR2 #Veteran flamer - melta
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 90  #80
       stamina: 90  #80
@@ -10542,7 +10122,7 @@ units:
 
   - type: STR_CATACHAN_FIGHTERVET_TRAITOR3 # heavy gun
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_NAVIGATOR
     stats:
       tu: 90  #80
       stamina: 90  #80
@@ -10558,18 +10138,17 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITORVET_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 3
-    aggression: 8
+    aggression: 2
     spotter: 1
     sniper: 80
     value: 20
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_ROTOR_CANNON_BLACK
-        - STR_ROTOR_CANNON_AMMO
-        - STR_ROTOR_CANNON_AMMO
+      - - STR_HEAVY_STUBBER_CHAOS
+        - STR_AC_AP_AMMO
+        - STR_AC_AP_AMMO
         - STR_GRENADE
       - - STR_ROTOR_CANNON_BLACK
         - STR_ROTOR_CANNON_AMMO
@@ -10584,7 +10163,7 @@ units:
 
   - type: STR_CATACHAN_FIGHTERVET_TRAITOR4 # explosion
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 90  #80
       stamina: 90  #80
@@ -10602,34 +10181,39 @@ units:
     armor: STR_CATACHAN_TRAITORVET_ARMOR
     avoidsFire: false #doesn't really care
     intelligence: 3
-    aggression: 8
+    aggression: 1
     spotter: 1
     sniper: 80
     value: 20
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_GRENADE
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_SMALL_ROCKET
+        - STR_MGRENADE
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_INCENDIARY_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_INCENDIARY_ROCKET
+        - STR_MGRENADE
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
+        - STR_LARGE_ROCKET
         - STR_MGRENADE
         - STR_KRAK_GRENADE
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_MGRENADE
-        - STR_MGRENADE
 
   - type: STR_CATACHAN_FIGHTERVET_TRAITOR5 # grenadier
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 90  #80
       stamina: 90  #80
@@ -10645,30 +10229,42 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITORVET_ARMOR
-    avoidsFire: false #doesn't really care
+    avoidsFire: true
     intelligence: 3
-    aggression: 8
+    aggression: 1
     spotter: 1
     sniper: 80
     value: 20
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
+      - - STR_STUBCANNON_GUARD
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
+        - STR_INCENDIARY_GRENADE40
         - STR_GRENADE
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
+      - - STR_STUBCANNON_GUARD
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
         - STR_MGRENADE
         - STR_KRAK_GRENADE
-      - - STR_GRENADE_LAUNCHER_STEEL_LEGION
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
-        - STR_KRAK_GRENADE_DRUM
+      - - STR_STUBCANNON_GUARD
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
         - STR_MGRENADE
         - STR_MGRENADE
 
@@ -10699,31 +10295,23 @@ units:
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_SMG_STUB_GUN_CHAOS
-        - STR_AXE
-        - STR_STUB_GUN_AMMO_AP
-        - STR_STUB_GUN_AMMO_AP
-        - STR_STUB_GUN_AMMO_AP
+      - - STR_CHAOS_RIPPERGUN
+        - STR_RIPPER_GUN_CLIP
+        - STR_RIPPER_GUN_CLIP
         - STR_GRENADE
         - STR_KRAK_GRENADE
-      - - STR_RIPPER_PISTOL
-        - STR_AXE
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
+      - - STR_CHAOS_RIPPERGUN
+        - STR_RIPPER_GUN_CLIP_INC
+        - STR_RIPPER_GUN_CLIP_INC
+        - STR_KRAK_GRENADE
+        - STR_KRAK_GRENADE
+      - - STR_CHAOS_RIPPERGUN
+        - STR_RIPPER_GUN_CLIP_AP
+        - STR_RIPPER_GUN_CLIP_AP
         - STR_KRAK_GRENADE
         - STR_MGRENADE
-      - - STR_RIPPER_PISTOL
-        - STR_AXE
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_RIPPER_PISTOL_AMMO
-        - STR_MGRENADE
-        - STR_MGRENADE
 
-  - type: STR_CATACHAN_FIGHTERTOP_TRAITOR # rifle shotgun
+  - type: STR_CATACHAN_FIGHTERTOP_TRAITOR # Heavy Stubber Assault
     race: STR_ALIEN
     rank: STR_LIVE_SOLDIER
     stats:
@@ -10750,22 +10338,28 @@ units:
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_HEAVY_STUBBER_ASSAULT
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_HEAVY_STUBBER_CLIP
+      - - STR_CHAOS_RIPPERGUN
+        - STR_RIPPER_GUN_CLIP_AP
+        - STR_RIPPER_GUN_CLIP_AP
         - STR_MGRENADE
-      - - STR_HEAVY_STUBBER_ASSAULT
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_HEAVY_STUBBER_CLIP
+      - - STR_AUTOGUN_HIGHGRADE_UNDERSLUNG
+        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE40
+        - STR_KRAK_GRENADE
         - STR_MGRENADE
-      - - STR_HEAVY_STUBBER_ASSAULT
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_HEAVY_STUBBER_CLIP
+      - - STR_AUTOGUN_HIGHGRADE_UNDERSLUNG
+        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+        - STR_AUTOGUN_CLIP_DRUM_KRAKEN
+        - STR_MELTA_GRENADE40
+        - STR_MELTA_GRENADE40
+        - STR_MGRENADE
         - STR_MGRENADE
 
   - type: STR_CATACHAN_FIGHTERTOP_TRAITOR2 # flamer
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 100  #90
       stamina: 100  #90
@@ -10781,9 +10375,8 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITORTOP_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 4
-    aggression: 8
+    aggression: 2
     spotter: 1
     sniper: 80
     value: 40
@@ -10798,14 +10391,17 @@ units:
         - STR_HFLAMER_CLIP
         - STR_PHOSPHOR_GRENADE
         - STR_MGRENADE
-      - - STR_HFLAMER
-        - STR_HFLAMER_CLIP
-        - STR_PHOSPHOR_GRENADE
+      - - STR_BLASTER_LAUNCHER #Multimelta
+        - STR_BLASTER_BOMB
+        - STR_BLASTER_BOMB
+        - STR_BLASTER_BOMB
+        - STR_BLASTER_BOMB
+        - STR_MGRENADE
         - STR_MGRENADE
 
   - type: STR_CATACHAN_FIGHTERTOP_TRAITOR3 # gunner
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_NAVIGATOR
     stats:
       tu: 100  #90
       stamina: 100  #90
@@ -10823,7 +10419,7 @@ units:
     armor: STR_CATACHAN_TRAITORTOP_ARMOR
     avoidsFire: false #doesn't really care
     intelligence: 4
-    aggression: 8
+    aggression: 1
     spotter: 1
     sniper: 80
     value: 40
@@ -10841,11 +10437,12 @@ units:
       - - STR_ROTOR_CANNON_BLACK
         - STR_ROTOR_CANNON_KRAKEN_AMMO
         - STR_ROTOR_CANNON_KRAKEN_AMMO
+        - STR_MGRENADE
         - STR_PHOSPHOR_GRENADE
 
   - type: STR_CATACHAN_FIGHTERTOP_TRAITOR4 # explosion
     race: STR_ALIEN
-    rank: STR_LIVE_SOLDIER
+    rank: STR_LIVE_ENGINEER
     stats:
       tu: 100  #90
       stamina: 100  #90
@@ -10861,29 +10458,35 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITORTOP_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 4
-    aggression: 8
+    aggression: 1
     spotter: 1
     sniper: 80
     value: 40
     energyRecovery: 30
     standHeight: 21
     builtInWeaponSets:
-      - - STR_ACCATRAN_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_SMALL_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_PHOSPHOR_GRENADE
-      - - STR_ACCATRAN_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_SMALL_ROCKET
-        - STR_LARGE_ROCKET
-      - - STR_ACCATRAN_ROCKET_LAUNCHER
-        - STR_SMALL_ROCKET
-        - STR_SMALL_ROCKET
-        - STR_LARGE_ROCKET
-        - STR_PHOSPHOR_GRENADE
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_HEAVY_ROCKET_HE
+        - STR_HEAVY_ROCKET_HE
+        - STR_HEAVY_ROCKET_HE
+        - STR_HEAVY_ROCKET_HE
+        - STR_HEAVY_ROCKET_HE
+        - STR_MGRENADE
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_HEAVY_ROCKET_KRAK
+        - STR_HEAVY_ROCKET_KRAK
+        - STR_HEAVY_ROCKET_KRAK
+        - STR_HEAVY_ROCKET_KRAK
+        - STR_HEAVY_ROCKET_KRAK
+        - STR_MGRENADE
+      - - STR_CHAOS_ROCKET_LAUNCHER
+        - STR_HEAVY_ROCKET
+        - STR_HEAVY_ROCKET
+        - STR_HEAVY_ROCKET
+        - STR_HEAVY_ROCKET
+        - STR_HEAVY_ROCKET
+        - STR_MGRENADE
 
   - type: STR_CATACHAN_FIGHTERTOP_TRAITOR5 # grenadier
     race: STR_ALIEN
@@ -10903,15 +10506,13 @@ units:
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     armor: STR_CATACHAN_TRAITORTOP_ARMOR
-    avoidsFire: false #doesn't really care
     intelligence: 4
-    aggression: 8
+    aggression: 1
     spotter: 1
     sniper: 80
     value: 40
     energyRecovery: 30
     standHeight: 21
-    builtInWeaponSets:
     builtInWeaponSets:
       - - STR_GRENADE_LAUNCHER_STEEL_LEGION
         - STR_KRAK_GRENADE_DRUM
@@ -10959,14 +10560,14 @@ units:
     standHeight: 21
     builtInWeaponSets:
       - - STR_SMG_STUB_GUN_CHAOS
-        - STR_AXE
+        - STR_KHORNE_BERSERKER_AXE
         - STR_STUB_GUN_AMMO_AP
         - STR_STUB_GUN_AMMO_AP
         - STR_STUB_GUN_AMMO_AP
         - STR_GRENADE
         - STR_KRAK_GRENADE
       - - STR_RIPPER_PISTOL
-        - STR_AXE
+        - STR_KHORNE_BERSERKER_AXE
         - STR_RIPPER_PISTOL_AMMO
         - STR_RIPPER_PISTOL_AMMO
         - STR_RIPPER_PISTOL_AMMO
@@ -10974,7 +10575,7 @@ units:
         - STR_KRAK_GRENADE
         - STR_MGRENADE
       - - STR_RIPPER_PISTOL
-        - STR_AXE
+        - STR_KHORNE_BERSERKER_AXE
         - STR_RIPPER_PISTOL_AMMO
         - STR_RIPPER_PISTOL_AMMO
         - STR_RIPPER_PISTOL_AMMO
@@ -10984,111 +10585,3 @@ units:
 
 
 #                 #                                        #                      #
-
-#*** Marine strategy wargear packages ***
-manufacture:
-
-#--------------------------------------------------------------- HONOR BADGES --------------------------------
-
-
-#--------------------------------------------------------------- PROMOTION --------------------------------
-
-  - name: STR_INFERNO_PISTOL
-    category: STR_WEAPON
-    requires:
-      - STR_HEAVY_LASER
-      - STR_ADEPTAS
-    space: 0
-    time: 300
-    cost: 12000
-    requiredItems:
-      STR_ALIEN_ALLOYS: 2
-
-  - name: STR_INFERNO_PISTOL_AMMO
-    category: STR_AMMUNITION
-    requires:
-      - STR_HEAVY_LASER
-      - STR_ADEPTAS
-    space: 0
-    time: 200
-    cost: 5000
-    requiredItems:
-      STR_ELERIUM_115: 5
-    producedItems:
-      STR_INFERNO_PISTOL_AMMO: 5
-
-
-#--------------------------------------------------------------- HWP --------------------------------
-  - name: STR_NOVA_BOMB
-    category: STR_HEAVY_WEAPONS_PLATFORM
-    requires:
-      - STR_GENERALLOCK #we're using our own unit
-    space: 0
-    time: 400
-    cost: 100000
-    listOrder: 3351
-    requiresBaseFunc: [COMU]
-    requiredItems:
-      STR_ALIEN_ALLOYS: 40
-      STR_ELERIUM_115: 100
-
-  - name: STR_ORBITAL_BEACON #orbital strike; weapon is built into the beacon's armor
-    category: STR_HEAVY_WEAPONS_PLATFORM
-    requires:
-      - STR_NAVY_COMUNICATIONS
-    space: 0
-    time: 1200
-    cost: 1000000
-    requiresBaseFunc: [COMU]
-    requiredItems:
-      STR_ALIEN_ALLOYS: 50
-      STR_ELERIUM_115: 200
-      STR_KILLPOINT_TOKEN: 400
-
-  - name: STR_TANK_LASER_CANNON
-    requires:
-      - STR_GENERALLOCK #we're using our own unit
-
-  - name: STR_HWP_FUSION_BOMB
-    category: STR_AMMUNITION
-#---------------------------------------------------------- CHAOS ARMOR --------------------------------
-
-#--------------------------------------------------------------- ARMOR --------------------------------
-armors:
-  - type: GENERATOR_ARMOR #TARGET
-    spriteSheet: GENERATOR.PCK
-    spriteInv: NOTDONEIMP
-    allowInv: false
-    zombiImmune: true
-    bleedImmune: true
-    fearImmune: true
-    painImmune: true
-    corpseBattle:
-      - STR_GENERATOR_CORPSE
-    frontArmor: 50
-    sideArmor: 50
-    rearArmor: 50
-    underArmor: 50
-    size: 1
-    damageModifier: #TARGET ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.0 #FLAMES
-      - 1.0 #HE
-      - 1.0 #LASCANON
-      - 1.0 #PLASMA
-      - 0.0 #STUN
-      - 1.0 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
-    loftempsSet: [ 3 ]
-    drawingRoutine: 16
-    constantAnimation: true
-    tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
-      UNIT_TYPE_MECHANICAL: 1
-
-#--------------------------------------------------------------- CRAFT --------------------------------

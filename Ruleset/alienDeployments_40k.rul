@@ -1,6 +1,12 @@
 alienDeployments:
-
   - type: STR_GENE_HIVE #GENESTELLER CULT, overwrites the 40k version to have GSC related missions happen
+    genMission: !remove
+      STR_MONOLITH_PATROL: 50
+      STR_NECRON_TERROR: 25
+      STR_NECRON_BASE: 25
+
+
+  - type: STR_GENE_HIVE # second entry to make yaml parsers happy
     data:
       - alienRank: 5
         lowQty: 9 #8
@@ -163,13 +169,6 @@ alienDeployments:
       STR_GSC_TRUCK_CONVOY_PATROL_LARGE: 25
       STR_GSC_TAUROX_PATROL_LARGE: 30
       STR_GENE_INFILTRATION: 0 # inherited from OXCE_40k objective: 1 doesn't work properly for bases. Might also miss spawnZone
-
-    genMission: !remove
-      STR_MONOLITH_PATROL: 50
-    genMission: !remove
-      STR_NECRON_TERROR: 25
-    genMission: !remove
-      STR_NECRON_BASE: 25
     genMissionFreq: 2
     points: 1
     #unlockedResearch: #Could unlock some GSC research topic or give a reward etc
@@ -3938,7 +3937,12 @@ alienDeployments:
         dQty: 0
         percentageOutsideUfo: 0
         itemSets: *emptyItemSets
-    genMissionFreq: 3 # 6
+    genMission: #50% chance of supply, 50% chance of something more interesting
+      STR_ALIEN_SUPPLY: 80
+      STR_ALIEN_PATROL: 50
+      STR_ALIEN_TERROR: 20
+      STR_ALIEN_RETALIATION: 10
+    genMissionFreq: 5 # 6
     genMissionLimit: 10000 # was 4 in OXCE_40k
     huntMissionMaxFrequency: 1440 # 300       # generate hunt mission max every 300 minutes (= 5 hours)
 
@@ -4063,11 +4067,14 @@ alienDeployments:
       showTarget: false
       desc: STR_ALIEN_BASE_ASSAULT_BRIEFING
     objectiveType: 3
-    genMission:
+    genMission: #50% chance of supply, 50% chance of something more interesting
       STR_ALIEN_SUPPLY: 80
-      STR_ALIEN_PATROL: 10
-      STR_DEFILER_RETALIATION: 10
-    genMissionFreq: 3 # 6
+      STR_ALIEN_PATROL: 20
+      STR_DEFILER_RETALIATION: 20
+      STR_ALIEN_TERROR_HARD: 20
+      STR_ALIEN_RETALIATION: 20
+    genMissionFreq: 5 # 6
+    genMissionLimit: 10000 # was 4 in OXCE_40k
     # genMissionLimit: 4                 # new attribute, allows specifying how many genMissions can be spawned in total by one base, default 1000
 #
     baseDetectionRange: 600            # base radar range, in nautical miles
@@ -4224,8 +4231,11 @@ alienDeployments:
     genMission:
       STR_NURGLE_SUPPLY: 80
       STR_NURGLE_PATROL: 10
-      STR_NURGLE_RETALIATION: 10
-    genMissionFreq: 3 # 6
+      STR_NURGLE_RETALIATION: 20
+      STR_NURGLE_TERROR: 40 #terror bias; spread the doom
+      STR_DEFILER_RETALIATION: 10
+    genMissionFreq: 5 # 6
+    genMissionLimit: 10000 # was 4 in OXCE_40k
     # genMissionLimit: 4                 # new attribute, allows specifying how many genMissions can be spawned in total by one base, default 1000
 #
     baseDetectionRange: 600            # base radar range, in nautical miles
@@ -9536,10 +9546,15 @@ alienDeployments:
       desc: STR_ALIEN_BASE_ASSAULT_SLAANESH_BRIEFING
     objectiveType: 3
     genMission:
-      STR_SLAAN_SUPPLY: 80 #these missions can be swapped out for ones using slaanesh ships exclusively later
-      STR_SLAAN_PATROL: 10
-      STR_TERROR_MISSION_SLAAN: 10 #instead of defiler mission
-    genMissionFreq: 3 # 6
+      STR_SLAAN_SUPPLY: 80
+      STR_SLAAN_PATROL: 20
+      STR_TERROR_MISSION_SLAAN: 20
+      STR_DEFILER_RETALIATION: 5
+      STR_SLAANESH_RETALIATION: 10
+      STR_SLAANESH_ABDUCTION_HARD: 15 #gotta abduct those slaves
+      STR_ALIEN_INFILTRATION_SLAANESH_HARD: 10
+    genMissionFreq: 5 # 6
+    genMissionLimit: 10000 # was 4 in OXCE_40k
     # genMissionLimit: 4                 # new attribute, allows specifying how many genMissions can be spawned in total by one base, default 1000
     baseDetectionRange: 600            # base radar range, in nautical miles
     baseDetectionChance: 50            # base radar chance (once every 10 minutes), in percent
@@ -10256,10 +10271,15 @@ alienDeployments:
       desc: STR_ALIEN_BASE_ASSAULT_TZEENTCH_BRIEFING
     objectiveType: 3
     genMission:
-      STR_TZEENTCH_SUPPLY: 80 #these missions can be swapped out for ones using tzeentch ships once they are in
-      STR_TZEENTCH_PATROL: 10
+      STR_TZEENTCH_SUPPLY: 80
+      STR_TZEENTCH_PATROL: 20
       STR_ALIEN_TERROR_TZEENTCH: 10
-    genMissionFreq: 3 # 6
+      STR_TZEENTCH_RETALIATION: 10
+      STR_DEFILER_RETALIATION: 10
+      STR_ALIEN_RESEARCH_TZEENTCH_HARD: 15 #amplify that warp
+      STR_ALIEN_HARVEST_TZEENTCH_HARD: 15 #spread that mutation
+    genMissionFreq: 5 # 6
+    genMissionLimit: 10000 # was 4 in OXCE_40k
     # genMissionLimit: 4                 # new attribute, allows specifying how many genMissions can be spawned in total by one base, default 1000
     baseDetectionRange: 600            # base radar range, in nautical miles
     baseDetectionChance: 50            # base radar chance (once every 10 minutes), in percent
@@ -12150,7 +12170,7 @@ alienDeployments:
     alert: STR_MARBO_ALERT
     alertBackground: VALKCRASHBG.SCR
     alertDescription: STR_MARBO_ALERT_DESCRIPTION
-    duration: [1440, 1500]
+    duration: [336, 480]
     despawnPenalty: 0
     markerName: STR_MARBOPROLOGUE_SITE
     missionBountyItem: STR_MARBO_CLUE1
@@ -12268,7 +12288,7 @@ alienDeployments:
     alert: STR_MARBO1_ALERT
     alertBackground: MARBO1MISSION.SCR
     alertDescription: STR_MARBO1_ALERT_DESCRIPTION
-    duration: [1440, 1500]
+    duration: [336, 480]
     despawnPenalty: 100
     markerName: STR_MARBO1MISSION_SITE
     missionBountyItem: STR_MARBO_CLUE2
@@ -12384,7 +12404,7 @@ alienDeployments:
     alert: STR_MARBO2_ALERT
     alertBackground: MARBO2MISSION.SCR
     alertDescription: STR_MARBO2_ALERT_DESCRIPTION
-    duration: [1440, 1500]
+    duration: [336, 480]
     despawnPenalty: 100
     markerName: STR_MARBO2MISSION_SITE
     missionBountyItem: STR_MARBO_CLUE3
@@ -12501,7 +12521,7 @@ alienDeployments:
     alert: STR_MARBO3_ALERT
     alertBackground: MARBO3MISSION.SCR
     alertDescription: STR_MARBO3_ALERT_DESCRIPTION
-    duration: [1440, 1500]
+    duration: [336, 480]
     despawnPenalty: 100
     markerName: STR_MARBO3MISSION_SITE
     missionBountyItem: STR_MARBO_CLUE4
@@ -12571,7 +12591,7 @@ alienDeployments:
       title: STR_CATACH_TERROR_MISSION
     markerName: STR_CATACH_TERROR_SITE
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_CATACH_TERROR_MISSION2
     data:
@@ -12635,7 +12655,7 @@ alienDeployments:
       title: STR_CATACH_TERROR_MISSION2
     markerName: STR_CATACH_TERROR_SITE2
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_CATACH_TERROR_MISSION3
     data:
@@ -12699,7 +12719,7 @@ alienDeployments:
       title: STR_CATACH_TERROR_MISSION3
     markerName: STR_CATACH_TERROR_SITE3
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_JUNGLETEMPLE_TERROR_DEPLOY
     data:
@@ -12763,7 +12783,7 @@ alienDeployments:
       title: STR_JUNGLETEMPLE_TERROR_DEPLOY
     markerName: STR_JUNGLETEMPLE_TERROR_SITE
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_JUNGLETEMPLE_TERROR_DEPLOY2
     data:
@@ -12827,7 +12847,7 @@ alienDeployments:
       title: STR_JUNGLETEMPLE_TERROR_DEPLOY
     markerName: STR_JUNGLETEMPLE_TERROR_SITE
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_DESERTTEMPLE_TERROR_DEPLOY
     data:
@@ -12891,7 +12911,7 @@ alienDeployments:
       title: STR_DESERTTEMPLE_TERROR_DEPLOY
     markerName: STR_DESERTTEMPLE_TERROR_SITE
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
   - type: STR_DESERTTEMPLE_TERROR_DEPLOY2
     data:
@@ -12955,7 +12975,7 @@ alienDeployments:
       title: STR_DESERTTEMPLE_TERROR_DEPLOY
     markerName: STR_DESERTTEMPLE_TERROR_SITE
     duration: [8, 14]
-    despawnPenalty: 400
+    despawnPenalty: 300
 
 #catachan monthly
 
@@ -13021,5 +13041,76 @@ alienDeployments:
     alertBackground: TrainingCatachan.SCR
     alertDescription: STR_CATACH_OUTPOST_DEFENSE_DESCRIPTION
     duration: [168, 168]
-    despawnPenalty: 400
+    despawnPenalty: 200
     markerName: STR_CATACH_OUTPOST_DEFENSE_SITE
+
+  - type: STR_CATAMARINE_ASSAULT_SITE
+    briefing:
+      title: STR_MARINE_ASSAULT_TITLE
+      palette: 4
+      desc: STR_MARINE_ASSAULT_DESCRIPTION
+      music: gmstory2
+      showCraft: true
+      showTarget: false
+      background: REGIMENT_INSPECTION.SCR
+    data:
+      - alienRank: 5
+        lowQty: 6 #4
+        highQty: 6 #8
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 1 #0
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 1 #0
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 1 #0
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 2 #1
+        highQty: 2 #3
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 1 #0
+        highQty: 1 #2
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 1 #0
+        highQty: 1 #2
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    width: 50
+    length: 50
+    height: 9
+    script: STR_CATAMARINE_ASSAULT_SITE
+    terrains:
+      - CATACHWAR_GROUND
+    alert: STR_MARINE_ASSAULT_ALERT
+    alertBackground: REGIMENT_INSPECTION.SCR
+    alertDescription: STR_MARINE_ASSAULT_DESCRIPTION
+    duration: [168, 168]
+    despawnPenalty: 600
+    markerName: STR_MARINE_ASSAULT_SITE

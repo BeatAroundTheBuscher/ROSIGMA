@@ -2,6 +2,7 @@
   - &STR_ADV_TURRET_DEFAULT
     type: STR_CHIMERA_COMMAND_TURRET # Rhino Turret
     race: STR_CHIMERA_TURRET
+    liveAlien: ""
     stats:
       tu: 20
       stamina: 10
@@ -34,14 +35,14 @@
   - type: STR_CHIMERASL_COMMAND_TURRET # Steel Legion Chimera turret
     refNode: *STR_ADV_TURRET_DEFAULT
     race: STR_CHIMERA_TURRET
-    armor: STR_COMMAND_TURRET_ARMOR #replace with SL version
+    armor: STR_CHIMERASL_COMMAND_TURRET_ARMOR 
 
   - type: STR_LEMANSL_COMMAND_TURRET  # Steel Legion Leman Rus turret
     refNode: *STR_ADV_TURRET_DEFAULT
     race: STR_LEMONRUSS
     stats:
       mana: 0 #half the capacity of a turret
-    armor: STR_LEMAN_TURRET_ARMOR  #replace with SL version
+    armor: STR_LEMANSL_COMMAND_TURRET_ARMOR  
 
   - type: STR_LEMAN_COMMAND_TURRET
     race: STR_LEMONRUSS
@@ -123,6 +124,7 @@
   - type: STR_CHIMERA_BOLTER_TURRET
     race: STR_CHIMERA_TURRET
     refNode: *STR_ADV_TURRET_DEFAULT
+    liveAlien: ""
     value: 100
     armor: STR_CHIMERA_BOLTER_TURRET_ARMOR
     livingWeapon: true
@@ -147,6 +149,7 @@
   - type: STR_CHIMERA_FLAMER_TURRET
     race: STR_CHIMERA_TURRET
     refNode: *STR_ADV_TURRET_DEFAULT
+    liveAlien: ""
     stats:
       mana: 60
     armor: STR_CHIMERA_FLAMER_TURRET_ARMOR
@@ -161,6 +164,7 @@
   - type: STR_CHIMERA_AC_TURRET
     race: STR_CHIMERA_TURRET
     refNode: *STR_ADV_TURRET_DEFAULT
+    liveAlien: ""
     stats:
       mana: 60
     armor: STR_CHIMERA_AC_TURRET_ARMOR
@@ -198,7 +202,7 @@
       - - STR_LEMONRUSS_WEAPON
         - STR_LEMANRUSS_BOLTER
 
-  - type: STR_LEMONRUSS_EXECUTIONER
+  - type: STR_EXECUTIONER_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -220,7 +224,7 @@
     builtInWeaponSets:
       - - STR_EXECUTIONER_CANNON
 
-  - type: STR_LEMONRUSS_PUNISHER
+  - type: STR_PUNISHER_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -231,7 +235,7 @@
     builtInWeaponSets:
       - - STR_PUNISHER_CANNON
 
-  - type: STR_LEMONRUSS_LASCANNON
+  - type: STR_LASCANNON_TURRET
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -242,7 +246,7 @@
     builtInWeaponSets:
       - - STR_TWIN_LINK_LASCANNON
 
-  - type: STR_SPONSON_FLAMER
+  - type: STR_FLAMER_SPONSON
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -270,7 +274,7 @@
     builtInWeaponSets:
       - - STR_SPONSON_HEAVY_FLAMER
 
-  - type: STR_SPONSON_BOLTER
+  - type: STR_BOLTER_SPONSON
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -298,7 +302,7 @@
     builtInWeaponSets:
       - - STR_SPONSON_HB
 
-  - type: STR_SPONSON_MULTIMELTA
+  - type: STR_MULTIMELTA_SPONSON
     race: STR_LEMONRUSS
     refNode: *STR_ADV_TURRET_DEFAULT
     stats:
@@ -322,6 +326,7 @@
     armor: STR_CHIMERA_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_CHIMERA_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -336,6 +341,7 @@
     armor: STR_CHIMERASL_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_CHIMERASL_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -350,6 +356,7 @@
     armor: STR_LEMAN_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_LEMAN_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -364,6 +371,7 @@
     armor: STR_LEMANSL_HULL_BOLTER_ARMOR
     standHeight: 20
     kneelHeight: 20
+    spawnUnit: STR_LEMANSL_HULL
     ignoredByAI: false
     builtInWeaponSets:
       - - STR_SPONSON_HB
@@ -376,7 +384,7 @@
       mana: 20 #half the capacity of a turret
     value: 20
     armor: STR_LEMAN_HULL_LAS_ARMOR
-    spawnUnit: STR_LEMANSL_HULL
+    spawnUnit: STR_LEMAN_HULL
     standHeight: 20
     kneelHeight: 20
     ignoredByAI: false
@@ -460,6 +468,11 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_2
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      Turret: 11
 
   - &STR_LEMAN_COMMAND_TURRET_DEFAULT
     type: STR_LEMAN_TURRET_ARMOR
@@ -511,7 +524,7 @@ armors:
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
-      LemanTurret: 1
+      Turret: 3
 
   - type: STR_LEMANSL_COMMAND_TURRET_ARMOR
     refNode: *STR_LEMAN_COMMAND_TURRET_DEFAULT
@@ -521,6 +534,11 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_2
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      Turret: 13
 
   - &STR_CHIMERA_BOLTER_TURRET_ARMOR_DEFAULT
     type: STR_CHIMERA_BOLTER_TURRET_ARMOR
@@ -572,7 +590,8 @@ armors:
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
-      BoltTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 101
 
   - type: STR_CHIMERASL_TWIN_HB_TURRET_ARMOR
     refNode: *STR_CHIMERA_BOLTER_TURRET_ARMOR_DEFAULT
@@ -583,6 +602,12 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_2
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      TurretUnit: 1
+      TurretId: 1101
 
   - type: STR_CHIMERASL_MULTILAS_TURRET_ARMOR
     refNode: *STR_CHIMERA_BOLTER_TURRET_ARMOR_DEFAULT
@@ -594,8 +619,11 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
     tags:
-      LasTurretUnit: 1
       INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      TurretUnit: 1
+      TurretId: 1100
 
   - type: STR_CHIMERA_FLAMER_TURRET_ARMOR
     visibilityAtDay: 40
@@ -643,7 +671,8 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      FlamerTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 102
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -695,7 +724,8 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      ACTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 103
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -709,10 +739,17 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_2
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
+    tags:
+      TurretUnit: 1
+      TurretId: 1103
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_CHIMERA_TURRET_ARMOR
     tags:
-      LasTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 100
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -761,7 +798,8 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     drawingRoutine: 3
     tags:
-      ExecutionerTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 303
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -776,6 +814,12 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_2
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
+    tags:
+      TurretUnit: 1
+      TurretId: 1303
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_PUNISHER_ARMOR
     allowsMoving: false
@@ -820,7 +864,8 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     drawingRoutine: 3
     tags:
-      PunisherTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 302
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -868,7 +913,8 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     drawingRoutine: 3
     tags:
-      LasCannonTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 301
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -876,7 +922,8 @@ armors:
   - type: LEMONRUSS_ARMOR
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      CannonTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 300
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
@@ -892,8 +939,11 @@ armors:
       - STR_CHIMERASL_TURRET_CORPSE_3
       - STR_CHIMERASL_TURRET_CORPSE_4
     tags:
-      CannonTurretUnit: 1
+      TurretUnit: 1
+      TurretId: 1300
       INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_FLAMER_SPONSON_ARMOR_DEFAULT
     type: STR_FLAMER_SPONSON_ARMOR
@@ -939,7 +989,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      FlamerSponsonUnit: 1
+      TurretUnit: 1
+      TurretId: 501
+      Sponson: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -951,6 +1003,14 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      TurretUnit: 1
+      TurretId: 1501
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_BOLTER_SPONSON_ARMOR_DEFAULT
     type: STR_BOLTER_SPONSON_ARMOR
@@ -996,7 +1056,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      BolterSponsonUnit: 1
+      TurretUnit: 1
+      TurretId: 500
+      Sponson: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1008,6 +1070,14 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      TurretUnit: 1
+      TurretId: 1500
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_MULTIMELTA_SPONSON_ARMOR
     visibilityAtDay: 40
@@ -1052,7 +1122,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      MMSponsonUnit: 1
+      TurretUnit: 1
+      TurretId: 502
+      Sponson: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1102,7 +1174,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      HullBolterUnit: 1
+      TurretUnit: 1
+      TurretId: 200
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1114,6 +1188,14 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      TurretUnit: 1
+      TurretId: 1200
+      Hull: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_LEMAN_HULL_BOLTER_ARMOR_DEFAULT
     type: STR_LEMAN_HULL_BOLTER_ARMOR
@@ -1159,7 +1241,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      HullBolterUnit: 1
+      TurretUnit: 1
+      TurretId: 400
+      Hull: 1
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1171,6 +1255,13 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      TurretUnit: 1
+      TurretId: 1400
+      Hull: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
 
   - &STR_LEMAN_HULL_LASCANNON_ARMOR_DEFAULT
     type: STR_LEMAN_HULL_LAS_ARMOR
@@ -1216,7 +1307,9 @@ armors:
     annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
     specialWeapon: STR_TURRET_RELOAD
     tags:
-      HullLasUnit: 1
+      TurretUnit: 1
+      Hull: 1
+      TurretId: 401
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1228,6 +1321,14 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      TurretUnit: 1
+      TurretId: 1401
+      Hull: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_SPONSON_ARMOR_DEFAULT
     type: STR_SPONSON_ARMOR
@@ -1275,6 +1376,7 @@ armors:
     specialWeapon: STR_TURRET_RELOAD
     tags:
       Sponson: 1
+      Turret: 5
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1286,6 +1388,13 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      Sponson: 1
+      Turret: 15
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_CHIMERA_HULL_ARMOR_DEFAULT
     type: STR_CHIMERA_HULL_ARMOR
@@ -1328,7 +1437,7 @@ armors:
     allowsRunning: false
     allowsMoving: false
     tags:
-      Hull: 1
+      Turret: 2
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1340,6 +1449,12 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      Turret: 12
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - &STR_LEMAN_HULL_ARMOR_DEFAULT
     type: STR_LEMAN_HULL_ARMOR
@@ -1382,7 +1497,7 @@ armors:
     allowsRunning: false
     allowsMoving: false
     tags:
-      LemanHull: 1
+      Turret: 4
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 100
       UNIT_TYPE_MECHANICAL: 1
@@ -1394,6 +1509,12 @@ armors:
     corpseGeo:  STR_CHIMERASL_TURRET_CORPSE
     corpseBattle:
       - STR_CHIMERASL_TURRET_CORPSE_1
+    tags:
+      Turret: 14
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
 
 items:
 
@@ -1410,8 +1531,6 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
-    tags:
-      SteelLegion: 1
 
   - type: STR_LEMONRUSS_SPAWNER
     spawnUnit: STR_LEMAN_COMMAND_TURRET
@@ -1426,8 +1545,6 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
-    tags:
-      SteelLegion: 1
 
   - type: STR_LEMONRUSS_SPONSON_SPAWNER
     spawnUnit: STR_LEMAN_SPONSON
@@ -1446,8 +1563,6 @@ items:
     battleType: 4
     hitAnimation: { mod: 40k, index: 1990 }
     armor: 255
-    tags:
-      SteelLegion: 1
 
   - &STR_LEMAN_RUSS_FINAL # DO NOT TOUCH; FINAL MISSION DOESN'T CARE ABOUT THIS SCRIPT
     type: STR_LEMONRUSS_SPAWNER_FINAL
@@ -1459,7 +1574,7 @@ items:
 
   - type: STR_LEMONRUSS_SPONSON_SPAWNER_FINAL # DO NOT TOUCH; FINAL MISSION DOESN'T CARE ABOUT THIS SCRIPT
     refNode: *STR_LEMAN_RUSS_FINAL
-    spawnUnit: STR_SPONSON_BOLTER # Bolter
+    spawnUnit: STR_BOLTER_SPONSON # Bolter
 
   - type: STR_LEMONRUSS_HULL_SPAWNER_FINAL
     refNode: *STR_LEMAN_RUSS_FINAL
@@ -1478,8 +1593,6 @@ items:
     invWidth: 0
     invHeight: 0
     battleType: 4
-    tags:
-      SteelLegion: 1
 
   - type: STR_LEMONRUSS_HULL_SPAWNER
     spawnUnit: STR_LEMAN_HULL
@@ -1539,13 +1652,14 @@ items:
     battleType: 4
 
 
-  - type: STR_CHIMERA_LAS_TURRET
+  - type: STR_CHIMERA_TURRET
     ufopediaType: STR_MULTI_LASER
     size: 0.1
     costBuy: 50000
     costSell: 25000
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1557,10 +1671,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      LasTurret: 1
+      TurretItem: 1
+      ItemId: 100
 
   - type: STR_CHIMERA_BOLTER_TURRET
     ufopediaType: STR_CHIMERA_HB
@@ -1569,6 +1686,7 @@ items:
     costSell: 50000
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1581,10 +1699,13 @@ items:
     floorSprite: -1
     liveAlien: false
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      BoltTurret: 1
+      TurretItem: 1
+      ItemId: 101
 
   - type: STR_CHIMERA_FLAMER_TURRET
     ufopediaType: STR_GORGON_HEAVY_FLAMER
@@ -1594,6 +1715,7 @@ items:
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1606,10 +1728,13 @@ items:
     floorSprite: -1
     liveAlien: false
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      FlamerTurret: 1
+      TurretItem: 1
+      ItemId: 102
 
   - type: STR_CHIMERA_AC_TURRET
     ufopediaType: STR_AUTOCANNON_TAUROX
@@ -1619,6 +1744,7 @@ items:
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_AUTOCANNON_GUARD
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1631,10 +1757,13 @@ items:
     floorSprite: -1
     liveAlien: false
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      ACTurret: 1
+      TurretItem: 1
+      ItemId: 103
 
   - type: STR_EXECUTIONER_TURRET
     ufopediaType: STR_EXECUTIONER_CANNON
@@ -1644,6 +1773,7 @@ items:
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_HEAVY_PLASMA_DEP1
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1655,10 +1785,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      ExecutionerTurret: 1
+      TurretItem: 3
+      ItemId: 303
 
   - type: STR_PUNISHER_TURRET
     ufopediaType: STR_PUNISHER_CANNON
@@ -1680,10 +1813,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      PunisherTurret: 1
+      TurretItem: 3
+      ItemId: 302
 
   - type: STR_LASCANNON_TURRET
     ufopediaType: STR_TWIN_LINK_LASCANNON
@@ -1706,12 +1842,15 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      LasCannonTurret: 1
+      TurretItem: 3
+      ItemId: 301
 
-  - type: STR_CANNON_TURRET
+  - type: STR_LEMONRUSS
     ufopediaType: STR_LEMONRUSS_WEAPON
     size: 0.1
     costBuy: 150000
@@ -1719,6 +1858,7 @@ items:
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ALIEN_ALLOYS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1730,10 +1870,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      CannonTurret: 1
+      TurretItem: 3
+      ItemId: 300
 
   - type: STR_FLAMER_SPONSON
     ufopediaType: STR_SPONSON_HEAVY_FLAMER
@@ -1743,6 +1886,7 @@ items:
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ALIEN_ALLOYS
+      - STR_NOT_STEEL_LEGION_STRATEGY
     weight: 999
     power: 1
     damageType: 3
@@ -1754,10 +1898,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      FlamerSponson: 1
+      TurretItem: 5
+      ItemId: 501
 
   - type: STR_BOLTER_SPONSON
     ufopediaType: STR_SPONSON_HB
@@ -1766,6 +1913,229 @@ items:
     costSell: 25000
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ALIEN_ALLOYS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 5
+      ItemId: 500
+
+  - type: STR_MULTIMELTA_SPONSON
+    ufopediaType: STR_SPONSON_MULTIMELTA_WEAPON
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_BLASTER_LAUNCHER
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 5
+      ItemId: 502
+
+  - type: STR_CHIMERA_HULL_BOLTER
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 25000
+    costSell: 12500
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 2
+      ItemId: 200
+
+
+  - type: STR_LEMAN_HULL_BOLTER
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 25000
+    costSell: 12500
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ALIEN_ALLOYS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 4
+      ItemId: 400
+
+
+  - type: STR_LEMAN_HULL_LAS
+    ufopediaType: STR_HULL_LASCANNON
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_LASCAN
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_IMPERIAL_GUARD_MIDTIER
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 4
+      ItemId: 401
+
+  - type: STR_CHIMERASL_MULTILAS_TURRET
+    ufopediaType: STR_MULTI_LASER
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 11
+      ItemId: 1100
+
+  - type: STR_CHIMERASL_TWIN_HB_TURRET
+    ufopediaType: STR_CHIMERA_HB
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 11
+      ItemId: 1101
+
+  - type: STR_CHIMERASL_AC_TURRET
+    ufopediaType: STR_AUTOCANNON_TAUROX
+    size: 0.1
+    costBuy: 200000
+    costSell: 100000
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_AUTOCANNON_GUARD
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 11
+      ItemId: 1103
+
+  - type: STR_LEMANSL_BATTLECANNON_TURRET
+    ufopediaType: STR_LEMONRUSS_WEAPON
+    size: 0.1
+    costBuy: 150000
+    costSell: 75000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
       - STR_ALIEN_ALLOYS
     weight: 999
     power: 1
@@ -1778,19 +2148,22 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      BolterSponson: 1
+      TurretItem: 13
+      ItemId: 1300
 
-  - type: STR_MULTIMELTA_SPONSON
-    ufopediaType: STR_SPONSON_MULTIMELTA_WEAPON
+  - type: STR_LEMANSL_EXECUTIONER
+    ufopediaType: STR_EXECUTIONER_CANNON
     size: 0.1
-    costBuy: 100000
-    costSell: 50000
+    costBuy: 200000
+    costSell: 100000
     requiresBuy:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_BLASTER_LAUNCHER
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_HEAVY_PLASMA_DEP1
     weight: 999
     power: 1
     damageType: 3
@@ -1802,12 +2175,95 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      MMSponson: 1
+      TurretItem: 13
+      ItemId: 1303
 
-  - type: STR_HULL_BOLTER
+  - type: STR_SL_SPONSON_FLAMER
+    ufopediaType: STR_SPONSON_HEAVY_FLAMER
+    size: 0.1
+    costBuy: 75000
+    costSell: 32500
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 15
+      ItemId: 1501
+
+  - type: STR_SL_SPONSON_BOLTER
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 15
+      ItemId: 1500
+
+  - type: STR_CHIMERASL_HULL_BOLTER
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 25000
+    costSell: 12500
+    requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 12
+      ItemId: 1200
+
+  - type: STR_LEMANSL_HULL_BOLTER
     ufopediaType: STR_SPONSON_HB
     size: 0.1
     costBuy: 25000
@@ -1825,19 +2281,22 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      HullBolter: 1
+      TurretItem: 14
+      ItemId: 1400
 
-  - type: STR_HULL_LAS
+  - type: STR_LEMANSL_HULL_LAS
     ufopediaType: STR_HULL_LASCANNON
     size: 0.1
     costBuy: 50000
     costSell: 25000
     requiresBuy:
+      - STR_STEEL_LEGION_STRATEGY
       - STR_LASCAN
-      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_IMPERIAL_GUARD_MIDTIER
     weight: 999
     power: 1
@@ -1850,10 +2309,13 @@ items:
     bigSprite: 100
     floorSprite: -1
     #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
     costPrime:
       time: 999
     tags:
-      HullLas: 1
+      TurretItem: 14
+      ItemId: 1401
 
 
   - type: STR_CHIMERA_HB
@@ -2043,9 +2505,7 @@ items:
     size: 1.0
     weight: 90
     bigSprite: {mod: 40k, index: 1081}
-    bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 100
-    fireSound: {mod: 40k, index: 742}
     autoRange: 25
     snapRange: 25
     aimRange: 35
@@ -2059,7 +2519,6 @@ items:
     clipSize: -1
     battleType: 1
     fixedWeapon: true
-    hitAnimation: {mod: 40k, index: 36}
     invWidth: 2
     invHeight: 3
     recover: false
@@ -2100,19 +2559,30 @@ items:
       mana: true
     tags:
       TURRET_RELOAD_TURNS: 2
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_HULL_LASCANNON
     size: 1.0
     weight: 90
     bigSprite: {mod: 40k, index: 1036}
-    bulletSprite: {mod: 40k, index: 12}
     bulletSpeed: 100
-    fireSound: {mod: 40k, index: 742}
     clipSize: -1
     dropoff: 3
     battleType: 1
     fixedWeapon: true
-    hitAnimation: {mod: 40k, index: 36}
     invWidth: 2
     invHeight: 3
     recover: false
@@ -2159,6 +2629,20 @@ items:
       mana: true
     tags:
       TURRET_RELOAD_TURNS: 2
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_SPONSON_HEAVY_FLAMER
     dropoff: 5
@@ -2271,72 +2755,15 @@ extended:
   tags:
     #turret reload scripts
     RuleItem:
-      LasTurret: int
-      BoltTurret: int
-      FlamerTurret: int
-      ACTurret: int
-      ExecutionerTurret: int
-      CannonTurret: int
-      PunisherTurret: int
-      LasCannonTurret: int
-      FlamerSponson: int
-      BolterSponson: int
-      MMSponson: int
-      HullBolter: int
-      HullLas: int
-      SteelLegion: int
+      TurretItem: int
+      ItemId: int
       TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
-    BattleGame:
-      NoOfBoltTurrets: int
-      NoOfLasTurrets: int
-      NoOfFlamerTurrets: int
-      NoOfACTurrets: int
-      NoOfExecutionerTurrets: int
-      NoOfCannonTurrets: int
-      NoOfPunisherTurrets: int
-      NoOfLasCannonTurrets: int
-      NoOfFlamerSponsons: int
-      NoOfBolterSponsons: int
-      NoOfMMSponsons: int
-      NoOfHullBolters: int
-      NoOfHullLas: int
-      NoOfSpawns: int
-      NoOfLemanSpawns: int
-      NoOfSponsonSpawns: int
-      NoOfHullSpawns: int
-      DeadBoltTurrets: int
-      DeadLasTurrets: int
-      DeadFlamerTurrets: int
-      DeadACTurrets: int
-      DeadExecutionerTurrets: int
-      DeadCannonTurrets: int
-      DeadPunisherTurrets: int
-      DeadLasCannonTurrets: int
-      DeadFlamerSponsons: int
-      DeadBolterSponsons: int
-      DeadMMSponsons: int
-      DeadHullBolters: int
-      DeadHullLas: int
-      ApplySteelLegion: int
     RuleArmor:
       Turret: int
-      LemanTurret: int
       Sponson: int
       Hull: int
-      LemanHull: int
-      BoltTurretUnit: int
-      LasTurretUnit: int
-      FlamerTurretUnit: int
-      ACTurretUnit: int
-      ExecutionerTurretUnit: int
-      CannonTurretUnit: int
-      PunisherTurretUnit: int
-      LasCannonTurretUnit: int
-      FlamerSponsonUnit: int
-      BolterSponsonUnit: int
-      MMSponsonUnit: int
-      HullBolterUnit: int
-      HullLasUnit: int
+      TurretUnit: int
+      TurretId: int
       #infection scripts
       INFECTION_RESIST: int #reduces infection damage by this as a %
       INFECTION_RESIST_TYPE: int
@@ -2345,498 +2772,87 @@ extended:
       INTIMIDATION_RESISTANCE: int
     BattleUnit:
       ReSprite: int
+    BattleItem:
+      TurretActive: int
+
+### Refactored Modular Turret Script Documentation###
+# The STR of the dummy item (i.e. the item that triggers the spawn of the turret) must be the same as the STR of the turret unit
+# Tags explanation
+# Turret: int # signifies that unit is the dummy unit that will be transformed into a actual turret (e.g. chimera command turrets, blank hull pieces)
+              # Every unique unit must have a different number
+                # Current index:
+                # 1: Chimera Turrets
+                # 2: Chimera Hull Turrets
+                # 3: Leman Russ Turrets
+                # 4: Leman Russ Hull Turrets
+                # 5: Leman Russ Sponsons
+                # 11: SL Chimera Turrets
+                # 12: SL Chimera Hull Turrets
+                # 13: SL Leman Russ Turrets
+                # 14: SL Leman Russ Hull Turrets
+                # 15: SL Leman Russ Sponsons
+# Sponson: 1  # Always a 1, signifies a leman russ sponson, only used in script to make west sponson have a blank sprite
+# Hull 1      # Always a 1, siginifes hull turret, used to make the spawned-on-death blank hull be on the neutral/civilian faction
+# TurretUnit: 1 # Always a 1, signifies that the unit is a turret unit that the script applies to
+# TurretItem: int # signifies that the item is a turret dummy item, INT MUST CORRESPOND TO THE CORRECT TURRET: INT TAG, i.e. a turret dummy item that triggers the transformation of a leman russ turret has the TurretItem tag be 3
+# ItemId: int   # Unique Id for this turret type
+# TurretId: int # Unique Id for this turret type, must correspond to ItemId
+                # Currently ids are formated to correspond to Turret: int number, this isnt a requirement, just makes it easier to keep track of them
+                # Current Ids:
+                  # 100: Chimera Turrets
+                  # 200: Chimera Hull Turrets
+                  # 300: Leman Russ Turrets
+                  # 400: Leman Russ Hull Turrets
+                  # 500: Leman Russ Sponsons
+                  # 1100: SL Chimera Turrets
+                  # 1200: SL Chimera Hull Turrets
+                  # 1300: SL Leman Russ Turrets
+                  # 1400: SL Leman Russ Hull Turrets
+                  # 1500: SL Leman Russ Sponsons
 
   scripts:
 
-    createItem:
-      - offset: 1
-        code: |
-          var int boltturret;
-          var int noofboltturrets;
-          var int lasturret;
-          var int nooflasturrets;
-          var int flamerturret;
-          var int noofflamerturrets;
-          var int acturret;
-          var int noofacturrets;
-          var int executionerturret;
-          var int noofexecutionerturrets;
-          var int cannonturret;
-          var int noofcannonturrets;
-          var int punisherturret;
-          var int noofpunisherturrets;
-          var int lascannonturret;
-          var int nooflascannonturrets;
-          var int flamersponson;
-          var int noofflamersponsons;
-          var int boltersponson;
-          var int noofboltersponsons;
-          var int mmsponson;
-          var int noofmmsponsons;
-          var int hullbolter;
-          var int noofhullbolters;
-          var int hulllas;
-          var int noofhulllas;
-          var int noofspawns;
-          var int nooflemanspawns;
-          var int noofsponsonspawns;
-          var int noofhullspawns;
-
-          item.getTag lasturret Tag.LasTurret;
-          if eq 1 lasturret;
-            battle_game.getTag nooflasturrets Tag.NoOfLasTurrets;
-            battle_game.getTag noofspawns Tag.NoOfSpawns;
-            add nooflasturrets 1;
-            add noofspawns 1;
-            if gt noofspawns 3;
-              set noofspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfLasTurrets nooflasturrets;
-            battle_game.setTag Tag.NoOfSpawns noofspawns;
-          end;
-
-          item.getTag boltturret Tag.BoltTurret;
-          if eq 1 boltturret;
-            battle_game.getTag noofboltturrets Tag.NoOfBoltTurrets;
-            battle_game.getTag noofspawns Tag.NoOfSpawns;
-            add noofboltturrets 1;
-            add noofspawns 1;
-            if gt noofspawns 3;
-              set noofspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfBoltTurrets noofboltturrets;
-            battle_game.setTag Tag.NoOfSpawns noofspawns;
-          end;
-
-          item.getTag flamerturret Tag.FlamerTurret;
-          if eq 1 flamerturret;
-            battle_game.getTag noofflamerturrets Tag.NoOfFlamerTurrets;
-            battle_game.getTag noofspawns Tag.NoOfSpawns;
-            add noofflamerturrets 1;
-            add noofspawns 1;
-            if gt noofspawns 3;
-              set noofspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfFlamerTurrets noofflamerturrets;
-            battle_game.setTag Tag.NoOfSpawns noofspawns;
-          end;
-
-          item.getTag acturret Tag.ACTurret;
-          if eq 1 acturret;
-            battle_game.getTag noofacturrets Tag.NoOfACTurrets;
-            battle_game.getTag noofspawns Tag.NoOfSpawns;
-            add noofacturrets 1;
-            add noofspawns 1;
-            if gt noofspawns 3;
-              set noofspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfACTurrets noofacturrets;
-            battle_game.setTag Tag.NoOfSpawns noofspawns;
-          end;
-
-          item.getTag executionerturret Tag.ExecutionerTurret;
-          if eq 1 executionerturret;
-            battle_game.getTag noofexecutionerturrets Tag.NoOfExecutionerTurrets;
-            battle_game.getTag nooflemanspawns Tag.NoOfLemanSpawns;
-            add noofexecutionerturrets 1;
-            add nooflemanspawns 1;
-            if gt nooflemanspawns 1;
-              set nooflemanspawns 1;
-            end;
-            battle_game.setTag Tag.NoOfExecutionerTurrets noofexecutionerturrets;
-            battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
-          end;
-          item.getTag cannonturret Tag.CannonTurret;
-          if eq 1 cannonturret;
-            battle_game.getTag noofcannonturrets Tag.NoOfCannonTurrets;
-            battle_game.getTag nooflemanspawns Tag.NoOfLemanSpawns;
-            add noofcannonturrets 1;
-            add nooflemanspawns 1;
-            if gt nooflemanspawns 1;
-              set nooflemanspawns 1;
-            end;
-            battle_game.setTag Tag.NoOfCannonTurrets noofcannonturrets;
-            battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
-          end;
-          item.getTag punisherturret Tag.PunisherTurret;
-          if eq 1 punisherturret;
-            battle_game.getTag noofpunisherturrets Tag.NoOfPunisherTurrets;
-            battle_game.getTag nooflemanspawns Tag.NoOfLemanSpawns;
-            add noofpunisherturrets 1;
-            add nooflemanspawns 1;
-            if gt nooflemanspawns 1;
-              set nooflemanspawns 1;
-            end;
-            battle_game.setTag Tag.NoOfPunisherTurrets noofpunisherturrets;
-            battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
-          end;
-          item.getTag lascannonturret Tag.LasCannonTurret;
-          if eq 1 lascannonturret;
-            battle_game.getTag nooflascannonturrets Tag.NoOfLasCannonTurrets;
-            battle_game.getTag nooflemanspawns Tag.NoOfLemanSpawns;
-            add nooflascannonturrets 1;
-            add nooflemanspawns 1;
-            if gt nooflemanspawns 1;
-              set nooflemanspawns 1;
-            end;
-            battle_game.setTag Tag.NoOfLasCannonTurrets nooflascannonturrets;
-            battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
-          end;
-          item.getTag flamersponson Tag.FlamerSponson;
-          if eq 1 flamersponson;
-            battle_game.getTag noofflamersponsons Tag.NoOfFlamerSponsons;
-            battle_game.getTag noofsponsonspawns Tag.NoOfSponsonSpawns;
-            add noofflamersponsons 1;
-            add noofsponsonspawns 1;
-            if gt noofsponsonspawns 2;
-              set noofsponsonspawns 2;
-            end;
-            battle_game.setTag Tag.NoOfFlamerSponsons noofflamersponsons;
-            battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
-            #debug_log "createItem | offset 1 | advancedTurrets. Flamer_Sponsons, noofflamersponsons:" noofflamersponsons;
-            #debug_log "createItem | offset 1 | advancedTurrets. Flamer_Sponsons, noofsponsonspawns:" noofsponsonspawns;
-          end;
-          item.getTag boltersponson Tag.BolterSponson;
-          if eq 1 boltersponson;
-            battle_game.getTag noofboltersponsons Tag.NoOfBolterSponsons;
-            battle_game.getTag noofsponsonspawns Tag.NoOfSponsonSpawns;
-            add noofboltersponsons 1;
-            add noofsponsonspawns 1;
-            if gt noofsponsonspawns 2;
-              set noofsponsonspawns 2;
-            end;
-            battle_game.setTag Tag.NoOfBolterSponsons noofboltersponsons;
-            battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
-            #debug_log "createItem | offset 1 | advancedTurrets. Bolter_Sponsons, noofboltersponsons:" noofboltersponsons;
-            #debug_log "createItem | offset 1 | advancedTurrets. Bolter_Sponsons, noofsponsonspawns:" noofsponsonspawns;
-          end;
-          item.getTag mmsponson Tag.MMSponson;
-          if eq 1 mmsponson;
-            battle_game.getTag noofmmsponsons Tag.NoOfMMSponsons;
-            battle_game.getTag noofsponsonspawns Tag.NoOfSponsonSpawns;
-            add noofmmsponsons 1;
-            add noofsponsonspawns 1;
-            if gt noofsponsonspawns 2;
-              set noofsponsonspawns 2;
-            end;
-            battle_game.setTag Tag.NoOfMMSponsons noofmmsponsons;
-            battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
-            #debug_log "createItem | offset 1 | advancedTurrets. Multimelta_Sponsons, noofmmsponsons:" noofmmsponsons;
-            #debug_log "createItem | offset 1 | advancedTurrets. Multimelta_Sponsons, noofsponsonspawns:" noofsponsonspawns;
-          end;
-          item.getTag hullbolter Tag.HullBolter;
-          if eq 1 hullbolter;
-            battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
-            battle_game.getTag noofhullspawns Tag.NoOfHullSpawns;
-            add noofhullbolters 1;
-            add noofhullspawns 1;
-            if gt noofhullspawns 3;
-              set noofhullspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfHullBolters noofhullbolters;
-            battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
-            #debug_log "createItem | offset 1 | advancedTurrets. noofhullbolters:" noofhullbolters;
-            #debug_log "createItem | offset 1 | advancedTurrets. noofhullspawns:" noofhullspawns;
-          end;
-          item.getTag hulllas Tag.HullLas;
-          if eq 1 hulllas;
-            battle_game.getTag noofhulllas Tag.NoOfHullLas;
-            battle_game.getTag noofhullspawns Tag.NoOfHullSpawns;
-            add noofhulllas 1;
-            add noofhullspawns 1;
-            if gt noofhullspawns 3;
-              set noofhullspawns 3;
-            end;
-            battle_game.setTag Tag.NoOfHullLas noofhulllas;
-            battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
-            #debug_log "createItem | offset 1 | advancedTurrets. Hulllas, noofhulllas:" noofhulllas;
-            #debug_log "createItem | offset 1 | advancedTurrets. Hulllas, noofhullspawns:" noofhullspawns;
-          end;
-          return;
-
-      - offset: 2
-        code: |
-          var int steellegion;
-          item.getTag steellegion Tag.SteelLegion;
-          if eq steellegion 1;
-            battle_game.setTag Tag.ApplySteelLegion 1;
-          end;
-          return;
-
     createUnit:
 
-      - offset: 1
+      - new: ROSIGMA_cU_adv_turret_setSpawnUnit1 #sets and forces turret spawn units based on dummy item names
+        offset: 1
         code: |
-          var int noofspawns;
-          var int nooflemanspawns;
-          var int noofsponsonspawns;
-          var int noofhullspawns;
           var int turret;
-          var int lemanturret;
-          var int sponson;
-          var int hull;
-          var int lemanhull;
-          var int noofboltturrets;
-          var int nooflasturrets;
-          var int noofflamerturrets;
-          var int noofacturrets;
-          var int noofcannonturrets;
-          var int noofexecutionerturrets;
-          var int noofpunisherturrets;
-          var int nooflascannonturrets;
-          var int noofflamersponsons;
-          var int noofboltersponsons;
-          var int noofmmsponsons;
-          var int noofhullbolters;
-          var int noofhulllas;
-          var int slstrat;
-          var ptr RuleUnit turret_unit;
+          var int turretitem;
+          var int id;
+          var int maxid;
+          var int turretactive;
+
+          var ptr RuleUnit rule_unit;
+          var ptr RuleItem rule_item;
+          var text name;
 
           unit.getTag turret Tag.Turret;
-          if eq turret 1;
-            battle_game.getTag noofspawns Tag.NoOfSpawns;
-            if gt noofspawns 0;
-              sub noofspawns 1;
-              battle_game.setTag Tag.NoOfSpawns noofspawns;
+          if ge turret 1;
+            loop var turret_item battle_game.getItems.list;
+              turret_item.getTag turretitem Tag.TurretItem;
+              if eq turretitem turret;
+                turret_item.getTag turretactive Tag.TurretActive;
+                if eq turretactive 0;
+                  turret_item.setTag Tag.TurretActive 1;
 
-              battle_game.getTag slstrat Tag.ApplySteelLegion;
-
-              battle_game.getTag noofacturrets Tag.NoOfACTurrets;
-              if gt noofacturrets 0;
-                rules.getRuleUnit turret_unit "STR_CHIMERA_AC_TURRET";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_CHIMERASL_AC_TURRET";
+                  turret_item.getRuleItem rule_item;
+                  rule_item.getType name;
+                  rules.getRuleUnit rule_unit name;
+                  unit.setSpawnUnit rule_unit;
+                  unit.setSpawnUnitFaction FACTION_PLAYER;
+                  unit.setSpawnUnitInstantRespawn 1;
+                  
+                  return;
                 end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofacturrets 1;
-                battle_game.setTag Tag.NoOfACTurrets noofacturrets;
-                return;
               end;
-              battle_game.getTag noofflamerturrets Tag.NoOfFlamerTurrets;
-              if gt noofflamerturrets 0;
-                rules.getRuleUnit turret_unit "STR_CHIMERA_FLAMER_TURRET";
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofflamerturrets 1;
-                battle_game.setTag Tag.NoOfFlamerTurrets noofflamerturrets;
-                return;
-              end;
-              battle_game.getTag noofboltturrets Tag.NoOfBoltTurrets;
-              if gt noofboltturrets 0;
-                rules.getRuleUnit turret_unit "STR_CHIMERA_BOLTER_TURRET";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_CHIMERASL_TWIN_HB_TURRET";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofboltturrets 1;
-                battle_game.setTag Tag.NoOfBoltTurrets noofboltturrets;
-                return;
-              end;
-              battle_game.getTag nooflasturrets Tag.NoOfLasTurrets;
-              if gt nooflasturrets 0;
-                rules.getRuleUnit turret_unit "STR_CHIMERA_TURRET";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_CHIMERASL_MULTILAS_TURRET";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofboltturrets 1;
-                battle_game.setTag Tag.NoOfLasTurrets nooflasturrets;
-                return;
-              end;
-            end;
-          end;
-
-
-
-          unit.getTag lemanturret Tag.LemanTurret;
-          if eq lemanturret 1;
-            battle_game.getTag nooflemanspawns Tag.NoOfLemanSpawns;
-
-            if gt nooflemanspawns 0;
-              sub nooflemanspawns 1;
-              battle_game.setTag Tag.NoOfLemanSpawns nooflemanspawns;
-
-
-              battle_game.getTag slstrat Tag.ApplySteelLegion;
-
-              battle_game.getTag noofcannonturrets Tag.NoOfCannonTurrets;
-              if gt noofcannonturrets 0;
-                rules.getRuleUnit turret_unit "STR_LEMONRUSS";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_LEMANSL_BATTLECANNON_TURRET";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofcannonturrets 1;
-                battle_game.setTag Tag.NoOfCannonTurrets noofcannonturrets;
-                return;
-              end;
-              battle_game.getTag noofexecutionerturrets Tag.NoOfExecutionerTurrets;
-              if gt noofexecutionerturrets 0;
-                rules.getRuleUnit turret_unit "STR_LEMONRUSS_EXECUTIONER";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_LEMANSL_EXECUTIONER";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofexecutionerturrets 1;
-                battle_game.setTag Tag.NoOfExecutionerTurrets noofexecutionerturrets;
-                return;
-              end;
-              battle_game.getTag noofpunisherturrets Tag.NoOfPunisherTurrets;
-              if gt noofpunisherturrets 0;
-                rules.getRuleUnit turret_unit "STR_LEMONRUSS_PUNISHER";
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofpunisherturrets 1;
-                battle_game.setTag Tag.NoOfPunisherTurrets noofpunisherturrets;
-                return;
-              end;
-              battle_game.getTag nooflascannonturrets Tag.NoOfLasCannonTurrets;
-              if gt nooflascannonturrets 0;
-                rules.getRuleUnit turret_unit "STR_LEMONRUSS_LASCANNON";
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub nooflascannonturrets 1;
-                battle_game.setTag Tag.NoOfLasCannonTurrets nooflascannonturrets;
-                return;
-              end;
-            end;
-          end;
-
-          unit.getTag sponson Tag.Sponson;
-          if eq sponson 1;
-            battle_game.getTag noofsponsonspawns Tag.NoOfSponsonSpawns;
-            if gt noofsponsonspawns 0;
-              sub noofsponsonspawns 1;
-              battle_game.setTag Tag.NoOfSponsonSpawns noofsponsonspawns;
-
-
-              battle_game.getTag slstrat Tag.ApplySteelLegion;
-
-
-              battle_game.getTag noofflamersponsons Tag.NoOfFlamerSponsons;
-              if gt noofflamersponsons 0;
-                rules.getRuleUnit turret_unit "STR_SPONSON_FLAMER";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_SL_SPONSON_FLAMER";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofflamersponsons 1;
-                battle_game.setTag Tag.NoOfFlamerSponsons noofflamersponsons;
-                #debug_log "createItem | offset 1 | advancedTurrets. LemanSponsons, NoOfFlamerSponsons:" noofflamersponsons;
-                return;
-              end;
-              battle_game.getTag noofboltersponsons Tag.NoOfBolterSponsons;
-              if gt noofboltersponsons 0;
-                rules.getRuleUnit turret_unit "STR_SPONSON_BOLTER";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_SL_SPONSON_BOLTER";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofboltersponsons 1;
-                battle_game.setTag Tag.NoOfBolterSponsons noofboltersponsons;
-                #debug_log "createItem | offset 1 | advancedTurrets. LemanSponsons, NoOfBolterSponsons:" noofboltersponsons;
-                return;
-              end;
-              battle_game.getTag noofmmsponsons Tag.NoOfMMSponsons;
-              if gt noofmmsponsons 0;
-                rules.getRuleUnit turret_unit "STR_SPONSON_MULTIMELTA";
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofmmsponsons 1;
-                battle_game.setTag Tag.NoOfMMSponsons noofmmsponsons;
-                #debug_log "createItem | offset 1 | advancedTurrets. LemanSponsons, NoOfMMSponsons:" noofmmsponsons;
-                return;
-              end;
-            end;
-          end;
-
-          unit.getTag hull Tag.Hull;
-          #debug_log "createItem | offset 1 | advancedTurrets. generalHull, hull:" hull;
-          if eq hull 1;
-            battle_game.getTag noofhullspawns Tag.NoOfHullSpawns;
-            if gt noofhullspawns 0;
-              sub noofhullspawns 1;
-
-
-              battle_game.getTag slstrat Tag.ApplySteelLegion;
-
-              battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
-              battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
-              #debug_log "createItem | offset 1 | advancedTurrets. ChimeraHull, noofhullbolters:" noofhullbolters;
-              if gt noofhullbolters 0;
-                rules.getRuleUnit turret_unit "STR_CHIMERA_HULL_BOLTER";
-                if eq slstrat 1;
-                  rules.getRuleUnit turret_unit "STR_CHIMERASL_HULL_BOLTER";
-                end;
-                unit.setSpawnUnit turret_unit;
-                unit.setSpawnUnitFaction FACTION_PLAYER;
-                unit.setSpawnUnitInstantRespawn 1;
-                sub noofhullbolters 1;
-                battle_game.setTag Tag.NoOfHullBolters noofhullbolters;
-                #debug_log "createItem | offset 1 | advancedTurrets. ChimeraHull, turret_unit:" turret_unit;
-                return;
-              end;
-            end;
-          end;
-          unit.getTag lemanhull Tag.LemanHull;
-          if eq lemanhull 1;
-            sub noofhullspawns 1;
-
-
-            battle_game.getTag slstrat Tag.ApplySteelLegion;
-
-            battle_game.setTag Tag.NoOfHullSpawns noofhullspawns;
-            battle_game.getTag noofhulllas Tag.NoOfHullLas;
-            #debug_log "createItem | offset 1 | advancedTurrets. lemanhull, NoOfHullSpawns:" noofhullspawns;
-            if gt noofhulllas 0;
-              rules.getRuleUnit turret_unit "STR_LEMAN_HULL_LAS";
-              if eq slstrat 1;
-                rules.getRuleUnit turret_unit "STR_LEMANSL_HULL_LAS";
-              end;
-              unit.setSpawnUnit turret_unit;
-              unit.setSpawnUnitFaction FACTION_PLAYER;
-              unit.setSpawnUnitInstantRespawn 1;
-              sub noofhulllas 1;
-              battle_game.setTag Tag.NoOfHullLas noofhulllas;
-              #debug_log "createItem | offset 1 | advancedTurrets. STR_LEMAN_HULL_LAS, NoOfHullLas:" noofhulllas;
-              return;
-            end;
-            battle_game.getTag noofhullbolters Tag.NoOfHullBolters;
-            if gt noofhullbolters 0;
-              rules.getRuleUnit turret_unit "STR_LEMAN_HULL_BOLTER";
-              if eq slstrat 1;
-                rules.getRuleUnit turret_unit "STR_LEMANSL_HULL_BOLTER";
-              end;
-              unit.setSpawnUnit turret_unit;
-              unit.setSpawnUnitFaction FACTION_PLAYER;
-              unit.setSpawnUnitInstantRespawn 1;
-              sub noofhullbolters 1;
-              battle_game.setTag Tag.NoOfHullBolters noofhullbolters;
-              #debug_log "createItem | offset 1 | advancedTurrets. STR_LEMAN_HULL_BOLTER, NoOfHullBolters:" noofhullbolters;
-              return;
             end;
           end;
           return;
 
-      - offset: 3
+
+      - new: ROSIGMA_cU_adv_turret_set_sponson_resprite3 #checks if unit is west sponson 
+        offset: 3
         code: |
 
           var int flamersponsonunit;
@@ -2852,41 +2868,15 @@ extended:
           var ptr BattleUnit other_sponson;
           var ptr Tile other_tile;
 
-          unit.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-          if eq flamersponsonunit 1;
-            set run 1;
-          end;
-          unit.getTag boltersponsonunit Tag.BolterSponsonUnit;
-          if eq boltersponsonunit 1;
-            set run 1;
-          end;
-          unit.getTag mmsponsonunit Tag.MMSponsonUnit;
-          if eq mmsponsonunit 1;
-            set run 1;
-          end;
+
           unit.getTag sponson Tag.Sponson;
           if eq sponson 1;
-            set run 1;
-          end;
-          if eq run 1;
             unit.getPosition.getY y;
             unit.getPosition.getX x;
             unit.getPosition.getZ z;
             add x 5;
             battle_game.getTile other_tile x y z;
             other_tile.getUnit other_sponson;
-            other_sponson.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-            if eq flamersponsonunit 1;
-              set temp 1;
-            end;
-            other_sponson.getTag boltersponsonunit Tag.BolterSponsonUnit;
-            if eq boltersponsonunit 1;
-              set temp 1;
-            end;
-            other_sponson.getTag mmsponsonunit Tag.MMSponsonUnit;
-            if eq mmsponsonunit 1;
-              set temp 1;
-            end;
             other_sponson.getTag sponson Tag.Sponson;
             if eq sponson 1;
               set temp 1;
@@ -2897,426 +2887,75 @@ extended:
           end;
           return;
 
-
-      - offset: 4
+      - new: ROSIGMA_cU_adv_turret_set_hull_neutral4 #sets dead hulls to be civilian faction
+        offset: 4
         code: |
-          var int hullbolterunit;
-          var int hulllasunit;
+          var int hull;
 
-          unit.getTag hullbolterunit Tag.HullBolterUnit;
-          unit.getTag hulllasunit Tag.HullLasUnit;
-          if or eq hullbolterunit 1 eq hulllasunit 1;
+          unit.getTag hull Tag.Hull;
+          if eq hull 1;
             #debug_log "createUnit | offset 4 | advanced_turrets: hullbolterunit or hulllasunit detected.";
-            unit.setSpawnUnitFaction FACTION_PLAYER;
+            unit.setSpawnUnitFaction FACTION_NEUTRAL;
           end;
           return;
+ 
 
-      - offset: 99
+      - new: ROSIGMA_cU_adv_turret_set_startingtimeunits99 #ensures turrets spawn with full time units
+        offset: 99
         code: |
-          var int lasturretunit;
-          var int boltturretunit;
-          var int flamerturretunit;
-          var int acturretunit;
-          var int cannonturretunit;
-          var int executionerturretunit;
-          var int punisherturretunit;
-          var int lascannonturretunit;
-          var int flamersponsonunit;
-          var int boltersponsonunit;
-          var int mmsponsonunit;
-          var int hullbolterunit;
-          var int hulllasunit;
+          var int turretunit;
           var int maxtu;
 
-          unit.getTag lasturretunit Tag.LasTurretUnit;
-          if eq lasturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag boltturretunit Tag.BoltTurretUnit;
-          if eq boltturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag flamerturretunit Tag.FlamerTurretUnit;
-          if eq flamerturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag acturretunit Tag.ACTurretUnit;
-          if eq acturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag cannonturretunit Tag.CannonTurretUnit;
-          if eq cannonturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag executionerturretunit Tag.ExecutionerTurretUnit;
-          if eq executionerturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag punisherturretunit Tag.PunisherTurretUnit;
-          if eq punisherturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag lascannonturretunit Tag.LasCannonTurretUnit;
-          if eq lascannonturretunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-          if eq flamersponsonunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag boltersponsonunit Tag.BolterSponsonUnit;
-          if eq boltersponsonunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag mmsponsonunit Tag.MMSponsonUnit;
-          if eq mmsponsonunit 1;
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag hullbolterunit Tag.HullBolterUnit;
-          if eq hullbolterunit 1;
-            #debug_log "createUnit | offset 99 | advanced_turrets: hullbolterunit TU replenished.";
-            unit.getTimeUnitsMax maxtu;
-            unit.setTimeUnits maxtu;
-          end;
-          unit.getTag hulllasunit Tag.HullLasUnit;
-          if eq hulllasunit 1;
-            #debug_log "createUnit | offset 99 | advanced_turrets: hullbolterunit TU replenished.";
+          unit.getTag turretunit Tag.TurretUnit;
+          if eq turretunit 1;
             unit.getTimeUnitsMax maxtu;
             unit.setTimeUnits maxtu;
           end;
           return;
 
     damageUnit:
-      - offset: 1
+      - new: ROSIGMA_dU_adv_turret_prime_dummy_items #primes dummy items when corresponding turret is killed
+        offset: 1
         code: |
-          var int lasturretunit;
-          var int deadlasturrets;
-          var int boltturretunit;
-          var int deadboltturrets;
-          var int flamerturretunit;
-          var int deadflamerturrets;
-          var int acturretunit;
-          var int deadacturrets;
-          var int cannonturretunit;
-          var int deadcannonturrets;
-          var int executionerturretunit;
-          var int deadexecutionerturrets;
-          var int punisherturretunit;
-          var int deadpunisherturrets;
-          var int lascannonturretunit;
-          var int deadlascannonturrets;
-          var int flamersponsonunit;
-          var int deadflamersponsons;
-          var int boltersponsonunit;
-          var int deadboltersponsons;
-          var int mmsponsonunit;
-          var int deadmmsponsons;
-          var int hullbolterunit;
-          var int deadhullbolters;
-          var int hulllasunit;
-          var int deadhulllas;
+          var int turretunit;
+          var int turretitem;
           var int health;
-          var int slstrat;
-          var ptr RuleUnit turret_unit;
+          var int turretid;
+          var int itemid;
+          var int fuseactive;
 
-          battle_game.getTag slstrat Tag.ApplySteelLegion;
-          unit.getTag boltturretunit Tag.BoltTurretUnit;
-          if eq boltturretunit 1;
+          var text name;
+
+          var ptr RuleUnit rule_unit;
+
+          unit.getTag turretunit Tag.TurretUnit;
+          if eq turretunit 1;
             unit.getHealth health;
             if gt to_health health;
-              battle_game.getTag deadboltturrets Tag.DeadBoltTurrets;
-              add deadboltturrets 1;
-              battle_game.setTag Tag.DeadBoltTurrets deadboltturrets;
-            end;
-          end;
-          unit.getTag lasturretunit Tag.LasTurretUnit;
-          if eq lasturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadlasturrets Tag.DeadLasTurrets;
-              add deadlasturrets 1;
-              battle_game.setTag Tag.DeadLasTurrets deadlasturrets;
-            end;
-          end;
-          unit.getTag flamerturretunit Tag.FlamerTurretUnit;
-          if eq flamerturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadflamerturrets Tag.DeadFlamerTurrets;
-              add deadflamerturrets 1;
-              battle_game.setTag Tag.DeadFlamerTurrets deadflamerturrets;
-            end;
-          end;
-          unit.getTag acturretunit Tag.ACTurretUnit;
-          if eq acturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadacturrets Tag.DeadACTurrets;
-              add deadacturrets 1;
-              battle_game.setTag Tag.DeadACTurrets deadacturrets;
-            end;
-          end;
-          unit.getTag cannonturretunit Tag.CannonTurretUnit;
-          if eq cannonturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadcannonturrets Tag.DeadCannonTurrets;
-              add deadcannonturrets 1;
-              battle_game.setTag Tag.DeadCannonTurrets deadcannonturrets;
-            end;
-          end;
-          unit.getTag executionerturretunit Tag.ExecutionerTurretUnit;
-          if eq executionerturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadexecutionerturrets Tag.DeadExecutionerTurrets;
-              add deadexecutionerturrets 1;
-              battle_game.setTag Tag.DeadExecutionerTurrets deadexecutionerturrets;
-            end;
-          end;
-          unit.getTag punisherturretunit Tag.PunisherTurretUnit;
-          if eq punisherturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadpunisherturrets Tag.DeadPunisherTurrets;
-              add deadpunisherturrets 1;
-              battle_game.setTag Tag.DeadPunisherTurrets deadpunisherturrets;
-            end;
-          end;
-          unit.getTag lascannonturretunit Tag.LasCannonTurretUnit;
-          if eq lascannonturretunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadlascannonturrets Tag.DeadLasCannonTurrets;
-              add deadlascannonturrets 1;
-              battle_game.setTag Tag.DeadLasCannonTurrets deadlascannonturrets;
-            end;
-          end;
-          unit.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-          if eq flamersponsonunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadflamersponsons Tag.DeadFlamerSponsons;
-              add deadflamersponsons 1;
-              battle_game.setTag Tag.DeadFlamerSponsons deadflamersponsons;
-            end;
-          end;
-          unit.getTag boltersponsonunit Tag.BolterSponsonUnit;
-          if eq boltersponsonunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadboltersponsons Tag.DeadBolterSponsons;
-              add deadboltersponsons 1;
-              battle_game.setTag Tag.DeadBolterSponsons deadboltersponsons;
-            end;
-          end;
-          unit.getTag mmsponsonunit Tag.MMSponsonUnit;
-          if eq mmsponsonunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadmmsponsons Tag.DeadMMSponsons;
-              add deadmmsponsons 1;
-              battle_game.setTag Tag.DeadMMSponsons deadmmsponsons;
-            end;
-          end;
-          unit.getTag hullbolterunit Tag.HullBolterUnit;
-          if eq hullbolterunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadhullbolters Tag.DeadHullBolters;
-              add deadhullbolters 1;
-              battle_game.setTag Tag.DeadHullBolters deadhullbolters;
-              #debug_log "damageUnit | offset 1 | advanced_turrets: hullbolterunit destroyed: deadhullbolters." deadhullbolters;
-              rules.getRuleUnit turret_unit "STR_CHIMERA_HULL";
-              if eq slstrat 1;
-                rules.getRuleUnit turret_unit "STR_CHIMERASL_HULL";
+              loop var turret_item battle_game.getItems.list;
+              turret_item.getTag turretitem Tag.TurretItem;
+                if eq turretitem 1;
+                  turret_item.getTag itemid Tag.ItemId;
+                  unit.getTag turretid Tag.TurretId;
+
+                  if eq itemid turretid;
+                    turret_item.isFuseEnabled fuseactive;
+                    if neq fuseactive 1;
+                      turret_item.setFuseTimer 0;
+                      return;
+                    end;
+                  end;
+                end;
               end;
-              unit.setSpawnUnit turret_unit;
-              unit.setSpawnUnitFaction FACTION_NEUTRAL;
-              unit.setSpawnUnitInstantRespawn 1;
             end;
           end;
-          unit.getTag hulllasunit Tag.HullLasUnit;
-          if eq hulllasunit 1;
-            unit.getHealth health;
-            if gt to_health health;
-              battle_game.getTag deadhulllas Tag.DeadHullLas;
-              add deadhulllas 1;
-              battle_game.setTag Tag.DeadHullLas deadhulllas;
-              rules.getRuleUnit turret_unit "STR_CHIMERA_HULL";
-              if eq slstrat 1;
-                rules.getRuleUnit turret_unit "STR_CHIMERASL_HULL";
-              end;
-              unit.setSpawnUnit turret_unit;
-              unit.setSpawnUnitFaction FACTION_NEUTRAL;
-              unit.setSpawnUnitInstantRespawn 1;
-              #debug_log "damageUnit | offset 1 | advanced_turrets: hulllasunit destroyed: deadhulllas." deadhulllas;
-            end;
-          end;
+
           return;
 
-    newTurnItem:
-      - offset: 1
-        code: |
-          var int boltturret;
-          var int deadboltturrets;
-          var int lasturret;
-          var int deadlasturrets;
-          var int flamerturret;
-          var int deadflamerturrets;
-          var int acturret;
-          var int deadacturrets;
-          var int cannonturret;
-          var int deadcannonturrets;
-          var int executionerturret;
-          var int deadexecutionerturrets;
-          var int punisherturret;
-          var int deadpunisherturrets;
-          var int lascannonturret;
-          var int deadlascannonturrets;
-          var int flamersponson;
-          var int deadflamersponsons;
-          var int boltersponson;
-          var int deadboltersponsons;
-          var int mmsponson;
-          var int deadmmsponsons;
-          var int hullbolter;
-          var int deadhullbolters;
-          var int hulllas;
-          var int deadhulllas;
-
-          item.getTag boltturret Tag.BoltTurret;
-          if eq 1 boltturret;
-            battle_game.getTag deadboltturrets Tag.DeadBoltTurrets;
-            if gt deadboltturrets 0;
-              sub deadboltturrets 1;
-              battle_game.setTag Tag.DeadBoltTurrets deadboltturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag lasturret Tag.LasTurret;
-          if eq 1 lasturret;
-            battle_game.getTag deadlasturrets Tag.DeadLasTurrets;
-            if gt deadlasturrets 0;
-              sub deadlasturrets 1;
-              battle_game.setTag Tag.DeadLasTurrets deadlasturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag flamerturret Tag.FlamerTurret;
-          if eq 1 flamerturret;
-            battle_game.getTag deadflamerturrets Tag.DeadFlamerTurrets;
-            if gt deadflamerturrets 0;
-              sub deadflamerturrets 1;
-              battle_game.setTag Tag.DeadFlamerTurrets deadflamerturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag acturret Tag.ACTurret;
-          if eq 1 acturret;
-            battle_game.getTag deadacturrets Tag.DeadACTurrets;
-            if gt deadacturrets 0;
-              sub deadacturrets 1;
-              battle_game.setTag Tag.DeadACTurrets deadacturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag cannonturret Tag.CannonTurret;
-          if eq 1 cannonturret;
-            battle_game.getTag deadcannonturrets Tag.DeadCannonTurrets;
-            if gt deadcannonturrets 0;
-              sub deadcannonturrets 1;
-              battle_game.setTag Tag.DeadCannonTurrets deadcannonturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag executionerturret Tag.ExecutionerTurret;
-          if eq 1 executionerturret;
-            battle_game.getTag deadexecutionerturrets Tag.DeadExecutionerTurrets;
-            if gt deadexecutionerturrets 0;
-              sub deadexecutionerturrets 1;
-              battle_game.setTag Tag.DeadExecutionerTurrets deadexecutionerturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag punisherturret Tag.PunisherTurret;
-          if eq 1 punisherturret;
-            battle_game.getTag deadpunisherturrets Tag.DeadPunisherTurrets;
-            if gt deadpunisherturrets 0;
-              sub deadpunisherturrets 1;
-              battle_game.setTag Tag.DeadPunisherTurrets deadpunisherturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag lascannonturret Tag.LasCannonTurret;
-          if eq 1 lascannonturret;
-            battle_game.getTag deadlascannonturrets Tag.DeadLasCannonTurrets;
-            if gt deadlascannonturrets 0;
-              sub deadlascannonturrets 1;
-              battle_game.setTag Tag.DeadLasCannonTurrets deadlascannonturrets;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag flamersponson Tag.FlamerSponson;
-          if eq 1 flamersponson;
-            battle_game.getTag deadflamersponsons Tag.DeadFlamerSponsons;
-            if gt deadflamersponsons 0;
-              sub deadflamersponsons 1;
-              battle_game.setTag Tag.DeadFlamerSponsons deadflamersponsons;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag boltersponson Tag.BolterSponson;
-          if eq 1 boltersponson;
-            battle_game.getTag deadboltersponsons Tag.DeadBolterSponsons;
-            if gt deadboltersponsons 0;
-              sub deadboltersponsons 1;
-              battle_game.setTag Tag.DeadBolterSponsons deadboltersponsons;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag mmsponson Tag.MMSponson;
-          if eq 1 mmsponson;
-            battle_game.getTag deadmmsponsons Tag.DeadMMSponsons;
-            if gt deadmmsponsons 0;
-              sub deadmmsponsons 1;
-              battle_game.setTag Tag.DeadMMSponsons deadmmsponsons;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag hullbolter Tag.HullBolter;
-          if eq 1 hullbolter;
-            battle_game.getTag deadhullbolters Tag.DeadHullBolters;
-            if gt deadhullbolters 0;
-              sub deadhullbolters 1;
-              battle_game.setTag Tag.DeadHullBolters deadhullbolters;
-              item.setFuseTimer 0;
-            end;
-          end;
-          item.getTag hulllas Tag.HullLas;
-          if eq 1 hulllas;
-            battle_game.getTag deadhulllas Tag.DeadHullLas;
-            if gt deadhulllas 0;
-              sub deadhulllas 1;
-              battle_game.setTag Tag.DeadHullLas deadhulllas;
-              item.setFuseTimer 0;
-            end;
-          end;
-          return;
 
     newTurnUnit:
-      - offset: 3
+      - new: ROSIGMA_nTU_adv_turret_set_sponson_resprite3 #cchecks if unit is west sponson (i honestly cant remember why there is a nTU and cU script for this same function)
+        offset: 3
         code: |
 
           var int flamersponsonunit;
@@ -3332,41 +2971,15 @@ extended:
           var ptr BattleUnit other_sponson;
           var ptr Tile other_tile;
 
-          unit.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-          if eq flamersponsonunit 1;
-            set run 1;
-          end;
-          unit.getTag boltersponsonunit Tag.BolterSponsonUnit;
-          if eq boltersponsonunit 1;
-            set run 1;
-          end;
-          unit.getTag mmsponsonunit Tag.MMSponsonUnit;
-          if eq mmsponsonunit 1;
-            set run 1;
-          end;
+
           unit.getTag sponson Tag.Sponson;
           if eq sponson 1;
-            set run 1;
-          end;
-          if eq run 1;
             unit.getPosition.getY y;
             unit.getPosition.getX x;
             unit.getPosition.getZ z;
             add x 5;
             battle_game.getTile other_tile x y z;
             other_tile.getUnit other_sponson;
-            other_sponson.getTag flamersponsonunit Tag.FlamerSponsonUnit;
-            if eq flamersponsonunit 1;
-              set temp 1;
-            end;
-            other_sponson.getTag boltersponsonunit Tag.BolterSponsonUnit;
-            if eq boltersponsonunit 1;
-              set temp 1;
-            end;
-            other_sponson.getTag mmsponsonunit Tag.MMSponsonUnit;
-            if eq mmsponsonunit 1;
-              set temp 1;
-            end;
             other_sponson.getTag sponson Tag.Sponson;
             if eq sponson 1;
               set temp 1;
@@ -3378,7 +2991,8 @@ extended:
           return;
 
     selectUnitSprite:
-      - offset: 1
+      - new: ROSIGMA_sUS_resprite_sponsons1 #switches west sponson sprite to a blank one
+        offset: 1
         code: |
           var int resprite;
 
@@ -3630,49 +3244,6 @@ extraSprites:
 
 extraStrings:
 
-  - type: en-US
-    strings:
-      STR_CHIMERA_AC_TURRET: "Auto-Cannon Turret"
-      STR_CHIMERA_COMMAND_TURRET: "Chimera Turret"
-      STR_CHIMERA_BOLTER_TURRET: "Bolter Turret"
-      STR_CHIMERA_FLAMER_TURRET: "Flamer Turret"
-      STR_CHIMERA_LAS_TURRET: "Multilas Turret"
-      STR_CHIMERA_HB: "Heavy Bolter Turret"
-      STR_CANNON_TURRET: "Battle Cannon Turret"
-      STR_EXECUTIONER_TURRET: "Executioner Turret"
-      STR_LEMONRUSS_EXECUTIONER: "Leman Russ Executioner"
-      STR_EXECUTIONER_CANNON: "Executioner Cannon"
-      STR_LEMAN_COMMAND_TURRET: "Leman Russ Turret"
-      STR_TWIN_LINK_LASCANNON: "Twin-Linked Lascannon"
-      STR_PUNISHER_CANNON: "Punisher Cannon"
-      STR_PUNISHER_TURRET: "Punisher Turret"
-      STR_LASCANNON_TURRET: "Annihilator Turret"
-      STR_SPONSON_HEAVY_FLAMER: "Heavy Flamer Sponson"
-      STR_FLAMER_SPONSON: "Heavy Flamer Sponson"
-      STR_SPONSON_FLAMER: "Heavy Flamer Sponson"
-      STR_BOLTER_SPONSON: "Heavy Bolter Sponson"
-      STR_SPONSON_HB: "Heavy Bolter Sponson"
-      STR_SPONSON_BOLTER: "Heavy Bolter Sponson"
-      STR_MULTIMELTA_SPONSON: "Multi-Melta Sponson"
-      STR_HULL_BOLTER: "Hull-Mounted Bolter"
-      STR_HULL_LAS: "Hull-Mounted Lascannon"
-      STR_LEMAN_HULL_BOLTER: "Hull-Mounted Bolter"
-      STR_LEMAN_HULL_LAS: "Hull-Mounted Lascannon"
-      STR_HULL_LASCANNON: "Lascannon"
-      STR_CHIMERA_HULL_BOLTER: "Heavy Bolter"
-      STR_SPONSON_MULTIMELTA: "Multi-Melta Sponson"
-      STR_LEMONRUSS_LASCANNON: "Annhilator Turret"
-      STR_LEMONRUSS_PUNISHER: "Punisher Turret"
-      STR_CHIMERA_HULL: "Vehicle Hull"
-      STR_LEMAN_HULL: "Vehicle Hull"
-      STR_LEMAN_SPONSON: "Vehicle Sponson"
-      STR_MULTI_LASER: "Multi-Laser"
-      STR_PUNISHER_CANNON_UFOPEDIA: "{NEWLINE} The Punisher Gatling Cannon is a large rotary ballistic weapon, and one of the fastest-firing slug throwers in the Imperium's arsenal. The Punisher can shred even the heaviest of infantry units with punitive ease."
-      STR_LEMONRUSS_LASCANNON_UFOPEDIA: "{NEWLINE} The Annhilator is a twin-linked heavy lascannon turret designed to destroy hostile armor and reduce the risks and logistics footprint of handling solid ammunition."
-      STR_LEMONRUSS_WEAPON_UFOPEDIA: "{NEWLINE} The standard Leman Russ battlecannon fires a 120mm shell that can destroy buildings and enemy armor alike."
-      STR_SPONSON_MULTIMELTA_WEAPON: "Multi-Melta"
-      STR_TWIN_AUTOCANNON_TURRET: "Twin Autocannon Turret"
-      STR_TWIN_LASCANNON_TURRET: "Twin Lascannon Turret"
 
 
   - type: ru

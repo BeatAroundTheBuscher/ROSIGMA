@@ -306,20 +306,26 @@ items:
     costBuy: 1500
     costSell: 150
     weight: 3
-    bigSprite: {mod: 40k, index: 236} #make new with alt color
+    bigSprite: 3018
     floorSprite: {mod: 40k, index: 119}
     handSprite: {mod: 40k, index: 464}
     hitSound: {mod: 40k, index: 22}
-    hitAnimation: {mod: 40k, index: 26}
+    hitAnimation: {mod: 40k, index: 104 }
+    damageType: 6 #stun properties
     power: 40 #40 for normal shotgun shells
     damageAlter: #DA SHOTGUN
-      ToArmorPre: 0.05
+      ResistType: 3 #concussive resists; less lethal
+      ToArmorPre: 0.02
       ArmorEffectiveness: 0.7
       ToHealth: 0.1
-      ToStun: 0.4
+      ToWound: 0.05
+      RandomWound: false
+      ToStun: 0.6
       ToEnergy: 1.0
       ToTime: 1.0
-    damageType: 5 #plasma energy shock
+      ToTile: 0.0
+      ToItem: 0.0
+      ToArmor: 0.0
     clipSize: 8
     battleType: 2
     armor: 200
@@ -333,20 +339,25 @@ items:
     costBuy: 1500
     costSell: 150
     weight: 3
-    bigSprite: {mod: 40k, index: 236} #make new with alt color
+    bigSprite: 3017
     floorSprite: {mod: 40k, index: 119}
     handSprite: {mod: 40k, index: 464}
     hitSound: {mod: 40k, index: 832} #blight rocket
     hitAnimation: 1020 #pink skull splosion
+    damageType: 8 #acid stun gas smoke bypasses
     power: 30 #40 for normal shotgun shells
     damageAlter: #DA SHOTGUN
       ArmorEffectiveness: 0.25 #low power, armor still offers some protection although it may target under armor value.
       ToHealth: 0.05
+      ToWound: 0.01
+      RandomWound: false
       ToStun: 0.5
       ToEnergy: 1.5
       ToTime: 1.5
-    damageType: 8 #acid stun gas smoke bypasses
-    blastRadius: 3
+      ToTile: 0.0
+      ToItem: 0.0
+      ToArmor: 0.0
+      FixRadius: 3
     clipSize: 8
     battleType: 2
     armor: 200
@@ -1706,6 +1717,40 @@ items:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle aimed shot bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
 
+  - type: STR_PRIMARIS_EXECUTOR_RIFLE
+    refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
+    dropoff: 4 #battle rifle
+    requiresBuyBaseFunc: [TRADE]
+    bigSprite: 1048
+    floorSprite: 977
+    handSprite: 1148
+    costBuy: 100000
+    costSell: 25000
+    weight: 30
+    compatibleAmmo:
+      - STR_PRIMARIS_EXECUTOR_RIFLE_DRUM_MAG #to be expanded to include other damage types?
+    aimRange: 21
+    snapRange: 18
+    autoRange: 12
+    autoShots: 5
+    accuracyAuto: 75
+    accuracySnap: 85
+    accuracyAimed: 95
+    tuAimed: 40
+    tuAuto: 33
+    tuSnap: 25
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    oneHandedPenalty: 25
+    kneelBonus: 130
+    tuLoad: 30 #drummag feed; takes longer
+    tags:
+      ITEM_RECOIL: 45
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 10 #battle rifle aimed shot bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle aimed shot bonus
+      ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+
   - type: STR_PRIMARIS_HEAVY_BOLT_RIFLE #BOLTER #        10330  TYPE RIFLE
     refNode: *STR_PRIMARIS_RIFLE_TEMPLATE
     requiresBuyBaseFunc: [TRADE]
@@ -1782,6 +1827,8 @@ items:
     hitAnimation: {mod: 40k, index: 26}
     requiresBuy:
       - STR_PRIMARIS
+    power: 65
+    damageType: 1
     damageAlter: #DA BOLTER
       ToArmorPre: 0.1
       ArmorEffectiveness: 0.9
@@ -1792,8 +1839,6 @@ items:
       ToWound: 0.2
       RandomWound: false
     explosionSpeed: 5
-    power: 65
-    damageType: 1
     clipSize: 60
     battleType: 2
     armor: 100
@@ -1855,6 +1900,27 @@ items:
       RandomWound: false
     power: 85
     listOrder: 10420
+
+  - type: STR_PRIMARIS_EXECUTOR_RIFLE_DRUM_MAG
+    refNode: *STR_PRIMARIS_HEAVY_BOLT_RIFLE_DRUM_TEMPLATE
+    bigSprite: 1059
+    floorSprite: 977
+    handSprite: 1212
+    costBuy: 4000
+    costSell: 1000
+    clipSize: 50
+    damageType: 1
+    power: 70
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    listOrder: 10430
 
   - type: STR_PRIMARIS_MELTA_RIFLE #MELTAGUN
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
