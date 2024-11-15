@@ -1144,7 +1144,6 @@ research:
 
   - name: STR_CONTACT_CHAOS_MARINES
     cost: 1500
-    cost: 1
     points: 0
     dependencies:
       - STR_CHAOS_PATH
@@ -1158,6 +1157,44 @@ research:
       - STR_CONVERT_TO_CHAOS_RESEARCH
       - STR_CONTACT_CHAOS_MARINES #Ceramite Tier
       - STR_HIGHTIER_PREREQ
+
+  - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH # Not technically a chaos research, but required for advancement down Iron Guard path if the player is already has CHAOS_PATH
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    
+  - name: STR_CONTACT_IRON_GUARD
+    cost: 1200
+    points: -500
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    #spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT # todo: create a mission event that then allows the player to progress the iron guard path
+
+  - name: STR_IRON_GUARD_LOWTIER_REQUISITIONS # todo: sort through basic chaos weaponry and select some to be able to be purchased by players still in lowtier through the Iron Guard
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD  
+
+  - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS
+    cost: 200 # Increase later when there's a real amount of content in this
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD
+      - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_CREATE_IRON_MAIDEN_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_LOWTIER_REQUISITIONS
+
+  - name: STR_CREATE_IRON_MAIDEN_RESEARCH
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_IRON_MAIDEN_SISTER
 
   - name: STR_CHAOS_CROZIUS
     cost: 500
@@ -7263,6 +7300,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_SOLDIER
     destroyItem: true
@@ -7274,7 +7312,9 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
+
   - name: STR_IRON_WARRIOR_BREACHER
     cost: 150
     points: 50
@@ -7282,6 +7322,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_HEAVY
@@ -7291,6 +7332,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_MEDIC
@@ -7300,6 +7342,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_BERSERKER
@@ -7309,6 +7352,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_TERMINATOR
@@ -7318,6 +7362,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_WARSMITH
@@ -7336,6 +7381,9 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_MASTER_CRAFTING
       - STR_BLASTER_LAUNCHER
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_ENGINEER
     destroyItem: true
 
   #Black Legion
@@ -8237,6 +8285,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_ENGINEER
     destroyItem: true
@@ -8248,6 +8297,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_IW_AUTOCANNON
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_MAIDEN_SISTER
     destroyItem: true
