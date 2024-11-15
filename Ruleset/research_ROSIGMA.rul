@@ -495,18 +495,6 @@ research:
     points: 50
     dependencies:
       - STR_ELDAR_PATH
-  #---CHAOS-----------------------------------------------------
-  - name: STR_ALIENS_ONLY #CHAOS PATH
-    cost: 1000
-    points: -2000
-    dependencies:
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-      - STR_LIBRARY
-    disables:
-      - STR_CHAPTER_PURITY
-      - STR_PSI_LAB
-      - STR_LIBRARY
 
   #---CORPSES AND FOES------------------------------------------------------
   - name: STR_INTERROGATION_COMPLETED
@@ -572,7 +560,7 @@ research:
       - STR_GENERALLOCK
 
   - name: STR_RADICAL_INQUISITOR_STRATEGY
-    cost: 100
+    cost: 5
     points: -1000
     dependencies:
       - STR_CHAMBERMILITANT
@@ -583,13 +571,12 @@ research:
       - STR_GREYKNIGHTS
       - STR_DEATHWATCH
 
-  - name: STR_HERETICAL_INQUISITOR_STRATEGY #For later, requires some CHAOS Soldiers.
+  - name: STR_HERETICAL_INQUISITOR_STRATEGY
     cost: 100
     points: -1000
-    getOneFree:
-      - STR_ALIENS_ONLY
-    unlocks:
-      - STR_CONVINCE_CHAOS_RESEARCH
+    getOneFree: # Now gives the prerequisites to enter the generic chaos path immediately which meets the needs of the former method
+      - STR_ALIEN_ORIGINS
+      - STR_ALIEN_FOOD
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
     reenables:
@@ -1075,97 +1062,139 @@ research:
   #*** the projects the player sees ***
   #---MISSIONS------------------------------------------------------
   #---CHAOS-----------------------------------------------------
-  - name: STR_CHAOS_PATH #CHAOS PATH Could use new Sisters adapted entry
+  - name: STR_ALIENS_ONLY # Serves as the lock for chaos items
+    cost: 1000
+    points: -2000
+    dependencies:
+      - STR_GENERALLOCK # Given by STR_CHAOS_PATH
+    disables:
+      - STR_CHAPTER_PURITY
+      - STR_PSI_LAB
+      - STR_LIBRARY
+
+  - name: STR_ALIEN_ORIGINS # Warp Origins
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CHAOS_PATH # This is the entry point into the generic chaos path
     cost: 1000
     points: -1000
     dependencies:
-      - STR_MARINES_STRATEGY #pretty superflous, plenty of ways to "unlock" chaos path now - only Guard and Arbites are more limited in how to take advantage.
-      - STR_PLASMA_PISTOL
-      - STR_PLASMA_PISTOL_TZEENTCH
-      - STR_PLASMA_RIFLE
-      - STR_HEAVY_PLASMA
+      - STR_GUARD_AND_ARBITES # This doesnt lock other factions out, they get their own entry points that gives this along with other bonuses
       - STR_ALIEN_ORIGINS
-      - STR_BOLTPISTOL_CHAOS
-      - STR_BOLTERC
-      - STR_CHAOS_CROZIUS
-      - STR_AXE
-      - STR_CHB
-      - STR_CASSC
-    unlocks:
-      - STR_CONVINCE_CHAOS_RESEARCH
+      - STR_ALIEN_FOOD
+    getOneFree:
+      - STR_ALIENS_ONLY
 
-  - name: STR_CHAMBER_CHAOS_PATH #Inquisition Chaos Path got the most freedom
+  - name: STR_ADEPTAS_CHAOS_PATH # Adeptas entry in to the generic chaos path.
     cost: 150
     points: 0
     dependencies:
+      - STR_ADEPTAS
+      - STR_ALIEN_ORIGINS
+      - STR_ALIEN_FOOD
+    unlocks:
+      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+    getOneFree:
+      - STR_CONTACT_CHAOS_SISTERS
       - STR_CHAOS_PATH
+
+  - name: STR_CHAMBER_CHAOS_PATH # Heretical Inquisitior's entry into the generic chaos path.
+    cost: 150
+    points: 0
+    dependencies:
       - STR_CHAMBERMILITANT
       - STR_HERETICAL_INQUISITOR_STRATEGY
-    unlocks:
-      - STR_CHAOS_MARINE_HIRE_RESEARCH
-      - STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH #Leads to the actual research that allows Chaos Adeptas research
+    getOneFree:
+      - STR_CHAOS_PATH
 
-  - name: STR_MARINE_CHAOS_PATH
+  - name: STR_MARINE_CHAOS_PATH # Marine entry into the generic chaos path
     cost: 150
     points: 0
     dependencies:
       - STR_MARINES_STRATEGY
-      - STR_CHAOS_PATH
+      - STR_ALIEN_ORIGINS
+      - STR_ALIEN_FOOD
     unlocks:
       - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+    getOneFree:
+      - STR_CONTACT_CHAOS_MARINES
+      - STR_CHAOS_PATH
 
-  - name: STR_CHAOS_SISTERS_CSM_ACCESS_LATER
+  - name: STR_CONTACT_CHAOS_SISTERS # Was STR_ALIENS_ONLY2
+    cost: 1000
+    points: -1500
+    dependencies:
+      - STR_CHAOS_PATH
+    unlocks:
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+    spawnedEvent: STR_HERETIC_SISTER_ADVISOR
+
+  - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH # Gates hiring heretic sisters behind Mid-Tier
+    cost: 500
+    points: 100
+    dependencies:
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+      - STR_CONTACT_CHAOS_SISTERS
+      - STR_MIDTIER_PREREQ
+
+  - name: STR_CONTACT_CHAOS_MARINES
     cost: 1500
     points: 0
     dependencies:
-      - STR_ALIENS_ONLY2
-      - STR_UFO_CONSTRUCTION #Ceramite Tier
-    unlocks:
-      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_CHAOS_PATH
+      - STR_MIDTIER_PREREQ
+    spawnedEvent: STR_CHAOS_MARINE_ADVISOR
 
   - name: STR_CHAOS_MARINE_HIRE_RESEARCH
     cost: 1000
     points: 0
     dependencies:
-      - STR_CHAMBER_CHAOS_PATH #Was this STR_CHAOS_PATH, now split to give CHAMBER and MARINES this right away, but not Chaos Sisters path
-      - STR_MARINE_CHAOS_PATH #marine chaos path
-      - STR_CHAOS_SISTERS_CSM_ACCESS_LATER #Ceramite Tier
+      - STR_CONVERT_TO_CHAOS_RESEARCH
+      - STR_CONTACT_CHAOS_MARINES #Ceramite Tier
+      - STR_HIGHTIER_PREREQ
 
-  - name: STR_ALIEN_ORIGINS
+  - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH # Not technically a chaos research, but required for advancement down Iron Guard path if the player is already has CHAOS_PATH
     cost: 500
-    points: 100
+    points: 0
     dependencies:
-      - STR_SECTOID_COMMANDER
-      - STR_SECTOID_LEADER
-      - STR_SECTOID_ENGINEER
-      - STR_SECTOID_MEDIC
-      - STR_SECTOID_NAVIGATOR
-      - STR_SECTOID_SOLDIER
-      - STR_CYBERDISC_TERRORIST
-      - STR_SNAKEMAN_COMMANDER
-      - STR_SNAKEMAN_LEADER
-      - STR_SNAKEMAN_ENGINEER
-      - STR_SNAKEMAN_NAVIGATOR
-      - STR_SNAKEMAN_SOLDIER
-      - STR_CHRYSSALID_TERRORIST
-      - STR_ETHEREAL_COMMANDER
-      - STR_ETHEREAL_LEADER
-      - STR_ETHEREAL_SOLDIER
-      - STR_SECTOPOD_TERRORIST
-      - STR_MUTON_ENGINEER
-      - STR_MUTON_NAVIGATOR
-      - STR_MUTON_SOLDIER
-      - STR_SILACOID_TERRORIST
-      - STR_CELATID_TERRORIST
-      - STR_FLOATER_COMMANDER
-      - STR_FLOATER_LEADER
-      - STR_FLOATER_ENGINEER
-      - STR_FLOATER_MEDIC
-      - STR_FLOATER_NAVIGATOR
-      - STR_FLOATER_SOLDIER
-      - STR_REAPER_TERRORIST
+      - STR_GENERALLOCK
+    
+  - name: STR_CONTACT_IRON_GUARD
+    cost: 1200
+    points: -500
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    #spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT # todo: create a mission event that then allows the player to progress the iron guard path
+
+  - name: STR_IRON_GUARD_LOWTIER_REQUISITIONS # todo: sort through basic chaos weaponry and select some to be able to be purchased by players still in lowtier through the Iron Guard
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD  
+
+  - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS
+    cost: 200 # Increase later when there's a real amount of content in this
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD
+      - STR_MIDTIER_PREREQ
     unlocks:
-      - STR_CHAOS_PATH #new way to get access to this research without being MARINES
+      - STR_CARAPACE_ARMOR_IG
+      - STR_CREATE_IRON_MAIDEN_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_LOWTIER_REQUISITIONS
+
+  - name: STR_CREATE_IRON_MAIDEN_RESEARCH
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_IRON_MAIDEN_SISTER
 
   - name: STR_CHAOS_CROZIUS
     cost: 500
@@ -1179,7 +1208,6 @@ research:
     points: -100
     dependencies:
       - STR_CHAOS_PATH
-      - STR_HERETICAL_INQUISITOR_STRATEGY
 
   - name: STR_CONVERT_TO_CHAOS_RESEARCH
     cost: 500
@@ -1255,7 +1283,7 @@ research:
     cost: 2000
     points: -250
     dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_DEATHWATCH
       - STR_GAUSS_BLASTER
       - STR_HYPERPHASESWORD
       - STR_SYNAPTIC_DISINTEGRATOR
@@ -1268,71 +1296,6 @@ research:
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_ELDAR_SEER #live interrogation
-
-  #SISTERS OF CHAOS path
-  - name: STR_ALIENS_ONLY2 #CHAOS PATH FOR SISTERS
-    cost: 1000
-    points: -1500
-    dependencies:
-      - STR_CHAOS_PATH
-      - STR_ADEPTAS
-    getOneFree:
-      - STR_CONVERT_TO_CHAOS_RESEARCH
-    unlocks:
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-      - STR_ALIENS_ONLY #chaos weapon use restrictor
-    disables:
-      - STR_CHAPTER_PURITY
-
-  - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH #can be researched right away after going chaos path adeptas
-    cost: 500
-    points: 100
-    dependencies:
-      - STR_CONVERT_TO_CHAOS_RESEARCH
-      - STR_ADEPTAS
-      - STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH
-
-  - name: STR_CHAOS_ALL_HIRE_CHAOS_ADEPTAS_LATER_RESEARCH #for non ADEPTAS chaos path factions to unlock hiring them later
-    cost: 1000
-    points: 150
-    dependencies:
-      - STR_CHAOS_PATH
-      - STR_CONVERT_TO_CHAOS_RESEARCH
-      - STR_NURGLE_OPTIONS
-      - STR_TZEENTCH_OPTIONS
-      - STR_SLAANESH_OPTIONS
-      - STR_KHORNE_OPTIONS
-      - STR_ALIENS_ONLY
-    unlocks:
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-
-  - name: STR_TZEENTCH_ADEPTAS_HIRE_RESEARCH
-    cost: 250
-    points: 100
-    dependencies:
-      - STR_TZEENTCH_PATH
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-
-  - name: STR_KHORNE_ADEPTAS_HIRE_RESEARCH
-    cost: 250
-    points: 100
-    dependencies:
-      - STR_KHORNE_PATH
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-
-  - name: STR_SLAANESH_ADEPTAS_HIRE_RESEARCH
-    cost: 250
-    points: 100
-    dependencies:
-      - STR_SLAANESH_PATH
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
-
-  - name: STR_NURGLE_ADEPTAS_HIRE_RESEARCH
-    cost: 250
-    points: 100
-    dependencies:
-      - STR_NURGLE_PATH
-      - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
 
   # Alpha Legion Infiltration Event Research
   - name: STR_ALPHA_LEGION_INFILTRATED
@@ -2487,6 +2450,17 @@ research:
       - STR_HIGHTIER_PREREQ
     getOneFree:
       - STR_HAMMER
+
+  - name: STR_RADICAL_HIGHTIER # Radical Road high tier
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_CYDONIA_OR_BUST
+      - STR_CHAMBERMILITANT
+    unlocks:
+      - STR_HIGHTIER_PREREQ
 
   - name: STR_DEFENSE_CORRIDORGK #facility OTHER FACTIONS BLACK
     cost: 100
@@ -5821,6 +5795,7 @@ research:
       - STR_COMMANDER_PLUS
       - STR_ALIEN_ORIGINS
       - STR_PSI_LAB
+      - STR_ALIEN_ORIGINS
     getOneFree:
       - STR_SECTOID_LEADER
 
@@ -6163,6 +6138,24 @@ research:
       - STR_KHRONE_TERRORIST
       - STR_WARPTALON_SOLDIER
       - STR_KHORNE_CHAMP
+
+  - name: STR_BLOODREAPER
+    cost: 300
+    points: 100
+    lookup: STR_SILACOID
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_LEADER_PLUS
+      - STR_ALIEN_ORIGINS
+    getOneFree:
+      - STR_SILACOID_TERRORIST
+      - STR_CYBERDISC_TERRORIST
+      - STR_KHRONE_TERRORIST
+      - STR_IRON_BERSERKER
+      - STR_WARPTALON_SOLDIER
+      - STR_KHORNE_CHAMP
+      - STR_REAPER_TERRORIST
 
   - name: STR_CHRYSSALID_TERRORIST
     cost: 170
@@ -7289,6 +7282,16 @@ research:
       - STR_SLAANESH_ANOINTED
     destroyItem: true
 
+  - name: STR_CHAOS_BASIC_BEHEMOTH   # SLANESH
+    cost: 192
+    points: 500
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_CHAOS_PATH
+
   #Iron Warriors
   - name: STR_IRON_MAIDEN_SISTER
     cost: 100
@@ -7297,6 +7300,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_SOLDIER
     destroyItem: true
@@ -7308,7 +7312,9 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
+
   - name: STR_IRON_WARRIOR_BREACHER
     cost: 150
     points: 50
@@ -7316,6 +7322,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_HEAVY
@@ -7325,6 +7332,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_MEDIC
@@ -7334,6 +7342,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_BERSERKER
@@ -7343,6 +7352,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_TERMINATOR
@@ -7352,6 +7362,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_WARSMITH
@@ -7370,6 +7381,9 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_MASTER_CRAFTING
       - STR_BLASTER_LAUNCHER
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_ENGINEER
     destroyItem: true
 
   #Black Legion
@@ -7795,6 +7809,22 @@ research:
     destroyItem: true
 
   #Tzeentch cult
+  - name: STR_EXALTED_FLAMER_TERRORIST
+    cost: 200
+    points: 50
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_FLAMER_TERRORIST
+    destroyItem: true
+
+  - name: STR_EXALTED_FLAMER_CORPSE
+    cost: 100
+    points: 50
+    needItem: true
+
   - name: STR_PINK_HORROR_TERRORIST
     cost: 200
     points: 50
@@ -7815,6 +7845,17 @@ research:
       - STR_THREAT_ONE
     getOneFree:
       - STR_PINK_HORROR_TERRORIST
+    destroyItem: true
+
+  - name: STR_BRIMSTONE_HORROR
+    cost: 100
+    points: 20
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+    getOneFree:
+      - STR_BLUE_HORROR_TERRORIST
     destroyItem: true
 
   - name: STR_TZAANGOR
@@ -8244,6 +8285,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_ENGINEER
     destroyItem: true
@@ -8255,6 +8297,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_IW_AUTOCANNON
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_MAIDEN_SISTER
     destroyItem: true
@@ -9713,6 +9756,9 @@ research:
   - name: STR_KHORNEGOR_CORPSE
     refNode: *STR_CORPSE_BASIC
 
+  - name: STR_BLOODREAPER_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
   - name: STR_CHAOS_SQUATS_CORPSE
     refNode: *STR_CORPSE_BASIC
 
@@ -9744,6 +9790,9 @@ research:
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_BLUEHORROR_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_BRIMSTONE_HORROR_CORPSE
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_TZAANGOR_CORPSE
@@ -9991,7 +10040,6 @@ research:
 
   - name: STR_ZOMBIE_CORPSE
     refNode: *STR_CORPSE_BASIC
-    lookup: STR_ZOMBIE_AUTOPSY
 
   - name: STR_SECTOID_CORPSE
     refNode: *STR_CORPSE_BASIC
@@ -10515,6 +10563,15 @@ research:
     neededItem: STR_WARPED_HULK_LOOT
     destroyItem: false
 
+  - name: STR_RES_WARPED_HULK_LOOT_RAD
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false
 
 #dungeon specific end
 
@@ -10576,6 +10633,21 @@ research:
   - name: STR_MARBO4_LOCK_RESEARCH
     dependencies:
       - STR_GENERALLOCK
+
+  - name: STR_MARBO_DELTA_DATA
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_MARBO4_LOCK_RESEARCH
+    neededItem: STR_MARBO_CLUE4
+    destroyItem: true
+
+  - name: STR_MARBO_CONTACT
+    cost: 150
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_MARBO_DELTA_DATA
 
 #Catachen Traitor Guard
 

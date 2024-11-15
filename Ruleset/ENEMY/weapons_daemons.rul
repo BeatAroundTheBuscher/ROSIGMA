@@ -109,7 +109,110 @@ items:
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
 
-  - type: STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles            #4006;  this is intended as an aoe debuff/debilitation spell
+  - type: STR_BRIMSTONE_HORROR_FIRE #STR_BRIMSTONE_HORROR
+    categories: [STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
+    weight: 1
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    bigSprite: { mod: 40k, index: 1102 } #psyker_flamestrike.png ig
+    #floorSprite: { mod: 40k, index: 134 }
+    #handSprite: { mod: 40k, index: 424 }
+    handSprite: 700
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: [2001, 2002, 2003, 2004]
+    explosionHitSound: { mod: 40k, index: 771 }
+    hitAnimation: 2120
+    powerForAnimation: 64
+    arcingShot: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    accuracySnap: 69
+    tuSnap: 25
+    battleType: 1
+    twoHanded: false
+    power: 49
+    damageType: 2
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 0.5 #melts armor
+      ToArmor: 0.0 #melts on the way in
+      FireBlastCalc: false
+      FixRadius: 2
+      RadiusReduction: 0 #no aoe falloff
+      IgnoreDirection: false
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 5.0 #Tzeentch attacks assail the mind and are stunning
+      ToEnergy: 1.0
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToItem: 0.5
+      ToTile: 0.5
+      ToWound: 0.05 #melta type wounds
+      RandomWound: false
+      TileDamageMethod: 1
+    clipSize: -1
+    dropoff: 6
+    maxRange: 20
+    invWidth: 2
+    invHeight: 3
+    armor: 255
+    flatRate: false
+    fixedWeapon: true
+    recover: false
+    tags:
+      INFECTION_DAMAGE_PERCENT: 5 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    hiddenOnMinimap: true
+
+  - type: STR_BRIMSTONE_HORROR_CLAWS #STR_BRIMSTONE_HORROR
+    battleType: 3
+    power: 49
+    bigSprite: { mod: 40k, index: 1102 } #psyker_flamestrike.png ig
+    meleeSound: 3986
+    meleeHitSound: 3986 #sizzling claws
+    meleeAnimation: 8 #claws red
+    accuracyMelee: 100
+    costMelee:
+      time: 10
+      energy: 1
+    flatMelee: true
+    damageType: 2
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 0.5 #melts armor
+      ToArmor: 0.0 #melts on the way in
+      FireBlastCalc: false
+      RadiusReduction: 0 #no aoe falloff
+      IgnoreDirection: false
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 5.0 #Tzeentch attacks assail the mind and are stunning
+      ToEnergy: 1.0
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToItem: 0.5
+      ToTile: 0.5
+      ToWound: 0.05 #melta type wounds
+      RandomWound: false
+      TileDamageMethod: 1
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    armor: 255
+    flatRate: false
+    fixedWeapon: true
+    recover: false
+    tags:
+      ITEM_IS_KAMIKAZI_TRIGGER: 1 #triggers self-destruct on melee
+      INFECTION_DAMAGE_PERCENT: 5 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    hiddenOnMinimap: true
+
+  - &STR_TZEENTCH_MAGIC_MISSILE_TEMPLATE
+    type: STR_BLUE_FIRE_WEAPON  #Blue Fire Magic Missiles            #4006;  this is intended as an aoe debuff/debilitation spell
     categories: [STR_CAT_PLASMA, STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
     size: 0.2
     costSell: 0
@@ -168,6 +271,48 @@ items:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     hiddenOnMinimap: true
+
+  - type: STR_PINK_FIRE_MAGIC_MISSILE #can spawn Brimstone Horrors; currently only used by Tzeentch Sorcerer
+    refNode: *STR_TZEENTCH_MAGIC_MISSILE_TEMPLATE
+    tuAimed: 20 #spammable
+    spawnUnit: STR_BRIMSTONE_HORROR
+    spawnUnitFaction: 1
+    spawnUnitChance: 25
+    vaporColorSurface: 15 #pink warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 90
+    bigSprite: { mod: 40k, index: 1102 } #psyker_flamestrike.png ig
+    #floorSprite: { mod: 40k, index: 134 }
+    #handSprite: { mod: 40k, index: 424 }
+    bulletSprite: { mod: 40k, index: 5 }
+    fireSound: [2001, 2002, 2003, 2004]
+    explosionHitSound: { mod: 40k, index: 771 }
+    bulletSpeed: 25
+    hitAnimation: 2140 #pink fire impact
+    power: 39
+    damageType: 5 #plasma
+    damageAlter: #DA MELTA Double
+      RandomType: 1 #Swingy damage
+      FireThreshold: 0
+      ToArmorPre: 1.0 #melts armor
+      ToArmor: 0.0 #melts on the way in
+      FireBlastCalc: false
+      FixRadius: 2
+      RadiusReduction: 0 #minimal aoe falloff
+      IgnoreDirection: false
+      ArmorEffectiveness: 0.5 #ephermal and magical; passes through most armor with ease
+      ToMorale: 5.0 #was set to 1000% - Tzeentch attacks assail the mind and are stunning
+      ToEnergy: 2.0
+      ToStun: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToMana: 0.3 #corruption damage
+      ToTime: 1.0 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 0.7 #damage is mostly spiritual
+      ToItem: 1.0 #was 5.0
+      ToTile: 5.0
+      ToWound: 0.00
+      RandomWound: false
+      TileDamageMethod: 1
+      IgnoreOverKill: true
 
   - type: STR_RED_FIRE  #RED FIRE Tzeentch magic         #4006
     categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
@@ -250,14 +395,18 @@ items:
     clipSize: -1
 
   - type: STR_SILACOID_WEAPON #Bloodletter Hellblade
+    bigSprite: 3010
     power: 50 #base damage lowered per Damage Alter and Damage Scaling; works out to about 162 after Damage Bonuses
     weight: 3
-    damageType: 7
     accuracyMelee: 100
-    tuMelee: 15
+    costMelee:
+      time: 15
+      energy: 2
+    flatMelee: true
     clipSize: -1
     battleType: 3
     fixedWeapon: true
+    fixedWeaponShow: false
     invWidth: 2
     invHeight: 3
     recover: false
@@ -266,18 +415,19 @@ items:
       strength: 0.2
       melee: 0.6
       psiStrength: 0.2 #profaned weapon
+    damageType: 7
     damageAlter: #Khorne hellblade weapon
-      IgnoreSelfDestruct: false
       ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
       IgnoreOverKill: true
       FireThreshold: 0.0 #flaming weapon
-      ToArmorPre: 0.2
-      ToArmor: 0.2
-      ToStun: 0.1
-      ToMorale: 0.2
-      ToWound: 0.4
+      ToArmorPre: 0.3
+      ToArmor: 0.3
+      ToStun: 0.3
+      ToMorale: 0.5
+      ToWound: 0.2
+      RandomWound: false
       ToEnergy: 0.3
-      ArmorEffectiveness: 0.6
+      ArmorEffectiveness: 0.7
     tags: #Bloodletter Hellblade is vampiric, granting them power as they spill blood for Khorne
       TAG_HP_RETURNED_ON_KILL: 88 #regains 88 HP on kill; Sacred Khorne Number
       TAG_ENERGY_RETURNED_ON_KILL: 88 #regains 88 Energy on kill
@@ -290,6 +440,7 @@ items:
       YTAG_DAMAGE_RETURNED_AS_MORALE: 8
       YTAG_DAMAGE_RETURNED_AS_STUN: 8
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0 #untyped damage so no modifications
+
 
   - type: STR_KHORNE_VALKIA_WEAPON_MELEE_ONLY #Deamon Spear
     meleeSound: {mod: 40k, index: 753} #753 Powersword miss
@@ -589,6 +740,7 @@ items:
     recover: false
     hiddenOnMinimap: true
     tags:
+      ITEM_IS_KAMIKAZI_TRIGGER: 1 #triggers self-destruct on melee
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
@@ -870,14 +1022,24 @@ items:
   - type: STR_PLAGUE_TOAD_MINE
     refNode: *STR_BLIGHT_EXPLOSION_TEMPLATE
     armor: 20 #you're supposed to be able to burn/destroy these
-    power: 60
     battleType: 4 #proximity explosive
     defaultInventorySlot: STR_GROUND
     spawnUnitChance: 0
     specialChance: 100
     supportedInventorySections:
       - STR_GROUND
-    damageAlter:
+    power: 60
+    damageType: 8
+    damageAlter: ## Plague-inflicting weapon
+      ArmorEffectiveness: 0.7
+      SmokeThreshold: 0.0
+      ToArmorPre: 0.75 #higher than normal plague weapons
+      ToArmor: 0.0 #damages armor on the way in
+      ToHealth: 0.1
+      ToMana: 0.9 #mana counts as health damage for the purposes of infection
+      ToTile: 0.5
+      ToEnergy: 0.5
+      ToTime: 0.5 #sticky goo; also makes it decent vs infection immune/mechanical units
       RandomType: 6 #gaussian damage
       ToItem: 0.5 #to help avoid mine stacking issues; globs will reliably destroy each other
       FixRadius: 2
@@ -932,7 +1094,9 @@ items:
     fixedWeapon: true
     flatMelee: true
 
-  - type: STR_TZEENTCH_FLAMER_WEAPON_PINK #built in flamer
+
+  - &STR_TZEENTCH_FLAMER_TEMPLATE
+    type: STR_TZEENTCH_FLAMER_WEAPON_PINK #built in flamer
     categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
     weight: 0
     vaporColorSurface: 15 #pink warpfire
@@ -993,6 +1157,36 @@ items:
       INFECTION_DAMAGE_PERCENT: 50 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
+  - type: STR_TZEENTCH_FLAMER_WEAPON_PINK_LESSER #built in flamer
+    refNode: *STR_TZEENTCH_FLAMER_TEMPLATE
+    confSnap:
+      shots: 1
+    autoRange: 7
+    snapRange: 9 #longer than normal range
+    maxRange: 12
+    power: 69
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 2
+      RandomType: 1 #Swingy damage
+      ToArmorPre: 0.2
+      RandomArmorPre: true #random armor degradation
+      ArmorEffectiveness: 0.6 #ephermal and magical; passes through most armor with ease
+      ToMorale: 1.5 #Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.5 #Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4 #Tzeentch attacks assail the mind and are stunning
+      ToTile: 2.0
+      ToItem: 0.5
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: true
+
   - type: STR_TZEENTCH_FLAMER_WEAPON_BLUE #built in melta
     categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
     weight: 0
@@ -1048,6 +1242,7 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
 
   - type: STR_TZEENTCH_GLIMMERING_WEAPON_SCATTER #built in long range shotgun melta
     categories: [ STR_CAT_MELTA, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
@@ -1180,14 +1375,54 @@ items:
 
 
   - type: STR_PINK_HORROR_DEATH_GRENADE #Tzeentch Blue Horror spawner; meant to trigger when Pink Horror dies
-    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
-    bigSprite: 2912
-    floorSprite: 2914
     hitAnimation: 2140 #WarpBurn
     explosionHitSound: {mod: 40k, index: 771}
     hitSound: {mod: 40k, index: 788}
-    invWidth: 2
-    invHeight: 3
+    invHeight: 0
+    invWidth: 0
+    damageType: 2
+    power: 40
+    damageAlter:
+      RandomType: 1
+      IgnoreOverKill: false
+      FireBlastCalc: false
+      FixRadius: 4
+      ToHealth: 0.1
+      ToTime: 0.5
+      ToWound: 0.0
+      RandomWound: false
+      ToMana: 2.0
+      ToEnergy: 2.0
+      ToMorale: 5.0
+      ArmorEffectiveness: 0.6
+      ToItem: 1.0
+      ToTile: 1.0
+    battleType: 4 # grenade
+    recover: false
+    tuThrow: 999 #only to be thrown via scripts
+    tuPrime: 999 #only to be thrown via scripts
+    throwRange: 1 #not meant to be thrown
+    armor: 999
+    isExplodingInHands: true
+    hiddenOnMinimap: false
+    powerForAnimation: 112
+    spawnUnit: STR_BLUE_HORROR_TERRORIST
+    spawnUnitFaction: -1
+    spawnUnitChance: 100
+    tags:
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      ITEM_IS_KAMIKAZI_BOMB: 1
+
+  - type: STR_BLUE_HORROR_DEATH_GRENADE #Tzeentch Blue Horror spawner; meant to trigger when Pink Horror dies
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
+    hitAnimation: 2160 #WarpBurn
+    explosionHitSound: {mod: 40k, index: 771}
+    hitSound: {mod: 40k, index: 788}
+    invHeight: 0
+    invWidth: 0
     power: 40
     damageType: 2
     damageAlter:
@@ -1203,6 +1438,8 @@ items:
       ToEnergy: 2.0
       ToMorale: 5.0
       ArmorEffectiveness: 0.6
+      ToItem: 1.0
+      ToTile: 1.0
     battleType: 4 # grenade
     recover: false
     tuThrow: 999 #only to be thrown via scripts
@@ -1211,17 +1448,62 @@ items:
     armor: 999
     fixedWeapon: false #has to be false so kamikazi tag and scripts work properly
     isExplodingInHands: true
-    hiddenOnMinimap: true
-    defaultInventorySlot: STR_BACK_PACK
+    hiddenOnMinimap: false
     powerForAnimation: 112
-    spawnUnit: STR_BLUE_HORROR_TERRORIST
-    spawnUnitFaction: 1
+    spawnUnit: STR_BRIMSTONE_HORROR
+    spawnUnitFaction: -1
+    spawnUnitChance: 100
     tags:
       ITEM_IS_BOMB: 1
       ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
-      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       ITEM_IS_KAMIKAZI_BOMB: 1
+
+  - type: STR_BRIMSTONE_HORROR_DEATH_GRENADE #STR_BRIMSTONE_HORROR
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
+    hitAnimation: 2120 #WarpBurn
+    explosionHitSound: {mod: 40k, index: 771}
+    hitSound: {mod: 40k, index: 788}
+    invHeight: 0
+    invWidth: 0
+    weight: 0
+    power: 69
+    damageType: 2
+    damageAlter:
+      RandomType: 1
+      FireBlastCalc: false
+      FireThreshold: 0
+      IgnoreDirection: false
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ArmorEffectiveness: 0.5
+      ToMorale: 5.0
+      ToStun: 0.5
+      ToHealth: 1.5
+      ToWound: 0.05
+      ToTile: 0.5
+      ToItem: 0.5
+      RadiusReduction: 5
+      RandomWound: false
+      FixRadius: 3
+    powerForAnimation: 96 #16 * Fix Radius * 2
+    battleType: 4 # grenade
+    recover: false
+    tuThrow: 999 #only to be thrown via scripts
+    tuPrime: 999 #only to be thrown via scripts
+    throwRange: 1 #not meant to be thrown
+    armor: 999
+    isExplodingInHands: true
+    hiddenOnMinimap: false
+    tags:
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1 #we blow this bomb up on death
+      INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      ITEM_IS_KAMIKAZI_BOMB: 1
+
+
 
   - type: REAPER_WEAPON #Juggernaut Bite/Reaper Terrorist Bite
     power: 8
@@ -1775,3 +2057,47 @@ items:
       ToMana: 0.6
       ToTime: 1.0 #sticky tongue
       ToEnergy: 0.5 #sticky tongue
+
+  - type: STR_INTIMIDATION_KHARN
+    categories: [ STR_CAT_TACTICAL]
+    weight: 1
+    bulletSprite: 0
+    bigSprite: 250 #placeholder
+    specialIconSprite: 3 #placeholder
+    explosionHitSound: 2423
+    hitAnimation: 1050
+    powerForAnimation: 48
+    bulletSpeed: 200
+    accuracySnap: 200
+    tuSnap: 10
+    battleType: 1
+    twoHanded: false
+    snapRange: 20
+    maxRange: 20
+    invWidth: 2
+    invHeight: 3
+    power: 1
+    accuracyMultiplier:
+      flatHundred: 1.0
+    damageBonus:
+      bravery: 1.0
+    damageType: 0
+    damageAlter: #DA MELTA Double
+      FixRadius: 2
+      RandomType: 6 #Gaussian damage
+      ArmorEffectiveness: 0.05 #armor doesn't help against intimidation, 5% safety blanket; people need to learn strategies to deal with it; or just train bravery
+      RadiusReduction: 0.0
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ToStun: 0.0
+      ToWound: 0.0
+      ToTile: 0.0
+      ToItem: 0.0
+      ToMana: 1.0 #used by scripts
+    clipSize: 3
+    recover: false
+    fixedWeapon: true
+    specialUseEmptyHand: true
+    tags:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100

@@ -10,7 +10,7 @@ items:
     costBuy: 150000
     size: 0.3
     costSell: 50000
-    weight: 15
+    weight: 35
     bigSprite: 1016 # 200 # {mod: 40k, index: 1130}
     floorSprite: 937 # {mod: 40k, index: 1130}
     handSprite: 824 # {mod: 40k, index: 1944}
@@ -28,7 +28,7 @@ items:
      0:
       compatibleAmmo: [STR_HEAVY_STUBBER_CLIP, STR_HEAVY_STUBBER_CLIP_MC]
      1:
-      compatibleAmmo: [STR_ROTOR_KOMBI_BUCKSHOT40, STR_ROTOR_KOMBI_SLUG40, STR_INCENDIARY_GRENADE40, STR_MELTA_GRENADE40]
+      compatibleAmmo: [STR_ROTOR_KOMBI_BUCKSHOT40, STR_ROTOR_KOMBI_SLUG40, STR_INCENDIARY_GRENADE40, STR_MELTA_GRENADE40, STR_KRAK_GRENADE40]
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -461,7 +461,7 @@ items:
     categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     size: 0.3
     power: 140
-    powerForAnimation: 16 # Power / 5 = tiles of explosion
+    powerForAnimation: 32 # Power / 5 = tiles of explosion
     damageType: 1
     damageAlter:
       ResistType: 1
@@ -472,7 +472,7 @@ items:
       ToTile: 1.0
       ToItem: 1.0
       ArmorEffectiveness: 0.5
-      FixRadius: 1 #1 for hand grenade version
+      FixRadius: 2 #1 for hand grenade version
     requiresBuy:
       - STR_MIDTIER_PREREQ
     costBuy: 40000 #Expensive
@@ -832,11 +832,12 @@ items:
     hitSound: {mod: 40k, index: 22}
     hitAnimation: {mod: 40k, index: 26}
     explosionSpeed: 5
-    power: 60
+    power: 50
     damageType: 1
     damageAlter:
-      ToArmorPre: 0.075
-      ArmorEffectiveness: 0.70
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.5
+      ToHealth: 0.8
     clipSize: 40
     battleType: 2
     armor: 200
@@ -1076,9 +1077,6 @@ items:
     floorSprite: 922
     handSprite: 650
     bulletSpeed: 50
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -1112,6 +1110,9 @@ items:
     fixedWeapon: false
     listOrder: 10761
     #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3981]
+    hitAnimation: 2220
     bulletSprite: {mod: 40k, index: 22}
     vaporColorSurface: 4 #red laser
     vaporDensitySurface: 2
@@ -1119,6 +1120,8 @@ items:
     scripts:
       vaporParticleAmmo: |
         # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
         return;
 
   - type: STR_HAND_MULTILASER_PA #Black Version, for Power Armors.
@@ -1135,9 +1138,6 @@ items:
     floorSprite: 922
     handSprite: 650
     bulletSpeed: 50
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -1172,13 +1172,18 @@ items:
     fixedWeaponShow: true #armor attached specialWeapon
     listOrder: 10761
     #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3981]
+    hitAnimation: 2220
     bulletSprite: {mod: 40k, index: 22}
     vaporColorSurface: 4 #red laser
-    vaporDensitySurface: 2
+    vaporDensitySurface: 3
     vaporProbabilitySurface: 100
     scripts:
       vaporParticleAmmo: |
         # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
         return;
 
   - type: STR_ROTOR_CANNON
@@ -1596,6 +1601,15 @@ items:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_HEAVY_WEAPONS_IG
       - STR_AUTOCANNON_GUARD
+
+  - type: STR_GUARD_ARMORS_MOUNTED_HEAVY_LASCANNON
+    costBuy: 1000000
+    costSell: 250000
+    requiresBuy:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LASCAN
+      - STR_IMPERIAL_GUARD_HIGHTIER
 
   - type: STR_GUARD_ARMORS_SENTINEL_MULTILASER                #6800
     requiresBuy:
@@ -2126,10 +2140,6 @@ items:
     # bigSprite: 342 # handled in scripts_plasma_heat.rul
     floorSprite: {mod: 40k, index: 1024}
     handSprite: {mod: 40k, index: 1192}
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     battleType: 1
     twoHanded: true
     invWidth: 1
@@ -2161,6 +2171,20 @@ items:
       time: true
     fixedWeapon: true
     fixedWeaponShow: true
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_SHOTLAS
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -2393,11 +2417,13 @@ items:
     aimRange: 0
     maxRange: 30
     vaporColorSurface: 4 #red laser
-    vaporDensitySurface: 1
+    vaporDensitySurface: 6
     vaporProbabilitySurface: 100
     scripts:
       vaporParticleAmmo: |
         # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
         return;
     accuracyAuto: 200
     accuracySnap: 0
@@ -2406,7 +2432,7 @@ items:
       flatHundred: 1.0
     tuSnap: 0
     tuAimed: 0
-    tuAuto: 90
+    tuAuto: 85
     confAuto:
       name: STR_DESIGNATE_AIRSTRIKE
       spendPerShot: 9 # setAmmoQuantity can't be set to 0 as the item would disappear (sanity check)
@@ -3063,6 +3089,16 @@ items:
     floorSprite: 296
     handSprite: { mod: 40k, index: 352 } #Needs new
     damageType: 1
+    damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+      FixRadius: 0
     spawnItem: STR_MORTAR_AMMO_FRAG_EXPLOSION
 
   - type: STR_MORTAR_AMMO_FRAG_EXPLOSION #HE munition
@@ -3088,6 +3124,16 @@ items:
     costSell: 1000
     weight: 7
     bigSprite: 912
+    damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+      FixRadius: 0
     floorSprite:  {mod: 40k, index: 70} #update with new
     handSprite:  {mod: 40k, index: 136} #update with new
     spawnItem: STR_MORTAR_AMMO_KRAK_EXPLOSION
@@ -3119,8 +3165,17 @@ items:
     floorSprite:  2060
     handSprite:  {mod: 40k, index: 336 } #update with new
     damageType: 8 #Acid burns
+    damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+      FixRadius: 0
     spawnItem: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION
-    spawnItemChance: 100
 
   - type: STR_MORTAR_AMMO_PHOSPHOR_EXPLOSION #HE munition
     refNode: *STR_MORTAR_AMMO_EXPLOSION_TEMPLATE
@@ -3150,6 +3205,16 @@ items:
     bigSprite: 913
     floorSprite: 2061
     handSprite: {mod: 40k, index: 336 } #update with new
+    damageAlter: #high explosive
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+      FixRadius: 0
     spawnItem: STR_MORTAR_AMMO_SMOKE_EXPLOSION
     spawnItemChance: 100
 
@@ -3443,16 +3508,12 @@ items:
     bigSprite: 208 #{mod: 40k, index: 570}
 #    floorSprite: {mod: 40k, index: 570}
     handSprite: 208 # {mod: 40k, index: 552} # {mod: 40k, index: 950}
-    bulletSprite: {mod: 40k, index: 13}
     bulletSpeed: 50
-    fireSound: {mod: 40k, index: 740}
     battleType: 1
     invWidth: 1
     invHeight: 2
     listOrder: 10851
     clipSize: -1
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     power: 75
     damageType: 1
     damageAlter:
@@ -3461,13 +3522,27 @@ items:
       ToHealth: 1.0
       ToArmor: 0.0
       ToStun: 0.0
-    vaporColor: 2
-    vaporDensity: 8
     recover: false
     fixedWeapon: true
     fixedWeaponShow: true
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
     tags:
+      TURRET_RELOAD_TURNS: 1
       ITEM_CHANGES_SPRITE_WITH_ARMOR: 1
+      REACTION_MULTIPLIER: 200
 
   - type: STR_HELLPISTOL
     bigSprite: 211
@@ -3622,7 +3697,7 @@ items:
       name: STR_LAUNCH_GRENADE
       shortName: STR_LAUNCH_GRENADE_SHORT
       arcing: true
-    autoShots: 6 #+1
+    autoShots: 4
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -3981,11 +4056,14 @@ items:
     meleeAnimation: {mod: 40k, index: 4} # was 0
     hidePower: true
     armor: 200 #to avoid item pile destruction
+    accuracyAimed: 200
+    accuracyMultiplier:
+      flatHundred: 1.0
+    arcingShot: false
     damageType: 0
     damageBonus:
-      bravery: 0.2
-      psiSkill: 0.1
-      rank: [0.0, 2.5]
+      bravery: 0.5
+      psiSkill: 0.25
     damageAlter:
       ResistType: 0
       RandomType: 3
@@ -4025,12 +4103,16 @@ items:
       ToArmorPre: 0.2
       ToHealth: 0.9
       RandomType: 6
-    powerRangeThreshold: 3
-    powerRangeReduction: 5
-    maxRange: 7
+    dropoff: 999
+    aimRange: 5
+    maxRange: 5
+    powerRangeThreshold: 5
+    powerRangeReduction: 999.0
     tags:
       ITEM_STRENGTH_REQUIREMENT: 30
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_OFFICER_ONLY: 1
+      ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
@@ -4048,9 +4130,8 @@ items:
     power: 0
     damageType: 0
     damageBonus:
-      bravery: 0.2
-      psiSkill: 0.1
-      rank: [0.0, 2.5]
+      bravery: 0.5
+      psiSkill: 0.25
     damageAlter:
       ResistType: 0
       RandomType: 3
@@ -4077,14 +4158,9 @@ items:
       energy: false
     accuracyAimed: 100
     accuracyMultiplier:
-      firing: 0.0
-      bravery: 1.4
-      rank: [0.0, 2.0]
-    arcingShot: true
+      flatHundred: 2.0
+    arcingShot: false
     noLOSAccuracyPenalty: 100 #buff
-    maxRange: 7
-    powerRangeThreshold: 2
-    powerRangeReduction: 5.0
     bulletSpeed: 80
     experienceTrainingMode: 19
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
@@ -4118,9 +4194,16 @@ items:
     invHeight: 3
     armor: 200
     listOrder: 12960
+    dropoff: 999
+    aimRange: 5
+    maxRange: 5
+    powerRangeThreshold: 5
+    powerRangeReduction: 999.0
     tags:
       ITEM_STRENGTH_REQUIREMENT: 20
       ITEM_IS_BUFF_WEAPON: 1
+      ITEM_IS_OFFICER_ONLY: 1
+      ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
 
@@ -4194,10 +4277,23 @@ items:
 
   - type: STR_LASCANNON_TAUROS
     compatibleAmmo: !remove
-     - STR_LASCAN_CLIP
+      - STR_LASCAN_CLIP
     clipSize: -1
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
 
   - type: STR_GRENADE_LAUNCHER_TAUROS
     ammo:
@@ -4335,11 +4431,13 @@ items:
     #laser sfx
     bulletSprite: {mod: 40k, index: 22}
     vaporColorSurface: 4 #red laser
-    vaporDensitySurface: 1
+    vaporDensitySurface: 2
     vaporProbabilitySurface: 100
     scripts:
       vaporParticleAmmo: |
         # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
         return;
 
   - type: STR_HEAVY_PLASMA_SENTINEL   #dread plasma                   2710
@@ -4969,6 +5067,22 @@ items:
     flatMelee:
       time: true
       energy: true
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+    tags:
+      TURRET_RELOAD_TURNS: 1
 
 # By Firaa
 # https://openxcom.org/forum/index.php/topic,7443.0.html
@@ -5112,10 +5226,6 @@ items:
 
   - type: STR_GUARD_POWER_ARMOR
 
-#CHAOS PLAYER GUARD ITEMS
-  - type: STR_IRON_GUARD_ARMOR_PLAYER #storeItem
-    size: 0.2
-
   - type: STR_TAUROS_HEAVY_STUBBER # ToDo: Balance
     weight: 0
     bigSprite: 400
@@ -5235,6 +5345,9 @@ items:
     handSprite: {mod: 40k, index: 1408}
     hitSound: {mod: 40k, index: 22}
     hitAnimation: {mod: 40k, index: 88}
+    vaporColorSurface: 0
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 50
     invWidth: 2
     invHeight: 1
     clipSize: 24
@@ -5441,7 +5554,7 @@ items:
     weight: 2
     battleType: 6
     medikitType: 2
-    stunRecovery: -25
+    stunRecovery: 0
     energyRecovery: 50
     stimulant: 1
     size: 0.05
@@ -5453,7 +5566,7 @@ items:
     costUse:
       time: 5
     medikitTargetSelf: true
-    medikitTargetMatrix: 15 #can only use on neutrals and allies
+    medikitTargetMatrix: 31 #can only use on neutrals, allies and enemies on the ground
     flatUse: true
     costThrow:
       energy: 1
@@ -5463,6 +5576,11 @@ items:
       time: true
       energy: true
     isConsumable: true
+    tags:
+      IS_DRUG: 1
+      DRUG_MORALE_INITIAL_COST_FLAT: 25
+      DRUG_STUN_INITIAL_COST_FLAT: 25
+      DRUG_HEALTH_INITIAL_COST_FLAT: 1
 
   - type: STR_TRAUMA_PACK
     costBuy: 5000
@@ -5571,7 +5689,6 @@ items:
     handSprite: 968
     bulletSprite: {mod: 40k, index: 12}
     fireSound: {mod: 40k, index: 741}
-    damageType: 4
     accuracyAuto: 45 #slightly better autofire accuracy
     accuracySnap: 60 #slightly worse snap accuracy
 #    accuracyAimed: 100
@@ -5711,10 +5828,6 @@ items:
     bigSprite: 932
     floorSprite: 914
     handSprite: 992
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     power: 75
     damageType: 1
     damageAlter:
@@ -5744,6 +5857,20 @@ items:
     recover: false
     fixedWeapon: true
     fixedWeaponShow: true
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_HELLGUN_STEEL_LEGION
     categories: [STR_CAT_LASGUN]
@@ -5753,10 +5880,6 @@ items:
     bigSprite: 928
     floorSprite: 910
     handSprite: 1040
-    bulletSprite: {mod: 40k, index: 12}
-    fireSound: {mod: 40k, index: 741}
-    hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 36}
     power: 75
     damageType: 1
     damageAlter:
@@ -5788,6 +5911,20 @@ items:
     tags:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25 #battle rifle bonus
       ITEM_POWER_BONUS_PERCENTILE: 1 #use %
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3983]
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - &STR_DISPOSABLE_LAUNCHER_STEEL_LEGION_TEMPLATE
     type: STR_KRAK_LAUNCHER_STEEL_LEGION
@@ -6057,6 +6194,20 @@ items:
       ToStun: 0.0
     tags:
       TURRET_RELOAD_TURNS: 2
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_BANEBLADE_WEAPON #STR_4X4_TURRET
     powerForAnimation: 0
@@ -6138,7 +6289,7 @@ items:
     meleeSound: {mod: 40k, index: 754}
     meleeHitSound: {mod: 40k, index: 773}
     meleeAnimation: 4
-    power: 25
+    power: 30
     damageBonus:
       strength: 0.1
       melee: 0.4 #finesse over strength
@@ -6176,10 +6327,18 @@ items:
 
   - type: STR_MARBOKNIFE #special
     refNode: *STR_CATACHAN_KNIFE_TEMPLATE
-    power: 110
-    damageAlter:     #DA POWER
-      ArmorEffectiveness: 0.5
+    power: 40
     damageType: 7
+    damageAlter:     #DA POWER
+      ResistType: 8 #poisoned
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.05
+      ToHealth: 0.8
+      ToWound: 0.5 #poisoned
+      RandomWound: false
+      ToEnergy: 0.5 #poisoned
+      ToStun: 0.5 #poisoned
+      ToTime: 0.5 #poisoned
     accuracyMelee: 130
 
 #catachan
@@ -6233,3 +6392,144 @@ items:
     armor: 255
 
 
+#HEAVY MOUNTED LASCANNON
+  - type: STR_MOUNTED_HEAVY_LASCANNON
+    dropoff: 3
+    weight: 100
+    bigSprite: {mod: 40k, index: 1062}
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: {mod: 40k, index: 742}
+    compatibleAmmo:
+      - STR_LASCANNON_CLIP_SMALL
+      - STR_LASCAN_CLIP
+    accuracySnap: 60
+    accuracyAimed: 94
+    tuSnap: 60
+    tuAimed: 90
+    tuLoad: 5
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 100
+    fixedWeapon: true
+    recover: false
+    listOrder: 6940
+    confSnap:
+      spendPerShot: 2
+    confAimed:
+      spendPerShot: 2
+
+  - type: STR_SATCHEL_CHARGE_HE #remote det charge
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    ufopediaType: STR_SATCHEL_CHARGE
+    size: 0.2
+    costBuy: 40000
+    costSell: 10000
+    weight: 10
+    bigSprite: 3006
+    floorSprite: 2992
+    handSprite: 1326
+    power: 160
+    damageType: 3
+    damageAlter: #High Explosive
+      FireThreshold: 100
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixedRadius: 14
+    battleType: 4
+    invWidth: 2
+    invHeight: 2
+    fuseType: 2
+    fuseTrigger:
+      throwExplode: false
+    listOrder: 14001
+    throwRange: 10
+    tags:
+      ITEM_IS_REMOTE_DETONATED: 1
+
+  - type: STR_SATCHEL_CHARGE_KRAK #remote det charge
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    ufopediaType: STR_SATCHEL_CHARGE
+    size: 0.2
+    costBuy: 10000
+    costSell: 2500
+    weight: 5
+    bigSprite: 3004
+    floorSprite: 3005
+    handSprite: 1326
+    powerForAnimation: 16 #Fix radius * 32 - 16.
+    hitAnimation: {mod: 40k, index: 184 }
+    power: 200
+    damageType: 3
+    damageAlter: #krak
+      ResistType: 1
+      RandomType: 6 #gaussian
+      ToHealth: 0.8
+      ToArmorPre: 0.5
+      ToArmor: 0.5
+      ToTile: 1.0
+      ToItem: 1.0
+      ArmorEffectiveness: 0.5
+      FixRadius: 1
+    battleType: 4
+    invWidth: 1
+    invHeight: 2
+    fuseType: 2
+    fuseTrigger:
+      throwExplode: false
+    listOrder: 14002
+    throwRange: 15
+    tags:
+      ITEM_IS_REMOTE_DETONATED: 1
+
+  - type: STR_SATCHEL_DETONATOR
+    categories: [ STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [TRADE]
+    ufopediaType: STR_SATCHEL_CHARGE
+    costBuy: 500
+    costSell: 100
+    size: 0.05
+    bigSprite: 3003
+    floorSprite: 2993
+    handSprite: 1318
+    woundRecovery: 0
+    healthRecovery: 0
+    medikitType: 1
+    medikitActionName: STR_SATCHEL_DETONATE
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6 # not used as medikit
+    tuUse: 10
+    flatUse: true
+    hitSound: 3987
+    invWidth: 1
+    invHeight: 2
+    listOrder: 14002
+    tags:
+      ITEM_IS_REMOTE_DETONATOR: 1
+
+  - type: STR_SATCHEL_CHARGE #dummy entry for Ufopaedia
+    battleType: 4
+    power: 160
+    damageType: 3
+    damageAlter: #High Explosive
+      FireThreshold: 100
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.5 #concussive
+      ToEnergy: 0.3 #concussive
+      ToTime: 0.2 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixedRadius: 14

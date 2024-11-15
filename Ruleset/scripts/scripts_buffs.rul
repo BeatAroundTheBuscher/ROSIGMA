@@ -4,8 +4,12 @@ extended:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_DAMAGE_PERCENT_VS_PILOTED: int
       ITEM_IS_BUFF_WEAPON: int
+      ITEM_IS_OFFICER_ONLY: int #can only offers use this effectively? Mostly for IG
+      ITEM_NON_OFFICER_PENALTY_PERCENT: int #what percent do we use instead of 100% if the user is not an officer
     RuleArmor:
       NO_BENEFIT_FROM_INSPIRE: int
+    RuleSoldier:
+      SOLDIER_IS_OFFICER: int #do we count as an officer?
 
   scripts:
     hitUnit:
@@ -15,6 +19,8 @@ extended:
           var int temp;
           var int temp2;
           var int faction;
+          var ptr RuleSoldier targetSoldier;
+          var ptr RuleSoldier attackerSoldier;
           var ptr RuleItem itemRule;
           var ptr RuleArmor armorRule;
 
@@ -34,6 +40,13 @@ extended:
             return power part side;
           end;
 
+          unit.getRuleSoldier targetSoldier;
+          targetSoldier.getTag temp Tag.SOLDIER_IS_LONE_WOLF;
+          if eq temp 1; # don't bother with lone wolves
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is a lone wolf. Hit power set to 0. Temp:" faction;
+            return 0 part side;
+          end;
+
           if eq attacker unit;
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker is also target. Hit power set to 0" faction;
             return 0 part side;
@@ -44,6 +57,26 @@ extended:
           if neq faction temp;
             #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker isn't player faction. Hit power set to 0" faction;
             return 0 part side;
+          end;
+
+          weapon_item.getTag temp Tag.ITEM_IS_OFFICER_ONLY;
+          if gt temp 0; #if we work with officers, check the attacker
+            attacker.getRuleSoldier attackerSoldier;
+            attackerSoldier.getTag temp2 Tag.SOLDIER_IS_OFFICER;
+            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Item is for officers:" weapon_item;
+            if lt temp2 1;
+              weapon_item.getTag temp Tag.ITEM_NON_OFFICER_PENALTY_PERCENT;
+              if gt temp 0;
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power pre-penalty:" power;
+                muldiv power temp 100; #apply the penalty
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_REDUCED_EFFECT" temp;
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power post-penalty:" power;
+              else;
+                battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_NULL_EFFECT";
+                return 0 part side; #if no define penalty, abort
+                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is not an officer and penalty percent is null. ITEM_NON_OFFICER_PENALTY_PERCENT:" temp;
+              end;
+            end;
           end;
 
           unit.getRuleArmor armorRule;
@@ -73,6 +106,7 @@ extended:
           end;
 
           #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
+          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff successful. Final power:" power;
           return power part side;
 
     damageUnit:
