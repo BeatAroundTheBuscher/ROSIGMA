@@ -3,6 +3,8 @@ items:
   - &STR_GENERIC_BATTLESERVITOR_STATS #Anchor for referencing, each unit needs an item with an identical name
     type: &STR_GENERIC_BATTLESERVITOR_STATS_STATS
     categories: [STR_CAT_AUXILIARY]
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
     size: 1
     transferTime: 10
     weight: 5
@@ -28,7 +30,7 @@ items:
     
   - type: STR_GENERIC_BATTLESERVITORHB # Heavy Bolter Servitor
     refNode: *STR_GENERIC_BATTLESERVITOR_STATS
-    costBuy: 90000 #Manufacture only
+    #costBuy: 90000 #Manufacture only
     costSell: 45000
     monthlySalary: 5000
 
@@ -192,3 +194,16 @@ units:
     builtInWeapons:
           - STR_GENERIC_SERVITOR_HEAVYBOLTER
           - STR_GENERICSERVITOR_HBAP_AMMO #AP ROUNDS
+
+manufacture:
+  - name: STR_MANUFACTURE_HEAVY_BOLTER_COMBAT_SERVITOR
+    category: STR_CAT_COMBAT_SERVITOR
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
+    space: 0
+    time: 100
+    cost: 60000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+    producedItems:
+      STR_GENERIC_BATTLESERVITORHB: 1
