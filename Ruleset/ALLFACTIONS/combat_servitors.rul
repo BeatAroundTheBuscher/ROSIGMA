@@ -1,0 +1,194 @@
+items:
+## These are the items that get latched onto by identically named units
+  - &STR_GENERIC_BATTLESERVITOR_STATS #Anchor for referencing, each unit needs an item with an identical name
+    type: &STR_GENERIC_BATTLESERVITOR_STATS_STATS
+    categories: [STR_CAT_AUXILIARY]
+    size: 1
+    transferTime: 10
+    weight: 5
+    bigSprite: 2817 #This is a generic ammo box sprite
+    customItemPreviewIndex: 0
+    power: 25 #Low damage by default, they got no arms.
+    damageType: 7
+    accuracyMelee: 100
+    battleType: 3
+    armor: 52
+    attraction: 1
+    flatRate: true
+    costMelee:
+      time: 20
+      energy: 20
+    fixedWeapon: true
+    twoHanded: false
+    skillApplied: false
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    listOrder: 2100
+    
+  - type: STR_GENERIC_BATTLESERVITORHB # Heavy Bolter Servitor
+    refNode: *STR_GENERIC_BATTLESERVITOR_STATS
+    costBuy: 90000 #Manufacture only
+    costSell: 45000
+    monthlySalary: 5000
+
+##Weapons and Ammo
+  - type: STR_GENERIC_SERVITOR_HEAVYBOLTER #Copied from STR_CSERVITOR_HB and modified
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
+    size: 0.3
+    dropoff: 4
+    weight: 40
+    bigSprite: 2816
+    bulletSprite: 6
+    fireSound: 2138
+    compatibleAmmo:
+      - STR_GENERICSERVITOR_HBAP_AMMO
+    accuracyAimed: 0
+    accuracySnap: 70 #semi-mounted
+    accuracyAuto: 60 #semi-mounted
+    tuAimed: 0
+    tuSnap: 30 #not great reactions, melee should be viable against it
+    tuAuto: 40 #only two auto fire per turn
+    snapRange: 20 #mounted + AI bonus
+    autoRange: 14 #consider accuracy and skill of wielder + autoshot number, will be plenty dangerous up to 20 tiles out
+    kneelBonus: 133
+    confSnap: #Double Shot
+      ammoSlot: 0 #Bolter
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 2 #Double shot snap
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoShots: 5
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 4
+    fixedWeapon: true
+    recover: false
+    listOrder: 12000
+
+  - type: STR_GENERICSERVITOR_HBAP_AMMO #HEAVY BOLTER AP
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
+    size: 0.1
+    costSell: 800
+    weight: 20
+    bigSprite: 2817
+    #floorSprite: 8
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 80 # was 60
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    explosionSpeed: 5
+    clipSize: 200
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 2
+    autoShots: 5
+    recover: false
+    listOrder: 12020
+
+## Corpses
+  - type: STR_GENERIC_BATTLESERVITORHB_CORPSE
+    size: 0.4
+    weight: 35
+    bigSprite: 2894
+    floorSprite: 2894
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    battleType: 11
+    armor: 26
+
+## Armors. Create a new armor referencing the anchor below and specify a corpse and sprites for it
+armors:
+  - &GENERIC_BATTLESERVITOR_ARMOR #Anchor for referencing, each unit needs an item with an identical name
+    type: GENERIC_BATTLESERVITOR_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 6
+    heatVision: 20 #% of smoke that is ignored by superior sensors
+    frontArmor: 60 #carapace tier
+    sideArmor: 50
+    rearArmor: 20
+    underArmor: 50
+    drawingRoutine: 4 #havoc
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    damageModifier: #CSERVITOR ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.6 #FLAMES
+      - 0.7 #HE
+      - 1.1 #LASCANON
+      - 1.2 #PLASMA
+      - 1.0 #STUN
+      - 1.2 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.1 #MELTA
+    loftempsSet: [ 4 ]
+    allowsRunning: false #NPC limits for BAI
+    corpseBattle:
+      - STR_GENERIC_BATTLESERVITORHB_CORPSE #It just doesnt like not having a corpse in a reference
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_MECHANICAL: 1
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
+
+  - type: GENERIC_BATTLESERVITOR_HBARMOR
+    refNode: *GENERIC_BATTLESERVITOR_ARMOR
+    corpseBattle:
+      - STR_GENERIC_BATTLESERVITORHB_CORPSE
+    spriteSheet: GENERIC_SERVITORHB_BS.PCK
+    spriteInv: GENERIC_SERVITORHB_INV.SPK
+
+## Unit names must match item names. Use the anchor below as a reference and specify an armor and a built in weapon/ammo for it.
+units:
+  - &STR_GENERIC_BATTLESERVITOR_UNIT
+    type: STR_GENERIC_BATTLESERVITOR_UNIT 
+    stats:
+      tu: 60
+      stamina: 120
+      health: 80 #toughcyboy, +15 from leader.
+      bravery: 110 #unbreakable
+      reactions: 35 #dropped low
+      firing: 75 #Accurate aiming sensors
+      throwing: 30 #No arms to toss with
+      strength: 80 #RobotStrong
+      psiStrength: 75 #Not sure if easy or hard to mind control a Servitor. Hardened at least
+      psiSkill: 0
+      melee: 25 #poor melee
+    armor: GENERIC_BATTLESERVITOR_ARMOR #It doesnt like the reference not having an armor
+    standHeight: 20
+    kneelHeight: 15
+    canPanic: false
+    canBeMindControlled: false
+    moraleLossWhenKilled: 50
+    value: 30
+    deathSound: 23
+    energyRecovery: 50
+  
+  - type: STR_GENERIC_BATTLESERVITORHB
+    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
+    armor: GENERIC_BATTLESERVITOR_HBARMOR
+    builtInWeapons:
+          - STR_GENERIC_SERVITOR_HEAVYBOLTER
+          - STR_GENERICSERVITOR_HBAP_AMMO #AP ROUNDS
