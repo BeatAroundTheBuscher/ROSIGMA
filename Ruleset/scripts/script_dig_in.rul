@@ -182,6 +182,7 @@ extended:
           var int currentY;
           var int currentZ;
           var int isKneeling;
+          var int temp;
 
           unit.getTag HasBonus Tag.DugInBonus;
           if neq HasBonus 1; #don't bother if we don't have the dug-in bonus
@@ -203,7 +204,13 @@ extended:
             return power part side;
           end;
 
-          # Dig In doesn't ignore melee, panic and mind control.
+          weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if gt temp 0;
+            #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Weapon is a buff weapon. Temp:" temp;
+            return power part side;
+          end;
+
+          # Dig In ignores melee, panic and mind control.
           if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
             #debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Battle action bypasses Dig In." side;
             return power part side;
