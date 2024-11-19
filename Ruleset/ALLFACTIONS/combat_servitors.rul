@@ -25,6 +25,7 @@ items:
     costMelee:
       time: 20
       energy: 20
+    defaultInventorySlot: STR_RIGHT_HAND
     fixedWeapon: true
     twoHanded: false
     skillApplied: false
@@ -37,25 +38,63 @@ items:
     refNode: *STR_GENERIC_BATTLESERVITOR_STATS
     requires:
       - STR_COMBAT_SERVITOR_PROGRAM
-    #costBuy: 90000 #Manufacture only
     costSell: 45000
     monthlySalary: 5000
 
+  - type: STR_GENERIC_BATTLESERVITORPL # Heavy Plasma Servitor
+    refNode: *STR_GENERIC_BATTLESERVITOR_STATS
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
+      - STR_HEAVY_PLASMA_DEP1
+      - STR_HEAVY_PLASMA_CLIP_DEP1
+    costSell: 60000
+    monthlySalary: 8000
+
+  - type: STR_GENERIC_BATTLESERVITORMI # Missile Servitor
+    refNode: *STR_GENERIC_BATTLESERVITOR_STATS
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
+      - STR_HEAVY_LASER
+    costSell: 50000
+    monthlySalary: 5000
+
 ##Weapons and Ammo
+  - &STR_GENERIC_SERVITOR_WEAPON # Not necessary to inherit from this, but it's here to make it easy
+    type: STR_GENERIC_SERVITOR_WEAPON
+    weight: 40 # Doesn't truly matter, no pockets
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    attraction: 1
+    fixedWeapon: true
+    recover: false
+    compatibleAmmo:
+      - STR_NONE # You need to give the actual weapon an ammo
+
+  - &STR_GENERIC_SERVITOR_AMMO # Not necessary to inherit from this, but it's here to make it easy
+    type: STR_GENERIC_SERVITOR_AMMO
+    weight: 30 # Doesn't truly matter, no pockets
+    bigSprite: 2817 # Generic servitor ammo box sprite
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    recover: false
+
   - type: STR_GENERIC_SERVITOR_HEAVYBOLTER #Copied from STR_CSERVITOR_HB and modified
+    refNode: *STR_GENERIC_SERVITOR_WEAPON
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
-    size: 0.3
     dropoff: 4
-    weight: 40
     bigSprite: 2816
     bulletSprite: 6
     fireSound: 2138
     compatibleAmmo:
       - STR_GENERICSERVITOR_HBAP_AMMO
-    accuracyAimed: 0
     accuracySnap: 70 #semi-mounted
     accuracyAuto: 60 #semi-mounted
-    tuAimed: 0
     tuSnap: 30 #not great reactions, melee should be viable against it
     tuAuto: 40 #only two auto fire per turn
     snapRange: 20 #mounted + AI bonus
@@ -66,27 +105,13 @@ items:
       name: STR_BURST_SNAP_SHOT
       arcing: false
       shots: 2 #Double shot snap
-    battleType: 1
-    twoHanded: false
-    blockBothHands: false
-    invWidth: 2
-    invHeight: 3
-    armor: 30
     autoShots: 5
     sprayWaypoints: 2
     bulletSpeed: 50
-    attraction: 4
-    fixedWeapon: true
-    recover: false
-    listOrder: 12000
 
   - type: STR_GENERICSERVITOR_HBAP_AMMO #HEAVY BOLTER AP
+    refNode: *STR_GENERIC_SERVITOR_AMMO
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
-    size: 0.1
-    costSell: 800
-    weight: 20
-    bigSprite: 2817
-    #floorSprite: 8
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 26}
     power: 80 # was 60
@@ -102,16 +127,97 @@ items:
       RandomWound: false
     explosionSpeed: 5
     clipSize: 200
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 2
     autoShots: 5
-    recover: false
-    listOrder: 12020
+
+  - type: STR_GENERICSERVITOR_MILAUNCHER #Copied from STR_CSERVITOR_MILAUNCHER and modified
+    refNode: *STR_GENERIC_SERVITOR_WEAPON
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    bigSprite: 2818
+    bulletSprite: 0
+    dropoff: 5
+    minRange: 5
+    fireSound: {mod: 40k, index: 52}
+    compatibleAmmo:
+        - STR_GENERICSERVITOR_MIMELTA_AMMO #Not worth making multiple player missile servitors, so we'll do melta missiles.
+    accuracySnap: 60
+    accuracyAuto: 60
+    tuSnap: 33
+    tuAuto: 50
+    autoShots: 4
+    snapRange: 7
+    autoRange: 18
+    confSnap:
+      name: STR_SNAP_DIRECT_FIRE
+    confAuto:
+      name: STR_AUTO_BARRAGE
+      arcing: true
+
+  - type: STR_GENERICSERVITOR_MIMELTA_AMMO
+    refNode: *STR_GENERIC_SERVITOR_AMMO
+    categories: [ STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    power: 65
+    damageType: 11
+    damageAlter: #DA MELTA
+      RandomType: 7
+      ToArmorPre: 1.0
+      ToHealth: 1.0
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    clipSize: 24 #Raised from 16, still only 3-4 turns of full auto
+    blastRadius: 3
+
+  - type: STR_GENERICSERVITOR_HEAVY_PLASMA #STR_HEAVY_PLASMA_TERRAN
+    refNode: *STR_GENERIC_SERVITOR_WEAPON
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    dropoff: 4
+    bigSprite: 2819
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: 18
+    compatibleAmmo:
+      - STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO
+    accuracySnap: 75
+    accuracyAimed: 75
+    tuSnap: 30
+    tuAimed: 30
+    minRange: 4
+    snapRange: 21
+    aimRange: 21
+    confAimed:
+      spendPerShot: 4
+      name: STR_MAXIMAL_SHOT
+
+  - type: STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO #STR_HEAVY_PLASMA_CLIP
+    refNode: *STR_GENERIC_SERVITOR_AMMO
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    vaporColorSurface: 2
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    power: 120
+    powerRangeReduction: 5
+    powerRangeThreshold: 30.0 #plasma decoheres at longer ranges
+    clipSize: 40 # The player will primarily be limited by heat management
+    damageType: 5
+    explosionHitSound: {mod: 40k, index: 690} #*** PLASMA rebalance
+    hitAnimation: 112 
+    powerForAnimation: 5
+    damageAlter: #DA PLASMA
+      RandomType: 6
+      #ToHealth: 0.9
+      ToArmorPre: 0.1
+      ToArmor: 0.1
+      FixRadius: 1 #*** PLASMA rebalance
+      ArmorEffectiveness: 0.75
+      ToArmor: 0.2
+      FireThreshold: 70 #can ignite at high damage
+      IgnoreDirection: false
+      RadiusReduction: 30.0
 
 ## Corpses
-  - type: STR_GENERIC_BATTLESERVITORHB_CORPSE
+  - type: STR_GENERIC_BATTLESERVITOR_CORPSE
     size: 0.4
     weight: 35
     bigSprite: 2894
@@ -124,7 +230,7 @@ items:
 
 ## Armors. Create a new armor referencing the anchor below and specify a corpse and sprites for it
 armors:
-  - &GENERIC_BATTLESERVITOR_ARMOR #Anchor for referencing, each unit needs an item with an identical name
+  - &GENERIC_BATTLESERVITOR_ARMOR #Anchor for referencing
     type: GENERIC_BATTLESERVITOR_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -155,7 +261,7 @@ armors:
     loftempsSet: [ 4 ]
     allowsRunning: false #NPC limits for BAI
     corpseBattle:
-      - STR_GENERIC_BATTLESERVITORHB_CORPSE #It just doesnt like not having a corpse in a reference
+      - STR_GENERIC_BATTLESERVITOR_CORPSE #It just doesnt like not having a corpse in a reference
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_MECHANICAL: 1
@@ -164,10 +270,18 @@ armors:
 
   - type: GENERIC_BATTLESERVITOR_HBARMOR
     refNode: *GENERIC_BATTLESERVITOR_ARMOR
-    corpseBattle:
-      - STR_GENERIC_BATTLESERVITORHB_CORPSE
     spriteSheet: GENERIC_SERVITORHB_BS.PCK
     spriteInv: GENERIC_SERVITORHB_INV.SPK
+
+  - type: GENERIC_BATTLESERVITOR_PLARMOR
+    refNode: *GENERIC_BATTLESERVITOR_ARMOR
+    spriteSheet: GENERIC_SERVITORPL_BS.PCK
+    spriteInv: GENERIC_SERVITORPL_INV.SPK
+
+  - type: GENERIC_BATTLESERVITOR_MIARMOR
+    refNode: *GENERIC_BATTLESERVITOR_ARMOR
+    spriteSheet: GENERIC_SERVITORMI_BS.PCK
+    spriteInv: GENERIC_SERVITORMI_INV.SPK
 
 ## Unit names must match item names. Use the anchor below as a reference and specify an armor and a built in weapon/ammo for it.
 units:
@@ -201,6 +315,32 @@ units:
     builtInWeapons:
           - STR_GENERIC_SERVITOR_HEAVYBOLTER
           - STR_GENERICSERVITOR_HBAP_AMMO #AP ROUNDS
+          - INV_NULL_2X1_RL
+          - INV_NULL_2X1_LL
+          - INV_NULL_3X3
+          - INV_NULL_4X2
+
+  - type: STR_GENERIC_BATTLESERVITORPL
+    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
+    armor: GENERIC_BATTLESERVITOR_PLARMOR
+    builtInWeapons:
+          - STR_GENERICSERVITOR_HEAVY_PLASMA
+          - STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO
+          - INV_NULL_2X1_RL
+          - INV_NULL_2X1_LL
+          - INV_NULL_3X3
+          - INV_NULL_4X2
+
+  - type: STR_GENERIC_BATTLESERVITORMI
+    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
+    armor: GENERIC_BATTLESERVITOR_MIARMOR
+    builtInWeapons:
+          - STR_GENERICSERVITOR_MILAUNCHER
+          - STR_GENERICSERVITOR_MIMELTA_AMMO
+          - INV_NULL_2X1_RL
+          - INV_NULL_2X1_LL
+          - INV_NULL_3X3
+          - INV_NULL_4X2
 
 manufacture:
   - name: STR_MANUFACTURE_HEAVY_BOLTER_COMBAT_SERVITOR
@@ -208,9 +348,37 @@ manufacture:
     requires:
       - STR_COMBAT_SERVITOR_PROGRAM
     space: 0
-    time: 100
+    time: 250
     cost: 60000
     requiredItems:
       STR_ALIEN_ALLOYS: 5
     producedItems:
       STR_GENERIC_BATTLESERVITORHB: 1
+
+  - name: STR_MANUFACTURE_HEAVY_PLASMA_COMBAT_SERVITOR
+    category: STR_CAT_COMBAT_SERVITOR
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
+      - STR_HEAVY_PLASMA_DEP1
+      - STR_HEAVY_PLASMA_CLIP_DEP1
+    space: 0
+    time: 1250
+    cost: 360000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 25
+    producedItems:
+      STR_GENERIC_BATTLESERVITORPL: 1
+
+  - name: STR_MANUFACTURE_MISSILE_COMBAT_SERVITOR
+    category: STR_CAT_COMBAT_SERVITOR
+    requires:
+      - STR_COMBAT_SERVITOR_PROGRAM
+      - STR_HEAVY_LASER
+    space: 0
+    time: 250
+    cost: 80000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 5
+      STR_ELERIUM_115: 5
+    producedItems:
+      STR_GENERIC_BATTLESERVITORMI: 1
