@@ -1078,6 +1078,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_CHAOS_PATH
   - name: STR_CHAOS_PATH # This is the entry point into the generic chaos path
     cost: 1000
     points: -1000
@@ -1095,7 +1096,7 @@ research:
       - STR_ADEPTAS
       - STR_ALIEN_ORIGINS
       - STR_ALIEN_FOOD
-    unlocks: 
+    unlocks:
       - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
       - STR_CONVERT_TO_CHAOS_RESEARCH
     getOneFree:
@@ -1118,7 +1119,7 @@ research:
       - STR_MARINES_STRATEGY
       - STR_ALIEN_ORIGINS
       - STR_ALIEN_FOOD
-    unlocks: 
+    unlocks:
       - STR_CHAOS_MARINE_HIRE_RESEARCH
       - STR_CONVERT_TO_CHAOS_RESEARCH
     getOneFree:
@@ -1144,7 +1145,6 @@ research:
 
   - name: STR_CONTACT_CHAOS_MARINES
     cost: 1500
-    cost: 1
     points: 0
     dependencies:
       - STR_CHAOS_PATH
@@ -1158,6 +1158,54 @@ research:
       - STR_CONVERT_TO_CHAOS_RESEARCH
       - STR_CONTACT_CHAOS_MARINES #Ceramite Tier
       - STR_HIGHTIER_PREREQ
+
+  - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH # Not technically a chaos research, but required for advancement down Iron Guard path if the player is already has CHAOS_PATH
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    
+  - name: STR_CONTACT_IRON_GUARD
+    cost: 1200
+    points: -500
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    #spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT # todo: create a mission event that then allows the player to progress the iron guard path
+
+  - name: STR_IRON_GUARD_LOWTIER_REQUISITIONS # todo: sort through basic chaos weaponry and select some to be able to be purchased by players still in lowtier through the Iron Guard
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD  
+
+  - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS
+    cost: 200 # Increase later when there's a real amount of content in this
+    points: 0
+    dependencies:
+      - STR_CONTACT_IRON_GUARD
+      - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_CREATE_IRON_MAIDEN_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_LOWTIER_REQUISITIONS
+      - STR_IRON_SERVITOR_TECHNOLOGY
+
+  - name: STR_COMBAT_SERVITOR_PROGRAM
+    cost: 800
+    dependencies:
+      - STR_APOC_BAY
+  
+  - name: STR_IRON_SERVITOR_TECHNOLOGY
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CREATE_IRON_MAIDEN_RESEARCH
+    cost: 500
+    points: 0
+    dependencies:
+      - STR_IRON_SERVITOR_TECHNOLOGY
 
   - name: STR_CHAOS_CROZIUS
     cost: 500
@@ -6102,6 +6150,24 @@ research:
       - STR_WARPTALON_SOLDIER
       - STR_KHORNE_CHAMP
 
+  - name: STR_BLOODREAPER
+    cost: 300
+    points: 100
+    lookup: STR_SILACOID
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_LEADER_PLUS
+      - STR_ALIEN_ORIGINS
+    getOneFree:
+      - STR_SILACOID_TERRORIST
+      - STR_CYBERDISC_TERRORIST
+      - STR_KHRONE_TERRORIST
+      - STR_IRON_BERSERKER
+      - STR_WARPTALON_SOLDIER
+      - STR_KHORNE_CHAMP
+      - STR_REAPER_TERRORIST
+
   - name: STR_CHRYSSALID_TERRORIST
     cost: 170
     points: 50
@@ -7245,8 +7311,10 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_SOLDIER
+      - STR_IRON_SERVITOR_TECHNOLOGY
     destroyItem: true
 
   - name: STR_IRON_WARRIOR
@@ -7256,7 +7324,9 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
+
   - name: STR_IRON_WARRIOR_BREACHER
     cost: 150
     points: 50
@@ -7264,6 +7334,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_HEAVY
@@ -7273,6 +7344,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_MEDIC
@@ -7282,6 +7354,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_BERSERKER
@@ -7291,6 +7364,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_TERMINATOR
@@ -7300,6 +7374,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     destroyItem: true
 
   - name: STR_IRON_WARRIOR_WARSMITH
@@ -7318,6 +7393,10 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_MASTER_CRAFTING
       - STR_BLASTER_LAUNCHER
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    getOneFree:
+      - STR_IRON_GUARD_ENGINEER
+      - STR_IRON_SERVITOR_TECHNOLOGY
     destroyItem: true
 
   #Black Legion
@@ -8219,6 +8298,7 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_GUARD_ENGINEER
     destroyItem: true
@@ -8230,6 +8310,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_IW_AUTOCANNON
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
       - STR_IRON_MAIDEN_SISTER
     destroyItem: true
@@ -9686,6 +9767,9 @@ research:
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_KHORNEGOR_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_BLOODREAPER_CORPSE
     refNode: *STR_CORPSE_BASIC
 
   - name: STR_CHAOS_SQUATS_CORPSE
