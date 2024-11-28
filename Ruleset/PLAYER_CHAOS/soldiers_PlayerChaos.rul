@@ -1,12 +1,9 @@
 soldiers:
 
 # Chaos Marines
-  - type: STR_CHAOS_MARINE #undivided/renegade
+  - &STR_GENERIC_CHAOS_MARINE
+    type: STR_CHAOS_MARINE_NOARMOR #This version is for manufacturing and recruiting with a specific armor
     flagOffset: 100
-    costBuy: 100000
-    costSalary: 40000
-    requires:
-      - STR_CHAOS_MARINE_HIRE_RESEARCH
     minStats:
       tu: 50 #was 40
       stamina: 60 #
@@ -58,7 +55,7 @@ soldiers:
       reactions: 30
       firing: 25
     allowPiloting: true
-    armor: STR_CHAOS_MARINE_ARMOR
+    armor: STR_MUTON_ARMOR0 #It will never actually be recruited with this
     standHeight: 22
     kneelHeight: 14
     femaleFrequency: 15
@@ -79,6 +76,14 @@ soldiers:
     rankSprite: {mod: 40k, index: 80}
     rankBattleSprite: {mod: 40k, index: 194}
     rankTinySprite: {mod: 40k, index: 127}
+
+  - type: STR_CHAOS_MARINE
+    refNode: *STR_GENERIC_CHAOS_MARINE
+    costBuy: 100000
+    costSalary: 40000
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+    armor: STR_CHAOS_MARINE_ARMOR
 
   - type: STR_CHAOS_MARINE_SLAANESH
     flagOffset: 100
