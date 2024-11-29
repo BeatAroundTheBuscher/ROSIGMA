@@ -77,7 +77,7 @@ extended:
             return 1000;
           end;
 
-          # add sprite_index sprite_offset; 
+          # add sprite_index sprite_offset;
           return sprite_index;
 
     selectMoveSoundUnit:
@@ -109,16 +109,16 @@ extended:
 
           return current_visibility visibility_mode;
 
-    newTurnUnit: 
+    newTurnUnit:
       - new: ROSIGMA_nTU_disable_teleport_on_new_turn
         offset: 11
         code: |
           var int temp;
-          
+
           unit.getTag temp Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
 
           if and eq turn 1 neq temp 0 eq side FACTION_PLAYER;  # multi sage missions
-            
+
             unit.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN 0;
             return;
           end;
@@ -148,7 +148,7 @@ extended:
           var int lastActivatedTeleporterTurn;
           var int currentTurn;
 
-          
+
           actor.getTag temp Tag.UNIT_IS_TELEPORTING;
           if ge temp 1;
             actor.setTag Tag.UNIT_IS_TELEPORTING 0;
@@ -164,7 +164,7 @@ extended:
             battle_game.flashMessage "STR_SCRIPT_TELEPORTER_SHUTTING_DOWN";
           else;
             item.getTag temp Tag.ITEM_IS_TELEPORTER;
-            
+
 
             if ge temp 1;
               actor.getTag lastActivatedTeleporterTurn Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
@@ -177,12 +177,12 @@ extended:
               else;
                 set temp 0;
               end;
-              
+
               if gt currentTurn temp;
                 actor.setTag Tag.UNIT_IS_TELEPORTING 1;
                 actor.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN currentTurn;
 
-                
+
                 actor.getEnergy temp;
                 actor.setTag Tag.UNIT_ENERGY_BEFORE_TELEPORT temp;
                 item.getTag temp Tag.ITEM_TELEPORTER_ENERGY;
