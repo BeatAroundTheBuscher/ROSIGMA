@@ -15,7 +15,7 @@ extended:
         code: |
           var int temp;
           var int temp2; #turret reload turn data for right handed weapon
-          var int ammo; #ammo of right handed weapon
+          var int ammo; #current ammo count
           var int timer; #timer of right handed weapon
           var ptr RuleItem leftHandWeaponRule;
           var ptr RuleItem rightHandWeaponRule;
@@ -38,6 +38,13 @@ extended:
           battle_game.getTurnSide temp; #trigger reload only on the same turn as the unit's faction
           unit.getFaction temp2;
           if neq temp temp2;
+            return;
+          end;
+
+          unit.getMana ammo;
+          #if weapon is loaded, cancel out
+          if gt ammo 0;
+            #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Weapon has munitions:" ammo;
             return;
           end;
 
@@ -71,14 +78,6 @@ extended:
 
           if lt temp 1;
             #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Equipped weapon lacks a turret reload property." temp;
-          end;
-
-          unit.getMana ammo;
-
-          #if weapon is loaded, cancel out
-          if gt ammo 0;
-            #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Weapon loaded; left hand weapon: ammo." ammo;
-            return;
           end;
 
           #debug_log "Turret Reload Scripts; ROSIGMA_nTU_turret_reload_check_ammo, offset 10: Starting left hand reload process for:" unit;
