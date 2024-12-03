@@ -5,6 +5,7 @@ extended:
     #turret reload scripts
       TURRET_RELOAD_TURNS: int #number of full turns it takes the weapon to reload
       TURRET_RELOAD_CAPACITY: int #reload capacity of turret
+      TURRET_RELOAD_ITEM: int #does this reload munition systems when used?
     BattleUnit:
       TURRET_RELOAD_TIMER: int #dynamic timer counting down turns until weapon reloads
 
@@ -141,6 +142,12 @@ extended:
           #has to be self-targeting
           if neq actor target;
             #debug_log "Turret Reload Scripts; ROSIGMA_healU_turret_reload, offset 22: target not equal to actor. Aborting. target" target;
+            return;
+          end;
+
+          item.getTag temp Tag.TURRET_RELOAD_ITEM;
+          if lt temp 1;
+            #debug_log "Turret Reload Scripts; ROSIGMA_healU_turret_reload, offset 22: item is not a reload item. Aborting. item:" item;
             return;
           end;
 

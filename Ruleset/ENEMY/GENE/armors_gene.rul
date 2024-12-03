@@ -302,17 +302,17 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
 
-  - type: STR_TERMAGANT_DEV_ARMOR #Tyranid
+  - type: STR_DEVOURER_TERMAGANT_ARMOR #Tyranid
     visibilityAtDay: 40
     visibilityAtDark: 30 #Good night vision
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 6
     heatVision: 15 #Basic bio-heatvision
     spriteSheet: DEVOURER_TERMAGANT_BS.PCK #DR4
-    spriteInv: TERMAGANT_DEV_INV.SPK
+    spriteInv: DEVOURER_TERMAGANT_INV.SPK
     drawingRoutine: 4
     corpseBattle:
-      - STR_TERMAGANT_DEV_CORPSE
+      - STR_TERMAGANT_CORPSE
     frontArmor: 30 #Flak equivalent, 5+ save
     sideArmor: 25
     rearArmor: 15
@@ -336,6 +336,50 @@ armors:
     loftempsSet: [ 2 ] #small, slim agile target
     builtInWeapons:
       - STR_DEVOURER_WEAPON
+    allowsRunning: false #NPC limits for BAI
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2 #immune to GSC infection
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
+  - type: STR_TYRANID_WARRIOR_ARMOR #Tyranid
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #Good night vision
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 6
+    heatVision: 15 #Basic bio-heatvision
+    spriteSheet: TYRANID_WARRIOR_BS.PCK #DR10
+    spriteInv: TYRANID_WARRIOR_INV.SPK
+    drawingRoutine: 10
+    corpseBattle:
+      - STR_TYRANID_WARRIOR_CORPSE
+    frontArmor: 70 #Carapace+ equivalent, 4+ save
+    sideArmor: 60
+    rearArmor: 35
+    underArmor: 20
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true #Adrenal Glands + Tyranid synapse
+    recovery:
+      health:
+        healthCurrent: 0.2
+        fatalWounds: 2
+    damageModifier: #Tyranid Layered Chitin
+      - 1.0 #untyped damage is supposed to be neutral
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.75 #STUN
+      - 0.9 #MELEE Dedicated Melee unit
+      - 0.5 #ACID Tyranid Acid Blood
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 4 ] #Large marine sized target 
     allowsRunning: false #NPC limits for BAI
     tags:
       INFECTION_RESIST: 100
