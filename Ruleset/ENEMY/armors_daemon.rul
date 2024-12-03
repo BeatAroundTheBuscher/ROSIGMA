@@ -362,6 +362,70 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_NURGLE: 1
 
+  - type: STR_LESSER_ROTFLY_ARMOR 
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #sees in the dark
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 5 #weak daemon, so not 10 psivision
+    spriteSheet: LESSER_ROTFLY_BS.PCK
+    allowInv: false
+    spriteInv: LESSER_ROTFLY_INV.SPK
+    corpseBattle:
+      - STR_LESSER_ROTFLY_CORPSE #create code
+    bleedImmune: true #Plague Blessed don't bleed
+    zombiImmune: true #Plague Blessed can't be corrupted further
+    movementType: 1 #its a fly
+    painImmune: true #Plague Blessed don't care about pain
+    recovery: #Plague Blessed slowly regenerate health
+      health:
+        healthCurrent: 0.1
+    frontArmor: 10 #20 Plaguebearer
+    sideArmor: 5 #15 Plaguebearer
+    rearArmor: 5 #10 Plaguebearer
+    underArmor: 5 #10 Plaguebearer
+    drawingRoutine: 4
+    scripts:
+      selectUnitSprite: |
+        #this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    damageModifier: #NURGLE ARMOR
+      - 1.0 #untyped damage is supposed to be neutral
+      - 0.5 #AP Same resistances as plaguebearers; much lower health (which also means lower regen) and lower armor already makes them much less durable
+      - 1.5 #FLAMES
+      - 0.5 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 0.5 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 3 ]
+    allowsRunning: false #NPC limits for BAI
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -10 #has feel no pain, but not as durable as most Nurgle daemons
+
 #Slaanesh Daemons
   - type: STR_CHRYSSALID_ARMOR     #DAEMONETTE
     spriteSheet: CH4.PCK
