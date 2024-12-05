@@ -2032,49 +2032,6 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
 
-  - type: STR_ROTFLY_STYLET #technical term for mosquito beak
-    power: 100
-    hitAnimation: 1030 #128 green from X1.pck
-    hitSound: {mod: 40k, index: 832 }
-    hitAnimFrames: 8
-    bulletSprite: {mod: 40k, index: 14}
-    meleeSound: { mod: 40k, index: 832} #SPLAT
-    meleeAnimation: 24 #melee green
-    weight: 1
-    bigSprite: 2962 #to be replaced
-    strengthApplied: false
-    damageType: 7
-    accuracyMelee: 100
-    tuMelee: 20 #attacks slowly for a melee weapon but has devastating effects
-    damageAlter: ## Plague weapon
-      ArmorEffectiveness: 0.75
-      ToArmorPre: 0.5
-      ToArmor: 0.2
-      ToHealth: 0.5
-      ToMana: 0.5
-      ToEnergy: 0.4
-      ToStun: 0.3
-      ToTime: 0.2
-      IgnoreSelfDestruct: false
-    meleeMultiplier: #heavy melee weapon; relies on strength as well as skill
-      melee: 0.7
-      strength: 0.3
-    damageBonus:
-      strength: 0.2
-      melee: 0.2
-      psiSkill: 0.2 #profaned weapon
-    clipSize: -1
-    battleType: 3
-    fixedWeapon: true
-    invWidth: 2
-    invHeight: 3
-    recover: false
-    flatRate: true
-    tags:
-      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    specialChance: 15 #low chance of zombifying its victims
-    
   - type: STR_LESSER_PLAGUE_TOAD_TONGUE
     refNode: *STR_TENDRIL_TEMPLATE
     bigSprite: 2647
@@ -2148,3 +2105,103 @@ items:
     tags:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
+
+  - &STR_TENDRIL_TEMPLATE_MELEE
+    type: STR_ROTBEARER_TENDRILS_MELEE #Rotbearer melee weapon for Leeroy compatibility
+    hitAnimation: 1030 #128 green from X1.pck
+    hitSound: {mod: 40k, index: 832 }
+    hitAnimFrames: 8
+    bulletSprite: {mod: 40k, index: 14}
+    meleeSound: { mod: 40k, index: 832} #SPLAT
+    meleeAnimation: 24 #melee green
+    weight: 1
+    bigSprite: 2962 #plague tendrils
+    #melee profile
+    accuracyMelee: 100
+    power: 7
+    accuracyMultiplier:
+      melee: 0.7
+      strength: 0.3
+    damageAlter: #Immobilizing plague tendrils
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.4
+      ToStun: 0.3
+      ToEnergy: 0.3
+      ResistType: 8
+    damageBonus:
+      strength: 1.0
+    tuMelee: 7 #fast attacking
+    clipSize: -1
+    battleType: 3
+    fixedWeapon: true
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    flatRate: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_ROTFLY_MELEE
+    refNode: *STR_TENDRIL_TEMPLATE_MELEE
+    meleeSound: 3990 #buzz buzz motherfucker
+    power: 77 #fixed
+    accuracyMultiplier:
+      melee: 1.0
+    damageAlter: #Armor piercing probscious; less armor rot, but more armor piercing
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.25
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.2
+      ToStun: 1.0 #blight injection kos and exhausts
+      ToEnergy: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      ResistType: 8
+    damageBonus:
+      strength: 0.01
+
+  - type: STR_ROTFLY_RANGED_MELEE
+    refNode: *STR_TENDRIL_TEMPLATE_MELEE
+    fireSound: 3990 #buzz buzz motherfucker
+    battleType: 1
+    power: 77 #fixed
+    accuracyMultiplier:
+      melee: 1.0
+    damageAlter: #Armor piercing probscious; less armor rot, but more armor piercing
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.25
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.2
+      ToStun: 1.0 #blight injection kos and exhausts
+      ToEnergy: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      ResistType: 8
+    damageBonus:
+      strength: 0.01
+    #range/thrust profile
+    powerRangeThreshold: 4
+    powerRangeReduction: 99
+    damageType: 7
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 7
+    snapRange: 2
+    maxRange: 2 #has super reach
