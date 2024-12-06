@@ -115,6 +115,12 @@ extended:
             return;
           end;
 
+          unit.getTag temp Tag.UNIT_OVERKILL_DISABLE_SELF_DESTRUCT; #if overkill disables self-destruct, set our SD chance to 0.
+          if gt temp 0;
+            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
+            return;
+          end;
+
           unit.getInventoryItem.size numInventoryItems;
           #debug_log "numInventoryItems" numInventoryItems;
           loop var i numInventoryItems;
