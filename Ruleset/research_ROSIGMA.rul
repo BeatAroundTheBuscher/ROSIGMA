@@ -43,6 +43,11 @@ research:
     points: 50
     needItem: true
 
+#to get rid of chaos cult getting the chaos stuff of other faction
+  - name: STR_NOTCHAOSCULT
+    dependencies:
+      - STR_GENERALLOCK
+
   ## OXCE_40k
   - name: STR_IMPERIAL_GUARD_MISSIONS
     cost: 50
@@ -147,7 +152,7 @@ research:
     cutscene: c3
     points: 60
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
@@ -361,7 +366,7 @@ research:
     points: 30
     dependencies:
       - STR_MIDTIER_PREREQ
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_MANTICORE_REQUISITION
       - STR_ARBITES_BUST
     unlocks:
@@ -888,6 +893,8 @@ research:
   - name: STR_THE_EMPEROR_PROTECTS_RESEARCH #The Emperor Protects (Beginner Mode Options)
     cost: 10
     points: 100
+    dependencies:
+      - STR_NOTCHAOSCULT
 
   - name: STR_THE_EMPEROR_PROTECTS_ARBITES_SUPPORT_RESEARCH #"Request Additional Arbites Support"
     cost: 10
@@ -1129,6 +1136,7 @@ research:
     points: -1500
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
     spawnedEvent: STR_HERETIC_SISTER_ADVISOR
@@ -1146,6 +1154,7 @@ research:
     points: 0
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
       - STR_MIDTIER_PREREQ
     spawnedEvent: STR_CHAOS_MARINE_ADVISOR
 
@@ -1168,6 +1177,7 @@ research:
     points: -500
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     #spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT # todo: create a mission event that then allows the player to progress the iron guard path
 
@@ -1229,12 +1239,14 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_NURGLE_OPTIONS
     cost: 500
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_NURGLE_PATH
     cost: 1000
@@ -1251,6 +1263,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_TZEENTCH_PATH
     cost: 1000
@@ -1267,6 +1280,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_KHORNE_PATH
     cost: 1000
@@ -1283,6 +1297,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_SLAANESH_PATH
     cost: 1000
@@ -2179,6 +2194,11 @@ research:
   - name: STR_GENERALLOCK
     needItem: true
 
+#to get rid of being able to buy unit before even choosing a strategy
+  - name: STR_CHAPTER_PURITY #CHAOS PATH
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_IMPERIUM_RESEARCH
     dependencies:
       - STR_MARINES_STRATEGY
@@ -2201,7 +2221,6 @@ research:
   - name: STR_GAME_START
     unlockFinalMission: true
 
-  - name: STR_CHAPTER_PURITY #CHAOS PATH
 
   - name: STR_NOT_ARBITES
     refNode: *STR_LOCKED
@@ -2273,13 +2292,30 @@ research:
       - STR_BASIC_SENTINEL_MISSILE
       - STR_PILOT_GUARDSMEN
       - STR_IMPERIUM_RESEARCH
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_CHAOS_STRATEGY_ARBITES
     disables:
+      - STR_CHAPTER_PURITY
       - STR_CYDONIA_OR_BUST
       - STR_MARINES_STRATEGY
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
       - STR_GUARD_SUPORT
+
+#added new arbites research used as a way to prevent arbites joining if you go chaos
+  - name: STR_THE_IMPERIAL_LAW_STRATEGY
+    cost: 5
+    points: 0
+    reenables:
+      - STR_CHAPTER_PURITY
+    dependencies:
+      - STR_ARBITES
+    unlocks:
+      - STR_CHAPTER_PURITY
+      - STR_NOTCHAOSCULT
+    disables:
+      - STR_CHAOS_STRATEGY_ARBITES
 
   - name: STR_ADEPTAS_MIDTIER #mid tier #cutcscene c2
     cost: 200
@@ -2307,7 +2343,7 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_MOTION_SCANNER
       - STR_INTERROGATION_COMPLETED
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_AIRSTRIKE_REQUISITION
@@ -2467,7 +2503,7 @@ research:
     unlocks:
       - STR_HIGHTIER_PREREQ
 
-  # DeathWatch uses STR_DEFENSE_CORRIDORBR
+# DeathWatch uses STR_DEFENSE_CORRIDORBR
   - name: STR_DEFENSE_CORRIDORGK #facility Grey Knights White
     cost: 100
     points: 15
@@ -2501,11 +2537,13 @@ research:
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_MARINES_STRATEGY
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
+      - STR_DEFENSE_CORRIDORBR
       - STR_GUARD_SUPORT
 
   ### Marines
@@ -2526,6 +2564,7 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -2684,6 +2723,7 @@ research:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -2709,6 +2749,7 @@ research:
       - STR_GUARD_AND_ARBITES
       # - STR_GUARD_SUPORT
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_ADEPTAS
@@ -3455,7 +3496,7 @@ research:
     cost: 900
     points: 30
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_HIGHTIER_PREREQ
 
   - name: STR_NEW_TRANSPORT_PD
@@ -3469,13 +3510,13 @@ research:
     points: 75
     dependencies:
       - STR_UFO_CONSTRUCTION
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
 
   - name: STR_VULTURE_ARBITES_REQUISITION
     cost: 200
     points: 50
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_ARBITES_MIDTIER
 
   # Crafts Adeptas
@@ -3866,7 +3907,7 @@ research:
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_THREAT_ONE
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       # - STR_ENFORCER_ARMOR
 
   # Armors Adeptas
@@ -9693,7 +9734,6 @@ research:
   - name: STR_NECRON_FLAYED_ONE_CORPSE
     refNode: *STR_CORPSE_BASIC
 
-
   - name: STR_DESTROYER_CORPSE
     refNode: *STR_CORPSE_BASIC
 
@@ -10260,7 +10300,7 @@ research:
     cost: 100
     points: 100
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_LOCKER_VAULT_RESEARCH
     neededItem: STR_WARPED_HULK_LOOT
     destroyItem: false
@@ -10307,6 +10347,7 @@ research:
     points: 10
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_CHAPTER_PURITY
       - STR_CATACHAN_GENLOCK
 
   - name: STR_CATACHAN_REQ
@@ -10315,6 +10356,7 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_CHAPTER_PURITY
       - STR_CATACHAN_GEN
 
 #marbostory
@@ -10668,6 +10710,7 @@ research:
     cost: 192
     points: 30
     dependencies:
+      - STR_NOTCHAOSCULT
       - STR_CHAOSCULT_SOLDIERM_LV1_AI
       - STR_CHAOSCULT_SOLDIERF_LV1_AI
       - STR_CHAOSCULT_SOLDIERM_LV2_AI
@@ -10686,6 +10729,7 @@ research:
     cost: 192
     points: 30
     dependencies:
+      - STR_NOTCHAOSCULT
       - STR_CHAOSCULT_GUARDFLAKM_AI
       - STR_CHAOSCULT_GUARDCARAPM_AI
       - STR_CHAOSCULT_GUARDFLAKF_AI
@@ -10701,6 +10745,7 @@ research:
     cost: 192
     points: 30
     dependencies:
+      - STR_NOTCHAOSCULT
       - STR_CHAOSCULT_LEGIONSCOUT_AI
       - STR_CHAOSCULT_LEGIONSCOUTF_AI
       - STR_CHAOSCULT_LEGIONARIE_AI
@@ -10710,3 +10755,303 @@ research:
       - STR_CHAOSCULT_TERMINATOR_AI
     unlocks:
       - STR_INTERROGATION_COMPLETED
+
+##### CHAOS CULT STRATEGY START
+
+  - name: STR_CHAOS_STRATEGY
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CHAOS_STRATEGY_ARBITES
+    spawnedEvent: STR_RECRUITS_CHAOS_STRATEGY_ARBITES
+    cost: 5
+    points: 0
+    dependencies:
+      - STR_ARBITES
+    disables:
+      - STR_MARINES_STRATEGY
+      - STR_CHAMBERMILITANT
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ARBITES
+      - STR_ADEPTAS
+      - STR_CHAPTER_PURITY
+      - STR_LASER_WEAPONS
+      - STR_HEAVY_LASER
+    unlocks:
+      - STR_CHAOS_STRATEGY
+      - STR_MOTION_SCANNER
+      - STR_SMOKE
+      - STR_GUARD_AND_ARBITES
+      - STR_IMPERIUM_RESEARCH
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_GUARD_BARRACKS
+      - STR_REGIMENT_OFFICERS
+      - STR_KRIEG_GUARDSMEN
+      - STR_CATACHAN_GUARDSMEN
+      - STR_PENITENT_GUARD
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_GUARDSMEN
+      - STR_VALKYRIE_GRAV_DROP_IG
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      - STR_BASIC_SENTINEL
+      - STR_PILOT_GUARDSMEN
+      - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_ABHUMAN_STRATEGY
+#      - STR_NOT_STEEL_LEGION_STRATEGY
+
+  - name: STR_CHAOS_MIDTIER
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_UNHOLY_WARTOOLS
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_LASER_WEAPONS
+      - STR_HARDER_MISSIONS
+      - STR_HFLAMERR
+      - STR_CASS_R
+      - STR_HB_DEP1
+      - STR_SIDEOPERATIONS
+    cutscene: c2
+
+  - name: STR_CHAOS_HIGHTIER
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_NEW_FIGHTER_TRANSPORTER
+      - STR_CYDONIA_OR_BUST
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+
+  - name: STR_CULTIST_GUARDUPGRADE
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CULTIST_ENHANCER_BLOCK
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_SECRET_OF_CULT
+    cost: 70
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+    unlocks:
+      - STR_CULTIST_ENHANCER_BLOCK
+      - STR_MEDI_KIT_PREREQ
+
+  - name: STR_RECRUIT_CHAOSOGRYN
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TURN_OGRYN
+    cost: 80
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+    unlocks:
+      - STR_RECRUIT_CHAOSOGRYN
+
+  - name: STR_CALL_CHAOSPRIEST
+    spawnedEvent: STR_RECRUITS_CHAOSPRIEST
+    cost: 70
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+
+  - name: STR_UNHOLY_WARTOOLS
+    cost: 90
+    points: 10
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_ELERIUM_115
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+    unlocks:
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_ALIENS_ONLY
+
+  - name: STR_GUARDSMEN_WEAPONS
+    cost: 90
+    points: 10
+    dependencies:
+      - STR_MIDTIER_PREREQ
+    reenable:
+      - STR_LASER_WEAPONS
+      - STR_HEAVY_LASER
+
+  - name: STR_CULTIST_GUARD
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_GUARDSMEN_WEAPONS
+
+  - name: STR_CULTIST_CHAOSREGIMENT
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD
+
+  - name: STR_CULTIST_GUARD_CARAPACE
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_CHAOSREGIMENT
+
+  - name: STR_CULTIST_MIDTIER_OGRYN
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD_CARAPACE
+
+  - name: STR_CULTIST_MIDTIER_PRIEST
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_MIDTIER_OGRYN
+
+  - name: STR_UNLOCK_CHAOSLEMAN
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD_CARAPACE
+
+  - name: STR_CULTIST_LEGION
+    cost: 180
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+
+  - name: STR_CULTIST_LEGION_SCOUT
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION
+
+  - name: STR_CULTIST_LEGIONGROWTH
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SCOUT
+
+  - name: STR_CULTIST_LEGION_CSM
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGIONGROWTH
+
+  - name: STR_CULTIST_LEGION_SORC
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_CSM
+
+# this should become available after some special mission
+  - name: STR_UNLOCK_CHAOSMOBILEFORT
+    cost: 300
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_CSM
+
+  - name: STR_CULTIST_TERMINAL
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SORC
+
+####Boons from Chaos
+
+  #Chaos Boons Beginner Mode Options
+  - name: STR_CHAOS_BOONS_RESEARCH
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_CALL_CHAOSPRIEST
+      - STR_TURN_OGRYN
+      - STR_CULTIST_ENHANCER_BLOCK
+
+  - name: STR_CHAOS_BOONS_LV2CULTISTS_RESEARCH #Request LV2 Cultists
+    cost: 70
+    points: 250
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_CHAOSOGRYN_RESEARCH #Request Ogryns
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_BOONS_CHAOSPRIEST_RESEARCH #Request Chaos Priests
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_BOONS_CHAOSGUARDELITE_RESEARCH #Request Chaos Elite Guards
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD
+
+  - name: STR_BOONS_OGRYNDEFENSE_RESEARCH #Request Chaos Bullgryns
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_MIDTIER_OGRYN
+
+  - name: STR_BOONS_LEGIONSCOUT_RESEARCH #Request Chaos Legion Aspirants
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SCOUT
+
+  - name: STR_BOONS_LEGIONARIES_RESEARCH #Request Chaos Legionary Warband
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_TERMINAL
