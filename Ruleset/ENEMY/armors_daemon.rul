@@ -418,6 +418,7 @@ armors:
       - 0.5 #IMPACT
       - 1.2 #MELTA
     loftempsSet: [ 3 ]
+    deathFrames: 4
     allowsRunning: false #NPC limits for BAI
     tags:
       INFECTION_RESIST: 100 #infection immune
@@ -891,7 +892,25 @@ armors:
     rearArmor: 9
     underArmor: 9
     drawingRoutine: 4
-    constantAnimation: true
+    scripts:
+      selectUnitSprite: |
+        #this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; #desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
     specialWeapon: STR_BRIMSTONE_HORROR_CLAWS #fiery claws
     damageModifier: #DAEMON ARMOR; Blue Horror resists physical, Pink Horror resists energy
       - 1.0 #none
