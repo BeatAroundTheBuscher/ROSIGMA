@@ -141,7 +141,7 @@ extended:
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" rollBonus;
           end;
 
-          unit.getRuleArmor armorRule; # we ignore decoy targets
+          unit.getRuleArmor armorRule;
           armorRule.getTag armorMod Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
           if gt armorMod 0;
             muldiv rollBonus armorMod 100;
@@ -149,6 +149,11 @@ extended:
           else eq faction FACTION_NEUTRAL;
             set rollBonus 0; #negate all modifiers if we are civilians without mods, but we still have a 1% chance of being an Alpha Legion
             #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL trigger chance after civilian modifier:" rollBonus;
+          end;
+
+          battle_game.getTurnSide temp; #if reaction fire was the cause, halve our modifier
+          if neq temp FACTION_PLAYER;
+            div rollBonus 2;
           end;
 
           armorRule.getTag armorMod Tag.UNIT_TYPE_MECHANICAL;
