@@ -78,7 +78,6 @@ items:
       - STR_LIGHT_BOLTER_AMMO_EX
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_INF
-      - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 85
     accuracyAuto: 65
     tuSnap: 25
@@ -137,7 +136,6 @@ items:
       - STR_LIGHT_BOLTER_AMMO_EX
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_INF
-      - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 85
     accuracyAuto: 65
     tuSnap: 22
@@ -985,7 +983,6 @@ items:
       - STR_PISTOL_CLIP_MC
       - STR_PISTOL_CLIP_AP
       - STR_PISTOL_CLIP_EX
-      - STR_PISTOL_CLIP_BLIGHT
     accuracySnap: 60
     tuSnap: 21
     snapRange: 14
@@ -1037,9 +1034,6 @@ items:
       - STR_ALIENS_ONLY
     size: 0.2
     dropoff: 5
-    recoveryTransformations:
-      STR_AUTOGUN_CHAOS: [1] #keeps the research clutter down
-    #costBuy: 3500
     costSell: 1000
     weight: 9
     bigSprite: 2626 #nurgle autogun
@@ -1224,6 +1218,10 @@ items:
     fireSound: {mod: 40k, index: 707}
     weight: 15
     compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO
+      - STR_LIGHT_BOLTER_AMMO_PEN
+      - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 80
     accuracyAuto: 60 #accurate but slow
@@ -1263,7 +1261,7 @@ items:
       0:
         compatibleAmmo: [STR_LIGHT_BOLTER_AMMO_NURGLE]
       1:
-        compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40]
+        compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40, STR_BLIGHT_GRENADE40_PLAYER, STR_ACIDRUST_GRENADE40_PLAYER]
     confAuto: #Bolter
       ammoSlot: 0 #Bolter
       name: STR_AUTOFIRE
@@ -1297,12 +1295,11 @@ items:
       INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: STR_BLIGHT_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
+  - &STR_BLIGHT_GRENADE40
+    type: STR_BLIGHT_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
     categories: [ STR_CAT_GRENADES, STR_CAT_NURGLE]
     size: 0.1
     weight: 3
-    requiresBuy:
-      - STR_ALIENS_ONLY
     requires:
       - STR_ALIENS_ONLY
     costSell: 250
@@ -1332,9 +1329,15 @@ items:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 1 #tiny chance of zombifying its victims
+    recoveryTransformations:
+      STR_BLIGHT_GRENADE40_PLAYER: [1]
+  - type: STR_BLIGHT_GRENADE40_PLAYER
+    refNode: *STR_BLIGHT_GRENADE40
+    spawnUnitFaction: 2
+    ufopediaType: STR_BLIGHT_GRENADE40
 
-
-  - type: STR_ACIDRUST_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
+  - &STR_ACIDRUST_GRENADE40
+    type: STR_ACIDRUST_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
     categories: [STR_CAT_GRENADES, STR_CAT_NURGLE, STR_CAT_TACTICAL]
     size: 0.1
     weight: 3
@@ -1368,13 +1371,16 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    recoveryTransformations:
+      STR_ACIDRUST_GRENADE40_PLAYER: [1]
+  - type: STR_ACIDRUST_GRENADE40_PLAYER
+    refNode: *STR_ACIDRUST_GRENADE40
+    spawnUnitFaction: 2
+    ufopediaType: STR_ACIDRUST_GRENADE40
 
   - type: STR_LIGHT_BOLTER_AMMO_NURGLE
     categories: [STR_CAT_BOLTER, STR_CAT_NURGLE]
-    requiresBuy:
-      - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 300
     costSell: 100
     bigSprite: 2605
     floorSprite: {mod: 40k, index: 2}
@@ -1582,6 +1588,7 @@ items:
     armor: 200
     compatibleAmmo:
       - STR_PLAGUE_SPEWER_TANK
+      - STR_PLAGUE_SPEWER_TANK_PLAYER
     dropoff: 6
     autoRange: 10
     snapRange: 12
@@ -1610,7 +1617,8 @@ items:
 #PLAGUE BELCHER (different weapon)
 
 #Plague Spewer ammo
-  - type: STR_PLAGUE_SPEWER_TANK
+  - &STR_PLAGUE_SPEWER_TANK
+    type: STR_PLAGUE_SPEWER_TANK
     categories: [ STR_CAT_NURGLE, STR_CAT_FLAMER, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
@@ -1657,8 +1665,13 @@ items:
     armor: 15
     attraction: 7
     listOrder: 10521
-    recover: true
-
+    recoveryTransformations:
+      STR_PLAGUE_SPEWER_TANK_PLAYER: [1]
+  - type: STR_PLAGUE_SPEWER_TANK_PLAYER
+    refNode: *STR_PLAGUE_SPEWER_TANK
+    zombieUnitFaction: 2
+    ufopediaType: STR_PLAGUE_SPEWER_TANK
+    clipSize: 25
 
   - type: STR_BOLTERR #BOLTER RUBRIC CHAOS   10360
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_CHAOS]
@@ -2351,6 +2364,8 @@ items:
     weight: 7
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS
+      - STR_STUN_SHELLS
+      - STR_STUN_GAS_SHELLS
     tuSnap: 25
     tuAimed: 33
     battleType: 1
@@ -3658,6 +3673,7 @@ items:
       - STR_STUB_GUN_AMMO_HP
       - STR_STUB_GUN_AMMO_AP
       - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_INC
 
   - type: STR_KHORNE_CHAOS_CLAWS #                        DA POWER
     weight: 0
@@ -4030,7 +4046,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 800
     costSell: 200
     weight: 4
     bigSprite: 1037
@@ -4208,7 +4223,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 200
     costSell: 75
     weight: 3
     bigSprite: 1041
@@ -4242,7 +4256,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 400
     costSell: 100
     weight: 4
     bigSprite: 1042
