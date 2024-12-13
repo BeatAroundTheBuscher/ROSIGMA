@@ -4,7 +4,7 @@ extended:
 armors:
 # CHAOS MARINE ARMORS
 ## UNDIVIDED
-  - &STR_MARINE_ARMOR
+  - &STR_CSM_ARMOR
     type: STR_CHAOS_MARINE_ARMOR #Warrior
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -58,7 +58,7 @@ armors:
       INTIMIDATION_RESISTANCE: 25 #intimidation
 
   - type: STR_CHAOS_SERGEANT_ARMOR #Sgt. Equivalent
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     spriteInv: UMARINESARGE_INV.SPK
@@ -88,7 +88,7 @@ armors:
       INTIMIDATION_RESISTANCE: 33 #intimidation
 
   - type: STR_CHAOS_HAVOC_ARMOR #HAVOC
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
     frontArmor: 130
@@ -118,7 +118,7 @@ armors:
       INTIMIDATION_RESISTANCE: 25 #intimidation
 
   - type: STR_CHAOS_RAPTOR_ARMOR # Chaos Raptor
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 5 #airborne
     antiCamouflageAtDark: 4
     corpseBattle:
@@ -147,7 +147,7 @@ armors:
       INTIMIDATION_RESISTANCE: 25 #intimidation
 
   - type: STR_CHAOS_SORC_ARMOR #SORCER
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 10
     frontArmor: 140
@@ -174,14 +174,16 @@ armors:
       - STR_PSI_AMP
     tags: !add
       INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 35
       UNIT_TYPE_PSYKER: 1
 
-  - &STR_TERMINATOR_ARMOR
+  - &STR_CSM_TERMINATOR_ARMOR
     type: STR_CHAOS_TERMINATOR_ARMOR # Chaos Terminator
     visibilityAtDay: 40
     visibilityAtDark: 30
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
+    heatVision: 25
     frontArmor: 150
     sideArmor: 140
     rearArmor: 100
@@ -236,7 +238,7 @@ armors:
       INTIMIDATION_RESISTANCE: 25 #intimidation
 
   - type: STR_CHAOS_LORD_ARMOR #LORD
-    refNode: *STR_TERMINATOR_ARMOR
+    refNode: *STR_CSM_TERMINATOR_ARMOR
     antiCamouflageAtDay: 7
     antiCamouflageAtDark: 7
     spriteInv: UNDIVIDED_TERMINATOR_LORD_INV.SPK #was CTC
@@ -266,7 +268,7 @@ armors:
 ## Alpha Legion
 
   - type: STR_ALPHA_ARMOR_PLAYER #Warrior
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     visibilityAtDark: 35 #+5
     antiCamouflageAtDay: 10 #-5 for player, still very good
     antiCamouflageAtDark: 10
@@ -305,7 +307,7 @@ armors:
 
 ## Iron Warriors
   - type: STR_IRON_WARRIOR_ARMOR_PLAYER
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 4
     heatVision: 30
@@ -339,7 +341,7 @@ armors:
       INFECTION_RESIST: 75
 
   - type: STR_IRON_BERSERKER_ARMOR
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     heatVision: 30
@@ -378,7 +380,7 @@ armors:
 ## Night Lords
 
   - type: STR_NIGHTLORD_CSM_ARMOR_PLAYER
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     visibilityAtDark: 35 #+5
     antiCamouflageAtDay: 8 #Slightly worse than Alpha
     antiCamouflageAtDark: 6 #Slightly worse than Alpha
@@ -416,7 +418,7 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
 ## Khorne
   - type: STR_KHORNECHAMP_ARMOR_PLAYER #Khorne Berzerker
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 30
     spriteSheet: MUTON2.PCK #Khorne Berzerker
@@ -431,17 +433,17 @@ armors:
     corpseBattle:
       - STR_KHORNECHAMP_CORPSE_PLAYER
     stats:
-      tu: 20
-      stamina: 30
-      health: 0
-      bravery: 20 #always multiples of 10
+      tu: 20 #+10
+      stamina: 30 #+10
+      health: 10 #+5
+      bravery: 20 #+10
       reactions: 20 #+10
       firing: -10 #-10
-      throwing: -10
-      strength: 100
+      throwing: -10 #-15
+      strength: 100 #+80
       psiStrength: 0
       psiSkill: 0
-      melee: 30
+      melee: 30 #+15
     frontArmor: 130 #Berzerker armor
     sideArmor: 120 #+5
     rearArmor: 60 #-15
@@ -456,10 +458,31 @@ armors:
       INTIMIDATION_RESISTANCE: 100 #intimidation immune
       INFECTION_RESIST: 25
       UNIT_TYPE_KHORNE: 1
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 5
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 5
 
 ## Nurgle
+  - &STR_NURGLE_ARMOR
+    type: MUTON_ARMORNURGLEA_PLAYER
+    refNode: *STR_CSM_ARMOR
+    damageModifier: #NURGLE CHAOS ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.5 #FLAMES; power armor
+      - 0.6 #HE
+      - 0.8 #LASCANON
+      - 1.1 #PLASMA
+      - 1.1 #STUN
+      - 1.1 #MELEE
+      - 0.1 #ACID
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.2 #MELTA
+    tags:
+      INFECTION_RESIST_TYPE: 0 #all
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
   - type: MUTON_ARMORNURGLEA_PLAYER #NURGLE ANIMATED
-    refNode: *STR_MARINE_ARMOR
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
     spriteSheet: CNURGLEA.PCK
@@ -496,7 +519,36 @@ armors:
     tags: !add
       INFECTION_RESIST: 100 #infection immune
       UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -50 #Two chances
+      DIEHARD_THRESHOLD: 80 #Big damage still kills
     scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
       selectUnitSprite: |
         var int reg0;
         var int reg1;
@@ -538,7 +590,7 @@ armors:
 
 ## Slaanesh
   - type: MUTON_ARMORSLAANESH_PLAYER #SLAANESH REGULAR
-    refNode: *STR_MARINE_ARMOR
+    refNode: *STR_CSM_ARMOR
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
     spriteSheet: CNOISE.PCK
@@ -560,10 +612,10 @@ armors:
       psiStrength: 0
       psiSkill: 0
       melee: 20 #+5
-    frontArmor: 120 #matches TACTICAL armor
-    sideArmor: 115  #matches TACTICAL armor
-    rearArmor: 100 #reinforced for backstabs, +15 vs player tactical
-    underArmor: 115 #+15 vs player tactical
+    frontArmor: 115 # -10
+    sideArmor: 110  #-10
+    rearArmor: 95 #+10
+    underArmor: 115 #+20
     loftempsSet: [ 3 ] #Agile Bonus
     specialWeapon: STR_UNARMED_GAUNTLET_PLUS
     units:
@@ -575,7 +627,7 @@ armors:
       INTIMIDATION_RESISTANCE: 50 #intimidate resistant
       UNIT_TYPE_SLAANESH: 1
 
-  - &STR_CENTURION_ARMOR
+  - &STR_BEHEMOTH_ARMOR
     type: STR_CHAOS_BEHEMOTH_ARMOR #Slaanesh, move this reference up if we make other behemoths
     visibilityAtDay: 40
     visibilityAtDark: 30
@@ -628,12 +680,14 @@ armors:
 
 ## Tzeentch
   - type: MUTON_ARMORTZEENTCH_PLAYER #Rubric Marine
-    refNode: *STR_TERMINATOR_ARMOR
+    refNode: *STR_CSM_TERMINATOR_ARMOR
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
+    psiVision: 5 #psychic senses
     spriteSheet: CRUBRIC.PCK
     spriteInv: TMARINE_INV
     allowInv: true
+    painImmune: true #Rubric Marines are dust
     fearImmune: true
     instantWoundRecovery: true
     bleedImmune: true
