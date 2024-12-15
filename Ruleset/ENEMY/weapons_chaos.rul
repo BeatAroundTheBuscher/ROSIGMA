@@ -78,7 +78,6 @@ items:
       - STR_LIGHT_BOLTER_AMMO_EX
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_INF
-      - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 85
     accuracyAuto: 65
     tuSnap: 25
@@ -137,7 +136,6 @@ items:
       - STR_LIGHT_BOLTER_AMMO_EX
       - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_INF
-      - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 85
     accuracyAuto: 65
     tuSnap: 22
@@ -290,6 +288,7 @@ items:
     costSell: 1000
     compatibleAmmo:
       - STR_HEAVY_STUBBER_CLIP
+      - STR_HEAVY_STUBBER_CLIP_MC
     accuracyAuto: 45
     accuracySnap: 60
     tuAuto: 45
@@ -984,7 +983,6 @@ items:
       - STR_PISTOL_CLIP_MC
       - STR_PISTOL_CLIP_AP
       - STR_PISTOL_CLIP_EX
-      - STR_PISTOL_CLIP_BLIGHT
     accuracySnap: 60
     tuSnap: 21
     snapRange: 14
@@ -1036,9 +1034,6 @@ items:
       - STR_ALIENS_ONLY
     size: 0.2
     dropoff: 5
-    recoveryTransformations:
-      STR_AUTOGUN_CHAOS: [1] #keeps the research clutter down
-    #costBuy: 3500
     costSell: 1000
     weight: 9
     bigSprite: 2626 #nurgle autogun
@@ -1223,6 +1218,10 @@ items:
     fireSound: {mod: 40k, index: 707}
     weight: 15
     compatibleAmmo:
+      - STR_LIGHT_BOLTER_AMMO
+      - STR_LIGHT_BOLTER_AMMO_PEN
+      - STR_LIGHT_BOLTER_AMMO_EX
+      - STR_LIGHT_BOLTER_AMMO_MC
       - STR_LIGHT_BOLTER_AMMO_NURGLE
     accuracySnap: 80
     accuracyAuto: 60 #accurate but slow
@@ -1262,7 +1261,7 @@ items:
       0:
         compatibleAmmo: [STR_LIGHT_BOLTER_AMMO_NURGLE]
       1:
-        compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40]
+        compatibleAmmo: [STR_BLIGHT_GRENADE40, STR_ACIDRUST_GRENADE40, STR_BLIGHT_GRENADE40_PLAYER, STR_ACIDRUST_GRENADE40_PLAYER]
     confAuto: #Bolter
       ammoSlot: 0 #Bolter
       name: STR_AUTOFIRE
@@ -1296,12 +1295,11 @@ items:
       INFECTION_DAMAGE_PERCENT: 10 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: STR_BLIGHT_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
+  - &STR_BLIGHT_GRENADE40
+    type: STR_BLIGHT_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
     categories: [ STR_CAT_GRENADES, STR_CAT_NURGLE]
     size: 0.1
     weight: 3
-    requiresBuy:
-      - STR_ALIENS_ONLY
     requires:
       - STR_ALIENS_ONLY
     costSell: 250
@@ -1331,9 +1329,15 @@ items:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
     specialChance: 1 #tiny chance of zombifying its victims
+    recoveryTransformations:
+      STR_BLIGHT_GRENADE40_PLAYER: [1]
+  - type: STR_BLIGHT_GRENADE40_PLAYER
+    refNode: *STR_BLIGHT_GRENADE40
+    spawnUnitFaction: 2
+    ufopediaType: STR_BLIGHT_GRENADE40
 
-
-  - type: STR_ACIDRUST_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
+  - &STR_ACIDRUST_GRENADE40
+    type: STR_ACIDRUST_GRENADE40 #STR_BOLTERN_LIGHT_GRENADELAUNCHER underslung grenade
     categories: [STR_CAT_GRENADES, STR_CAT_NURGLE, STR_CAT_TACTICAL]
     size: 0.1
     weight: 3
@@ -1367,13 +1371,16 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 25 #inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    recoveryTransformations:
+      STR_ACIDRUST_GRENADE40_PLAYER: [1]
+  - type: STR_ACIDRUST_GRENADE40_PLAYER
+    refNode: *STR_ACIDRUST_GRENADE40
+    spawnUnitFaction: 2
+    ufopediaType: STR_ACIDRUST_GRENADE40
 
   - type: STR_LIGHT_BOLTER_AMMO_NURGLE
     categories: [STR_CAT_BOLTER, STR_CAT_NURGLE]
-    requiresBuy:
-      - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 300
     costSell: 100
     bigSprite: 2605
     floorSprite: {mod: 40k, index: 2}
@@ -1581,6 +1588,7 @@ items:
     armor: 200
     compatibleAmmo:
       - STR_PLAGUE_SPEWER_TANK
+      - STR_PLAGUE_SPEWER_TANK_PLAYER
     dropoff: 6
     autoRange: 10
     snapRange: 12
@@ -1609,7 +1617,8 @@ items:
 #PLAGUE BELCHER (different weapon)
 
 #Plague Spewer ammo
-  - type: STR_PLAGUE_SPEWER_TANK
+  - &STR_PLAGUE_SPEWER_TANK
+    type: STR_PLAGUE_SPEWER_TANK
     categories: [ STR_CAT_NURGLE, STR_CAT_FLAMER, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
@@ -1656,8 +1665,13 @@ items:
     armor: 15
     attraction: 7
     listOrder: 10521
-    recover: true
-
+    recoveryTransformations:
+      STR_PLAGUE_SPEWER_TANK_PLAYER: [1]
+  - type: STR_PLAGUE_SPEWER_TANK_PLAYER
+    refNode: *STR_PLAGUE_SPEWER_TANK
+    zombieUnitFaction: 2
+    ufopediaType: STR_PLAGUE_SPEWER_TANK
+    clipSize: 25
 
   - type: STR_BOLTERR #BOLTER RUBRIC CHAOS   10360
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_CHAOS]
@@ -1945,6 +1959,7 @@ items:
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
     requires:
       - STR_ALIENS_ONLY
+    costSell: 250000
     size: 0.2
     weight: 15
     bigSprite: 2988
@@ -1975,7 +1990,7 @@ items:
     invWidth: 2
     invHeight: 3
     armor: 200
-    recover: false
+    recover: true
     skillApplied: true
     strengthApplied: false
     meleeMultiplier:
@@ -2349,6 +2364,8 @@ items:
     weight: 7
     compatibleAmmo:
       - STR_SHOTGUN_SHELLS
+      - STR_STUN_SHELLS
+      - STR_STUN_GAS_SHELLS
     tuSnap: 25
     tuAimed: 33
     battleType: 1
@@ -3519,7 +3536,7 @@ items:
       ToTime: 0.3 #concussive
       ToTile: 0.75 #caustic + high explosive
       ToItem: 0.75 #caustic + high explosive
-      SmokeThreshold: 0.0 #plague gasssss
+      SmokeThreshold: 0 #plague gasssss
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 8
     powerForAnimation: 240 #Fix radius * 32 - 16.
@@ -3580,7 +3597,7 @@ items:
       ToTime: 0.3 #concussive
       ToTile: 0.75 #caustic + high explosive
       ToItem: 0.75 #caustic + high explosive
-      SmokeThreshold: 0.0 #plague gasssss
+      SmokeThreshold: 0 #plague gasssss
       ResistType: 8 #explosive but tests against acid resistance
       FixRadius: 8
     powerForAnimation: 240 #Fix radius * 32 - 16.
@@ -3656,6 +3673,7 @@ items:
       - STR_STUB_GUN_AMMO_HP
       - STR_STUB_GUN_AMMO_AP
       - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_INC
 
   - type: STR_KHORNE_CHAOS_CLAWS #                        DA POWER
     weight: 0
@@ -3948,7 +3966,7 @@ items:
     damageAlter:
       FixRadius: 6
       ToArmorPre: 0.1
-      FireThreshold: 0.0
+      FireThreshold: 0
       FireBlastCalc: false
       IgnoreOverKill: false
       # IgnoreSelfDestruct: false
@@ -4028,7 +4046,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 800
     costSell: 200
     weight: 4
     bigSprite: 1037
@@ -4206,7 +4223,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 200
     costSell: 75
     weight: 3
     bigSprite: 1041
@@ -4240,7 +4256,6 @@ items:
     requires:
       - STR_ALIENS_ONLY
     size: 0.1
-    costBuy: 400
     costSell: 100
     weight: 4
     bigSprite: 1042
@@ -4381,3 +4396,52 @@ items:
   - type: STR_KHORNE_DREADNOUGHT_CHAIN_FIST_R #Khorne Dreadnought Chain fist
     bigSprite: 2972
     refNode: *STR_KHORNE_DREADNOUGHT_CHAIN_FIST_TEMPLATE
+
+  - type: STR_CHAOS_CROZIUS
+    requires:
+      - STR_ALIENS_ONLY
+    costAimed:
+      time: 40
+      energy: 40
+      morale: 20
+    costSnap:
+      time: 20
+      energy: 40
+      morale: 20
+    power: 25
+    damageType: 2
+    damageAlter:
+      RandomType: 6
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      IgnoreSelfDestruct: false
+      ToHealth: 1.0
+      ToTile: 0.3
+      ToItem: 0.3
+      ToMorale: 5.0
+      ArmorEffectiveness: 0.5
+      FixRadius: -1
+    damageBonus:
+      bravery: 0.5
+      psiSkill: 0.5
+      psiStrength: 0.1
+    #melee
+    meleePower: 100
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+      bravery: 0.1
+    costMelee:
+      time: 20
+      energy: 4
+    meleeType: 5
+    meleeAlter:
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      RandomType: 2
+    dropoff: 5
+    aimRange: 20
+    snapRange: 15
+    powerRangeThreshold: 20
+    powerRangeReduction: 5

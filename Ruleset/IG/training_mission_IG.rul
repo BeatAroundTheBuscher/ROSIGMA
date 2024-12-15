@@ -185,9 +185,43 @@ startingConditions:
       STR_GUARDSL_OFFICER_VETERAN:
         STR_GUARDSL_ARMOR_TRAIN: 100
 
+      STR_CHAOSCULT_SOLDIER_LV1:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_SOLDIER_LV2:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_PILOT:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_OGRYN:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_PRIEST_LV1:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_PRIEST_LV2:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_GUARDFLAK:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_GUARDCARAP:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_OGRYNDEFENSE:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_OGRYNBERSERK:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_PRIEST_LV3:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_LEGIONSCOUT:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_LEGIONARIE:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_PRIEST_LV4:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_TERMINATOR:
+        STR_CULTIST_ARMOR_TRAIN: 100
+      STR_CHAOSCULT_CHAOSLORD:
+        STR_CULTIST_ARMOR_TRAIN: 100
+
     allowedArmors:
       - STR_GUARD_ARMOR_TRAIN
       - STR_GUARDSL_ARMOR_TRAIN
+      - STR_CULTIST_ARMOR_TRAIN
 
 armors:
   - type: STR_GUARD_ARMOR_TRAIN #DR10 SPACE MARINE SUPORT
@@ -362,6 +396,144 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     loftempsSet: [ 3 ]
+    scripts:
+      # https://www.ufopaedia.org/index.php/Experience
+      # max Training is 2-6 for primary
+      # max Training is always 10 for bravery
+
+      # max Training is 0-5 for TUs and Health
+      # max Training is 0-7 for Strength
+      # max Training is 0-6 for Stamina
+      # The overall formula is that you gain 0 to 2 points,
+      # plus a tenth (rounded down) of the remaining increase possible
+
+      # random(0,2) + (Cap - Current)/10
+
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getTimeUnits statCap;
+        soldier.Stats.getTimeUnits statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setTimeUnits statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getHealth statCap;
+        soldier.Stats.getHealth statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setHealth statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStamina statCap;
+        soldier.Stats.getStamina statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStamina statCurrent;
+        end;
+
+
+        ruleSoldier.StatsCap.getReactions statCap;
+        soldier.Stats.getReactions statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setReactions statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getFiring statCap;
+        soldier.Stats.getFiring statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setFiring statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getMelee statCap;
+        soldier.Stats.getMelee statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setMelee statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getThrowing statCap;
+        soldier.Stats.getThrowing statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setThrowing statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getBravery statCap;
+        soldier.Stats.getBravery statCurrent;
+        if lt statCurrent statCap;
+          add statCurrent 10;
+          soldier.Stats.setBravery statCurrent;
+        end;
+
+        return;
+
+  - type: STR_CULTIST_ARMOR_TRAIN
+    visibilityAtDay: 40
+    visibilityAtDark: 15
+    spriteSheet: CHAOSCULT_LV1battle.PCK
+    spriteInv: CULTI1
+    customArmorPreviewIndex: 0
+    corpseBattle:
+      - STR_CULTISTLV1_CORPSE_GEO
+    drawingRoutine: 0
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.1 #AP
+      - 2.0 #FLAMES
+      - 1.2 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 1.0 #STUN
+      - 1.2 #MELEE
+      - 1.1 #ACID
+      - 0.0 #SMOKE
+      - 1.1 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [ 2 ]
     scripts:
       # https://www.ufopaedia.org/index.php/Experience
       # max Training is 2-6 for primary

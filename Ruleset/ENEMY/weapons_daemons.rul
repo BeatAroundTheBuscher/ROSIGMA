@@ -419,7 +419,7 @@ items:
     damageAlter: #Khorne hellblade weapon
       ResistType: 5 #treated like a plasma/power weapon for the purposes of resists
       IgnoreOverKill: true
-      FireThreshold: 0.0 #flaming weapon
+      FireThreshold: 0 #flaming weapon
       ToArmorPre: 0.3
       ToArmor: 0.3
       ToStun: 0.3
@@ -691,7 +691,7 @@ items:
       psiStrength: 0.2 #profaned weapon
     damageAlter: #Khorne hellblade weapon
       IgnoreSelfDestruct: false
-      FireThreshold: 0.0 #flaming weapon
+      FireThreshold: 0 #flaming weapon
       ToArmorPre: 0.2
       ToArmor: 0.2
       ToStun: 0.1
@@ -787,7 +787,7 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_LESSER_PLAGUE_TOAD_SPIT #STR_LESSER_PLAGUE_TOAD
-    bigSprite: {mod: xcom1, index: 60}
+    bigSprite: 2648
     dropoff: 5
     refNode: *STR_PLAGUE_SPIT_TEMPLATE
     accuracySnap: 70
@@ -796,6 +796,9 @@ items:
     snapRange: 12
     maxRange: 18
     power: 50 #bumped up power to try to trick the AI into using it
+    vaporColorSurface: 2 #toxic green
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 10
     damageAlter: #DA SPIT
       ToMana: 0.1 #less corruption, more debuff
       ToTime: 1.0 #sticky spit
@@ -808,7 +811,7 @@ items:
     spawnItem: STR_PLAGUE_TOAD_MINE
 
   - type: STR_GREATER_PLAGUE_TOAD_SPIT #STR_GREATER_PLAGUE_TOAD
-    bigSprite: {mod: xcom1, index: 60}
+    bigSprite: 2648
     dropoff: 5
     refNode: *STR_PLAGUE_SPIT_TEMPLATE
     accuracySnap: 70
@@ -817,6 +820,9 @@ items:
     snapRange: 15
     autoRange: 15
     maxRange: 20
+    vaporColorSurface: 2 #toxic green
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 10
     damageAlter: #DA SPIT
       ToMana: 0.1 #less corruption, more debuff
       ToTime: 1.0 #sticky spit
@@ -989,7 +995,7 @@ items:
     damageAlter: ## Plague-inflicting weapon
       RandomType: 2 #TFTD [50% - 150%]
       ArmorEffectiveness: 0.7
-      SmokeThreshold: 0.0
+      SmokeThreshold: 0
       ToArmorPre: 0.75 #higher than normal plague weapons
       ToArmor: 0.0 #damages armor on the way in
       ToHealth: 0.1
@@ -1020,6 +1026,8 @@ items:
       INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_PLAGUE_TOAD_MINE
+    bigSprite: 2649
+    floorSprite: 2647
     refNode: *STR_BLIGHT_EXPLOSION_TEMPLATE
     armor: 20 #you're supposed to be able to burn/destroy these
     battleType: 4 #proximity explosive
@@ -1032,7 +1040,7 @@ items:
     damageType: 8
     damageAlter: ## Plague-inflicting weapon
       ArmorEffectiveness: 0.7
-      SmokeThreshold: 0.0
+      SmokeThreshold: 0
       ToArmorPre: 0.75 #higher than normal plague weapons
       ToArmor: 0.0 #damages armor on the way in
       ToHealth: 0.1
@@ -2032,6 +2040,7 @@ items:
 
   - type: STR_LESSER_PLAGUE_TOAD_TONGUE
     refNode: *STR_TENDRIL_TEMPLATE
+    bigSprite: 2647
     meleeAlter: #Immobilizing plague tendrils
       ToHealth: 0.4
       ToMana: 0.5
@@ -2044,6 +2053,7 @@ items:
 
   - type: STR_GREATER_PLAGUE_TOAD_TONGUE
     refNode: *STR_TENDRIL_TEMPLATE
+    bigSprite: 2647
     snapRange: 6
     maxRange: 6 #has super reach
     powerRangeThreshold: 6
@@ -2101,3 +2111,103 @@ items:
     tags:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
+
+  - &STR_TENDRIL_TEMPLATE_MELEE
+    type: STR_ROTBEARER_TENDRILS_MELEE #Rotbearer melee weapon for Leeroy compatibility
+    hitAnimation: 1030 #128 green from X1.pck
+    hitSound: {mod: 40k, index: 832 }
+    hitAnimFrames: 8
+    bulletSprite: {mod: 40k, index: 14}
+    meleeSound: { mod: 40k, index: 832} #SPLAT
+    meleeAnimation: 24 #melee green
+    weight: 1
+    bigSprite: 2962 #plague tendrils
+    #melee profile
+    accuracyMelee: 100
+    power: 7
+    accuracyMultiplier:
+      melee: 0.7
+      strength: 0.3
+    damageAlter: #Immobilizing plague tendrils
+      ArmorEffectiveness: 1.0
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.4
+      ToStun: 0.3
+      ToEnergy: 0.3
+      ResistType: 8
+    damageBonus:
+      strength: 1.0
+    tuMelee: 7 #fast attacking
+    clipSize: -1
+    battleType: 3
+    fixedWeapon: true
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    flatRate: true
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      REACTION_MULTIPLIER: 200 #multiplies base reaction score by this amount divided by 100
+
+  - type: STR_ROTFLY_MELEE
+    refNode: *STR_TENDRIL_TEMPLATE_MELEE
+    meleeSound: 3990 #buzz buzz motherfucker
+    power: 77 #fixed
+    accuracyMultiplier:
+      melee: 1.0
+    damageAlter: #Armor piercing probscious; less armor rot, but more armor piercing
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.25
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.2
+      ToStun: 1.0 #blight injection kos and exhausts
+      ToEnergy: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      ResistType: 8
+    damageBonus:
+      strength: 0.01
+
+  - type: STR_ROTFLY_RANGED_MELEE
+    refNode: *STR_TENDRIL_TEMPLATE_MELEE
+    fireSound: 3990 #buzz buzz motherfucker
+    battleType: 1
+    power: 77 #fixed
+    accuracyMultiplier:
+      melee: 1.0
+    damageAlter: #Armor piercing probscious; less armor rot, but more armor piercing
+      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.25
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.6
+      ToMorale: 2.0
+      ToTime: 0.2
+      ToStun: 1.0 #blight injection kos and exhausts
+      ToEnergy: 1.0
+      ToWound: 0.0
+      RandomWound: false
+      ResistType: 8
+    damageBonus:
+      strength: 0.01
+    #range/thrust profile
+    powerRangeThreshold: 4
+    powerRangeReduction: 99
+    damageType: 7
+    confSnap:
+      name: STR_HALLEBARD_SNAPSHOT_LUNGE
+      shots: 1
+    costSnap:
+      time: 7
+    snapRange: 2
+    maxRange: 2 #has super reach

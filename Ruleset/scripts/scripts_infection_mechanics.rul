@@ -686,9 +686,9 @@ extended:
                     if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
                       add_shade new_pixel 2;
                     else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
-                      add_shade new_pixel 3;
+                      add_shade new_pixel 4;
                     else; #very high level infection
-                      add_shade new_pixel 5;
+                      add_shade new_pixel 6;
                     end;
                   end;
                 #GSC INFECTION
@@ -698,9 +698,9 @@ extended:
                     if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
                       add_shade new_pixel 2;
                     else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
-                      add_shade new_pixel 3;
+                      add_shade new_pixel 4;
                     else; #very high level infection
-                      add_shade new_pixel 5;
+                      add_shade new_pixel 6;
                     end;
                   end;
                 #SLAANESH INFECTION
@@ -710,9 +710,9 @@ extended:
                     if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
                       add_shade new_pixel 2;
                     else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
-                      add_shade new_pixel 3;
+                      add_shade new_pixel 4;
                     else; #very high level infection
-                      add_shade new_pixel 5;
+                      add_shade new_pixel 6;
                     end;
                   end;
                 #TZEENTCH INFECTION
@@ -722,9 +722,9 @@ extended:
                     if and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #mid level infection
                       add_shade new_pixel 2;
                     else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
-                      add_shade new_pixel 3;
+                      add_shade new_pixel 4;
                     else; #very high level infection
-                      add_shade new_pixel 5;
+                      add_shade new_pixel 6;
                     end;
                   end;
                 end;
@@ -742,21 +742,12 @@ extended:
           var int researchLevel;
           var int temp;
           var int infectionDamage;
+          var int INFECTION_LOW_THRESHOLD;
+          var int INFECTION_MID_THRESHOLD;
+          var int INFECTION_HIGH_THRESHOLD;
 
           #only proceed if we're using the heal action, otherwise cancel out
           if neq medikit_action_type medikit_action_heal;
-            return;
-          end;
-
-          #if we have no infection, cancel out
-          target.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
-          if le infectionDamage 0;
-            return;
-          end;
-
-          target.getFire temp;
-          if eq temp 1; #have to extinguish fire before we can remove infection
-            #debug_log "Infection Scripts; healUnit, offset 19: Target is on fire; it must be extinguished first. Aborting." temp;
             return;
           end;
 
@@ -772,9 +763,29 @@ extended:
             return;
           end;
 
+          item.getTag temp Tag.TURRET_RELOAD_ITEM;
+          if eq temp 1; #prevents reload items from triggering this
+            return;
+          end;
+
           item.getTag temp Tag.ITEM_IS_REMOTE_DETONATOR;
           if eq temp 1; #prevents jetpacks from removing infection
             #debug_log "Infection Scripts; healUnit, offset 19: Medikit is a remote detonator. Aborting. ActivateFlight:" temp;
+            return;
+          end;
+
+          #if we have no infection, cancel out
+          target.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
+          if le infectionDamage 0;
+            return;
+          end;
+
+          target.getFire temp;
+          if and eq medikit_action_type medikit_action_heal gt temp 0;
+            set wound_recovery 0;
+            set health_recovery 0;
+            target.setFire 0;
+            battle_game.flashMessage "Target Extinguished.";
             return;
           end;
 
@@ -811,7 +822,18 @@ extended:
             battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_COMPLETE" infectionDamage;
             target.setTag Tag.CURRENT_INFECTION_TYPE 0; #unset infection type
           else;
-            battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_INCOMPLETE" infectionDamage;
+            set INFECTION_LOW_THRESHOLD 20;
+            set INFECTION_MID_THRESHOLD 40;
+            set INFECTION_HIGH_THRESHOLD 70;
+            if le infectionDamage INFECTION_LOW_THRESHOLD;
+              battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_INCOMPLETE_LIGHT";
+            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; #low level infection
+              battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_INCOMPLETE_MODERATE";
+            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; #high level infection
+              battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_INCOMPLETE_HEAVY";
+            else; #very high level infection
+              battle_game.flashMessage "STR_SCRIPT_INFECTION_HEAL_INCOMPLETE_EXTREMUS";
+            end;
           end;
           set wound_recovery 0; #the charge is expended healing the infection, not wounds
           set health_recovery 0; #the charge is expended healing the infection, not wounds

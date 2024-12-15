@@ -19,6 +19,11 @@ extended:
 
 items:
   - type: STR_GUARD_ARMORS_MEDIC
+    stats:
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
+    weight: 5 #heavier
     requiresBuy:
       - STR_IMPERIAL_GUARD_OPERATIONS
 
@@ -32,6 +37,7 @@ items:
       tu: -5 #heavy
       stamina: -10 #heavy
       reactions: -10 #heavy
+    weight: 10 #heavier
     requiresBuy:
       - STR_CARAPACE_ARMOR_IG
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -1430,7 +1436,7 @@ armors:
     refNode: *STR_GUARD_ARMOR_SENTINEL_CLOSED
     stats:
       mana: 60
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     tags:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
@@ -1588,7 +1594,7 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       mana: 60
     builtInWeapons:
@@ -1742,7 +1748,7 @@ armors:
       - 0.0 #SMOKE
       - 1.0 #IMPACT
       - 1.2 #MELTA
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       mana: 60
     builtInWeapons:
@@ -2361,7 +2367,7 @@ armors:
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLGUN
     weight: 20
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       firing: 10
       reactions: 10
@@ -2378,7 +2384,7 @@ armors:
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_VOLLEYGUN
     weight: 20
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       firing: 10
       reactions: 10
@@ -2395,7 +2401,7 @@ armors:
     refNode: *STR_GUARD_ARMOR_CARAPACE_OFFICER_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
     weight: 15
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       firing: 10
       reactions: 10
@@ -2412,7 +2418,7 @@ armors:
     refNode: *STR_GUARD_ARMOR_CARAPACE_SCION
     storeItem: STR_STORMTROOPER_CARAPACE_ARMOR_HELLPISTOL
     weight: 15
-    specialWeapon: STR_TURRET_RELOAD
+    specialWeapon: STR_RELOAD_WEAPONS
     stats:
       firing: 10
       reactions: 10
@@ -2461,7 +2467,7 @@ armors:
     heatVision: 20 #basic thermals
     weight: 20
     drawingRoutine: 0
-    size: 0.2
+#    size: 0.2 # FIXME this value is not supported
     customArmorPreviewIndex: 911
     spriteSheet: HEAVY_SCION_BS.PCK
     spriteInv: SCIONHEAVY_33 #spk non layered
@@ -2771,6 +2777,49 @@ armors:
       - INV_NULL_3X3
     units:
       - STR_PENITENT_GUARD
+
+  - type: STR_PENAL_ARMOR_BEASTMAN
+    visibilityAtDay: 35 #abhuman beast malus
+    visibilityAtDark: 20 #abhuman beast bonus
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
+    customArmorPreviewIndex: 799
+    spriteSheet: PENITENTS_BEAST.PCK
+    spriteInv: BPENAL_0
+    corpseBattle:
+      - STR_PENAL_BEAST_CORPSE
+    storeItem: STR_NONE
+    loftempsSet: [ 3 ]
+    frontArmor: 15
+    sideArmor: 10
+    rearArmor: 5
+    underArmor: 5
+    zombiImmune: true
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.4 #FLAMES 20% BEASTMAN WEAKNESS
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 0.9 #STUN 10% BEASTMAN BONUS
+      - 1.0 #MELEE 10% BEASTMAN BONUS
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    stats:
+      stamina: 10
+      bravery: -10 #always multiples of 10
+    specialWeapon: STR_EXPLOSIVE_COLLAR
+    builtInWeapons:
+      - INV_NULL_3X3
+    units:
+      - STR_PENITENT_BEASTGUARD
+    tags:
+      INFECTION_RESIST: 25 #infection/corruption resistant due to warp acclimatization and physiology
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
 
   - type: STR_GUARD_ARMORS_PRIEST_UC
     antiCamouflageAtDay: 2
@@ -3220,7 +3269,7 @@ armors:
     rearArmor: 15
     underArmor: 20 # higher because flak vest
     drawingRoutine: 0
-    size: 0.2
+#    size: 0.2 # FIXME this value is not supported
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP
@@ -3235,7 +3284,6 @@ armors:
       - 1.0 #IMPACT
       - 1.0 #MELTA
     units:
-      - STR_GUARDSM
       - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
     stats:
       tu: 5
@@ -3258,12 +3306,12 @@ armors:
     sideArmor: 30 #Medic heavy flak
     rearArmor: 20 #Medic a bit heavier
     underArmor: 25 #medic
-    weight: 15 #heavier
+    weight: 5 #heavier
     customArmorPreviewIndex: 902
     stats:
-      tu: 0 #heavy
-      stamina: 0 #heavy
-      bravery: 10 #always multiples of 10
+      tu: -5 #heavy
+      stamina: -10 #heavy
+      reactions: -10 #heavy
     specialWeapon: STR_GUARD_MEDI_KIT
     builtInWeapons:
       - INV_NULL_MEDI_KIT
@@ -3283,7 +3331,6 @@ armors:
     specialWeapon: STR_AIRSTRIKE_VOX_SPECIAL
     builtInWeapons:
       - INV_NULL_AIRSTRIKE_VOX_DUMMY
-    storeItem: STR_AIRSTRIKE_VOX
     units:
       - STR_GUARDSM
       - STR_GUARDSL #Steel Legion Soldier Type for their own strategy
@@ -3360,7 +3407,7 @@ armors:
     underArmor: 60
     drawingRoutine: 0
     weight: 15
-    size: 0.4
+#    size: 0.4 # FIXME this value is not supported
     damageModifier: #GUARD ARMOR
       - 1.0 #none
       - 1.0 #AP

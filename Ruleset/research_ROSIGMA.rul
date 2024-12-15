@@ -43,6 +43,11 @@ research:
     points: 50
     needItem: true
 
+#to get rid of chaos cult getting the chaos stuff of other faction
+  - name: STR_NOTCHAOSCULT
+    dependencies:
+      - STR_GENERALLOCK
+
   ## OXCE_40k
   - name: STR_IMPERIAL_GUARD_MISSIONS
     cost: 50
@@ -147,7 +152,7 @@ research:
     cutscene: c3
     points: 60
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
@@ -361,7 +366,7 @@ research:
     points: 30
     dependencies:
       - STR_MIDTIER_PREREQ
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_MANTICORE_REQUISITION
       - STR_ARBITES_BUST
     unlocks:
@@ -566,6 +571,8 @@ research:
       - STR_CHAMBERMILITANT
     getOneFree: #new
       - STR_CORVUS_RESEARCH
+    unlocks:
+      - STR_REEDUCATION_RESEARCH
     spawnedEvent: STR_REINFORCEMENTS_RADICAL_EVENT
     disables:
       - STR_GREYKNIGHTS
@@ -574,9 +581,8 @@ research:
   - name: STR_HERETICAL_INQUISITOR_STRATEGY
     cost: 100
     points: -1000
-    getOneFree: # Now gives the prerequisites to enter the generic chaos path immediately which meets the needs of the former method
+    unlocks: # Now gives the prerequisites to enter the generic chaos path immediately which meets the needs of the former method
       - STR_ALIEN_ORIGINS
-      - STR_ALIEN_FOOD
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
     reenables:
@@ -887,6 +893,8 @@ research:
   - name: STR_THE_EMPEROR_PROTECTS_RESEARCH #The Emperor Protects (Beginner Mode Options)
     cost: 10
     points: 100
+    dependencies:
+      - STR_NOTCHAOSCULT
 
   - name: STR_THE_EMPEROR_PROTECTS_ARBITES_SUPPORT_RESEARCH #"Request Additional Arbites Support"
     cost: 10
@@ -1063,14 +1071,14 @@ research:
   #---MISSIONS------------------------------------------------------
   #---CHAOS-----------------------------------------------------
   - name: STR_ALIENS_ONLY # Serves as the lock for chaos items
-    cost: 1000
-    points: -2000
+    cost: 0
     dependencies:
       - STR_GENERALLOCK # Given by STR_CHAOS_PATH
     disables:
       - STR_CHAPTER_PURITY
       - STR_PSI_LAB
       - STR_LIBRARY
+      - STR_IMPERIAL_WEAPONS
 
   - name: STR_ALIEN_ORIGINS # Warp Origins
     cost: 500
@@ -1081,13 +1089,14 @@ research:
   - delete: STR_CHAOS_PATH
   - name: STR_CHAOS_PATH # This is the entry point into the generic chaos path
     cost: 1000
-    points: -1000
+    points: -2000
     dependencies:
       - STR_GUARD_AND_ARBITES # This doesnt lock other factions out, they get their own entry points that gives this along with other bonuses
       - STR_ALIEN_ORIGINS
-      - STR_ALIEN_FOOD
-    getOneFree:
+    unlocks:
       - STR_ALIENS_ONLY
+    disables:
+      - STR_PSYKER_REQUISITION
 
   - name: STR_ADEPTAS_CHAOS_PATH # Adeptas entry in to the generic chaos path.
     cost: 150
@@ -1095,12 +1104,11 @@ research:
     dependencies:
       - STR_ADEPTAS
       - STR_ALIEN_ORIGINS
-      - STR_ALIEN_FOOD
     unlocks:
+      - STR_CONTACT_CHAOS_SISTERS
       - STR_CHAOS_ADEPTAS_HIRE_RESEARCH
       - STR_CONVERT_TO_CHAOS_RESEARCH
     getOneFree:
-      - STR_CONTACT_CHAOS_SISTERS
       - STR_CHAOS_PATH
 
   - name: STR_CHAMBER_CHAOS_PATH # Heretical Inquisitior's entry into the generic chaos path.
@@ -1118,12 +1126,11 @@ research:
     dependencies:
       - STR_MARINES_STRATEGY
       - STR_ALIEN_ORIGINS
-      - STR_ALIEN_FOOD
     unlocks:
+      - STR_CONTACT_CHAOS_MARINES
       - STR_CHAOS_MARINE_HIRE_RESEARCH
       - STR_CONVERT_TO_CHAOS_RESEARCH
     getOneFree:
-      - STR_CONTACT_CHAOS_MARINES
       - STR_CHAOS_PATH
 
   - name: STR_CONTACT_CHAOS_SISTERS # Was STR_ALIENS_ONLY2
@@ -1131,6 +1138,7 @@ research:
     points: -1500
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
     spawnedEvent: STR_HERETIC_SISTER_ADVISOR
@@ -1148,6 +1156,7 @@ research:
     points: 0
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
       - STR_MIDTIER_PREREQ
     spawnedEvent: STR_CHAOS_MARINE_ADVISOR
 
@@ -1164,12 +1173,13 @@ research:
     points: 0
     dependencies:
       - STR_GENERALLOCK
-    
+
   - name: STR_CONTACT_IRON_GUARD
     cost: 1200
     points: -500
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     #spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT # todo: create a mission event that then allows the player to progress the iron guard path
 
@@ -1177,7 +1187,7 @@ research:
     cost: 500
     points: 0
     dependencies:
-      - STR_CONTACT_IRON_GUARD  
+      - STR_CONTACT_IRON_GUARD
 
   - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS
     cost: 200 # Increase later when there's a real amount of content in this
@@ -1188,15 +1198,15 @@ research:
     unlocks:
       - STR_CARAPACE_ARMOR_IG
       - STR_CREATE_IRON_MAIDEN_RESEARCH
+      - STR_IRON_SERVITOR_TECHNOLOGY
     getOneFree:
       - STR_IRON_GUARD_LOWTIER_REQUISITIONS
-      - STR_IRON_SERVITOR_TECHNOLOGY
 
   - name: STR_COMBAT_SERVITOR_PROGRAM
     cost: 800
     dependencies:
       - STR_APOC_BAY
-  
+
   - name: STR_IRON_SERVITOR_TECHNOLOGY
     dependencies:
       - STR_GENERALLOCK
@@ -1214,23 +1224,33 @@ research:
       - STR_CHAOS_PATH #new way to get access to this research without being MARINES
     needItem: true
 
+  - name: STR_REEDUCATION_RESEARCH #Allows splitting some chaos recruitment off from Convicnce Chaos to hand it out without duplicates.
+    dependencies:
+      - STR_CONVINCE_CHAOS_RESEARCH
+
   - name: STR_CONVINCE_CHAOS_RESEARCH
     cost: 500
     points: -100
     dependencies:
       - STR_CHAOS_PATH
+    unlocks:
+      - STR_REEDUCATION_RESEARCH
 
   - name: STR_CONVERT_TO_CHAOS_RESEARCH
     cost: 500
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_NURGLE_OPTIONS
     cost: 500
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
+    getOneFree:
+      - STR_SMALL_LAUNCHER #Nurgle Gravgun specialty
 
   - name: STR_NURGLE_PATH
     cost: 1000
@@ -1247,6 +1267,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_TZEENTCH_PATH
     cost: 1000
@@ -1263,6 +1284,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_KHORNE_PATH
     cost: 1000
@@ -1279,6 +1301,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_NOTCHAOSCULT
 
   - name: STR_SLAANESH_PATH
     cost: 1000
@@ -1319,17 +1342,7 @@ research:
 
   - name: STR_ALPHA_LEGION_INTERROGATION
     dependencies:
-      - STR_ALPHA_DAEMONETTE
-      - STR_ALPHA_GREYKNIGHT
-      - STR_ALPHA_ELOHIM
-      - STR_ALPHA_SARGE_ULTRA
-      - STR_ALPHA_DEV_ULTRA
-      - STR_ALPHA_SCOUT_ULTRA
-      - STR_ALPHA_SOLDIER_ULTRA
-      - STR_ALPHA_SOLDIER_CORVUS
-      - STR_ALPHA_SOLDIER
-      - STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
-      - STR_ALPHA_SOLDIER_INFILTRATOR
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_LEGION_PURGE #Ends the Alpha Legion infiltration event
     dependencies:
@@ -2185,6 +2198,11 @@ research:
   - name: STR_GENERALLOCK
     needItem: true
 
+#to get rid of being able to buy unit before even choosing a strategy
+  - name: STR_CHAPTER_PURITY #CHAOS PATH
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_IMPERIUM_RESEARCH
     dependencies:
       - STR_MARINES_STRATEGY
@@ -2192,6 +2210,8 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ARBITES
       - STR_ADEPTAS
+
+  - name: STR_IMPERIAL_WEAPONS #Access to Imperial Weaponry, disabled by Chaos Path/Unholy Wartools
 
   - name: STR_READCODEX_RESEARCH
     dependencies:
@@ -2207,7 +2227,6 @@ research:
   - name: STR_GAME_START
     unlockFinalMission: true
 
-  - name: STR_CHAPTER_PURITY #CHAOS PATH
 
   - name: STR_NOT_ARBITES
     refNode: *STR_LOCKED
@@ -2279,13 +2298,30 @@ research:
       - STR_BASIC_SENTINEL_MISSILE
       - STR_PILOT_GUARDSMEN
       - STR_IMPERIUM_RESEARCH
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_CHAOS_STRATEGY_ARBITES
     disables:
+      - STR_CHAPTER_PURITY
       - STR_CYDONIA_OR_BUST
       - STR_MARINES_STRATEGY
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
       - STR_GUARD_SUPORT
+
+#added new arbites research used as a way to prevent arbites joining if you go chaos
+  - name: STR_THE_IMPERIAL_LAW_STRATEGY
+    cost: 5
+    points: 0
+    reenables:
+      - STR_CHAPTER_PURITY
+    dependencies:
+      - STR_ARBITES
+    unlocks:
+      - STR_CHAPTER_PURITY
+      - STR_NOTCHAOSCULT
+    disables:
+      - STR_CHAOS_STRATEGY_ARBITES
 
   - name: STR_ADEPTAS_MIDTIER #mid tier #cutcscene c2
     cost: 200
@@ -2313,7 +2349,7 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_MOTION_SCANNER
       - STR_INTERROGATION_COMPLETED
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_AIRSTRIKE_REQUISITION
@@ -2473,7 +2509,8 @@ research:
     unlocks:
       - STR_HIGHTIER_PREREQ
 
-  - name: STR_DEFENSE_CORRIDORGK #facility OTHER FACTIONS BLACK
+# DeathWatch uses STR_DEFENSE_CORRIDORBR
+  - name: STR_DEFENSE_CORRIDORGK #facility Grey Knights White
     cost: 100
     points: 15
     dependencies:
@@ -2506,12 +2543,12 @@ research:
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_MARINES_STRATEGY
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
-      - STR_DEFENSE_CORRIDORBR
       - STR_GUARD_SUPORT
 
   ### Marines
@@ -2532,6 +2569,7 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -2690,6 +2728,7 @@ research:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -2715,6 +2754,7 @@ research:
       - STR_GUARD_AND_ARBITES
       # - STR_GUARD_SUPORT
       - STR_IMPERIUM_RESEARCH
+      - STR_NOTCHAOSCULT
     disables:
       - STR_ARBITES
       - STR_ADEPTAS
@@ -2977,6 +3017,7 @@ research:
       - STR_PERSONAL_ARMOR
       - STR_DEATHWATCH
       - STR_CHAOS_PATH
+      - STR_DEFENSE_CORRIDORBR
     spawnedEvent: STR_REINFORCEMENTS_GK
   - name: STR_CHOSEN_GREYKNIGHTS
     dependencies:
@@ -3460,7 +3501,7 @@ research:
     cost: 900
     points: 30
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_HIGHTIER_PREREQ
 
   - name: STR_NEW_TRANSPORT_PD
@@ -3474,13 +3515,13 @@ research:
     points: 75
     dependencies:
       - STR_UFO_CONSTRUCTION
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
 
   - name: STR_VULTURE_ARBITES_REQUISITION
     cost: 200
     points: 50
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_ARBITES_MIDTIER
 
   # Crafts Adeptas
@@ -3652,8 +3693,23 @@ research:
       - STR_UFO_POWER_SOURCE
       - STR_MIDTIER_PREREQ
       - STR_PERSONAL_ARMOR
+      - STR_CHAPTER_PURITY
     unlocks:
       - STR_TERMINATOR_ARMOR_SM_CODEX
+    disables:
+      - STR_POWER_SUIT_CHAOS
+
+  - name: STR_POWER_SUIT_CHAOS
+    cost: 205
+    points: 20
+    dependencies:
+      - STR_ELERIUM_115
+      - STR_UFO_POWER_SOURCE
+      - STR_MIDTIER_PREREQ
+      - STR_PERSONAL_ARMOR
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_POWER_SUIT
 
   - name: STR_FLYING_SUIT # unchanged from XCOM1
     cost: 330
@@ -3669,6 +3725,19 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_THREAT_ONE
       - STR_MARINES_STRATEGY
+      - STR_CHAPTER_PURITY
+    disables:
+      - STR_PERSONAL_ARMOR_CHAOS
+
+  - name: STR_PERSONAL_ARMOR_CHAOS
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_CONTACT_CHAOS_MARINES
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_PERSONAL_ARMOR
 
   - name: STR_DEV_ARMOR
     cost: 180
@@ -3676,6 +3745,19 @@ research:
     dependencies:
       - STR_ALIEN_ALLOYS # necessary because Tactical Strategy unlocks STR_PERSONAL_ARMOR
       - STR_PERSONAL_ARMOR
+      - STR_CHAPTER_PURITY
+    disables:
+      - STR_DEV_ARMOR_CHAOS
+
+  - name: STR_DEV_ARMOR_CHAOS
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_PERSONAL_ARMOR
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_DEV_ARMOR
 
   - name: STR_CHAP_ARMOR
     cost: 300
@@ -3700,6 +3782,20 @@ research:
       - STR_UFO_NAVIGATION
       - STR_MARINES_STRATEGY
       - STR_PERSONAL_ARMOR
+      - STR_CHAPTER_PURITY
+    disables:
+      - STR_CENT_ARMORR_CHAOS
+
+  - name: STR_CENT_ARMORR_CHAOS
+    cost: 330
+    points: 20
+    dependencies:
+      - STR_CYDONIA_OR_BUST
+      - STR_UFO_NAVIGATION
+      - STR_PERSONAL_ARMOR
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_CENT_ARMORR
 
   - name: STR_SARGENT_ARMOR
     cost: 180
@@ -3709,7 +3805,22 @@ research:
       - STR_ASS_ARMOR
       - STR_DEV_ARMOR
       - STR_LEADER_PLUS
+      - STR_CHAPTER_PURITY
       # - STR_BERSERKER_CORPSE
+    disables:
+      - STR_SARGENT_ARMOR_CHAOS
+
+  - name: STR_SARGENT_ARMOR_CHAOS
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_PERSONAL_ARMOR
+      - STR_ASS_ARMOR
+      - STR_DEV_ARMOR
+      - STR_LEADER_PLUS
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_SARGENT_ARMOR
 
   - name: STR_CAPTAIN_SUIT
     cost: 205
@@ -3726,6 +3837,18 @@ research:
       # - STR_FLOATER_SOLDIER
       - STR_PERSONAL_ARMOR
       - STR_ASS_ARMOR_DEP1
+      - STR_CHAPTER_PURITY
+    disables:
+      - STR_ASS_ARMOR_CHAOS
+
+  - name: STR_ASS_ARMOR_CHAOS
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_PERSONAL_ARMOR
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_ASS_ARMOR
 
   - name: STR_ASS_ARMOR_DEP1
     requires:
@@ -3871,7 +3994,7 @@ research:
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_THREAT_ONE
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       # - STR_ENFORCER_ARMOR
 
   # Armors Adeptas
@@ -5119,10 +5242,14 @@ research:
     cost: 500
     points: 25
     needItem: true
+    getOneFree:
+      - STR_SMALL_LAUNCHER
   - name: STR_GRAVCANNON_NURGLE
     cost: 1000
     points: 25
     needItem: true
+    getOneFree:
+      - STR_SMALL_LAUNCHER
   - name: STR_GRAVCANNON_AMMO
     cost: 250
     points: 25
@@ -5133,10 +5260,14 @@ research:
     cost: 300
     points: 25
     needItem: true
+    getOneFree:
+      - STR_SMALL_LAUNCHER
   - name: STR_NURGLE_GRAVPISTOL
     cost: 250
     points: 25
     needItem: true
+    getOneFree:
+      - STR_SMALL_LAUNCHER
 
   - name: STR_NURGLE_NEEDLER_RIFLE
     cost: 250
@@ -5759,6 +5890,681 @@ research:
     needItem: true
     destroyItem: true
 
+# Grouped Live Captives Research
+## Raptors
+  - name: STR_LIVE_CAPTURE_RAPTOR
+    cost: 192
+    points: 50
+    lookup: STR_FLOATER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_ADEPTAS_ARMORS_DEP1
+      - STR_ASS_ARMOR_DEP1
+      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_FLOATER_SOLDIER
+      #- STR_FLOATER_NAVIGATOR
+      #- STR_FLOATER_MEDIC
+      #- STR_FLOATER_ENGINEER
+      - STR_WARPTALON_SOLDIER
+      - STR_NIGHTLORDS_WARPTALON_SOLDIER
+      - STR_NIGHTLORDS_RAPTOR_SOLDIER
+      - STR_NIGHTLORDS_RAPTOR_ENGINEER
+      - STR_NIGHTLORDS_RAPTOR_NAVIGATOR
+      - STR_NIGHTLORDS_RAPTOR_MEDIC
+
+  - name: STR_LIVE_CAPTURE_RAPTOR_LEADER
+    cost: 192
+    points: 50
+    lookup: STR_FLOATER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_ADEPTAS_ARMORS_DEP1
+      - STR_ASS_ARMOR_DEP1
+      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_FLOATER_LEADER
+      - STR_NIGHTLORDS_RAPTOR_LEADER
+
+  - name: STR_LIVE_CAPTURE_RAPTOR_COMMANDER
+    cost: 192
+    points: 50
+    lookup: STR_FLOATER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_ADEPTAS_ARMORS_DEP1
+      - STR_ASS_ARMOR_DEP1
+      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
+      - STR_LEADER_PLUS
+      - STR_COMMANDER_PLUS
+      - STR_ALIEN_ORIGINS
+      - STR_PSI_LAB
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_FLOATER_COMMANDER
+      - STR_WARPTALON_COMMANDER
+      - STR_NIGHTLORDS_WARPTALON_COMMANDER
+      - STR_NIGHTLORDS_RAPTOR_COMMANDER
+
+  - name: STR_LIVE_CAPTURE_SERAPHIM
+    cost: 125
+    points: 50
+    lookup: STR_HERETIC_SISTER_SERAPH
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ADEPTAS_ARMORS_DEP1
+      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
+      - STR_THREAT_ONE
+      - STR_HERETIC_SISTERCELEST
+      - STR_SLAANESH_SISTER_SERAPH
+      - STR_HERETIC_SISTER_SERAPH
+
+## Chaos Assassin
+  - name: STR_LIVE_CAPTURE_CHAOS_ASSASSIN
+    cost: 125
+    points: 50
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_FELINID_ASSASSIN_DEP1
+      - STR_KHORNE_SISTERASS
+      - STR_NURGLE_BLIGHTED
+      - STR_SLAANESH_CHOSENASS
+      - STR_SLAANESH_SISDEVOTED
+      - STR_SLAANESH_SISTERASS
+      - STR_TZEENTCH_SISTERASS
+
+## Chaos Beastmen
+  - name: STR_LIVE_CAPTURE_CHAOS_BEASTMAN
+    cost: 75
+    points: 25
+    lookup: STR_KHORNE_GOR
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_TZAANGOR
+      #- STR_KHORNE_UNGOR #No Research
+      - STR_KHORNE_GOR
+      - STR_SLAANGOR_FIENDGOR
+      - STR_SLAANGOR_BULLGOR
+      - STR_SLAANGOR_GOR
+      - STR_SLAANGOR_UNGOR
+      - STR_SLAANGOR_BRAYGOR
+      #- STR_SLAANGOR_TERRORIST #Unit unused/unfinished
+
+## Chaos Cultists
+  - name: STR_LIVE_CAPTURE_CULTIST
+    cost: 100
+    points: 25
+    lookup: STR_NURGLE_CULTIST
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_TZEENTCH_FEM_CULTIST
+      #- STR_TZEENTCH_ZEALOT_THRALL #No Research
+      - STR_NURGLE_CIV_CULTIST_GREENROBE
+      - STR_NURGLE_CIV_CULTIST_BLESSED
+      - STR_NURGLE_CIV_CULTIST_BLESSED2
+      - STR_NURGLE_CULTIST_LIGHT
+      - STR_NURGLE_CULTIST
+      - STR_NURGLE_CULTIST_FEM
+      - STR_NURGLE_CULTIST_HEAVY
+      - STR_SECTOID_ASPIRING_CHAMPION
+      - STR_SECTOID_FEMCULTIST
+      - STR_SECTOID_DARK_DISCIPLE_DAEMONETTE
+      - STR_SECTOID_DARK_DISCIPLE_NEVERBORN
+      - STR_TZCULTIST_THRALL
+
+  - name: STR_LIVE_CAPTURE_CULTIST_LEADER
+    cost: 100
+    points: 30
+    lookup: STR_NURGLE_CULTIST
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+      - STR_NURGLE_CULTIST_LEADER
+      - STR_NURGLE_CULTIST_LEADER_RITUALIST
+
+  - name: STR_LIVE_CAPTURE_WITCH
+    cost: 125
+    points: 50
+    lookup: STR_TZEENTCH_CULT_WITCH
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+      - STR_TZEENTCH_CULT_WITCH
+      - STR_TZEENTCH_CULT_POSSESSED
+      - STR_SLAANESH_DEMIMONDE
+      - STR_TZEENTCH_ACOLYTE
+    getOneFree:
+      - STR_TZEENTCH_ACOLYTE_FLAMER
+
+  - name: STR_LIVE_CAPTURE_WITCH_LEADER
+    cost: 192
+    points: 75
+    lookup: STR_TZEENTCH_CULT_SUMMONER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+      - STR_TZEENTCH_CULT_SUMMONER
+      - STR_TZEENTCH_CULT_LEADER
+      - STR_TZEENTCH_CULT_LEADER_ASSASSIN
+      - STR_TZEENTCH_CULT_LEADER_SPAWN
+
+## Chaos Sisters
+  - name: STR_LIVE_CAPTURE_CHAOS_SISTER
+    cost: 75
+    points: 50
+    lookup: STR_HERETIC_SISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_HERETIC_SISTER
+      - STR_HERETIC_SISTERPALATINE
+      - STR_HERETIC_ELITE_SISTER
+      - STR_HERETIC_SISTERHOSPITALLER
+
+  - name: STR_LIVE_CAPTURE_CHAOS_SUPERIOR
+    cost: 150
+    points: 75
+    lookup: STR_HERETIC_SISTERCANONESS
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_THREAT_ONE
+      - STR_HERETIC_SISTERCANONESS
+
+## Khorne Sisters
+  - name: STR_LIVE_CAPTURE_KHORNE_SISTER
+    cost: 75
+    points: 50
+    lookup: STR_KHORNE_ROOKIESISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_KHORNE_ROOKIESISTER
+      - STR_KHORNE_SISTERREPENT
+      #- STR_KHORNE_SISTER # No Research
+      - STR_KHORNE_SISREPENTINFERIOR
+      - STR_KHORNE_ARMSISTER_BLESSED_TRUE
+      - STR_KHORNE_ARMSISTER_BLESSED_FALSE
+      - STR_KHORNE_RETRIBUTOR
+      - STR_KHORNE_ARMSISTER
+      - STR_REPENTIA_SUPERIOR
+      - STR_KHORNE_DEMIBLOODLETTERIN
+      - STR_KHORNE_DEMIBLOODLETTERIN_SPAWNED
+      - STR_KHORNE_DEMIBLOODLETTERIN_RETRIBUTOR
+      - STR_KHORNE_DEMIBLOODLETTERIN_RETRIBUTOR_SPAWNED
+
+  - name: STR_LIVE_CAPTURE_KHORNE_SUPERIOR
+    cost: 150
+    points: 75
+    lookup: STR_KHORNE_RETRIBUTOR_SUPERIOR
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_THREAT_ONE
+      - STR_KHORNE_RETRIBUTOR_SUPERIOR
+      - STR_KHORNE_DEMIBLOODLETTERIN_SUPERIOR
+      - STR_KHORNE_DEMIBLOODLETTERIN_SUPERIOR_SPAWNED
+
+## Nurgle sisters
+  - name: STR_LIVE_CAPTURE_NURGLE_SISTER
+    cost: 75
+    points: 50
+    lookup: STR_FILTHY_SISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      #- STR_NURGLE_SISTER # No Research
+      - STR_FILTHY_SISTER
+      - STR_NURGLE_SISTERBLESSED
+      - STR_NURGLE_SISTERBLESSED_MIDWIFE
+      - STR_NURGLE_SISTERBLESSED_NURGLING
+      - STR_SECONDBORN_SISTER
+      - STR_NURGLE_REBORNSISTER
+      #- STR_NURGLE_SISTERHOSPITALLER
+
+#  - name: STR_LIVE_CAPTURE_NURGLE_SUPERIOR
+#    cost: 150
+#    points: 75
+#    needItem: true
+#    destroyItem: true
+#    unlocks:
+#      - STR_INTERROGATION_COMPLETED
+#      - STR_LEADER_PLUS
+#      - STR_THREAT_ONE
+
+## Slaanesh Sisters
+  - name: STR_LIVE_CAPTURE_SLAANESH_SISTER
+    cost: 75
+    points: 50
+    lookup: STR_FALLEN_SISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_SLAANESH_CANTUS
+      - STR_SLAANESH_NOVICE
+      #- STR_SLAANESH_SISTER # No Research
+      - STR_SLAANESH_SISTER_BLESSED_TRUE
+      - STR_SLAANESH_SISTER_BLESSED_FALSE
+      - STR_SLAANESH_FBLESSED
+      - STR_SLAANESH_FBLESSED_FALSE
+      - STR_DEMI_DAEMONETTE
+      - STR_DEMI_DAEMONETTE_FALSE
+      - STR_SLAANESH_SISTERPALATINE
+      - STR_SLAANESH_SISTERDOM
+      - STR_SLAANESH_PURPLESISTER
+      - STR_FALLEN_SISTER
+      - STR_FALLEN_SISTERDAEMONETTE
+      - STR_HERETIC_SISTER_SBLESSED
+      - STR_HERETIC_SISTER_SBLESSED_LIE
+
+  - name: STR_LIVE_CAPTURE_SLAANESH_SUPERIOR
+    cost: 150
+    points: 75
+    lookup: STR_SLAANESH_SISTERDOM
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_THREAT_ONE
+      - STR_SLAANESH_SISTERDOM_SUPERIOR
+
+## Tzeentch Sisters
+#  - name: STR_LIVE_CAPTURE_TZEENTCH_SISTER
+#    cost: 75
+#    points: 50
+#    needItem: true
+#    destroyItem: true
+#    unlocks:
+#      - STR_INTERROGATION_COMPLETED
+#      - STR_THREAT_ONE
+#      #- STR_TZEENTCH_SISTER # No Research
+#      #- STR_TZEENTCH_TWISTED_SISTER # No Research
+#      #- STR_TZEENTCH_DREBORN # No Research
+
+#  - name: STR_LIVE_CAPTURE_TZEENTCH_SUPERIOR
+#    cost: 150
+#    points: 75
+#    needItem: true
+#    destroyItem: true
+#    unlocks:
+#      - STR_INTERROGATION_COMPLETED
+#      - STR_LEADER_PLUS
+#      - STR_THREAT_ONE
+
+## Night Sisters
+  - name: STR_LIVE_CAPTURE_NIGHT_SISTER
+    cost: 75
+    points: 50
+    lookup: STR_NIGHT_LORDS_SISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_NIGHT_LORDS_SISTER
+      - STR_NIGHT_LORDS_SISTER_SNIPER
+
+  - name: STR_LIVE_CAPTURE_NIGHT_SISTER_SUPERIOR
+    cost: 150
+    points: 75
+    lookup: STR_NIGHT_LORDS_SISTER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_THREAT_ONE
+      - STR_NIGHT_LORDS_SISTER_SUPERIOR
+
+## Chaos Marines
+  - name: STR_LIVE_CAPTURE_CHAOS_MARINE
+    cost: 192
+    points: 50
+    lookup: STR_ETHEREAL
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_ETHEREAL_SOLDIER
+      - STR_HAVOC
+      - STR_ETHEREAL_SOLDIER_NW
+      - STR_BLACK_LEGION_CSM_SOLDIER
+    getOneFree:
+      - STR_ETHEREAL_NAVIGATOR
+
+  - name: STR_ETHEREAL_SOLDIER_NW
+    cost: 0
+    points: 0
+    needItem: false
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_MARINE
+
+## Khorne Marines
+  - name: STR_LIVE_CAPTURE_KHORNE_MARINE
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_KHRONE_TERRORIST
+
+  - name: STR_KHRONE_TERRORIST
+    cost: 0
+    points: 0
+    needItem: false
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_MARINE
+
+## Nurgle Marines
+  - name: STR_LIVE_CAPTURE_NURGLE_MARINE
+    cost: 192
+    points: 50
+    lookup: STR_NURGLE_SOLDIER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_NURGLE_SOLDIER
+      #- STR_HAVOC_NURGLE # No Research
+      - STR_NURGLE_SOLDIER_BLESSED
+      - STR_DEATHGUARD_SPEWER
+
+  - name: STR_NURGLE_SOLDIER
+    cost: 0
+    points: 0
+    needItem: false
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_MARINE
+
+## Slaanesh Marines
+  - name: STR_LIVE_CAPTURE_SLAANESH_MARINE
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_SLAANESH_SOLDIER
+      - STR_SLAANESH_MBLESSED
+      #- STR_HAVOC_SLAANESH #No Research
+
+## Night Lords (Most are under raptors)
+  - name: STR_LIVE_CAPTURE_NIGHT_MARINE
+    cost: 192
+    points: 50
+    lookup: STR_NIGHTLORDS_CSM_SOLDIER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_NIGHTLORDS_CSM_SOLDIER
+
+## Iron Warrior Marines
+  - name: STR_LIVE_CAPTURE_IRON_MARINE
+    cost: 192
+    points: 50
+    lookup: STR_IRON_WARRIOR
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_THREAT_ONE
+      - STR_IRON_WARRIOR
+      - STR_IRON_WARRIOR_BREACHER
+      - STR_IRON_WARRIOR_HEAVY
+      - STR_IRON_WARRIOR_MEDIC
+      - STR_IRON_BERSERKER
+
+## Alpha Legion
+  - name: STR_LIVE_CAPTURE_ALPHA_MARINE
+    cost: 400
+    points: 100
+    lookup: STR_ALPHA_SOLDIER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_CHAOS_PATH
+      - STR_THREAT_ONE
+      - STR_ALPHA_LEGION_INTERROGATION
+      - STR_ALPHA_SOLDIER
+      - STR_ALPHA_SOLDIER_CORVUS
+      #- STR_ALPHACSM_OFFICER # No Research
+      #- STR_ALPHA_SOLDIER_POSSESSED # No Research
+      #- STR_ALPHA_SOLDIER_CORVUS_POSSESSED # No Research
+      - STR_ALPHA_SOLDIER_INFILTRATOR
+      - STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
+      - STR_ALPHA_SOLDIER_ULTRA
+      - STR_ALPHA_SCOUT_ULTRA
+      - STR_ALPHA_SARGE_ULTRA
+      - STR_ALPHA_DEV_ULTRA
+      - STR_ALPHA_ELOHIM
+      - STR_ALPHA_DAEMONETTE
+      #- STR_ALPHA_DAEMONETTE_RITUALIST # No Research
+      - STR_ALPHA_GREYKNIGHT
+      #- STR_ALPHA_GREYKNIGHT_CATAPHRACT # No Research
+      - STR_SECTOID_DARKDISCIPLE_ALPHA
+      - STR_DARK_APOSTLE_ALPHA
+
+## Traitor Guard
+  - name: STR_LIVE_CAPTURE_TG
+    cost: 192
+    points: 50
+    lookup: STR_SNAKEMAN
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_SNAKEMAN_SOLDIER
+      - STR_SLAANESH_GUARD_M
+      - STR_SLAANESH_GUARD_F
+      - STR_CHAOS_PENETANTE
+      - STR_CHAOS_PENETANTE_LEEROY
+      - STR_DESERTER_SOLDIER
+      - STR_DESERTER_GREEN_FLAK
+      - STR_DESERTER_GREEN_SHIRT
+      - STR_TZEENTCH_TRAITORGUARD_BASIC
+
+  - name: STR_LIVE_CAPTURE_TG_SCOUT
+    cost: 192
+    points: 50
+    lookup: STR_DESERTER_SCOUT_FEMALE
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_ALIEN_ORIGINS
+      - STR_TZEENTCH_TRAITORGUARD_SCOUT
+      - STR_DESERTER_SCOUT_FEMALE
+      - STR_TZEENTCH_TRAITORGUARD_COMMANDO
+
+  - name: STR_LIVE_CAPTURE_TG_OGRYN
+    cost: 100
+    points: 50
+    lookup: STR_TRAITORGUARD_OGRYN
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_THREAT_ONE
+      - STR_INTERROGATION_COMPLETED
+      - STR_TRAITORGUARD_OGRYN
+      - STR_TRAITORGUARD_OGRYN_REDBLACK
+      - STR_NURGLE_OGRYN
+
+  - name: STR_LIVE_CAPTURE_TG_PSYKER
+    cost: 150
+    points: 100
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_LEADER_PLUS
+      - STR_INTERROGATION_COMPLETED
+      - STR_PSI_LAB
+      - STR_THREAT_ONE
+      - STR_DESERTER_PSYKER
+
+  - name: STR_LIVE_CAPTURE_TG_SQUAT
+    cost: 150
+    points: 40
+    lookup: STR_TRAITOR_SQUATS
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_TRAITOR_SQUATS
+      - STR_TRAITOR_SQUATS_HEAVY
+      - STR_CHAOS_SQUATS
+      - STR_CHAOS_SQUATS_RANGER
+      - STR_CHAOS_SQUATS_HEAVY
+      - STR_CHAOS_SQUATS_EXO
+      - STR_CHAOS_SQUATS_LEADER
+      - STR_CULTIST_SQUATS_LEADER
+      - STR_CULTIST_SQUATS
+      - STR_CULTIST_SQUAT_HEAVY
+
+  - name: STR_LIVE_CAPTURE_TG_CATACHAN
+    cost: 100
+    points: 50
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_CATACHAN_FIGHTER_TRAITOR
+      - STR_CATACHAN_FIGHTER_TRAITOR2
+      - STR_CATACHAN_FIGHTER_TRAITOR3
+      - STR_CATACHAN_FIGHTER_TRAITOR4
+      - STR_CATACHAN_FIGHTER_TRAITOR5
+      - STR_CATACHAN_FIGHTER_TRAITOR6
+
+  - name: STR_LIVE_CAPTURE_TG_CATACHAN_VETERAN
+    cost: 200
+    points: 100
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_CATACHAN_FIGHTERVET_TRAITOR
+      - STR_CATACHAN_FIGHTERVET_TRAITOR2
+      - STR_CATACHAN_FIGHTERVET_TRAITOR3
+      - STR_CATACHAN_FIGHTERVET_TRAITOR4
+      - STR_CATACHAN_FIGHTERVET_TRAITOR5
+      - STR_CATACHAN_FIGHTERVET_TRAITOR6
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR2
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR3
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR4
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR5
+      - STR_CATACHAN_FIGHTERTOP_TRAITOR6
+
+  - name: STR_LIVE_CAPTURE_TG_VETERAN
+    cost: 192
+    points: 30
+    lookup: STR_TZEENTCH_TRAITORGUARD_CARAPACE
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_TZEENTCH_TRAITORGUARD_CARAPACE
+      - STR_SLAANESH_GUARD_CARAPACE
+      - STR_SNAKEMAN_ENGINEER
+      - STR_TZEENTCH_TRAITORGUARD_HEAVY
+
+  - name: STR_LIVE_CAPTURE_TG_STORMTROOPER
+    cost: 192
+    points: 50
+    lookup: STR_BLACKSTONE_STORMTROOPER
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_BLACKSTONE_STORMTROOPER
+      #- STR_BLACKSTONE_JUMPTROOPER #Assault Armor Tech
+      - STR_BLACKSTONE_STORMTROOPER_HEAVY
+      - STR_BLACKSTONE_STORMTROOPER_SNIPER
+      - STR_BLACKSTONE_STORMTROOPER_ELITE
+    getOneFree:
+      - STR_LONGLAS_CHAOS
+
+  - name: STR_LIVE_CAPTURE_TG_LEADER
+    cost: 192
+    points: 50
+    lookup: STR_SNAKEMAN
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_LEADER_PLUS
+      - STR_ALIEN_ORIGINS
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+      - STR_TZEENTCH_TRAITORGUARD_OFFICER
+      - STR_SLAANESH_GUARD_OFFICER
+      - STR_SLAANESH_GUARD_COMMISSAR
+      - STR_SNAKEMAN_LEADER
+      - STR_DESERTER_OFFICER
+
   - name: STR_SLAANESH_SONIC_PLATFORM
     cost: 150
     points: 50
@@ -5880,16 +6686,8 @@ research:
       - STR_SNAKEMAN_LEADER
 
   - name: STR_SNAKEMAN_LEADER
-    cost: 192
-    points: 50
-    lookup: STR_SNAKEMAN
-    needItem: true
-    destroyItem: true
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_ALIEN_ORIGINS
-    getOneFree:
-      - STR_SNAKEMAN_MEDIC
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_LEADER
 
   - name: STR_SNAKEMAN_MEDIC
     needItem: true
@@ -5921,13 +6719,8 @@ research:
       - STR_REAPER_CORPSE
 
   - name: STR_SNAKEMAN_SOLDIER
-    cost: 192
-    points: 50
-    lookup: STR_SNAKEMAN
-    needItem: true
-    destroyItem: true
-    unlocks:
-      - STR_ALIEN_ORIGINS
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_ETHEREAL_COMMANDER
     cost: 192
@@ -5993,22 +6786,13 @@ research:
     getOneFree:
       - STR_ETHEREAL_SOLDIER
 
-  - &STR_CHAOS_MARINE
-    name: STR_ETHEREAL_SOLDIER
-    cost: 192
-    points: 50
-    lookup: STR_ETHEREAL
-    needItem: true
-    destroyItem: true
-    unlocks:
-      - STR_ALIEN_ORIGINS
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_ETHEREAL_NAVIGATOR
+  - name: STR_ETHEREAL_SOLDIER
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_MARINE
 
   - name: STR_HAVOC
-    refNode: *STR_CHAOS_MARINE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_MARINE
 
   - name: STR_MUTON_COMMANDER
     needItem: true
@@ -6065,25 +6849,12 @@ research:
       - STR_MUTON_MEDIC
 
   - name: STR_FLOATER_COMMANDER
-    cost: 192
-    points: 50
-    lookup: STR_FLOATER
-    needItem: true
-    destroyItem: true
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
-      - STR_ALIEN_ORIGINS
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR_COMMANDER
 
   - name: STR_FLOATER_LEADER
-    cost: 192
-    points: 50
-    lookup: STR_FLOATER
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_ALIEN_ORIGINS
-    needItem: true
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR_LEADER
 
   - name: STR_FLOATER_MEDIC
     cost: 192
@@ -6113,13 +6884,8 @@ research:
       - STR_REAPER_CORPSE
 
   - name: STR_FLOATER_SOLDIER
-    cost: 192
-    points: 50
-    lookup: STR_FLOATER
-    needItem: true
-    destroyItem: true
-    unlocks:
-      - STR_ALIEN_ORIGINS
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_CELATID_TERRORIST
     cost: 170
@@ -6328,13 +7094,8 @@ research:
     destroyItem: true
 
   - name: STR_DEATHGUARD_SPEWER
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_MARINE
 
   - name: STR_FLOATER_SOLDIER
     cost: 50
@@ -6388,78 +7149,28 @@ research:
     destroyItem: true
 
   - name: STR_WARPTALON_SOLDIER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_WARPTALON_COMMANDER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
-      - STR_ALIEN_ORIGINS
-      - STR_PSI_LAB
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_FLOATER_COMMANDER
 
   - name: STR_NIGHT_LORDS_SISTER
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHT_LORDS_SISTER_SNIPER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NIGHT_SISTER
 
   - name: STR_NIGHT_LORDS_SISTER_SNIPER
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_LONGLAS_CHAOS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NIGHT_SISTER
 
   - name: STR_NIGHT_LORDS_SISTER_SUPERIOR
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_LEADER_PLUS
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHT_LORDS_SISTER
-      - STR_NIGHT_LORDS_SISTER_SNIPER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NIGHT_SISTER_SUPERIOR
 
   - name: STR_NIGHTLORDS_CSM_SOLDIER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_SOLDIER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NIGHT_MARINE
 
   - name: STR_NIGHTLORDS_CSM_LEADER
     cost: 150
@@ -6474,140 +7185,36 @@ research:
     destroyItem: true
 
   - name: STR_NIGHTLORDS_RAPTOR_SOLDIER
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_NAVIGATOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_NIGHTLORDS_RAPTOR_NAVIGATOR
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_SOLDIER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_NIGHTLORDS_RAPTOR_ENGINEER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_MEDIC
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_NIGHTLORDS_RAPTOR_MEDIC
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_SOLDIER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_NIGHTLORDS_RAPTOR_LEADER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_LEADER_PLUS
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_SOLDIER
-      - STR_NIGHTLORDS_RAPTOR_ENGINEER
-      - STR_NIGHTLORDS_RAPTOR_MEDIC
-      - STR_NIGHTLORDS_RAPTOR_NAVIGATOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR_LEADER
 
   - name: STR_NIGHTLORDS_RAPTOR_COMMANDER
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
-      - STR_ALIEN_ORIGINS
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_LEADER
-      - STR_NIGHTLORDS_RAPTOR_ENGINEER
-      - STR_NIGHTLORDS_RAPTOR_MEDIC
-      - STR_NIGHTLORDS_RAPTOR_NAVIGATOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR_COMMANDER
 
   - name: STR_NIGHTLORDS_WARPTALON_SOLDIER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_WARPTALON_RESEARCH
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_NIGHTLORDS_RAPTOR_SOLDIER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR
 
   - name: STR_NIGHTLORDS_WARPTALON_COMMANDER
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_NIGHTLORDS_WARPTALON_RESEARCH
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
-      - STR_ALIEN_ORIGINS
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_ASS_ARMOR_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_NIGHTLORDS_WARPTALON_SOLDIER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_RAPTOR_COMMANDER
 
   - name: STR_BLACKSTONE_JUMPTROOPER
     cost: 75
@@ -6621,57 +7228,28 @@ research:
     destroyItem: true
 
   - name: STR_SLAANESH_GUARD_M
-    cost: 50
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_SLAANESH_GUARD_F
-    cost: 50
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_SLAANESH_GUARD_CARAPACE
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_VETERAN
 
   - name: STR_SLAANESH_GUARD_OFFICER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_LEADER_PLUS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_LEADER
 
   - name: STR_SLAANESH_GUARD_COMMISSAR
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_LEADER_PLUS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_LEADER
 
   - name: STR_HERETIC_SISTERCANONESS
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_SUPERIOR
 
   - name: STR_HERETIC_SISTERINQ
     cost: 150
@@ -6687,171 +7265,76 @@ research:
     destroyItem: true
 
   - name: STR_HERETIC_SISTERPALATINE
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
 
   - name: STR_HERETIC_ELITE_SISTER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
 
   - name: STR_HERETIC_SISTERHOSPITALLER
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
 
   - name: STR_HERETIC_SISTERCELEST
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SERAPHIM
 
   - name: STR_SLAANESH_SISTER_SERAPH
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SERAPHIM
 
   - name: STR_HERETIC_SISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
 
   - name: STR_HERETIC_SISTER_SBLESSED
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_HERETIC_SISTER_SBLESSED_LIE
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_HERETIC_SISTER_SERAPH
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_ADEPTAS_ARMORS_DEP1
-      - STR_FELINID_JUMP_ARMOR_REQUISITION_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SERAPHIM
 
   - name: STR_NURGLE_SISTERHOSPITALLER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_BLIGHTED
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_SECONDBORN_SISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_FILTHY_SISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_REBORNSISTER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_SISTERBLESSED
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_SISTERBLESSED_MIDWIFE
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_SISTERBLESSED_NURGLING
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
 
   - name: STR_NURGLE_SOLDIER_BLESSED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_NURGLE_MARINE
 
   - name: STR_NURGLE_BLIGHT_HAULER
     cost: 150
@@ -6863,14 +7346,8 @@ research:
     destroyItem: true
 
   - name: STR_TZEENTCH_SISTERASS
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_REPENTIA_SUPERIOR
     cost: 150
@@ -6882,224 +7359,100 @@ research:
     destroyItem: true
 
   - name: STR_KHORNE_SISTERREPENT
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_SISREPENTINFERIOR
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_RETRIBUTOR_SUPERIOR
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SUPERIOR
 
   - name: STR_KHORNE_RETRIBUTOR
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_ARMSISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_ARMSISTER_BLESSED_TRUE
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_ARMSISTER_BLESSED_FALSE
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_ROOKIESISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_SISTERASS
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_FALLEN_SISTER
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_FALLEN_SISTERDAEMONETTE
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_CANTUS
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_NOVICE
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_SISTERPALATINE
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_SISTERDOM_SUPERIOR
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_LEADER_PLUS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SUPERIOR
 
   - name: STR_SLAANESH_SISTERDOM
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_PURPLESISTER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_SISTER_BLESSED_TRUE
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_SISTER_BLESSED_FALSE
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_CHOSENASS
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_SLAANESH_SISTERASS
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_SLAANESH_SISDEVOTED
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_FELINID_ASSASSIN_DEP1
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
 
   - name: STR_SLAANESH_FBLESSED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_FBLESSED_FALSE
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_MBLESSED
     cost: 150
@@ -7111,22 +7464,12 @@ research:
     destroyItem: true
 
   - name: STR_DEMI_DAEMONETTE
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_DEMI_DAEMONETTE_FALSE
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
 
   - name: STR_SLAANESH_CHOSEN
     cost: 192
@@ -7142,58 +7485,28 @@ research:
     destroyItem: true
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN_SPAWNED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN_RETRIBUTOR
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN_RETRIBUTOR_SPAWNED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN_SUPERIOR
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SUPERIOR
 
   - name: STR_KHORNE_DEMIBLOODLETTERIN_SUPERIOR_SPAWNED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_KHORNE_SUPERIOR
 
   #SLAANESH SLAANGOR HEDONITES
   - name: STR_DIRE_DAEMONETTE
@@ -7207,67 +7520,28 @@ research:
     destroyItem: true
 
   - name: STR_SLAANESH_DEMIMONDE
-    cost: 50
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_CHAOS_PATH
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH
 
   - name: STR_SLAANGOR_FIENDGOR
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_CHAOS_PATH
-    getOneFree:
-      - STR_SLAANGOR_BULLGOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_SLAANGOR_BULLGOR
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_SLAANGOR_GOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_SLAANGOR_GOR
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_SLAANGOR_UNGOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_SLAANGOR_UNGOR
-    cost: 75
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_SLAANGOR_BRAYGOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_SLAANGOR_BRAYGOR
-    cost: 50
-    points: 15
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_SLAANESH_ANOINTED
     cost: 192
@@ -7313,7 +7587,6 @@ research:
       - STR_THREAT_ONE
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     getOneFree:
-      - STR_IRON_GUARD_SOLDIER
       - STR_IRON_SERVITOR_TECHNOLOGY
     destroyItem: true
 
@@ -7394,20 +7667,15 @@ research:
       - STR_MASTER_CRAFTING
       - STR_BLASTER_LAUNCHER
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+      - STR_IRON_SERVITOR_TECHNOLOGY
     getOneFree:
       - STR_IRON_GUARD_ENGINEER
-      - STR_IRON_SERVITOR_TECHNOLOGY
     destroyItem: true
 
   #Black Legion
   - name: STR_BLACK_LEGION_CSM_SOLDIER
-    cost: 300
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_MARINE
 
   - name: STR_CHAOS_MARINE_LEADER #Chaos Champion
     cost: 250
@@ -7422,188 +7690,76 @@ research:
 
   #Alpha Legion
   - name: STR_ALPHA_SOLDIER
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SOLDIER_CORVUS
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SOLDIER_INFILTRATOR
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SOLDIER_ULTRA
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SCOUT_ULTRA
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_DEV_ULTRA
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_SARGE_ULTRA
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_ELOHIM
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_GREYKNIGHT
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_ALPHA_DAEMONETTE
-    cost: 400
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_THREAT_ONE
-      - STR_ALPHA_LEGION_INTERROGATION
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_SECTOID_ASPIRING_CHAMPION
-    cost: 200
-    points: 40
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_SECTOID_FEMCULTIST
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_SECTOID_DARKDISCIPLE
-    cost: 125
-    points: 30
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_SECTOID_DARKDISCIPLE_ALPHA
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_SECTOID_DARK_DISCIPLE_DAEMONETTE
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_SECTOID_DARK_DISCIPLE_NEVERBORN
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_DARK_APOSTLE_ALPHA
-    cost: 250
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
 
   - name: STR_NEVERBORN_TERRORIST
     cost: 250
@@ -7616,179 +7772,70 @@ research:
 
   #Khorne Gor Bloodgor
   - name: STR_KHORNEGOR_UNGOR
-    cost: 75
-    points: 20
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_KHORNE_GOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_KHORNE_GOR
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_KHORNEGOR_UNGOR
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   #Chaos Squats Interrogation
   - name: STR_CHAOS_SQUATS
-    cost: 150
-    points: 40
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_CHAOS_SQUATS_RANGER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CHAOS_SQUATS_RANGER
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_CHAOS_SQUATS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CHAOS_SQUATS_HEAVY
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_CHAOS_SQUATS_RANGER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CHAOS_SQUATS_EXO
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_CHAOS_SQUATS_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CHAOS_SQUATS_LEADER
-    cost: 192
-    points: 150
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_CHAOS_SQUATS_EXO
-      - STR_CHAOS_SQUATS_HEAVY
-      - STR_CHAOS_SQUATS_RANGER
-      - STR_CHAOS_SQUATS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_TRAITOR_SQUATS_HEAVY
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_TRAITOR_SQUATS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_TRAITOR_SQUATS
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_TRAITOR_SQUATS_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CULTIST_SQUATS_LEADER
-    cost: 192
-    points: 150
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_CULTIST_SQUAT_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CULTIST_SQUAT_HEAVY
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_CULTIST_SQUATS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   - name: STR_CULTIST_SQUATS
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_CULTIST_SQUAT_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SQUAT
 
   #Blackstone
   - name: STR_BLACKSTONE_STORMTROOPER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_BLACKSTONE_STORMTROOPER_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_STORMTROOPER
 
   - name: STR_BLACKSTONE_STORMTROOPER_HEAVY
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_BLACKSTONE_STORMTROOPER_SNIPER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_STORMTROOPER
 
   - name: STR_BLACKSTONE_STORMTROOPER_SNIPER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_LONGLAS_CHAOS
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_STORMTROOPER
 
   - name: STR_BLACKSTONE_STORMTROOPER_ELITE
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_BLACKSTONE_STORMTROOPER_HEAVY
-      - STR_BLACKSTONE_STORMTROOPER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_STORMTROOPER
 
   #Nurgling
   - name: STR_NURGLINGS
@@ -7872,15 +7919,8 @@ research:
     destroyItem: true
 
   - name: STR_TZAANGOR
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_BLUE_HORROR_TERRORIST
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
 
   - name: STR_TZEENTCH_WARP_THRALL
     cost: 100
@@ -7905,24 +7945,12 @@ research:
     destroyItem: true
 
   - name: STR_TZEENTCH_FEM_CULTIST
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_TZCULTIST_THRALL
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_TZCULTIST_THRALL
-    cost: 100
-    points: 30
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_TZEENTCH_FEM_CULTIST
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_TZEENTCH_LESSER_DAEMON
     cost: 150
@@ -7936,15 +7964,8 @@ research:
     destroyItem: true
 
   - name: STR_TZEENTCH_ACOLYTE
-    cost: 125
-    points: 40
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_ACOLYTE_FLAMER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH
 
   - name: STR_TZEENTCH_ACOLYTE_FLAMER
     cost: 125
@@ -7957,79 +7978,28 @@ research:
     destroyItem: true
 
   - name: STR_TZEENTCH_CULT_WITCH
-    cost: 125
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH
 
   - name: STR_TZEENTCH_CULT_LEADER
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER_ASSASSIN
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH_LEADER
 
   - name: STR_TZEENTCH_CULT_LEADER_ASSASSIN
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH_LEADER
 
   - name: STR_TZEENTCH_CULT_LEADER_SPAWN
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH_LEADER
 
   - name: STR_TZEENTCH_CULT_POSSESSED
-    cost: 150
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH
 
   - name: STR_TZEENTCH_CULT_SUMMONER
-    cost: 192
-    points: 75
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_LEADER_PLUS
-      - STR_ALIEN_ORIGINS
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_TZEENTCH_CULT_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_WITCH_LEADER
 
   #Tzeentch traitor guard research
   - name: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA
@@ -8049,59 +8019,28 @@ research:
     destroyItem: true
 
   - name: STR_TZEENTCH_TRAITORGUARD_BASIC
-    cost: 192
-    points: 20
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_TZEENTCH_TRAITORGUARD_HEAVY
-    cost: 192
-    points: 20
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_VETERAN
 
   - name: STR_TZEENTCH_TRAITORGUARD_SCOUT
-    cost: 192
-    points: 30
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_ASS_ARMOR_DEP1
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SCOUT
 
   - name: STR_TZEENTCH_TRAITORGUARD_COMMANDO
-    cost: 192
-    points: 30
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_ASS_ARMOR_DEP1
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SCOUT
 
   - name: STR_TZEENTCH_TRAITORGUARD_CARAPACE
-    cost: 192
-    points: 30
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_VETERAN
 
   - name: STR_TZEENTCH_TRAITORGUARD_OFFICER
-    cost: 192
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_PSI_LAB
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_LEADER
 
   - name: STR_CLOAKED_WOMAN
     cost: 25
@@ -8122,57 +8061,28 @@ research:
     destroyItem: true
 
   - name: STR_DESERTER_SCOUT_FEMALE
-    cost: 75
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_SCOUT
 
   - name: STR_DESERTER_SOLDIER
-    cost: 192
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_DESERTER_GREEN_FLAK
-    cost: 75
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_DESERTER_GREEN_SHIRT
-    cost: 75
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_DESERTER_OFFICER
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_LEADER
 
-  - name: STR_DESERTER_PYSKER
-    cost: 150
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_LEADER_PLUS
-      - STR_INTERROGATION_COMPLETED
-      - STR_PSI_LAB
-      - STR_THREAT_ONE
-    destroyItem: true
+  - name: STR_DESERTER_PSYKER
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_PSYKER
 
   - name: STR_TRAITORGUARD_BATTLE_SERVITOR_HB
     cost: 100
@@ -8191,21 +8101,12 @@ research:
     destroyItem: true
 
   - name: STR_TRAITORGUARD_OGRYN
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_OGRYN
 
   - name: STR_TRAITORGUARD_OGRYN_REDBLACK
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_THREAT_ONE
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_OGRYN
 
   - name: STR_NURGLE
     points: 50
@@ -8271,26 +8172,12 @@ research:
     destroyItem: true
 
   - name: STR_CHAOS_PENETANTE
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_CHAOS_PENETANTE_LEEROY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_CHAOS_PENETANTE_LEEROY
-    cost: 50
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_CHAOS_PENETANTE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG
 
   - name: STR_IRON_GUARD_SOLDIER
     cost: 100
@@ -8367,9 +8254,8 @@ research:
     lookup: STR_SECTOID
 
   - name: STR_SNAKEMAN_ENGINEER
-    refNode: *STR_ENGINEER
-    lookup: STR_SNAKEMAN
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_VETERAN
 
   - name: STR_MUTON_ENGINEER
     refNode: *STR_ENGINEER
@@ -9363,10 +9249,8 @@ research:
     destroyItem: true
 
   - name: STR_HERETIC_SISTERCELEST
-    unlocks:
-      - STR_LEADER_PLUS
-    needItem: true
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_SERAPHIM
 
   - name: STR_NURGLE_SISTERHOSPITALLER
     unlocks:
@@ -9376,20 +9260,14 @@ research:
     destroyItem: true
 
   - name: STR_NURGLE_CIV_CULTIST_GREENROBE
-    cost: 25
-    points: 10
-    needItem: true
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
   - name: STR_NURGLE_CIV_CULTIST_BLESSED
-    cost: 25
-    points: 10
-    needItem: true
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
   - name: STR_NURGLE_CIV_CULTIST_BLESSED2
-    cost: 25
-    points: 10
-    needItem: true
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_NURGLE_CHAMP # NURGLE
     cost: 192
@@ -9468,90 +9346,42 @@ research:
       - STR_CELATID_TERRORIST
     destroyItem: true
 
-  - name: STR_NURGLE_CULTIST_LIGHT
+  - name: STR_LESSER_ROTFLY
     cost: 50
     points: 25
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_NURGLE_CULTIST
+      - STR_THREAT_ONE
     destroyItem: true
+
+  - name: STR_NURGLE_CULTIST_LIGHT
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_NURGLE_CULTIST
-    cost: 50
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_NURGLE_CULTIST_LIGHT
-      - STR_NURGLE_CULTIST_FEM
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_NURGLE_CULTIST_FEM
-    cost: 50
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    getOneFree:
-      - STR_NURGLE_CULTIST
-      - STR_NURGLE_CULTIST_LIGHT
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_NURGLE_CULTIST_HEAVY
-    cost: 75
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NURGLE_CULTIST
-      - STR_NURGLE_CULTIST_FEM
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - name: STR_NURGLE_OGRYN
-    cost: 75
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    getOneFree:
-      - STR_NURGLE_CULTIST_HEAVY
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_OGRYN
 
   - name: STR_NURGLE_CULTIST_LEADER
-    cost: 100
-    points: 25
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_LEADER_PLUS
-      - STR_THREAT_ONE
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_NURGLE_CULTIST_HEAVY
-      - STR_NURGLE_OGRYN
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST_LEADER
 
   - name: STR_NURGLE_CULTIST_LEADER_RITUALIST
-    cost: 75
-    points: 20
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-      - STR_ALIEN_ORIGINS
-      - STR_LEADER_PLUS
-      - STR_CHAOS_PATH
-      - STR_PSI_LAB
-    getOneFree:
-      - STR_NURGLE_CULTIST_LEADER
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_CULTIST_LEADER
 
   # Captives Eldar
   ##########################################
@@ -9889,6 +9719,9 @@ research:
   - name: STR_NURGLE_ROTBEARER_CORPSE
     refNode: *STR_CORPSE_BASIC
 
+  - name: STR_LESSER_ROTFLY_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
   - name: STR_NURGLE_CULTIST_CORPSE
     refNode: *STR_CORPSE_BASIC
 
@@ -9995,7 +9828,6 @@ research:
 
   - name: STR_NECRON_FLAYED_ONE_CORPSE
     refNode: *STR_CORPSE_BASIC
-
 
   - name: STR_DESTROYER_CORPSE
     refNode: *STR_CORPSE_BASIC
@@ -10272,6 +10104,18 @@ research:
 
   - name: STR_GSC_KELER_CORPSE #GENE CULT
     refNode: *STR_CORPSE_BASIC
+
+  # Corpses Tyranid
+  ##########################################
+  # Section: Corpses
+  # Faction: Tyranid
+  ##########################################
+  - name: STR_TERMAGANT_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_TYRANID_WARRIOR_CORPSE
+    refNode: *STR_CORPSE_BASIC
+
 
   # Corpses Eldar
   ##########################################
@@ -10551,7 +10395,7 @@ research:
     cost: 100
     points: 100
     dependencies:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_LOCKER_VAULT_RESEARCH
     neededItem: STR_WARPED_HULK_LOOT
     destroyItem: false
@@ -10597,12 +10441,17 @@ research:
     cost: 50
     points: 10
     dependencies:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_CHAPTER_PURITY
       - STR_CATACHAN_GENLOCK
 
   - name: STR_CATACHAN_REQ
     cost: 70
     points: 10
     dependencies:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_CHAPTER_PURITY
       - STR_CATACHAN_GEN
 
 #marbostory
@@ -10666,12 +10515,8 @@ research:
 
   - &STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
     name: STR_CATACHAN_FIGHTER_TRAITOR
-    cost: 100
-    points: 50
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_CATACHAN
 
   - name: STR_CATACHAN_FIGHTER_TRAITOR2
     refNode: *STR_CATACHAN_FIGHTER_TRAITOR_INTERROGATION_TEMPLATE
@@ -10690,13 +10535,8 @@ research:
 
   - &STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
     name: STR_CATACHAN_FIGHTERVET_TRAITOR
-    cost: 200
-    points: 100
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_CATACHAN_VETERAN
 
   - name: STR_CATACHAN_FIGHTERVET_TRAITOR2
     refNode: *STR_CATACHAN_FIGHTERVET_TRAITOR_INTERROGATION_TEMPLATE
@@ -10715,13 +10555,8 @@ research:
 
   - &STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
     name: STR_CATACHAN_FIGHTERTOP_TRAITOR
-    cost: 250
-    points: 150
-    needItem: true
-    unlocks:
-      - STR_INTERROGATION_COMPLETED
-      - STR_THREAT_ONE
-    destroyItem: true
+    dependencies:
+      - STR_LIVE_CAPTURE_TG_CATACHAN_VETERAN
 
   - name: STR_CATACHAN_FIGHTERTOP_TRAITOR2
     refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
@@ -10737,3 +10572,605 @@ research:
 
   - name: STR_CATACHAN_FIGHTERTOP_TRAITOR6
     refNode: *STR_CATACHAN_FIGHTERTOP_TRAITOR_INTERROGATION_TEMPLATE
+
+#chaos cultists
+
+  - name: STR_CHAOSCULT_SOLDIERM_LV1_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_SOLDIERF_LV1_AI
+    lookup: STR_CHAOSCULT_SOLDIERM_LV1_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_SOLDIERM_LV2_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_SOLDIERF_LV2_AI
+    lookup: STR_CHAOSCULT_SOLDIERM_LV2_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PILOTM_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PILOTF_AI
+    lookup: STR_CHAOSCULT_PILOTM_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTM_LV1_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTM_LV2_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTF_LV1_AI
+    lookup: STR_CHAOSCULT_PRIESTM_LV1_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTF_LV2_AI
+    lookup: STR_CHAOSCULT_PRIESTM_LV2_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_OGRYN_AI
+    cost: 50
+    points: 10
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_GUARDFLAKM_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_GUARDCARAPM_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_GUARDFLAKF_AI
+    lookup: STR_CHAOSCULT_GUARDFLAKM_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_GUARDCARAPF_AI
+    lookup: STR_CHAOSCULT_GUARDCARAPM_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_OGRYNDEFENSE_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_OGRYNBERSERK_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTM_LV3_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIESTF_LV3_AI
+    lookup: STR_CHAOSCULT_PRIESTM_LV3_AI
+    cost: 100
+    points: 20
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_LEGIONSCOUT_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_LEGIONSCOUTF_AI
+    lookup: STR_CHAOSCULT_LEGIONSCOUT_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_LEGIONARIE_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_LEGIONARIEF_AI
+    lookup: STR_CHAOSCULT_LEGIONARIE_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIEST_LV4_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_PRIEST_LV4F_AI
+    lookup: STR_CHAOSCULT_PRIEST_LV4_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_TERMINATOR_AI
+    cost: 192
+    points: 50
+    needItem: true
+    destroyItem: true
+
+  - name: STR_CHAOSCULT_CHAOSLORD_AI
+    cost: 250
+    points: 100
+    needItem: true
+    destroyItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_LEADER_PLUS
+      - STR_COMMANDER_PLUS
+      - STR_ALIEN_ORIGINS
+      - STR_CHAOS_PATH
+      - STR_PSI_LAB
+      - STR_THREAT_ONE
+
+  - name: STR_CULTISTLV1_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTLV2_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTOGRYN_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTPILOT_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTPRIEST_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTGUARDFLAK_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTGUARDCARAP_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTOGRYNDEFENSE_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTOGRYNBERSERK_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTDEMAGOG_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTLEGIONSCOUT_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTLEGIONARIE_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTSORC_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTTERMINATOR_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_CULTISTCHAOSLORD_CORPSE_GEO
+    refNode: *STR_CORPSE_BASIC
+
+  - name: STR_LIVE_CAPTURE_CHAOSCULT
+    cost: 192
+    points: 30
+    dependencies:
+      - STR_NOTCHAOSCULT
+      - STR_CHAOSCULT_SOLDIERM_LV1_AI
+      - STR_CHAOSCULT_SOLDIERF_LV1_AI
+      - STR_CHAOSCULT_SOLDIERM_LV2_AI
+      - STR_CHAOSCULT_SOLDIERF_LV2_AI
+      - STR_CHAOSCULT_PILOTM_AI
+      - STR_CHAOSCULT_PILOTF_AI
+      - STR_CHAOSCULT_PRIESTM_LV1_AI
+      - STR_CHAOSCULT_PRIESTM_LV2_AI
+      - STR_CHAOSCULT_PRIESTF_LV1_AI
+      - STR_CHAOSCULT_PRIESTF_LV2_AI
+      - STR_CHAOSCULT_OGRYN_AI
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+
+  - name: STR_LIVE_CAPTURE_CHAOSGUARD
+    cost: 192
+    points: 30
+    dependencies:
+      - STR_NOTCHAOSCULT
+      - STR_CHAOSCULT_GUARDFLAKM_AI
+      - STR_CHAOSCULT_GUARDCARAPM_AI
+      - STR_CHAOSCULT_GUARDFLAKF_AI
+      - STR_CHAOSCULT_GUARDCARAPF_AI
+      - STR_CHAOSCULT_OGRYNDEFENSE_AI
+      - STR_CHAOSCULT_OGRYNBERSERK_AI
+      - STR_CHAOSCULT_PRIESTM_LV3_AI
+      - STR_CHAOSCULT_PRIESTF_LV3_AI
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+
+  - name: STR_LIVE_CAPTURE_CHAOSLEGION
+    cost: 192
+    points: 30
+    dependencies:
+      - STR_NOTCHAOSCULT
+      - STR_CHAOSCULT_LEGIONSCOUT_AI
+      - STR_CHAOSCULT_LEGIONSCOUTF_AI
+      - STR_CHAOSCULT_LEGIONARIE_AI
+      - STR_CHAOSCULT_LEGIONARIEF_AI
+      - STR_CHAOSCULT_PRIEST_LV4_AI
+      - STR_CHAOSCULT_PRIEST_LV4F_AI
+      - STR_CHAOSCULT_TERMINATOR_AI
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+
+##### CHAOS CULT STRATEGY START
+
+  - name: STR_CHAOS_STRATEGY
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CHAOS_STRATEGY_ARBITES
+    spawnedEvent: STR_RECRUITS_CHAOS_STRATEGY_ARBITES
+    cost: 5
+    points: 0
+    dependencies:
+      - STR_ARBITES
+    disables:
+      - STR_MARINES_STRATEGY
+      - STR_CHAMBERMILITANT
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ARBITES
+      - STR_ADEPTAS
+      - STR_CHAPTER_PURITY
+      - STR_LASER_WEAPONS
+      - STR_HEAVY_LASER
+    unlocks:
+      - STR_CHAOS_STRATEGY
+      - STR_MOTION_SCANNER
+      - STR_SMOKE
+      - STR_GUARD_AND_ARBITES
+      - STR_IMPERIUM_RESEARCH
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_GUARD_BARRACKS
+      - STR_REGIMENT_OFFICERS
+      - STR_KRIEG_GUARDSMEN
+      - STR_CATACHAN_GUARDSMEN
+      - STR_PENITENT_GUARD
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_GUARDSMEN
+      - STR_VALKYRIE_GRAV_DROP_IG
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      - STR_BASIC_SENTINEL
+      - STR_PILOT_GUARDSMEN
+      - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_ABHUMAN_STRATEGY
+#      - STR_NOT_STEEL_LEGION_STRATEGY
+
+#the reenable is required for now to get to high tier but may be changed once final mission is made
+    reenables:
+      - STR_CYDONIA_OR_BUST
+
+  - name: STR_CHAOS_MIDTIER
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_UNHOLY_WARTOOLS
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_LASER_WEAPONS
+      - STR_HARDER_MISSIONS
+      - STR_HFLAMERR
+      - STR_CASS_R
+      - STR_HB_DEP1
+      - STR_SIDEOPERATIONS
+    cutscene: c2
+
+  - name: STR_CHAOS_HIGHTIER
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_UFO_CONSTRUCTION
+      - STR_CYDONIA_OR_BUST
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+
+  - name: STR_CULTIST_GUARDUPGRADE
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CULTIST_ENHANCER_BLOCK
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_SECRET_OF_CULT
+    cost: 70
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+    unlocks:
+      - STR_CULTIST_ENHANCER_BLOCK
+      - STR_MEDI_KIT_PREREQ
+
+  - name: STR_RECRUIT_CHAOSOGRYN
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TURN_OGRYN
+    cost: 80
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+    unlocks:
+      - STR_RECRUIT_CHAOSOGRYN
+
+  - name: STR_CALL_CHAOSPRIEST
+    spawnedEvent: STR_RECRUITS_CHAOSPRIEST
+    cost: 70
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+
+  - name: STR_UNHOLY_WARTOOLS
+    cost: 90
+    points: 10
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_ELERIUM_115
+      - STR_CHAOS_STRATEGY
+      - STR_CULTIST_ENHANCER_BLOCK
+    disables:
+      - STR_IMPERIAL_WEAPONS
+    unlocks:
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_ALIENS_ONLY
+
+  - name: STR_GUARDSMEN_WEAPONS
+    cost: 90
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+    reenable:
+      - STR_LASER_WEAPONS
+      - STR_HEAVY_LASER
+
+  - name: STR_CULTIST_GUARD
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_GUARDSMEN_WEAPONS
+
+  - name: STR_CULTIST_CHAOSREGIMENT
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD
+
+  - name: STR_CULTIST_GUARD_CARAPACE
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_CHAOSREGIMENT
+
+  - name: STR_CULTIST_MIDTIER_OGRYN
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD_CARAPACE
+
+  - name: STR_CULTIST_MIDTIER_PRIEST
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_MIDTIER_OGRYN
+
+  - name: STR_UNLOCK_CHAOSLEMAN
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD_CARAPACE
+
+  - name: STR_CULTIST_LEGION
+    cost: 180
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+
+  - name: STR_CULTIST_LEGION_SCOUT
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION
+
+  - name: STR_CULTIST_LEGIONGROWTH
+    cost: 150
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SCOUT
+
+  - name: STR_CULTIST_LEGION_CSM
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGIONGROWTH
+
+  - name: STR_CULTIST_LEGION_SORC
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_CSM
+
+  - name: STR_UNLOCK_CHAOSTHUNDERRHINO
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_CSM
+
+  - name: STR_CULTIST_TERMINAL
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SORC
+
+# this should become available after some special mission but for now it is here
+  - name: STR_UNLOCK_CHAOSMOBILEFORT
+    cost: 300
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_TERMINAL
+
+####Boons from Chaos
+
+  #Chaos Boons Beginner Mode Options
+  - name: STR_CHAOS_BOONS_RESEARCH
+    cost: 50
+    points: 100
+    dependencies:
+      - STR_CALL_CHAOSPRIEST
+      - STR_TURN_OGRYN
+      - STR_CULTIST_ENHANCER_BLOCK
+
+  - name: STR_CHAOS_BOONS_LV2CULTISTS_RESEARCH #Request LV2 Cultists
+    cost: 70
+    points: 250
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_CHAOSOGRYN_RESEARCH #Request Ogryns
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_BOONS_CHAOSPRIEST_RESEARCH #Request Chaos Priests
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+
+  - name: STR_BOONS_CHAOSGUARDELITE_RESEARCH #Request Chaos Elite Guards
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_GUARD
+
+  - name: STR_BOONS_OGRYNDEFENSE_RESEARCH #Request Chaos Bullgryns
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_CULTIST_MIDTIER_OGRYN
+
+  - name: STR_BOONS_LEGIONSCOUT_RESEARCH #Request Chaos Legion Aspirants
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_LEGION_SCOUT
+
+  - name: STR_BOONS_LEGIONARIES_RESEARCH #Request Chaos Legionary Warband
+    cost: 70
+    points: 100
+    dependencies:
+      - STR_CHAOS_BOONS_RESEARCH
+      - STR_HIGHTIER_PREREQ
+      - STR_CULTIST_TERMINAL
+
+  - name: STR_RES_WARPED_HULK_LOOT_CHAOSCULT
+    cost: 100
+    points: 100
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_LOCKER_VAULT_RESEARCH
+    neededItem: STR_WARPED_HULK_LOOT
+    destroyItem: false

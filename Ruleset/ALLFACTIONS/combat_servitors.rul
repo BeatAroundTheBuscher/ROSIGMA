@@ -60,7 +60,7 @@ items:
 
 ##Weapons and Ammo
   - &STR_GENERIC_SERVITOR_WEAPON # Not necessary to inherit from this, but it's here to make it easy
-    type: STR_GENERIC_SERVITOR_WEAPON
+    type: STR_GENERIC_SERVITOR_HEAVYBOLTER
     weight: 40 # Doesn't truly matter, no pockets
     battleType: 1
     twoHanded: false
@@ -71,21 +71,9 @@ items:
     attraction: 1
     fixedWeapon: true
     recover: false
-    compatibleAmmo:
-      - STR_NONE # You need to give the actual weapon an ammo
-
-  - &STR_GENERIC_SERVITOR_AMMO # Not necessary to inherit from this, but it's here to make it easy
-    type: STR_GENERIC_SERVITOR_AMMO
-    weight: 30 # Doesn't truly matter, no pockets
-    bigSprite: 2817 # Generic servitor ammo box sprite
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 3
-    recover: false
+    clipSize: -1
 
   - type: STR_GENERIC_SERVITOR_HEAVYBOLTER #Copied from STR_CSERVITOR_HB and modified
-    refNode: *STR_GENERIC_SERVITOR_WEAPON
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
     dropoff: 4
     bigSprite: 2816
@@ -109,8 +97,17 @@ items:
     sprayWaypoints: 2
     bulletSpeed: 50
 
+  - &STR_GENERIC_SERVITOR_AMMO # Not necessary to inherit from this, but it's here to make it easy
+    type: STR_GENERICSERVITOR_HBAP_AMMO
+    weight: 30 # Doesn't truly matter, no pockets
+    bigSprite: 2817 # Generic servitor ammo box sprite
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    recover: false
+
   - type: STR_GENERICSERVITOR_HBAP_AMMO #HEAVY BOLTER AP
-    refNode: *STR_GENERIC_SERVITOR_AMMO
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 26}
@@ -202,7 +199,7 @@ items:
     clipSize: 40 # The player will primarily be limited by heat management
     damageType: 5
     explosionHitSound: {mod: 40k, index: 690} #*** PLASMA rebalance
-    hitAnimation: 112 
+    hitAnimation: {mod: 40k, index: 112}
     powerForAnimation: 5
     damageAlter: #DA PLASMA
       RandomType: 6

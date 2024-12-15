@@ -4,6 +4,7 @@ extended:
 soldiers:
   - type: STR_GUARDSM
     requires:
+      - STR_NOTCHAOSCULT
       - STR_GUARDSMEN
     costBuy: 15000
     costSalary: 5000
@@ -72,6 +73,7 @@ soldiers:
     costSalary: 10000
     flagOffset: 42
     requires:
+      - STR_NOTCHAOSCULT
       - STR_IMPERIAL_GUARD_OPERATIONS
     minStats:
       tu: 40
@@ -155,6 +157,7 @@ soldiers:
     flagOffset: 42
     requires:
       - STR_PENITENT_GUARD
+      - STR_NOT_ABHUMAN_STRATEGY
     costBuy: 5000
     costSalary: 1000
     minStats:
@@ -220,6 +223,83 @@ soldiers:
       - Names/penitent.nam
     deathMale: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
+    rankStrings:
+      - STR_PENITENT_RANK_0
+    rankSprite: {mod: 40k, index: 868}
+    rankBattleSprite: {mod: 40k, index: 251}
+    rankTinySprite: {mod: 40k, index: 163}
+    moraleLossWhenKilled: 0
+    value: 0
+
+  - type: STR_PENITENT_BEASTGUARD
+    requires:
+      - STR_PENITENT_GUARD
+      - STR_BEASTMEN_GUARDSMEN
+    costBuy: 12500
+    costSalary: 2000
+    minStats:
+      tu: 45
+      stamina: 50
+      health: 25
+      bravery: 5
+      reactions: 20
+      firing: 25
+      throwing: 35
+      strength: 25
+      psiStrength: 0
+      psiSkill: 0
+      melee: 60
+      mana: 0
+    maxStats:
+      tu: 80
+      stamina: 90
+      health: 60
+      bravery: 70
+      reactions: 75
+      firing: 55
+      throwing: 70
+      strength: 55
+      psiStrength: 100
+      psiSkill: 6
+      melee: 75
+      mana: 0
+    statCaps:
+      tu: 110
+      stamina: 110
+      health: 70
+      bravery: 100
+      reactions: 80
+      firing: 90
+      throwing: 80
+      strength: 80
+      psiStrength: 100
+      psiSkill: 50
+      melee: 95
+      mana: 0
+    trainingStatCaps: #can't train
+      tu: 0
+      stamina: 0
+      health: 0
+      firing: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+      mana: 0
+    armor: STR_PENAL_ARMOR_BEASTMAN
+    allowPiloting: false
+    allowPromotion: false
+    standHeight: 21
+    kneelHeight: 16
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 35
+    soldierNames:
+      - delete
+      - Names/beastman.nam
+    deathMale: [2680, 2681, 2682, 2683, 2684]
+    deathFemale: [2686, 2687, 2688, 2689, 2690]
     rankStrings:
       - STR_PENITENT_RANK_0
     rankSprite: {mod: 40k, index: 868}
@@ -527,7 +607,7 @@ soldiers:
       bravery: 110
       reactions: 80
       firing: 130 # was 90 # Scion was highest
-      throwing: 70
+      throwing: 80
       strength: 65
       psiStrength: 100
       psiSkill: 100
@@ -623,16 +703,20 @@ soldiers:
       tu: 75 # was 65 # Scion was higher
       stamina: 120 # was 100 # Scion was higher
       firing: 130 # was 120 # Scion was highest
+      throwing: 80
       strength: 65
       health: 55
       reactions: 80
+      melee: 100
       mana: 0
     trainingStatCaps:
+      tu: 60
       stamina: 80 # was 70 # Scion was highest # doesn't matter
       health: 40 # was 30 # Others were highest
       firing: 80 # was 70 # Scion was highest # doesn't matter
       throwing: 70 # was 65 # Scion was highest
       strength: 35 # was 25 # Others were highest
+      melee: 70
       mana: 0
     rankStrings:
       - STR_GUARD_RANK_1
@@ -676,17 +760,17 @@ soldiers:
       melee: 80 # + 20
       mana: 0
     statCaps:
-      tu: 65
-      stamina: 80
-      health: 45
+      tu: 75
+      stamina: 90
+      health: 55
       bravery: 110
       reactions: 80
-      firing: 90
+      firing: 100
       throwing: 70
-      strength: 55
+      strength: 65
       psiStrength: 100
       psiSkill: 100
-      melee: 100 # + 20
+      melee: 110 # +20
       mana: 0
     trainingStatCaps:
       tu: 60
@@ -819,17 +903,6 @@ soldiers:
       psiSkill: 50
       melee: 70
       mana: 0
-    trainingStatCaps:
-      tu: 80
-      stamina: 100
-      health: 140
-      firing: 70
-      throwing: 70
-      strength: 100
-      psiStrength: 60
-      psiSkill: 100
-      melee: 90
-      mana: 0
     statCaps:
       tu: 90
       stamina: 120
@@ -842,6 +915,17 @@ soldiers:
       psiStrength: 60
       psiSkill: 100
       melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 80
+      stamina: 100
+      health: 140
+      firing: 70
+      throwing: 70
+      strength: 100
+      psiStrength: 60
+      psiSkill: 100
+      melee: 90
       mana: 0
     allowPiloting: false
     allowPromotion: false
@@ -1082,7 +1166,7 @@ soldiers:
       strength: 65 # was 60
       psiStrength: 100
       psiSkill: 50
-      melee: 90
+      melee: 100 #+10 Natural Claw Fighters
       mana: 0
     trainingStatCaps:
       tu: 65
@@ -1160,7 +1244,7 @@ soldiers:
       strength: 65 # was 60
       psiStrength: 100
       psiSkill: 50
-      melee: 100 #Less firing accuracy gain, more melee gain.
+      melee: 110 #+10 Natural Claw Fighters, Less firing accuracy gain, more melee gain.
       mana: 0
     trainingStatCaps:
       tu: 65
@@ -1284,7 +1368,7 @@ soldiers:
     value: 5
     moraleLossWhenKilled: 50 #we don't really care when these abhuman grunts die
 
-  - type: STR_GUARD_TANITH # copied from Veteran # doesn't have to have same values
+  - type: STR_GUARD_TANITH # copied from Veteran, should be made more fitting to Taniths
     costSalary: 30000
     minStats:
       tu: 50
@@ -1316,16 +1400,20 @@ soldiers:
       tu: 75
       stamina: 120
       firing: 130
+      throwing: 80
       strength: 65
       health: 55
       reactions: 80
+      melee: 100
       mana: 0
     trainingStatCaps:
+      tu: 60
       stamina: 80
       health: 40
       firing: 80
       throwing: 70
       strength: 35
+      melee: 70
       mana: 0
     flagOffset: 42
     requires:
@@ -1357,20 +1445,20 @@ soldiers:
     rankTinySprite: {mod: 40k, index: 1006}
     value: 25
 
-  - type: STR_GUARD_KRIEG_GRENADIER # copied from Veteran # doesn't have to have same values
+  - type: STR_GUARD_KRIEG_GRENADIER # same as Veteran except for bravery and melee skill
     costSalary: 30000
     minStats:
       tu: 50
       stamina: 60
       health: 35
-      bravery: 60
+      bravery: 60 # +10 no cowards
       reactions: 50
       firing: 60
       throwing: 50
       strength: 20
-      psiStrength: 0
-      psiSkill: 0
-      melee: 50
+      psiStrength: 100
+      psiSkill: 60
+      melee: 60 #+10 from regular krieg
       mana: 0
     maxStats:
       tu: 60
@@ -1382,24 +1470,28 @@ soldiers:
       throwing: 65
       strength: 30
       psiStrength: 100
-      psiSkill: 6
-      melee: 60
+      psiSkill: 100
+      melee: 90 # +10 from regular krieg
       mana: 0
     statCaps:
       tu: 75
       stamina: 120
       bravery: 110
       firing: 130
+      throwing: 80
       strength: 65
       health: 55
       reactions: 80
+      melee: 120 # +20 vet to grenadier, just like guard to krieg
       mana: 0
     trainingStatCaps:
+      tu: 60
       stamina: 80
       health: 40
       firing: 80
       throwing: 70
       strength: 35
+      melee: 90 # +20 vet to grenadier, just like guard to krieg
       mana: 0
     flagOffset: 42
     requires:
@@ -1547,17 +1639,6 @@ soldiers:
       psiSkill: 16
       melee: 70
       mana: 0
-    trainingStatCaps:
-      tu: 60
-      stamina: 70
-      health: 40
-      firing: 70
-      throwing: 65
-      strength: 35
-      psiStrength: 100
-      psiSkill: 100
-      melee: 70
-      mana: 0
     statCaps:
       tu: 75
       stamina: 120
@@ -1570,6 +1651,17 @@ soldiers:
       psiStrength: 100
       psiSkill: 100
       melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 40
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
       mana: 0
     value: 25
     armor: STR_STEELLEGION_FLAK_ARMOR_OFFICER

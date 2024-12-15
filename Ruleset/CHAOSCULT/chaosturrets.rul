@@ -1,0 +1,3520 @@
+﻿extended:
+  tags:
+    RuleItem:
+      TurretItem: int
+      ItemId: int
+      TURRET_RELOAD_TURNS: int
+    RuleArmor:
+      Turret: int
+      Sponson: int
+      Hull: int
+      TurretUnit: int
+      TurretId: int
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
+      ARMOR_ENERGY_SHIELD_DECAY: int
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
+      UNIT_TYPE_LIVING: int
+      UNIT_TYPE_PSYKER: int
+      INFECTION_RESIST: int
+      INFECTION_RESIST_TYPE: int
+      INFECTION_REDUCTION: int #r
+      INTIMIDATION_RESISTANCE: int
+      UNIT_TYPE_MECHANICAL: int
+      UNIT_TYPE_IMPERIUM: int
+    BattleUnit:
+      ReSprite: int
+    BattleItem:
+      TurretActive: int
+
+units:
+  - &STR_ADV_TURRET_DEFAULTCHAOS
+    type: STR_CHIMERA_COMMAND_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    liveAlien: ""
+    stats:
+      tu: 20
+      stamina: 10
+      health: 100
+      bravery: 100
+      reactions: 20
+      firing: 75
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_COMMAND_TURRET_ARMORCHAOS
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: 23
+    moraleLossWhenKilled: 0
+    intelligence: 1
+    aggression: 7
+    canBeMindControlled: false
+    canPanic: false
+    canSurrender: false
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    specab: 1
+    ignoredByAI: true
+
+  - type: STR_LEMAN_COMMAND_TURRETCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 0 #half the capacity of a turret
+    armor: STR_LEMAN_TURRET_ARMORCHAOS
+
+  - type: STR_LEMAN_SPONSONCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 0 #half the capacity of a turret
+    armor: STR_SPONSON_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+
+  - type: STR_LEMAN_SPONSONCHAOSRHINO
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 0 #half the capacity of a turret
+    armor: STR_SPONSON_ARMORCHAOSRHINO
+    standHeight: 20
+    kneelHeight: 20
+
+  - type: STR_LEMAN_HULLCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 200
+      mana: 0 #half the capacity of a turret
+    armor: STR_LEMAN_HULL_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+
+  - type: STR_CHIMERA_HULLCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 200
+      mana: 0 #half the capacity of a turret
+    armor: STR_CHIMERA_HULL_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+
+  - type: STR_CHIMERA_BOLTER_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    liveAlien: ""
+    value: 100
+    armor: STR_CHIMERA_BOLTER_TURRET_ARMORCHAOS
+    livingWeapon: true
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_CHIMERA_HB
+      - - STR_CHIMERA_HB
+      - - STR_CHIMERA_HB
+
+  - type: STR_CHIMERA_FLAMER_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    liveAlien: ""
+    stats:
+      mana: 60
+    armor: STR_CHIMERA_FLAMER_TURRET_ARMORCHAOS
+    value: 100
+    livingWeapon: true
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_GORGON_HEAVY_FLAMER
+      - - STR_GORGON_HEAVY_FLAMER
+      - - STR_GORGON_HEAVY_FLAMER
+
+  - type: STR_CHIMERA_MULTILAS_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    liveAlien: ""
+    value: 100
+    stats:
+      tu: 20
+      stamina: 10
+      health: 100
+      bravery: 100
+      reactions: 20
+      firing: 75
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_CHIMERA_MULTILAS_TURRET_ARMORCHAOS
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: 23
+    moraleLossWhenKilled: 0
+    intelligence: 1
+    aggression: 7
+    canBeMindControlled: false
+    canPanic: false
+    canSurrender: false
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    specab: 1
+    livingWeapon: true
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_MULTI_LASER
+      - - STR_MULTI_LASER
+      - - STR_MULTI_LASER
+
+  - type: STR_CHIMERA_TWIN_HB_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    liveAlien: ""
+    value: 100
+    stats:
+      tu: 20
+      stamina: 10
+      health: 100
+      bravery: 100
+      reactions: 20
+      firing: 75
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_CHIMERA_TWIN_HB_TURRET_ARMORCHAOS
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: 23
+    moraleLossWhenKilled: 0
+    intelligence: 1
+    aggression: 7
+    canBeMindControlled: false
+    canPanic: false
+    canSurrender: false
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    specab: 1
+    livingWeapon: true
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_CHIMERA_HB
+      - - STR_CHIMERA_HB
+      - - STR_CHIMERA_HB
+
+  - type: STR_CHIMERA_AC_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    liveAlien: ""
+    stats:
+      mana: 60
+    armor: STR_CHIMERA_AC_TURRET_ARMORCHAOS
+    value: 100
+    livingWeapon: true
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_AUTOCANNON_TAUROX
+      - - STR_AUTOCANNON_TAUROX
+      - - STR_AUTOCANNON_TAUROX
+
+  - type: STR_EXECUTIONER_TURRETCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 40
+    armor: STR_EXECUTIONER_ARMORCHAOS
+    value: 100
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_EXECUTIONER_CANNON
+
+  - type: STR_PUNISHER_TURRETCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 60
+    armor: STR_PUNISHER_ARMORCHAOS
+    value: 100
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_PUNISHER_CANNON
+
+  - type: STR_LASCANNON_TURRETCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      mana: 40
+    armor: STR_LASCANNON_ARMORCHAOS
+    value: 100
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_TWIN_LINK_LASCANNON
+
+  - type: STR_FLAMER_SPONSONCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 30 #half the capacity of a turret
+    value: 20
+    armor: STR_FLAMER_SPONSON_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HEAVY_FLAMER
+
+  - type: STR_BOLTER_SPONSONCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 50 #half the capacity of a turret
+    value: 20
+    armor: STR_BOLTER_SPONSON_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HB
+
+  - type: STR_FLAMER_SPONSONCHAOSRHINO
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 30 #half the capacity of a turret
+    value: 20
+    armor: STR_FLAMER_SPONSON_ARMORCHAOSRHINO
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HEAVY_FLAMER
+
+  - type: STR_BOLTER_SPONSONCHAOSRHINO
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 50 #half the capacity of a turret
+    value: 20
+    armor: STR_BOLTER_SPONSON_ARMORCHAOSRHINO
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HB
+
+  - type: STR_MULTIMELTA_SPONSONCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 20 #half the capacity of a turret
+    value: 20
+    armor: STR_MULTIMELTA_SPONSON_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_MULTIMELTA_WEAPON
+
+  - type: STR_MULTIMELTA_SPONSONCHAOSRHINO
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 20 #half the capacity of a turret
+    value: 20
+    armor: STR_MULTIMELTA_SPONSON_ARMORCHAOSRHINO
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_MULTIMELTA_WEAPON
+
+  - type: STR_CHIMERA_HULL_BOLTERCHAOS
+    race: STR_CHIMERA
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 50 #half the capacity of a turret
+    value: 20
+    armor: STR_CHIMERA_HULL_BOLTER_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    spawnUnit: STR_CHIMERA_HULLCHAOS
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HB
+
+  - type: STR_LEMAN_HULL_BOLTERCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 50 #half the capacity of a turret
+    value: 20
+    armor: STR_LEMAN_HULL_BOLTER_ARMORCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    spawnUnit: STR_LEMAN_HULLCHAOS
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_SPONSON_HB
+
+  - type: STR_LEMAN_HULL_LASCHAOS
+    race: STR_LEMONRUSS
+    refNode: *STR_ADV_TURRET_DEFAULTCHAOS
+    stats:
+      health: 75
+      mana: 20 #half the capacity of a turret
+    value: 20
+    armor: STR_LEMAN_HULL_LAS_ARMORCHAOS
+    spawnUnit: STR_LEMAN_HULLCHAOS
+    standHeight: 20
+    kneelHeight: 20
+    ignoredByAI: false
+    builtInWeaponSets:
+      - - STR_HULL_LASCANNON
+
+  - type: STR_CHIMEDON_TURRETCHAOS
+    race: STR_CHIMEDON_TURRET #Add
+    liveAlien: ""
+    stats:
+      tu: 20
+      stamina: 10
+      health: 100
+      bravery: 200
+      reactions: 20
+      throwing: 0
+      firing: 80
+      strength: 90
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_CHIMEDON_ARMORCHAOS
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    moraleLossWhenKilled: 25
+    canBeMindControlled: false
+    canPanic: false
+    canSurrender: false
+    ignoredByAI: true
+    value: 300 #leman rus is 500
+    deathSound: {mod: 40k, index: 23}
+    intelligence: 4
+    aggression: 7
+    sniper: 50
+    spotter: 1
+    moveSound: 14
+    specab: 1
+    builtInWeaponSets:
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
+      - - STR_LEMONRUSS_WEAPON
+        #- STR_LEMANRUSS_BOLTER #NO TURRET BOLTER on the Chimedon
+
+  - type: STR_CHIMERA_TURRETCHAOS
+    race: STR_CHIMERA_TURRET
+    liveAlien: ""
+    stats:
+      tu: 12
+      stamina: 100
+      health: 100
+      bravery: 100
+      reactions: 30
+      firing: 100
+      throwing: 0
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_CHIMERA_TURRET_ARMORCHAOS
+    moraleLossWhenKilled: 25
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: {mod: 40k, index: 23}
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_MULTI_LASER
+      - - STR_MULTI_LASER
+      - - STR_MULTI_LASER
+    specab: 1
+
+  - type: STR_LEMONRUSSCHAOS
+    race: STR_LEMONRUSS
+    stats:
+      tu: 20
+      stamina: 10
+      health: 200
+      bravery: 200
+      reactions: 20
+      firing: 120
+      throwing: 0
+      strength: 90
+      psiStrength: 200
+      psiSkill: 0
+      melee: 1000
+      mana: 100
+    armor: LEMONRUSS_ARMORCHAOS
+    standHeight: 16
+    kneelHeight: 16
+    value: 500
+    intelligence: 4
+    aggression: 7
+    sniper: 50
+    spotter: 1
+    moveSound: {mod: 40k, index: 14}
+    specab: 1
+    builtInWeaponSets:
+      - - STR_LEMONRUSS_WEAPON
+        - STR_LEMANRUSS_BOLTER
+      - - STR_LEMONRUSS_WEAPON
+        - STR_LEMANRUSS_BOLTER
+      - - STR_LEMONRUSS_WEAPON
+        - STR_LEMANRUSS_BOLTER
+    moraleLossWhenKilled: 25
+    energyRecovery: 10
+    deathSound: 23
+    liveAlien: ""
+    value: 30
+
+armors:
+
+  - &STR_COMMAND_TURRET_DEFAULTCHAOS
+    type: STR_COMMAND_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: CHIMERA_COMMAND_TURRETCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    alwaysVisible: true
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      Turret: 101
+
+  - &STR_LEMAN_COMMAND_TURRET_DEFAULTCHAOS
+    type: STR_LEMAN_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: CHIMERA_COMMAND_TURRETCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    alwaysVisible: true
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      Turret: 103
+
+  - &STR_CHIMERA_BOLTER_TURRET_ARMOR_DEFAULTCHAOS
+    type: STR_CHIMERA_BOLTER_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: CHIMERA_BOLTER_TURRETCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      TurretUnit: 101
+      TurretId: 11101
+
+  - type: STR_CHIMERA_FLAMER_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: CHIMERA_FLAMER_TURRETCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11102
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CHIMERA_TWIN_HB_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteInv: CHIMC.SPK
+    spriteSheet: CHIMERA_HBTURRET_BSCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    tags:
+      TurretUnit: 101
+      TurretId: 11101
+      INFECTION_RESIST: 100 #infection immune
+
+  - type: STR_CHIMERA_MULTILAS_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteInv: CHIMC.SPK
+    spriteSheet: CHIMERA_MLTURRET_BSCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    tags:
+      TurretUnit: 101
+      TurretId: 11100
+      INFECTION_RESIST: 100 #infection immune
+
+  - &STR_CHIMERA_AC_TURRET_ARMOR_DEFAULTCHAOS
+    type: STR_CHIMERA_AC_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: CHIMERA_AC_TURRETCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 5
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11103
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CHIMERA_TURRET_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 6
+    antiCamouflageAtDark: 6
+    spriteSheet: CHIMERALASCHAOS.PCK
+    spriteInv: CHIG.SPK
+    heatVision: 20
+    frontArmor: 160 # was 130
+    sideArmor: 160 # was 130
+    rearArmor: 160 # was 130
+    underArmor: 160
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: false
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    size: 2
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    specialWeapon: STR_TURRET_RELOAD
+    recovery: #Manned turrets recover morale rapidly
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+      morale:
+        flatHundred: 0.5
+    personalLight: 6
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 3
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    tags:
+      TurretUnit: 101
+      TurretId: 11100
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_EXECUTIONER_ARMOR_DEFAULTCHAOS
+    type: STR_EXECUTIONER_ARMORCHAOS
+    allowsMoving: false
+    spriteSheet: EXECUTIONER_TURRETCHAOS.PCK
+    allowInv: false
+    spriteInv: LR.SPK
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 60
+    frontArmor: 150
+    sideArmor: 150
+    rearArmor: 150
+    underArmor: 150
+    movementType: 1
+    size: 2
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    specialWeapon: STR_TURRET_RELOAD
+    drawingRoutine: 3
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11303
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_PUNISHER_ARMORCHAOS
+    allowsMoving: false
+    spriteSheet: PUNISHER_TURRETCHAOS.PCK
+    allowInv: false
+    spriteInv: LR.SPK
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 60
+    frontArmor: 150
+    sideArmor: 150
+    rearArmor: 150
+    underArmor: 150
+    movementType: 1
+    size: 2
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    specialWeapon: STR_TURRET_RELOAD
+    drawingRoutine: 3
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11302
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_LASCANNON_ARMORCHAOS
+    allowsMoving: false
+    spriteSheet: LASCANNON_TURRETCHAOS.PCK
+    allowInv: false
+    spriteInv: LR.SPK
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_2
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_3
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_4
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 60
+    frontArmor: 150
+    sideArmor: 150
+    rearArmor: 150
+    underArmor: 150
+    movementType: 1
+    size: 2
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    specialWeapon: STR_TURRET_RELOAD
+    drawingRoutine: 3
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11301
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: LEMONRUSS_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 8
+    antiCamouflageAtDark: 8
+    heatVision: 60
+    frontArmor: 180 # was 150
+    sideArmor: 180 # was 150
+    rearArmor: 180 # was 150
+    underArmor: 180
+    fearImmune: false
+    allowsMoving: false
+    spriteSheet: LEMONRUSSCHAOS.PCK
+    allowInv: false
+    spriteInv: LR.SPK
+    corpseGeo: STR_VINDICATOR_CORPSE
+    corpseBattle:
+      - DREAD_CORPSE1
+      - DREAD_CORPSE2
+      - DREAD_CORPSE3
+      - DREAD_CORPSE4
+    movementType: 1
+    size: 2
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 3
+    specialWeapon: STR_TURRET_RELOAD
+    recovery: #Manned turrets recover morale rapidly
+      morale:
+        flatHundred: 0.5
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11300
+      INFECTION_RESIST: 100 #infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_FLAMER_SPONSON_ARMOR_DEFAULTCHAOS
+    type: STR_FLAMER_SPONSON_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: FLAMERSPONSONCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11501
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BOLTER_SPONSON_ARMOR_DEFAULTCHAOS
+    type: STR_BOLTER_SPONSON_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: BOLTERSPONSONCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11500
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_MULTIMELTA_SPONSON_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: MULTIMELTASPONSONCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11502
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_FLAMER_SPONSON_ARMOR_DEFAULTCHAOSRHINO
+    type: STR_FLAMER_SPONSON_ARMORCHAOSRHINO
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: FLAMERSPONSONCHAOSRHINO.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11501
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_BOLTER_SPONSON_ARMOR_DEFAULTCHAOSRHINO
+    type: STR_BOLTER_SPONSON_ARMORCHAOSRHINO
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: BOLTERSPONSONCHAOSRHINO.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11500
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_MULTIMELTA_SPONSON_ARMORCHAOSRHINO
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: MULTIMELTASPONSONCHAOSRHINO.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11502
+      Sponson: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_CHIMERA_HULL_BOLTER_ARMOR_DEFAULTCHAOS
+    type: STR_CHIMERA_HULL_BOLTER_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteInv: CHIMC.SPK
+    spriteSheet: CHIMERAHULLBOLTERCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11200
+      Hull: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_LEMAN_HULL_BOLTER_ARMOR_DEFAULTCHAOS
+    type: STR_LEMAN_HULL_BOLTER_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: LEMANHULLBOLTERCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      TurretId: 11400
+      Hull: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_LEMAN_HULL_LASCANNON_ARMOR_DEFAULTCHAOS
+    type: STR_LEMAN_HULL_LAS_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    personalLight: 0
+    spriteSheet: LEMANHULLLASCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}, { mod: 40k, index: 593}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      TurretUnit: 101
+      Hull: 1
+      TurretId: 11401
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_SPONSON_ARMOR_DEFAULTCHAOS
+    type: STR_SPONSON_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    spriteSheet: SPONSONCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      Sponson: 1
+      Turret: 105
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_SPONSON_ARMOR_DEFAULTCHAOSRHINO
+    type: STR_SPONSON_ARMORCHAOSRHINO
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    spriteSheet: SPONSONCHAOSRHINO.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 5 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    selectUnitMale:     [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectUnitFemale:   [{ mod: 40k, index: 590}, { mod: 40k, index: 591}, { mod: 40k, index: 592}]
+    selectWeaponMale:   [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    selectWeaponFemale: [{ mod: 40k, index: 585}, { mod: 40k, index: 586}, { mod: 40k, index: 587}, { mod: 40k, index: 588}, { mod: 40k, index: 589}]
+    annoyedMale:        [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    annoyedFemale:      [{ mod: 40k, index: 606}, { mod: 40k, index: 607}, { mod: 40k, index: 608}, { mod: 40k, index: 609}]
+    specialWeapon: STR_TURRET_RELOAD
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      Sponson: 1
+      Turret: 105
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_CHIMERA_HULL_ARMOR_DEFAULTCHAOS
+    type: STR_CHIMERA_HULL_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    camouflageAtDark: -999
+    camouflageAtDay: -999
+    psiCamouflage: -999
+    spriteSheet: CHIMERAHULLCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 150
+    sideArmor: 150
+    rearArmor: 150
+    underArmor: 150
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 20 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      Turret: 102
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_LEMAN_HULL_ARMOR_DEFAULTCHAOS
+    type: STR_LEMAN_HULL_ARMORCHAOS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    alwaysVisible: true
+    personalLight: 0
+    camouflageAtDark: -999
+    camouflageAtDay: -999
+    psiCamouflage: -999
+    spriteSheet: LEMANHULLCHAOS.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_TRAITOR_CHIMERA_TURRET_CORPSE
+    corpseBattle:
+      - STR_TRAITOR_CHIMERA_TURRET_CORPSE_1
+    frontArmor: 200
+    sideArmor: 200
+    rearArmor: 200
+    underArmor: 200
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.1 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 20 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      Turret: 104
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_CHIMEDON_ARMORCHAOS
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    spriteSheet: CHIMERON_TURRET_BSCHAOS.PCK
+    allowInv: false
+    spriteInv: CHIMEDON_INV.SPK
+    corpseGeo: STR_VINDICATOR_CORPSE
+    corpseBattle:
+      - DREAD_CORPSE1
+      - DREAD_CORPSE2
+      - DREAD_CORPSE3
+      - DREAD_CORPSE4
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 7
+    antiCamouflageAtDark: 7
+    heatVision: 30 #chimera+
+    frontArmor: 160 # was 130
+    sideArmor: 160 # was 130
+    rearArmor: 160 # was 130
+    underArmor: 160
+    size: 2
+    specialWeapon: STR_TURRET_RELOAD
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 92, 89, 90, 91 ]
+    drawingRoutine: 3
+    personalLight: 6
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+items:
+
+  - type: STR_CHIMERA_COMMAND_TURRET_SPAWNERCHAOS
+    spawnUnit: STR_CHIMERA_COMMAND_TURRETCHAOS
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_LEMONRUSS_SPAWNERCHAOS
+    spawnUnit: STR_LEMAN_COMMAND_TURRETCHAOS
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_LEMONRUSS_SPONSON_SPAWNERCHAOS
+    spawnUnit: STR_LEMAN_SPONSONCHAOS
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    hitAnimation: { mod: 40k, index: 1990 }
+    armor: 255
+
+  - type: STR_LEMONRUSS_SPONSON_SPAWNERCHAOSRHINO
+    spawnUnit: STR_LEMAN_SPONSONCHAOSRHINO
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    hitAnimation: { mod: 40k, index: 1990 }
+    armor: 255
+
+  - type: STR_CHIMEDON_SPAWNERCHAOS
+    spawnUnit: STR_CHIMEDON_TURRETCHAOS
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    hitAnimation: { mod: 40k, index: 1990 }
+    armor: 255
+
+  - &STR_LEMAN_RUSS_FINALCHAOS
+    type: STR_LEMONRUSS_SPAWNER_FINALCHAOS
+    spawnUnit: STR_LEMONRUSSCHAOS # Battle Cannon
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_LEMONRUSS_SPONSON_SPAWNER_FINALCHAOS
+    refNode: *STR_LEMAN_RUSS_FINALCHAOS
+    spawnUnit: STR_BOLTER_SPONSONCHAOS # Bolter
+
+  - type: STR_LEMONRUSS_HULL_SPAWNER_FINALCHAOS
+    refNode: *STR_LEMAN_RUSS_FINALCHAOS
+    spawnUnit: STR_LEMAN_HULL_BOLTERCHAOS # Bolter
+
+  - type: STR_CHIMERA_HULL_SPAWNERCHAOS
+    spawnUnit: STR_CHIMERA_HULLCHAOS
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_LEMONRUSS_HULL_SPAWNERCHAOS
+    spawnUnit: STR_LEMAN_HULLCHAOS
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_CHIMERA_TURRETCHAOS
+    ufopediaType: STR_MULTI_LASER
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 10100
+
+  - type: STR_CHIMERA_BOLTER_TURRETCHAOS
+    ufopediaType: STR_CHIMERA_HB
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 11101
+
+  - type: STR_CHIMERA_MULTILAS_TURRETCHAOS
+    ufopediaType: STR_MULTI_LASER
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 11100
+
+  - type: STR_CHIMERA_TWIN_HB_TURRETCHAOS
+    ufopediaType: STR_CHIMERA_HB
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 11101
+
+  - type: STR_CHIMERA_FLAMER_TURRETCHAOS
+    ufopediaType: STR_GORGON_HEAVY_FLAMER
+    size: 0.1
+    costBuy: 150000
+    costSell: 75000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 11102
+
+  - type: STR_CHIMERA_AC_TURRETCHAOS
+    ufopediaType: STR_AUTOCANNON_TAUROX
+    size: 0.1
+    costBuy: 200000
+    costSell: 100000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_AUTOCANNON_GUARD
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    liveAlien: false
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 101
+      ItemId: 11103
+
+  - type: STR_EXECUTIONER_TURRETCHAOS
+    ufopediaType: STR_EXECUTIONER_CANNON
+    size: 0.1
+    costBuy: 200000
+    costSell: 100000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_HEAVY_PLASMA_DEP1
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 103
+      ItemId: 11303
+
+  - type: STR_PUNISHER_TURRETCHAOS
+    ufopediaType: STR_PUNISHER_CANNON
+    size: 0.1
+    costBuy: 150000
+    costSell: 75000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_UFO_CONSTRUCTION
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 103
+      ItemId: 11302
+
+  - type: STR_LASCANNON_TURRETCHAOS
+    ufopediaType: STR_TWIN_LINK_LASCANNON
+    size: 0.1
+    costBuy: 150000
+    costSell: 75000
+    requiresBuy:
+      - STR_LASCAN
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 103
+      ItemId: 11301
+
+  - type: STR_LEMONRUSSCHAOS
+    ufopediaType: STR_LEMONRUSS_WEAPON
+    size: 0.1
+    costBuy: 150000
+    costSell: 75000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 103
+      ItemId: 11300
+
+  - type: STR_FLAMER_SPONSONCHAOS
+    ufopediaType: STR_SPONSON_HEAVY_FLAMER
+    size: 0.1
+    costBuy: 75000
+    costSell: 32500
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11501
+
+  - type: STR_BOLTER_SPONSONCHAOS
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11500
+
+  - type: STR_MULTIMELTA_SPONSONCHAOS
+    ufopediaType: STR_SPONSON_MULTIMELTA_WEAPON
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_BLASTER_LAUNCHER
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11502
+
+  - type: STR_FLAMER_SPONSONCHAOSRHINO
+    ufopediaType: STR_SPONSON_HEAVY_FLAMER
+    size: 0.1
+    costBuy: 75000
+    costSell: 32500
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11501
+
+  - type: STR_BOLTER_SPONSONCHAOSRHINO
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11500
+
+  - type: STR_MULTIMELTA_SPONSONCHAOSRHINO
+    ufopediaType: STR_SPONSON_MULTIMELTA_WEAPON
+    size: 0.1
+    costBuy: 100000
+    costSell: 50000
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_BLASTER_LAUNCHER
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 105
+      ItemId: 11502
+
+  - type: STR_CHIMERA_HULL_BOLTERCHAOS
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 25000
+    costSell: 12500
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 102
+      ItemId: 11200
+
+
+  - type: STR_LEMAN_HULL_BOLTERCHAOS
+    ufopediaType: STR_SPONSON_HB
+    size: 0.1
+    costBuy: 25000
+    costSell: 12500
+    requiresBuy:
+      - STR_CHAOS_STRATEGY
+      - STR_ALIEN_ALLOYS
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 104
+      ItemId: 11400
+
+
+  - type: STR_LEMAN_HULL_LASCHAOS
+    ufopediaType: STR_HULL_LASCANNON
+    size: 0.1
+    costBuy: 50000
+    costSell: 25000
+    requiresBuy:
+      - STR_LASCAN
+      - STR_CHAOS_STRATEGY
+      - STR_MIDTIER_PREREQ
+    weight: 999
+    power: 1
+    damageType: 3
+    battleType: 4
+    recover: true
+    armor: 255
+    fuseType: 0
+    isExplodingInHands: true
+    bigSprite: 100
+    floorSprite: -1
+    #hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+    costPrime:
+      time: 999
+    tags:
+      TurretItem: 104
+      ItemId: 11401
+
+  - type: STR_CHIMERA_HBCHAOS
+    weight: 0
+    size: 0
+    bigSprite: {mod: 40k, index:  640}
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 707}
+    explosionSpeed: 5
+    bulletSpeed: 50
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    accuracyAuto: 50
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    flatUse:
+      time: true
+      energy: true
+      mana: true
+    battleType: 1
+    damageType: 1
+    power: 80
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    autoShots: 7
+    sprayWaypoints: 2
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    twoHanded: false
+    fixedWeapon: true
+    recover: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+
+  - type: STR_SPONSON_HBCHAOS
+    weight: 0
+    size: 0
+    bigSprite: {mod: 40k, index:  640}
+    bulletSprite: 6
+    fireSound: {mod: 40k, index: 707}
+    explosionSpeed: 5
+    bulletSpeed: 50
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    accuracyAuto: 50
+    costAuto:
+      time: 1
+      energy: 10
+      mana: 10
+    flatUse:
+      time: true
+      energy: true
+      mana: true
+    battleType: 1
+    damageType: 1
+    power: 80
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    autoShots: 5
+    sprayWaypoints: 2
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    twoHanded: false
+    fixedWeapon: true
+    recover: false
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+
+  - type: STR_EXECUTIONER_CANNONCHAOS
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    weight: 1
+    bigSprite: {mod: 40k, index: 316}
+    floorSprite: {mod: 40k, index: 0}
+    handSprite: {mod: 40k, index: 0}
+    bulletSprite: {mod: 40k, index: 17}
+    fireSound: {mod: 40k, index: 18}
+    #hitSound: 19 #*** PLASMA rebalance
+    explosionHitSound: {mod: 40k, index: 690} #*** PLASMA rebalance
+    hitAnimation: {mod: 40k, index: 112} #100 #*** PLASMA rebalance
+    battleType: 1
+    fixedWeapon: true
+    clipSize: -1
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    listOrder: 2710
+    dropoff: 3 #mounted heavy weapon
+    autoRange: 25
+    snapRange: 25
+    aimRange: 30
+    accuracyAuto: 60
+    accuracySnap: 60
+    accuracyAimed: 90
+    power: 160
+    powerForAnimation: 48 # 5 / 5 = 1
+    damageType: 5
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.1 #melts some armor on the way in
+      ArmorEffectiveness: 0.75 #*** PLASMA rebalance
+      FireThreshold: 70 #can ignite at high damage
+      ToArmor: 0.2
+      FixRadius: 2
+      IgnoreDirection: false
+      RadiusReduction: 30.0
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 20
+    confAuto:
+      name: STR_MAXIMAL_SHOT
+      shots: 1
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 10
+    costAimed:
+      time: 1
+      energy: 5
+      mana: 10
+    confAimed:
+      name: STR_QUICK_SHOT
+    flatAuto: true
+    flatSnap: true
+    flatAimed: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+      ITEM_AIMED_FLAT_POWER_BONUS: 50 #Overcharged; increase damage by 50%
+      ITEM_POWER_BONUS_PERCENTILE: 1
+
+  - type: STR_PUNISHER_CANNONCHAOS
+    dropoff: 4
+    autoRange: 15 # # + 3 for tuAuto > 50 %
+    accuracyAuto: 40
+    battleType: 1
+    autoShots: 25
+    bigSprite: {mod: 40k, index: 217}
+    floorSprite: {mod: 40k, index: 104}
+    handSprite: {mod: 40k, index: 208}
+    bulletSprite: 2
+    bulletSpeed: 25
+    fireSound: 4
+    sprayWaypoints: 5
+    hitAnimation: 26
+    explosionSpeed: 50
+    power: 50 #ripper gun tier
+    shotgunPellets: 10
+    shotgunChoke: 70
+    shotgunBehavior: 1
+    clipSize: -1
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.02
+      ToArmor: 0.05
+    fixedWeapon: true
+    costAuto:
+      time: 1
+      mana: 10
+      energy: 5
+    flatAuto: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_TWIN_LINK_LASCANNONCHAOS
+    size: 1.0
+    weight: 90
+    bigSprite: {mod: 40k, index: 1081}
+    bulletSpeed: 100
+    autoRange: 25
+    snapRange: 25
+    aimRange: 35
+    dropoff: 3
+    accuracyAuto: 60
+    accuracySnap: 60
+    accuracyAimed: 90
+    shotgunPellets: 2
+    shotgunChoke: 2
+    shotgunBehavior: 1
+    clipSize: -1
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    power: 150 #Lascannon Sentinel Tier
+    damageType: 4
+    damageAlter: #DA LAS
+      RandomType: 6 #gaussian
+      ToArmorPre: 0.4
+      ToHealth: 1.0
+      ToArmor: 0.1
+      ToStun: 0.3
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 10
+    confAuto:
+      name: STR_QUICK_SHOT
+      shots: 1
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 10
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 10
+    flatAuto:
+      time: true
+      energy: true
+      mana: true
+    flatSnap:
+      time: true
+      energy: true
+      mana: true
+    flatAimed:
+      time: true
+      energy: true
+      mana: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
+  - type: STR_HULL_LASCANNONCHAOS
+    size: 1.0
+    weight: 90
+    bigSprite: {mod: 40k, index: 1036}
+    bulletSpeed: 100
+    clipSize: -1
+    dropoff: 3
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    power: 220
+    damageType: 4
+    damageAlter: #DA LAS
+      RandomType: 6 #gaussian
+      ToArmorPre: 0.4
+      ToHealth: 1.0
+      ToArmor: 0.1
+      ToStun: 0.3
+    autoRange: 25
+    snapRange: 25
+    aimRange: 35
+    accuracyAuto: 60
+    accuracySnap: 60
+    accuracyAimed: 90
+    costAuto:
+      time: 1
+      energy: 5
+      mana: 5
+    confAuto:
+      name: STR_QUICK_SHOT
+      shots: 1
+    costSnap:
+      time: 1
+      energy: 10
+      mana: 5
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 5
+    flatAuto:
+      time: true
+      energy: true
+      mana: true
+    flatSnap:
+      time: true
+      energy: true
+      mana: true
+    flatAimed:
+      time: true
+      energy: true
+      mana: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
+  - type: STR_SPONSON_HEAVY_FLAMERCHAOS
+    dropoff: 5
+    weight: 85
+    bigSprite: {mod: 40k, index: 280}
+    fireSound: {mod: 40k, index: 706}
+    invWidth: 2
+    invHeight: 3
+    accuracyAuto: 20
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    costAuto: #sponsons only get one shot / turn
+      time: 1
+      energy: 10
+      mana: 10
+    flatAuto:
+      time: true
+      energy: true
+      mana: true
+    battleType: 1
+    autoShots: 4
+    bulletSpeed: 80
+    fixedWeapon: true
+    recover: false
+    arcingShot: true
+    clipSize: -1
+    #damage profile
+    damageType: 2
+    power: 80
+    damageAlter:
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2 #50-150% Flamer now respects armor values
+      FixRadius: 2
+      ToHealth: 1.5
+      ArmorEffectiveness: 1.0
+      ToMorale: 0.5
+    #range
+    autoRange: 15
+    maxRange: 20
+    powerRangeReduction: 15
+    powerRangeThreshold: 22
+    #projectile SFX
+    bulletSprite: 5
+    hitAnimation: {mod: 40k, index: 88} #XFIRE
+    explosionHitSound: {mod: 40k, index: 771} #FlAMES
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    tags:
+      TURRET_RELOAD_TURNS: 4
+
+  - type: STR_SPONSON_MULTIMELTA_WEAPONCHAOS
+    weight: 0
+    bigSprite: {mod: 40k, index: 1075}
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    #compatibleAmmo:
+    #  - STR_BLASTER_BOMB
+    tuAuto: 0
+    tuAimed: 0
+    confSnap:
+      shots: 2
+    dropoff: 5
+    autoRange: 0
+    snapRange: 21 # -3 for snap shot count > 1
+    aimRange: 0
+    accuracyAuto: 0
+    accuracySnap: 80
+    accuracyAimed: 0
+    battleType: 1
+    clipSize: -1
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 110}
+    power: 10
+    damageType: 11
+    damageAlter:
+      RandomType: 0
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 16
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    costSnap: #sponsons only get one shot / turn
+      time: 1
+      energy: 10
+      mana: 10
+    flatSnap:
+      time: true
+      energy: true
+      mana: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+  - type: STR_SPONSON_HEAVY_FLAMERCHAOSRHINO
+    dropoff: 5
+    weight: 85
+    bigSprite: {mod: 40k, index: 280}
+    fireSound: {mod: 40k, index: 706}
+    invWidth: 2
+    invHeight: 3
+    accuracyAuto: 20
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    costAuto: #sponsons only get one shot / turn
+      time: 1
+      energy: 10
+      mana: 10
+    flatAuto:
+      time: true
+      energy: true
+      mana: true
+    battleType: 1
+    autoShots: 4
+    bulletSpeed: 80
+    fixedWeapon: true
+    recover: false
+    arcingShot: true
+    clipSize: -1
+    #damage profile
+    damageType: 2
+    power: 80
+    damageAlter:
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FireBlastCalc: false
+      RandomType: 2 #50-150% Flamer now respects armor values
+      FixRadius: 2
+      ToHealth: 1.5
+      ArmorEffectiveness: 1.0
+      ToMorale: 0.5
+    #range
+    autoRange: 15
+    maxRange: 20
+    powerRangeReduction: 15
+    powerRangeThreshold: 22
+    #projectile SFX
+    bulletSprite: 5
+    hitAnimation: {mod: 40k, index: 88} #XFIRE
+    explosionHitSound: {mod: 40k, index: 771} #FlAMES
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    tags:
+      TURRET_RELOAD_TURNS: 4
+
+  - type: STR_SPONSON_MULTIMELTA_WEAPONCHAOSRHINO
+    weight: 0
+    bigSprite: {mod: 40k, index: 1075}
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    #compatibleAmmo:
+    #  - STR_BLASTER_BOMB
+    tuAuto: 0
+    tuAimed: 0
+    confSnap:
+      shots: 2
+    dropoff: 5
+    autoRange: 0
+    snapRange: 21 # -3 for snap shot count > 1
+    aimRange: 0
+    accuracyAuto: 0
+    accuracySnap: 80
+    accuracyAimed: 0
+    battleType: 1
+    clipSize: -1
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 110}
+    power: 10
+    damageType: 11
+    damageAlter:
+      RandomType: 0
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 16
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    costSnap: #sponsons only get one shot / turn
+      time: 1
+      energy: 10
+      mana: 10
+    flatSnap:
+      time: true
+      energy: true
+      mana: true
+    tags:
+      TURRET_RELOAD_TURNS: 2
+
+extended:
+
+### Refactored Modular Turret Script Documentation###
+# The STR of the dummy item (i.e. the item that triggers the spawn of the turret) must be the same as the STR of the turret unit
+# Tags explanation
+# Turret: int # signifies that unit is the dummy unit that will be transformed into a actual turret (e.g. chimera command turrets, blank hull pieces)
+              # Every unique unit must have a different number
+                # Current index:
+                # 1: Chimera Turrets
+                # 2: Chimera Hull Turrets
+                # 3: Leman Russ Turrets
+                # 4: Leman Russ Hull Turrets
+                # 5: Leman Russ Sponsons
+                # 11: SL Chimera Turrets
+                # 12: SL Chimera Hull Turrets
+                # 13: SL Leman Russ Turrets
+                # 14: SL Leman Russ Hull Turrets
+                # 15: SL Leman Russ Sponsons
+                # 101: Chaos Chimera Turrets
+                # 102: Chaos Chimera Hull Turrets
+                # 103: Chaos Leman Russ Turrets
+                # 104: Chaos Leman Russ Hull Turrets
+                # 105: Chaos Leman Russ Sponsons
+
+# Sponson: 1  # Always a 1, signifies a leman russ sponson, only used in script to make west sponson have a blank sprite
+# Hull 1      # Always a 1, siginifes hull turret, used to make the spawned-on-death blank hull be on the neutral/civilian faction
+# TurretUnit: 1 # Always a 1, signifies that the unit is a turret unit that the script applies to
+# TurretItem: int # signifies that the item is a turret dummy item, INT MUST CORRESPOND TO THE CORRECT TURRET: INT TAG, i.e. a turret dummy item that triggers the transformation of a leman russ turret has the TurretItem tag be 3
+# ItemId: int   # Unique Id for this turret type
+# TurretId: int # Unique Id for this turret type, must correspond to ItemId
+                # Currently ids are formated to correspond to Turret: int number, this isnt a requirement, just makes it easier to keep track of them
+                # Current Ids:
+                  # 100: Chimera Turrets
+                  # 200: Chimera Hull Turrets
+                  # 300: Leman Russ Turrets
+                  # 400: Leman Russ Hull Turrets
+                  # 500: Leman Russ Sponsons
+                  # 1100: SL Chimera Turrets
+                  # 1200: SL Chimera Hull Turrets
+                  # 1300: SL Leman Russ Turrets
+                  # 1400: SL Leman Russ Hull Turrets
+                  # 1500: SL Leman Russ Sponsons
+                  # 11100: Chaos Chimera Turrets
+                  # 11200: Chaos Chimera Hull Turrets
+                  # 11300: Chaos Leman Russ Turrets
+                  # 11400: Chaos Leman Russ Hull Turrets
+                  # 11500: Chaos Leman Russ Sponsons
+
+  scripts:
+
+    createUnit:
+
+      - update: ROSIGMA_cU_adv_turret_setSpawnUnit1 #sets and forces turret spawn units based on dummy item names
+        offset: 1
+        code: |
+          var int turret;
+          var int turretitem;
+          var int id;
+          var int maxid;
+          var int turretactive;
+
+          var ptr RuleUnit rule_unit;
+          var ptr RuleItem rule_item;
+          var text name;
+
+          unit.getTag turret Tag.Turret;
+          if ge turret 1;
+            loop var turret_item battle_game.getItems.list;
+              turret_item.getTag turretitem Tag.TurretItem;
+              if eq turretitem turret;
+                turret_item.getTag turretactive Tag.TurretActive;
+                if eq turretactive 0;
+                  turret_item.setTag Tag.TurretActive 1;
+
+                  turret_item.getRuleItem rule_item;
+                  rule_item.getType name;
+                  rules.getRuleUnit rule_unit name;
+                  unit.setSpawnUnit rule_unit;
+                  unit.setSpawnUnitFaction FACTION_PLAYER;
+                  unit.setSpawnUnitInstantRespawn 1;
+
+                  return;
+                end;
+              end;
+            end;
+          end;
+          return;
+
+
+      - update: ROSIGMA_cU_adv_turret_set_sponson_resprite3 #checks if unit is west sponson
+        offset: 3
+        code: |
+
+          var int flamersponsonunit;
+          var int boltersponsonunit;
+          var int mmsponsonunit;
+          var int sponson;
+          var int run;
+          var int y;
+          var int x;
+          var int z;
+          var int temp;
+          var int id;
+          var ptr BattleUnit other_sponson;
+          var ptr Tile other_tile;
+
+
+          unit.getTag sponson Tag.Sponson;
+          if eq sponson 1;
+            unit.getPosition.getY y;
+            unit.getPosition.getX x;
+            unit.getPosition.getZ z;
+            add x 5;
+            battle_game.getTile other_tile x y z;
+            other_tile.getUnit other_sponson;
+            other_sponson.getTag sponson Tag.Sponson;
+            if eq sponson 1;
+              set temp 1;
+            end;
+            if eq temp 1;
+              unit.setTag Tag.ReSprite 1;
+            end;
+          end;
+          return;
+
+      - update: ROSIGMA_cU_adv_turret_set_hull_neutral4 #sets dead hulls to be civilian faction
+        offset: 4
+        code: |
+          var int hull;
+
+          unit.getTag hull Tag.Hull;
+          if eq hull 1;
+            #debug_log "createUnit | offset 4 | advanced_turrets: hullbolterunit or hulllasunit detected.";
+            unit.setSpawnUnitFaction FACTION_NEUTRAL;
+          end;
+          return;
+
+
+      - update: ROSIGMA_cU_adv_turret_set_startingtimeunits99 #ensures turrets spawn with full time units
+        offset: 99
+        code: |
+          var int turretunit;
+          var int maxtu;
+
+          unit.getTag turretunit Tag.TurretUnit;
+          if eq turretunit 1;
+            unit.getTimeUnitsMax maxtu;
+            unit.setTimeUnits maxtu;
+          end;
+          return;
+
+    damageUnit:
+      - update: ROSIGMA_dU_adv_turret_prime_dummy_items #primes dummy items when corresponding turret is killed
+        offset: 1
+        code: |
+          var int turretunit;
+          var int turretitem;
+          var int health;
+          var int turretid;
+          var int itemid;
+          var int fuseactive;
+
+          var text name;
+
+          var ptr RuleUnit rule_unit;
+
+          unit.getTag turretunit Tag.TurretUnit;
+          if eq turretunit 1;
+            unit.getHealth health;
+            if gt to_health health;
+              loop var turret_item battle_game.getItems.list;
+              turret_item.getTag turretitem Tag.TurretItem;
+                if ge turretitem 1;
+                  turret_item.getTag itemid Tag.ItemId;
+                  unit.getTag turretid Tag.TurretId;
+
+                  if eq itemid turretid;
+                    turret_item.isFuseEnabled fuseactive;
+                    if neq fuseactive 1;
+                      turret_item.setFuseTimer 0;
+                      return;
+                    end;
+                  end;
+                end;
+              end;
+            end;
+          end;
+
+          return;
+
+
+    newTurnUnit:
+      - update: ROSIGMA_nTU_adv_turret_set_sponson_resprite3 #cchecks if unit is west sponson (i honestly cant remember why there is a nTU and cU script for this same function)
+        offset: 3
+        code: |
+
+          var int flamersponsonunit;
+          var int boltersponsonunit;
+          var int mmsponsonunit;
+          var int sponson;
+          var int run;
+          var int y;
+          var int x;
+          var int z;
+          var int temp;
+          var int id;
+          var ptr BattleUnit other_sponson;
+          var ptr Tile other_tile;
+
+
+          unit.getTag sponson Tag.Sponson;
+          if eq sponson 1;
+            unit.getPosition.getY y;
+            unit.getPosition.getX x;
+            unit.getPosition.getZ z;
+            add x 5;
+            battle_game.getTile other_tile x y z;
+            other_tile.getUnit other_sponson;
+            other_sponson.getTag sponson Tag.Sponson;
+            if eq sponson 1;
+              set temp 1;
+            end;
+            if eq temp 1;
+              unit.setTag Tag.ReSprite 1;
+            end;
+          end;
+          return;
+
+    selectUnitSprite:
+      - update: ROSIGMA_sUS_resprite_sponsons1 #switches west sponson sprite to a blank one
+        offset: 1
+        code: |
+          var int resprite;
+
+          unit.getTag resprite Tag.ReSprite;
+          if eq 1 resprite;
+            add sprite_index 100;
+          end;
+          return sprite_index;
+
+
+extraSprites:
+  - type: CHIMERA_COMMAND_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 840
+    files:
+      0: Resources/Advanced Turrets/command_turretCHAOS.png
+
+  - type: CHIMERA_BOLTER_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 840
+    files:
+      0: Resources/Advanced Turrets/bolter_turretCHAOS.png
+
+  - type: CHIMERA_FLAMER_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 840
+    files:
+      0: Resources/Advanced Turrets/flamer_turretCHAOS.png
+
+  - type: CHIMERA_AC_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 840
+    files:
+      0: Resources/Advanced Turrets/AC_turretCHAOS.png
+
+  - type: EXECUTIONER_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/Executioner_TurretCHAOS.png
+
+  - type: PUNISHER_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/Leman_punisherCHAOS.png
+
+  - type: LASCANNON_TURRETCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/Annhilator_turretCHAOS.png
+
+  - type: SPONSONCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/empty_sponsonCHAOS.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: SPONSONCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/empty_sponsonCHAOSRHINO.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: FLAMERSPONSONCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Heavy_flamer_sponsonCHAOS.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: FLAMERSPONSONCHAOSRHINO.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Heavy_flamer_sponsonCHAOSRHINO.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: BOLTERSPONSONCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Bolter_sponsonCHAOS.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: BOLTERSPONSONCHAOSRHINO.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Bolter_sponsonCHAOSRHINO.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: MULTIMELTASPONSONCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Multimelta_sponsonCHAOS.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: MULTIMELTASPONSONCHAOSRHINO.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Multimelta_sponsonCHAOSRHINO.png
+      100: Resources/Advanced Turrets/invisible_sponson.png
+
+  - type: CHIMERAHULLCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/chimera_HullCHAOS.png
+
+  - type: LEMANHULLCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Leman_HullCHAOS.png
+
+  - type: CHIMERAHULLBOLTERCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/chimera_HBCHAOS.png
+
+  - type: LEMANHULLBOLTERCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Leman_HBCHAOS.png
+
+  - type: LEMANHULLLASCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 120
+    files:
+      0: Resources/Advanced Turrets/Leman_LasCHAOS.png
+
+  - type: CHIMERON_TURRET_BSCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/CHIMERON_TURRET_BSCHAOS.png
+
+  - type: CHIMERALASCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/chimeraturretCHAOS.png
+
+  - type: CHIMERA_MLTURRET_BSCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 840
+    files:
+      0: Resources/Advanced Turrets/chimera_turret_bsCHAOS.png
+
+  - type: CHIMERA_HBTURRET_BSCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/chimera_turret_hb2_bsCHAOS.png
+
+  - type: LEMONRUSSCHAOS.PCK
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/Advanced Turrets/lemonrussCHAOS.png
