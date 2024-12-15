@@ -5,37 +5,6 @@ extended:
       IS_DRUG: int
   scripts:
     healUnit:
-      - new: ROSIGMA_healU_medikit_extinguishes_fire
-        offset: 20
-        code: |
-          var int temp;
-          var int noExtinguish;
-
-          item.getTag noExtinguish Tag.ActivateFlight;
-          if eq noExtinguish 1; #prevents jetpacks from extinguishing fire
-            return;
-          end;
-
-          item.getTag noExtinguish Tag.IS_DRUG;
-          if eq noExtinguish 1; #prevents drugs from extinguishing fire
-            return;
-          end;
-
-          item.getTag noExtinguish Tag.TURRET_RELOAD_ITEM;
-          if eq noExtinguish 1; #prevents drugs from extinguishing fire
-            return;
-          end;
-
-          target.getFire temp;
-          if and eq medikit_action_type medikit_action_heal gt temp 0;
-            set wound_recovery 0;
-            set health_recovery 0;
-            target.setFire 0;
-            battle_game.flashMessage "Target Extinguished.";
-          end;
-
-          return;
-
       - new: ROSIGMA_healU_medikit_no_pain_or_stim_mechanical_units #prevents stimming/painkilling mechanical units
         offset: 1
         code: |
