@@ -36,13 +36,13 @@ soldierTransformation:
     requiredItems:
       STR_ELERIUM_115: 5
     producedSoldierType: STR_CHAOS_MARINE
+    keepSoldierArmor: false
     producedSoldierArmor: STR_CHAOS_MARINE_ARMOR
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
     needsCorpseRecovered: false
     allowedSoldierTypes:
       - STR_SOLDIER
-      - STR_SOLDIER_TERMINATOR
       - STR_PRIMARISLV2
       - STR_PRIMARISLV3
       - STR_PRIMARISLV4
@@ -60,6 +60,7 @@ soldierTransformation:
     requiredItems:
       STR_ELERIUM_115: 5
     producedSoldierType: STR_CHAOS_MARINE
+    keepSoldierArmor: false
     producedSoldierArmor: STR_ALPHA_ARMOR_PLAYER #storeItem
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
@@ -85,6 +86,7 @@ soldierTransformation:
     requiredItems:
       STR_ELERIUM_115: 5
     producedSoldierType: STR_CHAOS_MARINE
+    keepSoldierArmor: false
     producedSoldierArmor: STR_NIGHTLORD_CSM_ARMOR_PLAYER #storeItem
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
@@ -111,6 +113,7 @@ soldierTransformation:
     requiredItems:
       STR_ELERIUM_115: 5
     producedSoldierType: STR_CHAOS_MARINE_NURGLE
+    keepSoldierArmor: false
     producedSoldierArmor: MUTON_ARMORNURGLEA_PLAYER #armor storeItem
     allowsDeadSoldiers: false #could be set to TRUE for Nurgle, too good?
     allowsLiveSoldiers: true
@@ -136,8 +139,8 @@ soldierTransformation:
     cost: 1000
     requiredItems:
       STR_ELERIUM_115: 5
+    keepSoldierArmor: false
     producedSoldierType: STR_CHAOS_MARINE_KHORNE
-    producedSoldierArmor: STR_KHORNECHAMP_ARMOR_PLAYER #armor storeItem
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
     needsCorpseRecovered: false
@@ -163,6 +166,7 @@ soldierTransformation:
     requiredItems:
       STR_ELERIUM_115: 5
     producedSoldierType: STR_CHAOS_MARINE_SLAANESH
+    keepSoldierArmor: false
     producedSoldierArmor: MUTON_ARMORSLAANESH_PLAYER #armor storeItem
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
@@ -180,31 +184,134 @@ soldierTransformation:
     transferTime: 96 # 4 days
     lowerBoundAtMinStats: true
 
-  - name: STR_CONVERT_TO_TZEENTCH_MARINE
+# Rubrics are now manufactured, reuse this for tz sorcerers
+#  - name: STR_CONVERT_TO_TZEENTCH_MARINE
+#    requires:
+#      - STR_CONVERT_TO_CHAOS_RESEARCH
+#      - STR_TZEENTCH_OPTIONS
+#    requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
+#    cost: 1000
+#    requiredItems:
+#      STR_ELERIUM_115: 5
+#    producedSoldierType: STR_CHAOS_MARINE_TZEENTCH
+#    producedSoldierArmor: MUTON_ARMORTZEENTCH_PLAYER #armor storeItem
+#    allowsDeadSoldiers: false
+#    allowsLiveSoldiers: true
+#    needsCorpseRecovered: false
+#    allowedSoldierTypes:
+#      - STR_CHAOS_MARINE
+#      - STR_SOLDIER
+#      - STR_SOLDIER_TERMINATOR
+#      - STR_PRIMARISLV2
+#      - STR_PRIMARISLV3
+#      - STR_PRIMARISLV4
+#      - STR_PRIMARISLV5
+#      - STR_PRIMARISLV1
+#      - STR_SOLDIER_JOAN
+#    transferTime: 96 # 4 days
+#    lowerBoundAtMinStats: true
+
+##Chaos Chosen Promotions
+  - name: STR_PROMOTE_CHAOS_CHOSEN
     requires:
-      - STR_CONVERT_TO_CHAOS_RESEARCH
-      - STR_TZEENTCH_OPTIONS
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
     requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
-    cost: 1000
-    requiredItems:
-      STR_ELERIUM_115: 5
-    producedSoldierType: STR_CHAOS_MARINE_TZEENTCH
-    producedSoldierArmor: MUTON_ARMORTZEENTCH_PLAYER #armor storeItem
+    cost: 15000
+    producedSoldierType: STR_CHAOS_MARINE_CHOSEN
+    keepSoldierArmor: false
     allowsDeadSoldiers: false
     allowsLiveSoldiers: true
-    needsCorpseRecovered: false
+    allowsWoundedSoldiers: true
+    requiredItems: 
+      STR_CHAOS_SERGEANT_ARMOR: 1
     allowedSoldierTypes:
       - STR_CHAOS_MARINE
-      - STR_SOLDIER
       - STR_SOLDIER_TERMINATOR
-      - STR_PRIMARISLV2
-      - STR_PRIMARISLV3
-      - STR_PRIMARISLV4
-      - STR_PRIMARISLV5
-      - STR_PRIMARISLV1
-      - STR_SOLDIER_JOAN
-    transferTime: 96 # 4 days
-    lowerBoundAtMinStats: true
+    transferTime: 0
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_PROMOTE_CHAOS_CHOSEN_KHORNE
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_KHORNE_PATH
+    requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
+    cost: 15000
+    producedSoldierType: STR_CHAOS_CHOSEN_KHORNE
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    requiredItems: 
+      STR_CHAOS_SERGEANT_ARMOR: 1
+    allowedSoldierTypes:
+      - STR_CHAOS_MARINE_KHORNE
+      - STR_CHAOS_MARINE_CHOSEN
+      - STR_SOLDIER_TERMINATOR
+    transferTime: 0
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_PROMOTE_CHAOS_CHOSEN_NURGLE
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_NURGLE_PATH
+    requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
+    cost: 15000
+    producedSoldierType: STR_CHAOS_CHOSEN_NURGLE
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    requiredItems: 
+      STR_CHAOS_SERGEANT_ARMOR: 1
+    allowedSoldierTypes:
+      - STR_CHAOS_MARINE_NURGLE
+      - STR_CHAOS_MARINE_CHOSEN
+      - STR_SOLDIER_TERMINATOR
+    transferTime: 0
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_PROMOTE_CHAOS_CHOSEN_SLAANESH
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_SLAANESH_PATH
+    requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
+    cost: 15000
+    producedSoldierType: STR_CHAOS_CHOSEN_SLAANESH
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    requiredItems: 
+      STR_CHAOS_HAVOC_ARMOR: 1 #Slaanesh are havoc specialists
+    allowedSoldierTypes:
+      - STR_CHAOS_MARINE_SLAANESH
+      - STR_CHAOS_MARINE_CHOSEN
+      - STR_SOLDIER_TERMINATOR
+    transferTime: 0
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_PROMOTE_CHAOS_CHOSEN_TZEENTCH
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_TZEENTCH_PATH
+    requiresBaseFunc: [CHAOS] #Requires Chaos Shrine
+    cost: 15000
+    producedSoldierType: STR_CHAOS_CHOSEN_TZEENTCH
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    requiredItems: 
+      STR_CHAOS_SERGEANT_ARMOR: 1
+    allowedSoldierTypes:
+      - STR_CHAOS_MARINE_TZEENTCH #Only Rubrics
+    transferTime: 0
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
 
 # Sister into Heretic Sister transformations and Heretic Sister into specific god Heretic Sister transformations
   - name: STR_RESURRECT_CHAOS_SISTER
