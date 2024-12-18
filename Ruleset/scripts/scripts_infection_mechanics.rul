@@ -774,18 +774,18 @@ extended:
             return;
           end;
 
-          #if we have no infection, cancel out
-          target.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
-          if le infectionDamage 0;
-            return;
-          end;
-
           target.getFire temp;
           if and eq medikit_action_type medikit_action_heal gt temp 0;
             set wound_recovery 0;
             set health_recovery 0;
             target.setFire 0;
             battle_game.flashMessage "Target Extinguished.";
+            return;
+          end;
+
+          #if we have no infection, cancel out
+          target.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
+          if le infectionDamage 0;
             return;
           end;
 
