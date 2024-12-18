@@ -86,6 +86,9 @@ items:
   - type: STR_AXE
     refNode: *CHAOS_WEAPON
     costBuy: 4000
+  - type: STR_ALIEN_GRENADE
+    refNode: *CHAOS_WEAPON
+    costBuy: 1200
   - type: STR_AUTOGUN_CHAOS_NURGLE
     refNode: *CHAOS_WEAPON
     requiresBuy: !add
@@ -400,3 +403,87 @@ items:
     costBuy: 500
     requiresBuy: !add
       - STR_TZEENTCH_OPTIONS
+
+# Special Armor Weapons
+  - type: STR_NURGLING_HELPER #Chosen of Nurgle Special Weapon
+    weight: 0
+    specialIconSprite: 300
+    fireSound: {mod: 40k, index: 51 }
+    hitSound: {mod: 40k, index: 19 }
+    clipSize: -1
+    fixedWeapon: true
+    maxRange: 20
+    power: 45
+    dropoff: 5
+    damageType: 8 #acid
+    damageAlter: ## Plague-inflicting weapon
+      ArmorEffectiveness: 0.6 #bypasses armor
+      ToArmorPre: 0.7
+      ToArmor: 0.0
+      ToHealth: 0.5
+      ToMana: 0.5
+      ToMorale: 2.0
+      ToEnergy: 0.3
+      ToStun: 0.3
+      ToTime: 0.2
+      FixRadius: 2
+    tuAuto: 40 #was 25 = 4x per turn and higher reaction chance
+    accuracyAuto: 65
+    autoShots: 3
+    confAuto:
+      name: STR_PLAGUE_SPRAY
+    hitAnimation: 1030 #128 green from X1.pck
+    vaporColorSurface: 2 #toxic green
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 50
+    bulletSpeed: 25
+    autoRange: 12 #was 15, midrange
+    powerForAnimation: 48
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    shotgunBehavior: 1
+    shotgunPellets: 7
+    shotgunSpread: 37
+    powerRangeReduction: 2.0
+    powerRangeThreshold: 10.0 #was 15.0
+    tags:
+      INFECTION_DAMAGE_PERCENT: 100 #inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1 #the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+    specialChance: 1 #tiny chance of zombifying its victims
+
+  - type: STR_SONIC_GUN_SPECIAL #Slaanesh Chosen Havoc Special Weapon
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
+    specialIconSprite: 301
+    recover: false
+    fixedWeapon: true
+    size: 0.0
+    dropoff: 6 # sonic cannon 5
+    weight: 20 #sonic cannon 40
+    bigSprite: 2229
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 861}
+    clipSize: -1
+    explosionHitSound: {mod: 40k, index: 863} #Sound
+    hitAnimation: {mod: 40k, index: 96} #XSOUND
+    power: 45
+    damageType: 3
+    damageAlter: #DA Sound
+      ToHealth: 1.0 #sonic cannon 2.0
+      ArmorEffectiveness: 0.4 #sonic cannon 0.2
+      RandomType: 6
+      ToMorale: 2.0
+      ToStun: 0.5
+      ToTime: 0.5
+      ToEnergy: 0.2
+    accuracySnap: 70 #sonic cannon 75
+    tuSnap: 40
+    snapRange: 14
+    battleType: 1
+    bulletSpeed: 80
+    invWidth: 2
+    invHeight: 3
+    recoveryPoints: 2
+    armor: 50
+    listOrder: 11791

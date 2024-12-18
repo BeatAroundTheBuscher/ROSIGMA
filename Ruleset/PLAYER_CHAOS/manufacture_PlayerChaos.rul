@@ -542,7 +542,6 @@ manufacture:
     space: 0
     time: 2000
     cost: 500000
-    spawnedPersonType: STR_CHAOS_MARINE_NOARMOR
     producedItems:
       STR_KILLPOINT_TOKEN: 1
   - name: STR_RECRUIT_CAPTIVE_CHAOS_TERMINATOR
@@ -550,6 +549,7 @@ manufacture:
     requiredItems:
       STR_MUTON_SOLDIER: 1
       STR_KILLPOINT_TOKEN: 70
+    spawnedPersonType: STR_CHAOS_MARINE_CHOSEN
     spawnedSoldier:
       armor: STR_CHAOS_TERMINATOR_ARMOR
       rank: 3
@@ -571,6 +571,7 @@ manufacture:
     requiredItems:
       STR_MUTON_SOLDIER_NW: 1
       STR_KILLPOINT_TOKEN: 70
+    spawnedPersonType: STR_CHAOS_MARINE_CHOSEN
     spawnedSoldier:
       armor: STR_CHAOS_TERMINATOR_ARMOR
       rank: 3
@@ -592,6 +593,7 @@ manufacture:
     requiredItems:
       STR_MUTON_ENGINEER: 1
       STR_KILLPOINT_TOKEN: 70
+    spawnedPersonType: STR_CHAOS_MARINE_CHOSEN
     spawnedSoldier:
       armor: STR_CHAOS_TERMINATOR_ARMOR
       rank: 3
@@ -613,9 +615,9 @@ manufacture:
     requiredItems:
       STR_KHORNE_TERMINATOR: 1
       STR_KILLPOINT_TOKEN: 70
-    spawnedPersonType: STR_CHAOS_MARINE_KHORNE
+    spawnedPersonType: STR_CHAOS_CHOSEN_KHORNE
     spawnedSoldier:
-      armor: STR_KHORNEterminator_ARMOR
+      armor: STR_KHORNE_TERMINATOR_ARMOR
       rank: 3
       diary:
         commendations:
@@ -635,9 +637,9 @@ manufacture:
     requiredItems:
       STR_NURGLE_TERMINATOR: 1
       STR_KILLPOINT_TOKEN: 70
-    spawnedPersonType: STR_CHAOS_MARINE_NURGLE
+    spawnedPersonType: STR_CHAOS_CHOSEN_NURGLE
     spawnedSoldier:
-      armor: STR_MUTON_ARMORNURGLE
+      armor: STR_NURGLE_TERMINATOR_ARMOR
       rank: 3
       diary:
         commendations:
@@ -722,36 +724,24 @@ manufacture:
     producedItems:
       STR_KILLPOINT_TOKEN: 1
 
+# Rubric Production
+  - name: STR_PRODUCE_RUBRIC
+    category: STR_ADVANCEMENT
+    requires:
+      - STR_CHAOS_MARINE_HIRE_RESEARCH
+      - STR_TZEENTCH_PATH
+    requiresBaseFunc: [CHAOS]
+    space: 1
+    time: 250
+    cost: 100000
+    requiredItems:
+      STR_CHAOS_MARINE_ARMOR: 1
+    producedItems:
+      STR_KILLPOINT_TOKEN: 1
+    spawnedPersonType: STR_CHAOS_MARINE_TZEENTCH
+
 #Chaos Armor Manufacturing
 ##Chaos Space Marines
-  - name: STR_CHAOS_BEHEMOTH_ARMOR #Slaanesh #1 BADGE 5
-    category: STR_PERSONAL_ARMOR
-    requires:
-      - STR_NOTCHAOSCULT
-      - STR_ALIENS_ONLY
-      - STR_CENT_ARMORR
-    space: 0
-    time: 1200
-    cost: 32000
-    requiresBaseFunc: [ARMO]
-    requiredItems:
-      STR_ALIEN_ALLOYS: 250
-      STR_EXAMINATION_ROOM: 2
-      STR_ELERIUM_115: 50
-  - name: STR_CHAOS_SORC_ARMOR
-    category: STR_PERSONAL_ARMOR
-    requires:
-      - STR_NOTCHAOSCULT
-      - STR_ALIENS_ONLY
-      - STR_PERSONAL_ARMOR
-      - STR_PSI_AMP
-    space: 0
-    time: 800
-    cost: 22000
-    requiresBaseFunc: [CHAOS]
-    requiredItems:
-      STR_ALIEN_ALLOYS: 150
-      STR_EXAMINATION_ROOM: 8
   - name: STR_CHAOS_MARINE_ARMOR
     category: STR_PERSONAL_ARMOR
     requires:
@@ -763,7 +753,7 @@ manufacture:
     cost: 22000
     requiredItems:
       STR_ALIEN_ALLOYS: 30
-  - name: STR_CHAOS_SERGEANT_ARMOR
+  - name: STR_CHAOS_SERGEANT_ARMOR #Chosen
     category: STR_PERSONAL_ARMOR
     requires:
       - STR_NOTCHAOSCULT
@@ -772,6 +762,17 @@ manufacture:
     space: 0
     time: 800
     cost: 50000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 50
+  - name: STR_CHAOS_HAVOC_ARMOR
+    category: STR_PERSONAL_ARMOR
+    requires:
+      - STR_NOTCHAOSCULT
+      - STR_ALIENS_ONLY
+      - STR_DEV_ARMOR
+    space: 0
+    time: 800
+    cost: 22000
     requiredItems:
       STR_ALIEN_ALLOYS: 50
   - name: STR_CHAOS_RAPTOR_ARMOR
@@ -785,17 +786,6 @@ manufacture:
     cost: 22000
     requiredItems:
       STR_ALIEN_ALLOYS: 40
-  - name: STR_CHAOS_HAVOC_ARMOR
-    category: STR_PERSONAL_ARMOR
-    requires:
-      - STR_NOTCHAOSCULT
-      - STR_ALIENS_ONLY
-      - STR_DEV_ARMOR
-    space: 0
-    time: 800
-    cost: 22000
-    requiredItems:
-      STR_ALIEN_ALLOYS: 50
   - name: STR_CHAOS_TERMINATOR_ARMOR
     category: STR_PERSONAL_ARMOR
     requires:
@@ -809,7 +799,18 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 300
       STR_ELERIUM_115: 30
-      STR_EXAMINATION_ROOM: 1
+  - name: STR_CHAOS_SORC_ARMOR
+    category: STR_PERSONAL_ARMOR
+    requires:
+      - STR_NOTCHAOSCULT
+      - STR_ALIENS_ONLY
+      - STR_PERSONAL_ARMOR
+    space: 0
+    time: 800
+    cost: 22000
+    requiresBaseFunc: [CHAOS]
+    requiredItems:
+      STR_ALIEN_ALLOYS: 150
   - name: STR_CHAOS_LORD_ARMOR
     category: STR_PERSONAL_ARMOR
     requires:
@@ -823,7 +824,19 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 400
       STR_ELERIUM_115: 120
-      STR_EXAMINATION_ROOM: 2
+  - name: STR_CHAOS_BEHEMOTH_ARMOR #Slaanesh
+    category: STR_PERSONAL_ARMOR
+    requires:
+      - STR_NOTCHAOSCULT
+      - STR_SLAANESH_PATH
+      - STR_CENT_ARMORR
+    space: 0
+    time: 1200
+    cost: 32000
+    requiresBaseFunc: [ARMO]
+    requiredItems:
+      STR_ALIEN_ALLOYS: 250
+      STR_ELERIUM_115: 50
 
 #Chaos Weapons Manufacturing
 ##Las
