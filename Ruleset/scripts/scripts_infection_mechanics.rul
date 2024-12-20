@@ -322,7 +322,7 @@ extended:
 
           unit.getTag infectionFaction Tag.CURRENT_INFECTION_FACTION; #set the faction
           #debug_log "Infection Scripts; damageUnit, offset 23: Infection faction:" infectionFaction;
-          if eq infectionFaction FACTION_PLAYER; #player infections don't spawn units for balance reasons
+          if neq infectionFaction FACTION_HOSTILE; #player infections don't spawn units for balance reasons
             #debug_log "Infection Scripts; damageUnit, offset 23: Aborting. PC sourced infection.";
             #clear tags:
             unit.setTag Tag.CURRENT_INFECTION_FACTION 0; #untag
@@ -501,7 +501,7 @@ extended:
 
           unit.getTag infectionFaction Tag.CURRENT_INFECTION_FACTION; #set the faction
           #debug_log "Infection Scripts; newTurnUnit, offset 22: Infected unit infection faction:" infectionFaction;
-          if eq infectionFaction FACTION_PLAYER; #player infections don't spawn units for balance reasons
+          if neq infectionFaction FACTION_HOSTILE; #player infections don't spawn units for balance reasons
             #debug_log "Infection Scripts; newTurnUnit, offset 22: Aborting. PC sourced infection.";
             #set new health level
             unit.setHealth remainingHealth;
