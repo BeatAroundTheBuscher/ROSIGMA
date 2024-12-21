@@ -862,14 +862,17 @@ items:
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
     weight: 3
-    power: 130
+    power: 150
+    dropoff: 3
     damageType: 5
     accuracySnap: 75
     accuracyAimed: 110
     powerForAnimation: 48
     tuSnap: 30
     tuAimed: 60
-    snapRange: 24 #*** PLASMA rebalance
+    snapRange: 25
+    aimRange: 40
+    powerRangeThreshold: 40
     battleType: 1
     damageAlter: #DA PLASMA
       #ToHealth: 0.9
@@ -891,12 +894,16 @@ items:
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
     weight: 3
-    power: 120
+    power: 150
+    dropoff: 3
     damageType: 5
     accuracySnap: 50
     accuracyAimed: 90
     tuSnap: 40
     tuAimed: 60
+    snapRange: 25
+    aimRange: 40
+    powerRangeThreshold: 40
     battleType: 1
     powerForAnimation: 48
     damageAlter: #DA PLASMA
@@ -2252,7 +2259,7 @@ items:
     listOrder: 13210
 
   - type: STR_CASSC_DREADNOUGHT                                                             #13210
-    categories: [STR_CAT_TERMINATOR]
+    categories: [STR_CAT_DEVASTATOR]
     requires:
       - STR_ALIENS_ONLY
     size: 0.6
@@ -2272,9 +2279,9 @@ items:
     snapRange: 22
     autoRange: 17
     confSnap:
-      shots: 5
+      shots: 3
       name: STR_BURST_SNAP_SHOT
-    autoShots: 10
+    autoShots: 15
     battleType: 1
     clipSize: -1
     power: 120
@@ -2294,7 +2301,200 @@ items:
     sprayWaypoints: 2
     bulletSpeed: 100
     attraction: 8
-    listOrder: 13211
+
+  - type: STR_HEAVY_FLAMER_DREADNOUGHT
+    categories: [STR_CAT_DEVASTATOR, STR_CAT_FLAMER]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 1.0
+    dropoff: 4
+    costSell: 35000
+    weight: 70
+    bigSprite: 937
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    clipSize: -1
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    armor: 100
+
+    autoRange: 12
+    snapRange: 18
+    aimRange: 0
+
+    accuracyAuto: 25
+    accuracySnap: 50
+    accuracyAimed: 0
+    tuSnap: 25
+    tuAuto: 45
+
+    maxRange: 25
+    autoShots: 4
+    arcingShot: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+
+    power: 90
+    powerRangeReduction: 15
+    powerRangeThreshold: 25
+    damageType: 2
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 3
+      ToHealth: 1.7
+      ToStun: 0.4
+      ToTile: 0.3
+      ToItem: 0.3
+      ToMorale: 5.0
+      ToTime: 0.2 #debilitating pain
+      RandomType: 6 #Gaussian
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+
+    bulletSpeed: 80
+    fixedWeapon: true
+    recover: false
+    twoHanded: false
+
+  - type: STR_CHAOS_DREADNOUGHT_MULTIMELTA
+    categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
+    size: 0.3
+    dropoff: 4
+    costSell: 54000
+    weight: 100
+    bigSprite: {mod: 40k, index: 35}
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    battleType: 1
+    invWidth: 2
+    invHeight: 3
+    power: 15
+    damageType: 11
+    damageAlter: #DA MELTA Double
+      RandomType: 0
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      FireThreshold: 5
+    clipSize: -1
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 20.0
+    accuracySnap: 90
+    tuSnap: 45
+    confSnap:
+      shots: 2
+    maxRange: 40
+    fixedWeapon: true
+    recover: false
+    twoHanded: false
+    armor: 200
+    listOrder: 12300
+
+  - type: STR_TWIN_LINK_LASCANNON_CHAOS_DREADNOUGHT
+    categories: [STR_CAT_DEVASTATOR]
+    size: 1.0
+    weight: 90
+    bigSprite: {mod: 40k, index: 1081}
+    bulletSpeed: 100
+    autoRange: 0
+    snapRange: 25
+    aimRange: 35
+    dropoff: 3
+    accuracyAuto: 0
+    accuracySnap: 60
+    accuracyAimed: 90
+    shotgunSpread: 1 # 1/100; hit together
+    shotgunBehavior: 1 # new behaviour
+    shotgunPellets: 2
+    clipSize: -1
+    battleType: 1
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    twoHanded: false
+    power: 150 #Lascannon Sentinel Tier
+    damageType: 4
+    damageAlter: #DA LAS
+      RandomType: 6 #gaussian
+      ToArmorPre: 0.4
+      ToHealth: 1.0
+      ToArmor: 0.1
+      ToStun: 0.3
+    costSnap:
+      time: 40
+    costAimed:
+      time: 80
+    #lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4 #red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
+  - &STR_DREADNOUGHT_MISSILE_LAUNCHER_TEMPLATE
+    type: DM_WEAPON #DREADNOUGHT ROCKET LAUNCHER; HIGH EXPLOSIVE
+    categories: [STR_CAT_DEVASTATOR]
+    dropoff: 3
+    vaporColorSurface: 0
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    power: 120
+    damageType: 3
+    damageAlter: #high explosive
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9 #concussive
+      ToStun: 0.6 #concussive
+      ToEnergy: 0.4 #concussive
+      ToTime: 0.3 #concussive
+      ToTile: 0.75 #high explosive
+      ToItem: 0.75 #high explosive
+      FixRadius: 10 #1 for hand grenade version
+      FireThreshold: 100
+    accuracyAuto: 50
+    accuracySnap: 70
+    accuracyAimed: 110
+    tuSnap: 30
+    tuAimed: 60
+    tuAuto: 65
+    confAuto: #arcing rocket barrage
+      shots: 4
+      arcing: true
+    noLOSAccuracyPenalty: 75 #indirect fire weapon
+    autoRange: 15
+    snapRange: 25
+    aimRange: 35
+
+  - type: DEFILER_WEAPON_R
+    refNode: *STR_DREADNOUGHT_MISSILE_LAUNCHER_TEMPLATE
+
+  - type: DEFILER_WEAPON_L
+    refNode: *STR_DREADNOUGHT_MISSILE_LAUNCHER_TEMPLATE
 
   - type: STR_IWCOMBIBOLTER
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
