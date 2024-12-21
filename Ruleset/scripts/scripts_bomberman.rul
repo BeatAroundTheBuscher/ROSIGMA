@@ -86,7 +86,7 @@ extended:
     #blow up our bomb if we're killed
     damageUnit:
       - new: ROSIGMA_dU_bomberman
-        offset: 24
+        offset: 99
         code: |
           var ptr RuleItem ruleItem;
           var int temp;
@@ -102,7 +102,7 @@ extended:
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; #Are we set to explode on death? If greater than 1, we kamikazi through melee attacks only.
           if neq temp 1;
-            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. No ARMOR_IS_EXPLODE_ON_DEATH Tag Detected";
+            #debug_log "Bomberman Scripts; damageUnit, offset 99: Aborted. No ARMOR_IS_EXPLODE_ON_DEATH Tag Detected";
             return;
           end;
 
@@ -111,13 +111,13 @@ extended:
 
           #if we're not killed cancel out
           if gt remainingHealth 0;
-            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. Target still alive." remainingHealth;
+            #debug_log "Bomberman Scripts; damageUnit, offset 99: Aborted. Target still alive." remainingHealth;
             return;
           end;
 
           unit.getTag temp Tag.UNIT_OVERKILL_DISABLE_SELF_DESTRUCT; #if overkill disables self-destruct, set our SD chance to 0.
           if gt temp 0;
-            #debug_log "Bomberman Scripts; damageUnit, offset 24: Aborted. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
+            #debug_log "Bomberman Scripts; damageUnit, offset 99: Aborted. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
             return;
           end;
 
@@ -133,19 +133,19 @@ extended:
               someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
               if ge randomFuse 1;
                 battle_game.randomRange temp 0 randomFuse;
-                #debug_log "Bomberman Scripts; damageUnit, offset 24: Random fuse. Random fuse upper limit:" randomFuse;
+                #debug_log "Bomberman Scripts; damageUnit, offset 99: Random fuse. Random fuse upper limit:" randomFuse;
               else;
                 sub temp 1;
               end;
               #someItem.InventoryMoveCost.setBaseTimePercent 999;
               someItem.setFuseTimer temp;
               someItem.setFuseEnabled 1;
-              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Triggered. Bomb Item:" someItem;
-              #debug_log "Bomberman Scripts; damageUnit, offset 24: Successful. Bomb Fuse. Fuse Timer:" temp;
+              #debug_log "Bomberman Scripts; damageUnit, offset 99: Successful. Bomb Triggered. Bomb Item:" someItem;
+              #debug_log "Bomberman Scripts; damageUnit, offset 99: Successful. Bomb Fuse. Fuse Timer:" temp;
             end;
           end;
           #if lt deathBombs 1;
-            #debug_log "Bomberman Scripts; damageUnit, offset 24: Failed. No Kamikazi Bomb detected. Item:";
+            #debug_log "Bomberman Scripts; damageUnit, offset 99: Failed. No Kamikazi Bomb detected. Item:";
           #end;
           return;
 
@@ -158,8 +158,8 @@ extended:
           var int temp;
           var int temp2;
 
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: unit:" unit;
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: attacker:" attacker;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: unit:" unit;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: attacker:" attacker;
 
           unit.getHealth temp; #don't bother if we have more than 0 health
           sub temp health_damage;
@@ -167,53 +167,53 @@ extended:
             unit.getRuleArmor myRuleArmor;
             myRuleArmor.getTag temp Tag.ARMOR_IS_KAMIKAZI; #don't bother unless we're a scripted kamikazi
             weapon_item.getTag temp2 Tag.ITEM_IS_KAMIKAZI_BOMB;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: ARMOR_IS_KAMIKAZI:" temp;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: ITEM_IS_KAMIKAZI_BOMB:" temp2;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: ARMOR_IS_KAMIKAZI:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: ITEM_IS_KAMIKAZI_BOMB:" temp2;
             set self_destruct_chance 0;
             if and gt temp 0 gt temp2 0 eq unit attacker; #if we're the attacker, we and our damage source have the kamikazi tag kill ourselves.
               unit.setHealth 0;
-              #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Self-destruct unit survived; zeroing out health:" temp;
+              #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Self-destruct unit survived; zeroing out health:" temp;
             end;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Non-lethal damage. Remaining health (temp):" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Aborting. Non-lethal damage. Remaining health (temp):" temp;
             return;
           end;
 
           unit.getRuleArmor myRuleArmor; #prevent double kamikazi detonations
           myRuleArmor.getTag temp Tag.ARMOR_IS_KAMIKAZI;
           weapon_item.getTag temp2 Tag.ITEM_IS_KAMIKAZI_BOMB;
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: ARMOR_IS_KAMIKAZI:" temp;
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: ITEM_IS_KAMIKAZI_BOMB:" temp2;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: ARMOR_IS_KAMIKAZI:" temp;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: ITEM_IS_KAMIKAZI_BOMB:" temp2;
           if and gt temp 0 gt temp2 0 eq unit attacker; #if we're the attacker, we and our damage source have the kamikazi tag prevent self-destructing again
             set self_destruct_chance 0;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Kamikazi bombs already triggered; negating self-destruct chance." temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Kamikazi bombs already triggered; negating self-destruct chance." temp;
             return;
           end;
 
           unit.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS; #melee bypasses self-destruct if we have this tag.
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS:" temp;
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: battle_action:" battle_action;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS:" temp;
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: battle_action:" battle_action;
           if and eq temp 1 eq battle_action BA_HIT;
             set self_destruct_chance 0;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Melee damage bypasses self-destruct, ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Aborting. Melee damage bypasses self-destruct, ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS:" temp;
             return;
           end;
 
           myRuleArmor.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; #don't bother unless we're a scripted kamikazi
           if lt temp 1;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. Unit not set to explode on death:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Aborting. Unit not set to explode on death:" temp;
             return;
           end;
 
           unit.getTag temp Tag.UNIT_OVERKILL_DISABLE_SELF_DESTRUCT; #if overkill disables self-destruct, set our SD chance to 0.
           if gt temp 0;
             set self_destruct_chance 0;
-            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: Aborting. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
+            #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: Aborting. UNIT_OVERKILL_DISABLE_SELF_DESTRUCT set to:" temp;
             return;
           end;
 
           set self_destruct_chance 100; #melee type damage and other such typical negators will not stop us from self-destructing due to our ARMOR_IS_EXPLODE_ON_DEATH tag
-          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 100: self_destruct_chance set to 100";
+          #debug_log "Bomberman Scripts; ROSIGMA_dSU_bomberman, offset 99: self_destruct_chance set to 100";
 
           return;
 
@@ -248,7 +248,7 @@ extended:
               someItem.getTag randomFuse Tag.ITEM_IS_RANDOM_FUSE; #check if the fuse is random
               if ge randomFuse 1;
                 battle_game.randomRange temp 0 randomFuse;
-                #debug_log "Bomberman Scripts; damageUnit, offset 24: Random fuse. Random fuse upper limit:" randomFuse;
+                #debug_log "Bomberman Scripts; damageUnit, offset 99: Random fuse. Random fuse upper limit:" randomFuse;
               else;
                 sub temp 1;
               end;
