@@ -200,7 +200,7 @@ extended:
       SOLDIER_WOUND_TIME_MULTIPLIER: int
   scripts:
     damageUnit:
-      - offset: 3
+      - offset: 1
         code: |
           var ptre BattleUnit attackingUnit;
           var ptre BattleItem attackingItem;
@@ -232,6 +232,8 @@ extended:
           var int numWounds;
 
           # debug_log "Drain On Hit/Kill: Script Start";
+          unit.getHealth hpTarget;
+          # debug_log "Drain On Hit/Kill: Target initial HP:" hpTarget;
           damaging_item.getRuleItem itemRuleset;
           #set tag values
           itemRuleset.getTag hpReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_HP;
@@ -246,7 +248,21 @@ extended:
           itemRuleset.getTag KillMoraleReturnedValue Tag.TAG_MORALE_RETURNED_ON_KILL;
           itemRuleset.getTag KillStunReturnedValue Tag.TAG_STUN_RETURNED_ON_KILL;
 
+          add temp hpReturnedCoefficient;
+          add temp energyReturnedCoefficient;
+          add temp timeReturnedCoefficient;
+          add temp moraleReturnedCoefficient;
+          add temp stunReturnedCoefficient;
+          add temp KillHPReturnedValue;
+          add temp KillEnergyReturnedValue;
+          add temp KillTimeReturnedValue;
+          add temp KillMoraleReturnedValue;
+          add temp KillStunReturnedValue;
 
+          if eq temp 0;
+            # debug_log "rain On Hit/Kill: No vampirism tags detected. Aborting.";
+            return;
+          end;
           # check weapon for resist type
           itemRuleset.getTag damageReturnedResistType Tag.YTAG_DAMAGE_RETURNED_RESIST_TYPE;
 
@@ -347,8 +363,10 @@ extended:
 
             # set amount of HP drained, and that it can't be higher than target's total
             unit.getHealth hpTarget;
+            # debug_log "Drain On Hit/Kill: Target initial HP:" hpTarget;
             set hpDamageDone to_health;
-            limit_upper hpDamageDone hpTarget;
+            unit.getHealthMax temp; #we can't do more damage than the unit has health
+            limit_upper hpDamageDone temp;
             set hpReturned hpDamageDone;
             set energyReturned hpDamageDone;
             set timeReturned hpDamageDone;
@@ -357,6 +375,8 @@ extended:
 
             # multiply damage returned to attacker as drain with coefs; muldiv is a*b/c
             muldiv hpReturned hpReturnedCoefficient 100;
+            # debug_log "Drain On Hit/Kill: hpReturnedCoefficient:" hpReturnedCoefficient;
+            # debug_log "Drain On Hit/Kill: hpReturned after applying hpReturnedCoefficient:" hpReturnedCoefficient;
             muldiv energyReturned energyReturnedCoefficient 100;
             muldiv timeReturned timeReturnedCoefficient 100;
             muldiv moraleReturned moraleReturnedCoefficient 100;
@@ -384,6 +404,7 @@ extended:
               # debug_log "Drain On Hit/Kill: KillStunReturnedValue" KillStunReturnedValue;
             end;
 
+            # debug_log "Drain On Hit/Kill: hpReturned before resistances" hpReturned;
             # factor in specified resistance
             unit.reduceByResistance hpReturned damageReturnedResistType;
             unit.reduceByResistance energyReturned damageReturnedResistType;
@@ -413,29 +434,25 @@ extended:
                 # debug_log "Drain On Hit/Kill: Number of wounds in bodypart:" numWounds;
                 if gt numWounds 0; #if there are any wounds in this body part, remove as many as we can
                   if gt numWounds temp; #if there are more wounds than heals in this body part, subtract the heals from the wounds and zero out heals
-                    set numWounds temp;
+                    sub numWounds temp;
                     set temp 0;
-                    # debug_log "Drain On Hit/Kill: Wounds Greater Than Heals: Number of wounds in bodypart:" numWounds;
-                    # debug_log "Drain On Hit/Kill: Wounds Greater Than Heals: Number of Heals:" temp;
-                  end;
-                  if le numWounds temp; #if there are more wounds than heals in this body part, subtract the heals from the wounds and zero out heals
+                    # debug_log "Drain On Hit/Kill: Wounds Greater/Equal To Heals: Number of wounds in bodypart:" numWounds;
+                  else le numWounds temp;
                     sub temp numWounds; #if there are more heals than wounds in this body part, subtract the wounds from the heals and zero out wounds
-                    # debug_log "Drain On Hit/Kill: Wounds Less Than/Equal to Heals: Number of wounds in bodypart:" numWounds;
-                    # debug_log "Drain On Hit/Kill: Wounds Less Than/Equal to Heals: Number of Heals:" temp;
+                    set numWounds 0;
+                    # debug_log "Drain On Hit/Kill: Wounds Less Than Heals: Number of wounds in bodypart:" numWounds;
                   end;
-                  mul numWounds -1; #set the wound count to negative
-                  # debug_log "Drain On Hit/Kill: Wounds to Heal:" numWounds;
+                  # debug_log "Drain On Hit/Kill: Number of Heals Remaining:" temp;
+                  # debug_log "Drain On Hit/Kill: Wounds Remaining in Bodypart:" numWounds;
                   attackingUnit.setFatalwounds i numWounds; #remove the wounds
                   attackingUnit.getFatalwoundsTotal numWounds; #recalculate wounds
                   # debug_log "Drain On Hit/Kill: Total number of wounds remaining:" numWounds;
                 end;
               end;
-              #if or le numWounds 0 le temp 0; #if there are no fatal wounds remaining, or we're out of heals, end this loop early
-              #  end;
             end;
             #cap the healing to the unit's maximum Health
             limit_upper hpReturned statMaxAttacker;
-            # debug_log "Drain On Hit/Kill: hpReturned post-cap" hpReturned;
+            # debug_log "Drain On Hit/Kill: hpReturned final" hpReturned;
             attackingUnit.setHealth hpReturned;
 
             attackingUnit.getEnergy statAttacker;
@@ -443,6 +460,7 @@ extended:
             add energyReturned statAttacker;
             add energyReturned KillEnergyReturnedValue;
             limit_upper energyReturned statMaxAttacker;
+            # debug_log "Drain On Hit/Kill: energyReturned final" energyReturned;
             attackingUnit.setEnergy energyReturned;
 
             attackingUnit.getTimeUnits statAttacker;
@@ -450,6 +468,7 @@ extended:
             add timeReturned statAttacker;
             add timeReturned KillTimeReturnedValue;
             limit_upper timeReturned statMaxAttacker;
+            # debug_log "Drain On Hit/Kill: timeReturned final" timeReturned;
             attackingUnit.setTimeUnits timeReturned;
 
             # special case, morale return is influenced by bravery
@@ -460,12 +479,14 @@ extended:
             add moraleReturned statAttacker;
             add moraleReturned KillMoraleReturnedValue;
             limit_upper moraleReturned 100;
+            # debug_log "Drain On Hit/Kill: moraleReturned final" moraleReturned;
             attackingUnit.setMorale moraleReturned;
 
             attackingUnit.getStun statAttacker;
             sub statAttacker stunReturned;
             sub statAttacker KillStunReturnedValue;
             limit_lower stunReturned 0;
+            # debug_log "Drain On Hit/Kill: moraleReturned final" moraleReturned;
             attackingUnit.setStun statAttacker;
           end;
 
