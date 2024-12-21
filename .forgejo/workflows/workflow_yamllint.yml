@@ -1,0 +1,31 @@
+name: Validate YAML with Yamllint
+
+on:
+  push:
+
+  pull_request:
+
+
+jobs:
+  lint:
+    runs-on: codeberg-tiny
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python and install yamllint
+      - name: Set up Python and Install Yamllint
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Yamllint
+        run: |
+          pip3 install yamllint
+
+      # Step 3: Run yamllint on all YAML files
+      - name: Lint YAML files
+        run: |
+          yamllint -c .github/.yamllint.yml .
