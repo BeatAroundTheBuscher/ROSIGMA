@@ -1,10 +1,10 @@
 extended:
   tags:
     RuleItem:
-      ITEM_IS_REMOTE_DETONATOR: int #this item activates remote detonation explosives that have this value per the tag ITEM_IS_REMOTE_DETONATED
-      ITEM_IS_REMOTE_DETONATED: int #this item is remotely detonated while BATTLE_GAME_DETONATOR_ACTIVE matches its value
+      ITEM_IS_REMOTE_DETONATOR: int  # this item activates remote detonation explosives that have this value per the tag ITEM_IS_REMOTE_DETONATED
+      ITEM_IS_REMOTE_DETONATED: int  # this item is remotely detonated while BATTLE_GAME_DETONATOR_ACTIVE matches its value
     BattleGame:
-      BATTLE_GAME_DETONATOR_ACTIVE: int #which detonator frequency value is active per ITEM_IS_REMOTE_DETONATOR
+      BATTLE_GAME_DETONATOR_ACTIVE: int  # which detonator frequency value is active per ITEM_IS_REMOTE_DETONATOR
 
   scripts:
     healUnit:
@@ -19,7 +19,7 @@ extended:
             return;
           end;
 
-          battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE temp; #activate the frequency
+          battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE temp; # activate the frequency
           return;
 
     newTurnItem:
@@ -30,13 +30,13 @@ extended:
           var int detFrequency;
           var int itemFrequency;
 
-          if le turn 0; #reset the frequency at the start of T0
+          if le turn 0; # reset the frequency at the start of T0
             battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE 0;
             return;
           end;
 
           if eq side FACTION_PLAYER;
-            battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE 0; #clear the frequency during the player's turn
+            battle_game.setTag Tag.BATTLE_GAME_DETONATOR_ACTIVE 0; # clear the frequency during the player's turn
             return;
           end;
 
@@ -52,23 +52,23 @@ extended:
 
           item.isFuseEnabled temp;
           if lt temp 1;
-            #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Fuse not enabled for this explosive:" temp;
+            # debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Fuse not enabled for this explosive:" temp;
             return;
           end;
-          #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Fuse Active. Fuse Value:" temp;
+          # debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Fuse Active. Fuse Value:" temp;
 
           item.getFuseTimer temp;
-          if lt temp 1; #sanity check
-            #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Explosive about to detonate. Fuse Timer:" temp;
+          if lt temp 1; # sanity check
+            # debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Explosive about to detonate. Fuse Timer:" temp;
             return;
           end;
 
           battle_game.getTag detFrequency Tag.BATTLE_GAME_DETONATOR_ACTIVE;
           if eq detFrequency itemFrequency;
             item.setFuseTimer 0;
-            #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Frequency matches ITEM_IS_REMOTE_DETONATED. Detonating Explosives. Frequency:" itemFrequency;
+            # debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Frequency matches ITEM_IS_REMOTE_DETONATED. Detonating Explosives. Frequency:" itemFrequency;
           else;
-            #debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Frequency doesn't match ITEM_IS_REMOTE_DETONATED. Frequency:" itemFrequency;
+            # debug_log "newTurnItem | ROSIGMA_nTI_detonate_satchels | offset: 20 | Aborting. Frequency doesn't match ITEM_IS_REMOTE_DETONATED. Frequency:" itemFrequency;
             item.setFuseTimer 30;
           end;
 

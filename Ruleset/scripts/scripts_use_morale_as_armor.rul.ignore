@@ -3,17 +3,17 @@ armors:
     tags:
       UNIT_EXTRA_DAMAGE_MORALE_MELEE: 40
       UNIT_EXTRA_DAMAGE_MORALE_RANGED: 20
-      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: 200 # 100 / divisor
+      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: 200  # 100 / divisor
 extended:
   tags:
     RuleArmor: # would have prefered RuleUnit but there is not BattleUnit.getRuleUnit
       UNIT_EXTRA_DAMAGE_MORALE_MELEE: int
       UNIT_EXTRA_DAMAGE_MORALE_RANGED: int
-      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: int # 100 / divisor
+      UNIT_EXTRA_DAMAGE_MORALE_DIVISOR: int  # 100 / divisor
 
   scripts:
     damageUnit:
-      - offset: 1 # extra Damage with Morale/Bravery as armor # Bravery acts as damageModifier, Morale as Armor
+      - offset: 1  # extra Damage with Morale/Bravery as armor  # Bravery acts as damageModifier, Morale as Armor
         code: |   # extra Damage is independent of current power (may change in the future)
           var int temp1;
           var int temp2;
@@ -40,7 +40,7 @@ extended:
           end;
           if neq extraDamageMorale 0;
 
-            # rend morale armor # but will not be accounted for the following yet
+            # rend morale armor  # but will not be accounted for the following yet
             add to_morale extraDamageMorale; # this does apply the native damageModifier (same calculation as next step)
 
             # damageModifier = extraDamage * (110 - bravery) / 100

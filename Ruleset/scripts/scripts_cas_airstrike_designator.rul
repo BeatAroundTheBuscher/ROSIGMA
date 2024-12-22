@@ -1,10 +1,10 @@
 extended:
   tags:
     RuleItem:
-      ITEM_IS_AIRSTRIKE_DESIGNATOR: int #Is this an airstrike designator? Currently used only for STR_CAS_AIRSTRIKE_DESIGNATOR
-      ITEM_AMMO_TURN_COOLDOWN: int #What is the cooldown of this effect in Rounds before we can use it again?
+      ITEM_IS_AIRSTRIKE_DESIGNATOR: int  # Is this an airstrike designator? Currently used only for STR_CAS_AIRSTRIKE_DESIGNATOR
+      ITEM_AMMO_TURN_COOLDOWN: int  # What is the cooldown of this effect in Rounds before we can use it again?
     BattleItem:
-      ITEM_AMMO_TURN_COUNTER: int #What is the remaining cooldown of this effect in Rounds?
+      ITEM_AMMO_TURN_COUNTER: int  # What is the remaining cooldown of this effect in Rounds?
 
   scripts:
     newTurnItem:
@@ -18,39 +18,39 @@ extended:
           var ptr BattleGame casGame;
           var ptre BattleItem itemAmmo;
 
-          if neq side FACTION_PLAYER; #only trigger if it's our turn
+          if neq side FACTION_PLAYER; # only trigger if it's our turn
             return;
           end;
 
           item.getTag itemCooldown Tag.ITEM_AMMO_TURN_COOLDOWN;
 
-          if lt itemCooldown 1; #if we don't despawn, abort
+          if lt itemCooldown 1; # if we don't despawn, abort
             return;
           end;
 
-          item.getAmmoQuantity temp; #we only care if we don't enough any ammo loaded
+          item.getAmmoQuantity temp; # we only care if we don't enough any ammo loaded
           if gt temp 1;
             return;
           end;
 
           item.getTag itemCounter Tag.ITEM_AMMO_TURN_COUNTER;
 
-          if gt itemCounter 1; #if we have more than 1 left, decrement
+          if gt itemCounter 1; # if we have more than 1 left, decrement
             sub itemCounter 1;
             battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGING" itemCounter;
             item.setTag Tag.ITEM_AMMO_TURN_COUNTER itemCounter;
             return;
           end;
 
-          if gt itemCounter 0; #if we have 1 left, decrement and reload
+          if gt itemCounter 0; # if we have 1 left, decrement and reload
             sub itemCounter 1;
             battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGED";
             item.setTag Tag.ITEM_AMMO_TURN_COUNTER 0;
-            item.setAmmoQuantity 10; #reload the designator
+            item.setAmmoQuantity 10; # reload the designator
             return;
           end;
 
-          item.setTag Tag.ITEM_AMMO_TURN_COUNTER itemCooldown; #set our countdown
+          item.setTag Tag.ITEM_AMMO_TURN_COUNTER itemCooldown; # set our countdown
           set itemCounter itemCooldown;
           battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGING" itemCounter;
           return;

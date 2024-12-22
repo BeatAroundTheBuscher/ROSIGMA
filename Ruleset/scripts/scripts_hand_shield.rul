@@ -10,7 +10,7 @@ extended:
 
   scripts:
     createItem:
-    - new: ROSIGMA_cI_hand_shield_item_recharge # set level to recharge to per turn
+    - new: ROSIGMA_cI_hand_shield_item_recharge  # set level to recharge to per turn
       offset: 1
       code: |
         var int temp;
@@ -27,7 +27,7 @@ extended:
 
 
     newTurnItem:
-    - new: ROSIGMA_nTI_hand_shield_item_recharge # recharge shield to beginning level
+    - new: ROSIGMA_nTI_hand_shield_item_recharge  # recharge shield to beginning level
       offset: 1
       code: |
         var int temp;
@@ -45,7 +45,7 @@ extended:
 
     hitUnit:
     - new: ROSIGMA_hU_hand_shield_item
-      offset: 1 # Extend Front Armor facing (40k script) + Reduce incoming damage
+      offset: 1  # Extend Front Armor facing (40k script) + Reduce incoming damage
       code: |   # use Shield Ammo as HP, if HP lower than attack power, shield doesn't protect
         var int unitDirection;
         var int attackerDirection;
@@ -101,11 +101,11 @@ extended:
         unit.getDirection unitDirection; # {0-7}
         attacker.getDirection attackerDirection;
         add attackerDirection 4; # Offset for attacker so A+D "face the same direction"
-        mod attackerDirection 8; # (7+4) % 8 = 3 # in other words limit to {0-7}
+        mod attackerDirection 8; # (7+4) % 8 = 3  # in other words limit to {0-7}
         sub unitDirection attackerDirection; # check if both face the same direction
         abs unitDirection; # range should be {-1, 0, +1} to take effect
 
-        if lt unitDirection 2; # {abs(-1), 0, +1} # hitting shield facing
+        if lt unitDirection 2; # {abs(-1), 0, +1}  # hitting shield facing
           set side SIDE_FRONT;
 
           # new part
@@ -173,7 +173,7 @@ extended:
 items:
   - &STR_STORM_SHIELD
     type: AUX_SHIELD
-    clipSize: 41 # Shield HP + 1
+    clipSize: 41  # Shield HP + 1
     tuMelee: 0
     tags:
       ITEM_SHIELD_BLOCKING_STRENGTH: 20

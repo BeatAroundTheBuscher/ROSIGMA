@@ -3,21 +3,21 @@ extended:
     RuleArmor:
       ARMOR_TENACIOUS_HP_MOD: int
       ARMOR_TENACIOUS_STUN_RECOVERY: int
-    #infection script tags
-      INFECTION_RESIST: int #reduces infection damage by this as a %
-      INFECTION_REDUCTION: int #reduces infection damage by this as a flat amount
-    #intimidation script tags
-      INTIMIDATION_RESISTANCE: int #Reduces the effectiveness of Intimidate attacks by this percentage
-    #dodge script tags
+    # infection script tags
+      INFECTION_RESIST: int  # reduces infection damage by this as a %
+      INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
+    # intimidation script tags
+      INTIMIDATION_RESISTANCE: int  # Reduces the effectiveness of Intimidate attacks by this percentage
+    # dodge script tags
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
       ARMOR_MAX_SUCCESSFUL_DODGES: int
-    #bomberman script tags
-      ARMOR_IS_EXPLODE_ON_DEATH: int #do we check this unit on death for bombs to activate?
-      ARMOR_IS_KAMIKAZI: int #do we kamikazi when we hit regardless of the weapon used?
-    #reinforcement TU scripts
-      ARMOR_REINFORCEMENT_TU_PERCENT: int #this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
-    #unit typing tags
+    # bomberman script tags
+      ARMOR_IS_EXPLODE_ON_DEATH: int  # do we check this unit on death for bombs to activate?
+      ARMOR_IS_KAMIKAZI: int  # do we kamikazi when we hit regardless of the weapon used?
+    # reinforcement TU scripts
+      ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
+    # unit typing tags
       UNIT_TYPE_MECHANICAL: int
       UNIT_TYPE_DAEMONIC: int
       UNIT_TYPE_CONSECRATED: int
@@ -43,8 +43,8 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 2
       ARMOR_TENACIOUS_STUN_RECOVERY: 20
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
@@ -56,8 +56,8 @@ armors:
 
         unit.getRuleArmor targetArmor;
         targetArmor.getTag temp Tag.ARMOR_TENACIOUS_HP_MOD;
-        if le temp 0; #no Tenacious? cancel out
-          #debug_log "damageUnit | Necron Tenacious Armor Scripts | target lacks ARMOR_TENACIOUS_HP_MOD value. Aborting." unit;
+        if le temp 0; # no Tenacious? cancel out
+          # debug_log "damageUnit | Necron Tenacious Armor Scripts | target lacks ARMOR_TENACIOUS_HP_MOD value. Aborting." unit;
           return;
         end;
 
@@ -65,27 +65,27 @@ armors:
           sub temp 1;
         end;
 
-        if le temp 1; #if our tenacious value is reduced to 1 or less cancel out as we just take damage as normal now
-          #debug_log "damageUnit | Necron Tenacious Armor Scripts | ARMOR_TENACIOUS_HP_MOD value 1 or less. Aborting." temp;
+        if le temp 1; # if our tenacious value is reduced to 1 or less cancel out as we just take damage as normal now
+          # debug_log "damageUnit | Necron Tenacious Armor Scripts | ARMOR_TENACIOUS_HP_MOD value 1 or less. Aborting." temp;
           return;
         end;
 
         targetArmor.getSize temp2;
         if ge temp2 2; # don't stun 2x2 as they can't get up
-          div to_health temp; #divide damage by tenacious rating
+          div to_health temp; # divide damage by tenacious rating
           set to_stun 0;
-          #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 2x2. ARMOR_TENACIOUS_HP_MOD:" temp;
+          # debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 2x2. ARMOR_TENACIOUS_HP_MOD:" temp;
           return;
         end;
 
-        #convert the HP damage to stun damage for non-large units
-        #debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 1x1. ARMOR_TENACIOUS_HP_MOD:" temp;
-        set temp2 to_health; #set the health damage
-        div to_health temp; #divide the health damage by the Tenacious rating
-        sub temp2 to_health; #calculate the extra Stun damage that's converted from HP damage
-        add to_stun temp2; #apply the extra Stun damage
-        #debug_log "damageUnit | Necron Tenacious Armor Scripts | Modified to_health damage:" to_health;
-        #debug_log "damageUnit | Necron Tenacious Armor Scripts | Modified to_stun damage:" to_stun;
+        # convert the HP damage to stun damage for non-large units
+        # debug_log "damageUnit | Necron Tenacious Armor Scripts | Target is 1x1. ARMOR_TENACIOUS_HP_MOD:" temp;
+        set temp2 to_health; # set the health damage
+        div to_health temp; # divide the health damage by the Tenacious rating
+        sub temp2 to_health; # calculate the extra Stun damage that's converted from HP damage
+        add to_stun temp2; # apply the extra Stun damage
+        # debug_log "damageUnit | Necron Tenacious Armor Scripts | Modified to_health damage:" to_health;
+        # debug_log "damageUnit | Necron Tenacious Armor Scripts | Modified to_stun damage:" to_stun;
         return;
 
 
@@ -124,8 +124,8 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 3
       ARMOR_TENACIOUS_STUN_RECOVERY: 30
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
@@ -135,8 +135,8 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 6
       ARMOR_TENACIOUS_STUN_RECOVERY: 20
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
@@ -146,8 +146,8 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 3
       ARMOR_TENACIOUS_STUN_RECOVERY: 30
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
@@ -157,54 +157,54 @@ armors:
     tags:
       ARMOR_TENACIOUS_HP_MOD: 2
       ARMOR_TENACIOUS_STUN_RECOVERY: 20
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
 
-  - type: STR_NECRON_ARCHITECT_ARMOR       #NECRON WARRIOR
+  - type: STR_NECRON_ARCHITECT_ARMOR       # NECRON WARRIOR
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
-      #ARMOR_ENERGY_SHIELD_CAPACITY: 80
-      #ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      #ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
+      # ARMOR_ENERGY_SHIELD_CAPACITY: 80
+      # ARMOR_ENERGY_SHIELD_PER_TURN: 10
+      # ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 12
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       ARMOR_TENACIOUS_HP_MOD: 3
       ARMOR_TENACIOUS_STUN_RECOVERY: 25
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
 
   - type: STR_NECRON_SCARAB_ARMOR1
     tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
-      ARMOR_REINFORCEMENT_TU_PERCENT: 75 #so the scarab grenades are actually somewhat scary
+      ARMOR_REINFORCEMENT_TU_PERCENT: 75  # so the scarab grenades are actually somewhat scary
 
   - type: STR_NECRON_SCARAB_ARMOR1
     tags:
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
-      ARMOR_REINFORCEMENT_TU_PERCENT: 75 #so the scarab grenades are actually somewhat scary
+      ARMOR_REINFORCEMENT_TU_PERCENT: 75  # so the scarab grenades are actually somewhat scary
 
   - type: STR_NECRON_FLAYED_ONE_ARMOR
     refNode: *TENACIOUS_NECRON_ARMOR
     tags:
       ARMOR_TENACIOUS_HP_MOD: 3
       ARMOR_TENACIOUS_STUN_RECOVERY: 30
-      INFECTION_RESIST: 100 #infection immune
-      INTIMIDATION_RESISTANCE: 100 #intimidate immune
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
