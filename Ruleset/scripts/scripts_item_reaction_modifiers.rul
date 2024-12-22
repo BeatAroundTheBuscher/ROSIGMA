@@ -1,23 +1,23 @@
 # hooks
 # reactionUnitAction   # Runs when an unit performs an action that triggers reaction fire.
-# reactionUnitReaction # Runs when a unit sees another unit perform an action that triggers reaction fire.
-# reactionWeaponAction # Runs for the weapon that triggered reaction shots by firing.
+# reactionUnitReaction  # Runs when a unit sees another unit perform an action that triggers reaction fire.
+# reactionWeaponAction  # Runs for the weapon that triggered reaction shots by firing.
 
 # these are tags for modifying the effective reaction values of weapons; largely meant to give most pistols bonuses to reactions.
 
 extended:
   tags:
     RuleItem:
-      #reaction modifier tags
-      REACTION_MULTIPLIER: int #multiplies base reaction score by this amount divided by 100
-      REACTION_PENALTY_KNEELING_BYPASS: int #do we bypass reaction penalties when kneeling?
-      REACTION_FLAT_BONUS_OR_PENALTY: int #increases or decreases base reaction score by this amount
+      # reaction modifier tags
+      REACTION_MULTIPLIER: int  # multiplies base reaction score by this amount divided by 100
+      REACTION_PENALTY_KNEELING_BYPASS: int  # do we bypass reaction penalties when kneeling?
+      REACTION_FLAT_BONUS_OR_PENALTY: int  # increases or decreases base reaction score by this amount
     BattleUnit:
       UNIT_REACTION_BASE_REACTIONS_BONUS: int
 
 
   scripts:
-    returnFromMissionUnit: #reset our reactions to baseline on mission return
+    returnFromMissionUnit:  # reset our reactions to baseline on mission return
       - new: ROSIGMA_rFMU_item_reactions_modifier
         offset: 1
         code: |
@@ -27,21 +27,21 @@ extended:
           unit.getTag reactionBonus Tag.UNIT_REACTION_BASE_REACTIONS_BONUS;
 
           if eq reactionBonus 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" reactionBonus;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" reactionBonus;
             return;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Target Unit:" unit;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Removing Reaction Bonus granted by items:" reactionBonus;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Target Unit:" unit;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Removing Reaction Bonus granted by items:" reactionBonus;
           unit.Stats.getReactions reactions;
           sub reactions reactionBonus;
           unit.Stats.setReactions reactions;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Reactions reset:" reactions;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_rFMU_item_reactions_modifier, offset 1: Reactions reset:" reactions;
           unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS 0;
 
           return;
 
-    newTurnUnit: #reset our reactions to baseline on mission return
+    newTurnUnit:  # reset our reactions to baseline on mission return
       - new: ROSIGMA_nTU_item_reactions_modifier
         offset: 1
         code: |
@@ -54,91 +54,91 @@ extended:
 
           unit.getFaction temp;
           battle_game.getTurnSide temp2;
-          if eq temp temp2; #abort if it's our turn; we only modify when it's not our turn.
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
+          if eq temp temp2; # abort if it's our turn; we only modify when it's not our turn.
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
             return;
           end;
 
-          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; # if we've already set the bonus, abort; sanity check.
           if neq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
             return;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Target Unit:" unit;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Target Unit:" unit;
 
-          #handle the reaction multiplier on weapons
+          # handle the reaction multiplier on weapons
           unit.Stats.getReactions baseReactions;
 
           unit.getLeftHandWeapon battleWeapon;
           battleWeapon.getTag temp Tag.REACTION_MULTIPLIER;
-          battleWeapon.getTag isKneelingBypass Tag.REACTION_PENALTY_KNEELING_BYPASS; #check if we have a penalty bypass for kneeling
+          battleWeapon.getTag isKneelingBypass Tag.REACTION_PENALTY_KNEELING_BYPASS; # check if we have a penalty bypass for kneeling
 
           unit.getRightHandWeapon battleWeapon;
           battleWeapon.getTag temp2 Tag.REACTION_MULTIPLIER;
-          battleWeapon.getTag isKneeling Tag.REACTION_PENALTY_KNEELING_BYPASS; #check if we have a penalty bypass for kneeling
+          battleWeapon.getTag isKneeling Tag.REACTION_PENALTY_KNEELING_BYPASS; # check if we have a penalty bypass for kneeling
 
           add isKneelingBypass isKneeling;
 
-          if gt temp2 temp; #we only take the highest multiplier among our weapons.
+          if gt temp2 temp; # we only take the highest multiplier among our weapons.
             set temp temp2;
           end;
 
           if gt isKneelingBypass 0;
             unit.isKneeled isKneeling;
             if and gt isKneeling 0 lt temp 100;
-              #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Kneeling bypass at REACTION_MULTIPLIER." temp;
-              set temp2 2; #skip penalizing our reactions if REACTION_MULTIPLIER is less than 100 and we're kneeling
+              # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Kneeling bypass at REACTION_MULTIPLIER." temp;
+              set temp2 2; # skip penalizing our reactions if REACTION_MULTIPLIER is less than 100 and we're kneeling
             end;
           end;
 
           if and neq temp 0 neq temp2 2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
             set temp2 baseReactions;
             muldiv temp2 temp 100;
             unit.Stats.setReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
-            sub temp2 baseReactions; #get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
+            sub temp2 baseReactions; # get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
             unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
           end;
 
-          #handle the reaction bonus on weapons
+          # handle the reaction bonus on weapons
           unit.getLeftHandWeapon battleWeapon;
           battleWeapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
 
           unit.getRightHandWeapon battleWeapon;
           battleWeapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
 
-          if gt temp temp2; #we only take the highest bonus among our weapons.
+          if gt temp temp2; # we only take the highest bonus among our weapons.
             set temp temp2;
           end;
 
           if eq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. REACTION_FLAT_BONUS_OR_PENALTY is null." temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. REACTION_FLAT_BONUS_OR_PENALTY is null." temp;
             return;
           end;
 
           if gt isKneelingBypass 0;
             unit.isKneeled isKneeling;
             if and gt isKneeling 0 lt temp 100;
-              #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. Kneeling bypass at REACTION_FLAT_BONUS_OR_PENALTY." temp;
+              # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Aborting. Kneeling bypass at REACTION_FLAT_BONUS_OR_PENALTY." temp;
               return;
             end;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
           unit.Stats.getReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
           add temp2 temp;
           unit.Stats.setReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
           sub temp2 baseReactions;
-          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #modify any existing bonus appropriately
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; # modify any existing bonus appropriately
           add temp2 temp;
           unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
 
           return;
 
@@ -150,24 +150,24 @@ extended:
 
           unit.getFaction temp;
           battle_game.getTurnSide temp2;
-          if neq temp temp2; #if it's not our turn, abort; we only reset when it's our turn.
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. Faction turn doesn't equal unit turn.";
+          if neq temp temp2; # if it's not our turn, abort; we only reset when it's our turn.
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. Faction turn doesn't equal unit turn.";
             return;
           end;
 
-          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; # if we've already set the bonus, abort; sanity check.
           if eq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS not set:" temp;
             return;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Target Unit:" unit;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Removing Reaction Bonus granted by items:" temp;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Target Unit:" unit;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Removing Reaction Bonus granted by items:" temp;
           unit.Stats.getReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions pre-reset:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions pre-reset:" temp2;
           sub temp2 temp;
           unit.Stats.setReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions post-reset:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_nTU_item_reactions_modifier_reset, offset 2: Reactions post-reset:" temp2;
           unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS 0;
 
           return;
@@ -183,20 +183,20 @@ extended:
 
           unit.getFaction temp;
           battle_game.getTurnSide temp2;
-          if eq temp temp2; #abort if it's our turn; we only modify when it's not our turn.
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
+          if eq temp temp2; # abort if it's our turn; we only modify when it's not our turn.
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Faction turn equals user turn." temp2;
             return;
           end;
 
-          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; #if we've already set the bonus, abort; sanity check.
+          unit.getTag temp Tag.UNIT_REACTION_BASE_REACTIONS_BONUS; # if we've already set the bonus, abort; sanity check.
           if neq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. UNIT_REACTION_BASE_REACTIONS_BONUS already set:" temp;
             return;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Target Unit:" unit;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Target Unit:" unit;
 
-          #handle the reaction multiplier on weapons
+          # handle the reaction multiplier on weapons
           unit.Stats.getReactions baseReactions;
 
           unit.getLeftHandWeapon battleWeapon;
@@ -205,46 +205,46 @@ extended:
           unit.getRightHandWeapon battleWeapon;
           battleWeapon.getTag temp2 Tag.REACTION_MULTIPLIER;
 
-          if gt temp2 temp; #we only take the highest multiplier among our weapons.
+          if gt temp2 temp; # we only take the highest multiplier among our weapons.
             set temp temp2;
           end;
 
           if neq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_MULTIPLIER:" temp;
             set temp2 baseReactions;
             muldiv temp2 temp 100;
             unit.Stats.setReactions temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
-            sub temp2 baseReactions; #get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-multiplier:" temp2;
+            sub temp2 baseReactions; # get the differential between our reactions pre and post multiplier to set UNIT_REACTION_BASE_REACTIONS_BONUS to;
             unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: baseReactions:" baseReactions;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-multiplier:" temp2;
           end;
 
-          #handle the reaction bonus on weapons
+          # handle the reaction bonus on weapons
           unit.getLeftHandWeapon battleWeapon;
           battleWeapon.getTag temp Tag.REACTION_FLAT_BONUS_OR_PENALTY;
 
           unit.getRightHandWeapon battleWeapon;
           battleWeapon.getTag temp2 Tag.REACTION_FLAT_BONUS_OR_PENALTY;
 
-          if gt temp temp2; #we only take the highest bonus among our weapons.
+          if gt temp temp2; # we only take the highest bonus among our weapons.
             set temp temp2;
           end;
 
           if eq temp 0;
-            #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Total REACTION_FLAT_BONUS_OR_PENALTY value is null:" temp;
+            # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Aborting. Total REACTION_FLAT_BONUS_OR_PENALTY value is null:" temp;
             return;
           end;
 
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: REACTION_FLAT_BONUS:" temp;
           unit.Stats.getReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions pre-flat bonus:" temp2;
           add temp2 temp;
           unit.Stats.setReactions temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: Reactions post-flat bonus:" temp2;
           sub temp2 baseReactions;
           unit.setTag Tag.UNIT_REACTION_BASE_REACTIONS_BONUS temp2;
-          #debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
+          # debug_log "Reaction Modifier Scripts; ROSIGMA_cU_item_reactions_modifier, offset 1: UNIT_REACTION_BASE_REACTIONS_BONUS post-flat bonus:" temp2;
 
           return;

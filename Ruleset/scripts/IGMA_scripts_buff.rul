@@ -1,6 +1,6 @@
 # https://www.ufopaedia.org/index.php/Script_(OpenXcom)
 
-# https://openxcom.org/forum/index.php/topic,7974.msg124338.html#msg124338
+# https://openxcom.org/forum/index.php/topic,7974.msg124338.html# msg124338
 
 
 # possible interesting APIs
@@ -11,7 +11,7 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
-    hitUnit: # damageUnit:
+    hitUnit:  # damageUnit:
       # doesn't consider fatal wounds, but eh
       - new: ROSIGMA_hU_stats_buff
         offset: 20
@@ -57,13 +57,13 @@ extended:
           limit_lower corruptionResistance 0;
           limit_upper corruptionResistance 50;
           unit.getTag temp Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE;
-          if gt corruptionResistance temp; #if our incoming bless corruption resistance is higher, use it
+          if gt corruptionResistance temp; # if our incoming bless corruption resistance is higher, use it
             unit.setTag Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE corruptionResistance;
           end;
 
           unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
           unit.getTag temp2 Tag.CURRENT_INFECTION_TYPE;
-          if and gt temp 0 neq temp2 2; #we remove non-GSC corruption equal to the resistance we grant
+          if and gt temp 0 neq temp2 2; # we remove non-GSC corruption equal to the resistance we grant
             sub temp corruptionResistance;
             limit_lower temp 0;
             unit.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
@@ -100,7 +100,7 @@ extended:
               unit.Stats.addFiring blessPower;
             end;
           end;
-          battle_game.flashMessage "STR_SCRIPT_BLESS_NOTICE"; #notify of blessing
+          battle_game.flashMessage "STR_SCRIPT_BLESS_NOTICE"; # notify of blessing
 
           return power part side;
 
@@ -165,7 +165,7 @@ extended:
             set currentFiringBlessBonus 0;
           end;
 
-          if gt corruptionResistance 0; #only bother if we have corruption resistance
+          if gt corruptionResistance 0; # only bother if we have corruption resistance
             sub corruptionResistance dissipationFactor;
             limit_lower corruptionResistance 0;
             unit.setTag Tag.SOLDIER_BLESS_CORRUPTION_RESISTANCE corruptionResistance;

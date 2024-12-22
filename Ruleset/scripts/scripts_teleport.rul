@@ -2,12 +2,12 @@
 
 
 # Hooks
-# reactionUnitAction # not necessary due to visibilityUnit?
+# reactionUnitAction  # not necessary due to visibilityUnit?
 # selectUnitSprite
 # selectMoveSoundUnit
-# healUnit # start teleport
-# newTurnUnit # stop teleport
-# visibilityUnit # hide unit while teleporting
+# healUnit  # start teleport
+# newTurnUnit  # stop teleport
+# visibilityUnit  # hide unit while teleporting
 
 items:
   - type: STR_TELEPORT
@@ -15,15 +15,15 @@ items:
     medikitType: 3
     medikitActionName: STR_SCRIPT_TELEPORTER_TOGGLE
     medikitTargetSelf: true
-    painKiller: 999 # unexpected effects possible
-    battleType: 6 # not used as medikit
+    painKiller: 999  # unexpected effects possible
+    battleType: 6  # not used as medikit
     tuUse: 10
     flatRate: true
     fixedWeapon: true
     specialIconSprite: {mod: 40k, index: 220}
     tags:
       ITEM_IS_TELEPORTER: 1
-      ITEM_TELEPORTER_COOLDOWN: 1 # code adds +1 => 2
+      ITEM_TELEPORTER_COOLDOWN: 1  # code adds +1 => 2
       ITEM_TELEPORTER_ENERGY: 10
     specialUseEmptyHand: true
     hitSound: {mod: 40k, index: 788}
@@ -39,10 +39,10 @@ extended:
       ITEM_TELEPORTER_COOLDOWN: int
       ITEM_TELEPORTER_ENERGY: int
   scripts:
-    # tryPsiAttackUnit: # no ptre
-    # tryMeleeAttackUnit: # no ptre
+    # tryPsiAttackUnit:  # no ptre
+    # tryMeleeAttackUnit:  # no ptre
     hitUnit:
-      - new: ROSIGMA_hU_disable_teleport # ROSIGMA_hU_infiltration_stealth_deactivate
+      - new: ROSIGMA_hU_disable_teleport  # ROSIGMA_hU_infiltration_stealth_deactivate
         offset: 11
         code: |
           var int temp;
@@ -89,21 +89,21 @@ extended:
           unit.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
 
           if ge isTeleporting 1;
-            return 40; # sound_index # for hovertank/cyberdisk move hum
+            return 40; # sound_index  # for hovertank/cyberdisk move hum
           end;
 
           return sound_index;
 
     visibilityUnit:
-      - new: ROSIGMA_vU_hide_teleporter # ROSIGMA_vU_infiltration
-        offset: 5 # hide unit
+      - new: ROSIGMA_vU_hide_teleporter  # ROSIGMA_vU_infiltration
+        offset: 5  # hide unit
         code: |
           var int temp;
 
           target_unit.getTag temp Tag.UNIT_IS_TELEPORTING;
 
           if gt temp 0;
-            #debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+            # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
             return 0 visibility_mode;
           end;
 
