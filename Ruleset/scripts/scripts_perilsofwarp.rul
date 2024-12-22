@@ -1,18 +1,18 @@
 extended:
   tags:
     RuleItem:
-      ITEM_IS_PSYCHIC_POWER: int #is this item a psychic power/spell?
-      ITEM_PSYCHIC_POWER_MODIFIER: int #increments UNIT_PERILS_MODIFIER or our risk of perils by this much per use
-      ITEM_PSYCHIC_POWER_FLAT_CHECK: int #if we only check for perils once per turn
+      ITEM_IS_PSYCHIC_POWER: int  # is this item a psychic power/spell?
+      ITEM_PSYCHIC_POWER_MODIFIER: int  # increments UNIT_PERILS_MODIFIER or our risk of perils by this much per use
+      ITEM_PSYCHIC_POWER_FLAT_CHECK: int  # if we only check for perils once per turn
     BattleUnit:
-      UNIT_PERILS_MODIFIER: int #our cumulative increase to perils of the warp
-      CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
-      CURRENT_INFECTION_TYPE: int #type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
-      CURRENT_INFECTION_FACTION: int #faction source of the infection
+      UNIT_PERILS_MODIFIER: int  # our cumulative increase to perils of the warp
+      CURRENT_INFECTION_DAMAGE: int  # current amount of infection the unit has
+      CURRENT_INFECTION_TYPE: int  # type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+      CURRENT_INFECTION_FACTION: int  # faction source of the infection
     BattleItem:
-      ITEM_PSYCHIC_POWER_CHECKED: int #have we checked this item?
+      ITEM_PSYCHIC_POWER_CHECKED: int  # have we checked this item?
     RuleArmor:
-      ARMOR_PERILS_EFFECTS_RESISTANCE: int #% resistance to Perils effects
+      ARMOR_PERILS_EFFECTS_RESISTANCE: int  # % resistance to Perils effects
 
   scripts:
     hitUnit:
@@ -28,14 +28,14 @@ extended:
           var ptr RuleUnit myRuleUnit;
 
           attacker.getFaction temp;
-          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
-            #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
+          if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
+            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
             return power part side;
           end;
 
           damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
           if eq temp 0;
-            #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
+            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
             return power part side;
           end;
 
@@ -43,10 +43,10 @@ extended:
           if gt temp 0;
             damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_CHECKED;
             if gt temp 0;
-              #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. We've already checked this for perils this turn." damaging_item;
+              # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. We've already checked this for perils this turn." damaging_item;
               return power part side;
             else;
-              damaging_item.setTag Tag.ITEM_PSYCHIC_POWER_CHECKED 1; #this flags the item as already having performed a check
+              damaging_item.setTag Tag.ITEM_PSYCHIC_POWER_CHECKED 1; # this flags the item as already having performed a check
             end;
           end;
 
@@ -54,38 +54,38 @@ extended:
           if eq temp 1;
             unit.getFaction temp;
             attacker.getFaction temp2;
-            if neq temp temp2; #don't roll for enemies caught in buff effects
-              #debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Buff power targeting a non-ally.";
+            if neq temp temp2; # don't roll for enemies caught in buff effects
+              # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Buff power targeting a non-ally.";
               return power part side;
             end;
           end;
 
           unit.getRuleArmor rArmor;
-          rArmor.getTag temp Tag.UNIT_TYPE_NULL; #we don't affect nulls
+          rArmor.getTag temp Tag.UNIT_TYPE_NULL; # we don't affect nulls
           if eq temp 1;
-            battle_game.flashMessage "STR_PSYCHIC_TARGET_NULL"; #let the player know the power was resisted
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Aborting. Target is a null. temp:" temp;
+            battle_game.flashMessage "STR_PSYCHIC_TARGET_NULL"; # let the player know the power was resisted
+            # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Aborting. Target is a null. temp:" temp;
             return 0 0 0;
           end;
 
           attacker.getFaction temp;
           battle_game.getTurnSide temp2;
-          if neq temp temp2; #abort if it's not our turn; only test for perils on our turn so reaction fire doesn't trigger
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+          if neq temp temp2; # abort if it's not our turn; only test for perils on our turn so reaction fire doesn't trigger
+            # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
             return power part side;
           end;
 
           attacker.getMorale perilsMagnitude;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
           attacker.getTag perilsModifier Tag.UNIT_PERILS_MODIFIER;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: UNIT_PERILS_MODIFIER:" perilsModifier;
-          add perilsMagnitude 10; #offset for morale cost
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: UNIT_PERILS_MODIFIER:" perilsModifier;
+          add perilsMagnitude 10; # offset for morale cost
           sub perilsMagnitude perilsModifier;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
 
-          damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER; #increment our Perils of the Warp chance
+          damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER; # increment our Perils of the Warp chance
           unit.getRuleArmor rArmor;
-          rArmor.getSize temp2; #divide increment by 4
+          rArmor.getSize temp2; # divide increment by 4
           if gt temp2 1;
             div temp 4;
           end;
@@ -94,35 +94,35 @@ extended:
           add temp2 temp;
           attacker.setTag Tag.UNIT_PERILS_MODIFIER temp2;
 
-          battle_game.randomRange randomNumber 0 100; #if we roll greater than our Morale + offsets, we trigger Perils
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils of the Warp roll:" randomNumber;
+          battle_game.randomRange randomNumber 0 100; # if we roll greater than our Morale + offsets, we trigger Perils
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils of the Warp roll:" randomNumber;
           if le randomNumber perilsMagnitude;
             return power part side;
           end;
 
           attacker.getRuleArmor rArmor;
-          rArmor.getTag temp Tag.ARMOR_PERILS_EFFECTS_RESISTANCE; #if we have immunity to perils, don't bother
+          rArmor.getTag temp Tag.ARMOR_PERILS_EFFECTS_RESISTANCE; # if we have immunity to perils, don't bother
           if gt temp 99;
             return power part side;
           end;
 
-          sub perilsMagnitude 100; #potency scales with the amount we're under max Morale
+          sub perilsMagnitude 100; # potency scales with the amount we're under max Morale
           mul perilsMagnitude -1;
-          attacker.getTag temp Tag.CURRENT_INFECTION_DAMAGE; #add infection damage equal to PerilsMagnitude
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage before Perils increment:" temp;
+          attacker.getTag temp Tag.CURRENT_INFECTION_DAMAGE; # add infection damage equal to PerilsMagnitude
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage before Perils increment:" temp;
           add temp perilsMagnitude;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils increment:" temp;
           attacker.getRuleArmor rArmor;
           rArmor.getTag temp2 Tag.ARMOR_PERILS_EFFECTS_RESISTANCE;
           if gt temp2 0;
             muldiv temp temp2 100;
           end;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils resistance:" temp;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection damage after Perils resistance:" temp;
 
           attacker.setTag Tag.CURRENT_INFECTION_DAMAGE temp;
 
-          if gt temp 0; #only bother assigning a type if we actually have infection damage
-            battle_game.randomRange randomNumber 0 1; #if we don't have infection damage, add infection damage of a random chaos type
+          if gt temp 0; # only bother assigning a type if we actually have infection damage
+            battle_game.randomRange randomNumber 0 1; # if we don't have infection damage, add infection damage of a random chaos type
             if eq randomNumber 0;
               attacker.setTag Tag.CURRENT_INFECTION_TYPE 1;
             else eq randomNumber 1;
@@ -130,36 +130,36 @@ extended:
             else;
               attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
             end;
-            attacker.setTag Tag.CURRENT_INFECTION_FACTION 1; #infection faction is hostile
-            attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; #randomize our infection type
-            #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
+            attacker.setTag Tag.CURRENT_INFECTION_FACTION 1; # infection faction is hostile
+            attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; # randomize our infection type
+            # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
           end;
 
-          attacker.getHealth temp; #deplete health in proportion to perilMagnitude
+          attacker.getHealth temp; # deplete health in proportion to perilMagnitude
           battle_game.randomRange temp2 1 perilsMagnitude;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Health loss from Perils:" temp2;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Health loss from Perils:" temp2;
           sub temp temp2;
-          limit_lower temp 1; #don't go below 1 hp... at least not now.
+          limit_lower temp 1; # don't go below 1 hp... at least not now.
           attacker.setHealth temp;
 
-          attacker.getMorale temp; #deplete morale in proportion to perilMagnitude
-          set temp2 temp; #save pre-perils morale
+          attacker.getMorale temp; # deplete morale in proportion to perilMagnitude
+          set temp2 temp; # save pre-perils morale
           sub temp perilsMagnitude;
           limit_lower temp 0;
           attacker.setMorale temp;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Morale loss from Perils:" perilsMagnitude;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Morale loss from Perils:" perilsMagnitude;
 
-          #attacker.getHealth temp; #apply fatal wounds to head in proportion to perilMagnitude
-          #battle_game.randomRange temp2 1 perilsMagnitude;
-          #attacker.getFatalwounds temp 1; #add fatal wounds to any we currently have in this location
-          #add temp temp2;
-          #attacker.setFatalwounds 1 temp;
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
+          # attacker.getHealth temp; # apply fatal wounds to head in proportion to perilMagnitude
+          # battle_game.randomRange temp2 1 perilsMagnitude;
+          # attacker.getFatalwounds temp 1; # add fatal wounds to any we currently have in this location
+          # add temp temp2;
+          # attacker.setFatalwounds 1 temp;
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Fatal wounds from Perils:" temp;
 
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Rolled more or equal to Perils target value." temp;
-          battle_game.randomRange randomNumber 0 100; #determine our random perils result; lower is worse.
-          #debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
-          if and lt randomNumber 6 lt temp2 50; #can only happen if morale is less than 50; psyker is instantly corrupted and transforms into a random higher end daemon
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Rolled more or equal to Perils target value." temp;
+          battle_game.randomRange randomNumber 0 100; # determine our random perils result; lower is worse.
+          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Perils result roll:" randomNumber;
+          if and lt randomNumber 6 lt temp2 50; # can only happen if morale is less than 50; psyker is instantly corrupted and transforms into a random higher end daemon
             battle_game.randomRange randomNumber 0 4;
             if eq randomNumber 0;
               rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
@@ -174,16 +174,16 @@ extended:
             end;
             attacker.setSpawnUnit myRuleUnit;
             attacker.setSpawnUnitInstantRespawn 1;
-          else lt randomNumber 11; #psyker is almost zeroed out
+          else lt randomNumber 11; # psyker is almost zeroed out
             attacker.setHealth 1;
             attacker.setStun 0;
             attacker.setMorale 0;
             attacker.setEnergy 0;
-          else lt randomNumber 31; #KO
+          else lt randomNumber 31; # KO
             attacker.setStun 0;
             attacker.setMorale 0;
             attacker.setEnergy 0;
-          else lt randomNumber 71; #do extra stun and energy damage in proportion to perilsMagnitude
+          else lt randomNumber 71; # do extra stun and energy damage in proportion to perilsMagnitude
             battle_game.randomRange temp 1 perilsMagnitude;
             attacker.getEnergy temp;
             battle_game.randomRange temp2 1 perilsMagnitude;
@@ -198,7 +198,7 @@ extended:
 
           attacker.getFaction temp;
           if eq temp FACTION_PLAYER;
-            battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; #let the player know we have suffered perils of the warp
+            battle_game.flashMessage "STR_SCRIPT_PERILS_TRIGGERED"; # let the player know we have suffered perils of the warp
           end;
 
           return power part side;
@@ -216,21 +216,21 @@ extended:
           var ptr RuleUnit myRuleUnit;
 
           attacker.getFaction temp;
-          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
-            #debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
+          if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
+            # debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
             return;
           end;
 
           damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
           if eq temp 0;
-            #debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
+            # debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
             return;
           end;
 
           damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER;
           unit.getRuleArmor rArmor;
           rArmor.getSize temp2;
-          if gt temp2 1; #if our target is large, divide the psychic ability's power by 4 after armor
+          if gt temp2 1; # if our target is large, divide the psychic ability's power by 4 after armor
             div to_armor 4;
             div to_energy 4;
             div to_health 4;
@@ -245,7 +245,7 @@ extended:
           return;
 
 
-    newTurnUnit: #reset our Perils modifier
+    newTurnUnit:  # reset our Perils modifier
       - new: ROSIGMA_nTU_perils
         offset: 22
         code: |
@@ -255,41 +255,41 @@ extended:
           var int numInventoryItems;
 
           unit.getFaction temp;
-          if neq temp FACTION_PLAYER; #abort if the faction isn't the player faction; minimize overhead
-            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Unit is a non-player faction.";
+          if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
+            # debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Unit is a non-player faction.";
             return;
           end;
 
           battle_game.getTurnSide temp2;
-          if neq temp temp2; #abort if it's not our turn
-            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+          if neq temp temp2; # abort if it's not our turn
+            # debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
             return;
           end;
 
           unit.getTag temp Tag.UNIT_PERILS_MODIFIER;
           if eq temp 0;
-            #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. UNIT_PERILS_MODIFIER is 0.";
+            # debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Aborting. UNIT_PERILS_MODIFIER is 0.";
             return;
           end;
 
-          #debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Reset UNIT_PERILS_MODIFIER. Current value:" temp;
+          # debug_log "ROSIGMA_hU_perils Scripts; newTurnUnit, offset 22: Reset UNIT_PERILS_MODIFIER. Current value:" temp;
           unit.setTag Tag.UNIT_PERILS_MODIFIER 0;
 
           unit.getInventoryItem.size numInventoryItems;
-          #debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: numInventoryItems" numInventoryItems;
+          # debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: numInventoryItems" numInventoryItems;
           loop var i numInventoryItems;
             unit.getInventoryItem someItem i;
-            someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_CHECKED; #get check value
+            someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_CHECKED; # get check value
             if gt temp 0;
               someItem.setTag Tag.ITEM_PSYCHIC_POWER_CHECKED 0;
-              #debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
+              # debug_log "ROSIGMA_hU_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
               return;
             end;
           end;
 
           return;
 
-#    newTurnItem: #reset our Perils modifier
+#    newTurnItem:  # reset our Perils modifier
 #      - new: ROSIGMA_nTI_perils
 #        offset: 22
 #        code: |
@@ -297,12 +297,12 @@ extended:
 #          var ptre BattleItem someItem;
 #          var int numInventoryItems;
 #
-#          someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK; #get check value
+#          someItem.getTag temp Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK; # get check value
 #          if lt temp 2;
-#            #debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Aborting ITEM_PSYCHIC_POWER_FLAT_CHECK less than 2:" temp;
+#            # debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Aborting ITEM_PSYCHIC_POWER_FLAT_CHECK less than 2:" temp;
 #            return;
 #          end;
 #
 #          someItem.setTag Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK 1;
-#          #debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
+#          # debug_log "ROSIGMA_nTI_perils; newTurnUnit, offset 22: Resetting ITEM_PSYCHIC_POWER_FLAT_CHECK for:" someItem;
 #          return;

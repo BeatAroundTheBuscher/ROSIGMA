@@ -1,9 +1,9 @@
 extended:
   tags:
     BattleUnit:
-      UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int #is our self-destruct disabled?
+      UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
     RuleArmor:
-      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: int #do we disable our self-destruct if the unit is overkilled?
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: int  # do we disable our self-destruct if the unit is overkilled?
 
   scripts:
     damageUnit:
@@ -42,15 +42,15 @@ extended:
               sub difference health;
               mul difference multiplier;
               mul difference -1;
-              #debug_log difference;
+              # debug_log difference;
               unit.setHealthWithOverkill difference;
             end;
           end;
 
           unit.getRuleArmor rArmor;
-          rArmor.getTag temp Tag.ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT; #if overkill stops us our scripted forced self-destruct, set the tag appropriately as follows
+          rArmor.getTag temp Tag.ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT; # if overkill stops us our scripted forced self-destruct, set the tag appropriately as follows
           if lt temp 1;
-            #debug_log "ROSIGMA_dU_overkill Scripts; damageUnit, offset 98: Aborting. Target has no disable self-destruct on kill:" temp;
+            # debug_log "ROSIGMA_dU_overkill Scripts; damageUnit, offset 98: Aborting. Target has no disable self-destruct on kill:" temp;
             return;
           end;
 
@@ -58,7 +58,7 @@ extended:
           unit.getHealthMax temp;
           div temp 2;
           mul temp -1;
-          if le health temp; #if we are overkilled, set the tag to disable forced self-destruct
+          if le health temp; # if we are overkilled, set the tag to disable forced self-destruct
             unit.setTag Tag.UNIT_OVERKILL_DISABLE_SELF_DESTRUCT 1;
           end;
 

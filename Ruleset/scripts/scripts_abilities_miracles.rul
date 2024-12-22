@@ -72,13 +72,13 @@ extended:
       UNIT_EXP_PSISTRENGTH: int
       UNIT_EXP_STRENGTH: int
       UNIT_HAS_BEEN_MARTYRED: int
-      #infection scripts
-      CURRENT_INFECTION_DAMAGE: int #current amount of infection the unit has
+      # infection scripts
+      CURRENT_INFECTION_DAMAGE: int  # current amount of infection the unit has
       CURRENT_INFECTION_TYPE: int
 
 
   scripts:
-    damageUnit: # get Miracle Points per HP
+    damageUnit:  # get Miracle Points per HP
     - offset: 1
       code: |
         var int temp;
@@ -112,7 +112,7 @@ extended:
 
         return;
 
-    - offset: 2 # Spirit of the Martyr
+    - offset: 2  # Spirit of the Martyr
       code: |
         var int temp1;
         var int temp2;
@@ -150,50 +150,50 @@ extended:
         battle_game.getTag temp2 Tag.MIRACLE_POINTS;
         add temp2 temp1; # temp1 is negative
         add temp2 temp1; # cost = 2 * HP to save
-        sub temp2 10; # cost for getting above 0 HP # 10 = 5 * 2
+        sub temp2 10; # cost for getting above 0 HP  # 10 = 5 * 2
 
         if and le temp1 0 gt temp2 0;
           add to_health temp1; # temp1 is negative
           sub to_health 5; # get above 0 HP
           set to_wound 0;
-          unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; #spirit of martyr purges all infection/corruption
-          unit.setTag Tag.CURRENT_INFECTION_TYPE 0; #spirit of martyr purges all infection/corruption
+          unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # spirit of martyr purges all infection/corruption
+          unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # spirit of martyr purges all infection/corruption
           battle_game.setTag Tag.MIRACLE_POINTS temp2;
           battle_game.getTurn temp2;
           battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
-          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; #a unit can only be martyred once per combat
+          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; # a unit can only be martyred once per combat
           battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
         end;
 
         return;
 
     returnFromMissionUnit:
-      - new: ROSIGMA_rFMU_miracles #how many Miracle points does this unit generate after each combat?
+      - new: ROSIGMA_rFMU_miracles  # how many Miracle points does this unit generate after each combat?
         offset: 99
         code: |
           var int temp;
           var int miraclePointsGained;
           var ptr RuleSoldier rSoldier;
 
-          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 0; #reset so we can benefit from Spirit of the Martyr again
+          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 0; # reset so we can benefit from Spirit of the Martyr again
 
           unit.getRuleSoldier rSoldier;
           rSoldier.getTag miraclePointsGained Tag.SOLDIER_MIRACLE_POINTS;
           if le miraclePointsGained 0;
-            #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Aborting. No Soldier Miracle Points generated:" miraclePointsGained;
+            # debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Aborting. No Soldier Miracle Points generated:" miraclePointsGained;
             return;
           end;
 
-          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Soldier Miracle Points generated:" miraclePointsGained;
+          # debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Soldier Miracle Points generated:" miraclePointsGained;
           battle_game.getTag temp Tag.MIRACLE_POINTS;
-          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Current Miracle Points:" temp;
+          # debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: Current Miracle Points:" temp;
           add temp miraclePointsGained;
-          #debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: New Miracle Points:" temp;
+          # debug_log "Miracle Scripts; ROSIGMA_rFMU_miracles, offset 1: New Miracle Points:" temp;
           battle_game.setTag Tag.MIRACLE_POINTS temp;
           return;
 
     newTurnUnit:
-    - offset: 1 # gain miracle points by gaining experience
+    - offset: 1  # gain miracle points by gaining experience
       code: |
         var int temp1;
         var int temp2;

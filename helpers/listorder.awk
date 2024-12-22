@@ -4,7 +4,7 @@
 
 BEGIN {
     FS = ":"
-    # startValue = 0 # set with -v startValue=0
+    # startValue = 0  # set with -v startValue=0
 }
 
 /listOrder/ {

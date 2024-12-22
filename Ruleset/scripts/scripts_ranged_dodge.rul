@@ -10,7 +10,7 @@ extended:
       DODGE_CHANCE: int
       FLIGHT_DODGE_CHANCE: int
       ARMOR_MAX_SUCCESSFUL_DODGES: int
-      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: int #how much our chance to dodge decreases with each successful dodge
+      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: int  # how much our chance to dodge decreases with each successful dodge
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: int
       ARMOR_DODGE_CHANCE_FLAT_REDUCTION: int
     RuleItem:
@@ -58,7 +58,7 @@ armors:
         end;
 
         unit.getTag temp Tag.DugInBonus;
-        if eq temp 1; #don't bother if we don't have the dug-in bonus
+        if eq temp 1; # don't bother if we don't have the dug-in bonus
           # debug_log "hitUnit | dodge scripts | unit dug in; cannot dodge. Aborting:" temp;
           return power part side;
         end;
@@ -80,11 +80,11 @@ armors:
           return power part side;
         end;
 
-        #define defender armor values
+        # define defender armor values
         unit.getRuleArmor targetArmor;
         targetArmor.getTag dodgeChance Tag.DODGE_CHANCE;
         targetArmor.getTag flightDodgeChance Tag.FLIGHT_DODGE_CHANCE;
-        #define attacker armor values
+        # define attacker armor values
         attacker.getRuleArmor attackerArmor;
         attackerArmor.getTag dodgeArmorPercentReduction Tag.ARMOR_DODGE_CHANCE_PERCENT_REDUCTION;
         set temp dodgeArmorPercentReduction;
@@ -110,18 +110,18 @@ armors:
         damagingItem.getTag dodgeFlatReduction Tag.DODGE_CHANCE_FLAT_REDUCTION;
         damagingItem.getTag dodgePercentReduction Tag.DODGE_CHANCE_PERCENT_REDUCTION;
 
-        if gt dodgeArmorPercentReduction dodgePercentReduction; #use the armor dodge mitigation if it's higher
+        if gt dodgeArmorPercentReduction dodgePercentReduction; # use the armor dodge mitigation if it's higher
           set dodgePercentReduction dodgeArmorPercentReduction;
         end;
 
         attackerArmor.getTag temp Tag.ARMOR_DODGE_CHANCE_FLAT_REDUCTION;
-        if gt temp dodgeFlatReduction; #use the armor dodge mitigation if it's higher
+        if gt temp dodgeFlatReduction; # use the armor dodge mitigation if it's higher
           set dodgeFlatReduction temp;
         end;
 
         # debug_log "hitUnit | dodge scripts | dodgePercentReduction:" dodgePercentReduction;
         # debug_log "hitUnit | dodge scripts | dodgeFlatReduction:" dodgeFlatReduction;
-        if or ge dodgeFlatReduction 100 ge dodgePercentReduction 100; #these weapons are undodgable
+        if or ge dodgeFlatReduction 100 ge dodgePercentReduction 100; # these weapons are undodgable
           # debug_log "hitUnit | dodgeFlatReduction or dodgePercentReduction 100 or greater, Aborting." dodgePercentReduction;
           return power part side;
         end;
@@ -133,7 +133,7 @@ armors:
 
         targetArmor.getTag dodgeDeclines Tag.ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS;
         if gt dodgeDeclines 0;
-          set maxSuccessfulDodges 999; #effectively we ignore max dodges; we're limited by our declining chance of dodge success on subsequent hits instead
+          set maxSuccessfulDodges 999; # effectively we ignore max dodges; we're limited by our declining chance of dodge success on subsequent hits instead
         end;
 
         if ge counterSuccessfulDodges maxSuccessfulDodges;
@@ -148,16 +148,16 @@ armors:
           end;
         end;
 
-        #reduce the dodge chance by the dodgeFlatReduction amount
+        # reduce the dodge chance by the dodgeFlatReduction amount
         sub dodgeChance dodgeFlatReduction;
-        mul dodgeDeclines counterSuccessfulDodges; #reduce dodge chance by ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS times number of successful dodges.
+        mul dodgeDeclines counterSuccessfulDodges; # reduce dodge chance by ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS times number of successful dodges.
         sub dodgeChance dodgeDeclines;
         if le dodgeChance 0;
           # debug_log "Dodge chance reduced to 0 by dodgeFlatReduction property.";
           return power part side;
         end;
 
-        #invert the dodgePercentReduction and multiply with the dodgeChance to get a % chance reduction
+        # invert the dodgePercentReduction and multiply with the dodgeChance to get a % chance reduction
         sub dodgePercentReduction 100;
         mul dodgePercentReduction -1;
         muldiv dodgeChance dodgePercentReduction 100;
@@ -165,7 +165,7 @@ armors:
         unit.getDirection unitDirection; # {0-7}
         attacker.getDirection attackerDirection;
         add attackerDirection 4; # Offset for attacker so A+D "face the same direction"
-        mod attackerDirection 8; # (7+4) % 8 = 3 # in other words limit to {0-7}
+        mod attackerDirection 8; # (7+4) % 8 = 3  # in other words limit to {0-7}
         sub unitDirection attackerDirection; # check if both face the same direction
         abs unitDirection; # range should be outside of {-1, 0, +1} (extended front) to take effect
 
@@ -202,7 +202,7 @@ armors:
         unit.getTag temp Tag.LAST_DODGE_FRAME;
         if gt temp 3;
           sub temp anim_frame;
-          if gt temp -2; #only 3 frames after hit have changed color
+          if gt temp -2; # only 3 frames after hit have changed color
             set_color new_pixel COLOR_X1_BLUE1;
           end;
         end;
@@ -212,7 +212,7 @@ armors:
         add_burn_shade new_pixel burn shade;
         return new_pixel;
 
-#ADEPTAS
+# ADEPTAS
   - type: STR_DEATHCULT_ASSASSIN_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -243,14 +243,14 @@ armors:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-  - type: STR_GUARD_IMPERIAL_ASSASSIN_UC #Vindicare are proper Temple assassins; they can dodge more than worth a damn; invul 4+ baby
+  - type: STR_GUARD_IMPERIAL_ASSASSIN_UC  # Vindicare are proper Temple assassins; they can dodge more than worth a damn; invul 4+ baby
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 100 #vindicare don't care
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 100  # vindicare don't care
 
-  - type: STR_CALLIDUS_ASSASSIN_ARMOR #Callidus are proper Temple assassins; they can dodge more than worth a damn; invul 4+ baby
+  - type: STR_CALLIDUS_ASSASSIN_ARMOR  # Callidus are proper Temple assassins; they can dodge more than worth a damn; invul 4+ baby
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
@@ -283,7 +283,7 @@ armors:
       FLIGHT_DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-#MARINES
+# MARINES
   - type: STR_SCOUT_UC
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -326,7 +326,7 @@ armors:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-#   - type: STR_FLYING_SUIT_UC # Assault Terminator
+#   - type: STR_FLYING_SUIT_UC  # Assault Terminator
 #     refNode: *STR_DODGE_ARMOR
 #     tags:
 #       DODGE_CHANCE: 0
@@ -369,7 +369,7 @@ armors:
       FLIGHT_DODGE_CHANCE: 0
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-#GUARD
+# GUARD
   - type: STR_ELYSIAN_JUMP_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -479,7 +479,7 @@ armors:
       DODGE_CHANCE: 100
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#ELDAR
+# ELDAR
 
   - type: STR_ELDAR_ARMOR
     refNode: *STR_DODGE_ARMOR
@@ -517,85 +517,85 @@ armors:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: STR_ELDAR_ARMOR2_P #banshee
+  - type: STR_ELDAR_ARMOR2_P  # banshee
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: STR_ELDAR_ARMOR2_P_SHIELD  #banshee
+  - type: STR_ELDAR_ARMOR2_P_SHIELD  # banshee
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: STR_ELDAR_ARMOR3_P #seer player
+  - type: STR_ELDAR_ARMOR3_P  # seer player
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-  - type: STR_ELDAR_ARMOR3_P_SHIELD  #seer player
+  - type: STR_ELDAR_ARMOR3_P_SHIELD  # seer player
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-  - type: STR_ELDAR_ARMOR4_P #dire avenger
+  - type: STR_ELDAR_ARMOR4_P  # dire avenger
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-  - type: STR_ELDAR_ARMOR4_P_SHIELD  #dire avenger
+  - type: STR_ELDAR_ARMOR4_P_SHIELD  # dire avenger
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-  - type: STR_ELDAR_ARMOR5_P #Scorpion
+  - type: STR_ELDAR_ARMOR5_P  # Scorpion
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-  - type: STR_ELDAR_ARMOR5_P_SHIELD  #Scorpion
+  - type: STR_ELDAR_ARMOR5_P_SHIELD  # Scorpion
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 25
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-  - type: STR_ELDAR_ARMOR6_P #reaper
+  - type: STR_ELDAR_ARMOR6_P  # reaper
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-  - type: STR_ELDAR_ARMOR6_P_SHIELD  #reaper
+  - type: STR_ELDAR_ARMOR6_P_SHIELD  # reaper
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-  - type: STR_ELDAR_ARMOR2 #banshee
+  - type: STR_ELDAR_ARMOR2  # banshee
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: STR_ELDAR_ARMOR3  #Farseer
+  - type: STR_ELDAR_ARMOR3  # Farseer
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-  - type: STR_ELDAR_FARSEER_ARMOR   #Player Farsser
+  - type: STR_ELDAR_FARSEER_ARMOR   # Player Farsser
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
-#INQUISITION/CHAMBER MILITANT
+# INQUISITION/CHAMBER MILITANT
 
   - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_JUMPPACK
     refNode: *STR_DODGE_ARMOR
@@ -604,7 +604,7 @@ armors:
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#Slaanesh dodge
+# Slaanesh dodge
 
   - type: STR_SLAANESH_FLAK_M_ARMOR
     refNode: *STR_DODGE_ARMOR
@@ -685,51 +685,51 @@ armors:
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_CHRYSSALID_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_CHRYSSALID_ARMOR_DIRE
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_CHRYSSALID_ARMORSELENE
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_NEVERBORN_TERRORIST_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_CHAOS_SERAPHIM
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_HERETIC_SERAPHIM_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#Khorne
-  - type: STR_SILACOID_ARMORT #blood letter
+# Khorne
+  - type: STR_SILACOID_ARMORT  # blood letter
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: STR_BLOODREAPER_ARMOR #blood letter
+  - type: STR_BLOODREAPER_ARMOR  # blood letter
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 40
@@ -801,7 +801,7 @@ armors:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#kharn
+# kharn
 
   - type: STR_KHARN_ARMOR
     refNode: *STR_DODGE_ARMOR
@@ -821,21 +821,21 @@ armors:
       DODGE_CHANCE: 33
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-#psykers
+# psykers
 
   - type: STR_DIVINER
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #perfect dodge chance but we only get one
+      DODGE_CHANCE: 100  # perfect dodge chance but we only get one
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_TELEPATH
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 50 #telepath can 'read' the thoughts of enemies, giving it some preternatural dodging capabilities
+      DODGE_CHANCE: 50  # telepath can 'read' the thoughts of enemies, giving it some preternatural dodging capabilities
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#Tzeentch
+# Tzeentch
   - type: STR_ADEPTAS_TZEENTCHNASSASSINARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -881,22 +881,22 @@ armors:
   - type: STR_SCREAMER_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 50 #fast and dodgy; compensates for lack of health and armor; use aoes/volume of fire to combat these
+      DODGE_CHANCE: 50  # fast and dodgy; compensates for lack of health and armor; use aoes/volume of fire to combat these
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-  - type: MUTON_ARMORTZS #Chaos Sorcerer; Divination/prescience based dodging; always dodges the first attack
+  - type: MUTON_ARMORTZS  # Chaos Sorcerer; Divination/prescience based dodging; always dodges the first attack
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 100
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-  - type: STR_BRIMSTONE_HORROR_ARMOR #tiny and evasive little shit
+  - type: STR_BRIMSTONE_HORROR_ARMOR  # tiny and evasive little shit
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#Nurgle
+# Nurgle
   - type: STR_NURGLECHEM_SUIT
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -909,95 +909,95 @@ armors:
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
-  - type: STR_LESSER_ROTFLY_ARMOR #dodgy instead of tough
+  - type: STR_LESSER_ROTFLY_ARMOR  # dodgy instead of tough
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 50
       FLIGHT_DODGE_CHANCE: 60
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-#Undivided
+# Undivided
   - type: STR_NIGHTLORD_RAPTOR_ARMOR0
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 15
       FLIGHT_DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - type: STR_NIGHTLORD_RAPTOR_ARMOR2
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 20
       FLIGHT_DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_NIGHTLORDS_WARPTALON_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 20
       FLIGHT_DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_FLOATER_ARMOR0
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: FLOATER_ARMOR1
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: FLOATER_ARMOR2
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_WARPTALON_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 20
       FLIGHT_DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
   - type: STR_ALPHA_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_ALPHAOFF_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_ALPHA_CORVUS_ARMOR
-    refNode: *STR_DODGE_ARMOR #50%
+    refNode: *STR_DODGE_ARMOR  # 50%
     tags:
       DODGE_CHANCE: 5
       FLIGHT_DODGE_CHANCE: 0
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#GSC & Tyranids
+# GSC & Tyranids
   - type: STR_HORMAGAUNT_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
       DODGE_CHANCE: 20
-      ARMOR_MAX_SUCCESSFUL_DODGES: 1 #chaff units, so not too many dodges allowed
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1  # chaff units, so not too many dodges allowed
 
   - type: STR_PATRIARCH_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 50 #psychic prescience + agility
+      DODGE_CHANCE: 50  # psychic prescience + agility
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
   - type: GENE_ARMOR
@@ -1090,7 +1090,7 @@ armors:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#dungeon specific start
+# dungeon specific start
 
   - type: STR_HULKERGENE_ARMOR2
     refNode: *STR_DODGE_ARMOR
@@ -1168,42 +1168,42 @@ armors:
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#dungeon specific end
+# dungeon specific end
 
-#uniques
+# uniques
 
   - type: STR_SLY_MARBO_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      DODGE_CHANCE: 100  # you really have to work at getting Sly Marbo killed
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-#marbostory
+# marbostory
   - type: STR_SLY_MARBOM1_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      DODGE_CHANCE: 100  # you really have to work at getting Sly Marbo killed
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
   - type: STR_SLY_MARBOM2_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      DODGE_CHANCE: 100  # you really have to work at getting Sly Marbo killed
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
   - type: STR_SLY_MARBOM3_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      DODGE_CHANCE: 100  # you really have to work at getting Sly Marbo killed
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
   - type: STR_SLY_MARBOEND_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 100 #you really have to work at getting Sly Marbo killed
+      DODGE_CHANCE: 100  # you really have to work at getting Sly Marbo killed
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-#catachan
+# catachan
 
   - type: STR_CATACHAN_FIGHTER_ARMOR
     refNode: *STR_DODGE_ARMOR
@@ -1265,7 +1265,7 @@ armors:
       DODGE_CHANCE: 40
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
 
-#ORKS
+# ORKS
   - type: STR_WEIRDORK_ARMOR
     refNode: *STR_DODGE_ARMOR
     tags:
@@ -1290,26 +1290,26 @@ armors:
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
-#NECRONS
+# NECRONS
   - type: STR_NECRON_SCARAB_ARMOR5
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 40 #dodge chance increases as the number of scarabs decrease
+      DODGE_CHANCE: 40  # dodge chance increases as the number of scarabs decrease
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_NECRON_SCARAB_ARMOR3
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 50 #dodge chance increases as the number of scarabs decrease
+      DODGE_CHANCE: 50  # dodge chance increases as the number of scarabs decrease
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_NECRON_SCARAB_ARMOR1
     refNode: *STR_DODGE_ARMOR
     tags:
-      DODGE_CHANCE: 70 #dodge chance increases as the number of scarabs decrease
+      DODGE_CHANCE: 70  # dodge chance increases as the number of scarabs decrease
       ARMOR_MAX_SUCCESSFUL_DODGES: 5
 
-#CULTISTS
+# CULTISTS
 
   - type: STR_CULTIST_ARMORMLV1
     refNode: *STR_DODGE_ARMOR

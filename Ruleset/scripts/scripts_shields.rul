@@ -2,26 +2,26 @@
 extended:
   tags:
     RuleArmor:
-#*** Tags for energy shield on armor ***
+# *** Tags for energy shield on armor ***
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
 
-#*** Tags for shield penetrating on weapon ***
+# *** Tags for shield penetrating on weapon ***
     RuleItem:
       ITEM_ENERGY_SHIELD_PENETRATION_PERCENT: int
       ITEM_ENERGY_SHIELD_PENETRATION_FLAT_AMOUNT: int
       ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: int
       ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT: int
-      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: int #overrides damage type bypassing if true
+      ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: int  # overrides damage type bypassing if true
 
     BattleUnit:
-#*** Tags for handling energy shields on units ***
+# *** Tags for handling energy shields on units ***
       UNIT_ENERGY_SHIELD_HP: int
       UNIT_ENERGY_SHIELD_DECAY: int
 
   scripts:
     hitUnit:
-      #*** Defense layer: does the unit have an energy shield? ***
+      # *** Defense layer: does the unit have an energy shield? ***
       - update: 40k_hU_personal_shields
         offset: 12
         code: |
@@ -40,103 +40,103 @@ extended:
           if eq shieldHP 0;
             return power part side;
           else or eq damaging_type 0 eq damaging_type 9 eq damaging_type 10;
-            damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; #check to see whether the weapon or ammo ignores the damage type bypass
+            damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; # check to see whether the weapon or ammo ignores the damage type bypass
             attackingAmmo.getTag frame Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS;
             add temp frame;
-            if eq temp 0; #if we don't ignore the damage typing bypass, bypass
+            if eq temp 0; # if we don't ignore the damage typing bypass, bypass
               return power part side;
             end;
           end;
 
-          #check if our weapon or ammo ignores shields
+          # check if our weapon or ammo ignores shields
           damaging_item.getAmmoItem attackingAmmo;
           damaging_item.getTag shieldPercentagePenetration Tag.ITEM_ENERGY_SHIELD_PENETRATION_PERCENT;
           attackingAmmo.getTag temp Tag.ITEM_ENERGY_SHIELD_PENETRATION_PERCENT;
-          #total ammo and weapon shield penetration
+          # total ammo and weapon shield penetration
           add shieldPercentagePenetration temp;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldPercentagePenetration:" shieldPercentagePenetration;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldPercentagePenetration:" shieldPercentagePenetration;
 
-          #if we straight up ignore shields, do so and abort
+          # if we straight up ignore shields, do so and abort
           if ge shieldPercentagePenetration 100;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Weapon/ammo ignores shields. Aborting. shieldPercentagePenetration:" shieldPercentagePenetration;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Weapon/ammo ignores shields. Aborting. shieldPercentagePenetration:" shieldPercentagePenetration;
             return power part side;
           end;
 
           unit.getTag shieldHP Tag.UNIT_ENERGY_SHIELD_HP;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Base shield initial value (shieldHP): " shieldHP;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Base shield initial value (shieldHP): " shieldHP;
 
-          #calculate flat shield penetration
+          # calculate flat shield penetration
           damaging_item.getTag shieldFlatPenetration Tag.ITEM_ENERGY_SHIELD_PENETRATION_FLAT_AMOUNT;
           attackingAmmo.getTag temp Tag.ITEM_ENERGY_SHIELD_PENETRATION_FLAT_AMOUNT;
-          #total ammo and weapon shield penetration
+          # total ammo and weapon shield penetration
           add shieldFlatPenetration temp;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldFlatPenetration:" shieldFlatPenetration;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldFlatPenetration:" shieldFlatPenetration;
 
-          #if we straight up ignore shields, do so and abort
+          # if we straight up ignore shields, do so and abort
           if ge shieldFlatPenetration shieldHP;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Weapon/ammo ignores shields. Aborting. shieldFlatPenetration:" shieldFlatPenetration;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Weapon/ammo ignores shields. Aborting. shieldFlatPenetration:" shieldFlatPenetration;
             return power part side;
           end;
 
-          #calculate flat shield reduction
+          # calculate flat shield reduction
           damaging_item.getTag shieldFlatReduction Tag.ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT;
           attackingAmmo.getTag temp Tag.ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT;
-          #total ammo and weapon shield flat reduction
+          # total ammo and weapon shield flat reduction
           add shieldFlatReduction temp;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldFlatReduction:" shieldFlatReduction;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldFlatReduction:" shieldFlatReduction;
 
-          #calculate percentage shield reduction
+          # calculate percentage shield reduction
           damaging_item.getTag shieldPercentageReduction Tag.ITEM_ENERGY_SHIELD_REDUCTION_PERCENT;
           attackingAmmo.getTag temp Tag.ITEM_ENERGY_SHIELD_REDUCTION_PERCENT;
-          #total ammo and weapon shield flat reduction
+          # total ammo and weapon shield flat reduction
           add shieldPercentageReduction temp;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldPercentageReduction:" shieldPercentageReduction;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Total shieldPercentageReduction:" shieldPercentageReduction;
 
-          #temp value is equal to our effective shield hp that can be adjusted by penetration
+          # temp value is equal to our effective shield hp that can be adjusted by penetration
           set temp shieldHP;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective shield initial value (temp): " temp;
-          #apply shield flat penetration
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective shield initial value (temp): " temp;
+          # apply shield flat penetration
           if ge shieldFlatPenetration 0;
-            sub temp shieldFlatPenetration; #reduce effective shielding by this amount
+            sub temp shieldFlatPenetration; # reduce effective shielding by this amount
             limit_lower temp 0;
           end;
 
-          #apply shield percentage penetration
+          # apply shield percentage penetration
           if ge shieldPercentagePenetration 0;
-            sub shieldPercentagePenetration 100; #invert shield penetration
+            sub shieldPercentagePenetration 100; # invert shield penetration
             mul shieldPercentagePenetration -1;
-            muldiv temp shieldPercentagePenetration 100; #reduce effective shielding by this amount
+            muldiv temp shieldPercentagePenetration 100; # reduce effective shielding by this amount
           end;
 
-          #reduce the actual ShieldHP and effective shield HP by shieldPercentageReduction
+          # reduce the actual ShieldHP and effective shield HP by shieldPercentageReduction
           if ge shieldPercentageReduction 0;
-            sub shieldPercentageReduction 100; #invert shield reduction
+            sub shieldPercentageReduction 100; # invert shield reduction
             mul shieldPercentageReduction -1;
-            muldiv shieldHP shieldPercentageReduction 100; #reduce effective shielding by this amount
-            muldiv temp shieldPercentageReduction 100; #reduce effective shielding by this amount
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldPercentageReduction (temp): " temp;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldPercentageReduction (shieldHP): " shieldHP;
+            muldiv shieldHP shieldPercentageReduction 100; # reduce effective shielding by this amount
+            muldiv temp shieldPercentageReduction 100; # reduce effective shielding by this amount
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldPercentageReduction (temp): " temp;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldPercentageReduction (shieldHP): " shieldHP;
           end;
 
-          #reduce the actual ShieldHP and effective shield HP by shieldFlatReduction
+          # reduce the actual ShieldHP and effective shield HP by shieldFlatReduction
           sub shieldHP shieldFlatReduction;
           sub temp shieldFlatReduction;
           limit_lower shieldHP 0;
           limit_lower temp 0;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldFlatReduction (temp): " temp;
-          #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldFlatReduction (shieldHP): " shieldHP;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldFlatReduction (temp): " temp;
+          # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Shield values after shieldFlatReduction (shieldHP): " shieldHP;
 
           set shieldHPAfter shieldHP;
           sub shieldHPAfter power;
-          #subtract from power the lower of temp (adjusted shield HP) or real shield HP.
+          # subtract from power the lower of temp (adjusted shield HP) or real shield HP.
           if lt temp shieldHP;
             sub power temp;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value lower than Base Shield (temp): " temp;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value lower than Base Shield (shieldHP): " shieldHP;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value lower than Base Shield (temp): " temp;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value lower than Base Shield (shieldHP): " shieldHP;
           else;
             sub power shieldHP;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value higher than Base Shield (temp): " temp;
-            #debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value higher than Base Shield (shieldHP): " shieldHP;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value higher than Base Shield (temp): " temp;
+            # debug_log "40k_hU_personal_shields; damageUnit, offset 12: Effective Shield value higher than Base Shield (shieldHP): " shieldHP;
           end;
           limit_lower shieldHPAfter 0;
           limit_lower power 0;

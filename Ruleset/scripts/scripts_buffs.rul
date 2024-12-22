@@ -4,12 +4,12 @@ extended:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_DAMAGE_PERCENT_VS_PILOTED: int
       ITEM_IS_BUFF_WEAPON: int
-      ITEM_IS_OFFICER_ONLY: int #can only offers use this effectively? Mostly for IG
-      ITEM_NON_OFFICER_PENALTY_PERCENT: int #what percent do we use instead of 100% if the user is not an officer
+      ITEM_IS_OFFICER_ONLY: int  # can only offers use this effectively? Mostly for IG
+      ITEM_NON_OFFICER_PENALTY_PERCENT: int  # what percent do we use instead of 100% if the user is not an officer
     RuleArmor:
       NO_BENEFIT_FROM_INSPIRE: int
     RuleSoldier:
-      SOLDIER_IS_OFFICER: int #do we count as an officer?
+      SOLDIER_IS_OFFICER: int  # do we count as an officer?
 
   scripts:
     hitUnit:
@@ -24,89 +24,89 @@ extended:
           var ptr RuleItem itemRule;
           var ptr RuleArmor armorRule;
 
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: attacker:" attacker;
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: weapon_item:" weapon_item;
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: unit:" unit;
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: power:" power;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: attacker:" attacker;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: weapon_item:" weapon_item;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: unit:" unit;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: power:" power;
 
-          if neq damaging_type 0; #needs to be untyped damage
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking damage isn't untyped. damaging_type:" damaging_type;
+          if neq damaging_type 0; # needs to be untyped damage
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking damage isn't untyped. damaging_type:" damaging_type;
             return power part side;
           end;
 
           weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
-          if le temp 0; #if we're not a buff weapon, pass
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
+          if le temp 0; # if we're not a buff weapon, pass
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
             return power part side;
           end;
 
           unit.getRuleSoldier targetSoldier;
           targetSoldier.getTag temp Tag.SOLDIER_IS_LONE_WOLF;
           if eq temp 1; # don't bother with lone wolves
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is a lone wolf. Hit power set to 0. Temp:" faction;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is a lone wolf. Hit power set to 0. Temp:" faction;
             return 0 part side;
           end;
 
           if eq attacker unit;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker is also target. Hit power set to 0" faction;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker is also target. Hit power set to 0" faction;
             return 0 part side;
           end;
 
-          attacker.getFaction faction; #the target must be from the buffer's faction
+          attacker.getFaction faction; # the target must be from the buffer's faction
           unit.getFaction temp;
           if neq faction temp;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker isn't player faction. Hit power set to 0" faction;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker isn't player faction. Hit power set to 0" faction;
             return 0 part side;
           end;
 
           weapon_item.getTag temp Tag.ITEM_IS_OFFICER_ONLY;
-          if gt temp 0; #if we work with officers, check the attacker
+          if gt temp 0; # if we work with officers, check the attacker
             attacker.getRuleSoldier attackerSoldier;
             attackerSoldier.getTag temp2 Tag.SOLDIER_IS_OFFICER;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Item is for officers:" weapon_item;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Item is for officers:" weapon_item;
             if lt temp2 1;
               weapon_item.getTag temp Tag.ITEM_NON_OFFICER_PENALTY_PERCENT;
               if gt temp 0;
-                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power pre-penalty:" power;
-                muldiv power temp 100; #apply the penalty
+                # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power pre-penalty:" power;
+                muldiv power temp 100; # apply the penalty
                 battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_REDUCED_EFFECT" temp;
-                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power post-penalty:" power;
+                # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Attacker isn't an officer. Power post-penalty:" power;
               else;
                 battle_game.flashLongMessage "STR_SCRIPT_OFFICER_CHECK_NULL_EFFECT";
-                return 0 part side; #if no define penalty, abort
-                #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is not an officer and penalty percent is null. ITEM_NON_OFFICER_PENALTY_PERCENT:" temp;
+                return 0 part side; # if no define penalty, abort
+                # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Target is not an officer and penalty percent is null. ITEM_NON_OFFICER_PENALTY_PERCENT:" temp;
               end;
             end;
           end;
 
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.UNIT_TYPE_MECHANICAL;
-          if eq temp 1; #for handling mechanical units
-            armorRule.getTag temp Tag.UNIT_TYPE_LIVING; #handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
+          if eq temp 1; # for handling mechanical units
+            armorRule.getTag temp Tag.UNIT_TYPE_LIVING; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
             if eq temp 0;
               weapon_item.getTag temp Tag.ITEM_DAMAGE_PERCENT_VS_MECHANICAL;
               muldiv power temp 100;
-              #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. ITEM_DAMAGE_PERCENT_VS_MECHANICAL:" temp;
-              #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. Modified power:" power;
+              # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. ITEM_DAMAGE_PERCENT_VS_MECHANICAL:" temp;
+              # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. Modified power:" power;
             end;
             weapon_item.getTag temp Tag.ITEM_DAMAGE_PERCENT_VS_PILOTED;
             muldiv power temp 100;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. ITEM_DAMAGE_PERCENT_VS_PILOTED:" temp;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. Modified power:" power;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. ITEM_DAMAGE_PERCENT_VS_PILOTED:" temp;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. Modified power:" power;
           end;
 
           armorRule.getSize temp;
-          if eq temp 2; #for handling mechanical units
+          if eq temp 2; # for handling mechanical units
             weapon_item.getRuleItem itemRule;
             itemRule.isSingleTarget temp;
-            if eq temp 0; #reduce power to 25% if our buff doesn't single target
+            if eq temp 0; # reduce power to 25% if our buff doesn't single target
               muldiv power 25 100;
-              #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is large. Modified power:" power;
+              # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is large. Modified power:" power;
             end;
           end;
 
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
-          #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff successful. Final power:" power;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff item + attacker and target faction matches." faction;
+          # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Buff successful. Final power:" power;
           return power part side;
 
     damageUnit:
@@ -120,26 +120,26 @@ extended:
           var ptr RuleArmor armorRule;
 
           damaging_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
-          if le temp 0; #if we're not a buff weapon, pass
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
+          if le temp 0; # if we're not a buff weapon, pass
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
             return;
           end;
 
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.NO_BENEFIT_FROM_INSPIRE;
           if le temp 0;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker can benefit from inspire:" temp;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker can benefit from inspire:" temp;
             return;
           end;
 
-          if le to_time 0; #no recursive action economy multiplication
+          if le to_time 0; # no recursive action economy multiplication
             set to_time 0;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Time unit restoration cancelled:" to_time;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Time unit restoration cancelled:" to_time;
           end;
 
-          if le to_stun 0; #no recursive action economy multiplication
+          if le to_stun 0; # no recursive action economy multiplication
             div to_stun 2;
-            #debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Stun cost halved:" to_stun;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Stun cost halved:" to_stun;
           end;
 
           return;

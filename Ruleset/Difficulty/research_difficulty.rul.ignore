@@ -1,150 +1,150 @@
-#BuscherQuestion: Can events remove/add Adamantium, Prometheum or other ITEMS? Cash is possible.
-#BuscherQuestion: Can events remove/add Facilities in the starting base? Like "Easy" you get an extra storage/large radar/living quarters built. Or alternative: An starting outpost.
-#BuscherQuestion: You want to code up any of this? I think the starting gear and limited to monthly recruits were your ideas. In the interest of [speed]
+# BuscherQuestion: Can events remove/add Adamantium, Prometheum or other ITEMS? Cash is possible.
+# BuscherQuestion: Can events remove/add Facilities in the starting base? Like "Easy" you get an extra storage/large radar/living quarters built. Or alternative: An starting outpost.
+# BuscherQuestion: You want to code up any of this? I think the starting gear and limited to monthly recruits were your ideas. In the interest of [speed]
 
-#This can be set up as a SUBMOD I think. With the necessary startingBase.rul (starting gear and soldiers), vars.rul (starting cash), research.rul (limit hiring of Adepts, limit purchase of heavy weapons) changes etc.
+# This can be set up as a SUBMOD I think. With the necessary startingBase.rul (starting gear and soldiers), vars.rul (starting cash), research.rul (limit hiring of Adepts, limit purchase of heavy weapons) changes etc.
 
-#TO DO list. DONE1 = Not tested yet. DONE2: Tested, ready for open beta. DONE3: Final, ready for launch.
-#DONE1: Create framework of Difficulty Options.
-#DONE1: Brainstorm randomized event system.
-#TO DO: Complete research topics for all difficulties
-#WIP: Events for Economy Funding options.
-#TO DO: Complete all event scripting
-#TO DO: Complete random boon/malus events for various difficulties.
-#DONE1: Create new art assets for event backgrounds.
-#DONE1: Code research and events to spawn faction specific squads.
-#TO DO: Change startingBase equipment for all factions
-#TO DO: Write research and events for Faction specific Starting Gear options.
-#TO DO: Change heavy weapons to require a tech research to unluck purchase of for all factions. Will be available through the new difficulty system.
-#TO DO: Write Research Options and events for the monthly reinforcements options.
-#TO DO: Change starting Adept hiring mechanic to be activated through tech.
-#DONE1: Adept Hiring Events scripted and written.
-#TO DO: Testing that the events and such actually work
-#TO DO: Test balance of economic malus, I have summarized total costs. Mostly monthly hits. Is it reasonable?
+# TO DO list. DONE1 = Not tested yet. DONE2: Tested, ready for open beta. DONE3: Final, ready for launch.
+# DONE1: Create framework of Difficulty Options.
+# DONE1: Brainstorm randomized event system.
+# TO DO: Complete research topics for all difficulties
+# WIP: Events for Economy Funding options.
+# TO DO: Complete all event scripting
+# TO DO: Complete random boon/malus events for various difficulties.
+# DONE1: Create new art assets for event backgrounds.
+# DONE1: Code research and events to spawn faction specific squads.
+# TO DO: Change startingBase equipment for all factions
+# TO DO: Write research and events for Faction specific Starting Gear options.
+# TO DO: Change heavy weapons to require a tech research to unluck purchase of for all factions. Will be available through the new difficulty system.
+# TO DO: Write Research Options and events for the monthly reinforcements options.
+# TO DO: Change starting Adept hiring mechanic to be activated through tech.
+# DONE1: Adept Hiring Events scripted and written.
+# TO DO: Testing that the events and such actually work
+# TO DO: Test balance of economic malus, I have summarized total costs. Mostly monthly hits. Is it reasonable?
 
-#DIFFICULTY options through research topics for the ROSIGMA mod
-#Big topics unlock suboptions to avoid clutter.
+# DIFFICULTY options through research topics for the ROSIGMA mod
+# Big topics unlock suboptions to avoid clutter.
 
 
-#Difficulty topics overview (ICGm just listing everything that needs a research topic and event scripting below, I´ve already coded up a bunch of it, scroll down)
+# Difficulty topics overview (ICGm just listing everything that needs a research topic and event scripting below, I´ve already coded up a bunch of it, scroll down)
 
-#STR_DIFFICULTY_OPTIONS_RESEARCH (This shows all main research options, each subtopic in turn will show more once researched -
-#unless we can come up with a smarter sorting option to not fuck up the research screen, each topic probably needs to start with the same type of words so its easy to see-
+# STR_DIFFICULTY_OPTIONS_RESEARCH (This shows all main research options, each subtopic in turn will show more once researched -
+# unless we can come up with a smarter sorting option to not fuck up the research screen, each topic probably needs to start with the same type of words so its easy to see-
 #-what is tech research and what is difficulty options)
-#One method is to hide difficulty options that are not of your faction (research topics require STR_ADEPTAS for example).
+# One method is to hide difficulty options that are not of your faction (research topics require STR_ADEPTAS for example).
 
-#Funding Options, I´ve started coding the research and events for these below.
-#STR_EASY_MODE_FUNDING_RESEARCH #One time boon of funds
-#STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly boost of funds
-#STR_NORMAL_MODE_FUNDING_RESEARCH #Randomized funds boon/malus
-#STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly randomized funds boon/malus
-#STR_HARD_MODE_FUNDING_RESEARCH #One time hit to funds
-#STR_HARD_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly randomized funding hits
-
-
-#Starting equipment options - NEEDS TO BE CODED. Research, eventScripts, Events.
-#Easy starting gear options ship in a large batch of starting weapons, heavy weapons, ammo etc. CONSIDERATION: Starting Storage.
-#STR_EASY_STARTING_GEAR_ARBITES
-#STR_EASY_STARTING_GEAR_GUARD
-#STR_EASY_STARTING_GEAR_ADEPTAS
-#STR_EASY_STARTING_GEAR_ASTARTES
-
-#These "Normal" difficulty options ships in a basic set of starting weapons. Include heavy weapons?
-#STR_NORMAL_STARTING_GEAR_ARBITES
-#STR_NORMAL_STARTING_GEAR_GUARD
-#STR_NORMAL_STARTING_GEAR_ADEPTAS
-#STR_NORMAL_STARTING_GEAR_ASTARTES
-
-#Hard mode equipment starts with minimal/no gear (changed to starting base in ROSIGMA 1.03+, as events can´t remove gear)
-#BuscherQuestion: Can events remove/add Adamantium, Prometheum or other ITEMS? Cash is possible.
-#STR_HARD_MODE_NO_COLLATERAL_DAMAGE #removes STR_HEAVY_WEAPONS_RESEARCH, gives no heavy weapons or explosives
-#STR_HARD_MODE_BUT_WITH_HEAVY_WEAPONS #grants ability to research a tech that unlocks STR_HEAVY_WEAPONS_RESEARCH / ability to buy heavy weapons
+# Funding Options, I´ve started coding the research and events for these below.
+# STR_EASY_MODE_FUNDING_RESEARCH  # One time boon of funds
+# STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly boost of funds
+# STR_NORMAL_MODE_FUNDING_RESEARCH  # Randomized funds boon/malus
+# STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly randomized funds boon/malus
+# STR_HARD_MODE_FUNDING_RESEARCH  # One time hit to funds
+# STR_HARD_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly randomized funding hits
 
 
-#One time unit spawn options, for when you want to have a squad of X faction with your other faction
-#Spawn In Units belonging to various factions. Can have a Price included to make it "fair"?
-#These research topics can be found further down, along with scripts and events. Ready for testing?
-#STR_SHOW_SPAWN_UNIT_OPTIONS_RESEARCH
+# Starting equipment options - NEEDS TO BE CODED. Research, eventScripts, Events.
+# Easy starting gear options ship in a large batch of starting weapons, heavy weapons, ammo etc. CONSIDERATION: Starting Storage.
+# STR_EASY_STARTING_GEAR_ARBITES
+# STR_EASY_STARTING_GEAR_GUARD
+# STR_EASY_STARTING_GEAR_ADEPTAS
+# STR_EASY_STARTING_GEAR_ASTARTES
 
-#STR_BASIC_SPAWN_PENAL_SQUAD_RESEARCH
-#STR_BASIC_SPAWN_PDF_SQUAD_RESEARCH
-#STR_BASIC_SPAWN_ARBITES_JUDGES_RESEARCH
+# These "Normal" difficulty options ships in a basic set of starting weapons. Include heavy weapons?
+# STR_NORMAL_STARTING_GEAR_ARBITES
+# STR_NORMAL_STARTING_GEAR_GUARD
+# STR_NORMAL_STARTING_GEAR_ADEPTAS
+# STR_NORMAL_STARTING_GEAR_ASTARTES
 
-#STR_BASIC_SPAWN_GUARD_VETERANS_RESEARCH
-#STR_BASIC_SPAWN_OGRYN_RESEARCH
-#STR_BASIC_SPAWN_STORMTROOPERS_RESEARCH
-#STR_BASIC_SPAWN_SANCTIONED_PSYKER_RESEARCH
-
-#STR_BASIC_SPAWN_ADEPTAS_RESEARCH
-#STR_BASIC_SPAWN_FRATERIS_RESEARCH
-#STR_BASIC_SPAWN_ADEPTAS_SERAPHIM_RESEARCH
-#STR_BASIC_SPAWN_VETERAN_ADEPTAS_RESEARCH
-
-#STR_BASIC_SPAWN_MARINE_SCOUTS_RESEARCH
-#STR_BASIC_SPAWN_TACTICAL_MARINES_RESEARCH
-#STR_BASIC_SPAWN_DEVASTATOR_MARINES_RESEARCH
-#STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
-
-#Soldier recruitment and reinforcement options, hiring is disabled by default in ROSIGMA 1.03+
-#STR_SHOW_MONTHLY_UNIT_REINFORCEMENTS_OPTIONS_RESEARCH
-
-#STR_ALLOW_HIRING_RECRUITS_ARBITES
-#STR_ALLOW_HIRING_RECRUITS_GUARD
-#STR_ALLOW_HIRING_RECRUITS_ADEPTAS
-#STR_ALLOW_HIRING_RECRUITS_ASTARTES
+# Hard mode equipment starts with minimal/no gear (changed to starting base in ROSIGMA 1.03+, as events can´t remove gear)
+# BuscherQuestion: Can events remove/add Adamantium, Prometheum or other ITEMS? Cash is possible.
+# STR_HARD_MODE_NO_COLLATERAL_DAMAGE  # removes STR_HEAVY_WEAPONS_RESEARCH, gives no heavy weapons or explosives
+# STR_HARD_MODE_BUT_WITH_HEAVY_WEAPONS  # grants ability to research a tech that unlocks STR_HEAVY_WEAPONS_RESEARCH / ability to buy heavy weapons
 
 
-#SUPER HARD MODE - NO RECRUIT HIRE OPTION, soldiers are dripped in monthly instead through events linked to performance. On hard, lower score = less recruits. On easy, more recruits with low score.
-#Monthly Reinforcement Options, can be combined with no soldier Hire allowed.
-#Easy allows the player to lose a couple units each battle, every month. Can get sweaty with terrible losses though.
-#STR_EASY_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 10 PDF; 5 Judges]
-#STR_EASY_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 20 Guardsmen 4 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_EASY_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 8 Adeptas, 21 Adeptas Pilot]
-#STR_EASY_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 10 Guardsmen/Auxilliaries, 16 Scouts, 1/1/1/1 Tactical/Devastator/Assault Marine]
+# One time unit spawn options, for when you want to have a squad of X faction with your other faction
+# Spawn In Units belonging to various factions. Can have a Price included to make it "fair"?
+# These research topics can be found further down, along with scripts and events. Ready for testing?
+# STR_SHOW_SPAWN_UNIT_OPTIONS_RESEARCH
 
-#Normal mode is pretty similar to easy, but far less higher ranking troops.
-#STR_NORMAL_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
-#STR_NORMAL_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_NORMAL_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 2 Adeptas, 1 Adeptas Pilot]
-#STR_NORMAL_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 10 Scouts, 1 Tactical Marine]
+# STR_BASIC_SPAWN_PENAL_SQUAD_RESEARCH
+# STR_BASIC_SPAWN_PDF_SQUAD_RESEARCH
+# STR_BASIC_SPAWN_ARBITES_JUDGES_RESEARCH
 
-#Hard mode is clutch mode. Very good play with few losses expected. Might have to bring the chaff units like Militia as cannon fodder.
-#STR_HARD_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
-#STR_HARD_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_HARD_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 10 Novices, No Adeptas, No Adeptas Pilot]
-#STR_HARD_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 6 Scouts, No Tactical Marine]
+# STR_BASIC_SPAWN_GUARD_VETERANS_RESEARCH
+# STR_BASIC_SPAWN_OGRYN_RESEARCH
+# STR_BASIC_SPAWN_STORMTROOPERS_RESEARCH
+# STR_BASIC_SPAWN_SANCTIONED_PSYKER_RESEARCH
 
-#Unlock factions
-#STR_OPTION_ARBITES_FOR_ALL
-#STR_OPTION_GUARD_FOR_ALL
-#STR_OPTION_ADEPTAS_FOR_ALL
-#STR_OPTION_ASTARTES_FOR_ALL
+# STR_BASIC_SPAWN_ADEPTAS_RESEARCH
+# STR_BASIC_SPAWN_FRATERIS_RESEARCH
+# STR_BASIC_SPAWN_ADEPTAS_SERAPHIM_RESEARCH
+# STR_BASIC_SPAWN_VETERAN_ADEPTAS_RESEARCH
 
-#Adept Hiring LimitationSystem
-#STR_HIRE_ADEPT_UNLOCK #Shows options, must be researched to unlock adept (scientists) hire. Changed in ROSIGMA 1.03+
-#STR_EASY_MODE_ADEPTS. #Adepts unlocked for hire right away.
-#STR_NORMAL_MODE_ADEPTS #3 monthly batches of Adept recruits at standard cost, at month 3+ they are unlocked for hire
-#STR_HARD_MODE_ADEPTS #6 monthly batches of Adept recrutis at elevated cost, at month 6+ they are unlocked for hire.
+# STR_BASIC_SPAWN_MARINE_SCOUTS_RESEARCH
+# STR_BASIC_SPAWN_TACTICAL_MARINES_RESEARCH
+# STR_BASIC_SPAWN_DEVASTATOR_MARINES_RESEARCH
+# STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
+
+# Soldier recruitment and reinforcement options, hiring is disabled by default in ROSIGMA 1.03+
+# STR_SHOW_MONTHLY_UNIT_REINFORCEMENTS_OPTIONS_RESEARCH
+
+# STR_ALLOW_HIRING_RECRUITS_ARBITES
+# STR_ALLOW_HIRING_RECRUITS_GUARD
+# STR_ALLOW_HIRING_RECRUITS_ADEPTAS
+# STR_ALLOW_HIRING_RECRUITS_ASTARTES
 
 
-#Below are the actual research topics
-research: #Research topics
-#Show Difficulty Options Research topics
+# SUPER HARD MODE - NO RECRUIT HIRE OPTION, soldiers are dripped in monthly instead through events linked to performance. On hard, lower score = less recruits. On easy, more recruits with low score.
+# Monthly Reinforcement Options, can be combined with no soldier Hire allowed.
+# Easy allows the player to lose a couple units each battle, every month. Can get sweaty with terrible losses though.
+# STR_EASY_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 10 PDF; 5 Judges]
+# STR_EASY_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 20 Guardsmen 4 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_EASY_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 8 Adeptas, 21 Adeptas Pilot]
+# STR_EASY_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 10 Guardsmen/Auxilliaries, 16 Scouts, 1/1/1/1 Tactical/Devastator/Assault Marine]
+
+# Normal mode is pretty similar to easy, but far less higher ranking troops.
+# STR_NORMAL_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+# STR_NORMAL_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_NORMAL_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 2 Adeptas, 1 Adeptas Pilot]
+# STR_NORMAL_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 10 Scouts, 1 Tactical Marine]
+
+# Hard mode is clutch mode. Very good play with few losses expected. Might have to bring the chaff units like Militia as cannon fodder.
+# STR_HARD_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+# STR_HARD_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_HARD_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 10 Novices, No Adeptas, No Adeptas Pilot]
+# STR_HARD_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 6 Scouts, No Tactical Marine]
+
+# Unlock factions
+# STR_OPTION_ARBITES_FOR_ALL
+# STR_OPTION_GUARD_FOR_ALL
+# STR_OPTION_ADEPTAS_FOR_ALL
+# STR_OPTION_ASTARTES_FOR_ALL
+
+# Adept Hiring LimitationSystem
+# STR_HIRE_ADEPT_UNLOCK  # Shows options, must be researched to unlock adept (scientists) hire. Changed in ROSIGMA 1.03+
+# STR_EASY_MODE_ADEPTS. # Adepts unlocked for hire right away.
+# STR_NORMAL_MODE_ADEPTS  # 3 monthly batches of Adept recruits at standard cost, at month 3+ they are unlocked for hire
+# STR_HARD_MODE_ADEPTS  # 6 monthly batches of Adept recrutis at elevated cost, at month 6+ they are unlocked for hire.
+
+
+# Below are the actual research topics
+research: # Research topics
+# Show Difficulty Options Research topics
 STR_DIFFICULTY_OPTIONS_RESEARCH
 
-#Basic Difficulty Options research topics
+# Basic Difficulty Options research topics
 
-#Difficulty Options for Funding Research topics
-#STR_EASY_MODE_FUNDING_RESEARCH #One time boon of funds
-#STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly boost of funds
-#STR_NORMAL_MODE_FUNDING_RESEARCH #Randomized funds boon/malus
-#STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly randomized funds boon/malus
-#STR_HARD_MODE_FUNDING_RESEARCH #One time hit to funds
-#STR_HARD_MODE_FUNDING_CONTINUAL_RESEARCH #Monthly randomized funding hits
+# Difficulty Options for Funding Research topics
+# STR_EASY_MODE_FUNDING_RESEARCH  # One time boon of funds
+# STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly boost of funds
+# STR_NORMAL_MODE_FUNDING_RESEARCH  # Randomized funds boon/malus
+# STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly randomized funds boon/malus
+# STR_HARD_MODE_FUNDING_RESEARCH  # One time hit to funds
+# STR_HARD_MODE_FUNDING_CONTINUAL_RESEARCH  # Monthly randomized funding hits
 
 eventScripts:
 - type: STR_EASY_MODE_FUNDING_SCRIPT
-  oneTimeRandomEvents: #only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
+  oneTimeRandomEvents: # only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
     STR_EASY_BOON_FUNDS
   firstMonth: 0
   lastMonth: 0
@@ -153,16 +153,16 @@ eventScripts:
     STR_EASY_MODE_FUNDING_RESEARCH: true
 
 - type: STR_EASY_MODE_FUNDING_CONTINUOUS_SCRIPT
-  eventWeights: #uncertain on the right syntax here, there´s just one event that should be triggered, and every month
+  eventWeights: # uncertain on the right syntax here, there´s just one event that should be triggered, and every month
       0:
       STR_EASY_BOON_FUNDING_CONTINUAL: 100
-  firstMonth: 0 #no last months, last entire game
+  firstMonth: 0  # no last months, last entire game
   executionOdds: 100
   researchTriggers:
     STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH: true
 
 - type: STR_HARD_MODE_FUNDING_SCRIPT
-  oneTimeRandomEvents: #only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
+  oneTimeRandomEvents: # only triggers the event one time, once this is researched. Could make a recurring easy funding boon event that gives say, 500k a month
     STR_HARD_MALUS_FUNDS
   firstMonth: 0
   lastMonth: 1
@@ -171,7 +171,7 @@ eventScripts:
     STR_HARD_MODE_FUNDING_RESEARCH: true
 
 - type: STR_HARD_MODE_FUNDING_CONTINUOUS_SCRIPT
-  oneTimeSequentialEvents: #triggers sequential event one time, once this is researched. Unsure if it will trigger one time, every month, if there is no lastMonth set? See above for alternative A.
+  oneTimeSequentialEvents: # triggers sequential event one time, once this is researched. Unsure if it will trigger one time, every month, if there is no lastMonth set? See above for alternative A.
     STR_HARD_MALUS_FUNDING_CONTINUAL
   firstMonth: 0
   executionOdds: 100
@@ -180,353 +180,353 @@ eventScripts:
 
 
 events:
-#EASY MODE ECON Events
+# EASY MODE ECON Events
   - name: STR_EASY_BOON_FUNDS
-    description: STR_EASY_BOON_FUNDS_DESCRIPTION1 #The Imperial Cult volounteer a boon of funding for your efforts
-    background: GovernorBG.SCR #Governor
-    funds: 200000000 #2 million granted
-    researchTriggers: #not necessary or only works through the eventScripts entry
-       STR_EASY_MODE_FUNDING_RESEARCH #the research needed for this event to trigger
+    description: STR_EASY_BOON_FUNDS_DESCRIPTION1  # The Imperial Cult volounteer a boon of funding for your efforts
+    background: GovernorBG.SCR  # Governor
+    funds: 200000000  # 2 million granted
+    researchTriggers: # not necessary or only works through the eventScripts entry
+       STR_EASY_MODE_FUNDING_RESEARCH  # the research needed for this event to trigger
     timer: 60
     timerRandom: 60
 
   - name: STR_EASY_BOON_FUNDING_CONTINUOUS
-    description: STR_EASY_BOON_FUNDING_CONTINUOUS_DESCRIPTION1 #The Imperial Cult volounteer a boon of funding for your efforts
-    background: GovernorBG.SCR #Governor
-    funds: 1000000 #1 million bonus credits every month
-    researchTriggers: #not necessary or only works through the eventScripts entry
-       STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH #the research needed for this event to trigger
-    timer: 60 #not sure how to set this to monthly
+    description: STR_EASY_BOON_FUNDING_CONTINUOUS_DESCRIPTION1  # The Imperial Cult volounteer a boon of funding for your efforts
+    background: GovernorBG.SCR  # Governor
+    funds: 1000000  # 1 million bonus credits every month
+    researchTriggers: # not necessary or only works through the eventScripts entry
+       STR_EASY_MODE_FUNDING_CONTINUAL_RESEARCH  # the research needed for this event to trigger
+    timer: 60  # not sure how to set this to monthly
     timerRandom: 60
 
-#NORMAL MODE ECON Events - These might not even be necessary
+# NORMAL MODE ECON Events - These might not even be necessary
   - name: STR_NORMAL_FUNDS
-    description: STR_NORMAL_FUNDS_DESCRIPTION1 #The Governor assigns funding to your independent command
-    background: GovernorBG.SCR #Governor
-    funds: 500000 #500k one time boon
-    researchTriggers: #not necessary or only works through the eventScripts entry
-       STR_NORMAL_MODE_FUNDING_RESEARCH #the research needed for this event to trigger
+    description: STR_NORMAL_FUNDS_DESCRIPTION1  # The Governor assigns funding to your independent command
+    background: GovernorBG.SCR  # Governor
+    funds: 500000  # 500k one time boon
+    researchTriggers: # not necessary or only works through the eventScripts entry
+       STR_NORMAL_MODE_FUNDING_RESEARCH  # the research needed for this event to trigger
     timer: 60
     timerRandom: 60
 
   - name: STR_NORMAL_FUNDING_CONTINUOUS
-    description: STR_NORMAL_FUNDING_CONTINUOUS_DESCRIPTION1 #The Governor assigns funding to your independent command
-    background: GovernorBG.SCR #Governor
-    funds: 250000 #250k bonus monthly funding
-    researchTriggers: #not necessary or only works through the eventScripts entry
-       STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH #the research needed for this event to trigger
-    timer: 60 #not sure how to set this to monthly
+    description: STR_NORMAL_FUNDING_CONTINUOUS_DESCRIPTION1  # The Governor assigns funding to your independent command
+    background: GovernorBG.SCR  # Governor
+    funds: 250000  # 250k bonus monthly funding
+    researchTriggers: # not necessary or only works through the eventScripts entry
+       STR_NORMAL_MODE_FUNDING_CONTINUAL_RESEARCH  # the research needed for this event to trigger
+    timer: 60  # not sure how to set this to monthly
     timerRandom: 60
-#ImperialAdminBG.scr
+# ImperialAdminBG.scr
 
-#HARD MODE ECON Events
+# HARD MODE ECON Events
   - name: STR_HARD_MALUS_FUNDS
-    description: STR_ STR_HARD_MALUS_FUNDS_DESCRIPTION #Give to the poor, boost planetary efforts, give to the Ecclessiarchy for prayers, we shall need them
-    background: ImperialinfraBG.SCR #InfaGuy
-    points: -1000 #Starting malus
-    funds: -300000000 #Malus of 3 million, too harsh?
-    researchTriggers: #not necessary or only works through the eventScripts entry
+    description: STR_ STR_HARD_MALUS_FUNDS_DESCRIPTION  # Give to the poor, boost planetary efforts, give to the Ecclessiarchy for prayers, we shall need them
+    background: ImperialinfraBG.SCR  # InfaGuy
+    points: -1000  # Starting malus
+    funds: -300000000  # Malus of 3 million, too harsh?
+    researchTriggers: # not necessary or only works through the eventScripts entry
       STR_HARD_MODE_FUNDING_RESEARCH
     timer: 60
     timerRandom: 60
 
   - name: STR_HARD_MALUS_FUNDING_CONTINUAL
-    description: STR_ STR_HARD_MALUS_FUNDING_CONTINUAL_DESCRIPTION #Give to the poor, boost planetary efforts, give to the Ecclessiarchy for prayers, we shall need them
-    background: ImperialinfraBG.SCR #InfaGuy
-    #city: true
-    points: -500 #Malus of 500 points a month
-    funds: -500000 #Malus of 500k a month
-    researchTriggers: #not necessary or only works through the eventScripts entry
+    description: STR_ STR_HARD_MALUS_FUNDING_CONTINUAL_DESCRIPTION  # Give to the poor, boost planetary efforts, give to the Ecclessiarchy for prayers, we shall need them
+    background: ImperialinfraBG.SCR  # InfaGuy
+    # city: true
+    points: -500  # Malus of 500 points a month
+    funds: -500000  # Malus of 500k a month
+    researchTriggers: # not necessary or only works through the eventScripts entry
       STR_HARD_MODE_FUNDING_CONTINUAL_RESEARCH
     timer: 60
     timerRandom: 60
 
 
-#Econ Malus for the Randomized system hooked up to STR_HARD_MALUS_FUNDING_CONTINUAL. Needs to be written up.
-#Thinking there will be a span of malus effects that will randomly be selected biweekly or monthly. It can be as low as -50k, to -500k funds and -500 score.
-#Do we want DIP PREVENTION, where events don´t fire if you don´t have positive score/cash?
-#Do we want RUBBERBANDING on the upside? Where harder hitting events will (can) trigger if the player has over X million cash in the bank?
-#Design wise, these events will delay the player from snowballing, make campaigns longer and could contribute (a little) to a loss. Especially without DIP PREVENTION.
-#WITH Dip Prevention, the player is incentivized to SPEN SPEND SPEND, so they have no cash to lose to events monthly. Getting that expensive (upkeep too) outpost or forge might make more sense.
-#Saving up for base expansion can get tricky. The player will want to grabm ore loot, and do more missions to get that cash reserve up when needed.
-#There will also be some sequential event chains with ramping costs, but if you survive (month 9+ for example) they are "Resolved". Maxes out at like -1 million funds.
-#For the future, whenever OXCE can handle it, I´d like to include multiple choice events where you can pay a resource (Kill/Honour Tokens) to avoid the economic or score impact of bad events.
+# Econ Malus for the Randomized system hooked up to STR_HARD_MALUS_FUNDING_CONTINUAL. Needs to be written up.
+# Thinking there will be a span of malus effects that will randomly be selected biweekly or monthly. It can be as low as -50k, to -500k funds and -500 score.
+# Do we want DIP PREVENTION, where events don´t fire if you don´t have positive score/cash?
+# Do we want RUBBERBANDING on the upside? Where harder hitting events will (can) trigger if the player has over X million cash in the bank?
+# Design wise, these events will delay the player from snowballing, make campaigns longer and could contribute (a little) to a loss. Especially without DIP PREVENTION.
+# WITH Dip Prevention, the player is incentivized to SPEN SPEND SPEND, so they have no cash to lose to events monthly. Getting that expensive (upkeep too) outpost or forge might make more sense.
+# Saving up for base expansion can get tricky. The player will want to grabm ore loot, and do more missions to get that cash reserve up when needed.
+# There will also be some sequential event chains with ramping costs, but if you survive (month 9+ for example) they are "Resolved". Maxes out at like -1 million funds.
+# For the future, whenever OXCE can handle it, I´d like to include multiple choice events where you can pay a resource (Kill/Honour Tokens) to avoid the economic or score impact of bad events.
 
-Papyrus and wax tithe #AdministratumBG.scr
+Papyrus and wax tithe  # AdministratumBG.scr
 "The Administratum requires additional papyrus and wax supplies after discovering a severe shortage and has redirected a inconsequential amount of funding from your reserves" [cost cash]
 
-Subversion of Imperial Ledgers #AdministratumBG.scr
+Subversion of Imperial Ledgers  # AdministratumBG.scr
 "The Administratum fears infilitration and subversion of the imperial ledgers, a department of eight hundred adepts has been purged. With them, some of your fund records were consumed by the blaze." [cost cash]
 
-Heretical Book Keeping #InquisitionBG.scr
+Heretical Book Keeping  # InquisitionBG.scr
 "The Ordo Hereticus of the Inquisition, suspecting radical book keeping, has purged several accounts relating to your efforts" [cost cash]
 
-Infrastructure Investment #ImperialinfraBG.scr
+Infrastructure Investment  # ImperialinfraBG.scr
 "An Imperial advisor to the Governor has demanded additional infrastructure funding, withdrawing funds from your accounts" [cost cash, +100 score]
 
-Governors New Garden #GovernorBG.scr
+Governors New Garden  # GovernorBG.scr
 "The Planetary Governor has waylaid some of your funds to construct a new garden" [raise score 100, cost cash]
 
-Governors Personal Guard #GovernorBG.scr
+Governors Personal Guard  # GovernorBG.scr
 "The Planetary Governor has diverted some of your funding to support expansion of his personal guard" [raise score 50, cost cash]
 
-Governor walks back promises #GovernorBG.scr
+Governor walks back promises  # GovernorBG.scr
 "The Planetary Governor has withdrawn some of your recent funding after nobles expressed doubts about your performance" [-100 score, 250k]
 
-Governer holds military parade #GovernorBG.scr
+Governer holds military parade  # GovernorBG.scr
 The Planetary Governor has diverted all reserves to hold a massive military parade to bolster his personal power at your expense. [-250 score, -500k]
 
-Nobility Opposes Your Deployments #ImperialNoblesBG.scr
+Nobility Opposes Your Deployments  # ImperialNoblesBG.scr
 "Upset at your recent deployments causing disturbances and damages to their estates and serfs, the nobility takes every opportunity to cause delays and oppose your forces" [-200 score, -100k]
 
-Nobility Favors local rival Commander #RivalCommanderBG.scr
+Nobility Favors local rival Commander  # RivalCommanderBG.scr
 "The Nobility has chosen to support a local Commander, diverting funding and supplies from your campaign to aid her and belittle your actions at every opportunity" [-250 score, -125k]
 
-Nobility diverts funds #ImperialNoblesBG.scr
+Nobility diverts funds  # ImperialNoblesBG.scr
 "The local nobility are diverting funds from your efforts, claiming that protecting their estates holds legal priority" [+50 score-250k cash]
 
-Local Lord intercedes #LocalLordBG.scr
+Local Lord intercedes  # LocalLordBG.scr
 Local Lord intercedes in recruitment efforts within his lands, several promising recruits have become unavailable as a result. [-200k, -100 score]
 
-Training Ground Converted to Hunting Park #LocalLordBG.scr
+Training Ground Converted to Hunting Park  # LocalLordBG.scr
 Local Lord takes over military training ground, converts it to a hunting park. [-200 score, +100k]
 
-Local Lord clamps down #LocalLordBG.scr
+Local Lord clamps down  # LocalLordBG.scr
 Local Lord diverts Arbites and PDF forces to punish protesting workers at one of his estate factory farms. [-100k]
 
-Local Lord diverts air power #LocalLordBG.scr
+Local Lord diverts air power  # LocalLordBG.scr
 A Local Lord has diverted a PDF air wing to bomb several growing refugee camps on her estate. [-100 score, -250k]
 
-Local Lords denounce you #LocalLordBG.scr
+Local Lords denounce you  # LocalLordBG.scr
 "Local lords have publically denounced your efforts as ineffective, slow and a waste of imperial funding, going as far as to accuse you of corruption and fanning public rumours agaisnt you." [-400 score, -100k]
 
-Noble Conspiracy #ImperialNoblesBG2.scr
+Noble Conspiracy  # ImperialNoblesBG2.scr
 "A conspiracy of local nobles has been discovered, having embezzled large amounts of funding, the suspected nobles have disappeared" [+200 score, -500k cash]
 
-Noble Fund Raiser #ImperialNoblesBG2.scr
+Noble Fund Raiser  # ImperialNoblesBG2.scr
 "In a extravagant display of loyalty, local Nobles have hosted a large fundraiser for your efforts, celebrating your recent successes. However, most of the funds was spent on the fundraiser." [+400 score, -250k cash]
 
-Infiltrated Nobility #ImperialNoblesBG2.scr
+Infiltrated Nobility  # ImperialNoblesBG2.scr
 "Large groups of Nobles are suspected to have sworn loyalty to Chaos, denying you not only their personal forces and support, but taking over local garrisons and opposing any efforts to assist you as well" [-300 score, -400k]
 
-Nobles Organize Resistance  #ImperialNoblesBG.scr
+Nobles Organize Resistance  # ImperialNoblesBG.scr
 "In conjunction with high born Officers, the local Nobility has organized a strong resistance in the planetary command structure to any and all of your actions. They block or delay any order you send through the local command network." [-500 score]
 Counteract Nobility
 "In a preemptive move, your forces have struck at dawn against several Nobles who have proclaimed their opposition to you, invading several estates, seized supplies and arrest any Noble that did not have time to flee" [-200 score, +250k]
 
-Imperial Cult Frenzy #EcclessiarchyBG4.scr
+Imperial Cult Frenzy  # EcclessiarchyBG4.scr
 A local Imperial cult held mass prayer gatherings in the streets to support your efforts, however in their frenzy they forced the deployment of reserves and expenditure of some kilotons of munitions." [+250 score, -100k]"
 
-Rumours of Defeat #UnrestBG2.scr
+Rumours of Defeat  # UnrestBG2.scr
 "Rumours of your impending defeat has begun circulating in the populance, no doubt fanned by heretics. Thousands of Arbites have been dispatched to round up and execute the troublemakers." [cost 200 000, score -250]
 
-Civilian Unrest #UnrestBG2.scr
+Civilian Unrest  # UnrestBG2.scr
 "The Civilian populance of several cities are in unrest, and several violent incidents of protests and sabotage has been reported. Local forces are suppressing the dissidents with lasgun fire. We require more victories!" [cost 300k, score -500]
 
-Widespread Riots  #UnrestBG2.scr
+Widespread Riots  # UnrestBG2.scr
 "Widespread riots have been occured within several urban centres due to the continued activity of xenos and heretical elements on this planet. The Governor has diverted funding to deal with this." [cost 500 k, score -750]
 
-Local PDF Deserts #DesertionBG.scr
+Local PDF Deserts  # DesertionBG.scr
 "Doubts about your efforts have been spreading within the local planetary defence forces, and a large percentage have deserted their posts, taking funds and equipment with them" [-250k, -200 score]
 
-Local PDF Mutinies #UnrestBG.scr
+Local PDF Mutinies  # UnrestBG.scr
 "Intense fighting broke out within several bases the past night, before reports could reach us the deserters disbanded into the night, after causing severe damage to local instillations and garrisons" [-500k, -500 score]
 
-Two fast furious Gangs attack Administratum buildings #GangfightingBG.scr
+Two fast furious Gangs attack Administratum buildings  # GangfightingBG.scr
 "Local street gangs have exploited the shortage of garrison forces and in a series of bold heists involving high speed vehicles tearing out vaults from Administratum buildings with chains, have stolen large amounts of our funds" [-400k]
 
-Gang fighting #GangfightingBG.scr
+Gang fighting  # GangfightingBG.scr
 "Furious gang fighting has broken out on the lower levels and resulted in severe damage to imperial installations and required the deployment of local Arbites enforcers supported by the PDF neighbourhood watch tanks." [-200k cash]
 
-Starving refugees plunder supply convoy #ImperialPrisonersBG.scr
+Starving refugees plunder supply convoy  # ImperialPrisonersBG.scr
 "Starving Refugees attack supply convoy, local Arbites have dispersed them but only after most of the supplies were taken or destroyed" [-100k]
 
-Starving Refugees overwhelm supply depot #UnrestBG.scr
+Starving Refugees overwhelm supply depot  # UnrestBG.scr
 "Starving Refugees overwhelm supply depot, local PDF opened fire to disperse them but accidentally burning down the supply depot in the process" [-150k]
 
-Starving Refugees overwhelm local estates #ImperialNoblesBG.scr
+Starving Refugees overwhelm local estates  # ImperialNoblesBG.scr
 "Starving Refugees overwhelm local estates, the Nobility guns down scores and demand compensation for your failure to keep order" [-100 score, -200k]
 
-Adeptas divert supplies to pious refugees #SistersReinforcement.scr
+Adeptas divert supplies to pious refugees  # SistersReinforcement.scr
 "A local Adeptas Convent has diverted supplies to feed the growing refugee camps" [+50 score, -100k]
 
-Canoness diverts supplies to refugees #CanonessBG.scr
+Canoness diverts supplies to refugees  # CanonessBG.scr
 "A Canoness have diverted supplies to support hundreds of growing refugee camps across the continent" [+100 score, -200k]
 
-Cardinal orders supplies diverted across the planet #CardinalBG.scr
+Cardinal orders supplies diverted across the planet  # CardinalBG.scr
 "The Cardinal has ordered supplies diverted across the planet to support the millions of refugees, blaming your lack of action for the poor state of the planet" [-300 Score, -500k]
 
 
-Industrial Sabotage #ImperialinfraBG.scr -250k
+Industrial Sabotage  # ImperialinfraBG.scr -250k
 Several railway hubs have been sabotaged by Chaos agents, the Administratum lambasts your lack of precautions and cut funding to infrastructure.
 
 Prometheum Tanks Explodes
 
 
-Firebrand sparks Imperial Cult riot #EcclessiarchyBG4.scr #firebrand -50 score, -50k
+Firebrand sparks Imperial Cult riot  # EcclessiarchyBG4.scr  # firebrand -50 score, -50k
 
-Pilgrims missing #SistersBG.scr -100 score
+Pilgrims missing  # SistersBG.scr -100 score
 
-Novices kidnapped #SistersBG.scr -125 score
+Novices kidnapped  # SistersBG.scr -125 score
 
-Local Shrine attacked #ShrineAttackedBG.scr -150 score
+Local Shrine attacked  # ShrineAttackedBG.scr -150 score
 "The assigned Battle Sisters fought off the attackers, but hundreds of Imperial cult members and several sisters were killed"
 
-Sisters ambushed #AdeptasAttackedBG.scr -150 score
+Sisters ambushed  # AdeptasAttackedBG.scr -150 score
 
-Pilgrims massacred #KhorneAttackBG.scr -175 score
+Pilgrims massacred  # KhorneAttackBG.scr -175 score
 
-Chaos executes captured prisoners  #ChaosMassacreBG.scr -150 score
+Chaos executes captured prisoners  # ChaosMassacreBG.scr -150 score
 
-Holy Shrine defiled #AdeptasAttackedBG2.scr -175 score
+Holy Shrine defiled  # AdeptasAttackedBG2.scr -175 score
 "The Battle Sisters fought to the last, covered in corpses the Shrine was left defiled"
 
-Novices found massacred #AdeptasAttackedBG2.scr -200 score
+Novices found massacred  # AdeptasAttackedBG2.scr -200 score
 "Over a hundred Adeptas Novices found killed in mass grave, the site bearing the mark of chaos"
 
-Local Abbey attacked  #AdeptasAttackedBG2.scr -250 score
+Local Abbey attacked  # AdeptasAttackedBG2.scr -250 score
 
-Canoness criticize your efforts #CanonessBG.scr
+Canoness criticize your efforts  # CanonessBG.scr
 
-Local Canoness assassinated #CanonessBG.scr -275 score
+Local Canoness assassinated  # CanonessBG.scr -275 score
 
-Local Abbey found abandoned and defiled #BeastmenBG.scr  -300 score
+Local Abbey found abandoned and defiled  # BeastmenBG.scr  -300 score
 
-Campaign of attacks and terror against local Convents #ChaosActivityBG.scr -325
+Campaign of attacks and terror against local Convents  # ChaosActivityBG.scr -325
 
-Ecclessiarchy Constructs Additional Monuments #EcclessiarchyBG.scr
+Ecclessiarchy Constructs Additional Monuments  # EcclessiarchyBG.scr
 "The Ecclessiarchy has donated several of your accounts to help raise more statues of imperial Saints" [raise score 200 , -400k]
 
-Canoness ousts local commander  #CanonessBG.scr -350 score, -100k
+Canoness ousts local commander  # CanonessBG.scr -350 score, -100k
 "A local Canoness have accused a PDF commander of heresy, purging him on the spot and placing the garrison and all their supporting infrastructure under Ecclessiarchial control"
 
-The Ecclessiarchy diverts all local resources to reinforce their Convents #EcclessiarchyBG2.scr -150k, -325 score
+The Ecclessiarchy diverts all local resources to reinforce their Convents  # EcclessiarchyBG2.scr -150k, -325 score
 "After a series of attacks, local Convents have dispatched Battle Sisters to secure fortification resources from the PDF, leaving several garrisons strapped of equipment. The Governor has scrambled to divert resources from your efforts to cover the gap.""
 
-Cardinal criticize your efforts, launches inquiry #CardinalBG.scr -350 score, -125k
+Cardinal criticize your efforts, launches inquiry  # CardinalBG.scr -350 score, -125k
 
-Local Convents step up recruitment efforts, inducts thousands #EcclessiarchyBG2.scr -200k cash, -300 score
+Local Convents step up recruitment efforts, inducts thousands  # EcclessiarchyBG2.scr -200k cash, -300 score
 "Launching a parallel recruitment and fund raising effort, the local Convents are inadvertently diverting recruits and funding from your efforts in their fervor to bolster their own numbers"
 
-Chaos Abbey spreads heresy throughout community and attacks local forces #AdeptasAttackedBG.scr -400 score
+Chaos Abbey spreads heresy throughout community and attacks local forces  # AdeptasAttackedBG.scr -400 score
 
-Respected Priest denounce your efforts #EcclessiarchyBG2.scr -425 score, -100k
+Respected Priest denounce your efforts  # EcclessiarchyBG2.scr -425 score, -100k
 
-Respected Canoness publically criticizes your efforts  #CanonessBG.scr -450 score, -150k
+Respected Canoness publically criticizes your efforts  # CanonessBG.scr -450 score, -150k
 
-Donations diverted by corrupt clergy #CorruptionBG.scr
+Donations diverted by corrupt clergy  # CorruptionBG.scr
 
-Ecclessiarchy diverts recruits from the planetary defense forces #EcclessiarchyBG3.scr -475 score, -200k cash
+Ecclessiarchy diverts recruits from the planetary defense forces  # EcclessiarchyBG3.scr -475 score, -200k cash
 "Staking their right to recruit all women across the planet before the PDF or guard, the Ecclessiarchy has deployed the Adeptas across the planet to secure their interests at Imperial recruitment offices"
 
-Chaos sworn Canoness disparages the imperial creed infront of masses #EcclessiarchyBG2.scr -500 score
+Chaos sworn Canoness disparages the imperial creed infront of masses  # EcclessiarchyBG2.scr -500 score
 
-Clashes between Adeptas and PDF #AdeptasAttackedBG.scr   -250k cash, -500 score
+Clashes between Adeptas and PDF  # AdeptasAttackedBG.scr   -250k cash, -500 score
 Several Clashes has taken place across the planet, as the Adeptas drive to purge and secure cities escalate, inadvertently putting them into conflict with local Arbites and PDF forces. The Governor has diverted resources to placate the Ecclessiarchy"
 
-Ecclessiarchy moves to replace the Governors guard with Battle Sisters #AdeptasControlBG.scr -250 score, -350k
+Ecclessiarchy moves to replace the Governors guard with Battle Sisters  # AdeptasControlBG.scr -250 score, -350k
 "After a series of spats and disagreements, the Cardinal has forced the Governor to accept a permanent bodyguard of Battle Sisters and Dialogous to ensure all his decisions are in their favour."
 
-Battle Sisters purges supply convoy #SistersPurgeBG.scr -250k, -100 score
+Battle Sisters purges supply convoy  # SistersPurgeBG.scr -250k, -100 score
 "Claiming the Convoy contained heretical contraband, the entire cargo of supplies ment for your bases was purged with heavy flamers. The Ecclessiarchy has launched inquiries into all your scheduled resupply convoys."
 
-Ecclessiarchy launches planetary recruitment drive and raises an army of Sisters #SistersReinforcement.scr - 500k cash, -500 score
+Ecclessiarchy launches planetary recruitment drive and raises an army of Sisters  # SistersReinforcement.scr - 500k cash, -500 score
 "Publically criticizing your efforts, the Ecclessiarchy has commanded the Adeptas Sororitas to conscript and induct women across the planet,
 
-Ecclessiarchy wrests control of several cities and defenses from the PDF #AdeptasControlBG.scr -500k, -500 score
+Ecclessiarchy wrests control of several cities and defenses from the PDF  # AdeptasControlBG.scr -500k, -500 score
 "The Cardinal and local Canonesses have deployed thousands of Battle Sisters to several major cities and logistics hubs, attacking any PDF that stand in their way. Several Guard commanders have been executed for heresy already.""
 
-Ecclessiarchy launches widespread witch hunts and purges #SistersPurgeBG2.scr
+Ecclessiarchy launches widespread witch hunts and purges  # SistersPurgeBG2.scr
 "Having lost confidence in your abilties, the Cardinal has commanded Adeptas Sororitas across the planet to deploy from their battle convents, attack local communities and cities in a frenzy of holy fervour. Tens of thousands are expected to be purged every day." [-750 score, -500k cash]
 
-Ecclessiarchy launches planetary crusade #SistersReinforcement.scr
+Ecclessiarchy launches planetary crusade  # SistersReinforcement.scr
 "Publically criticizing your efforts, the Cardinal has commanded the Adeptas Sororitas to launch their own crusade to drive Chaos from the planet, purge any other imperial forces they encounter as heretics and diverting all resources they can from you." [-1M cash, -1000 score]
 
-Chaos Sabotage discovered #ChaosActivityBG.scr -125 score
-Chaos blood propaganda covers walls and alleys #ChaosActivityBG2.scr -150 score
+Chaos Sabotage discovered  # ChaosActivityBG.scr -125 score
+Chaos blood propaganda covers walls and alleys  # ChaosActivityBG2.scr -150 score
 
-Chaos Cult Leader launches vast recruitment drive #ChaosActivityBG2.scr -175 score
+Chaos Cult Leader launches vast recruitment drive  # ChaosActivityBG2.scr -175 score
 
-Community leader comes out in support of Chaos #ChaosActivityBG2.scr -200 score
+Community leader comes out in support of Chaos  # ChaosActivityBG2.scr -200 score
 
-Widespread Chaos Cultist attacks against civilians #ChaosCultAttacksBG.scr -225 score
-Khorne massacre discovered #ChaosMassacreBG.scr -250 score
+Widespread Chaos Cultist attacks against civilians  # ChaosCultAttacksBG.scr -225 score
+Khorne massacre discovered  # ChaosMassacreBG.scr -250 score
 
 Nurgle Pox breakout -400 score
 
-Depraved public Slaanesh pleasure festival held #ChaosActivityBG2.scr -500 score
+Depraved public Slaanesh pleasure festival held  # ChaosActivityBG2.scr -500 score
 
-Rival Commander diverts supplies #RivalCommanderBG.scr
+Rival Commander diverts supplies  # RivalCommanderBG.scr
 
-Rival Commander Tours the Front  #RivalCommanderBG.scr
+Rival Commander Tours the Front  # RivalCommanderBG.scr
 
-Rival Commander Media Darling #RivalCommanderBG.scr
+Rival Commander Media Darling  # RivalCommanderBG.scr
 
-Rival Commander Maneuvers Blocks Supply Route #RivalCommanderBG.scr
+Rival Commander Maneuvers Blocks Supply Route  # RivalCommanderBG.scr
 
-Setback! Planetary forces falls back against advancing Chaos forces  #ImperialCommandBG.scr -400 score, -250k
+Setback! Planetary forces falls back against advancing Chaos forces  # ImperialCommandBG.scr -400 score, -250k
 
-Beastmen rampage in the hinterlands, targets farms #BeastmenBG.scr
+Beastmen rampage in the hinterlands, targets farms  # BeastmenBG.scr
 
-Imperial Prison camps overflowing #ImperialPrisonersBG.scr -500k
+Imperial Prison camps overflowing  # ImperialPrisonersBG.scr -500k
 "The Planetary Governor diverts resources to expand forced labour camps to exploit the recent mass arrests following widespread unrest across the planet, and save on future ammunition."
 
-Scandal! #CorruptionBG.scr
+Scandal! # CorruptionBG.scr
 "The public is outraged after rumours spread that confirm your debauched lifestyle and disregard for the imperial creed"
 
 Chaos Activity
 
 Boon Econ Events:
-Redemptionists garner support #EcclessiarchyBG4.scr
+Redemptionists garner support  # EcclessiarchyBG4.scr
 "Redemptionists and other imperial cult memebers have taken to the streets, rousing the population to support your efforts through self-flagellation." [+150 score]
 
-Frateris Militia deployed in support #EcclessiarchyBG2.scr
+Frateris Militia deployed in support  # EcclessiarchyBG2.scr
 "Local Frateris Militia, on orders of local Preachers, have deployed to support your efforts and root out heresy. Although thousands of civilians have died, several dozen heretics have been killed" [+250 score]
 
-Death Cults root out Chaos cultists #DeathCultBG.scr
+Death Cults root out Chaos cultists  # DeathCultBG.scr
 "In a night of blessed murder, local Death Cults of the Imperial Creed took to the streets across the planet, fighting several Chaos cults and causing thousands of casaulties. Some of them no doubt chaos supporters." [+500 score]
 
-Imperial Priests rouses congregates #EcclessiarchyBG4.scr
+Imperial Priests rouses congregates  # EcclessiarchyBG4.scr
 "Imperial Priests around the planet have raised support for your efforts through fervent prayer and the burning of several suspected heretics. They have donated funds for your efforts." [+200 score, +250k]
 
-Seraphim drives back Chaos forces #SeraphimBG.scr
+Seraphim drives back Chaos forces  # SeraphimBG.scr
 By chance, a company of Seraphim were nearby when a large Chaos force suddenly attacked a Shrine of pilgrims
 
-Cardinal expresses support #CardinalBG.scr
+Cardinal expresses support  # CardinalBG.scr
 "A high ranking Cardinal has publically called for the faithful of the imperial cult to support your efforts in any way possible, raising a substantial amount of cash for your efforts" [+300 score, +500k]
 
-A force of Adeptas purges Chaos Cult #SistersPurgeBG.scr +150 score
+A force of Adeptas purges Chaos Cult  # SistersPurgeBG.scr +150 score
 
-A force of Adeptas purges the Impure #SistersPurgeBG.scr +100 score
+A force of Adeptas purges the Impure  # SistersPurgeBG.scr +100 score
 
-Adeptas Sororitas carries out Witch burnings #SistersPurgeBG2 +200 score
+Adeptas Sororitas carries out Witch burnings  # SistersPurgeBG2 +200 score
 Local communities were overjoyed to witness the holy spectacle.
 
-A Convent of Adeptas drive back Chaos Cultists #SistersCombatBG.scr +300 score
+A Convent of Adeptas drive back Chaos Cultists  # SistersCombatBG.scr +300 score
 
-Adeptas victorious against mob #SistersReinforcements3BG.scr +250 score
+Adeptas victorious against mob  # SistersReinforcements3BG.scr +250 score
 The Unarmed mob was caught defiling a holy statue and purged afterwards. The defiled statue was then purified by being melted into slag by multimeltas.
 
-Adeptas launches preemptive attack against Chaos Cult haven +250 score #AdeptasControlBG.scr
+Adeptas launches preemptive attack against Chaos Cult haven +250 score  # AdeptasControlBG.scr
 The small town reported to harbor a Chaos Cult was successfully purged by a neaby Adeptas force, dousing the entire community in holy prometheum before igniting the town before any cultists could escape.
 
-Citizens reveal local Chaos Cult #ChaosActivityBG.scr +50 score
+Citizens reveal local Chaos Cult  # ChaosActivityBG.scr +50 score
 
-Local Arbites destroys Chaos Cult #ArbitesBG.scr +100 score
+Local Arbites destroys Chaos Cult  # ArbitesBG.scr +100 score
 
-Inquisitors root out Chaos Cultists #InquisitionBG2.scr
+Inquisitors root out Chaos Cultists  # InquisitionBG2.scr
 
-Forced Labour Camps support the war effort #PenetentsBG.scr
+Forced Labour Camps support the war effort  # PenetentsBG.scr
 
-Inquisition interrogators reveal hidden Chaos Caches #InterrogationBG.scr +250k
+Inquisition interrogators reveal hidden Chaos Caches  # InterrogationBG.scr +250k
 
 Signs of the Saint +125 score
 
-Local Chaos Cult infighting +150 score #ChaosActivityBG.scr
+Local Chaos Cult infighting +150 score  # ChaosActivityBG.scr
 
-Local Abhumans routs Chaos Beastmen infiltration +175 score #BeastmenBG.scr
+Local Abhumans routs Chaos Beastmen infiltration +175 score  # BeastmenBG.scr
 
-Local PDF forces inspired by your efforts +200 score #GuardBG.scr
+Local PDF forces inspired by your efforts +200 score  # GuardBG.scr
 
 Local Chaos Cult Leader killed by Redemptionists +225 score
 
@@ -552,49 +552,49 @@ Living Saint proclaimed +600 score
 
 Planetary Governor Declares Not One Step Back +750 score
 
-Ecclessiarchy launches local crusade +800 score #SistersReinforcement.scr
+Ecclessiarchy launches local crusade +800 score  # SistersReinforcement.scr
 
-City declared free of Chaos forces by Inquisition +900 score #InquisitionBG.scr
+City declared free of Chaos forces by Inquisition +900 score  # InquisitionBG.scr
 
-Imperial Guard launches continental counter offensive  +1000 score #ImperialCommandBG.scr
+Imperial Guard launches continental counter offensive  +1000 score  # ImperialCommandBG.scr
 
-Administrative Error Raises Funds +100k #ImperialAdminBG.scr
+Administrative Error Raises Funds +100k  # ImperialAdminBG.scr
 
-Inquisition returns embezzled funds +150k #InquisitionBG.scr
+Inquisition returns embezzled funds +150k  # InquisitionBG.scr
 
-Inquisition Stormtroopers raid Chaos warehouse #StormtroopersBG.scr +100 score, +250k
+Inquisition Stormtroopers raid Chaos warehouse  # StormtroopersBG.scr +100 score, +250k
 
-Inquisition Stormtroopers prevent Chaos ritual #StormtroopersBG.scr +200 score
+Inquisition Stormtroopers prevent Chaos ritual  # StormtroopersBG.scr +200 score
 
-Inquisition Stormtroopers liberate Chaos captives from tainted existence  #StormtroopersBG.scr
+Inquisition Stormtroopers liberate Chaos captives from tainted existence  # StormtroopersBG.scr
 
-Local Noble Estate donates +200k #LocalLordBG.scr
+Local Noble Estate donates +200k  # LocalLordBG.scr
 
-Noble Fund Raiser Gone Well +400k #ImperialNoblesBG2.scr
+Noble Fund Raiser Gone Well +400k  # ImperialNoblesBG2.scr
 Only half the funds garnered were squandered during the night
 
-Planetary Governor diverts additional funding +500k #GovernorBG.scr
+Planetary Governor diverts additional funding +500k  # GovernorBG.scr
 #/End of Events
 
-STR_STARTING_KIT_DELIVERY #Rechange starting base gear so heavy/special are only delivered through the difficulty mode options
-#Easy Starting gear grants a large starting package of gear + the tech to buy heavy weapons, krak grenades etc
+STR_STARTING_KIT_DELIVERY  # Rechange starting base gear so heavy/special are only delivered through the difficulty mode options
+# Easy Starting gear grants a large starting package of gear + the tech to buy heavy weapons, krak grenades etc
 STR_EASY_STARTING_GEAR_ARBITES
 STR_EASY_STARTING_GEAR_GUARD
 STR_EASY_STARTING_GEAR_ADEPTAS
 STR_EASY_STARTING_GEAR_ASTARTES
 
-#Normal Starting gear grants a small starting package of gear + the tech to buy heavy weapons, krak grenades etc
+# Normal Starting gear grants a small starting package of gear + the tech to buy heavy weapons, krak grenades etc
 STR_NORMAL_STARTING_GEAR_ARBITES
 STR_NORMAL_STARTING_GEAR_GUARD
 STR_NORMAL_STARTING_GEAR_ADEPTAS
 STR_NORMAL_STARTING_GEAR_ASTARTES
 
-STR_HARD_MODE_BUT_WITH_HEAVY_WEAPONS #grants ability to research a tech that unlocks STR_HEAVY_WEAPONS_RESEARCH / ability to buy heavy weapons
-STR_HARD_MODE_NO_COLLATERAL_DAMAGE #removes STR_HEAVY_WEAPONS_RESEARCH, gives no heavy weapons or explosives
+STR_HARD_MODE_BUT_WITH_HEAVY_WEAPONS  # grants ability to research a tech that unlocks STR_HEAVY_WEAPONS_RESEARCH / ability to buy heavy weapons
+STR_HARD_MODE_NO_COLLATERAL_DAMAGE  # removes STR_HEAVY_WEAPONS_RESEARCH, gives no heavy weapons or explosives
 
 
-#Spawn Unit Options
-#Research Topics
+# Spawn Unit Options
+# Research Topics
 STR_SHOW_SPAWN_UNIT_OPTIONS_RESEARCH
 
 STR_BASIC_SPAWN_PENAL_SQUAD_RESEACH
@@ -616,8 +616,8 @@ STR_BASIC_SPAWN_TACTICAL_MARINES_RESEARCH
 STR_BASIC_SPAWN_DEVASTATOR_MARINES_RESEARCH
 STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
 
-#Spawn Unit Scripts
-#Spawn Arbites Scripts
+# Spawn Unit Scripts
+# Spawn Arbites Scripts
   - type: STR_BASIC_SPAWN_PENAL_SQUAD_SCRIPT
     oneTimeRandomEvents:
       STR_BASIC_SPAWN_PENAL_SQUAD
@@ -651,7 +651,7 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     researchTriggers:
        STR_BASIC_SPAWN_ARBITES_JUDGES_RESEACH: true
 
-#Spawn Guard Scripts
+# Spawn Guard Scripts
   - type: STR_BASIC_SPAWN_GUARD_VETERANS_SCRIPT
     oneTimeRandomEvents:
        STR_BASIC_SPAWN_GUARD_VETERANS
@@ -785,13 +785,13 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
        STR_BASIC_SPAWN_ASSAULT_MARINES_RESEACH: true
 
 
-#Arbites spawn events
+# Arbites spawn events
   - name: STR_BASIC_SPAWN_PENAL_SQUAD
-    description: STR_BASIC_SPAWN_PENAL_SQUAD_DESC #A Penal Squad has arrived from the local guard penitentiary to serve out their sentence for you.
+    description: STR_BASIC_SPAWN_PENAL_SQUAD_DESC  # A Penal Squad has arrived from the local guard penitentiary to serve out their sentence for you.
     background: PenalLegionBG.scr
     spawnedPersons: 10
     spawnedPersonType: STR_PENITENT
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_PENAL_ARMOR_UC: 10
       STR_AUTOGUN: 8
       STR_AUTOGUN_CLIP: 5
@@ -804,11 +804,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_PDF_SQUAD
-    description: STR_BASIC_SPAWN_PDF_SQUAD_DESC #A PDF Squad has arrived from the local garrison to strengthen your defenses.
+    description: STR_BASIC_SPAWN_PDF_SQUAD_DESC  # A PDF Squad has arrived from the local garrison to strengthen your defenses.
     background: REGIMENT_INSPECTION.SCR
     spawnedPersons: 8
     spawnedPersonType: STR_GUARDPD
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_ENFORCER_ARMOR_UC: 8
       STR_AUTOGUN: 8
       STR_AUTOGUN_CLIP: 16
@@ -819,11 +819,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_ARBITES_JUDGES
-    description: STR_BASIC_SPAWN_ARBITES_JUDGES_DESC #A Squad of Arbites Judges have arrived to assist you keep order.
+    description: STR_BASIC_SPAWN_ARBITES_JUDGES_DESC  # A Squad of Arbites Judges have arrived to assist you keep order.
     background: ArbitesBG.scr
     spawnedPersons: 5
     spawnedPersonType: STR_JUDGE
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_JUDGE_ARMOR_UC: 5
       STR_SHOTGUNPD: 5
       STR_SHOTGUN_SHELLS: 10
@@ -832,13 +832,13 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timer: 60
     timerRandom: 60
 
-#Guard spawn events
+# Guard spawn events
   - name: STR_BASIC_SPAWN_GUARD_VETERANS
-    description: STR_BASIC_SPAWN_GUARD_VETERANS_DESC #A group of Ogryn guard have arrived to bolster your forces.
+    description: STR_BASIC_SPAWN_GUARD_VETERANS_DESC  # A group of Ogryn guard have arrived to bolster your forces.
     background: GuardBG.SCR
     spawnedPersons: 6
     spawnedPersonType: STR_GUARD_VETERAN
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_GUARD_ARMORH_UC: 6
       STR_LASGUN_LUCIUS: 6
       STR_LASGUN_CLIP_HOTSHOT: 12
@@ -848,11 +848,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_OGRYN
-    description: STR_BASIC_SPAWN_OGRYN_DESC #A group of Ogryn guard have arrived to bolster your forces.
+    description: STR_BASIC_SPAWN_OGRYN_DESC  # A group of Ogryn guard have arrived to bolster your forces.
     background: OgrynBG.scr
     spawnedPersons: 5
     spawnedPersonType: STR_OGRYN
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_OGRYN_UC: 5
       STR_RIPPER_GUN: 5
       STR_RIPPER_GUN_CLIP: 10
@@ -861,34 +861,34 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_STORMTROOPERS
-    description: STR_BASIC_SPAWN_STORMTROOPERS_DESC #A Fireteam of Stormtroopers have arrived to bolster your forces.
+    description: STR_BASIC_SPAWN_STORMTROOPERS_DESC  # A Fireteam of Stormtroopers have arrived to bolster your forces.
     background: StormtroopersBG.scr
     spawnedPersons: 5
     spawnedPersonType: STR_STORMTROOPER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_STORMTROOPER_CARAPACE_ARMOR_HELLGUN: 5
     randomItem: false        # false = all items from the list are given, true = only one item is given (randomly)
     timer: 60
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_SANCTIONED_PSYKERS
-    description: STR_BASIC_SPAWN_PSYKERS_DESC #A pair of Sanctioned Psykers has arrived after being dispatched to aid you.
-    background: PsykersBG.scr #check if this is what its called
+    description: STR_BASIC_SPAWN_PSYKERS_DESC  # A pair of Sanctioned Psykers has arrived after being dispatched to aid you.
+    background: PsykersBG.scr  # check if this is what its called
     spawnedPersons: 2
     spawnedPersonType: STR_PSYKER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_PSYKER_ARMOR: 2
     randomItem: false        # false = all items from the list are given, true = only one item is given (randomly)
     timer: 60
     timerRandom: 60
 
-#Spawn Adeptas events
+# Spawn Adeptas events
   - name: STR_BASIC_SPAWN_FRATERIS_MILITIA
-    description: STR_BASIC_SPAWN_FRATERIS_MILITIA_DESC #A Penal Squad has arrived from the local guard penitentiary to serve out their sentence for you.
+    description: STR_BASIC_SPAWN_FRATERIS_MILITIA_DESC  # A Penal Squad has arrived from the local guard penitentiary to serve out their sentence for you.
     background: EcclessiarchyBG.SCR
     spawnedPersons: 10
     spawnedPersonType: STR_ADEPTAS_FRATERIS_MILITIA
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_FRATERIS_MILITIA_HEAVY: 10
       STR_AUTOGUN: 10
       STR_AUTOGUN_CLIP: 20
@@ -899,11 +899,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_ADEPTAS
-    description: STR_BASIC_SPAWN_ADEPTAS_DESC #A squad of armed Sisters of Battle have arrived at your base, sent by the nearby Convent to support your efforts and protect the sacred collar bone of Saint Lucius, buried somewhere beneath your base
+    description: STR_BASIC_SPAWN_ADEPTAS_DESC  # A squad of armed Sisters of Battle have arrived at your base, sent by the nearby Convent to support your efforts and protect the sacred collar bone of Saint Lucius, buried somewhere beneath your base
     background: SistersBG.SCR
     spawnedPersons: 6
-    spawnedPersonType: STR_ADEPTAS #Possible to spawn multiple types with different armors through event script?
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    spawnedPersonType: STR_ADEPTAS  # Possible to spawn multiple types with different armors through event script?
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_BOLTPISTOL_DEAZ: 2
       STR_LIGHT_BOLTPISTOL_AMMO: 4
       STR_HAND_FLAMETHROWER: 1
@@ -916,14 +916,14 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
       STR_BOLTER_ELOHIM: 1
       STR_LIGHT_BOLTER_AMMO: 10
     randomItem: false        # false = all items from the list are given, true = only one item is given (randomly)
-    #researchList: [STR_LASER_PISTOL] #Could add STR_ADEPTAS research topic here, so the player gets access to everything sisters?
-    #interruptResearch: STR_LASER_PISTOL #not needed
+    # researchList: [STR_LASER_PISTOL] # Could add STR_ADEPTAS research topic here, so the player gets access to everything sisters?
+    # interruptResearch: STR_LASER_PISTOL  # not needed
     timer: 60
     timerRandom: 60
 
   - name: STR_SPAWN_SERAPHIM_ADEPTAS
-    description: STR_SERAPHIM__ADEPTAS_DESC #A small group of Seraphim have arrived, claiming to be guided by a vision to aid you.
-    background: SeraphimBG.SCR #include custom [Seraphim.png]
+    description: STR_SERAPHIM__ADEPTAS_DESC  # A small group of Seraphim have arrived, claiming to be guided by a vision to aid you.
+    background: SeraphimBG.SCR  # include custom [Seraphim.png]
     spawnedPersons: 4
     spawnedPersonType: STR_ADEPTAS
     spawnedSoldier: # When "hiring" a soldier, you can (optionally) specify overrides for any of the soldier's attributes. Uses the same syntax as the saved games. Cannot override soldier's ID.
@@ -951,10 +951,10 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_SPAWN_VETERAN_ADEPTAS
-    description: STR_VETERAN_ADEPTAS_DESC #A small group of heavily armed Veteran Sororitas have arrived, sent by their nearby Convent to support your efforts to purge the planet.
+    description: STR_VETERAN_ADEPTAS_DESC  # A small group of heavily armed Veteran Sororitas have arrived, sent by their nearby Convent to support your efforts to purge the planet.
     background: SistersReinforcements2BG.SCR
     spawnedPersons: 4
-    spawnedPersonType: STR_ADEPTAS #Possible to spawn multiple types with different armors through event script?
+    spawnedPersonType: STR_ADEPTAS  # Possible to spawn multiple types with different armors through event script?
     spawnedSoldier: # When "hiring" a soldier, you can (optionally) specify overrides for any of the soldier's attributes. Uses the same syntax as the saved games. Cannot override soldier's ID.
       rank: 3
       currentStats:
@@ -984,18 +984,18 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
       STR_LASCAN_MALTHUS: 1
       STR_LASCANNON_CLIP_MALTHUS: 2
     randomItem: false        # false = all items from the list are given, true = only one item is given (randomly)
-    #researchList: [STR_LASER_PISTOL] #Could add STR_ADEPTAS research topic here, so the player gets access to everything sisters?
-    #interruptResearch: STR_LASER_PISTOL #not needed
+    # researchList: [STR_LASER_PISTOL] # Could add STR_ADEPTAS research topic here, so the player gets access to everything sisters?
+    # interruptResearch: STR_LASER_PISTOL  # not needed
     timer: 60
     timerRandom: 60
 
-#spawn marines events
+# spawn marines events
   - name: STR_BASIC_SPAWN_MARINE_SCOUTS
-    description: STR_BASIC_SPAWN_MARINE_SCOUTS_DESC #A Squad of Astartes Scouts have arrived to support you.
-    background: BACK02.SCR #SoldierBG
+    description: STR_BASIC_SPAWN_MARINE_SCOUTS_DESC  # A Squad of Astartes Scouts have arrived to support you.
+    background: BACK02.SCR  # SoldierBG
     spawnedPersons: 6
     spawnedPersonType: STR_SOLDIER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_PISTOLS: 2
       STR_PISTOL_CLIP: 4
       STR_RIFLE: 2
@@ -1008,11 +1008,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_TACTICAL_MARINES
-    description: STR_BASIC_SPAWN_TACTICAL_MARINES_DESC #A fireteam of Astartes Tactical Marines have arrived, detached to support you.
-    background: BACK02.SCR #SoldierBG
+    description: STR_BASIC_SPAWN_TACTICAL_MARINES_DESC  # A fireteam of Astartes Tactical Marines have arrived, detached to support you.
+    background: BACK02.SCR  # SoldierBG
     spawnedPersons: 4
     spawnedPersonType: STR_SOLDIER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_PERSONAL_ARMOR_UC: 4
       STR_RIFLE: 2
       STR_RIFLEB: 2
@@ -1027,11 +1027,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_DEVASTATOR_MARINES
-    description: STR_BASIC_SPAWN_DEVASTATOR_MARINES_DESC #A fireteam of Astartes Devastator Marines have arrived, detached to support you.
-    background: BACK02.SCR #SoldierBG
+    description: STR_BASIC_SPAWN_DEVASTATOR_MARINES_DESC  # A fireteam of Astartes Devastator Marines have arrived, detached to support you.
+    background: BACK02.SCR  # SoldierBG
     spawnedPersons: 4
     spawnedPersonType: STR_SOLDIER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_DEV_ARMOR_UC: 4
       STR_AUTO_CANNON: 2
       STR_AC_AP_AMMO: 8
@@ -1045,11 +1045,11 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
   - name: STR_BASIC_SPAWN_ASSAULT_MARINES
-    description: STR_BASIC_SPAWN_ASSAULT_MARINES_DESC #A fireteam of Astartes Assault Marines have arrived, detached to support you.
-    background: BACK02.SCR #SoldierBG
+    description: STR_BASIC_SPAWN_ASSAULT_MARINES_DESC  # A fireteam of Astartes Assault Marines have arrived, detached to support you.
+    background: BACK02.SCR  # SoldierBG
     spawnedPersons: 4
     spawnedPersonType: STR_SOLDIER
-    everyMultiItemList: #A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
+    everyMultiItemList: # A list of item IDs and their quantities. When this event pops up they are all transferred to the HQ (within 1 hour).
       STR_ASS_ARMOR_UC: 4
       STR_PISTOLS: 4
       STR_PISTOL_CLIP: 8
@@ -1060,46 +1060,46 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
     timerRandom: 60
 
 
-#Research and events for the monthly reinforcement options
-#STR_EASY_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 10 PDF; 5 Judges]
-#STR_EASY_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 20 Guardsmen 4 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_EASY_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 8 Adeptas, 21 Adeptas Pilot]
-#STR_EASY_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 10 Guardsmen/Auxilliaries, 16 Scouts, 1/1/1/1 Tactical/Devastator/Assault Marine]
+# Research and events for the monthly reinforcement options
+# STR_EASY_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 10 PDF; 5 Judges]
+# STR_EASY_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 20 Guardsmen 4 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_EASY_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 8 Adeptas, 21 Adeptas Pilot]
+# STR_EASY_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 10 Guardsmen/Auxilliaries, 16 Scouts, 1/1/1/1 Tactical/Devastator/Assault Marine]
 
-#Normal mode is pretty similar to easy, but far less higher ranking troops.
-#STR_NORMAL_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
-#STR_NORMAL_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_NORMAL_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 2 Adeptas, 1 Adeptas Pilot]
-#STR_NORMAL_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 10 Scouts, 1 Tactical Marine]
+# Normal mode is pretty similar to easy, but far less higher ranking troops.
+# STR_NORMAL_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+# STR_NORMAL_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_NORMAL_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 15 Novices, 2 Adeptas, 1 Adeptas Pilot]
+# STR_NORMAL_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 10 Scouts, 1 Tactical Marine]
 
-#Hard mode is clutch mode. Very good play with few losses expected. Might have to bring the chaff units like Militia as cannon fodder.
-#STR_HARD_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
-#STR_HARD_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
-#STR_HARD_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 10 Novices, No Adeptas, No Adeptas Pilot]
-#STR_HARD_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 6 Scouts, No Tactical Marine]
+# Hard mode is clutch mode. Very good play with few losses expected. Might have to bring the chaff units like Militia as cannon fodder.
+# STR_HARD_MODE_ARBITES_REINFORCEMENTS_RESEARCH [Monthly 20 Penal Troops, 5 PDF; 2 Judges]
+# STR_HARD_MODE_GUARD_REINFORCEMENTS_RESEARCH [Monthly: 20 Penal Troops, 15 Guardsmen, 2 Ogryn, 1/1 Officer/Commissar? Maybe even a Psyker, could be bimonthly on the higher ranking stuff as their own event]
+# STR_HARD_MODE_ADEPTAS_REINFORCEMENTS_RESEARCH [Monthly: 10 Frateris, 10 Novices, No Adeptas, No Adeptas Pilot]
+# STR_HARD_MODE_ASTARTES_REINFORCEMENTS_RESEARCH [Monthly: 8 Guardsmen/Auxilliaries, 6 Scouts, No Tactical Marine]
 
 
 
-#Difficulty option research that can unlock factions while playing as other factions
+# Difficulty option research that can unlock factions while playing as other factions
 
-#Unlock Arbites for all
-  - name: STR_OPTION_ARBITES_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+# Unlock Arbites for all
+  - name: STR_OPTION_ARBITES_FOR_ALL  # While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
     cost: 0
     points: 0
     unlocks:
-      - STR_ARBITES #this one is important
+      - STR_ARBITES  # this one is important
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
       - STR_SMOKE
       - STR_CRAFTADD
-      - STR_GUARD_AND_ARBITES #this one is important
+      - STR_GUARD_AND_ARBITES  # this one is important
       - STR_HEAVY_WEAPONS_RESEARCH_REQ
       - STR_LIGHT_BOLTERS
     dependencies:
       - STR_DIFFICULTY_OPTIONS_RESEARCH
 
-#Unlock Guard for all
-  - name: STR_OPTION_GUARD_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+# Unlock Guard for all
+  - name: STR_OPTION_GUARD_FOR_ALL  # While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
     cost: 0
     points: 0
     unlocks:
@@ -1108,38 +1108,38 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_RESEARCH_REQ
       - STR_CRAFTADD
-      - STR_GUARD_AND_ARBITES #this one is important
-      - STR_GUARD_SUPORT #this one is important
+      - STR_GUARD_AND_ARBITES  # this one is important
+      - STR_GUARD_SUPORT  # this one is important
     dependencies:
       - STR_DIFFICULTY_OPTIONS_RESEARCH
 
-#Unlock Adeptas for all
-  - name: STR_OPTION_ADEPTAS_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+# Unlock Adeptas for all
+  - name: STR_OPTION_ADEPTAS_FOR_ALL  # While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
     cost: 0
     points: 0
     unlocks:
-      - STR_ADEPTAS #this one is important
+      - STR_ADEPTAS  # this one is important
       - STR_MOTION_SCANNER
       - STR_MEDICAE_RESEARCH
       - STR_LASER_WEAPONS
       - STR_CRAFTADD
-      - STR_MARINES_AND_ADEPTAS #this one is important
+      - STR_MARINES_AND_ADEPTAS  # this one is important
       - STR_LIGHT_BOLTERS
       - STR_PHOSPHOR_GRENADE
       - STR_SMOKE
     dependencies:
       - STR_DIFFICULTY_OPTIONS_RESEARCH
 
-#Unlock Astartes for all
-  - name: STR_OPTION_ASTARTES_FOR_ALL #While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
+# Unlock Astartes for all
+  - name: STR_OPTION_ASTARTES_FOR_ALL  # While research can be given by event, not sure how "disables" work in that one, Answer - an event can give a research topic that disabled other research
     cost: 0
     points: 0
     unlocks:
-      - STR_MARINES_STRATEGY #this one is important
+      - STR_MARINES_STRATEGY  # this one is important
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
       - STR_CRAFTADD
-      - STR_MARINES_AND_ADEPTAS #this one is important
+      - STR_MARINES_AND_ADEPTAS  # this one is important
       - STR_LIGHT_BOLTERS
       - STR_SMOKE
     dependencies:
@@ -1147,9 +1147,9 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
 
 
 
-#Difficulty options for the Adept Recruitment Limit System
-#More Adepts are given through oneTimeSequentialEvents and hireScientistsUnlockResearch unlocked at different tiers depending on difficulty (starting for easy, tier 3 for normal and tier 6 for hard)
-#Add to vars.rul hireScientistsUnlockResearch: STR_HIRE_ADEPT_UNLOCK, create STR_HIRE_ADEPT_UNLOCK as a research topic
+# Difficulty options for the Adept Recruitment Limit System
+# More Adepts are given through oneTimeSequentialEvents and hireScientistsUnlockResearch unlocked at different tiers depending on difficulty (starting for easy, tier 3 for normal and tier 6 for hard)
+# Add to vars.rul hireScientistsUnlockResearch: STR_HIRE_ADEPT_UNLOCK, create STR_HIRE_ADEPT_UNLOCK as a research topic
   - name: STR_HIRE_ADEPT_UNLOCK
     cost: 0
     points: 0
@@ -1159,168 +1159,168 @@ STR_BASIC_SPAWN_ASSAULT_MARINES_RESEARCH
       - STR_SMOKE
       - STR_HEAVY_WEAPONS_RESEARCH_REQ
       - STR_CRAFTADD
-      - STR_GUARD_AND_ARBITES #this one is important
-      - STR_GUARD_SUPORT #this one is important
+      - STR_GUARD_AND_ARBITES  # this one is important
+      - STR_GUARD_SUPORT  # this one is important
     dependencies:
       - STR_EASY_MODE_ADEPTS_UNLOCK
       - STR_NORMAL_MODE_ADEPTS_UNLOCK
       - STR_HARD_MODE_ADEPTS_UNLOCK
 
-  - name: STR_EASY_MODE_ADEPTS #this one allows the player to recruit adepts right away, no events linked
+  - name: STR_EASY_MODE_ADEPTS  # this one allows the player to recruit adepts right away, no events linked
     cost: 0
     points: 0
     unlocks:
-      - STR_HIRE_ADEPT_UNLOCK #This one unlocks Adepts for recruitment
+      - STR_HIRE_ADEPT_UNLOCK  # This one unlocks Adepts for recruitment
     dependencies:
-      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+      - STR_DIFFICULTY_OPTIONS_RESEARCH  # this one makes this research topic show up
 
-#STR_NORMAL_MODE_ADEPTS_UNLOCK and STR_HARD_MODE_ADEPTS_UNLOCK are only granted through events
-#for NORMAL difficulty, access to hire adepts is granted after month 3 (oneTimeSequentialEvents STR_NORMAL_MODE_ADEPTS1-3)
-#for Hard difficulty, access to hire adepts is granted after month 6 (oneTimeSequentialEvents STR_HARD_MODE_ADEPTS1-6)
+# STR_NORMAL_MODE_ADEPTS_UNLOCK and STR_HARD_MODE_ADEPTS_UNLOCK are only granted through events
+# for NORMAL difficulty, access to hire adepts is granted after month 3 (oneTimeSequentialEvents STR_NORMAL_MODE_ADEPTS1-3)
+# for Hard difficulty, access to hire adepts is granted after month 6 (oneTimeSequentialEvents STR_HARD_MODE_ADEPTS1-6)
 
 Research:
-  - name: STR_NORMAL_MODE_ADEPTS #this one allows the player to recruit adepts by event after 3 months
+  - name: STR_NORMAL_MODE_ADEPTS  # this one allows the player to recruit adepts by event after 3 months
     cost: 0
     points: 0
-    #unlocks: #Not required?
-      #- STR_MEDIUM_MODE_ADEPTS_RESEARCH #this one triggers the sequential event chain
+    # unlocks: # Not required?
+      #- STR_MEDIUM_MODE_ADEPTS_RESEARCH  # this one triggers the sequential event chain
     dependencies:
-      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+      - STR_DIFFICULTY_OPTIONS_RESEARCH  # this one makes this research topic show up
 
 eventScripts:
   - type: STR_NORMAL_MODE_ADEPTS_SCRIPT
     oneTimeSequentialEvents:
-        STR_NORMAL_MODE_ADEPTS1 #This event gives the player 15 adepts, -15x30k = -450k cash. 30k is the 40k cost per adept, 20k in Rosigma (easy).
-        STR_NORMAL_MODE_ADEPTS2 #This event gives the player 25 adepts, -25x30k = -750k cash
-        STR_NORMAL_MODE_ADEPTS3 #This event unlocks STR_HIRE_ADEPT_UNLOCK, - 250k cash (total event series malus to cash = 1,2 million, for 40 adepts)
+        STR_NORMAL_MODE_ADEPTS1  # This event gives the player 15 adepts, -15x30k = -450k cash. 30k is the 40k cost per adept, 20k in Rosigma (easy).
+        STR_NORMAL_MODE_ADEPTS2  # This event gives the player 25 adepts, -25x30k = -750k cash
+        STR_NORMAL_MODE_ADEPTS3  # This event unlocks STR_HIRE_ADEPT_UNLOCK, - 250k cash (total event series malus to cash = 1,2 million, for 40 adepts)
     firstMonth: 1
     lastMonth: 6
     executionOdds: 100
     minDifficulty: 0
     maxDifficulty: 4
     researchTriggers:
-      STR_MEDIUM_MODE_ADEPTS: true #this event script only fires if this is researched
+      STR_MEDIUM_MODE_ADEPTS: true  # this event script only fires if this is researched
 
 events:
   - name: STR_MEDIUM_MODE_ADEPTS1
-    description: STR_HARD_MODE_ADEPTS1_DESCRIPTION #The Administratum Prefectus informs you that your base is understaffed according to protocol and he has sent the required number of Adepts in exchange for funding. You have filled out the necessary forms to apply for hiring Adepts yourself in the future, and under guard by your best, delivered the paperwork to the Administratum Prefectus here on the planet.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -450000 #-450K
-    minFunds: 450000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS1_DESCRIPTION  # The Administratum Prefectus informs you that your base is understaffed according to protocol and he has sent the required number of Adepts in exchange for funding. You have filled out the necessary forms to apply for hiring Adepts yourself in the future, and under guard by your best, delivered the paperwork to the Administratum Prefectus here on the planet.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -450000  #-450K
+    minFunds: 450000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 15
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_MEDIUM_MODE_ADEPTS2
-    description: STR_MEDIUM_MODE_ADEPTS2_DESCRIPTION #The Administratum Prefectus sends up some of his Adepts to administrate your base in exchange for funding. They inform you that the application your filled in to fire more adepts is in the months long process of being catalouged.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -750000 #-750k
-    minFunds: 750000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_MEDIUM_MODE_ADEPTS2_DESCRIPTION  # The Administratum Prefectus sends up some of his Adepts to administrate your base in exchange for funding. They inform you that the application your filled in to fire more adepts is in the months long process of being catalouged.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -750000  #-750k
+    minFunds: 750000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 25
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_MEDIUM_MODE_ADEPTS3
-    description: STR_MEDIUM_MODE_ADEPTS3_DESCRIPTION #The adepts at your base are celebrating a new milestone, a record processing speed for your application with the Administratum Prefectus to hire new adepts. You are now allowed to go through with the required rituals to file the necessary paperwork to hire any number of additional adepts you can afford!
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -250000 #-250k admin fee
-    minFunds: 250000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_MEDIUM_MODE_ADEPTS3_DESCRIPTION  # The adepts at your base are celebrating a new milestone, a record processing speed for your application with the Administratum Prefectus to hire new adepts. You are now allowed to go through with the required rituals to file the necessary paperwork to hire any number of additional adepts you can afford!
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -250000  #-250k admin fee
+    minFunds: 250000  # This could result in the player not getting the event if they run cash strapped
     researchList:
-      STR_HIRE_ADEPT_UNLOCK #this will unlock hiring adepts
+      STR_HIRE_ADEPT_UNLOCK  # this will unlock hiring adepts
     interruptResearch:
-      STR_HIRE_ADEPT_UNLOCK: true #if the player already has this, the event will not fire
-    timer: 1440 #within one day
+      STR_HIRE_ADEPT_UNLOCK: true  # if the player already has this, the event will not fire
+    timer: 1440  # within one day
     timerRandom: 640
 
 Research:
-  - name: STR_HARD_MODE_ADEPTS #this one allows the player to recruit adepts by event after 3 months
+  - name: STR_HARD_MODE_ADEPTS  # this one allows the player to recruit adepts by event after 3 months
     cost: 0
     points: 0
     unlocks:
-      - STR_HARD_MODE_ADEPTS_RESEARCH #this one triggers the sequential event chain
+      - STR_HARD_MODE_ADEPTS_RESEARCH  # this one triggers the sequential event chain
     dependencies:
-      - STR_DIFFICULTY_OPTIONS_RESEARCH #this one makes this research topic show up
+      - STR_DIFFICULTY_OPTIONS_RESEARCH  # this one makes this research topic show up
 
 eventScripts:
   - type: STR_HARD_MODE_ADEPTS_SCRIPT
     oneTimeSequentialEvents:
-        STR_HARD_MODE_ADEPTS1 #This event gives the player 10 adepts, -500k (10x50k) credits
-        STR_HARD_MODE_ADEPTS2 #This event gives the player 15 adepts, -750k (15x50k) credits
-        STR_HARD_MODE_ADEPTS3 #This event gives the player 20 adepts, -1m (20x50k) credits
-        STR_HARD_MODE_ADEPTS4 #This event gives the player 20 adepts, -1m (20x50k) credits
-        STR_HARD_MODE_ADEPTS5 #This event gives the player 20 adepts, -1m (20x50k) credits
-        STR_HARD_MODE_ADEPTS6 #this event gives the player 25 adepts, -1,25m credits and unlocks STR_HIRE_ADEPT_UNLOCK. Total event chain cost = 5,5 million in the first 6 months, for +110 Adepts.
-    firstMonth: 1 #does this ensure one of these events, in order, trigger every month? Or does their "Timer" need to be set to a month worth of minutes
+        STR_HARD_MODE_ADEPTS1  # This event gives the player 10 adepts, -500k (10x50k) credits
+        STR_HARD_MODE_ADEPTS2  # This event gives the player 15 adepts, -750k (15x50k) credits
+        STR_HARD_MODE_ADEPTS3  # This event gives the player 20 adepts, -1m (20x50k) credits
+        STR_HARD_MODE_ADEPTS4  # This event gives the player 20 adepts, -1m (20x50k) credits
+        STR_HARD_MODE_ADEPTS5  # This event gives the player 20 adepts, -1m (20x50k) credits
+        STR_HARD_MODE_ADEPTS6  # this event gives the player 25 adepts, -1,25m credits and unlocks STR_HIRE_ADEPT_UNLOCK. Total event chain cost = 5,5 million in the first 6 months, for +110 Adepts.
+    firstMonth: 1  # does this ensure one of these events, in order, trigger every month? Or does their "Timer" need to be set to a month worth of minutes
     lastMonth: 7
     executionOdds: 100
     minDifficulty: 0
     maxDifficulty: 4
     researchTriggers:
-      STR_HARD_MODE_ADEPTS: true #this event script only fires if this is researched
+      STR_HARD_MODE_ADEPTS: true  # this event script only fires if this is researched
 
 events:
   - name: STR_HARD_MODE_ADEPTS1
-    description: STR_HARD_MODE_ADEPTS1_DESCRIPTION #The Administratum Prefectus informs you that your base is understaffed according to protocol and he has sent the required number of Adepts in exchange for funding. You have filled out the necessary forms to apply for hiring Adepts yourself in the future, and under guard by your best, delivered the paperwork to the Administratum Prefectus here on the planet.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -500000 #-500k
-    minFunds: 500000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS1_DESCRIPTION  # The Administratum Prefectus informs you that your base is understaffed according to protocol and he has sent the required number of Adepts in exchange for funding. You have filled out the necessary forms to apply for hiring Adepts yourself in the future, and under guard by your best, delivered the paperwork to the Administratum Prefectus here on the planet.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -500000  #-500k
+    minFunds: 500000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 10
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_HARD_MODE_ADEPTS2
-    description: STR_HARD_MODE_ADEPTS2_DESCRIPTION #The Administratum Prefectus sends up some of his Adepts to administrate your base in exchange for funding. They inform you that the form your filled in contained several errors and must be redone and sent in again.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -750000 #-750k
-    minFunds: 750000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS2_DESCRIPTION  # The Administratum Prefectus sends up some of his Adepts to administrate your base in exchange for funding. They inform you that the form your filled in contained several errors and must be redone and sent in again.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -750000  #-750k
+    minFunds: 750000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 15
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_HARD_MODE_ADEPTS3
-    description: STR_HARD_MODE_ADEPTS3_DESCRIPTION #The Administratum Prefectus sends over another batch of Adepts in exchange for funding that they transfer from your accounts. Admonishing you for filing your application for hiring more adepts, with the wrong department. The application will take another month to refile with the correct department.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -1000000 #-1m
-    minFunds: 1000000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS3_DESCRIPTION  # The Administratum Prefectus sends over another batch of Adepts in exchange for funding that they transfer from your accounts. Admonishing you for filing your application for hiring more adepts, with the wrong department. The application will take another month to refile with the correct department.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -1000000  #-1m
+    minFunds: 1000000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 20
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_HARD_MODE_ADEPTS4
-    description: STR_HARD_MODE_ADEPTS4_DESCRIPTION #Several Adepts arrive carrying several cartloads of papyrus and documentation supplies. They inform you that the additional tithe has now been transfered for your previously filed application to hire more adepts, but the Prefectus inquires where you sent the required hexafold copies of your application.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -1000000 #-1m
-    minFunds: 1000000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS4_DESCRIPTION  # Several Adepts arrive carrying several cartloads of papyrus and documentation supplies. They inform you that the additional tithe has now been transfered for your previously filed application to hire more adepts, but the Prefectus inquires where you sent the required hexafold copies of your application.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -1000000  #-1m
+    minFunds: 1000000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 20
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
   - name: STR_HARD_MODE_ADEPTS5
-    description: STR_HARD_MODE_ADEPTS5_DESCRIPTION #More Adept clerks arrive at your base by transport, refiling some of your funding into the Administratum accounts in the process. You recieve welcome news, the hexafold copies of your application to hire more adepts have arrived and are in the month long process of being filed.
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -1000000 #-1m
-    minFunds: 1000000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS5_DESCRIPTION  # More Adept clerks arrive at your base by transport, refiling some of your funding into the Administratum accounts in the process. You recieve welcome news, the hexafold copies of your application to hire more adepts have arrived and are in the month long process of being filed.
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -1000000  #-1m
+    minFunds: 1000000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 20
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
-    timer: 1440 #within one day
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
+    timer: 1440  # within one day
     timerRandom: 640
 
  - name: STR_HARD_MODE_ADEPTS6
-    description: STR_HARD_MODE_ADEPTS6_DESCRIPTION #The adepts at your base are celebrating a new milestone, a record processing speed for your application with the Administratum Prefectus to hire new adepts. You are now allowed to go through with the required rituals to file the necessary paperwork to hire any number of additional adepts you can afford!
-    background: ImperialAdminBG.scr #ImperialAdminBG.png
-    funds: -1250000 #-1,25m credits
-    minFunds: 1250000 #This could result in the player not getting the event if they run cash strapped
+    description: STR_HARD_MODE_ADEPTS6_DESCRIPTION  # The adepts at your base are celebrating a new milestone, a record processing speed for your application with the Administratum Prefectus to hire new adepts. You are now allowed to go through with the required rituals to file the necessary paperwork to hire any number of additional adepts you can afford!
+    background: ImperialAdminBG.scr  # ImperialAdminBG.png
+    funds: -1250000  #-1,25m credits
+    minFunds: 1250000  # This could result in the player not getting the event if they run cash strapped
     spawnedPersons: 25
-    spawnedPersonType: STR_SCIENTIST #or STR_SCIENTISTS?
+    spawnedPersonType: STR_SCIENTIST  # or STR_SCIENTISTS?
     researchList:
-      STR_HIRE_ADEPT_UNLOCK #this will unlock hiring adepts
+      STR_HIRE_ADEPT_UNLOCK  # this will unlock hiring adepts
     interruptResearch:
-      STR_HIRE_ADEPT_UNLOCK: true #if the player already has this, the event will not fire
-    timer: 1440 #within one day
+      STR_HIRE_ADEPT_UNLOCK: true  # if the player already has this, the event will not fire
+    timer: 1440  # within one day
     timerRandom: 640

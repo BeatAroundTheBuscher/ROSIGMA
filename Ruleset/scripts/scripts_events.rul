@@ -4,8 +4,8 @@ extended:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_IS_BUFF_WEAPON: int
     RuleArmor:
-      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: int #attacker armor property; modifies the final modifier by this as a percent after all other modifiers
-      ARMOR_ALPHA_TARGET_VALUE_MODIFIER: int #target armor property; modifies the final modifier by this as a percent after all other modifiers
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: int  # attacker armor property; modifies the final modifier by this as a percent after all other modifiers
+      ARMOR_ALPHA_TARGET_VALUE_MODIFIER: int  # target armor property; modifies the final modifier by this as a percent after all other modifiers
 
   scripts:
     damageUnit:
@@ -23,169 +23,169 @@ extended:
           var ptr GeoscapeGame geoScape;
           var ptr BattleItem ammoItem;
 
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: weapon_item" weapon_item;
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: weapon_item" weapon_item;
 
           battle_game.getGeoscapeGame geoScape;
-          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_PURGED"; #if Alpha Legion was purged, abort.
+          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_PURGED"; # if Alpha Legion was purged, abort.
           geoScape.isResearched temp researchTopic;
           if gt temp 0;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Alpha Legion Purged." temp;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Alpha Legion Purged." temp;
             return;
           end;
 
-          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_INFILTRATED"; #if Alpha Legion isn't infiltrating, abort.
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: researchTopic:" researchTopic;
+          rules.getRuleResearch researchTopic "STR_ALPHA_LEGION_INFILTRATED"; # if Alpha Legion isn't infiltrating, abort.
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: researchTopic:" researchTopic;
           geoScape.isResearched temp researchTopic;
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: temp:" temp;
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: temp:" temp;
           if eq temp 0;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No Alpha Legion Infiltration. temp:" temp;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No Alpha Legion Infiltration. temp:" temp;
             return;
           end;
 
-          attacker.getFaction faction; #the attacker must not be from the hostile faction
+          attacker.getFaction faction; # the attacker must not be from the hostile faction
           if eq faction FACTION_HOSTILE;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is hostile faction." faction;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is hostile faction." faction;
             return;
           end;
 
           unit.getFaction faction;
-          if eq faction 1; #the victim must not be hostile; civilian or player faction only
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is enemy." unit;
+          if eq faction 1; # the victim must not be hostile; civilian or player faction only
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is enemy." unit;
             return;
           end;
 
           # Abort for inappropriate damage type or if the attacker or victim are null
           if eq attacker unit;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Victim is also attacker.";
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Victim is also attacker.";
             return;
           end;
 
           weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
           if eq temp 1; # we ignore buffing items/weapons
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacking item is a buff item.";
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacking item is a buff item.";
             return;
           end;
 
           unit.getRuleArmor armorRule; # we ignore decoy targets
           armorRule.getTag temp Tag.UNIT_TYPE_DECOY;
           if eq temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is decoy.";
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is decoy.";
             return;
           end;
 
           attacker.getRuleArmor armorRule; # we ignore decoy targets
           armorRule.getTag temp Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
-          if lt temp 0; #if the value is -1 there is no chance to trigger Alpha legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker has no chance to be Alpha Legion. ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER:" temp;
+          if lt temp 0; # if the value is -1 there is no chance to trigger Alpha legion
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker has no chance to be Alpha Legion. ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER:" temp;
             return;
           end;
 
           unit.getRuleArmor armorRule; # we ignore decoy targets
-          armorRule.getTag temp Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER; #if the value is -1 there is no chance to trigger Alpha legion
+          armorRule.getTag temp Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER; # if the value is -1 there is no chance to trigger Alpha legion
           if lt temp 0;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target has no chance cause Alpha Legion trigger. ARMOR_ALPHA_TARGET_VALUE_MODIFIER:" temp;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target has no chance cause Alpha Legion trigger. ARMOR_ALPHA_TARGET_VALUE_MODIFIER:" temp;
             return;
           end;
 
           unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
           if gt temp 0; # we always ignore infected units
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is infected.";
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Target is infected.";
             return;
           end;
 
           if or eq null attacker eq null unit;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker or victim is null.";
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker or victim is null.";
             return;
           end;
 
           if or eq damaging_type 6 eq damaging_type 9 eq damaging_type 10;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
             return;
           end;
 
-          damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; #check to see whether the weapon is a grav gun
+          damaging_item.getTag temp Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS; # check to see whether the weapon is a grav gun
           damaging_item.getAmmoItem ammoItem;
           ammoItem.getTag rollBonus Tag.ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS;
           add temp rollBonus;
           if and eq damaging_type 0 lt temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Damage is inappropriate type." damaging_type;
             return;
           end;
 
-          set temp to_health; #need to deal at least some damage
+          set temp to_health; # need to deal at least some damage
           if lt temp 1;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No damage dealt." temp;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. No damage dealt." temp;
             return;
           end;
 
           unit.getHealth temp;
           sub temp to_health;
           battle_game.randomRange randomNumber 0 100;
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Random roll:" randomNumber;
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Random roll:" randomNumber;
 
-          if lt temp 1; #if we kill the target, 90% chance we are an Alpha Legion traitor;
-            unit.getHealthMax rollBonus; #percentage chance is equal to the victim's max health.
-            limit_upper rollBonus 95; #we don't exceed a 95% chance
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from kill:" rollBonus;
-          else; #if we don't kill, the chance of a reveal is proportional to the damage we deal; half the to_health value, capping at 50%.
+          if lt temp 1; # if we kill the target, 90% chance we are an Alpha Legion traitor;
+            unit.getHealthMax rollBonus; # percentage chance is equal to the victim's max health.
+            limit_upper rollBonus 95; # we don't exceed a 95% chance
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from kill:" rollBonus;
+          else; # if we don't kill, the chance of a reveal is proportional to the damage we deal; half the to_health value, capping at 50%.
             set rollBonus to_health;
             div rollBonus 4;
-            limit_upper rollBonus 50; #cap the chance from damage at 50
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from damage:" rollBonus;
+            limit_upper rollBonus 50; # cap the chance from damage at 50
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Bonus to AL trigger chance from damage:" rollBonus;
           end;
 
           attacker.getRuleArmor armorRule;
           armorRule.getTag armorMod Tag.ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER;
           if gt armorMod 0;
             muldiv rollBonus armorMod 100;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" rollBonus;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Attacker Bonus mod, temp:" rollBonus;
           end;
 
           unit.getRuleArmor armorRule;
           armorRule.getTag armorMod Tag.ARMOR_ALPHA_TARGET_VALUE_MODIFIER;
           if gt armorMod 0;
             muldiv rollBonus armorMod 100;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Target Bonus mod, rollBonus:" rollBonus;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Modifier after Target Bonus mod, rollBonus:" rollBonus;
           else eq faction FACTION_NEUTRAL;
-            set rollBonus 0; #negate all modifiers if we are civilians without mods, but we still have a 1% chance of being an Alpha Legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL trigger chance after civilian modifier:" rollBonus;
+            set rollBonus 0; # negate all modifiers if we are civilians without mods, but we still have a 1% chance of being an Alpha Legion
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL trigger chance after civilian modifier:" rollBonus;
           end;
 
-          battle_game.getTurnSide temp; #if reaction fire was the cause, halve our modifier
+          battle_game.getTurnSide temp; # if reaction fire was the cause, halve our modifier
           if neq temp FACTION_PLAYER;
             div rollBonus 2;
           end;
 
           armorRule.getTag armorMod Tag.UNIT_TYPE_MECHANICAL;
           if eq armorMod 1; # we ignore mechanical units
-            set rollBonus 0; #negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Attacker is mechanical; rollBonus negated:" rollBonus;
+            set rollBonus 0; # negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Attacker is mechanical; rollBonus negated:" rollBonus;
           end;
 
-          attacker.getRuleArmor armorRule; #if the attacker is a 2x2 unit, we abort.
+          attacker.getRuleArmor armorRule; # if the attacker is a 2x2 unit, we abort.
           armorRule.getSize temp;
           if eq temp 2; # we ignore tanks
-            set rollBonus 0; #negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2; rollBonus negated:" rollBonus;
+            set rollBonus 0; # negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2; rollBonus negated:" rollBonus;
             return;
           end;
 
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Final bonus to AL trigger chance:" rollBonus;
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Final bonus to AL trigger chance:" rollBonus;
 
-          add randomNumber rollBonus; #after all modifiers, add our roll bonus
+          add randomNumber rollBonus; # after all modifiers, add our roll bonus
 
           if lt randomNumber 100;
-            #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor. randomNumber:" randomNumber;
+            # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Roll too low to be traitor. randomNumber:" randomNumber;
             return;
           end;
 
-          #debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL triggered. randomNumber:" randomNumber;
+          # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: AL triggered. randomNumber:" randomNumber;
 
           battle_game.randomRange temp 1 10;
           if lt temp 6;
-            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR"; #turn the offender into an Alpha Legion; CQC
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR"; # turn the offender into an Alpha Legion; CQC
           else;
-            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_INFILTRATOR"; #turn the offender into an Alpha Legion; Ranged
+            rules.getRuleUnit alpha "STR_ALPHA_SOLDIER_INFILTRATOR"; # turn the offender into an Alpha Legion; Ranged
           end;
           attacker.setSpawnUnit alpha;
           attacker.setSpawnUnitFaction FACTION_HOSTILE;
