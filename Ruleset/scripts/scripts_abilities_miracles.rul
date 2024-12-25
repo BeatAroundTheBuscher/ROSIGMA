@@ -79,93 +79,93 @@ extended:
 
   scripts:
     damageUnit:  # get Miracle Points per HP
-    - offset: 1
-      code: |
-        var int temp;
-        var int miraclePoints;
-        var ptr RuleSoldier rSoldier;
+      - offset: 1
+        code: |
+          var int temp;
+          var int miraclePoints;
+          var ptr RuleSoldier rSoldier;
 
-        unit.getRuleSoldier rSoldier;
-        rSoldier.getTag temp Tag.SOLDIER_IS_SOB;
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag temp Tag.SOLDIER_IS_SOB;
 
-        if eq temp 0; # this script shouldn't run anyway, so that illogical choice is fine
+          if eq temp 0; # this script shouldn't run anyway, so that illogical choice is fine
+            return;
+          end;
+
+          unit.getFaction temp;
+          if neq temp FACTION_HOSTILE;
+            return;
+          end;
+
+          # using rank will create inconsistent values (even for the same unit)
+          # unit.getRank temp;
+          # debug_log "killed target" unit;
+          # debug_log "killed temp index" temp;
+
+          unit.getHealth temp;
+          if le temp 0;
+            unit.getHealthMax temp;
+            battle_game.getTag miraclePoints Tag.MIRACLE_POINTS;
+            add miraclePoints temp;
+            battle_game.setTag Tag.MIRACLE_POINTS miraclePoints;
+          end;
+
           return;
-        end;
 
-        unit.getFaction temp;
-        if neq temp FACTION_HOSTILE;
-          return;
-        end;
+      - offset: 2  # Spirit of the Martyr
+        code: |
+          var int temp1;
+          var int temp2;
 
-        # using rank will create inconsistent values (even for the same unit)
-        # unit.getRank temp;
-        # debug_log "killed target" unit;
-        # debug_log "killed temp index" temp;
+          var ptr RuleSoldier rSoldier;
 
-        unit.getHealth temp;
-        if le temp 0;
-          unit.getHealthMax temp;
-          battle_game.getTag miraclePoints Tag.MIRACLE_POINTS;
-          add miraclePoints temp;
-          battle_game.setTag Tag.MIRACLE_POINTS miraclePoints;
-        end;
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag temp1 Tag.SOLDIER_IS_SOB;
 
-        return;
+          if eq temp1 0;
+            return;
+          end;
 
-    - offset: 2  # Spirit of the Martyr
-      code: |
-        var int temp1;
-        var int temp2;
+          # not needed anymore due to the above check (hostiles can't be soldiers)
+          # unit.getFaction temp1;
+          # if neq temp1 FACTION_PLAYER;
+          #   return;
+          # end;
 
-        var ptr RuleSoldier rSoldier;
-
-        unit.getRuleSoldier rSoldier;
-        rSoldier.getTag temp1 Tag.SOLDIER_IS_SOB;
-
-        if eq temp1 0;
-          return;
-        end;
-
-        # not needed anymore due to the above check (hostiles can't be soldiers)
-        # unit.getFaction temp1;
-        # if neq temp1 FACTION_PLAYER;
-        #   return;
-        # end;
-
-        battle_game.getTag temp1 Tag.TURN_SPIRIT_OF_MARTYR;
-        battle_game.getTurn temp2;
-
-        if eq temp1 temp2;  # can only work once per turn
-          return;
-        end;
-
-        unit.getTag temp1 Tag.UNIT_HAS_BEEN_MARTYRED;
-        if gt temp1 0;
-          return;
-        end;
-
-        unit.getHealth temp1;
-        sub temp1 to_health;
-
-        battle_game.getTag temp2 Tag.MIRACLE_POINTS;
-        add temp2 temp1; # temp1 is negative
-        add temp2 temp1; # cost = 2 * HP to save
-        sub temp2 10; # cost for getting above 0 HP  # 10 = 5 * 2
-
-        if and le temp1 0 gt temp2 0;
-          add to_health temp1; # temp1 is negative
-          sub to_health 5; # get above 0 HP
-          set to_wound 0;
-          unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # spirit of martyr purges all infection/corruption
-          unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # spirit of martyr purges all infection/corruption
-          battle_game.setTag Tag.MIRACLE_POINTS temp2;
+          battle_game.getTag temp1 Tag.TURN_SPIRIT_OF_MARTYR;
           battle_game.getTurn temp2;
-          battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
-          unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; # a unit can only be martyred once per combat
-          battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
-        end;
 
-        return;
+          if eq temp1 temp2;  # can only work once per turn
+            return;
+          end;
+
+          unit.getTag temp1 Tag.UNIT_HAS_BEEN_MARTYRED;
+          if gt temp1 0;
+            return;
+          end;
+
+          unit.getHealth temp1;
+          sub temp1 to_health;
+
+          battle_game.getTag temp2 Tag.MIRACLE_POINTS;
+          add temp2 temp1; # temp1 is negative
+          add temp2 temp1; # cost = 2 * HP to save
+          sub temp2 10; # cost for getting above 0 HP  # 10 = 5 * 2
+
+          if and le temp1 0 gt temp2 0;
+            add to_health temp1; # temp1 is negative
+            sub to_health 5; # get above 0 HP
+            set to_wound 0;
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # spirit of martyr purges all infection/corruption
+            unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # spirit of martyr purges all infection/corruption
+            battle_game.setTag Tag.MIRACLE_POINTS temp2;
+            battle_game.getTurn temp2;
+            battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR temp2;
+            unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; # a unit can only be martyred once per combat
+            battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
+          end;
+
+          return;
 
     returnFromMissionUnit:
       - new: ROSIGMA_rFMU_miracles  # how many Miracle points does this unit generate after each combat?
@@ -193,169 +193,169 @@ extended:
           return;
 
     newTurnUnit:
-    - offset: 1  # gain miracle points by gaining experience
-      code: |
-        var int temp1;
-        var int temp2;
-        var int miraclePointsGained;
-        var ptr RuleSoldier rSoldier;
+      - offset: 1  # gain miracle points by gaining experience
+        code: |
+          var int temp1;
+          var int temp2;
+          var int miraclePointsGained;
+          var ptr RuleSoldier rSoldier;
 
-        unit.getFaction temp1;
-        if neq temp1 FACTION_PLAYER;
-          return;
-        end;
-
-        unit.getRuleSoldier rSoldier;
-        rSoldier.getTag temp1 Tag.SOLDIER_IS_SOB;
-        if eq temp1 0;
-          return;
-        end;
-
-        # https://openxcom.org/forum/index.php/topic,4230.0.html
-
-        unit.getTag temp2 Tag.UNIT_EXP_BRAVERY;
-        unit.Exp.getBravery temp1;
-        unit.setTag Tag.UNIT_EXP_BRAVERY temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getBravery" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_FIRING;
-        unit.Exp.getFiring temp1;
-        unit.setTag Tag.UNIT_EXP_FIRING temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getFiring" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_MELEE;
-        unit.Exp.getMelee temp1;
-        unit.setTag Tag.UNIT_EXP_MELEE temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getMelee" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_REACTIONS;
-        unit.Exp.getReactions temp1;
-        unit.setTag Tag.UNIT_EXP_REACTIONS temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getReactions" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_THROWING;
-        unit.Exp.getThrowing temp1;
-        unit.setTag Tag.UNIT_EXP_THROWING temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getThrowing" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_STRENGTH;
-        unit.Exp.getStrength temp1; # probably doesn't do anything
-        unit.setTag Tag.UNIT_EXP_STRENGTH temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getStrength" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_PSISKILL;
-        unit.Exp.getPsiSkill temp1;
-        unit.setTag Tag.UNIT_EXP_PSISKILL temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getPsiSkill" temp1;
-
-        unit.getTag temp2 Tag.UNIT_EXP_PSISTRENGTH;
-        unit.Exp.getPsiStrength temp1;
-        unit.setTag Tag.UNIT_EXP_PSISTRENGTH temp1;
-        sub temp1 temp2;
-        mul temp1 10;
-        add miraclePointsGained temp1;
-        # debug_log "Miracle Points gained getPsiStrength" temp1;
-
-        # debug_log "Miracle Points gained total" miraclePointsGained;
-        battle_game.getTag temp1 Tag.MIRACLE_POINTS;
-        add temp1 miraclePointsGained;
-        battle_game.setTag Tag.MIRACLE_POINTS temp1;
-
-        return;
-
-
-    skillUseUnit:
-    - offset: 1
-      code: |
-        var int temp1;
-        var int temp2;
-        var int newCommand;
-        var int currentTurn;
-        var int lastCommand;
-        var int lastTurn;
-
-        skill.getTag newCommand Tag.SKILL_MIRACLE_ID;
-        if eq newCommand 0;
-          return;
-        end;
-        battle_game.getTurn currentTurn;
-
-        battle_game.getTag lastCommand Tag.CHOICE_ACTIVE_MIRACLE;
-        battle_game.getTag lastTurn Tag.TURN_ACTIVE_MIRACLE;
-
-        if eq newCommand 1;
-          battle_game.getTag temp1 Tag.MIRACLE_POINTS;
-          battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
-
-          if eq currentTurn lastTurn; # no commands issued this turn yet
-            if eq lastCommand 2;
-              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_FIX_BAYONETS" temp1 temp2;
-            end;
-            if eq lastCommand 3;
-              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_BLITZKRIEG" temp1 temp2;
-            end;
-            if eq lastCommand 4;
-              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_HUNKER_DOWN" temp1 temp2;
-            end;
-          else;
-            battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_NO_COMMAND" temp1 temp2;
-          end;
-
-          return;
-        end;
-
-        if neq currentTurn lastTurn; # no commands issued this turn yet
-          battle_game.getTag temp1 Tag.MIRACLE_POINTS;
-          battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
-          mul temp2 4;
-          sub temp1 temp2;
-          if lt temp1 0;
-            battle_game.getTag temp1 Tag.MIRACLE_POINTS;
-            battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
+          unit.getFaction temp1;
+          if neq temp1 FACTION_PLAYER;
             return;
           end;
 
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag temp1 Tag.SOLDIER_IS_SOB;
+          if eq temp1 0;
+            return;
+          end;
+
+          # https://openxcom.org/forum/index.php/topic,4230.0.html
+
+          unit.getTag temp2 Tag.UNIT_EXP_BRAVERY;
+          unit.Exp.getBravery temp1;
+          unit.setTag Tag.UNIT_EXP_BRAVERY temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getBravery" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_FIRING;
+          unit.Exp.getFiring temp1;
+          unit.setTag Tag.UNIT_EXP_FIRING temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getFiring" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_MELEE;
+          unit.Exp.getMelee temp1;
+          unit.setTag Tag.UNIT_EXP_MELEE temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getMelee" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_REACTIONS;
+          unit.Exp.getReactions temp1;
+          unit.setTag Tag.UNIT_EXP_REACTIONS temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getReactions" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_THROWING;
+          unit.Exp.getThrowing temp1;
+          unit.setTag Tag.UNIT_EXP_THROWING temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getThrowing" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_STRENGTH;
+          unit.Exp.getStrength temp1; # probably doesn't do anything
+          unit.setTag Tag.UNIT_EXP_STRENGTH temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getStrength" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_PSISKILL;
+          unit.Exp.getPsiSkill temp1;
+          unit.setTag Tag.UNIT_EXP_PSISKILL temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getPsiSkill" temp1;
+
+          unit.getTag temp2 Tag.UNIT_EXP_PSISTRENGTH;
+          unit.Exp.getPsiStrength temp1;
+          unit.setTag Tag.UNIT_EXP_PSISTRENGTH temp1;
+          sub temp1 temp2;
+          mul temp1 10;
+          add miraclePointsGained temp1;
+          # debug_log "Miracle Points gained getPsiStrength" temp1;
+
+          # debug_log "Miracle Points gained total" miraclePointsGained;
+          battle_game.getTag temp1 Tag.MIRACLE_POINTS;
+          add temp1 miraclePointsGained;
           battle_game.setTag Tag.MIRACLE_POINTS temp1;
-          # debug_log "Remaining Command Points" temp1;
 
-          if eq newCommand 2;
-            battle_game.flashMessage "STR_FIX_BAYONETS";
+          return;
+
+
+    skillUseUnit:
+      - offset: 1
+        code: |
+          var int temp1;
+          var int temp2;
+          var int newCommand;
+          var int currentTurn;
+          var int lastCommand;
+          var int lastTurn;
+
+          skill.getTag newCommand Tag.SKILL_MIRACLE_ID;
+          if eq newCommand 0;
+            return;
           end;
-          if eq newCommand 3;
-            battle_game.flashMessage "STR_BLITZKRIEG";
+          battle_game.getTurn currentTurn;
+
+          battle_game.getTag lastCommand Tag.CHOICE_ACTIVE_MIRACLE;
+          battle_game.getTag lastTurn Tag.TURN_ACTIVE_MIRACLE;
+
+          if eq newCommand 1;
+            battle_game.getTag temp1 Tag.MIRACLE_POINTS;
+            battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
+
+            if eq currentTurn lastTurn; # no commands issued this turn yet
+              if eq lastCommand 2;
+                battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_FIX_BAYONETS" temp1 temp2;
+              end;
+              if eq lastCommand 3;
+                battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_BLITZKRIEG" temp1 temp2;
+              end;
+              if eq lastCommand 4;
+                battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_HUNKER_DOWN" temp1 temp2;
+              end;
+            else;
+              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_NO_COMMAND" temp1 temp2;
+            end;
+
+            return;
           end;
-          if eq newCommand 4;
-            battle_game.flashMessage "STR_HUNKER_DOWN";
+
+          if neq currentTurn lastTurn; # no commands issued this turn yet
+            battle_game.getTag temp1 Tag.MIRACLE_POINTS;
+            battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
+            mul temp2 4;
+            sub temp1 temp2;
+            if lt temp1 0;
+              battle_game.getTag temp1 Tag.MIRACLE_POINTS;
+              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
+              return;
+            end;
+
+            battle_game.setTag Tag.MIRACLE_POINTS temp1;
+            # debug_log "Remaining Command Points" temp1;
+
+            if eq newCommand 2;
+              battle_game.flashMessage "STR_FIX_BAYONETS";
+            end;
+            if eq newCommand 3;
+              battle_game.flashMessage "STR_BLITZKRIEG";
+            end;
+            if eq newCommand 4;
+              battle_game.flashMessage "STR_HUNKER_DOWN";
+            end;
+
+            battle_game.setTag Tag.TURN_ACTIVE_MIRACLE currentTurn;
+            # debug_log "skill TURN_ACTIVE_MIRACLE" currentTurn;
+
+            battle_game.setTag Tag.CHOICE_ACTIVE_MIRACLE newCommand;
+            # debug_log "skill CHOICE_ACTIVE_MIRACLE" newCommand;
+          else;
+              battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
           end;
 
-          battle_game.setTag Tag.TURN_ACTIVE_MIRACLE currentTurn;
-          # debug_log "skill TURN_ACTIVE_MIRACLE" currentTurn;
-
-          battle_game.setTag Tag.CHOICE_ACTIVE_MIRACLE newCommand;
-          # debug_log "skill CHOICE_ACTIVE_MIRACLE" newCommand;
-        else;
-            battle_game.flashMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
-        end;
-
-        return;
+          return;

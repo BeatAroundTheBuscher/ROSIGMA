@@ -20,113 +20,113 @@ extended:
 
   scripts:
     createUnit:
-    - offset: 1
-      code: |
-        var int temp;
-        var int rank;
-        var int commandPoints;
-        var ptr RuleSoldier rSoldier;
+      - offset: 1
+        code: |
+          var int temp;
+          var int rank;
+          var int commandPoints;
+          var ptr RuleSoldier rSoldier;
 
-        unit.getFaction temp;
-        if neq temp FACTION_PLAYER;
-          return;
-        end;
-
-        unit.getRuleSoldier rSoldier;
-
-        if eq rSoldier null;
-          return;
-        end;
-
-        unit.getRank rank;
-        add rank 1;
-        rSoldier.getTag commandPoints Tag.SOLDIER_COMMAND_POINTS;
-        mul commandPoints rank;
-        battle_game.getTag temp Tag.COMMAND_POINTS;
-        add temp commandPoints;
-        battle_game.setTag Tag.COMMAND_POINTS temp;
-
-        battle_game.getTag temp Tag.NUMBER_SOLDIERS;
-        add temp 1;
-        battle_game.setTag Tag.NUMBER_SOLDIERS temp;
-
-        return;
-
-    skillUseUnit:
-    - offset: 1
-      code: |
-        var int temp1;
-        var int temp2;
-        var int newCommand;
-        var int currentTurn;
-        var int lastCommand;
-        var int lastTurn;
-
-        skill.getTag newCommand Tag.SKILL_COMMAND_ID;
-        if eq newCommand 0;
-          return;
-        end;
-
-        battle_game.getTurn currentTurn;
-
-        battle_game.getTag lastCommand Tag.CHOICE_ACTIVE_COMMAND;
-        battle_game.getTag lastTurn Tag.TURN_ACTIVE_COMMAND;
-
-        if eq newCommand 1;
-          battle_game.getTag temp1 Tag.COMMAND_POINTS;
-          battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
-
-          if eq currentTurn lastTurn; # no commands issued this turn yet
-            if eq lastCommand 2;
-              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_FIX_BAYONETS" temp1 temp2;
-            end;
-            if eq lastCommand 3;
-              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_BLITZKRIEG" temp1 temp2;
-            end;
-            if eq lastCommand 4;
-              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_HUNKER_DOWN" temp1 temp2;
-            end;
-          else;
-            battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_NO_COMMAND" temp1 temp2;
-          end;
-
-          return;
-        end;
-
-        if neq currentTurn lastTurn; # no commands issued this turn yet
-          battle_game.getTag temp1 Tag.COMMAND_POINTS;
-          battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
-          mul temp2 4;
-          sub temp1 temp2;
-          if lt temp1 0;
-            battle_game.getTag temp1 Tag.COMMAND_POINTS;
-            battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
             return;
           end;
 
-          battle_game.setTag Tag.COMMAND_POINTS temp1;
-          # debug_log "Remaining Command Points" temp1;
+          unit.getRuleSoldier rSoldier;
 
-          if eq newCommand 2;
-            battle_game.flashLongMessage "STR_FIX_BAYONETS";
-          end;
-          if eq newCommand 3;
-            battle_game.flashLongMessage "STR_BLITZKRIEG";
-          end;
-          if eq newCommand 4;
-            battle_game.flashLongMessage "STR_HUNKER_DOWN";
+          if eq rSoldier null;
+            return;
           end;
 
-          battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
-          # debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
+          unit.getRank rank;
+          add rank 1;
+          rSoldier.getTag commandPoints Tag.SOLDIER_COMMAND_POINTS;
+          mul commandPoints rank;
+          battle_game.getTag temp Tag.COMMAND_POINTS;
+          add temp commandPoints;
+          battle_game.setTag Tag.COMMAND_POINTS temp;
 
-          battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
-          # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
-        else;
-            battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
-        end;
+          battle_game.getTag temp Tag.NUMBER_SOLDIERS;
+          add temp 1;
+          battle_game.setTag Tag.NUMBER_SOLDIERS temp;
 
-        return;
+          return;
+
+    skillUseUnit:
+      - offset: 1
+        code: |
+          var int temp1;
+          var int temp2;
+          var int newCommand;
+          var int currentTurn;
+          var int lastCommand;
+          var int lastTurn;
+
+          skill.getTag newCommand Tag.SKILL_COMMAND_ID;
+          if eq newCommand 0;
+            return;
+          end;
+
+          battle_game.getTurn currentTurn;
+
+          battle_game.getTag lastCommand Tag.CHOICE_ACTIVE_COMMAND;
+          battle_game.getTag lastTurn Tag.TURN_ACTIVE_COMMAND;
+
+          if eq newCommand 1;
+            battle_game.getTag temp1 Tag.COMMAND_POINTS;
+            battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
+
+            if eq currentTurn lastTurn; # no commands issued this turn yet
+              if eq lastCommand 2;
+                battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_FIX_BAYONETS" temp1 temp2;
+              end;
+              if eq lastCommand 3;
+                battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_BLITZKRIEG" temp1 temp2;
+              end;
+              if eq lastCommand 4;
+                battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_HUNKER_DOWN" temp1 temp2;
+              end;
+            else;
+              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_NO_COMMAND" temp1 temp2;
+            end;
+
+            return;
+          end;
+
+          if neq currentTurn lastTurn; # no commands issued this turn yet
+            battle_game.getTag temp1 Tag.COMMAND_POINTS;
+            battle_game.getTag temp2 Tag.NUMBER_SOLDIERS;
+            mul temp2 4;
+            sub temp1 temp2;
+            if lt temp1 0;
+              battle_game.getTag temp1 Tag.COMMAND_POINTS;
+              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_NOT_ENOUGH_CP" temp1 temp2;
+              return;
+            end;
+
+            battle_game.setTag Tag.COMMAND_POINTS temp1;
+            # debug_log "Remaining Command Points" temp1;
+
+            if eq newCommand 2;
+              battle_game.flashLongMessage "STR_FIX_BAYONETS";
+            end;
+            if eq newCommand 3;
+              battle_game.flashLongMessage "STR_BLITZKRIEG";
+            end;
+            if eq newCommand 4;
+              battle_game.flashLongMessage "STR_HUNKER_DOWN";
+            end;
+
+            battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
+            # debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
+
+            battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
+            # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
+          else;
+              battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
+          end;
+
+          return;
 
     hitUnit:
       - offset: 10  # 1 - Fix Bayonets
