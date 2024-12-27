@@ -1,6 +1,6 @@
 name: Validate YAML with Yamllint
 
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
 
 jobs:
@@ -10,6 +10,7 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Check out code
+        # https://github.com/marketplace/actions/checkout
         uses: actions/checkout@v3
 
       # Step 2: Set up Python and install yamllint
@@ -25,4 +26,6 @@ jobs:
       # Step 3: Run yamllint on all YAML files
       - name: Lint YAML files
         run: |
+          echo "Start Linting"
           yamllint --no-warnings -c ./.yamllint.yml .
+          echo "Completed Linting"

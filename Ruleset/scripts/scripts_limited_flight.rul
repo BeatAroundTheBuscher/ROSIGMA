@@ -225,88 +225,88 @@ extended:
       ActivateFlight: int
   scripts:
     newTurnUnit:
-    - new: ROSIGMA_nTU_limited_flight
-      offset: 1
-      code: |
-        var int maxFlight;
-        var int flightTime;
-        var int faction;
-        var int factionturn;
-        var int currentTurn;
+      - new: ROSIGMA_nTU_limited_flight
+        offset: 1
+        code: |
+          var int maxFlight;
+          var int flightTime;
+          var int faction;
+          var int factionturn;
+          var int currentTurn;
 
-        var int temp1;
-
-
-        unit.getTag maxFlight Tag.MaxFlight;
-
-        if eq maxFlight 0;
-          return;
-        end;
-
-        unit.getFaction faction;
-        battle_game.getTurnSide factionturn;
-
-        battle_game.getTurn currentTurn;
-        unit.getTag flightTime Tag.FlightTime;
+          var int temp1;
 
 
+          unit.getTag maxFlight Tag.MaxFlight;
+
+          if eq maxFlight 0;
+            return;
+          end;
+
+          unit.getFaction faction;
+          battle_game.getTurnSide factionturn;
+
+          battle_game.getTurn currentTurn;
+          unit.getTag flightTime Tag.FlightTime;
 
 
-        if and eq faction FACTION_PLAYER eq factionturn FACTION_PLAYER;
-          if gt flightTime 0;
-            if ge turn flightTime;
+
+
+          if and eq faction FACTION_PLAYER eq factionturn FACTION_PLAYER;
+            if gt flightTime 0;
+              if ge turn flightTime;
+                unit.setMovementType movement_type_walk;
+              end;
+            end;
+            if eq currentTurn 1;
               unit.setMovementType movement_type_walk;
+              unit.setTag Tag.CooldownTime 0; # reset flight cooldown
+              unit.setTag Tag.FlightTime 0;
             end;
           end;
-          if eq currentTurn 1;
-            unit.setMovementType movement_type_walk;
-            unit.setTag Tag.CooldownTime 0; # reset flight cooldown
-            unit.setTag Tag.FlightTime 0;
-          end;
-        end;
-        return;
+          return;
 
     healUnit:
-    - new: ROSIGMA_healU_limited_flight
-      offset: 1
-      code: |
-        var int activateFlight;
-        var int maxFlight;
-        var int maxCooldown;
-        var int flightTime;
-        var int cooldownTime;
-        var int turn;
-        var int duration;
+      - new: ROSIGMA_healU_limited_flight
+        offset: 1
+        code: |
+          var int activateFlight;
+          var int maxFlight;
+          var int maxCooldown;
+          var int flightTime;
+          var int cooldownTime;
+          var int turn;
+          var int duration;
 
-        item.getTag activateFlight Tag.ActivateFlight;
-        if eq activateFlight 1;
-          battle_game.getTurn turn;
-          actor.getTag maxFlight Tag.MaxFlight;
-          actor.getTag maxCooldown Tag.MaxCoolDown;
-          actor.getTag flightTime Tag.FlightTime;
-          actor.getTag cooldownTime Tag.CooldownTime;
-          if lt turn flightTime;
-            set duration flightTime;
-            sub duration turn;
-            battle_game.flashMessage "STR_SCRIPT_FLIGHT_DURATION_LEFT" duration;
-            return;
+          item.getTag activateFlight Tag.ActivateFlight;
+          if eq activateFlight 1;
+            battle_game.getTurn turn;
+            actor.getTag maxFlight Tag.MaxFlight;
+            actor.getTag maxCooldown Tag.MaxCoolDown;
+            actor.getTag flightTime Tag.FlightTime;
+            actor.getTag cooldownTime Tag.CooldownTime;
+            if lt turn flightTime;
+              set duration flightTime;
+              sub duration turn;
+              battle_game.flashMessage "STR_SCRIPT_FLIGHT_DURATION_LEFT" duration;
+              return;
+            end;
+            if lt turn cooldownTime;
+              set duration cooldownTime;
+              sub duration turn;
+              battle_game.flashMessage "STR_SCRIPT_COOLDOWN_DURATION_LEFT" duration;
+              return;
+            end;
+
+            actor.setMovementType movement_type_fly;
+            actor.MoveCost.setBaseFlyTimePercent 75;
+            set cooldownTime turn;
+            add cooldownTime maxCooldown;
+            add cooldownTime maxFlight;
+            actor.setTag Tag.CooldownTime cooldownTime;
+            set flightTime turn;
+            add flightTime maxFlight;
+            actor.setTag Tag.FlightTime flightTime;
+
           end;
-          if lt turn cooldownTime;
-            set duration cooldownTime;
-            sub duration turn;
-            battle_game.flashMessage "STR_SCRIPT_COOLDOWN_DURATION_LEFT" duration;
-            return;
-          end;
-
-          actor.setMovementType movement_type_fly;
-          actor.MoveCost.setBaseFlyTimePercent 75;
-          set cooldownTime turn;
-          add cooldownTime maxCooldown;
-          add cooldownTime maxFlight;
-          actor.setTag Tag.CooldownTime cooldownTime;
-          set flightTime turn;
-          add flightTime maxFlight;
-          actor.setTag Tag.FlightTime flightTime;
-
-        end;
-        return;
+          return;

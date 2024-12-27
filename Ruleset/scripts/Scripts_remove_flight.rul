@@ -1,60 +1,60 @@
 items:
-    - type: STR_HEAVY_WEBBER_AMMO
-      tags:
-        RemovesFlight: 1
-    - type: STR_PISTOL_WEBBER_AMMO
-      tags:
-        RemovesFlight: 1
-    - type: STR_CONSTRICTOR_WEBBER_AMMO
-      tags:
-        RemovesFlight: 1
-    - type: STR_WEBBER_AMMO
-      tags:
-        RemovesFlight: 1
+  - type: STR_HEAVY_WEBBER_AMMO
+    tags:
+      RemovesFlight: 1
+  - type: STR_PISTOL_WEBBER_AMMO
+    tags:
+      RemovesFlight: 1
+  - type: STR_CONSTRICTOR_WEBBER_AMMO
+    tags:
+      RemovesFlight: 1
+  - type: STR_WEBBER_AMMO
+    tags:
+      RemovesFlight: 1
 
 extended:
-    tags:
-        RuleItem:
-          RemovesFlight: int
-        BattleUnit:
-          FlightTime: int
-          CooldownTime: int
-          DODGED: int
-        RuleArmor:
-          MaxFlight: int
-          MaxCoolDown: int
-    scripts:
-        hitUnit:
-        - new: ROSIGMA_hU_remove_flight
-          offset: 50
-          code: |
-            var int flying;
-            var int flighttime;
-            var int removesflight;
-            var int turn;
-            var int maxCooldown;
-            var int cooldownTime;
-            var int dodged;
-            var ptr BattleItem ammoptr;
+  tags:
+    RuleItem:
+      RemovesFlight: int
+    BattleUnit:
+      FlightTime: int
+      CooldownTime: int
+      DODGED: int
+    RuleArmor:
+      MaxFlight: int
+      MaxCoolDown: int
+  scripts:
+    hitUnit:
+      - new: ROSIGMA_hU_remove_flight
+        offset: 50
+        code: |
+          var int flying;
+          var int flighttime;
+          var int removesflight;
+          var int turn;
+          var int maxCooldown;
+          var int cooldownTime;
+          var int dodged;
+          var ptr BattleItem ammoptr;
 
-            unit.getTag dodged Tag.DODGED;
-            if eq dodged 1;
-              unit.setTag Tag.DODGED 0;
-              return power part side;
-            end;
-
-            weapon_item.getAmmoItem ammoptr;
-            ammoptr.getTag removesflight Tag.RemovesFlight;
-            if or eq removesflight 1 ge power 200;
-              unit.getTag flighttime Tag.FlightTime;
-              if gt flighttime 0;
-                  battle_game.getTurn turn;
-                  unit.setTag Tag.FlightTime turn;
-                  unit.getTag maxCooldown Tag.MaxCoolDown;
-                  set cooldownTime turn;
-                  add cooldownTime maxCooldown;
-                  unit.setTag Tag.CooldownTime cooldownTime;
-              end;
-              unit.setMovementType 0;
-            end;
+          unit.getTag dodged Tag.DODGED;
+          if eq dodged 1;
+            unit.setTag Tag.DODGED 0;
             return power part side;
+          end;
+
+          weapon_item.getAmmoItem ammoptr;
+          ammoptr.getTag removesflight Tag.RemovesFlight;
+          if or eq removesflight 1 ge power 200;
+            unit.getTag flighttime Tag.FlightTime;
+            if gt flighttime 0;
+                battle_game.getTurn turn;
+                unit.setTag Tag.FlightTime turn;
+                unit.getTag maxCooldown Tag.MaxCoolDown;
+                set cooldownTime turn;
+                add cooldownTime maxCooldown;
+                unit.setTag Tag.CooldownTime cooldownTime;
+            end;
+            unit.setMovementType 0;
+          end;
+          return power part side;
