@@ -147,7 +147,7 @@ missionScripts:
         STR_SPACE_HULK_GSC: 100  # space hulk
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     useTable: false
 
   - type: recurringGSCTerror
@@ -184,7 +184,7 @@ missionScripts:
         STR_DESERTER_HIDEOUT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     useTable: false
     executionOdds: 30
     startDelay: 5000
@@ -269,9 +269,9 @@ missionScripts:
         STR_ALIEN_ARTIFACT: 20
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
-#         WAR_SITES: 100
-#    varName: hulk
+        REGION_HULK_SITES: 100
+        # WAR_SITES: 100
+    # varName: hulk
     useTable: false
     firstMonth: 2
     executionOdds: 50
@@ -279,6 +279,7 @@ missionScripts:
     researchTriggers:
       STR_ARBITES: true
       STR_ADEPTAS: false
+      STR_CHAOS_PATH: false
 
   - type: MMAdeptas
     refNode: *STR_MONTHLY_MISSIONS
@@ -351,13 +352,38 @@ missionScripts:
     researchTriggers:
       STR_CHAMBERMILITANT: true
 
+  - type: MMChaosPath
+    missionWeights:
+      0:
+        STR_INTERCEPT_PDF_VALKYRIE: 30  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+      4:
+        STR_INTERCEPT_PDF_VALKYRIE: 33
+        STR_ELDAR_ARTIFACT: 50
+        #STR_SUPPORT_PDF_ASSAULT: 33  # Replace with PDF Base Assault
+        STR_ALIEN_ARTIFACT: 20
+      7:
+        STR_ELDAR_ARTIFACT: 40
+        #STR_SUPPORT_MARINE_ASSAULT: 20  # Replace
+        #STR_SUPPORT_CATAMARINE_ASSAULT: 20  # Replace
+        STR_ALIEN_ARTIFACT: 20
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    # varName: hulk
+    useTable: false
+    firstMonth: 2
+    executionOdds: 50
+    startDelay: 15000  # 10k = 7 days
+    researchTriggers:
+      STR_CHAOS_PATH: true
+
   - type: alienAirSuperiorityLight
     missionWeights:
       0:
         STR_ALIEN_AIR_SUPERIORITY_LIGHT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_ALIENS_ONLY: false
     useTable: false
@@ -558,7 +584,27 @@ missionScripts:
       STR_TATICALTRAININFO: false
       STR_GENERALLOCK: true
 
-  - type: Inquisition  # any chaos opposed force. Not only Inquisition
+  # Player Chaos Missions
+  - delete: Inquisition  # This was the previous 40k mod chaos retaliation
+
+  - type: PlayerChaos_Retaliation  # Happens before high-tier if you have bad score
+    maxScore: 0
+    missionWeights:
+      0:
+        STR_INQUISITION_RETALIATION: 100
+        STR_ELDAR_RETALIATION_CHAOS: 100
+      6:
+        STR_INQUISITION_RETALIATION: 100
+        STR_ELDAR_RETALIATION_CHAOS: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_HIGHTIER_PREREQ: false
+    startDelay: 150
+    targetBaseOdds: 100
+    useTable: false
+
+  - type: PlayerChaos_Retaliation_Endgame_PoorScore  # Happens at high-tier if you have a bad score
+    maxScore: 0
     missionWeights:
       0:
         STR_INQUISITION_RETALIATION: 100
@@ -570,11 +616,30 @@ missionScripts:
         STR_ELDAR_RETALIATION_CHAOS: 100
     researchTriggers:
       STR_ALIENS_ONLY: true
+      STR_HIGHTIER_PREREQ: true
     startDelay: 150
     targetBaseOdds: 100
     useTable: false
 
-# Final Mission
+  - type: PlayerChaos_Retaliation_Endgame_GoodScore  # Happens at high-tier even if you have a good score
+    minScore: 0
+    missionWeights:
+      0:
+        STR_INQUISITION_RETALIATION: 100
+        STR_NECRON_RETALIATION_CHAOS: 0
+        STR_ELDAR_RETALIATION_CHAOS: 100
+      6:  # Necrons awake on month 6  # STR_FIRST_EARTHQUAKE_NECRONS
+        STR_INQUISITION_RETALIATION: 100
+        STR_NECRON_RETALIATION_CHAOS: 100
+        STR_ELDAR_RETALIATION_CHAOS: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_HIGHTIER_PREREQ: true
+    startDelay: 150
+    targetBaseOdds: 25
+    useTable: false
+
+  # Final Mission
 
   - type: finalMissionGuard
     researchTriggers:
@@ -597,16 +662,16 @@ missionScripts:
     varName: finalMissionGuard
 
 
-# dungeon specific start
+  # dungeon specific start
 
   - type: HULKERMarines
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_MARINES_STRATEGY: true
       STR_WARPED_VAULT: true
@@ -617,13 +682,13 @@ missionScripts:
     varName: HULKERMarines
 
   - type: HULKERGuards
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_IMPERIAL_GUARD_OPERATIONS: true
       STR_WARPED_VAULT: true
@@ -634,13 +699,13 @@ missionScripts:
     varName: HULKERGuards
 
   - type: HULKERAdeptas
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_ADEPTAS: true
       STR_WARPED_VAULT: true
@@ -651,13 +716,13 @@ missionScripts:
     varName: HULKERAdeptas
 
   - type: HULKERArbites
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_THE_IMPERIAL_LAW_STRATEGY: true
       STR_WARPED_VAULT: true
@@ -668,13 +733,13 @@ missionScripts:
     varName: HULKERArbites
 
   - type: HULKERDeathwatch
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_CHAMBERMILITANT: true
       STR_DEATHWATCH: true
@@ -686,13 +751,13 @@ missionScripts:
     varName: HULKERDeathwatch
 
   - type: HULKERInquisition
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_CHAMBERMILITANT: true
       STR_GREYKNIGHTS: true
@@ -704,13 +769,13 @@ missionScripts:
     varName: HULKERInquisition
 
   - type: HULKERChaosCult
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_ALIENER_ARTIFACT: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_CHAOS_STRATEGY: true
       STR_WARPED_VAULT: true
@@ -720,19 +785,19 @@ missionScripts:
     maxRuns: 1
     varName: HULKERChaosCult
 
-# dungeon specific end
+  # dungeon specific end
 
-# marbostory
+  # marbostory
 
   - type: MARBOPrologue
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     executionOdds: 5  # so it's rare considering the endgoal will give the player a very strong hero unit
     missionWeights:
       0:
         STR_MARBO_VALKYRIE: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     firstMonth: 2  # delay 1 more month for balancing other mission of the chain will follow it anyways
     startDelay: 1440  # 1 day
     useTable: false
@@ -740,13 +805,13 @@ missionScripts:
     varName: MARBOPrologue
 
   - type: MARBO1
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_MARBO1_VALKYRIE: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_MARBO_ALPHA_DATA: true
     firstMonth: 1
@@ -757,13 +822,13 @@ missionScripts:
     varName: MARBO1
 
   - type: MARBO2
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_MARBO2_VALKYRIE: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_MARBO_BETA_DATA: true
     firstMonth: 1
@@ -774,13 +839,13 @@ missionScripts:
     varName: MARBO2
 
   - type: MARBO3
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_MARBO3_VALKYRIE: 100
     regionWeights:
       0:
-         REGION_HULK_SITES: 100
+        REGION_HULK_SITES: 100
     researchTriggers:
       STR_MARBO_GAMMA_DATA: true
     firstMonth: 1
@@ -790,10 +855,10 @@ missionScripts:
     maxRuns: 1
     varName: MARBO3
 
-# terrorcatachan
+  # terrorcatachan
 
   - type: CATACH_TERROR
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_CATACH_TERROR_GO: 20
@@ -812,10 +877,10 @@ missionScripts:
     maxRuns: -1
     varName: CATACH_TERROR
 
-# catachan monthly if catachan recruitment triggered lowered odds to 50 percent
+  # catachan monthly if catachan recruitment triggered lowered odds to 50 percent
 
   - type: CATACH_DEFENSE
-    retaliationOdds: 0
+    # FIXME: retaliationOdds: 0
     missionWeights:
       0:
         STR_CATACH_OUTPOST_DEFENSE: 100

@@ -1,0 +1,77 @@
+name: Update Metadata Nightly
+
+on:  # yamllint disable-line rule:truthy
+  schedule:
+    - cron: "0 0 * * *"  # Runs every day at midnight
+jobs:
+  create-pullrequest-metadata:
+    runs-on: codeberg-tiny  # ubuntu-latest
+    # runs-on: ubuntu-latest
+
+    # if: "!contains(github.event.head_commit.message, 'Add commit hash file')"  # Prevent infinite loop
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        # https://github.com/marketplace/actions/checkout
+        uses: actions/checkout@v3
+
+      # Step 2: Check if an open pull request exists for a specific branch
+      - name: Check for open pull request for feature-branch
+        id: check-pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="update-metadata"  # Set the branch name you want to check
+          gh pr list --state open --json headRefName \
+            --jq ".[] | select(.headRefName == \"$BRANCH_NAME\")" > pr.json
+          if [ -s pr.json ]; then
+            echo "pull_request_found=true" >> $GITHUB_ENV
+          else
+            echo "pull_request_found=false" >> $GITHUB_ENV
+          fi
+
+      # Step 2: Generate a file with the commit hash
+      - name: Generate Commit Hash File
+        if: env.pull_request_found == 'false'
+        run: |
+          bash ./metadata_creator.sh $(git rev-parse HEAD) > metadata.yml
+
+      # Step 3: Configure Git (required for committing changes)
+      # - name: Configure Git
+      #   run: |
+      #     git config user.name "rosigma-actions[bot]"
+      #     git config user.email "rosigma-actions[bot]@users.noreply.github.com"
+
+      # Step 4: Commit and Push Changes
+      # - name: Commit and Push Changes
+      #   run: |
+      #     git branch update-metadate
+      #     git checkout update-metadata
+      #     git add metadata.yml
+      #     git commit -m "BOT: Update metadata.yml with commit hash"
+      #     git push
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 3: Commit and Create Pull Request
+      # https://github.com/marketplace/actions/create-pull-request
+      - name: Create Pull Request
+        if: env.pull_request_found == 'false'
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update Metadata
+          committer: rosigma-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: update-metadata
+          delete-branch: true
+          title: 'Update Metadata.yml'
+          body: |
+            Updated Metadata.yml
+          labels: |
+            metadata
+            automated pr
+          draft: false

@@ -197,8 +197,8 @@ items:
     weight: 0
     bigSprite: {mod: 40k, index: 611}
     floorSprite: {mod: 40k, index: 24}
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeAnimation: { mod: 40k, index: 16}  # melee purple
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: {mod: 40k, index: 16}  # melee purple
     battleType: 3
     damageType: 7
     clipSize: -1
@@ -229,8 +229,8 @@ items:
   - type: STR_HORMAGAUNT_WEAPON  # Hormagaunt Scything Blades
     weight: 3
     bigSprite: 2726
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeAnimation: { mod: 40k, index: 4}  # melee white
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: {mod: 40k, index: 4}  # melee white
     clipSize: -1  # unlimited ammo
     strengthApplied: true
     meleePower: 60  # 120 for carnifex claws
@@ -321,11 +321,11 @@ items:
       RandomWound: true
       ToArmor: 0.0
       ToTime: 0.1  # attacks the nerve system
-      RandomTime: True
+      RandomTime: true
       ToStun: 0.2
-      RandomStun: True
+      RandomStun: true
       ToEnergy: 0.2
-      RandomEnergy: True
+      RandomEnergy: true
       RandomType: 1
     battleType: 1
     twoHanded: true
@@ -368,11 +368,11 @@ items:
       RandomWound: true
       ToArmor: 0.0
       ToTime: 0.1  # attacks the nerve system
-      RandomTime: True
+      RandomTime: true
       ToStun: 0.2
-      RandomStun: True
+      RandomStun: true
       ToEnergy: 0.2
-      RandomEnergy: True
+      RandomEnergy: true
       RandomType: 1
     battleType: 1
     twoHanded: true
@@ -449,8 +449,8 @@ items:
     # floorSprite: 188
     bigSprite: 3032
     handSprite: 3408
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeHitSound: { mod: 40k, index: 101}
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 80
     power: 90  # should use over scything talons
     damageAlter:
@@ -500,9 +500,9 @@ items:
     clipSize: -1
     powerRangeThreshold: 10.0
     powerRangeReduction: 5.0
-    explosionHitSound: { mod: 40k, index: 863}  # Sound
-    hitSound: { mod: 40k, index: 743}
-    hitAnimation: { mod: 40k, index: 96}
+    explosionHitSound: {mod: 40k, index: 863}  # Sound
+    hitSound: {mod: 40k, index: 743}
+    hitAnimation: {mod: 40k, index: 96}
     power: 0
     damageBonus:
       psi: 0.015
@@ -533,15 +533,15 @@ items:
   - type: STR_GENE_WEAPON
     weight: 3
     bigSprite: 2708
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeAnimation: { mod: 40k, index: 16}  # melee purple
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: {mod: 40k, index: 16}  # melee purple
     fireSound: 2172  # clawswipe
-    explosionHitSound: { mod: 40k, index: 101}  # stabhit
+    explosionHitSound: {mod: 40k, index: 101}  # stabhit
     hitAnimation: 2040  # Bloodgush sprite, X1.pck for ranged attacks, was 1070  # AOEMELEEGENE.png
-    # hitAnimation: { mod: 40k, index: 16}  # melee purple DOESNT WORK ULTRAMARINE LOGO
+    # hitAnimation: {mod: 40k, index: 16}  # melee purple DOESNT WORK ULTRAMARINE LOGO
     hitAnimFrames: 8
     powerForAnimation: 10
-    hitSound: { mod: 40k, index: 101}  # stabhit
+    hitSound: {mod: 40k, index: 101}  # stabhit
     bulletSprite: 5
     clipSize: -1
     strengthApplied: true
@@ -674,7 +674,7 @@ items:
     bigSprite: 2705
     floorSprite: {mod: 40k, index: 615}
     handSprite: {mod: 40k, index: 184}
-    bulletSprite: {mod: 40k, index: 21 }
+    bulletSprite: {mod: 40k, index: 21}
     fireSound: {mod: 40k, index: 802}
     compatibleAmmo:
       - STR_HEAVY_WEBBER_AMMO
@@ -700,10 +700,11 @@ items:
     floorSprite: {mod: 40k, index: 616}
     handSprite: {mod: 40k, index: 616}
     hitSound: {mod: 40k, index: 790}
-    hitAnimation: 160
+    hitAnimation: 1180
     power: 100
-    FixRadius: 4
-    explosionSpeed: 5
+    blastRadius: 4
+    explosionSpeed: 0
+    # powerForAnimation: 128  # voxels * blastRadius * 2 = 16 * 4 * 2
     damageType: 7
     clipSize: 3
     battleType: 2
@@ -718,6 +719,7 @@ items:
       ToEnergy: 2.0
       ToTime: 1.0
       ToMorale: 0.5
+      ToTile: 0.0
     listOrder: 11806
 
   - type: STR_GSC_WEBBER_PISTOL  # One handed
@@ -734,7 +736,7 @@ items:
     bigSprite: 2706
     floorSprite: {mod: 40k, index: 615}
     handSprite: 550
-    bulletSprite: {mod: 40k, index: 21 }
+    bulletSprite: {mod: 40k, index: 21}
     fireSound: {mod: 40k, index: 802}
     compatibleAmmo:
       - STR_PISTOL_WEBBER_AMMO
@@ -923,7 +925,7 @@ items:
     autoRange: 15
     snapRange: 15
     autoShots: 15  # less than the military version
-    followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    # FIXME: followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
     confSnap:
       shots: 7
     sprayWaypoints: 2
@@ -931,7 +933,7 @@ items:
 
 
   - type: STR_MAKESHIFT_GRENADE
-    categories: [ STR_CAT_GRENADES]
+    categories: [STR_CAT_GRENADES]
     size: 0.1
     weight: 3
     bigSprite: 2714
@@ -950,7 +952,7 @@ items:
     costSell: 200
 
   - type: STR_MAKESHIFT_PIPEBOMB
-    categories: [ STR_CAT_GRENADES]
+    categories: [STR_CAT_GRENADES]
     size: 0.1
     weight: 6
     bigSprite: 2715
@@ -972,9 +974,9 @@ items:
     weight: 3
     invWidth: 2
     invHeight: 3
-    bigSprite:  2717
+    bigSprite: 2717
     meleeSound: {mod: 40k, index: 48}
-    meleeAnimation: { mod: 40k, index: 16}  # melee purple
+    meleeAnimation: {mod: 40k, index: 16}  # melee purple
     strengthApplied: true
     power: 50
     damageAlter:  # DA GSC GRAPPLE
@@ -1006,8 +1008,8 @@ items:
     # floorSprite: 188
     bigSprite: 2732
     handSprite: 3408
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeHitSound: { mod: 40k, index: 101}
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 80
     power: 80
     damageAlter:
@@ -1040,9 +1042,9 @@ items:
     # floorSprite: 188
     bigSprite: 2732
     handSprite: 3408
-    meleeSound: { mod: 40k, index: 101}  # stabhit
-    meleeHitSound: { mod: 40k, index: 101}
-    meleeAnimation: { mod: 40k, index: 4}  # melee white
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: {mod: 40k, index: 4}  # melee white
     power: 90
     damageAlter:
       # RandomType: 2  # TFTD [50% - 150%]
@@ -1073,7 +1075,7 @@ items:
     handSprite: 3408
     bulletSprite: 5
     fireSound: 2172  # clawswipe
-    hitSound: { mod: 40k, index: 101}  # stabhit
+    hitSound: {mod: 40k, index: 101}  # stabhit
     hitAnimation: 2040
     power: 80
     damageAlter:  # DA SPIT
@@ -1103,7 +1105,7 @@ items:
     handSprite: 3408
     bulletSprite: 5
     fireSound: 2172  # clawswipe
-    hitSound: { mod: 40k, index: 101}  # stabhit
+    hitSound: {mod: 40k, index: 101}  # stabhit
     hitAnimation: 2040
     power: 100  # was 90
     damageAlter:  # DA SPIT

@@ -1,5 +1,5 @@
 manufacture:
-# Recruitment of Loyalist AI units into the equivalent player soldiers.
+  # Recruitment of Loyalist AI units into the equivalent player soldiers.
   - name: STR_CONVERT_NOVICE
     category: STR_CAT_HERETICAL
     requires:
@@ -60,37 +60,7 @@ manufacture:
     producedItems:
       STR_ADEPTAS_ARMOR_ELOHIM: 1
 
-  - name: STR_CONVERT_GUARD_KRIEG
-    category: STR_CAT_HERETICAL
-    requires:
-      - STR_NOTCHAOSCULT
-      - STR_CONVINCE_CHAOS_RESEARCH
-    space: 0
-    time: 250
-    cost: 20000
-    requiredItems:
-      STR_GUARD_KRIEG: 1
-      STR_KILLPOINT_TOKEN: 5
-    spawnedPersonType: STR_GUARDSM_KRIEG
-    producedItems:
-      STR_KILLPOINT_TOKEN: 1
-
-  - name: STR_CONVERT_GUARD_PILOT
-    category: STR_CAT_HERETICAL
-    requires:
-      - STR_NOTCHAOSCULT
-      - STR_CONVINCE_CHAOS_RESEARCH
-    space: 0
-    time: 100
-    cost: 8000
-    requiredItems:
-      STR_GUARD_PILOT: 1
-      STR_KILLPOINT_TOKEN: 5
-    spawnedPersonType: STR_PILOT_GUARD
-    producedItems:
-      STR_KILLPOINT_TOKEN: 1
-
-  - name: STR_CONVERT_GUARD_FEMALE_CIVILIAN
+  - name: STR_CONVERT_GUARD
     category: STR_CAT_HERETICAL
     requires:
       - STR_NOTCHAOSCULT
@@ -99,24 +69,22 @@ manufacture:
     time: 100
     cost: 5000
     requiredItems:
-      FEMALE_CIVILIAN: 1  # Guard
-      STR_KILLPOINT_TOKEN: 5
+      STR_LIVE_CAPTURE_GUARDAI: 1  # Guard
     spawnedPersonType: STR_GUARDSM
     producedItems:
       STR_KILLPOINT_TOKEN: 1
 
-  - name: STR_CONVERT_HEAVY_GUARDSMAN_FEMALE
+  - name: STR_CONVERT_GUARD_VETERAN
     category: STR_CAT_HERETICAL
     requires:
       - STR_NOTCHAOSCULT
       - STR_CONVINCE_CHAOS_RESEARCH
     space: 0
-    time: 100
-    cost: 8000
+    time: 140
+    cost: 20000
     requiredItems:
-      STR_HEAVY_GUARDSMAN_FEMALE: 1  # Guard
-      STR_KILLPOINT_TOKEN: 5
-    spawnedPersonType: STR_GUARD_KRIEG_GRENADIER
+      STR_LIVE_CAPTURE_GUARDAI_VETERAN: 1  # Guard
+    spawnedPersonType: STR_GUARD_VETERAN
     producedItems:
       STR_KILLPOINT_TOKEN: 1
 
@@ -165,7 +133,7 @@ manufacture:
     producedItems:
       STR_KILLPOINT_TOKEN: 1
 
-# Reeducation, Radical Road gets access to these without going fully chaos.
+  # Reeducation, Radical Road gets access to these without going fully chaos.
   - name: STR_RECRUIT_TRAITOR_GUARD
     category: STR_CAT_REEDUCATE
     requires:
@@ -307,7 +275,7 @@ manufacture:
     producedItems:
       STR_PURITY_SEAL: 1
 
-# Convince Chaos
+  # Convince Chaos
   - &STR_RECRUIT_CHAOS_SISTER
     name: STR_RECRUIT_CAPTIVE_HERETIC_SISTER
     category: STR_CAT_RECRUIT_HSIS
@@ -724,7 +692,24 @@ manufacture:
     producedItems:
       STR_KILLPOINT_TOKEN: 1
 
-# Rubric Production
+  - name: STR_RECRUIT_PLAGUE_OGRYN
+    category: STR_CAT_REEDUCATE
+    requires:
+      - STR_NOTCHAOSCULT
+      - STR_CONVINCE_CHAOS_RESEARCH
+      - STR_NURGLE_OPTIONS
+    requiresBaseFunc: [CHAOS]
+    space: 0
+    time: 100
+    cost: 60000
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_OGRYN: 1
+      STR_ELERIUM_115: 5
+    spawnedPersonType: STR_PLAGUE_OGRYN_PLAYER
+    producedItems:
+      STR_KILLPOINT_TOKEN: 1
+
+  # Rubric Production
   - name: STR_PRODUCE_RUBRIC
     category: STR_ADVANCEMENT
     requires:
@@ -740,8 +725,8 @@ manufacture:
       STR_KILLPOINT_TOKEN: 1
     spawnedPersonType: STR_CHAOS_MARINE_TZEENTCH
 
-# Chaos Armor Manufacturing
-## Chaos Space Marines
+  # Chaos Armor Manufacturing
+  ## Chaos Space Marines
   - name: STR_CHAOS_MARINE_ARMOR
     category: STR_PERSONAL_ARMOR
     requires:
@@ -838,8 +823,8 @@ manufacture:
       STR_ALIEN_ALLOYS: 250
       STR_ELERIUM_115: 50
 
-# Chaos Weapons Manufacturing
-## Las
+  # Chaos Weapons Manufacturing
+  ## Las
   - name: STR_LASGUN_CLIP_HOTSHOT_CHAOS
     category: STR_AMMUNITION
     requires:
@@ -853,7 +838,7 @@ manufacture:
     producedItems:
       STR_LASGUN_CLIP_HOTSHOT_CHAOS: 10
 
-## Bolters
+  ## Bolters
   - name: STR_CHB  # Chaos Storm Bolter
     category: STR_WEAPON
     requires:
@@ -901,7 +886,7 @@ manufacture:
       STR_BOLTERSLAAN: 1
       STR_ALIEN_ALLOYS: 5
 
-## Flamer, technically
+  ## Flamer, technically
   - name: STR_PLAGUE_SPEWER
     category: STR_WEAPON
     requires:
@@ -920,11 +905,12 @@ manufacture:
     space: 0
     time: 300
     cost: 10000
-    STR_ELERIUM_115: 10
+    requiredItems:
+      STR_ELERIUM_115: 10
     producedItems:
-      STR_GRAVCANNON_AMMO: 5
+      STR_PLAGUE_SPEWER_TANK_PLAYER: 5
 
-## Melta
+  ## Melta
   - name: STR_CHAOS_MELTAGUN
     category: STR_WEAPON
     requires:
@@ -947,7 +933,7 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 50
 
-## Plasma
+  ## Plasma
   - name: STR_HEAVY_PLASMA
     category: STR_WEAPON
     requires:
@@ -1043,7 +1029,7 @@ manufacture:
     requiredItems:
       STR_ALIEN_ALLOYS: 25
 
-## Sonic
+  ## Sonic
   - name: STR_SONIC_GUN
     category: STR_WEAPON
     requires:
@@ -1063,7 +1049,7 @@ manufacture:
     requiredItems:
       STR_UFO_CONSTRUCTION: 1
 
-## Graviton
+  ## Graviton
   - name: STR_SMALL_LAUNCHER  # Chaos Graviton Gun
     category: STR_WEAPON
     requires:
@@ -1148,7 +1134,7 @@ manufacture:
     producedItems:
       STR_GRAVGUN_AOE_AMMO_SHOTGUN: 5
 
-## Specialty Munitions
+  ## Specialty Munitions
   - name: STR_BLIGHT_GRENADE40_PLAYER
     category: STR_AMMUNITION
     requires:
@@ -1220,7 +1206,7 @@ manufacture:
     producedItems:
       STR_FLAMETHROWER_WARPFIRE_CLIP: 5
 
-## Melee
+  ## Melee
   - name: STR_CPOWER_DAGGER
     category: STR_WEAPON
     requires:

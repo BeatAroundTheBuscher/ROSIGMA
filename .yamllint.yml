@@ -1,27 +1,48 @@
 extends: default
 
 rules:
-  # don't bother me with this rule
+  # don't bother me with these rules
   line-length: disable
-  indentation: disable
-  # indentation:
-  #   spaces: 2
-  #   indent-sequences: yes
-  #   check-multi-line-strings: yes
-  comments:
-    level: error
+  document-start: disable
+
+  # comments:
+  #   spaces: 1  # breaks yamllint
+  #   level: error
+  # don't bother as there is no huge benefit
+  comments-indentation: disable
   # comments-indentation:
   #   level: error
-  empty-lines: disable
-  braces: disable
-  colons: disable
-  commas: disable
-  # hyphens: disable
-  brackets: disable
   new-line-at-end-of-file: disable
   new-lines: disable
+  empty-lines: disable
+  quoted-strings: disable
+
+  indentation:
+    spaces: 2
+    indent-sequences: true  # create false positives  # false create even more issues
+    check-multi-line-strings: false  # breaks scripts
+  truthy:
+    level: error
+  # braces: enable  # enabled by default
+  # colons: enable  # enabled by default
+  # commas: enable  # enabled by default
+  # hyphens: enable  # enabled by default
+  # brackets: enable  # enabled by default
+  empty-values: enable
+  float-values: enable
+  # anchors: enable  # enabled by default
+  # key-duplicates: enable  # enabled by default
+  octal-values: enable
+  # trailing-spaces: enable  # enabled by default
+
+  # missing space before # will crash the game
+  comments:
+    min-spaces-from-content: 1
+    require-starting-space: false
+    level: error
+
 yaml-files:
   - '*.yaml'
   - '*.yml'
-  - '.yamllint'
   - '*.rul'
+  - '*.nam'
