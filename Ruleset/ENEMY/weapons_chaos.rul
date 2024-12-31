@@ -1556,6 +1556,7 @@ items:
       - STR_LARGE_ROCKET
       - STR_INCENDIARY_ROCKET
       - STR_BLIGHT_ROCKET
+      - STR_BLIGHT_ROCKET_PLAYER
     accuracySnap: 55
     accuracyAimed: 115
     tuSnap: 55
@@ -2839,18 +2840,23 @@ items:
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: STR_BLIGHT_ROCKET  #                         12160
+  - delete: STR_BLIGHT_ROCKET
+  - &BLIGHT_ROCKET
+    type: STR_BLIGHT_ROCKET  #                         12160
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
     size: 0.2
-    costBuy: 6000
     costSell: 1500
     weight: 6
+    bigSprite: {mod: 40k, index: 16}
+    floorSprite: {mod: 40k, index: 16}
+    handSprite: {mod: 40k, index: 448}
     vaporColorSurface: 12
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
     power: 100
+    blastRadius: 10
     damageType: 3
     damageAlter:  # DA BLIGHT
       RandomType: 6  # gaussian
@@ -2875,9 +2881,16 @@ items:
     spawnUnitChance: 50
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
+    recoveryTransformations:
+      STR_BLIGHT_ROCKET_PLAYER: [1]
+    listOrder: 12160
     tags:
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+  - type: STR_BLIGHT_ROCKET_PLAYER
+    refNode: *BLIGHT_ROCKET
+    spawnUnitFaction: 2
+    ufopediaType: STR_BLIGHT_ROCKET
 
   - type: AUX_LASCAN_CHAOS  # LASCANON                         2017  amied
     categories: [STR_CAT_LASGUN, STR_CAT_DEVASTATOR]
@@ -3057,7 +3070,7 @@ items:
     size: 0.2
     costSell: 5000
     weight: 6
-    bigSprite: 2614
+    bigSprite: 2650  # Was 2614
     floorSprite: 2613
     handSprite: 2590
     bulletSprite: {mod: 40k, index: 14}
@@ -3071,7 +3084,7 @@ items:
     powerRangeReduction: 2
     battleType: 1
     twoHanded: false
-    invWidth: 2
+    invWidth: 1
     invHeight: 3
     recoveryPoints: 3
     listOrder: 11821
