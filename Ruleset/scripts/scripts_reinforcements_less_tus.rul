@@ -2,6 +2,8 @@ extended:
   tags:
     RuleArmor:
       ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
+      ARMOR_REINFORCEMENT_PLAYER_HP_PERCENT: int #% of HP a player summoned unit starts with
+      ARMOR_REINFORCEMENT_PLAYER_HP_FLAT: int #flat amount of HP a player summoned unit starts with
 
   scripts:
     createUnit:
@@ -33,5 +35,49 @@ extended:
           unit.setTimeUnits temp;
             # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Unit: " unit;
             # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Set time units to " temp;
+
+          return;
+
+      - new: ROSIGMA_cU_reinforcements_player_hp_adjustment
+        offset: 3
+        code: |
+          var ptr RuleArmor armorRule;
+          var int temp;
+          var int HPpercent;
+          var int HPflat;
+
+          if le turn 0; # we don't care about Turn 0; abort.
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Turn 0. Aborting.";
+            return;
+          end;
+
+          unit.getFaction temp;
+          if eq temp FACTION_HOSTILE; #if it's not a player unit we don't care
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Unit is hostile. Aborting.";
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag HPpercent Tag.ARMOR_REINFORCEMENT_PLAYER_HP_PERCENT;
+          armorRule.getTag HPflat Tag.ARMOR_REINFORCEMENT_PLAYER_HP_FLAT;
+          if and lt HPpercent 1 lt HPflat 1;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Unit has null HP adjustment tags. Aborting.";
+            return;
+          end;
+
+          if gt HPpercent 1;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Adjusting unit HP per %. HPpercent:" HPpercent;
+            unit.getHealthMax temp;
+            muldiv temp HPpercent 100;
+            unit.setHealthWithOverkill temp;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Adjusting unit HP per %. Final HP:" temp;
+            return;
+          end;
+
+          if gt HPflat 1;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Adjusting unit HP per flat amount. HPflat:" HPflat;
+            unit.setHealthWithOverkill HPflat;
+            return;
+          end;
 
           return;
