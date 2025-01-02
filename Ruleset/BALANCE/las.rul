@@ -814,7 +814,8 @@ items:
       ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
 
-  - type: STR_SLASCAN  # done  # Sentinel
+  - &STR_MOUNTED_LIGHT_LASCANNON_TEMPLATE
+    type: STR_SLASCAN  # done  # Sentinel
     dropoff: 3
     autoRange: 0
     snapRange: 25
@@ -837,32 +838,27 @@ items:
       ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
       RandomWound: false
       RandomType: 6  # gaussian; high power precision weapon
+
+    # lasgun aesthetics
+    hitSound: [3986]
+    fireSound: [3984]
+    hitAnimation: 2230
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 4  # red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_SLASCANPD  # done  # Arbites
-    dropoff: 3
-    autoRange: 0
-    snapRange: 25
-    aimRange: 34
-
-    accuracyAuto: 0
-    accuracySnap: 60
-    accuracyAimed: 94
-    tuAuto: 0
-    tuSnap: 40
-    tuAimed: 70
-
-    power: 150  # 40k 100  # Guard sentinel has lower damage; on the other hand it's mobile and doesn't need ammo
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.3  # painful las burns
-      ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
-      RandomWound: false
-      RandomType: 6  # gaussian; high power precision weapon
+    refNode: *STR_MOUNTED_LIGHT_LASCANNON_TEMPLATE
 
   - type: AUX_HOVERTANK_LASER  # done  # player Dread
+    refNode: *STR_MOUNTED_LIGHT_LASCANNON_TEMPLATE
     dropoff: 3
     autoRange: 16
     snapRange: 25
@@ -877,18 +873,9 @@ items:
     tuAimed: 0
 
     autoShots: 2
-    power: 150  # 40k 100  # same as Sentinel
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.3  # painful las burns
-      ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
-      RandomWound: false
-      RandomType: 6  # gaussian; high power precision weapon
 
   - type: AUX_DW_DREAD_LASER    # dread las
+    refNode: *STR_MOUNTED_LIGHT_LASCANNON_TEMPLATE
     dropoff: 3
     autoRange: 16
     snapRange: 25
@@ -903,18 +890,9 @@ items:
     tuAimed: 0
 
     autoShots: 2
-    power: 150  # 40k 100  # same as Sentinel
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.3  # painful las burns
-      ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
-      RandomWound: false
-      RandomType: 6  # gaussian; high power precision weapon
 
   - type: STR_HOVERTANK_LASER  # done  # not used
+    refNode: *STR_MOUNTED_LIGHT_LASCANNON_TEMPLATE
     dropoff: 3
     autoRange: 16
     snapRange: 25
@@ -929,16 +907,6 @@ items:
     tuAimed: 0
 
     autoShots: 2
-    power: 150  # 40k 100  # same as Sentinel
-    damageType: 4
-    damageAlter:
-      ToArmorPre: 0.3
-      ToHealth: 1.0
-      ToArmor: 0.1
-      ToStun: 0.3  # painful las burns
-      ToWound: 0.05  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
-      RandomWound: false
-      RandomType: 6  # gaussian; high power precision weapon
 
 ## Mounted (Chimera turrets and similar count as mounted)
 
