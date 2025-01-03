@@ -307,6 +307,7 @@ missionScripts:
     researchTriggers:
       STR_ARBITES: false
       STR_ADEPTAS: true
+      STR_CHAOS_PATH: false
 
   - type: MMElse  # SM, CSM, IG, GK
     refNode: *STR_MONTHLY_MISSIONS
@@ -330,6 +331,7 @@ missionScripts:
     researchTriggers:
       STR_ARBITES: false
       STR_ADEPTAS: false
+      STR_CHAOS_PATH: false
 
   - type: MMEarlyGK
     refNode: *STR_MONTHLY_MISSIONS
@@ -587,6 +589,16 @@ missionScripts:
   # Player Chaos Missions
   - delete: Inquisition  # This was the previous 40k mod chaos retaliation
 
+  - type: PlayerChaos_Inquisition_Score  # Simply generates inquisition ufos flying around to score, placeholder to make the world seem more hostile until proper imperial bases are added.
+    executionOdds: 100
+    firstMonth: 0
+    missionWeights:
+      0:
+        STR_INQUISITION_SCORE: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+    targetBaseOdds: 100
+
   - type: PlayerChaos_Retaliation  # Happens before high-tier if you have bad score
     maxScore: 0
     missionWeights:
@@ -623,6 +635,7 @@ missionScripts:
 
   - type: PlayerChaos_Retaliation_Endgame_GoodScore  # Happens at high-tier even if you have a good score
     minScore: 0
+    executionOdds: 25
     missionWeights:
       0:
         STR_INQUISITION_RETALIATION: 100
@@ -636,7 +649,7 @@ missionScripts:
       STR_ALIENS_ONLY: true
       STR_HIGHTIER_PREREQ: true
     startDelay: 150
-    targetBaseOdds: 25
+    targetBaseOdds: 100
     useTable: false
 
   # Final Mission
