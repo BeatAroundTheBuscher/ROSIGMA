@@ -272,9 +272,9 @@ items:
       - STR_ALIENS_ONLY
   - type: STR_GRENADE_LAUNCHER_CHAOS
     costBuy: 10000
-  - type: STR_MORTAR_PORTABLE_CHAOS_PLAYER
-    refNode: *CHAOS_HEAVY_WEAPON
-    costBuy: 150000
+  #- type: STR_MORTAR_PORTABLE_CHAOS_PLAYER
+  #  refNode: *CHAOS_HEAVY_WEAPON
+  #  costBuy: 150000
   - type: STR_NURGLE_GRENADE_DRUM
     refNode: *CHAOS_HEAVY_WEAPON
     costBuy: 12000
@@ -405,6 +405,54 @@ items:
     costBuy: 500
     requiresBuy: !add
       - STR_TZEENTCH_OPTIONS
+
+  # Player versions of weapons
+  - type: STR_MORTAR_PORTABLE_CHAOS_PLAYER  # Player version of chaos mortar
+    ufopediaType: STR_MORTAR_PORTABLE
+    categories: [STR_CAT_ROCKETL]
+    size: 0.4
+    dropoff: 8  # high drop off, inaccurate
+    requiresBuy:
+      - STR_HEAVY_WEAPONS_IG
+      - STR_ALIENS_ONLY
+    costBuy: 150000  # pricy to buy
+    costSell: 25000
+    weight: 40  # like heavy bolter
+    bigSprite: 1038
+    floorSprite: 953
+    handSprite: 896
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 4}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    compatibleAmmo:
+      - STR_MORTAR_AMMO_HE
+      - STR_MORTAR_AMMO_KRAK
+      - STR_MORTAR_AMMO_PHOSPHOR
+      - STR_MORTAR_AMMO_SMOKE
+      - STR_MORTAR_AMMO_ILLUMINATION
+      - STR_MORTAR_AMMO_PHOTON
+      - STR_MORTAR_AMMO_FRAG
+    accuracyAimed: 30  # was 50, reduced for the waypoint system
+    tuLoad: 20  # a bit of work to reload
+    tuAimed: 80  # two grenades per turn+some turn adjustment, or reload cost?
+    reloadSound: 2427
+    autoRange: 0
+    snapRange: 0  # no snap, to prevent reactions
+    aimRange: 30  # Sniper range
+    battleType: 1
+    arcingShot: false
+    waypoints: 2  # 1 waypoint, loitering munitions to mimic mortar indirect fire
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    listOrder: 11871
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 14
+      ITEM_HAS_BIPOD: 1
 
   # Special Armor Weapons
   - type: STR_NURGLING_HELPER  # Chosen of Nurgle Special Weapon
