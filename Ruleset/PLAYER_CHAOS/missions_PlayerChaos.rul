@@ -28,7 +28,7 @@ missionScripts:
       STR_ALIENS_ONLY: true
 
 alienMissions:
-  - type: STR_INQUISITION_OUTPOST_BUILD_INITIAL  # creates a new inquisition outpost
+  - type: STR_INQUISITION_OUTPOST_BUILD_INITIAL  # creates a new inquisition outpost from space
     retaliationOdds: 0
     operationType: 0
     spawnZone: 4
@@ -289,6 +289,27 @@ alienMissions:
         timer: 0
         objective: true
 
+  - type: STR_INQUISITION_PURGE  # Terror type mission
+    points: 10
+    objective: 3
+    spawnZone: 3  # Mission zone for terror missions
+    siteType: STR_INQUISITION_PURGE_MISSION
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_IMP_MEDIUM_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_IMP_LONG_TRANSPORT_SHIP
+        count: 1
+        trajectory: P3
+        timer: 3000
+      - ufo: STR_IMP_HEAVY_TRANSPORT_SHIP
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+
 alienDeployments:
   - type: STR_INQUISITION_OUTPOST  # Small Inquisition Base
     randomRace: [STR_IMPERIAL_INQUISITION_OUTPOST_LIST]
@@ -452,11 +473,11 @@ alienDeployments:
       desc: STR_INQUISITION_BASE_ASSAULT_BRIEFING
     markerName: STR_INQUISITION_BASE
     genMission:
-      STR_INQUISITION_OUTPOST_BUILD: 20
-      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 20
-      STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 30
-      STR_INQUISITION_AIR_SUPERIORITY: 30
-      # Need some kind of site based mission
+      STR_INQUISITION_OUTPOST_BUILD: 15
+      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 15
+      STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 25
+      STR_INQUISITION_AIR_SUPERIORITY: 25
+      STR_INQUISITION_PURGE: 20
     genMissionFreq: 5
     baseDetectionRange: 300
     baseDetectionChance: 20
@@ -551,12 +572,12 @@ alienDeployments:
       desc: STR_INQUISITION_HQ_ASSAULT_BRIEFING
     markerName: STR_INQUISITION_HQ
     genMission:
-      STR_INQUISITION_OUTPOST_BUILD: 10
-      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 9
+      STR_INQUISITION_OUTPOST_BUILD: 7
+      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 7
       STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 15
-      STR_INQUISITION_AIR_SUPERIORITY: 30
-      STR_INQUISITION_SCORE: 40  # XCOM Base Flyover
-      # Need some kind of site based missions
+      STR_INQUISITION_AIR_SUPERIORITY: 20
+      STR_INQUISITION_SCORE: 20  # XCOM Base Flyover
+      STR_INQUISITION_PURGE: 40
       STR_INQUISITION_RETALIATION: 1  # 1% at genMissionFreq: 8 is ~2.4% chance monthly for retalitation per HQ
     genMissionFreq: 8
     baseDetectionRange: 750
@@ -628,6 +649,81 @@ alienDeployments:
     length: 50
     height: 9
     missionBountyItem: STR_REWARD_INTERCEPT_PDF_VALKYRIE
+
+  - type: STR_INQUISITION_PURGE_MISSION
+    data:
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 3
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 7
+        highQty: 7
+        dQty: 5
+        percentageOutsideUfo: 70
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2
+        highQty: 2
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2
+        highQty: 2
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    width: 60
+    length: 60
+    height: 9
+    civiliansByType:  # Add more civilian variety, branch out from reusing Cult Strategy Soldiers
+      STR_SECTOID_FEMCULTIST: 4
+      STR_HERETIC_SISTER: 1
+      STR_CHAOSCULT_SOLDIERM_LV1_AI: 3
+      STR_CHAOSCULT_SOLDIERF_LV1_AI: 3
+      STR_CHAOSCULT_SOLDIERM_LV2_AI: 2
+      STR_CHAOSCULT_SOLDIERF_LV2_AI: 2
+      STR_CHAOSCULT_PILOTM_AI: 1
+      STR_CHAOSCULT_GUARDFLAKM_AI: 2
+      STR_CHAOSCULT_OGRYN_AI: 1
+      STR_TZEENTCH_CULT_WITCH: 1
+    terrains:
+      - URBAN
+      - BDAIRPORT
+      - REFINERY
+      - INDUSTRIALURBANDIO
+    alert: STR_PURGE_ALERT
+    alertBackground: StormtroopersScionsBG.SCR
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      palette: 2
+      desc: STR_INQUISITION_PURGE_DESCRIPTION
+      title: STR_INQUISITION_PURGE_MISSION
+    markerName: STR_INQUISITION_PURGE_MISSION
+    duration: [4, 10]
+    despawnPenalty: 1200  # +200
 
 ufos:
   - type: STR_VALKYRIE_INTERCEPT #  For Chaos Path
