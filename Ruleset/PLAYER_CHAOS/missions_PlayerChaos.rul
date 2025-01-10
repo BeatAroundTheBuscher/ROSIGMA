@@ -1,24 +1,39 @@
-# missionScripts:
-  #- type: firstInquisitionBase
-  #  missionWeights:
-  #    0:
-  #      STR_INQUISITION_OUTPOST_BUILD: 100
-  #  firstMonth: 1
-  #  startDelay: 120
-  #  randomDelay: 1440 # Up to 1 weeks random delay
-  #  executionOdds: 100
-  #  maxRuns: 1  # Runs once after Chaos Corruption
-  #  varName: firstInquisitionBase
-  #  researchTriggers:
-  #    STR_ALIENS_ONLY: true
+missionScripts:
+  - &starterInquisitionOutposts
+    type: firstInquisitionOutpost
+    missionWeights:
+      0:
+        STR_INQUISITION_OUTPOST_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 2  # Runs once after Chaos Corruption
+    varName: starterInquisitionOutposts
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+  - type: secondInquisitionOutpost  # So that two get made immediately
+    refNode: *starterInquisitionOutposts
+  - type: firstInquisitionHQ
+    missionWeights:
+      0:
+        STR_INQUISITION_HQ_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 1  # Runs once after Chaos Corruption
+    varName: starterInquisitionHQ
+    researchTriggers:
+      STR_ALIENS_ONLY: true
 
 alienMissions:
-  - type: STR_INQUISITION_OUTPOST_BUILD  # creates a new inquisition base
+  - type: STR_INQUISITION_OUTPOST_BUILD_INITIAL  # creates a new inquisition outpost from space
     retaliationOdds: 0
     operationType: 0
     spawnZone: 4
     objective: 2
-  #  siteType: #Base Alien Deployment
+    siteType: STR_INQUISITION_OUTPOST
     points: 0
     waves:
       - ufo: STR_SIGNAL_UFO
@@ -28,6 +43,210 @@ alienMissions:
     raceWeights:
       0:
         STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 100
+
+  - type: STR_INQUISITION_OUTPOST_BUILD
+    retaliationOdds: 0
+    operationType: 1
+    spawnZone: 4
+    objective: 2
+    operationBaseType: STR_INQUISITION_OUTPOST
+    siteType: STR_INQUISITION_OUTPOST
+    points: 0
+    waves:
+      - ufo: STR_IMP_MEDIUM_SCOUT
+        count: 2
+        trajectory: P7
+        timer: 6000
+        objective: true
+      - ufo: STR_IMP_MEDIUM_TRANSPORT
+        count: 1
+        trajectory: P7
+        timer: 7000
+        objective: true
+      - ufo: STR_IMP_LARGE_TRANSPORT
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+    raceWeights:
+      0:
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 100
+
+  - type: STR_INQUISITION_BASE_IFILTRATE  # Establishes a new base while also taking a region
+    retaliationOdds: 20  # Stopping infiltration from an HQ has a chance to trigger retaliation
+    operationType: 1
+    spawnZone: 4
+    objective: 1
+    endlessInfiltration: false  # Infiltration mission can be stopped
+    operationBaseType: STR_INQUISITION_BASE
+    siteType: STR_INQUISITION_BASE
+    points: 0
+    waves:
+      - ufo: STR_IMP_MEDIUM_SCOUT
+        count: 2
+        trajectory: P7
+        timer: 6000
+        objective: true
+      - ufo: STR_IMP_MEDIUM_TRANSPORT
+        count: 1
+        trajectory: P7
+        timer: 7000
+        objective: true
+      - ufo: STR_IMP_LARGE_TRANSPORT
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+    raceWeights:
+      0:
+        STR_IMPERIAL_INQUISITION_INFILTRATION_LIST: 100
+
+  - type: STR_INQUISITION_HQ_BUILD_INITIAL  # Takes a region for the inquisiiton, establishes an HQ
+    retaliationOdds: 0
+    operationType: 0
+    spawnZone: 4
+    objective: 1
+    endlessInfiltration: false
+    siteType: STR_INQUISITION_HQ
+    points: 0
+    waves:
+      - ufo: STR_SIGNAL_UFO
+        count: 1
+        trajectory: P5
+        timer: 30
+    raceWeights:
+      0:
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 100
+
+  - type: STR_INQUISITION_STORMRAVEN_PATROL_SINGLE
+    operationType: 1
+    retaliationOdds: 0
+    raceWeights: &INQUISITION_GENMISSION_RACEMIX
+      0:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 75
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 25
+      1:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 66
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 33
+      2:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 50
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 50
+      3:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 25
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 50
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 15
+      4:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 15
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 30
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 35
+      5:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 5
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 20
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 40
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 10
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 5
+      6:
+        STR_IMPERIAL_INQUISITION_FRATERIS_LIST: 10
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 10
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 30
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 30
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 20
+      7:
+        STR_IMPERIAL_INQUISITION_NOVICE_KILLTEAM_LIST: 5
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 10
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 30
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 20
+        STR_IMPERIAL_INQUISITION_ADEPTAS_STORMTROOPERS_MIXLIST: 30
+        STR_INQUISITION_ASSASSINATION_FORCE: 5
+      8:
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 5
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 30
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 20
+        STR_IMPERIAL_INQUISITION_ADEPTAS_STORMTROOPERS_MIXLIST: 35
+        STR_GREYKNIGHT: 15
+        STR_INQUISITION_ASSASSINATION_FORCE: 10
+        STR_RADICAL_SISTERS: 5
+        STR_BRIDES_OF_THE_EMPEROR: 1
+      9:
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 5
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 10
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 10
+        STR_IMPERIAL_INQUISITION_ADEPTAS_STORMTROOPERS_MIXLIST: 10
+        STR_GREYKNIGHT: 30
+        STR_INQUISITION_ASSASSINATION_FORCE: 30
+        STR_RADICAL_SISTERS: 5
+        STR_BRIDES_OF_THE_EMPEROR: 1
+        STR_ALPHA_LEGION_FALSE_FLAG2GREYK: 3
+      10:
+        STR_IMPERIAL_INQUISITION_ADEPTAS_LIST: 5
+        STR_IMPERIAL_INQUISITION_STORMTROOPER_LIST: 5
+        STR_IMPERIAL_INQUISITION_ADEPTAS_ELOHIM_LIST: 5
+        STR_IMPERIAL_INQUISITION_ADEPTAS_STORMTROOPERS_MIXLIST: 10
+        STR_INQUISITION_ASSASSINATION_FORCE: 30
+        STR_GREYKNIGHT: 50
+        STR_RADICAL_SISTERS: 5
+        STR_BRIDES_OF_THE_EMPEROR: 1
+    waves:
+      - ufo: STR_STORMRAVEN_UFO
+        count: 1
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 3000
+
+  - type: STR_INQUISITION_STORMRAVEN_PATROL_PAIR
+    operationType: 1
+    retaliationOdds: 0
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_STORMRAVEN_UFO
+        count: 2
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 3000
+
+  - type: STR_INQUISITION_HUNT
+    operationType: 1
+    retaliationOdds: 0
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_STORMRAVEN_UFO
+        huntMode: 2
+        huntBehavior: 2
+        hunterKillerPercentage: 100
+        count: 1
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 0
+
+  - type: STR_INQUISITION_HUNT_LARGE
+    operationType: 1
+    retaliationOdds: 0
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_STORMRAVEN_UFO
+        huntMode: 2
+        huntBehavior: 2
+        hunterKillerPercentage: 100
+        count: 3
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 0
+
+  - type: STR_INQUISITION_AIR_SUPERIORITY
+    operationType: 1
+    retaliationOdds: 0
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_STORMRAVEN_UFO
+        huntMode: 2
+        huntBehavior: 2
+        hunterKillerPercentage: 100
+        count: 2
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 0
+      - ufo: STR_STORMRAVEN_UFO
+        huntMode: 2
+        huntBehavior: 2
+        hunterKillerPercentage: 100
+        count: 2
+        trajectory: AIR_PATROL_TRAJECTORY
+        timer: 1440  # 1 day
 
   - type: STR_INTERCEPT_PDF_VALKYRIE
     points: 10
@@ -70,7 +289,307 @@ alienMissions:
         timer: 0
         objective: true
 
+  - type: STR_INQUISITION_PURGE  # Terror type mission
+    points: 10
+    objective: 3
+    spawnZone: 3  # Mission zone for terror missions
+    siteType: STR_INQUISITION_PURGE_MISSION
+    raceWeights: *INQUISITION_GENMISSION_RACEMIX
+    waves:
+      - ufo: STR_IMP_MEDIUM_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_IMP_LONG_TRANSPORT_SHIP
+        count: 1
+        trajectory: P3
+        timer: 3000
+      - ufo: STR_IMP_HEAVY_TRANSPORT_SHIP
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+
 alienDeployments:
+  - type: STR_INQUISITION_OUTPOST  # Small Inquisition Base
+    randomRace: [STR_IMPERIAL_INQUISITION_OUTPOST_LIST]
+    markerIcon: 118
+    terrains:
+      - CITY
+    script: INQUISITION_OUTPOST_SCRIPT
+    alienBase: true
+    customUfo: STR_IMP_LARGE_TRANSPORT  # mixes ship into map
+    objectiveComplete: [STR_INQUISITION_OUTPOST_DESTROYED, 200]
+    objectiveFailed: [STR_INQUISITION_OUTPOST_NOT_DESTROYED, -100]
+    abortPenalty: 100
+    data:
+      - alienRank: 0  # Inquisitor
+        lowQty: 0
+        highQty: 0
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: &emptyItemSets
+          -
+            []
+          -
+            []
+          -
+            []
+      - alienRank: 1  # Elite Stormtrooper
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 2  # Stormtrooper
+        lowQty: 5
+        highQty: 5
+        dQty: 1
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 3  # Visiting Dignitaries
+        lowQty: 0
+        highQty: 0
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4  # Frateris Vet
+        lowQty: 2
+        highQty: 2  # 3
+        dQty: 1  # 1
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 5  # Frateris
+        lowQty: 4
+        highQty: 4  # 3
+        dQty: 6  # 1
+        percentageOutsideUfo: 80
+        itemSets: *emptyItemSets
+      - alienRank: 6 # Assassins
+        lowQty: 2
+        highQty: 2
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7  # Civillian bystanders, most unarmed
+        lowQty: 5
+        highQty: 5
+        dQty: 2
+        percentageOutsideUfo: 90
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_INQUISITION_OUTPOST_ASSAULT
+      textOffset: -16
+      background: InquisitionBG.SCR
+      showTarget: false
+      desc: STR_INQUISITION_OUTPOST_ASSAULT_BRIEFING
+    markerName: STR_INQUISITION_OUTPOST
+    genMission:  # no new base building or retaliations until its upgraded
+      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 50
+      STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 50
+      # Need some kind of site based mission
+    genMissionFreq: 3
+    alienBaseUpgrades:
+      0:
+        STR_INQUISITION_OUTPOST: 100
+      1:
+        STR_INQUISITION_OUTPOST: 50
+        STR_INQUISITION_BASE: 50
+      2:
+        STR_INQUISITION_BASE: 100
+    width: 50
+    length: 50
+    height: 12
+
+  - type: STR_INQUISITION_BASE
+    randomRace: [STR_IMPERIAL_INQUISITION_BASE_LIST]
+    markerIcon: 119
+    terrains:
+      - CITY
+    script: INQUISITION_BASE_SCRIPT
+    alienBase: true
+    customUfo: STR_IMP_HEAVY_TRANSPORT_SHIP
+    objectiveComplete: [STR_INQUISITION_BASE_DESTROYED, 300]
+    objectiveFailed: [STR_INQUISITION_BASE_NOT_DESTROYED, -150]
+    abortPenalty: 150
+    data:
+      - alienRank: 0  # Inquisitor
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1  # Dreadnought
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2  # GK
+        lowQty: 3
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 3  # Visiting Dignitaries
+        lowQty: 0
+        highQty: 0
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4  # Elites
+        lowQty: 3
+        highQty: 3  # 3
+        dQty: 1  # 1
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 5  # Frateris/Storm Troopers
+        lowQty: 6
+        highQty: 6  # 3
+        dQty: 8  # 1
+        percentageOutsideUfo: 80
+        itemSets: *emptyItemSets
+      - alienRank: 6 # Assassins
+        lowQty: 3
+        highQty: 3
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7  # Penitent Engine
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_INQUISITION_BASE_ASSAULT
+      textOffset: -16
+      background: InquisitionBG.SCR
+      showTarget: false
+      desc: STR_INQUISITION_BASE_ASSAULT_BRIEFING
+    markerName: STR_INQUISITION_BASE
+    genMission:
+      STR_INQUISITION_OUTPOST_BUILD: 15
+      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 15
+      STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 25
+      STR_INQUISITION_AIR_SUPERIORITY: 25
+      STR_INQUISITION_PURGE: 20
+    genMissionFreq: 5
+    baseDetectionRange: 300
+    baseDetectionChance: 20
+    huntMissionMaxFrequency: 1800  # generate hunt mission max every 300 minutes (= 5 hours)
+    huntMissionRaceFromAlienBase: false
+    huntMissionWeights:
+      0:
+        STR_INQUISITION_HUNT: 100
+      4:
+        STR_INQUISITION_HUNT: 50
+        STR_INQUISITION_HUNT_LARGE: 50
+    alienBaseUpgrades:
+      0:
+        STR_INQUISITION_BASE: 100
+      2:
+        STR_INQUISITION_BASE: 85
+        STR_INQUISITION_HQ: 15
+      3:
+        STR_INQUISITION_BASE: 75
+        STR_INQUISITION_HQ: 25
+    width: 50
+    length: 50
+    height: 12
+
+  - type: STR_INQUISITION_HQ
+    randomRace: [STR_IMPERIAL_INQUISITION_BASE_LIST]
+    markerIcon: 120
+    terrains:
+      - CITY
+    script: INQUISITION_HQ_SCRIPT
+    alienBase: true
+    customUfo: STR_IMP_LONG_TRANSPORT_SHIP
+    objectiveComplete: [STR_INQUISITION_HQ_DESTROYED, 300]
+    objectiveFailed: [STR_INQUISITION_HQ_NOT_DESTROYED, -150]
+    abortPenalty: 150
+    data:
+      - alienRank: 0  # Inquisitor
+        lowQty: 2
+        highQty: 2
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1  # Dreadnought
+        lowQty: 2
+        highQty: 2
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+      - alienRank: 2  # GK
+        lowQty: 4
+        highQty: 4
+        dQty: 4
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 3  # Visiting Dignitaries
+        lowQty: 1
+        highQty: 1
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4  # Elites
+        lowQty: 5
+        highQty: 5  # 3
+        dQty: 2  # 1
+        percentageOutsideUfo: 75
+        itemSets: *emptyItemSets
+      - alienRank: 5  # Frateris/Storm Troopers
+        lowQty: 8
+        highQty: 8  # 3
+        dQty: 8  # 1
+        percentageOutsideUfo: 80
+        itemSets: *emptyItemSets
+      - alienRank: 6 # Assassins
+        lowQty: 3
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7  # Penitent Engine
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      title: STR_INQUISITION_HQ_ASSAULT
+      textOffset: -16
+      background: InquisitionBG.SCR
+      showTarget: false
+      desc: STR_INQUISITION_HQ_ASSAULT_BRIEFING
+    markerName: STR_INQUISITION_HQ
+    genMission:
+      STR_INQUISITION_OUTPOST_BUILD: 7
+      STR_INQUISITION_STORMRAVEN_PATROL_SINGLE: 7
+      STR_INQUISITION_STORMRAVEN_PATROL_PAIR: 15
+      STR_INQUISITION_AIR_SUPERIORITY: 20
+      STR_INQUISITION_SCORE: 20  # XCOM Base Flyover
+      STR_INQUISITION_PURGE: 40
+      STR_INQUISITION_RETALIATION: 1  # 1% at genMissionFreq: 8 is ~2.4% chance monthly for retalitation per HQ
+    genMissionFreq: 8
+    baseDetectionRange: 750
+    baseDetectionChance: 20
+    huntMissionMaxFrequency: 1800  # generate hunt mission max every 300 minutes (= 5 hours)
+    huntMissionWeights:
+      0:
+        STR_INQUISITION_HUNT_LARGE: 50
+    width: 50
+    length: 50
+    height: 12
+
   - type: STR_INTERCEPT_PDF_VALKYRIE
     alert: STR_INTERCEPT_PDF_VALKYRIE_ALERT
     alertBackground: VALKCRASHBG.SCR
@@ -92,73 +611,37 @@ alienDeployments:
         highQty: 4
         dQty: 5
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
       - alienRank: 4
         lowQty: 1
         highQty: 1
         dQty: 3
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
       - alienRank: 3
         lowQty: 0
         highQty: 0
         dQty: 2
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
       - alienRank: 2
         lowQty: 1
         highQty: 1
         dQty: 2
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
       - alienRank: 1
         lowQty: 0
         highQty: 0
         dQty: 1
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
       - alienRank: 0
         lowQty: 0
         highQty: 0
         dQty: 1
         percentageOutsideUfo: 100
-        itemSets:
-          -
-            []
-          -
-            []
-          -
-            []
+        itemSets: *emptyItemSets
     script: VALKYRIE_INTERCEPT
     terrains:
       - JUNGLE
@@ -166,6 +649,81 @@ alienDeployments:
     length: 50
     height: 9
     missionBountyItem: STR_REWARD_INTERCEPT_PDF_VALKYRIE
+
+  - type: STR_INQUISITION_PURGE_MISSION
+    data:
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 3
+        highQty: 3
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 7
+        highQty: 7
+        dQty: 5
+        percentageOutsideUfo: 70
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2
+        highQty: 2
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2
+        highQty: 2
+        dQty: 4
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    width: 60
+    length: 60
+    height: 9
+    civiliansByType:  # Add more civilian variety, branch out from reusing Cult Strategy Soldiers
+      STR_SECTOID_FEMCULTIST: 4
+      STR_HERETIC_SISTER: 1
+      STR_CHAOSCULT_SOLDIERM_LV1_AI: 3
+      STR_CHAOSCULT_SOLDIERF_LV1_AI: 3
+      STR_CHAOSCULT_SOLDIERM_LV2_AI: 2
+      STR_CHAOSCULT_SOLDIERF_LV2_AI: 2
+      STR_CHAOSCULT_PILOTM_AI: 1
+      STR_CHAOSCULT_GUARDFLAKM_AI: 2
+      STR_CHAOSCULT_OGRYN_AI: 1
+      STR_TZEENTCH_CULT_WITCH: 1
+    terrains:
+      - URBAN
+      - BDAIRPORT
+      - REFINERY
+      - INDUSTRIALURBANDIO
+    alert: STR_PURGE_ALERT
+    alertBackground: StormtroopersScionsBG.SCR
+    briefing:
+      cutscene: TERROR
+      music: gmstory2
+      palette: 2
+      desc: STR_INQUISITION_PURGE_DESCRIPTION
+      title: STR_INQUISITION_PURGE_MISSION
+    markerName: STR_INQUISITION_PURGE_MISSION
+    duration: [4, 10]
+    despawnPenalty: 1200  # +200
 
 ufos:
   - type: STR_VALKYRIE_INTERCEPT #  For Chaos Path
