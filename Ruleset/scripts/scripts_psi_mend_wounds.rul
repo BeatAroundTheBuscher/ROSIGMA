@@ -315,6 +315,7 @@ extended:
             # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Mend wounds current health:" temp2;
             if ge temp2 temp; # we don't heal above half max HP; cancel out
               # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally, target HP already above ITEM_MEND_HEAL_CAP_PERCENT; aborting. Health, temp2:" temp2;
+              battle_game.flashMessage "STR_PSI_MEND_WOUNDS_HEAL_CAP" temp;
               return;
             end;
 
@@ -345,10 +346,10 @@ extended:
             set rulePower orig_power;
             div rulePower 2;
             add temp2 rulePower;
+            mul rulePower -1; #invert as we're healing
 
             if gt temp2 temp; # cap our healing
               limit_upper temp2 temp;
-              set to_health 0;
               unit.setHealth temp2;
               # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Healing ally. Healing capped at temp2% HP. temp2:" temp2;
             else;
@@ -364,6 +365,7 @@ extended:
             return;
           end;
 
+          set rulePower orig_power; #reset rulePower
           unit.Stats.getPsiSkill temp;
           unit.Stats.getPsiStrength temp2;
           muldiv temp 20 100; # replicate standard psi defense
@@ -375,17 +377,13 @@ extended:
             return;
           end;
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Initial rulePower:" rulePower;
-          sub to_energy temp;
-          limit_lower to_energy 0;
+          set to_energy rulePower;
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Energy damage:" to_energy;
-          sub to_stun temp;
-          limit_lower to_stun 0;
+          set to_stun rulePower;
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Stun damage:" to_stun;
-          sub to_time temp;
-          limit_lower to_time 0;
+          set to_time rulePower;
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Time damage:" to_time;
-          mul to_health -1; # invert as we're targeting enemies
-          sub to_health temp;
+          set to_health rulePower;
           limit_lower to_health 0;
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Health damage:" to_health;
           set to_wound to_health;
