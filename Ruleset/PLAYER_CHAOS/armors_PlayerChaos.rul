@@ -891,6 +891,26 @@ armors:
           end;
         end;
         return;
+      recolorUnitSprite:
+        var int reg0;
+        var int reg1;
+        var int color;
+
+        get_color color new_pixel;
+        get_shade reg0 new_pixel;
+
+        if eq blit_part blit_torso;
+          if or eq color COLOR_X1_PURPLE0 eq color COLOR_X1_PURPLE1;
+            set reg1 anim_frame;
+            wavegen_tri reg1 8 4 4;
+            add reg0 reg1;
+            limit_upper reg0 15;
+            set_shade new_pixel reg0;
+          end;
+        end;
+
+        add_shade new_pixel shade;
+        return new_pixel;
 
   - type: STR_NURGLE_TERMINATOR_ARMOR
     refNode: *STR_CSM_TERMINATOR_ARMOR
