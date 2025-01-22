@@ -619,8 +619,8 @@ armors:
 
   - type: MUTON_ARMORNURGLEA_PLAYER  # NURGLE ANIMATED
     refNode: *STR_NURGLE_ARMOR
-    antiCamouflageAtDay: 4
-    antiCamouflageAtDark: 4
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
     spriteSheet: CNURGLEA.PCK
     spriteInv: NMARINE_INV
     allowInv: true
@@ -649,6 +649,111 @@ armors:
     specialWeapon: STR_MFIST
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -50  # Two chances
+      DIEHARD_THRESHOLD: 80  # Big damage still kills
+      INTIMIDATION_RESISTANCE: 25  # intimidation
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
+      selectUnitSprite:
+        var int reg0;
+        var int reg1;
+        var int reg2;
+        var int reg3;
+        var int in0 sprite_index;
+        var int in1 sprite_offset;
+
+        if eq blit_part BODYPART_TORSO;
+          set reg0 anim_frame;
+          unit.getId reg1;
+          add reg0 reg1;
+          div reg0 4;
+          mod reg0 2;
+          offset reg0 8 272;
+          add reg0 in1;
+          return reg0;
+        end;
+        add in0 in1;
+        return in0;
+      recolorUnitSprite:
+        var int reg0;
+        var int reg1;
+        var int color;
+
+        get_color color new_pixel;
+        get_shade reg0 new_pixel;
+
+        if or eq color COLOR_X1_PURPLE0 eq color COLOR_X1_PURPLE1;
+          set reg1 anim_frame;
+          wavegen_tri reg1 8 4 4;
+          add reg0 reg1;
+          limit_upper reg0 15;
+          set_shade new_pixel reg0;
+        end;
+
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_NURGLE_HAVOC_ARMOR
+    refNode: *STR_NURGLE_ARMOR
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
+    spriteSheet: NURGLE_HAVOC.PCK
+    spriteInv: NHAVOC_INV
+    allowInv: true
+    storeItem: STR_CHAOS_HAVOC_ARMOR
+    customArmorPreviewIndex: 1057
+    units:
+      - STR_CHAOS_MARINE_NURGLE
+      - STR_CHAOS_CHOSEN_NURGLE
+    corpseBattle:
+      - STR_NURGLES_CORPSE_PLAYER
+    stats:
+      tu: -10
+      stamina: 40
+      health: 25
+      bravery: 15
+      reactions: 0
+      firing: 30
+      throwing: 10
+      strength: 45
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+    frontArmor: 130
+    sideArmor: 120
+    rearArmor: 90
+    underArmor: 125
+    specialWeapon: STR_MFIST
+    builtInWeapons:
+      - INV_NULL_1X3
     tags:
       INFECTION_RESIST: 100  # infection immune
       UNIT_TYPE_NURGLE: 1
@@ -861,6 +966,24 @@ armors:
           end;
         end;
         return;
+      recolorUnitSprite:
+        var int reg0;
+        var int reg1;
+        var int color;
+
+        get_color color new_pixel;
+        get_shade reg0 new_pixel;
+
+        if or eq color COLOR_X1_PURPLE0 eq color COLOR_X1_PURPLE1;
+          set reg1 anim_frame;
+          wavegen_tri reg1 8 4 4;
+          add reg0 reg1;
+          limit_upper reg0 15;
+          set_shade new_pixel reg0;
+        end;
+
+        add_shade new_pixel shade;
+        return new_pixel;
 
   ## Slaanesh
   - type: MUTON_ARMORSLAANESH_PLAYER  # SLAANESH REGULAR
