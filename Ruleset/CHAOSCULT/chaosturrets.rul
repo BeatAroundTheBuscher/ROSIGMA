@@ -456,6 +456,35 @@
     deathSound: 23
     value: 30
 
+  - type: STR_CHAOSTRUCK_SMALL_TURRET
+    race: STR_CHIMERA_TURRET
+    liveAlien: ""
+    stats:
+      tu: 20
+      stamina: 10
+      health: 50
+      bravery: 100
+      reactions: 20
+      firing: 100
+      throwing: 0
+      strength: 245
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: STR_CHAOSTRUCK_SMALL_TURRET_ARMOR
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: 23
+    value: 20
+    energyRecovery: 10
+    moraleLossWhenKilled: 25
+    livingWeapon: true
+    builtInWeaponSets:
+      - - STR_GORGON_HEAVY_STUBBER
+      - - STR_GORGON_HEAVY_STUBBER
+      - - STR_GORGON_HEAVY_STUBBER
+
 armors:
 
   - &STR_COMMAND_TURRET_DEFAULTCHAOS
@@ -1887,6 +1916,45 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
 
+  - type: STR_CHAOSTRUCK_SMALL_TURRET_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: CHAOSTRUCK_SMALL_TURRET.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseGeo: STR_CHAOSTRUCK_SMALL_TURRET_CORPSE
+    corpseBattle:
+      - STR_CHAOSTRUCK_SMALL_TURRET_CORPSE
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 120
+    damageModifier: #VEHICLE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [ 4 ]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    specialWeapon: STR_TURRET_RELOAD
+    recovery:  # Manned turrets recover morale rapidly
+      morale:
+        flatHundred: 0.5
+
 items:
 
   - type: STR_CHIMERA_COMMAND_TURRET_SPAWNERCHAOS
@@ -1972,6 +2040,15 @@ items:
     recover: true
     spawnUnit: STR_LEMAN_HULLCHAOS
     spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_CHAOSTRUCKTURRET_SPAWNERCHAOS
+    liveAlien: false
+    recover: true
+    spawnUnit: STR_CHAOSTRUCK_SMALL_TURRET
+    spawnUnitFaction: 0
     invWidth: 0
     invHeight: 0
     battleType: 4
@@ -3089,8 +3166,16 @@ items:
     invHeight: 0
     recover: false
 
-# to help getting rid of those log error about recoverable items
-# because those indeed lacked a corresponding item so here they are
+  - type: STR_CHAOSTRUCK_SMALL_TURRET_CORPSE
+    floorSprite: 3058
+    armor: 255
+    invWidth: 0
+    invHeight: 0
+    battleType: 11
+    recover: false
+
+  # to help getting rid of those log error about recoverable items
+  # because those indeed lacked a corresponding item so here they are
 
   - type: STR_CHIMERA_COMMAND_TURRETCHAOS
     size: 0.0
@@ -3150,10 +3235,10 @@ extended:
     BattleItem:
       TurretActive: int
 
-### Refactored Modular Turret Script Documentation###
-# The STR of the dummy item (i.e. the item that triggers the spawn of the turret) must be the same as the STR of the turret unit
-# Tags explanation
-# Turret: int  # signifies that unit is the dummy unit that will be transformed into a actual turret (e.g. chimera command turrets, blank hull pieces)
+  ### Refactored Modular Turret Script Documentation###
+  # The STR of the dummy item (i.e. the item that triggers the spawn of the turret) must be the same as the STR of the turret unit
+  # Tags explanation
+  # Turret: int  # signifies that unit is the dummy unit that will be transformed into a actual turret (e.g. chimera command turrets, blank hull pieces)
               # Every unique unit must have a different number
                 # Current index:
                 # 1: Chimera Turrets
@@ -3172,12 +3257,12 @@ extended:
                 # 104: Chaos Leman Russ Hull Turrets
                 # 105: Chaos Leman Russ Sponsons
 
-# Sponson: 1  # Always a 1, signifies a leman russ sponson, only used in script to make west sponson have a blank sprite
-# Hull 1      # Always a 1, siginifes hull turret, used to make the spawned-on-death blank hull be on the neutral/civilian faction
-# TurretUnit: 1  # Always a 1, signifies that the unit is a turret unit that the script applies to
-# TurretItem: int  # signifies that the item is a turret dummy item, INT MUST CORRESPOND TO THE CORRECT TURRET: INT TAG, i.e. a turret dummy item that triggers the transformation of a leman russ turret has the TurretItem tag be 3
-# ItemId: int   # Unique Id for this turret type
-# TurretId: int  # Unique Id for this turret type, must correspond to ItemId
+  # Sponson: 1  # Always a 1, signifies a leman russ sponson, only used in script to make west sponson have a blank sprite
+  # Hull 1      # Always a 1, siginifes hull turret, used to make the spawned-on-death blank hull be on the neutral/civilian faction
+  # TurretUnit: 1  # Always a 1, signifies that the unit is a turret unit that the script applies to
+  # TurretItem: int  # signifies that the item is a turret dummy item, INT MUST CORRESPOND TO THE CORRECT TURRET: INT TAG, i.e. a turret dummy item that triggers the transformation of a leman russ turret has the TurretItem tag be 3
+  # ItemId: int   # Unique Id for this turret type
+  # TurretId: int  # Unique Id for this turret type, must correspond to ItemId
                 # Currently ids are formated to correspond to Turret: int number, this isnt a requirement, just makes it easier to keep track of them
                 # Current Ids:
                   # 100: Chimera Turrets
