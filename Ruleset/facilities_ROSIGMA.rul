@@ -345,6 +345,52 @@ facilities:
   - type: STR_OUTPOST_MARINES
     refNode: *STR_OUTPOST_NORMAL
 
+  - type: STR_OUTPOST_CHAOSCULT
+    refNode: *STR_OUTPOST_NORMAL
+    requires:
+      - STR_CHAOS_STRATEGY
+      - STR_CALL_CHAOSPRIEST
+    placeSound: {mod: 40k, index: 98}
+    canBeBuiltOver: true
+    requiresBaseFunc: [OUTP]
+    provideBaseFunc: [OUTP, HANGAR, IMPERIUM]
+    maxAllowedPerBase: 1
+    monthlyCost: 300000
+    refundValue: 500000
+    connectorsDisabled: true
+    spriteShape: {mod: 40k, index: 600}
+    spriteFacility: {mod: 40k, index: 600}
+    size: 4
+    buildCost: 1000000
+    crafts: 1
+    buildTime: 10
+    personnel: 50
+    storage: 100
+    radarRange: 2577
+    radarChance: 20
+    mapName: XBASE_60
+    storageTiles:
+      - [24, 6, 1]
+      - [25, 6, 1]
+      - [27, 6, 1]
+      - [22, 4, 1]
+      - [34, 10, 1]
+      - [28, 3, 1]
+      - [27, 3, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60] # probably not 60, you'll have to count the number of where XBASE_60 is in the terrain, starting from 0
+        size: [4, 4, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [4, 4, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: VOSS4X4 # needs a 40x40 map to match the outpost
+        blocks: [0]
+    listOrder: 800
+
   - &STR_OUTPOST_DECODER
     type: STR_OUTPOST_GUARD_HYPER
     requires:
@@ -393,6 +439,7 @@ facilities:
       - STR_OUTPOST
       - STR_OUTPOST_ADEPTAS
       - STR_OUTPOST_MARINES
+      - STR_OUTPOST_CHAOSCULT
 
   - type: STR_OUTPOST_ARBITES_HYPER
     refNode: *STR_OUTPOST_DECODER
@@ -447,3 +494,53 @@ facilities:
         size: [4, 4, 3]
         terrain: ARVUS4X4
         blocks: [0]
+
+  - type: STR_OUTPOST_CHAOSCULT_HYPER
+    refNode: *STR_OUTPOST_DECODER
+    requires:
+      - STR_CHAOS_STRATEGY
+      - STR_HYPER_WAVE_DECODER
+    requiresBaseFunc: [OUTP]
+    provideBaseFunc: [OUTP_UPGRADE, HANGAR, IMPERIUM]
+    connectorsDisabled: true
+    spriteShape: 700
+#    spriteFacility: 700
+    size: 4
+    buildCost: 1250000
+    crafts: 1
+    buildTime: 15  # 10
+    monthlyCost: 650000  # 600000  # 800000 is too much
+    personnel: 50
+    storage: 100
+    mapName: XBASE_60
+    storageTiles:
+      - [24, 6, 1]
+      - [25, 6, 1]
+      - [27, 6, 1]
+      - [22, 4, 1]
+      - [34, 10, 1]
+      - [28, 3, 1]
+      - [27, 3, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        groups: [13]
+        size: [4, 4, 0]
+      - type: middle
+        blocks: [60]
+        size: [4, 4, 1]
+      - type: ceiling
+        size: [4, 4, 3]
+        terrain: VOSS4X4
+        blocks: [0]
+    listOrder: 800
+    # hyper
+    radarRange: 2759
+    radarChance: 100
+    hyper: true
+    buildOverFacilities:  # shouldn't matter, so might be the same for all
+      - STR_OUTPOST_GUARD
+      - STR_OUTPOST
+      - STR_OUTPOST_ADEPTAS
+      - STR_OUTPOST_MARINES
+      - STR_OUTPOST_CHAOSCULT
