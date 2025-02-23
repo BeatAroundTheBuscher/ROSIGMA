@@ -1,0 +1,111 @@
+# Skills alongside any 0 size token items for them to call on. Mostly for Chaos Sorcery
+
+skills:
+  - type: STR_SKILL_PSI_PANIC
+    targetMode: 14
+    isPsiRequired: true
+    costUse:
+      time: 25
+    compatibleWeapons:
+      - STR_PSI_AMP_TOKEN
+    checkHandsOnly: false
+  - type: STR_SKILL_PSI_MIND_CONTROL
+    targetMode: 13
+    isPsiRequired: true
+    costUse:
+      time: 45
+    compatibleWeapons:
+      - STR_PSI_AMP_TOKEN
+    checkHandsOnly: false
+  - type: STR_SKILL_TZEENTCH_WARPFIRE_SNAP
+    targetMode: 8
+    costUse:
+      time: 33
+    compatibleWeapons:
+      - STR_WARPFIRE_FLAMER_TOKEN
+    checkHandsOnly: false
+  - type: STR_SKILL_TZEENTCH_WARPFIRE_AUTO
+    targetMode: 7
+    costUse:
+      time: 66
+    compatibleWeapons:
+      - STR_WARPFIRE_FLAMER_TOKEN
+    checkHandsOnly: false
+
+items:
+  - &SKILL_TOKEN
+    type: STR_PSI_AMP_TOKEN
+    size: 0
+    weight: 0
+    invWidth: 0
+    invHeight: 0
+    hitSound: {mod: 40k, index: 36}
+    armor: 255
+    recover: false
+    hiddenOnMinimap: true
+    fixedWeapon: true
+    defaultInventorySlot: STR_BACK_PACK
+  - type: STR_PSI_AMP_TOKEN
+    requires:
+      - STR_PSI_AMP
+    battleType: 9
+    tuUse: 25
+    flatRate: true
+
+  - type: STR_WARPFIRE_FLAMER_TOKEN  # Tokenized version for the tzeentch flamer
+    refNode: *SKILL_TOKEN
+    categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
+    weight: 0
+    vaporColorSurface: 15  # pink warpfire
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    hitSound: {mod: 40k, index: 12}
+    powerForAnimation: 48
+    hitAnimation: 2140
+    accuracyAuto: 60
+    accuracySnap: 75
+    tuAuto: 33
+    tuSnap: 20
+    battleType: 1
+    twoHanded: false
+    arcingShot: true
+    noLOSAccuracyPenalty: 75
+    confSnap:
+      shots: 2
+    autoRange: 9
+    snapRange: 12
+    maxRange: 15
+    dropoff: 5
+    invWidth: 0
+    invHeight: 0
+    autoShots: 6
+    power: 69
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 2
+      RandomType: 1  # Swingy damage
+      ToArmorPre: 0.2
+      RandomArmorPre: true  # random armor degradation
+      ArmorEffectiveness: 0.6  # ephermal and magical; passes through most armor with ease
+      ToMorale: 1.5  # Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.5  # Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4  # Tzeentch attacks assail the mind and are stunning
+      ToTile: 2.0
+      ToItem: 0.5
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: true
+    clipSize: -1
+    bulletSpeed: 50
+    explosionSpeed: 10
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
