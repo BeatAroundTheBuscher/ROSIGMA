@@ -61,16 +61,24 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
           # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Health damage multiplier:" damagePercentBonus;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Health damage flat bonus:" damageFlatBonus;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
-            debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: No Daemonic damage bonus; aborting.";
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            #debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: No Daemonic damage bonus; aborting.";
             return;
           end;
-          debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Default damage to health:" to_health;
+          #debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Default damage to health:" to_health;
 
           #apply the percentile damage bonus
           if neq damagePercentBonus 0;
@@ -102,11 +110,19 @@ extended:
 
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
-          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_MECHANICAL;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_MECHANICAL;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -137,10 +153,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CONSECRATED;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -171,10 +195,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CHAOS;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -205,10 +237,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_PSYKER;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -239,10 +279,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NULL;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NULL;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NULL;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NULL;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NULL;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -273,10 +321,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TYRANID;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -307,10 +363,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_LIVING;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_LIVING;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_LIVING;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_LIVING;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_LIVING;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -341,10 +405,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TZEENTCH;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -375,10 +447,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_KHORNE;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -409,10 +489,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NURGLE;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -443,10 +531,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_SLAANESH;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -477,10 +573,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_XENO;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_XENO;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_XENO;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_XENO;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_XENO;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -511,10 +615,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ELDAR;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -545,10 +657,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ORK;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ORK;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ORK;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ORK;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ORK;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -579,10 +699,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_IMPERIUM;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
@@ -613,10 +741,18 @@ extended:
           weapon_item.getRuleItem itemRule;
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NECRON;
-          ammoItem.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NECRON;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NECRON;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
           set temp damagePercentBonus;
           add temp damageFlatBonus;
-          if lt temp 1; #if we have no damage type modifiers, cancel out.
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
             return;
           end;
 
