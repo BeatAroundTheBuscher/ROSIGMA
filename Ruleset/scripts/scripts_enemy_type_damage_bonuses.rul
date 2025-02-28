@@ -1,0 +1,765 @@
+extended:
+  tags:
+    BattleUnit:
+      UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
+    RuleItem:
+      #percentile damage bonus
+      DAMAGE_BONUS_PERCENT_MECHANICAL: int
+      DAMAGE_BONUS_PERCENT_DAEMONIC: int
+      DAMAGE_BONUS_PERCENT_CONSECRATED: int
+      DAMAGE_BONUS_PERCENT_CHAOS: int
+      DAMAGE_BONUS_PERCENT_PSYKER: int
+      DAMAGE_BONUS_PERCENT_NULL: int
+      DAMAGE_BONUS_PERCENT_TYRANID: int
+      DAMAGE_BONUS_PERCENT_LIVING: int
+      DAMAGE_BONUS_PERCENT_TZEENTCH: int
+      DAMAGE_BONUS_PERCENT_KHORNE: int
+      DAMAGE_BONUS_PERCENT_SLAANESH: int
+      DAMAGE_BONUS_PERCENT_NURGLE: int
+      DAMAGE_BONUS_PERCENT_XENO: int
+      DAMAGE_BONUS_PERCENT_ELDAR: int
+      DAMAGE_BONUS_PERCENT_IMPERIUM: int
+      DAMAGE_BONUS_PERCENT_ORK: int
+      DAMAGE_BONUS_PERCENT_NECRON: int
+      #flat damage bonus
+      DAMAGE_BONUS_FLAT_MECHANICAL: int
+      DAMAGE_BONUS_FLAT_DAEMONIC: int
+      DAMAGE_BONUS_FLAT_CONSECRATED: int
+      DAMAGE_BONUS_FLAT_CHAOS: int
+      DAMAGE_BONUS_FLAT_PSYKER: int
+      DAMAGE_BONUS_FLAT_NULL: int
+      DAMAGE_BONUS_FLAT_TYRANID: int
+      DAMAGE_BONUS_FLAT_LIVING: int
+      DAMAGE_BONUS_FLAT_TZEENTCH: int
+      DAMAGE_BONUS_FLAT_KHORNE: int
+      DAMAGE_BONUS_FLAT_SLAANESH: int
+      DAMAGE_BONUS_FLAT_NURGLE: int
+      DAMAGE_BONUS_FLAT_XENO: int
+      DAMAGE_BONUS_FLAT_ELDAR: int
+      DAMAGE_BONUS_FLAT_IMPERIUM: int
+      DAMAGE_BONUS_FLAT_ORK: int
+      DAMAGE_BONUS_FLAT_NECRON: int
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_daemonic_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_DAEMONIC;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Health damage multiplier:" damagePercentBonus;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Health damage flat bonus:" damageFlatBonus;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            #debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: No Daemonic damage bonus; aborting.";
+            return;
+          end;
+          #debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Default damage to health:" to_health;
+
+          #apply the percentile damage bonus
+          if neq damagePercentBonus 0;
+            muldiv to_health damagePercentBonus 100;
+            # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Post multiplier damage to health:" to_health;
+          end;
+
+          #apply the flat damage bonus
+          add to_health damageFlatBonus;
+          # debug_log "ROSIGMA_dU_daemonic_damage_enhancement; damageUnit, offset 1: Final damage to health:" to_health;
+
+          return;
+
+      - new: ROSIGMA_dU_mechanical_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_MECHANICAL;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_consecrated_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_CONSECRATED;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CONSECRATED;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_chaos_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_CHAOS;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CHAOS;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CHAOS;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_psyker_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_PSYKER;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_PSYKER;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_PSYKER;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_null_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_NULL;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NULL;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NULL;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NULL;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NULL;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_tyranid_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_TYRANID;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TYRANID;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TYRANID;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_living_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_LIVING;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_LIVING;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_LIVING;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_LIVING;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_LIVING;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_tzeentch_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TZEENTCH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_khorne_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_KHORNE;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_KHORNE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_KHORNE;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_nurgle_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_NURGLE;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NURGLE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NURGLE;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_slaanesh_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_SLAANESH;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_SLAANESH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_xeno_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_XENO;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_XENO;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_XENO;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_XENO;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_XENO;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_eldar_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_ELDAR;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ELDAR;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ELDAR;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_ork_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_ORK;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ORK;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ORK;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_ORK;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ORK;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_imperium_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_IMPERIUM;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_IMPERIUM;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
+
+      - new: ROSIGMA_dU_necron_damage_enhancement
+        offset: 1
+        code: |
+          var int temp;
+          var int damageFlatBonus;
+          var int damagePercentBonus;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleArmor rArmor;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_NECRON;
+          if lt temp 1;
+            return;
+          end;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NECRON;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+          if gt damagePercentBonus temp; #apply the higher of the two
+            set damagePercentBonus temp;
+          end;
+          itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NECRON;
+          ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+          if gt damageFlatBonus temp; #apply the higher of the two
+            set damageFlatBonus temp;
+          end;
+          set temp damagePercentBonus;
+          add temp damageFlatBonus;
+          if eq temp 0; #if we have no damage type modifiers, cancel out.
+            return;
+          end;
+
+          if neq damagePercentBonus 0; #apply the percentile damage bonus
+            muldiv to_health damagePercentBonus 100;
+          end;
+
+          add to_health damageFlatBonus; #apply the flat damage bonus
+
+          return;
