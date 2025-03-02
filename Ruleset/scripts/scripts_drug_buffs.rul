@@ -62,10 +62,6 @@ extended:  # WIP
           end;
 
           if gt temp2 0;
-            if ge temp2 currentHealth; # if health cost is too high, abort
-              battle_game.flashMessage "Unit Health Too Low To Take This Drug!";
-              return;
-            end;
             mul temp2 -1; # apply health costs
             add temp2 currentHealth;
             target.setHealthWithOverkill temp2;
@@ -77,7 +73,8 @@ extended:  # WIP
           set temp2 0;
           item.getTag temp Tag.DRUG_STUN_INITIAL_COST_PERCENT;
           if gt temp 0;
-            muldiv temp2 maxHealth 100;
+            muldiv temp maxHealth 100; #calculate stun as a percent of max health
+            add temp2 temp;
           end;
 
           item.getTag temp Tag.DRUG_STUN_INITIAL_COST_FLAT;
@@ -87,13 +84,15 @@ extended:  # WIP
 
           if gt temp2 0;
             add temp2 currentStun;
-            # debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Max stun:" currentHealth;
-            # debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Pending stun:" temp2;
-            if ge temp2 currentHealth; # if stun cost is too high, abort
-              battle_game.flashMessage "Unit Stun Too High To Take This Drug!";
-              return;
-            end;
             target.setStun temp2; # apply stun
+            if ge temp2 currentHealth; # if stun cost is too high, abort
+              # debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Max stun:" currentHealth;
+              # debug_log "healUnit | ROSIGMA_healU_apply_drug_effects | offset: 20 | Unit stun too high. Pending stun:" temp2;
+              battle_game.flashMessage "Excess stun from drug applied as health damage!";
+              sub temp2 currentHealth; #calculate the excess stun and subtract it from our health
+              sub currentHealth temp2;
+              target.setHealthWithOverkill currentHealth;
+            end;
           end;
 
           # first, calculate and apply morale costs

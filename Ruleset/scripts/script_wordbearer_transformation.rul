@@ -1,0 +1,113 @@
+extended:
+  scripts:
+    newTurnUnit:
+      - new: ROSIGMA_nTU_possession_transformation
+        offset: 99
+        code: |
+          var int HasBonus;
+          var int temp;
+          var int temp2;
+          var int manifestationChance;
+          var int healthMultiplier;
+          var int randomNumber;
+          var ptr GeoscapeGame geoScape;
+          var ptr RuleArmor rArmor;
+          var ptr RuleUnit rUnit;
+
+          battle_game.getTurnSide temp;
+          if neq temp FACTION_HOSTILE; # don't bother if it's not our turn.
+            # debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Not the player's turn. TurnSide:" FACTION_PLAYER;
+            return;
+          end;
+
+          unit.getStun temp; #KOed possessed can't transform
+          unit.getHealth temp2;
+          if ge temp temp2;
+            # debug_log "Intimidation Scripts; damageUnit, offset 99: Aborting. Target is unconscious." unit;
+            return;
+          end;
+
+          unit.getRuleArmor rArmor; #need to have a manifestation chance
+          rArmor.getTag manifestationChance Tag.UNIT_POSSESSION_MANIFESTATION_CHANCE;
+          if lt manifestationChance 1;
+            return;
+          end;
+          set temp 100; #invert the manifestation chance
+          sub temp manifestationChance;
+          set manifestationChance temp;
+          # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. initial manifestationChance:" manifestationChance;
+
+          battle_game.randomRange randomNumber 1 100;
+          # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. initial randomNumber:" randomNumber;
+
+          unit.getHealth temp; #we multiply our roll value by the ratio of our max health to our current health
+          unit.getHealthMax temp2;
+
+          div temp2 temp;
+          # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. randomNumber multiplier temp2:" temp2;
+          mul randomNumber temp2; #the lower our HP, the higher our chance to transform
+
+          # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. final randomNumber:" randomNumber;
+          # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. final manifestationChance:" manifestationChance;
+          if gt manifestationChance randomNumber; #check if we roll high enough to transform
+            # debug_log "ROSIGMA_hU_possession_transformation scripts; newTurnUnit. Aborting; randomNumber less than manifestationChance:";
+            return;
+          end;
+
+          rArmor.getTag temp Tag.UNIT_POSSESSION_TYPE;
+          if eq temp 1;
+            rules.getRuleUnit rUnit "STR_WORDBEARER_GALVWARRIORPOSS"; # turn the unit into a Word Bearer Possessed
+          else eq temp 2;
+            rules.getRuleUnit rUnit "STR_WORDBEARER_GALVWARRIORPOSSELITE"; # turn the unit into a Word Bearer Elite Possessed
+          end;
+          unit.setSpawnUnit rUnit;
+          unit.setSpawnUnitFaction FACTION_HOSTILE;
+          unit.setSpawnUnitInstantRespawn 1;
+          return;
+
+    damageUnit:
+      - new: ROSIGMA_hU_possession_transformation
+        offset: 99
+        code: |
+          var int HasBonus;
+          var int temp;
+          var int temp2;
+          var int manifestationChance;
+          var int healthMultiplier;
+          var int randomNumber;
+          var ptr GeoscapeGame geoScape;
+          var ptr RuleArmor rArmor;
+          var ptr RuleUnit rUnit;
+
+          unit.getStun temp; #KOed possessed can't transform
+          unit.getHealth temp2;
+          if ge temp temp2;
+            # debug_log "ROSIGMA_hU_possession_transformation scripts; damageUnit, offset 99: Aborting. Target is unconscious." unit;
+            return;
+          end;
+
+          unit.getRuleArmor rArmor; #need to have a manifestation chance
+          rArmor.getTag manifestationChance Tag.UNIT_POSSESSION_MANIFESTATION_CHANCE;
+          if lt manifestationChance 1;
+            # debug_log "ROSIGMA_hU_possession_transformation scripts; damageUnit, offset 99: Aborting. Target doesn't have a possession manifestation chance. manifestationChance:" manifestationChance;
+            return;
+          end;
+          set temp 100; #invert the manifestation chance
+          sub temp manifestationChance;
+          set manifestationChance temp;
+
+          battle_game.randomRange randomNumber 1 100; #flat chance
+          if gt manifestationChance randomNumber; #check if we roll high enough to transform
+            return;
+          end;
+
+          rArmor.getTag temp Tag.UNIT_POSSESSION_TYPE;
+          if eq temp 1;
+            rules.getRuleUnit rUnit "STR_WORDBEARER_GALVWARRIORPOSS"; # turn the unit into a Word Bearer Possessed
+          else eq temp 2;
+            rules.getRuleUnit rUnit "STR_WORDBEARER_GALVWARRIORPOSSELITE"; # turn the unit into a Word Bearer Elite Possessed
+          end;
+          unit.setSpawnUnit rUnit;
+          unit.setSpawnUnitFaction FACTION_HOSTILE;
+          unit.setSpawnUnitInstantRespawn 1;
+          return;
