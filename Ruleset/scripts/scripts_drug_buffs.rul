@@ -40,9 +40,17 @@ extended:  # WIP
           var int currentHealth;
           var int currentStun;
           var int currentMorale;
+          var ptr RuleArmor armorRule;
 
           item.getTag drugDoseCount Tag.IS_DRUG;
           if lt drugDoseCount 1;
+            return;
+          end;
+
+          target.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_LIVING;
+          if lt temp 1;
+            battle_game.flashMessage "Target isn't biological and can't benefit from this!";
             return;
           end;
 
