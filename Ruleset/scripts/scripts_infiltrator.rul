@@ -89,30 +89,43 @@ extended:
 
     # if you hit or are hit while in stealth mode, you lose your stealth
     hitUnit:
-      - new: ROSIGMA_hU_infiltration_stealth_deactivate
+      - new: ROSIGMA_hU_infiltration_stealth_deactivate_on_hit
+        offset: 1  # hide unit
+        code: |
+          var int temp;
+          var ptr RuleDamageType damageType;
+          var ptr RuleItem damagingItem;
+
+          unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
+          if lt temp 1;
+            return power part side;
+          end;
+
+          damaging_item.getRuleItem damagingItem;
+          damagingItem.getDamageType damageType;
+          damageType.getResistType temp;
+          # disable stealth for unit from non-impact damage
+          if neq temp 10;
+            unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0;
+            # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate_on_hit, offset 1: disabling target invisibility due to damage. UNIT_STEALTH_IS_ACTIVE";
+            return power part side;
+          end;
+
+          return power part side;
+
+      - new: ROSIGMA_hU_infiltration_stealth_deactivate_on_attack
         offset: 1  # hide unit
         code: |
           var int temp;
 
-          unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
-
-          # disable stealth for damaged unit
-          if gt temp 0;
-            unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0;
-            # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate, offset 1: disabling target invisibility due to damage. UNIT_STEALTH_IS_ACTIVE";
-            return power part side;
-          end;
-
           attacker.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
-
-          # disable stealth for damaging unit
-          if gt temp 0;
-            attacker.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0; # disable stealth
-            attacker.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
-            # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate, offset 1: disabling attacker invisibility due to damage. UNIT_STEALTH_IS_ACTIVE" temp;
+          if lt temp 1;
             return power part side;
           end;
 
+          attacker.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0; # disable stealth
+          attacker.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
+          # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate_on_attack, offset 1: disabling attacker invisibility due to damage. UNIT_STEALTH_IS_ACTIVE" temp;
           return power part side;
 
     damageUnit:
