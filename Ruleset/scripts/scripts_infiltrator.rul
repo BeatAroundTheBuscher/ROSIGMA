@@ -178,10 +178,47 @@ extended:
         offset: 5  # change unit color to grey so player knows target is in infiltrator mode
         code: |
           var int temp;
+          var int animFrame;
+          var int newShade;
 
           unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
 
-          if gt temp 0;
+          if lt temp 1;
+            return new_pixel;
+          end;
+
+          set animFrame anim_frame; #new
+          if gt animFrame 20;
+            set temp animFrame;
+            muldiv temp 1 20;
+            mul temp 20;
+            sub animFrame temp;
+            if lt animFrame 0;
+              add animFrame 20;
+            end;
+          end;
+          if and le animFrame 4 neq old_pixel 0;
+            get_shade newShade new_pixel;
+            add newShade animFrame;
+            add newShade 3;
+            if ge newShade 16;
+              set new_pixel 0;
+              return new_pixel;
+            end;
+            sub newShade 15;
+            mul newShade -1;
+            set_shade new_pixel newShade;
+            set_color new_pixel COLOR_X1_GRAY;
+          else gt animFrame 4;
+            get_shade newShade old_pixel;
+            sub newShade animFrame;
+            sub newShade 3;
+            if le newShade -16;
+              set new_pixel 0;
+              return new_pixel;
+            end;
+            add newShade 15;
+            set_shade new_pixel newShade;
             set_color new_pixel COLOR_X1_GRAY;
           end;
 
