@@ -39,17 +39,19 @@ extended:
 
           unit.getTimeUnits currentTU;
           armorRule.getTag temp2 Tag.ARMOR_OVERWATCH_RESTORATION_CUMULATIVE;
-          if lt temp2 1; # check if our Overwatch TU stacks or overlaps with our existing TU
-            if gt overwatchTU currentTU; # TUs overlap, not stack; apply the higher of our current TUs or max TUs;
-              unit.setTimeUnits overwatchTU;
-              # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" overwatchTU;
-              # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
-            end;
-          else; # TUs stack
+          if gt temp2 0; # check if our Overwatch TU stacks or overlaps with our existing TU
             add overwatchTU currentTU;
             limit_upper overwatchTU maxTU;
+            unit.setTimeUnits overwatchTU;
             # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Stacking overwatchTU and currentTU:" overwatchTU;
-              # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
+            # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
+            return;
+          end;
+
+          if gt overwatchTU currentTU; # TUs overlap, not stack; apply the higher of our current TUs or max TUs;
+            unit.setTimeUnits overwatchTU;
+            # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" overwatchTU;
+            # debug_log "ROSIGMA_nTU_Overwatch Scripts; newTurnUnit, offset 1: Overlapping overwatchTU and currentTU:" unit;
           end;
 
           return;

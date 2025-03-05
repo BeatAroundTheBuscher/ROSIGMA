@@ -2264,3 +2264,99 @@ mapScripts:
         executions: 1
         verticalLevels: *VL_DROPPOD_FIRESTORM
       - type: fillArea
+
+  # ganger
+
+  - type: MUNDAINDUSTRIALURBANDIO
+    commands:
+      #*** Add the player's craft ***
+      - type: addCraft
+      #*** Add roads/railroads ***
+      - type: addLine
+        direction: vertical
+        executionChances: 50
+        label: 1
+      - type: addLine
+        direction: horizontal
+        executionChances: 50
+        label: 2
+        conditionals: [-1]
+      - type: addLine
+        direction: both
+        conditionals: [-1, -2]
+        label: 3
+      # sometimes replace vertical line with rails
+      - type: fillArea # mask off the map for removeBlock
+        groups: 10
+        executionChances: 50
+        conditionals: [-2]
+        label: 4
+      - type: removeBlock # remove the normal road
+        groups: 3
+        conditionals: [4]
+        rects:
+          - [0, 0, 10, 10]
+      - type: fillArea # place the rails
+        groups: 13
+        conditionals: [4]
+      - type: removeBlock # remove the crossing
+        groups: [4]
+        conditionals: [3, 4]
+        rects:
+          - [0, 0, 10, 10]
+
+      - type: fillArea # place the rail crossing
+        groups: 14
+        conditionals: [3, 4]
+
+      - type: removeBlock # remove the mask
+        groups: 10
+        conditionals: [4]
+        rects:
+          - [0, 0, 10, 10]
+
+      #*** Fill in the area ***
+      - type: addBlock #BLOCK1X1 #DROPPODHELPER1
+        size: [1, 1, 4]
+        craftGroups: [80]
+        executions: 1
+        verticalLevels:
+          - type: ground
+            size: [1, 1, 0]
+            groups: [1] #<--- FLAT GROUP add this!
+          - type: ceiling
+            blocks: [0]
+            size: [1, 1, 4]
+            terrain: HELPERDROPPOD
+      - type: addBlock #BLOCK1X1 #DROPPODHELPER2
+        size: [1, 1, 4]
+        craftGroups: [81]
+        executions: 1
+        verticalLevels:
+          - type: ground
+            size: [1, 1, 0]
+            groups: [1] #<--- FLAT GROUP add this!
+          - type: ceiling
+            blocks: [0]
+            size: [1, 1, 4]
+            terrain: HELPERDROPPOD2
+      - type: addUFO                #BOMBARDMENT UFO
+        size: 1
+        craftGroups: [77]
+        executions: 1
+        UFOName: STR_HELPER_UFO
+      - type: addUFO                #BOMBARDMENT UFO
+        size: 1
+        craftGroups: [78]
+        executions: 1
+        UFOName: STR_HELPER_UFO
+      - type: addUFO                #BOMBARDMENT UFO
+        size: 1
+        craftGroups: [79]
+        executions: 1
+        UFOName: STR_HELPER_UFO
+      - type: fillArea
+      - type: addBlock
+        size: 2
+        executions: 4
+      - type: fillArea
