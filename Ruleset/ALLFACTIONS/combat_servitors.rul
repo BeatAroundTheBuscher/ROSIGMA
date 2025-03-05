@@ -33,6 +33,25 @@ items:
     invHeight: 3
     listOrder: 2100
 
+
+
+
+    costAuto:
+      time: 33
+      mana: 3
+    costSnap:
+      time: 25
+      mana: 1
+
+    flatAuto:
+      time: false
+      mana: true
+    flatSnap:
+      time: false
+      mana: true
+
+
+
   - type: STR_GENERIC_BATTLESERVITORHB  # Heavy Bolter Servitor
     refNode: *STR_GENERIC_BATTLESERVITOR_STATS
     requires:
@@ -61,6 +80,30 @@ items:
     monthlySalary: 5000
 
   ## Weapons and Ammo
+  - type: STR_GENERICSERVITOR_AMMO  # Generic Servitor Reload Item
+    weight: 30  # Doesn't truly matter, no pockets
+    bigSprite: 2817  # Generic servitor ammo box sprite
+    battleType: 6  # not used as medikit
+    medikitType: 1
+    medikitActionName: STR_RELOAD_WEAPONS
+    medikitTargetSelf: true
+    heal: 999
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    costUse:
+      time: 90 #so the player can misclick a facing change without losing out on the reload
+      mana: 1  # need at least one mana to try
+    flatUse:
+      time: false
+      mana: true
+    hitSound: {mod: 40k, index: 102}
+    specialIconSprite: 209
+    fixedWeapon: true
+    tags:
+      TURRET_RELOAD_ITEM: 1
+
   - &STR_GENERIC_SERVITOR_WEAPON  # Not necessary to inherit from this, but it's here to make it easy
     type: STR_GENERIC_SERVITOR_HEAVYBOLTER
     weight: 40  # Doesn't truly matter, no pockets
@@ -77,40 +120,6 @@ items:
 
   - type: STR_GENERIC_SERVITOR_HEAVYBOLTER  # Copied from STR_CSERVITOR_HB and modified
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
-    dropoff: 4
-    bigSprite: 2816
-    bulletSprite: 6
-    fireSound: 2138
-    compatibleAmmo:
-      - STR_GENERICSERVITOR_HBAP_AMMO
-    accuracySnap: 70  # semi-mounted
-    accuracyAuto: 60  # semi-mounted
-    tuSnap: 30  # not great reactions, melee should be viable against it
-    tuAuto: 40  # only two auto fire per turn
-    snapRange: 20  # mounted + AI bonus
-    autoRange: 14  # consider accuracy and skill of wielder + autoshot number, will be plenty dangerous up to 20 tiles out
-    kneelBonus: 133
-    confSnap:  # Double Shot
-      ammoSlot: 0  # Bolter
-      name: STR_BURST_SNAP_SHOT
-      arcing: false
-      shots: 2  # Double shot snap
-    autoShots: 5
-    sprayWaypoints: 2
-    bulletSpeed: 50
-
-  - &STR_GENERIC_SERVITOR_AMMO  # Not necessary to inherit from this, but it's here to make it easy
-    type: STR_GENERICSERVITOR_HBAP_AMMO
-    weight: 30  # Doesn't truly matter, no pockets
-    bigSprite: 2817  # Generic servitor ammo box sprite
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 3
-    recover: false
-
-  - type: STR_GENERICSERVITOR_HBAP_AMMO  # HEAVY BOLTER AP
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR]
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 26}
     power: 80  # was 60
@@ -125,35 +134,44 @@ items:
       ToWound: 0.2
       RandomWound: false
     explosionSpeed: 5
-    clipSize: 200
+    dropoff: 4
+    bigSprite: 2816
+    bulletSprite: 6
+    fireSound: 2138
+    clipSize: -1
+    accuracySnap: 70  # semi-mounted
+    accuracyAuto: 60  # semi-mounted
+    costSnap:
+      time: 30
+      mana: 2
+    costAuto:
+      time: 40
+      mana: 5
+    flatSnap:
+      time: false
+      mana: true
+    flatAuto:
+      time: false
+      mana: true
+    snapRange: 20  # mounted + AI bonus
+    autoRange: 14  # consider accuracy and skill of wielder + autoshot number, will be plenty dangerous up to 20 tiles out
+    kneelBonus: 133
+    confSnap:  # Double Shot
+      ammoSlot: 0  # Bolter
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 2  # Double shot snap
     autoShots: 5
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    tags:
+      TURRET_RELOAD_TURNS: 1
 
   - type: STR_GENERICSERVITOR_MILAUNCHER  # Copied from STR_CSERVITOR_MILAUNCHER and modified
     refNode: *STR_GENERIC_SERVITOR_WEAPON
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     bigSprite: 2818
     bulletSprite: 0
-    dropoff: 5
-    minRange: 5
-    fireSound: {mod: 40k, index: 52}
-    compatibleAmmo:
-      - STR_GENERICSERVITOR_MIMELTA_AMMO  # Not worth making multiple player missile servitors, so we'll do melta missiles.
-    accuracySnap: 60
-    accuracyAuto: 60
-    tuSnap: 33
-    tuAuto: 50
-    autoShots: 4
-    snapRange: 7
-    autoRange: 18
-    confSnap:
-      name: STR_SNAP_DIRECT_FIRE
-    confAuto:
-      name: STR_AUTO_BARRAGE
-      arcing: true
-
-  - type: STR_GENERICSERVITOR_MIMELTA_AMMO
-    refNode: *STR_GENERIC_SERVITOR_AMMO
-    categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR]
     hitSound: {mod: 40k, index: 0}
     hitAnimation: {mod: 40k, index: 0}
     power: 65
@@ -166,31 +184,38 @@ items:
       ToWound: 0.05
       RandomWound: false
       TileDamageMethod: 2
-    clipSize: 24  # Raised from 16, still only 3-4 turns of full auto
+    clipSize: -1
     blastRadius: 3
+    dropoff: 5
+    minRange: 5
+    fireSound: {mod: 40k, index: 52}
+    accuracySnap: 60
+    accuracyAuto: 60
+    autoShots: 4
+    snapRange: 7
+    autoRange: 18
+    costSnap:
+      time: 33
+      mana: 1
+    costAuto:
+      time: 50
+      mana: 4
+    flatSnap:
+      time: false
+      mana: true
+    flatAuto:
+      time: false
+      mana: true
+    confSnap:
+      name: STR_SNAP_DIRECT_FIRE
+    confAuto:
+      name: STR_AUTO_BARRAGE
+      arcing: true
+    tags:
+      TURRET_RELOAD_TURNS: 1
 
   - type: STR_GENERICSERVITOR_HEAVY_PLASMA  # STR_HEAVY_PLASMA_TERRAN
     refNode: *STR_GENERIC_SERVITOR_WEAPON
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
-    dropoff: 4
-    bigSprite: 2819
-    bulletSprite: {mod: 40k, index: 11}
-    fireSound: 18
-    compatibleAmmo:
-      - STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO
-    accuracySnap: 75
-    accuracyAimed: 75
-    tuSnap: 30
-    tuAimed: 30
-    minRange: 4
-    snapRange: 21
-    aimRange: 21
-    confAimed:
-      spendPerShot: 4
-      name: STR_MAXIMAL_SHOT
-
-  - type: STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO  # STR_HEAVY_PLASMA_CLIP
-    refNode: *STR_GENERIC_SERVITOR_AMMO
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
     vaporColorSurface: 2
     vaporDensitySurface: 6
@@ -198,7 +223,7 @@ items:
     power: 120
     powerRangeReduction: 5
     powerRangeThreshold: 30.0  # plasma decoheres at longer ranges
-    clipSize: 40  # The player will primarily be limited by heat management
+    clipSize: -1
     damageType: 5
     explosionHitSound: {mod: 40k, index: 690}  # *** PLASMA rebalance
     hitAnimation: {mod: 40k, index: 112}
@@ -213,6 +238,31 @@ items:
       FireThreshold: 70  # can ignite at high damage
       IgnoreDirection: false
       RadiusReduction: 30.0
+    dropoff: 4
+    bigSprite: 2819
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: 18
+    accuracySnap: 75
+    accuracyAimed: 75
+    minRange: 4
+    snapRange: 21
+    aimRange: 21
+    confAimed:
+      name: STR_MAXIMAL_SHOT
+    costSnap:
+      time: 30
+      mana: 1
+    costAimed:
+      time: 60
+      mana: 4
+    flatSnap:
+      time: false
+      mana: true
+    flatAimed:
+      time: false
+      mana: true
+    tags:
+      TURRET_RELOAD_TURNS: 1
 
   ## Corpses
   - type: STR_GENERIC_BATTLESERVITOR_CORPSE
@@ -271,20 +321,20 @@ armors:
     spriteSheet: GENERIC_SERVITORHB_BS.PCK
     spriteInv: GENERIC_SERVITORHB_INV.SPK
 
-  - type: GENERIC_BATTLESERVITOR_PLARMOR
-    refNode: *GENERIC_BATTLESERVITOR_ARMOR
-    spriteSheet: GENERIC_SERVITORPL_BS.PCK
-    spriteInv: GENERIC_SERVITORPL_INV.SPK
-
   - type: GENERIC_BATTLESERVITOR_MIARMOR
     refNode: *GENERIC_BATTLESERVITOR_ARMOR
     spriteSheet: GENERIC_SERVITORMI_BS.PCK
     spriteInv: GENERIC_SERVITORMI_INV.SPK
 
+  - type: GENERIC_BATTLESERVITOR_PLARMOR
+    refNode: *GENERIC_BATTLESERVITOR_ARMOR
+    spriteSheet: GENERIC_SERVITORPL_BS.PCK
+    spriteInv: GENERIC_SERVITORPL_INV.SPK
+
 ## Unit names must match item names. Use the anchor below as a reference and specify an armor and a built in weapon/ammo for it.
 units:
   - &STR_GENERIC_BATTLESERVITOR_UNIT
-    type: STR_GENERIC_BATTLESERVITOR_UNIT
+    type: STR_GENERIC_BATTLESERVITORHB
     stats:
       tu: 60
       stamina: 120
@@ -308,37 +358,42 @@ units:
     energyRecovery: 50
 
   - type: STR_GENERIC_BATTLESERVITORHB
-    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
     armor: GENERIC_BATTLESERVITOR_HBARMOR
     builtInWeaponSets:
       - - STR_GENERIC_SERVITOR_HEAVYBOLTER
-        - STR_GENERICSERVITOR_HBAP_AMMO  # AP ROUNDS
+        - STR_GENERICSERVITOR_AMMO
         - INV_NULL_2X1_RL
         - INV_NULL_2X1_LL
         - INV_NULL_3X3
         - INV_NULL_4X2
-
-  - type: STR_GENERIC_BATTLESERVITORPL
-    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
-    armor: GENERIC_BATTLESERVITOR_PLARMOR
-    builtInWeaponSets:
-      - - STR_GENERICSERVITOR_HEAVY_PLASMA
-        - STR_GENERICSERVITOR_HEAVY_PLASMA_AMMO
-        - INV_NULL_2X1_RL
-        - INV_NULL_2X1_LL
-        - INV_NULL_3X3
-        - INV_NULL_4X2
+    stats:
+      mana: 100
 
   - type: STR_GENERIC_BATTLESERVITORMI
     refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
     armor: GENERIC_BATTLESERVITOR_MIARMOR
     builtInWeaponSets:
       - - STR_GENERICSERVITOR_MILAUNCHER
-        - STR_GENERICSERVITOR_MIMELTA_AMMO
+        - STR_GENERICSERVITOR_AMMO
         - INV_NULL_2X1_RL
         - INV_NULL_2X1_LL
         - INV_NULL_3X3
         - INV_NULL_4X2
+    stats:
+      mana: 8
+
+  - type: STR_GENERIC_BATTLESERVITORPL
+    refNode: *STR_GENERIC_BATTLESERVITOR_UNIT
+    armor: GENERIC_BATTLESERVITOR_PLARMOR
+    builtInWeaponSets:
+      - - STR_GENERICSERVITOR_HEAVY_PLASMA
+        - STR_GENERICSERVITOR_AMMO
+        - INV_NULL_2X1_RL
+        - INV_NULL_2X1_LL
+        - INV_NULL_3X3
+        - INV_NULL_4X2
+    stats:
+      mana: 12
 
 manufacture:
   - name: STR_MANUFACTURE_HEAVY_BOLTER_COMBAT_SERVITOR
