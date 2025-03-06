@@ -80,6 +80,12 @@ extended:
           end;
 
           unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_CAS_STRIKE;
+          if eq temp 1;
+            return 0 part side;
+          end;
+
+          unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.UNIT_TYPE_MECHANICAL;
           if eq temp 1; # for handling mechanical units
             armorRule.getTag temp Tag.UNIT_TYPE_LIVING; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal

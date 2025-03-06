@@ -52,6 +52,209 @@ items:
       ITEM_DOESNT_HURT_USER: 1
       ITEM_DOESNT_HURT_FRIENDS: 1
 
+  - &STR_CAS_DEFAULT
+    type: STR_CAS_MISSILE_POD
+    costAimed:
+      time: 1
+      energy: 0
+    dropoff: 4
+    autoRange: 0
+    snapRange: 0
+    aimRange: 36
+    accuracyAuto: 0
+    accuracySnap: 0
+    accuracyAimed: 60
+    tuAuto: 0
+    tuSnap: 0
+    power: 150
+    damageType: 3
+    damageAlter:
+      ToArmorPre: 0.15  # default is 0
+      RadiusReduction: 5  # default is 10  # range is independent of RadiusReduction (= power / 20)
+      FireThreshold: 150
+      ToItem: 0  # CAS isn't allowed to destroy the Tauros Spawner
+    bigSprite: 265
+    # floorSprite: 256
+    # handSprite: 256
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    recover: false
+    clipSize: 2
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+      ITEM_DOESNT_HURT_FRIENDS: 1
+
+  - type: STR_CAS_STRIKE_DESIGNATOR
+    dropoff: 999
+    minRange: 0
+    autoRange: 40
+    snapRange: 0
+    aimRange: 0
+    maxRange: 40
+    vaporColorSurface: 4  # red laser
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 3;
+        set subvoxel_drift 0;
+        return;
+    accuracyAuto: 200
+    accuracySnap: 0
+    accuracyAimed: 0
+    accuracyMultiplier:
+      flatHundred: 1.0
+    tuSnap: 0
+    tuAimed: 0
+    costAuto:
+      time: 1
+      energy: 0
+      mana: 100
+    confAuto:
+      name: STR_CAS_DROP_BOMB
+    flatUse:
+      time: true
+      energy: true
+    autoShots: 1
+    noLOSAccuracyPenalty: 100  # airstrike
+    bigSprite: 240
+    handSprite: 240
+    floorSprite: {mod: 40k, index: 157}
+    invWidth: 1
+    invHeight: 1
+    bulletSprite: {mod: 40k, index: 22}
+    fireSound: {mod: 40k, index: 491}
+    bulletSpeed: 50
+    explosionHitSound: {mod: 40k, index: 704}
+    hitSound: {mod: 40k, index: 704}
+    hitAnimation: 2210
+    #
+    power: 240
+    damageType: 3
+    damageAlter:  # high explosive
+      ArmorEffectiveness: 0
+      ToHealth: 0
+      ToEnergy: 0
+      ToStun: 0
+      ToWound: 0
+      ToArmor: 0
+      ToTile: 0
+      ToItem: 0
+      ToArmorPre: 0
+      FixRadius: 0
+    spawnItem: STR_CAS_AIRSTRIKE_BLAST
+    spawnItemChance: 100
+    #
+    battleType: 1
+    fixedWeapon: true
+    fixedWeaponShow: false
+    recover: false
+    clipSize: -1
+
+  - type: STR_CAS_STRIKE_HEAVY_BOLTER
+    refNode: *STR_CAS_DEFAULT
+    noLOSAccuracyPenalty: 100  # airstrike
+    dropoff: 4
+    autoRange: 18
+    snapRange: 0
+    aimRange: 0
+    accuracyAuto: 80
+    accuracySnap: 0
+    accuracyAimed: 0
+    tuSnap: 0
+    tuAimed: 0
+    costAuto:
+      time: 1
+      energy: 0
+      mana: 50
+    flatUse:
+      time: true
+      energy: true
+    autoShots: 6
+    damageType: 1
+    damageAlter:  # DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    power: 80
+    bigSprite: 266
+    sprayWaypoints: 2
+    # floorSprite: 256
+    # handSprite: 256
+    flatRate: true
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 26}
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2138
+    bulletSpeed: 60
+    explosionSpeed: 5
+    recover: false
+    clipSize: -1
+
+  - type: STR_CAS_STRIKE_MISSILE_POD
+    refNode: *STR_CAS_DEFAULT
+    costAimed:
+      time: 1
+      energy: 0
+    confAimed:
+      spendPerShot: 2
+    dropoff: 4
+    autoRange: 0
+    snapRange: 0
+    aimRange: 36
+    accuracyAuto: 0
+    accuracySnap: 0
+    accuracyAimed: 60
+    tuAuto: 0
+    tuSnap: 0
+    power: 150
+    damageType: 3
+    damageAlter:
+      FireThreshold: 110
+      ToArmorPre: 0.2
+      ToArmor: 0.0
+      RandomType: 6
+      ArmorEffectiveness: 0.9  # concussive
+      ToStun: 0.5  # concussive
+      ToEnergy: 0.3  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+    bigSprite: 265
+    # floorSprite: 256
+    # handSprite: 256
+    bulletSprite: {mod: 40k, index: 0}
+    fireSound: {mod: 40k, index: 52}
+    battleType: 1
+    hitSound: {mod: 40k, index: 0}
+    hitAnimation: {mod: 40k, index: 0}
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    fixedWeaponShow: false
+    recover: false
+    clipSize: 9 #9 so it doesn't expend the mag but can't shoot beyond 4x
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+
   - type: STR_CAS_CANNON
     refNode: *STR_TURRET_DEFAULT
     dropoff: 4
