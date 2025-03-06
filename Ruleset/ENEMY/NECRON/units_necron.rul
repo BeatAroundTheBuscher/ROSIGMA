@@ -1,6 +1,27 @@
 extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
+weaponSets:  # these can be re-used for any unit
+  # Necron Warrior
+  - type: BASIC_GAUSS_FLAYER
+    weapons: [STR_GAUSS_FLAYER, STR_KILLPOINT_TOKEN_5]
+  - type: BASIC_GAUSS_REAPER
+    weapons: [STR_GAUSS_REAPER, STR_KILLPOINT_TOKEN_5]
+  - type: GAUSS_FLAYER_WITH_SCARAB
+    weapons: [STR_GAUSS_FLAYER, STR_NECRON_SCARAB_SPAWNER_GRENADE, STR_KILLPOINT_TOKEN_5]
+  - type: GAUSS_REAPER_WITH_SCARAB
+    weapons: [STR_GAUSS_REAPER, STR_NECRON_SCARAB_SPAWNER_GRENADE, STR_KILLPOINT_TOKEN_5]
+  # Necron Immortal
+  - type: BASIC_GAUSS_BLASTER
+    weapons: [STR_GAUSS_BLASTER, STR_KILLPOINT_TOKEN_7]
+  - type: GAUSS_BLASTER_WITH_SCARAB
+    weapons: [STR_GAUSS_BLASTER, STR_NECRON_SCARAB_SPAWNER_GRENADE, STR_KILLPOINT_TOKEN_7]
+  # Necron Deathmark
+  - type: BASIC_SYNAPTIC_DISINTEGRATOR
+    weapons: [STR_SYNAPTIC_DISINTEGRATOR, STR_KILLPOINT_TOKEN_7]
+  - type: SYNAPTIC_DISINTEGRATOR_WITH_SCARAB
+    weapons: [STR_SYNAPTIC_DISINTEGRATOR, STR_NECRON_SCARAB_SPAWNER_GRENADE, STR_KILLPOINT_TOKEN_7]
+
 units:
   - type: STR_NECRON_WARRIOR
     stats:
@@ -21,15 +42,22 @@ units:
     sniper: 50
     value: 10
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_GAUSS_FLAYER
-        - STR_KILLPOINT_TOKEN_5
-      - - STR_GAUSS_FLAYER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_5
-      - - STR_GAUSS_REAPER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_5
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_GAUSS_FLAYER: 50
+        BASIC_GAUSS_REAPER: 50
+        GAUSS_FLAYER_WITH_SCARAB: 5
+        GAUSS_REAPER_WITH_SCARAB: 5
+      -  # Tier 2
+        BASIC_GAUSS_FLAYER: 40
+        BASIC_GAUSS_REAPER: 40
+        GAUSS_FLAYER_WITH_SCARAB: 10
+        GAUSS_REAPER_WITH_SCARAB: 10
+      -  # Tier 3
+        BASIC_GAUSS_FLAYER: 30
+        BASIC_GAUSS_REAPER: 30
+        GAUSS_FLAYER_WITH_SCARAB: 20
+        GAUSS_REAPER_WITH_SCARAB: 20
 
   - type: STR_NECRON_WARRIOR_REVIVES  # STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -54,17 +82,27 @@ units:
     spawnUnit: STR_NECRON_WARRIOR
     canPanic: false
     canBeMindControlled: false
-    intelligence: 2  # Necron immortals have some level of intelligence
+    intelligence: 1  # Giving them 1; I'm assuming they have some direction, rather than being left to their own devices entirely
     aggression: 8
     spotter: 1
     sniper: 50
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_GAUSS_FLAYER
-      - - STR_GAUSS_FLAYER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-      - - STR_GAUSS_FLAYER
-        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_GAUSS_FLAYER: 40
+        BASIC_GAUSS_REAPER: 40
+        GAUSS_FLAYER_WITH_SCARAB: 10
+        GAUSS_REAPER_WITH_SCARAB: 10
+      -  # Tier 2
+        BASIC_GAUSS_FLAYER: 20
+        BASIC_GAUSS_REAPER: 20
+        GAUSS_FLAYER_WITH_SCARAB: 30
+        GAUSS_REAPER_WITH_SCARAB: 30
+      -  # Tier 3
+        BASIC_GAUSS_FLAYER: 10
+        BASIC_GAUSS_REAPER: 10
+        GAUSS_FLAYER_WITH_SCARAB: 40
+        GAUSS_REAPER_WITH_SCARAB: 40
 
   - type: STR_NECRON_IMORTAL
     stats:
@@ -85,16 +123,17 @@ units:
     sniper: 75
     value: 15
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_GAUSS_BLASTER
-        - STR_KILLPOINT_TOKEN_7
-      - - STR_GAUSS_BLASTER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_7
-      - - STR_GAUSS_BLASTER
-        - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_7
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_GAUSS_BLASTER: 90
+        GAUSS_BLASTER_WITH_SCARAB: 10
+      -  # Tier 2
+        BASIC_GAUSS_BLASTER: 50
+        GAUSS_BLASTER_WITH_SCARAB: 50
+      -  # Tier 3
+        BASIC_GAUSS_BLASTER: 5
+        GAUSS_BLASTER_WITH_SCARAB: 95
+
 
   - type: STR_NECRON_IMORTAL_REVIVES  # STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -124,13 +163,17 @@ units:
     spotter: 1
     sniper: 75
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_GAUSS_BLASTER
-      - - STR_GAUSS_BLASTER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-      - - STR_GAUSS_BLASTER
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_GAUSS_BLASTER: 90
+        GAUSS_BLASTER_WITH_SCARAB: 10
+      -  # Tier 2
+        BASIC_GAUSS_BLASTER: 50
+        GAUSS_BLASTER_WITH_SCARAB: 50
+      -  # Tier 3
+        BASIC_GAUSS_BLASTER: 5
+        GAUSS_BLASTER_WITH_SCARAB: 95
+
 
   - type: STR_NECRON_DEATHMARK_REVIVES  # STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -160,13 +203,16 @@ units:
     spotter: 2
     sniper: 100  # they are primarily snipers
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_SYNAPTIC_DISINTEGRATOR
-      - - STR_SYNAPTIC_DISINTEGRATOR
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-      - - STR_SYNAPTIC_DISINTEGRATOR
-        - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_SYNAPTIC_DISINTEGRATOR: 80
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 20
+      -  # Tier 2
+        BASIC_SYNAPTIC_DISINTEGRATOR: 40
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 60
+      -  # Tier 3
+        BASIC_SYNAPTIC_DISINTEGRATOR: 1
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 99
 
   - type: STR_NECRON_DEATHMARK
     stats:
@@ -187,16 +233,16 @@ units:
     sniper: 100  # they are primarily snipers
     energyRecovery: 200
     value: 15
-    builtInWeaponSets:
-      - - STR_SYNAPTIC_DISINTEGRATOR
-        - STR_KILLPOINT_TOKEN_7
-      - - STR_SYNAPTIC_DISINTEGRATOR
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_7
-      - - STR_SYNAPTIC_DISINTEGRATOR
-        # - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_NECRON_SCARAB_SPAWNER_GRENADE
-        - STR_KILLPOINT_TOKEN_7
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_SYNAPTIC_DISINTEGRATOR: 80
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 20
+      -  # Tier 2
+        BASIC_SYNAPTIC_DISINTEGRATOR: 40
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 60
+      -  # Tier 3
+        BASIC_SYNAPTIC_DISINTEGRATOR: 1
+        SYNAPTIC_DISINTEGRATOR_WITH_SCARAB: 99
 
   - type: STR_NECRON_LYCHGUARD_REVIVES  # STR_NECRON_LYCHGUARD_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
