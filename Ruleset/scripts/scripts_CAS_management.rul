@@ -1,0 +1,201 @@
+extended:
+  tags:
+    BattleGame:
+      BATTLE_GAME_CAS_ACTIVE: int  #
+    RuleArmor:
+      UNIT_IS_CAS_STRIKE: int #Unit counts as a CAS strike designator for the purposes of scripts
+      UNIT_IS_INVULNERABLE: int #All hits to the unit are nullified
+    RuleItem:
+      ITEM_IS_AIRSTRIKE_DESIGNATOR_2: int #counts as a CAS item for the purposes of scripts
+    BattleItem:
+      ITEM_CAS_COOLDOWN: int  #cooldown before CAS can be used
+
+  scripts:
+    createUnit:
+      - new: ROSIGMA_cU_CAS_management_setup
+        offset: 2
+        code: |
+          var ptr RuleArmor armorRule;
+          var int temp;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_CAS_STRIKE;
+          if lt temp 1;
+            return;
+          end;
+
+          unit.setTimeUnits 0; #immobilize and disable the CAS
+          unit.setEnergy 0;
+          unit.setMana 0;
+          return;
+
+    visibilityUnit:
+      - new: ROSIGMA_cU_CAS_management_visibility_invisibility
+        offset: 2  # hide unit
+        code: |
+          var int temp;
+          var ptr RuleArmor armorRule;
+
+          target_unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_CAS_STRIKE;
+
+          if lt temp 1;
+            return current_visibility visibility_mode;
+          end;
+
+          # debug_log "ROSIGMA_cU_CAS_management_visibility, offset 2: making unit invisible per UNIT_IS_CAS_STRIKE tag, temp:" temp;
+          return 0 visibility_mode;
+
+      - new: ROSIGMA_cU_CAS_management_visibility_no_see
+        offset: 2  # hide unit
+        code: |
+          var int temp;
+          var ptr RuleArmor armorRule;
+
+          observer_unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_CAS_STRIKE;
+
+          if lt temp 1;
+            return current_visibility visibility_mode;
+          end;
+
+          # debug_log "ROSIGMA_cU_CAS_management_visibility, offset 2: making unit invisible per UNIT_IS_CAS_STRIKE tag, temp:" temp;
+          return 0 visibility_mode;
+
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_CAS_management_turn_start
+        offset: 2
+        code: |
+          var ptr RuleArmor armorRule;
+          var int temp;
+          var ptre BattleItem CASWeapon;
+
+          if lt turn 1; # we don't care about Turn 0; abort.
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_player_hp_adjustment | offset: 3 | Turn 0. Aborting.";
+            return;
+          end;
+
+          if neq side FACTION_PLAYER; # only trigger if it's our turn
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_CAS_STRIKE;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTag temp Tag.BATTLE_GAME_CAS_ACTIVE;
+          if lt temp 1; #immobilize and disable the CAS
+            unit.setTimeUnits 0;
+            unit.setEnergy 0;
+            unit.setMana 0;
+            return;
+          end;
+
+          unit.getManaMax temp;
+          unit.setMana temp; # recharge mana
+          #unit.getLeftHandWeapon CASWeapon;
+          #CASWeapon.setAmmoQuantity 13; # reload the designator
+          #unit.getRightHandWeapon CASWeapon;
+          #CASWeapon.setAmmoQuantity 9; # reload the designator
+          battle_game.setTag Tag.BATTLE_GAME_CAS_ACTIVE 0;
+
+          return;
+
+    healUnit:
+      - new: ROSIGMA_healU_activate_CAS
+        offset: 2
+        code: |
+          var int temp;
+          var int temp2;
+
+          item.getTag temp Tag.ITEM_IS_AIRSTRIKE_DESIGNATOR_2; # cancel out if we're not a CAS designator
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTag temp Tag.BATTLE_GAME_CAS_ACTIVE; #cancel out if our CAS is active
+          if gt temp 0;
+            battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_ACTIVE" temp;
+            return;
+          end;
+
+          item.getTag temp Tag.ITEM_CAS_COOLDOWN;
+          if gt temp 0; # if we don't despawn, abort
+            battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGING" temp;
+            actor.getTimeUnitsMax temp;
+            muldiv temp 80 100;
+            actor.getTimeUnits temp2;
+            add temp2 temp;
+            actor.setTimeUnits temp2; #rebate TU for checking
+            return;
+          end;
+
+          battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_ACTIVATED";
+          battle_game.setTag Tag.BATTLE_GAME_CAS_ACTIVE 1; #enable the airstrike
+          item.setTag Tag.ITEM_CAS_COOLDOWN 5; #reset cooldown
+          return;
+
+    createItem:
+      - new: ROSIGMA_cI_CAS_initialize_CAS_item
+        offset: 3
+        code: |
+          var int temp;
+
+          item.getTag temp Tag.ITEM_IS_AIRSTRIKE_DESIGNATOR_2; # cancel out if we're not a CAS designator
+          if lt temp 1;
+            return;
+          end;
+
+          item.setTag Tag.ITEM_CAS_COOLDOWN 5; #initialize cooldown
+          return;
+
+    newTurnItem:
+      - new: ROSIGMA_nTI_CAS_management_cooldown_counter
+        offset: 3
+        code: |
+          var int temp;
+
+          if neq side FACTION_PLAYER; # only trigger if it's our turn
+            return;
+          end;
+
+          item.getTag temp Tag.ITEM_IS_AIRSTRIKE_DESIGNATOR_2; # cancel out if we're not a CAS designator
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTag temp Tag.BATTLE_GAME_CAS_ACTIVE; # cancel out if our CAS is active
+          if gt temp 0;
+            return;
+          end;
+
+          item.getTag temp Tag.ITEM_CAS_COOLDOWN;
+          if gt temp 0; # if we have more than 1 left, decrement
+            sub temp 1;
+            item.setTag Tag.ITEM_CAS_COOLDOWN temp;
+            if gt temp 0;
+              battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGING" temp;
+              return;
+            end;
+          end;
+
+          battle_game.flashMessage "STR_SCRIPT_CAS_AIRSTRIKE_RELOAD_RECHARGED";
+          return;
+
+    hitUnit:
+      - new: ROSIGMA_nTI_CAS_management_invulnerability
+        offset: 2
+        code: |
+          var int temp;
+          var ptr RuleArmor armorRule;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_IS_INVULNERABLE;
+          if gt temp 0;
+            return 0 part side;
+          end;
+
+          return power part side;
