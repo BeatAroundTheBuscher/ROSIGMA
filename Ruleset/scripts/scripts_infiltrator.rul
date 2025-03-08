@@ -267,15 +267,30 @@ extended:
         offset: 5  # hide unit
         code: |
           var int temp;
+          var ptr RuleArmor myRuleArmor;
 
           target_unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
 
-          if gt temp 0;
-            # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+          if lt temp 1;
+            return current_visibility visibility_mode;
+          end;
+
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: observer_unit:" observer_unit;
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: distance:" distance;
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+          target_unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #see if we have the camo cloak
+          if lt temp 1;
             return 0 visibility_mode;
           end;
 
-          return current_visibility visibility_mode;
+          if lt distance 80; #enemies can see camo cloaks at range 5 and less; each tile = ~15.75 units of distance
+            # debug_log "ROSIGMA_vU_infiltration, offset 5: Camo Cloak unit spotted. distance:" distance;
+            return current_visibility visibility_mode;
+          end;
+
+          return 0 visibility_mode;
+
 
 # this is for setting the order currently active on the Bonehead
     skillUseUnit:
@@ -344,7 +359,7 @@ extended:
 
           # Check our counter
           actor.getRuleArmor myRuleArmor;
-          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; # get the number of turns  required
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; # get the number of turns required
           if lt temp 1;
             battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK_NO_RESTEALTH" temp;
             # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Unit cannot regain infiltration. Aborting.";
@@ -402,7 +417,7 @@ extended:
           # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
           actor.setTag Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER 0; # reset this counter
           battle_game.flashMessage "STR_SKILL_CAMO_CLOAK_ACTIVATED" temp;
-          set temp2 300;
+          set temp2 9999;
           actor.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER temp2; # set the multiplier for dig in compatibility
           actor.MoveCost.getBaseTimePercent temp; #highest penalty applies
           if lt temp temp2;
