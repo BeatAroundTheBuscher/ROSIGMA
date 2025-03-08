@@ -1,15 +1,5 @@
 extended:
-  tags:
-    BattleUnit:
-      UNIT_STEALTH_IS_ACTIVE: int  # is stealth mode currently active? If so, for how many turns?
-      UNIT_LIKE_A_SHADOW_COUNTER: int  # keeps track of the number of kills this unit has to activate Like Fighting A Shadow
-    RuleArmor:
-      ARMOR_IS_INFILTRATOR: int  # does this armor allow us to infiltrate?
-      ARMOR_RESTEALTH_KILL_REQUIREMENT: int  # how many kills do we need to restealth with this character?
-      ARMOR_IS_DEEP_STRIKE: int  # does this armor allow us to deep strike? WIP
-    RuleSkill:
-      SKILL_LIKE_FIGHTING_A_SHADOW_ID: int
-      SKILL_LIKE_FIGHTING_A_SHADOW_RESTEALTH_DURATION: int  # how many turns does restealthing last?
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
     newTurnUnit:
@@ -18,6 +8,7 @@ extended:
         code: |
           var int temp;
           var int temp2; # turret reload turn data for right handed weapon
+          var ptr RuleArmor myRuleArmor;
 
           battle_game.getTurn temp;
           if le temp 0; # we don't care about Turn 0 and prior; abort.
@@ -36,14 +27,36 @@ extended:
 
           if le temp 0;
             # debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_decrement_stealth | offset: 2 | Target lacks UNIT_STEALTH_IS_ACTIVE. Aborting.";
+            unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
+            if gt temp 0;
+              unit.getTag temp2 Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER;
+              if lt temp2 temp;
+                sub temp temp2;
+                add temp2 1;
+                unit.setTag Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER temp2;
+                battle_game.flashMessage "STR_SCRIPT_INFILTRATION_RECHARGING" temp;
+              else;
+                battle_game.flashMessage "STR_SCRIPT_INFILTRATION_RECHARGED";
+              end;
+            end;
             return;
           end;
 
           sub temp 1; # decrement the counter by 1;
           unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp; # set our stealth counter to the Infiltrator value
 
-          if le temp 0;
+          if lt temp 1;
             battle_game.flashMessage "STR_SCRIPT_INFILTRATION_NO_TIME_REMAINING";
+            unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
+            unit.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER 0;
+            if gt temp 0; #revert normal movement
+              unit.getTag temp Tag.UNIT_DIG_IN_MOVE_PENALTY;
+              if le temp 100;
+                unit.MoveCost.setBaseNormalTimePercent 100;
+              end;
+            end;
             return;
           end;
 
@@ -73,15 +86,21 @@ extended:
           end;
 
           unit.getRuleArmor myRuleArmor;
-          myRuleArmor.getTag temp Tag.ARMOR_IS_INFILTRATOR; # get the unit's infiltrator value
+          myRuleArmor.getTag temp2 Tag.ARMOR_IS_INFILTRATOR; # get the unit's infiltrator value
 
-          if le temp 0;
+          if le temp2 0;
             # debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | Target lacks ARMOR_IS_INFILTRATOR. Aborting.";
             return;
           end;
 
-          unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp; # set our stealth counter to the Infiltrator value
-          battle_game.flashMessage "STR_SCRIPT_INFILTRATION_UNIT_STEALTHED" temp;
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; # get the unit's infiltrator value
+          if gt temp 0;
+            # debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | Unit has camo cloak. Aborting.";
+            return;
+          end;
+
+          unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp2; # set our stealth counter to the Infiltrator value
+          battle_game.flashMessage "STR_SCRIPT_INFILTRATION_UNIT_STEALTHED" temp2;
           # debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | Current Turn:" turn;
           # debug_log "newTurnUnit | ROSIGMA_nTU_infiltration_set_stealth | offset: 3 | UNIT_STEALTH_IS_ACTIVE. temp." temp;
           return;
@@ -95,6 +114,7 @@ extended:
           var int temp;
           var ptr RuleDamageType damageType;
           var ptr RuleItem damagingItem;
+          var ptr RuleArmor myRuleArmor;
 
           unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
           if lt temp 1;
@@ -107,6 +127,15 @@ extended:
           # disable stealth for unit from non-impact damage
           if neq temp 10;
             unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0;
+            unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
+            unit.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER 0;
+            if gt temp 0; #revert normal movement
+              unit.getTag temp Tag.UNIT_DIG_IN_MOVE_PENALTY;
+              if le temp 100;
+                unit.MoveCost.setBaseNormalTimePercent 100;
+              end;
+            end;
             # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate_on_hit, offset 1: disabling target invisibility due to damage. UNIT_STEALTH_IS_ACTIVE";
             return power part side;
           end;
@@ -117,6 +146,7 @@ extended:
         offset: 1  # hide unit
         code: |
           var int temp;
+          var ptr RuleArmor myRuleArmor;
 
           attacker.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
           if lt temp 1;
@@ -124,7 +154,15 @@ extended:
           end;
 
           attacker.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0; # disable stealth
-          attacker.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
+          attacker.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
+          attacker.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER 0;
+          if gt temp 0; #revert normal movement if we don't have a dig in penalty
+            attacker.getTag temp Tag.UNIT_DIG_IN_MOVE_PENALTY;
+            if le temp 100;
+              attacker.MoveCost.setBaseNormalTimePercent 100;
+            end;
+          end;
           # debug_log "ROSIGMA_hU_infiltration_stealth_deactivate_on_attack, offset 1: disabling attacker invisibility due to damage. UNIT_STEALTH_IS_ACTIVE" temp;
           return power part side;
 
@@ -229,19 +267,34 @@ extended:
         offset: 5  # hide unit
         code: |
           var int temp;
+          var ptr RuleArmor myRuleArmor;
 
           target_unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
 
-          if gt temp 0;
-            # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+          if lt temp 1;
+            return current_visibility visibility_mode;
+          end;
+
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: observer_unit:" observer_unit;
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: distance:" distance;
+          # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
+          target_unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #see if we have the camo cloak
+          if lt temp 1;
             return 0 visibility_mode;
           end;
 
-          return current_visibility visibility_mode;
+          if lt distance 80; #enemies can see camo cloaks at range 5 and less; each tile = ~15.75 units of distance
+            # debug_log "ROSIGMA_vU_infiltration, offset 5: Camo Cloak unit spotted. distance:" distance;
+            return current_visibility visibility_mode;
+          end;
+
+          return 0 visibility_mode;
+
 
 # this is for setting the order currently active on the Bonehead
     skillUseUnit:
-      - new: ROSIGMA_sUU_infiltration
+      - new: ROSIGMA_sUU_infiltration_shadow
         offset: 1
         code: |
           var int temp;
@@ -252,18 +305,18 @@ extended:
           # Check to see if we're using the Fighting A Shadow skill
           skill.getTag shadowSkill Tag.SKILL_LIKE_FIGHTING_A_SHADOW_ID;
           if le shadowSkill 0;
-            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration | offset: 1 | Not using SKILL_LIKE_FIGHTING_A_SHADOW_ID. Aborting.";
+            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_shadow | offset: 1 | Not using SKILL_LIKE_FIGHTING_A_SHADOW_ID. Aborting.";
             return;
           end;
 
           # Check our counter
           actor.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_KILL_REQUIREMENT; # get the number of kills required
-          actor.getTag temp2 Tag.UNIT_LIKE_A_SHADOW_COUNTER;
-          if le temp2 0;
+          if lt temp 1;
             battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK_NO_RESTEALTH" temp;
-            # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration | offset: 1 | Unit cannot regain infiltration. Aborting.";
+            # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration_shadow | offset: 1 | Unit cannot regain infiltration. Aborting.";
           end;
+          actor.getTag temp2 Tag.UNIT_LIKE_A_SHADOW_COUNTER;
           sub temp temp2; # calculate kills remaining
           limit_lower temp 0; # negatives look ugly when displayed.
 
@@ -271,18 +324,104 @@ extended:
             battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK" temp;
           else le temp 0;
             if le have_tu 0;
-              # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration | offset: 1 | Unit lacks adequate TU. Aborting.";
+              # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration_shadow | offset: 1 | Unit lacks adequate TU. Aborting.";
               return;
             end;
-            actor.getTimeUnits temp;
+            actor.getTimeUnitsMax temp;
+            muldiv temp 90 100;
             mul temp -1;
             actor.addTimeUnits temp; # takes our whole turn to go back into stealth mode
-            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
+            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_shadow | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
             skill.getTag temp Tag.SKILL_LIKE_FIGHTING_A_SHADOW_RESTEALTH_DURATION;
             actor.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp; # activate stealth
-            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
+            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_shadow | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
             actor.setTag Tag.UNIT_LIKE_A_SHADOW_COUNTER 0; # reset this counter
             battle_game.flashMessage "STR_SKILL_INFILTRATION_ACTIVATED" temp;
+          end;
+
+          return;
+
+      - new: ROSIGMA_sUU_infiltration_camo_cloak
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var int stealthActive;
+          var int shadowSkill;
+          var ptr RuleArmor myRuleArmor;
+
+          # Check to see if we're using the Fighting A Shadow skill
+          skill.getTag shadowSkill Tag.SKILL_ACTIVATE_CAMO_CLOAK_ID;
+          if lt shadowSkill 1;
+            # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Not using SKILL_LIKE_FIGHTING_A_SHADOW_ID. Aborting.";
+            return;
+          end;
+
+          # Check our counter
+          actor.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; # get the number of turns required
+          if lt temp 1;
+            battle_game.flashMessage "STR_SKILL_INFILTRATION_CHECK_NO_RESTEALTH" temp;
+            # debug_log "skillUseUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Unit cannot regain infiltration. Aborting.";
+          end;
+          actor.getTag temp2 Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER;
+          sub temp temp2; # calculate kills remaining
+          limit_lower temp 0; # negatives look ugly when displayed.
+
+          actor.getTag stealthActive Tag.UNIT_STEALTH_IS_ACTIVE; # activate stealth
+          if eq shadowSkill 3;
+            if gt stealthActive 0;
+              battle_game.flashMessage "STR_SCRIPT_CAMO_CLOAK_DEACTIVATE";
+              actor.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0; # disable stealth
+              actor.getTag temp Tag.UNIT_DIG_IN_MOVE_PENALTY;
+              actor.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER 0;
+              if le temp 100;
+                actor.MoveCost.setBaseNormalTimePercent 100;
+              end;
+              return;
+            end;
+            battle_game.flashMessage "STR_SCRIPT_CAMO_CLOAK_NOT_ACTIVE";
+            return;
+          end;
+
+          if eq shadowSkill 1;
+            if gt stealthActive 0;
+              battle_game.flashMessage "STR_SCRIPT_INFILTRATION_TIME_REMAINING" stealthActive;
+            else;
+              if lt temp 1;
+                battle_game.flashMessage "STR_SCRIPT_INFILTRATION_RECHARGED";
+              else;
+                battle_game.flashMessage "STR_SCRIPT_INFILTRATION_RECHARGING" temp;
+              end;
+            end;
+            return;
+          end;
+
+          if gt temp 0;
+            battle_game.flashMessage "STR_SCRIPT_INFILTRATION_RECHARGING" temp;
+            return;
+          end;
+
+          if le have_tu 0;
+            battle_game.flashMessage "STR_SCRIPT_CAMO_CLOAK_NOT_ENOUGH_TUS";
+            return;
+          end;
+
+          actor.getTimeUnitsMax temp;
+          muldiv temp 90 100;
+          mul temp -1;
+          actor.addTimeUnits temp; # takes most of our turn to go back into stealth mode
+          # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
+          skill.getTag temp Tag.SKILL_ACTIVATE_CAMO_CLOAK_RESTEALTH_DURATION;
+          actor.setTag Tag.UNIT_STEALTH_IS_ACTIVE temp; # activate stealth
+          # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
+          actor.setTag Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER 0; # reset this counter
+          battle_game.flashMessage "STR_SKILL_CAMO_CLOAK_ACTIVATED" temp;
+          set temp2 9999;
+          actor.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER temp2; # set the multiplier for dig in compatibility
+          actor.MoveCost.getBaseTimePercent temp; #highest penalty applies
+          if lt temp temp2;
+            actor.MoveCost.setBaseNormalTimePercent temp2; #moving is more expensive
           end;
 
           return;

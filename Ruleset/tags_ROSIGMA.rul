@@ -38,9 +38,6 @@ extended:
       ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS: int  # if true, melee type damage bypasses the self-destruct
       # *** Reinforcement TU scripts ***
       ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
-      # *** Infiltrator scripts ***
-      ARMOR_IS_INFILTRATOR: int
-      ARMOR_RESTEALTH_KILL_REQUIREMENT: int
       # *** Dodge bypass scripts ***
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: int
       # *** Diehard ***
@@ -72,6 +69,13 @@ extended:
       # *** CAS Scripts ***
       UNIT_IS_CAS_STRIKE: int #Unit counts as a CAS strike designator for the purposes of scripts
       UNIT_IS_INVULNERABLE: int #All hits to the unit are nullified
+      # *** Stealth and Infiltration Scripts ***
+      ARMOR_IS_INFILTRATOR: int  # does this armor allow us to infiltrate?
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: int  # how many kills do we need to restealth with this character?
+      ARMOR_RESTEALTH_TURN_REQUIREMENT: int  # how many turns cooldown do we need to restealth with this character
+      ARMOR_MOVEMENT_BREAKS_STEALTH: int #does movement break stealth? If so, how many tiles do we need to move from our turn start position?
+      ARMOR_IS_DEEP_STRIKE: int  # does this armor allow us to deep strike? WIP
+
 
     RuleSoldierBonus:
       BONUS_ENERGY_SHIELD_HP_PER_TURN: int
@@ -161,9 +165,13 @@ extended:
       SKILL_MIRACLE_ID: int
       SKILL_COMMAND_ID: int
       SKILL_BONEHEAD_ORDER_ID: int
+      # *** Stealth and Infiltration Scripts ***
       SKILL_LIKE_FIGHTING_A_SHADOW_ID: int
       SKILL_LIKE_FIGHTING_A_SHADOW_RESTEALTH_DURATION: int
-
+      SKILL_ACTIVATE_CAMO_CLOAK_ID: int
+      SKILL_ACTIVATE_CAMO_CLOAK_RESTEALTH_DURATION: int
+      # *** Dig In ***
+      DigIn: int
 
     BattleUnit:
       # *** Tags for handling energy shields on units ***
@@ -179,11 +187,21 @@ extended:
       # *** Perils of the Warp ***
       UNIT_PERILS_MODIFIER: int  # our cumulative increase to perils of the warp
       # *** Dig In ***
+      TimesHit: int
       DugInBonus: int
+      LocX: int
+      LocY: int
+      LocZ: int
+      UNIT_DIG_IN_MOVE_PENALTY: int #records the move penalty for compatibility with camo cloak stealth
       # *** Dodge ***
       LAST_DODGE_FRAME: int
       DODGED: int
       UNIT_COUNTER_SUCCESSFUL_DODGES: int
+      # *** Stealth and Infiltration Scripts ***
+      UNIT_STEALTH_IS_ACTIVE: int  # is stealth mode currently active? If so, for how many turns?
+      UNIT_LIKE_A_SHADOW_COUNTER: int  # keeps track of the number of kills this unit has to activate Like Fighting A Shadow
+      UNIT_STEALTH_CHARGE_TURN_COUNTER: int #how many turns have we been charging our stealth?
+      UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER: int #move multiplier while the Camo Cloak is active
 
     RuleSoldier:
       # *** Bonehead orders ***

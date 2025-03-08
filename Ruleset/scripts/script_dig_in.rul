@@ -1,19 +1,11 @@
 extended:
-  tags:
-
-    BattleUnit:
-      TimesHit: int
-      DugInBonus: int
-      LocX: int
-      LocY: int
-      LocZ: int
-    RuleSkill:
-      DigIn: int
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
     skillUseUnit:
       - offset: 1
         code: |
+          var int temp;
           var int MaxTu;
           var int CurrentTu;
           var int MaxEnergy;
@@ -53,8 +45,16 @@ extended:
                 actor.setEnergy CurrentEnergy;
                 actor.setTimeUnits CurrentTu;
                 actor.setTag Tag.DugInBonus 0;
-                actor.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
-                actor.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
+                actor.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+                actor.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+                if le temp 100;
+                  actor.MoveCost.setBaseNormalTimePercent 100; ## revert move cost to normal
+                  # debug_log "Dig In Scripts; skillUseUnit, offset 1: Camo penalty null. Move cost reverted to normal. temp:" temp;
+                else;
+                  actor.MoveCost.setBaseNormalTimePercent temp;
+                  # debug_log "Dig In Scripts; skillUseUnit, offset 1: Camo penalty active. Move cost set to camo penalty. temp:" temp;
+                end;
+                actor.MoveCost.setBaseNormalEnergyPercent 100; ## revert energy cost to normal
                 battle_game.flashMessage "Unit No Longer Dug In!";
                 return;
               else;
@@ -89,6 +89,7 @@ extended:
               actor.setTag Tag.LocZ locZ;
               actor.MoveCost.setBaseNormalTimePercent 9999; # unit energy and move costs increased by 10x
               actor.MoveCost.setBaseNormalEnergyPercent 9999; # unit energy and move costs increased by 10x
+              actor.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 9999; # set the multiplier for dig in compatibility
               battle_game.flashMessage "Dug In!";
               # debug_log "Dig In Scripts; skillUseUnit, offset 1: Dig In successfully activated.";
             else;
@@ -113,6 +114,7 @@ extended:
           var int currentX;
           var int currentY;
           var int currentZ;
+          var int temp;
 
           battle_game.getTurnSide TurnSide;
           if neq TurnSide FACTION_PLAYER; # don't bother if it's not our turn.
@@ -130,7 +132,13 @@ extended:
           if neq kneeling 1;
             # debug_log "Dig In Scripts; newTurnUnit, offset 99: Aborting. Unit doesn't have Dig-In Bonus. HasBonus:" HasBonus;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return;
           end;
@@ -143,19 +151,37 @@ extended:
           unit.getTag locZ Tag.LocZ;
           if neq locX currentX;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return;
           end;
           if neq locY currentY;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return;
           end;
           if neq locZ currentZ;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return;
           end;
@@ -194,7 +220,13 @@ extended:
           if neq isKneeling 1;
             # debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit isn't kneeling. isKneeling:" isKneeling;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return power part side;
           end;
@@ -225,21 +257,39 @@ extended:
           if neq locX currentX;
             # debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentX:" currentX;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return power part side;
           end;
           if neq locY currentY;
             # debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentY:" currentY;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return power part side;
           end;
           if neq locZ currentZ;
             # debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Unit X position changed. currentZ:" currentZ;
             unit.setTag Tag.DugInBonus 0;
-            unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            unit.setTag Tag.UNIT_DIG_IN_MOVE_PENALTY 0;
+            unit.getTag temp Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER;
+            if le temp 100;
+              unit.MoveCost.setBaseNormalTimePercent 100; # revert move cost to normal
+            else;
+              unit.MoveCost.setBaseNormalTimePercent temp;
+            end;
             unit.MoveCost.setBaseNormalEnergyPercent 100; ## revert move cost to normal
             return power part side;
           end;
