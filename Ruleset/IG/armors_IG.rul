@@ -1278,7 +1278,7 @@ armors:
   - &STR_GUARD_ARMOR_TANITH  # DAMAGE + STATS
     type: STR_TANITH_CAMO_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 9
+    visibilityAtDark: 20 #basic NV
     camouflageAtDay: -15
     camouflageAtDark: -8
     antiCamouflageAtDay: 5
@@ -1313,6 +1313,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
+      ARMOR_RESTEALTH_TURN_REQUIREMENT: 2
 
   - type: STR_TANITH_MEDIC_ARMOR
     refNode: *STR_GUARD_ARMOR_TANITH
@@ -3939,8 +3940,27 @@ armors:
     allowsRunning: false
     allowInv: false
     constantAnimation: true
-    drawingRoutine: 4
     loftempsSet: [1]
+    drawingRoutine: 4
+    scripts:
+      selectUnitSprite: |
+        # this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
     moveCost:
       flyDownPercent: [1000, 9000]
     damageModifier:  #Invulnerable; dummy unit
