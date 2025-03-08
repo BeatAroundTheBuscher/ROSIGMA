@@ -126,6 +126,7 @@ extended:
           damageType.getResistType temp;
           # disable stealth for unit from non-impact damage
           if neq temp 10;
+            battle_game.flashMessage "STR_SCRIPT_INFILTRATION_NO_TIME_REMAINING";
             unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0;
             unit.getRuleArmor myRuleArmor;
             myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
@@ -153,6 +154,7 @@ extended:
             return power part side;
           end;
 
+          battle_game.flashMessage "STR_SCRIPT_INFILTRATION_NO_TIME_REMAINING";
           attacker.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0; # disable stealth
           attacker.getRuleArmor myRuleArmor;
           myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #check to see if we're a camo cloak
@@ -417,7 +419,7 @@ extended:
           # debug_log "newTurnUnit | ROSIGMA_sUU_infiltration_camo_cloak | offset: 1 | Restealthing: UNIT_STEALTH_IS_ACTIVE. temp." temp;
           actor.setTag Tag.UNIT_STEALTH_CHARGE_TURN_COUNTER 0; # reset this counter
           battle_game.flashMessage "STR_SKILL_CAMO_CLOAK_ACTIVATED" temp;
-          set temp2 9999;
+          set temp2 700;
           actor.setTag Tag.UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER temp2; # set the multiplier for dig in compatibility
           actor.MoveCost.getBaseTimePercent temp; #highest penalty applies
           if lt temp temp2;
