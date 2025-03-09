@@ -5,10 +5,6 @@ extended:
       # *** Energy shields ***
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: int
       ARMOR_ENERGY_SHIELD_DECAY: int
-      # *** Infection ***
-      INFECTION_RESIST: int  # reduces infection damage by this as a %
-      INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
-      INFECTION_RESIST_TYPE: int  # bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
       # *** Unit types ***
       UNIT_TYPE_MECHANICAL: int
       UNIT_TYPE_DAEMONIC: int
@@ -75,7 +71,10 @@ extended:
       ARMOR_RESTEALTH_TURN_REQUIREMENT: int  # how many turns cooldown do we need to restealth with this character
       ARMOR_MOVEMENT_BREAKS_STEALTH: int #does movement break stealth? If so, how many tiles do we need to move from our turn start position?
       ARMOR_IS_DEEP_STRIKE: int  # does this armor allow us to deep strike? WIP
-
+      # *** Infection/Corruption Scripts ***
+      INFECTION_RESIST: int  # reduces infection damage by this as a %
+      INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
+      INFECTION_RESIST_TYPE: int  # bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
 
     RuleSoldierBonus:
       BONUS_ENERGY_SHIELD_HP_PER_TURN: int
@@ -97,10 +96,6 @@ extended:
       ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: int
       ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT: int
       ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: int  # overrides damage type bypassing if true
-      # *** Infection system tags ***
-      INFECTION_DAMAGE_FLAT: int  # if 0 uses damage dealt
-      INFECTION_DAMAGE_PERCENT: int  # inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: int  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       # *** Bomb/kamikazi scripts ***
       ITEM_IS_BOMB: int
       ITEM_IS_BOMB_ON_DEATH: int  # does this blow up on death?
@@ -159,10 +154,13 @@ extended:
       MUNITION_DELAY: int  # number of to prime the munition's delay to; -1 sets it to 0. -2 activates the fuse only
       # *** CAS Scripts ***
       ITEM_IS_AIRSTRIKE_DESIGNATOR_2: int #counts as a CAS item for the purposes of scripts
+      # *** Infection/Corruption Scripts ***
+      INFECTION_DAMAGE_FLAT: int  # if 0 uses damage dealt
+      INFECTION_DAMAGE_PERCENT: int  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: int  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
     RuleSkill:
       # *** Misc ***
-      SKILL_MIRACLE_ID: int
       SKILL_COMMAND_ID: int
       SKILL_BONEHEAD_ORDER_ID: int
       # *** Stealth and Infiltration Scripts ***
@@ -172,6 +170,8 @@ extended:
       SKILL_ACTIVATE_CAMO_CLOAK_RESTEALTH_DURATION: int
       # *** Dig In ***
       DigIn: int
+      # *** Sisters of Battle Miracles ***
+      SKILL_MIRACLE_ID: int
 
     BattleUnit:
       # *** Tags for handling energy shields on units ***
@@ -179,7 +179,7 @@ extended:
       UNIT_ENERGY_SHIELD_DECAY: int
       # *** Diehard ***
       DIEHARD_TEMP_MODIFIER: int  # our cumulative penalty to diehard triggers since the start of our last turn
-      # *** Misc ***
+      # *** Misc/Blessings ***
       SOLDIER_BLESS_CURRENT_MELEE_BONUS: int
       SOLDIER_BLESS_CURRENT_FIRING_BONUS: int
       SOLDIER_BLESS_CORRUPTION_RESISTANCE: int
@@ -202,6 +202,21 @@ extended:
       UNIT_LIKE_A_SHADOW_COUNTER: int  # keeps track of the number of kills this unit has to activate Like Fighting A Shadow
       UNIT_STEALTH_CHARGE_TURN_COUNTER: int #how many turns have we been charging our stealth?
       UNIT_CAMO_CLOAK_MOVE_COST_MULTIPLIER: int #move multiplier while the Camo Cloak is active
+      # *** Sisters of Battle Miracles ***
+      UNIT_EXP_BRAVERY: int
+      UNIT_EXP_FIRING: int
+      UNIT_EXP_MELEE: int
+      UNIT_EXP_REACTIONS: int
+      UNIT_EXP_THROWING: int
+      UNIT_EXP_PSISKILL: int
+      UNIT_EXP_PSISTRENGTH: int
+      UNIT_EXP_STRENGTH: int
+      UNIT_HAS_BEEN_MARTYRED: int
+      # *** Infection/Corruption Scripts ***
+      CURRENT_INFECTION_DAMAGE: int  # current amount of infection the unit has
+      CURRENT_INFECTION_TYPE: int  # type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
+      CURRENT_INFECTION_FACTION: int  # the faction that caused the infection; also determines which faction an infection spawned unit aligns with
+      LAST_INFECTION_DAMAGE: int  # infection damage accumulated since last start of unit turn
 
     RuleSoldier:
       # *** Bonehead orders ***
@@ -214,3 +229,16 @@ extended:
       SOLDIER_CAN_BE_TRAITOR: int
       SOLDIER_COMMAND_POINTS: int
       SOLDIER_IS_LONE_WOLF: int
+      # *** Sisters of Battle Miracles ***
+      SOLDIER_MIRACLE_POINTS: int
+      SOLDIER_IS_SOB: int
+
+    BattleGame:
+      # *** Sisters of Battle Miracles ***
+      TURN_ACTIVE_MIRACLE: int
+      CHOICE_ACTIVE_MIRACLE: int
+      MIRACLE_POINTS: int
+      NUMBER_SOLDIERS: int
+      TURN_SPIRIT_OF_MARTYR: int
+      # *** Infection/Corruption Scripts ***
+      RESEARCH_LEVEL_CURE: int
