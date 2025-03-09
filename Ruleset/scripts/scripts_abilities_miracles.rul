@@ -50,32 +50,7 @@ soldiers:
       SOLDIER_IS_SOB: 1
 
 extended:
-  tags:
-    BattleGame:
-      TURN_ACTIVE_MIRACLE: int
-      CHOICE_ACTIVE_MIRACLE: int
-      MIRACLE_POINTS: int
-      NUMBER_SOLDIERS: int
-      TURN_SPIRIT_OF_MARTYR: int
-    RuleSkill:
-      SKILL_MIRACLE_ID: int
-    RuleSoldier:
-      SOLDIER_MIRACLE_POINTS: int
-      SOLDIER_IS_SOB: int
-    BattleUnit:
-      UNIT_EXP_BRAVERY: int
-      UNIT_EXP_FIRING: int
-      UNIT_EXP_MELEE: int
-      UNIT_EXP_REACTIONS: int
-      UNIT_EXP_THROWING: int
-      UNIT_EXP_PSISKILL: int
-      UNIT_EXP_PSISTRENGTH: int
-      UNIT_EXP_STRENGTH: int
-      UNIT_HAS_BEEN_MARTYRED: int
-      # infection scripts
-      CURRENT_INFECTION_DAMAGE: int  # current amount of infection the unit has
-      CURRENT_INFECTION_TYPE: int
-
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
     damageUnit:  # get Miracle Points per HP
@@ -133,9 +108,7 @@ extended:
           # end;
 
           battle_game.getTag temp1 Tag.TURN_SPIRIT_OF_MARTYR;
-          battle_game.getTurn temp2;
-
-          if eq temp1 temp2;  # can only work once per turn
+          if gt temp1 0;  # can only work once per turn
             return;
           end;
 
@@ -152,10 +125,11 @@ extended:
           add temp2 temp1; # cost = 2 * HP to save
           sub temp2 10; # cost for getting above 0 HP  # 10 = 5 * 2
 
-          if and le temp1 0 gt temp2 0;
+          if and lt temp1 1 gt temp2 0; #if we have enough Miracle Points to pay for Spirit of the Martyr and the damage is lethal
             add to_health temp1; # temp1 is negative
             sub to_health 5; # get above 0 HP
             set to_wound 0;
+            unit.setTag Tag.CURRENT_INFECTION_FACTION 0; # untag
             unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # spirit of martyr purges all infection/corruption
             unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # spirit of martyr purges all infection/corruption
             battle_game.setTag Tag.MIRACLE_POINTS temp2;
@@ -203,6 +177,11 @@ extended:
           unit.getFaction temp1;
           if neq temp1 FACTION_PLAYER;
             return;
+          end;
+
+          battle_game.getTag temp1 Tag.TURN_SPIRIT_OF_MARTYR; #reset spirit of the martyr
+          if gt temp1 0; # can only work once per turn
+            battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR 0;
           end;
 
           unit.getRuleSoldier rSoldier;

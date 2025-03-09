@@ -3,23 +3,7 @@
 # scripts mostly used for nurgle plague
 
 extended:
-  tags:
-    BattleUnit:
-      CURRENT_INFECTION_DAMAGE: int  # current amount of infection the unit has
-      CURRENT_INFECTION_TYPE: int  # type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
-      CURRENT_INFECTION_FACTION: int  # the faction that caused the infection; also determines which faction an infection spawned unit aligns with
-      LAST_INFECTION_DAMAGE: int  # infection damage accumulated since last start of unit turn
-      SOLDIER_BLESS_CORRUPTION_RESISTANCE: int
-    RuleItem:
-      INFECTION_DAMAGE_FLAT: int  # if 0 uses damage dealt
-      INFECTION_DAMAGE_PERCENT: int  # inflicts % of damage dealt as infection damage
-      INFECTION_TYPE: int  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    RuleArmor:
-      INFECTION_RESIST: int  # reduces infection damage by this as a %
-      INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
-      INFECTION_RESIST_TYPE: int  # bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
-    BattleGame:
-      RESEARCH_LEVEL_CURE: int
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
     returnFromMissionUnit:
@@ -295,6 +279,7 @@ extended:
           var int INFECTION_MID_THRESHOLD;
           var int INFECTION_HIGH_THRESHOLD;
           var ptr RuleUnit myRuleUnit;
+          var ptr RuleSoldier rSoldier;
 
           unit.getTag infectionDamage Tag.CURRENT_INFECTION_DAMAGE;
 
@@ -329,6 +314,38 @@ extended:
             unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # untag
             unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # untag
             return;
+          end;
+
+          #Spirit of the Martyr component
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag temp Tag.SOLDIER_IS_SOB;
+          # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Soldier is Sob?" temp;
+          if gt temp 0;
+            battle_game.getTag temp Tag.TURN_SPIRIT_OF_MARTYR;
+            unit.getTag temp2 Tag.UNIT_HAS_BEEN_MARTYRED;
+            # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Spirit of Martyr Triggered?:" temp;
+            # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Unit Martyred?:" temp2;
+            add temp temp2;
+            if lt temp 1; #we can't have been Martyred and Spirit of the Martyr can't have triggered this turn
+              unit.Stats.getPsiSkill temp; #we can only be saved if our Devotion is greater than our corruption
+              battle_game.setTag Tag.MIRACLE_POINTS 100; #test parameter
+              battle_game.getTag temp2 Tag.MIRACLE_POINTS;
+              # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Devotion:" temp;
+              # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Miracle Points:" temp2;
+              # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. infectionDamage:" infectionDamage;
+              if and ge temp2 infectionDamage ge temp infectionDamage; # we're saved! 0 out infection metrics, trigger use of Spirit of Martyr
+                set to_wound 0;
+                unit.setTag Tag.CURRENT_INFECTION_FACTION 0; # untag
+                unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # untag
+                unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # untag
+                unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; # a unit can only be martyred once per combat
+                sub temp2 infectionDamage;
+                battle_game.setTag Tag.MIRACLE_POINTS temp2;
+                battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR 1;
+                battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
+                return;
+              end;
+            end;
           end;
 
           unit.getHealthMax temp;
@@ -420,6 +437,7 @@ extended:
           var int temp;
           var int temp2;
           var int infectionGrowthMultiplier;
+          var ptr RuleSoldier rSoldier;
 
           unit.getHealth remainingHealth;
 
@@ -498,7 +516,6 @@ extended:
             return;
           end;
 
-
           unit.getTag infectionFaction Tag.CURRENT_INFECTION_FACTION; # set the faction
           # debug_log "Infection Scripts; newTurnUnit, offset 22: Infected unit infection faction:" infectionFaction;
           if neq infectionFaction FACTION_HOSTILE; # player infections don't spawn units for balance reasons
@@ -513,6 +530,38 @@ extended:
           end;
 
           # beyond this point it's assumed the victim has suffered lethal infection damage; time to transform it appropriately
+
+          #Spirit of the Martyr component
+          unit.getRuleSoldier rSoldier;
+          rSoldier.getTag temp Tag.SOLDIER_IS_SOB;
+          # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Soldier is Sob?" temp;
+          if gt temp 0;
+            battle_game.getTag temp Tag.TURN_SPIRIT_OF_MARTYR;
+            unit.getTag temp2 Tag.UNIT_HAS_BEEN_MARTYRED;
+            # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Spirit of Martyr Triggered?:" temp;
+            # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Unit Martyred?:" temp2;
+            add temp temp2;
+            if lt temp 1; #we can't have been Martyred and Spirit of the Martyr can't have triggered this turn
+              unit.Stats.getPsiSkill temp; #we can only be saved if our Devotion is greater than our corruption
+              battle_game.setTag Tag.MIRACLE_POINTS 100; #test parameter
+              battle_game.getTag temp2 Tag.MIRACLE_POINTS;
+              # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Devotion:" temp;
+              # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Miracle Points:" temp2;
+              # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. infectionDamage:" infectionDamage;
+              if and ge temp2 infectionDamage ge temp infectionDamage; # we're saved! 0 out infection metrics, trigger use of Spirit of Martyr
+                set to_wound 0;
+                unit.setTag Tag.CURRENT_INFECTION_FACTION 0; # untag
+                unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # untag
+                unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # untag
+                unit.setTag Tag.UNIT_HAS_BEEN_MARTYRED 1; # a unit can only be martyred once per combat
+                sub temp2 infectionDamage;
+                battle_game.setTag Tag.MIRACLE_POINTS temp2;
+                battle_game.setTag Tag.TURN_SPIRIT_OF_MARTYR 1;
+                battle_game.flashMessage "STR_SCRIPT_SPIRIT_OF_MARTYR";
+                return;
+              end;
+            end;
+          end;
 
           unit.getHealthMax temp;
           limit_upper infectionDamage temp; # infection damage cannot exceed the victim's maximum health
