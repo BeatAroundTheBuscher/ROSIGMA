@@ -2069,3 +2069,25 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_DAEMONIC: 1
+
+    scripts:
+      selectUnitSprite:
+        var int reg0;
+        var int reg1;
+        var int reg2;
+        var int reg3;
+        var int in0 sprite_index;
+        var int in1 sprite_offset;
+
+        if eq blit_part BODYPART_TORSO;
+          set reg0 anim_frame;
+          unit.getId reg1;
+          add reg0 reg1;
+          div reg0 4;
+          mod reg0 2;
+          offset reg0 8 272;
+          add reg0 in1;
+          return reg0;
+        end;
+        add in0 in1;
+        return in0;
