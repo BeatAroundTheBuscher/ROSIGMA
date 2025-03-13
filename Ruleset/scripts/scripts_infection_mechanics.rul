@@ -328,7 +328,6 @@ extended:
             add temp temp2;
             if lt temp 1; #we can't have been Martyred and Spirit of the Martyr can't have triggered this turn
               unit.Stats.getPsiSkill temp; #we can only be saved if our Devotion is greater than our corruption
-              battle_game.setTag Tag.MIRACLE_POINTS 100; #test parameter
               battle_game.getTag temp2 Tag.MIRACLE_POINTS;
               # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Devotion:" temp;
               # debug_log "Infection Scripts; newTurnUnit, offset 23. Spirit of the Martyr Devotion vs Infection Check. Miracle Points:" temp2;
@@ -361,9 +360,9 @@ extended:
           if eq infectionType 1; # if Nurgle
             if le infectionDamage INFECTION_LOW_THRESHOLD; # low level infection
               rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Boomer Zombie
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Boomer Zombie
               rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Rotbearer
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Rotbearer
               battle_game.randomRange temp 1 100;
               if lt temp 71;
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
@@ -378,9 +377,9 @@ extended:
           else eq infectionType 3; # if Slaanesh
             if le infectionDamage INFECTION_LOW_THRESHOLD; # low level infection
               rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Lesser Daemonette
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Lesser Daemonette
               rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Daemonette
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Daemonette
               rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
             else; # very high level infection; spawns Dire Daemonette
               rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
@@ -397,15 +396,17 @@ extended:
               else;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               end;
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 51;
+              if lt temp 34;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
-              else;
+              else lt temp 67;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              else lt temp 101;
+                rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
               end;
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection
-              rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection
+                rules.getRuleUnit myRuleUnit "STR_EXALTED_FLAMER_TERRORIST";
             else; # very high level infection
               rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
             end;
@@ -543,13 +544,11 @@ extended:
             add temp temp2;
             if lt temp 1; #we can't have been Martyred and Spirit of the Martyr can't have triggered this turn
               unit.Stats.getPsiSkill temp; #we can only be saved if our Devotion is greater than our corruption
-              battle_game.setTag Tag.MIRACLE_POINTS 100; #test parameter
               battle_game.getTag temp2 Tag.MIRACLE_POINTS;
               # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Devotion:" temp;
               # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. Miracle Points:" temp2;
               # debug_log "Infection Scripts; newTurnUnit, offset 22. Spirit of the Martyr Devotion vs Infection Check. infectionDamage:" infectionDamage;
               if and ge temp2 infectionDamage ge temp infectionDamage; # we're saved! 0 out infection metrics, trigger use of Spirit of Martyr
-                set to_wound 0;
                 unit.setTag Tag.CURRENT_INFECTION_FACTION 0; # untag
                 unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # untag
                 unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # untag
@@ -575,16 +574,16 @@ extended:
           if eq infectionType 1;
             if le infectionDamage INFECTION_LOW_THRESHOLD; # low level infection
               rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Boomer Zombie
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Boomer Zombie
               rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Rotbearer
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Rotbearer
               battle_game.randomRange temp 1 100;
               if lt temp 71;
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
               else;
                 rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
               end;
-            else gt infectionDamage INFECTION_HIGH_THRESHOLD; # very high level infection; spawns Plaguebearer
+            else; # very high level infection; spawns Plaguebearer
               rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
             end;
           else eq infectionType 2; # if GSC
@@ -592,11 +591,11 @@ extended:
           else eq infectionType 3; # if Slaanesh
             if le infectionDamage INFECTION_LOW_THRESHOLD; # low level infection
               rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Lesser Daemonette
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection; spawns Lesser Daemonette
               rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Daemonette
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection; spawns Daemonette
               rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
-            else gt infectionDamage INFECTION_HIGH_THRESHOLD; # very high level infection; spawns Dire Daemonette
+            else; #very high level infection; spawns Dire Daemonette
               rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
             end;
           else eq infectionType 4; # if Tzeentch
@@ -611,15 +610,17 @@ extended:
               else;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
               end;
-            else and gt infectionDamage INFECTION_LOW_THRESHOLD le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection
+            else le infectionDamage INFECTION_MID_THRESHOLD; # mid level infection
               battle_game.randomRange temp 1 100;
-              if lt temp 51;
+              if lt temp 34;
                 rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
-              else;
+              else lt temp 67;
                 rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              else lt temp 101;
+                rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
               end;
-            else and gt infectionDamage INFECTION_MID_THRESHOLD le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection
-              rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
+            else le infectionDamage INFECTION_HIGH_THRESHOLD; # high level infection
+                rules.getRuleUnit myRuleUnit "STR_EXALTED_FLAMER_TERRORIST";
             else; # very high level infection
               rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
             end;
