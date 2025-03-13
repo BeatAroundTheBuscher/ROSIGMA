@@ -119,20 +119,14 @@ extended:
 
           battle_game.getTag portalPower Tag.DAEMON_PORTAL_POWER;
           # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Initial portal power:" portalPower;
-          add portalPower 100; #power increases by 100 per portal
-          battle_game.setTag Tag.DAEMON_PORTAL_POWER portalPower;
-          # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Portal power after tick:" portalPower;
           battle_game.randomRange temp 1 1000;
           # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Base roll:" temp;
           add temp portalPower;
           # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Roll plus portal power:" temp;
-          if lt temp 201;
+          if lt temp 301;
             unit.setTimeUnits 0;
             return;
           else lt temp 501; #we can't spawn a daemon, but we will terrorize the player with Dark Sermon reaction fire
-            unit.getTimeUnitsMax temp;
-            unit.setTimeUnits temp;
-            return;
           else lt temp 701; #minor daemons
             battle_game.randomRange temp 1 100;
               set portalPowerCost 100;
@@ -218,9 +212,12 @@ extended:
                 rules.getRuleUnit myRuleUnit "STR_SLAANESH_CHOSEN";
               end;
           end;
-          if lt portalPower portalPowerCost;
+          if or lt portalPower portalPowerCost eq portalPowerCost 0;
             unit.getTimeUnitsMax temp;
             unit.setTimeUnits temp;
+            add portalPower 100;
+            battle_game.setTag Tag.DAEMON_PORTAL_POWER portalPower;
+            # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Portal power after tick:" portalPower;
             return;
           end;
           unit.setSpawnUnit myRuleUnit;
