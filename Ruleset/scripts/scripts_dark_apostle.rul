@@ -1,0 +1,323 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+  tags:
+    BattleUnit:
+      UNIT_HAS_RECEIVED_RUINOUS_BLESSING: int
+      UNIT_HAS_RUINOUS_BLESSING_PROTECTION: int
+      UNIT_RUINOUS_BLESSING_GLOW_PASS: int
+    RuleArmor:
+      UNIT_HAS_RUINOUS_BLESSING: int
+      IS_DAEMONIC_PORTAL: int
+    RuleItem:
+      ITEM_PORTAL_SPAWNER: int
+    BattleGame:
+      DAEMON_PORTAL_POWER: int
+
+  scripts:
+    damageUnit:  # get Miracle Points per HP
+      - new: ROSIGMA_dU_dark_apostle_ruinous_blessing_trigger
+        offset: 99
+        code: |
+          var int temp;
+          var int Health;
+          var ptr RuleSoldier rSoldier;
+          var ptr RuleArmor armorRule;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_HAS_RUINOUS_BLESSING;
+          if lt temp 1;
+            return;
+          end;
+
+          unit.getTag temp Tag.UNIT_HAS_RECEIVED_RUINOUS_BLESSING;
+          if gt temp 0;
+            return;
+          end;
+
+          set temp to_health;
+          unit.getHealth Health;
+          if ge temp Health; #if we would be dealt lethal damage, naw dawg
+            set to_health 0;
+            set to_stun 0;
+            set to_morale 0;
+            set to_energy 0;
+            set to_time 0;
+            set to_wound 0;
+            loop var i 6; # cycle through the body parts to remove all wounds
+              unit.getFatalwounds temp i; # check the number of wounds in this bodypart
+              unit.setFatalwounds i 0; # remove the wounds
+            end;
+            unit.getHealthMax temp; #set health to half of maximum
+            div temp 2;
+            unit.setHealth temp;
+            unit.getEnergyMax temp; #set energy to maximum
+            unit.setEnergy temp;
+            unit.getTimeUnitsMax temp; #set time to maximum
+            unit.setTimeUnits temp;
+            unit.setStun 0; #zero out stun
+            unit.setMorale 100;
+            unit.setFire 0;
+            unit.setTag Tag.CURRENT_INFECTION_FACTION 0; # untag
+            unit.setTag Tag.CURRENT_INFECTION_DAMAGE 0; # spirit of martyr purges all infection/corruption
+            unit.setTag Tag.CURRENT_INFECTION_TYPE 0; # spirit of martyr purges all infection/corruption
+            unit.setTag Tag.UNIT_HAS_RECEIVED_RUINOUS_BLESSING 1; #so we can't trigger this again
+            unit.setTag Tag.UNIT_HAS_RUINOUS_BLESSING_PROTECTION 1;
+            battle_game.flashMessage "STR_RUINOUS_BLESSING";
+          end;
+
+          return;
+
+      - new: ROSIGMA_dU_dark_apostle_portal_empower
+        offset: 99
+        code: |
+          var int temp;
+          var int portalPower;
+
+          weapon_item.getTag temp Tag.ITEM_PORTAL_SPAWNER;
+          if lt temp 1;
+            return;
+          end;
+
+          set portalPower to_health; #add health damage to portal power
+          # debug_log "damageUnit | ROSIGMA_dU_dark_apostle_portal_empower | offset: 99 | Power gained from to_heath:" to_health;
+          set temp to_morale;
+          div temp 40;
+          add portalPower temp;
+          # debug_log "damageUnit | ROSIGMA_dU_dark_apostle_portal_empower | offset: 99 | Total power gained:" portalPower;
+          limit_upper portalPower 200;
+          battle_game.getTag temp Tag.DAEMON_PORTAL_POWER;
+          add temp portalPower;
+          battle_game.setTag Tag.DAEMON_PORTAL_POWER temp;
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_dU_dark_apostle_daemon_portal_spawn
+        offset: 2
+        code: |
+          var int temp;
+          var int portalPowerCost;
+          var int portalPower;
+          var ptr RuleArmor myRuleArmor;
+          var ptr RuleUnit myRuleUnit;
+
+          unit.getRuleArmor myRuleArmor;
+          myRuleArmor.getTag temp Tag.IS_DAEMONIC_PORTAL;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTurnSide temp;
+          if neq temp FACTION_PLAYER; #we trigger at the start of the player's turn
+            # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Turn isn't player turn. Aborting.";
+            return;
+          end;
+
+          unit.getHealth temp;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTag portalPower Tag.DAEMON_PORTAL_POWER;
+          # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Initial portal power:" portalPower;
+          battle_game.randomRange temp 1 1000;
+          # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Base roll:" temp;
+          add temp portalPower;
+          # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Roll plus portal power:" temp;
+          if lt temp 301;
+            unit.setTimeUnits 0;
+            return;
+          else lt temp 501; #we can't spawn a daemon, but we will terrorize the player with Dark Sermon reaction fire
+          else lt temp 701; #minor daemons
+            battle_game.randomRange temp 1 100;
+              set portalPowerCost 100;
+              if lt temp 9;
+                rules.getRuleUnit myRuleUnit "STR_NURGLINGS";
+              else lt temp 17;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_BOOMER";
+              else lt temp 26;
+                rules.getRuleUnit myRuleUnit "STR_ZOMBIE";
+              else lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_BRIMSTONE_HORROR";
+              else lt temp 42;
+                rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORISTSELENE";
+              else lt temp 50;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_LESSER_DAEMON";
+              else lt temp 59;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_ROTBEARER";
+              else lt temp 67;
+                rules.getRuleUnit myRuleUnit "STR_FLAMER_TERRORIST";
+              else lt temp 75;
+                rules.getRuleUnit myRuleUnit "STR_LESSER_ROTFLY";
+              else lt temp 84;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_ZOMBIE";
+              else lt temp 92;
+                rules.getRuleUnit myRuleUnit "STR_LESSER_PLAGUETOAD";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_BLUE_HORROR_TERRORIST";
+              end;
+          else lt temp 901; #moderate daemons
+            battle_game.randomRange temp 1 100;
+              set portalPowerCost 200;
+              if lt temp 9;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_DAEMONETTE";
+              else lt temp 17;
+                rules.getRuleUnit myRuleUnit "STR_PINK_HORROR_TERRORIST";
+              else lt temp 26;
+                rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
+              else lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_CHRYSSALID_TERRORIST";
+              else lt temp 42;
+                rules.getRuleUnit myRuleUnit "STR_EXALTED_FLAMER_TERRORIST";
+              else lt temp 50;
+                rules.getRuleUnit myRuleUnit "STR_DIRE_DAEMONETTE";
+              else lt temp 59;
+                rules.getRuleUnit myRuleUnit "STR_CELATID_TERRORIST";
+              else lt temp 67;
+                rules.getRuleUnit myRuleUnit "STR_SILACOID_TERRORIST";
+              else lt temp 75;
+                rules.getRuleUnit myRuleUnit "STR_TZEENTCH_CULT_POSSESSED";
+              else lt temp 84;
+                rules.getRuleUnit myRuleUnit "STR_NEVERBORN";
+              else lt temp 92;
+                rules.getRuleUnit myRuleUnit "STR_CYBERDISC_TERRORIST";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_WORDBEARER_GALVWARRIORPOSS";
+              end;
+          else; #high level daemons
+            battle_game.randomRange temp 1 100;
+              set portalPowerCost 300;
+              if lt temp 9;
+                rules.getRuleUnit myRuleUnit "STR_SILACOID_TERRORIST_EXALTED";
+              else lt temp 17;
+                rules.getRuleUnit myRuleUnit "STR_OBLITERATOR_SOLDIER";
+              else lt temp 26;
+                rules.getRuleUnit myRuleUnit "STR_SLAANESH_ANOINTED";
+              else lt temp 34;
+                rules.getRuleUnit myRuleUnit "STR_REAPER_TERRORIST";
+              else lt temp 42;
+                rules.getRuleUnit myRuleUnit "STR_NURGLE_BLIGHT_HAULER";
+              else lt temp 50;
+                rules.getRuleUnit myRuleUnit "STR_SCREAMER_TERRORIST";
+              else lt temp 59;
+                rules.getRuleUnit myRuleUnit "STR_WORDBEARER_GALVWARRIORPOSSELITE";
+              else lt temp 67;
+                rules.getRuleUnit myRuleUnit "STR_GREATER_PLAGUE_TOAD";
+              else lt temp 75;
+                rules.getRuleUnit myRuleUnit "STR_CHAOS_BASIC_BEHEMOTH";
+              else lt temp 84;
+                rules.getRuleUnit myRuleUnit "STR_CHAOS_BEHEMOTH";
+              else lt temp 92;
+                rules.getRuleUnit myRuleUnit "STR_BLOODREAPER";
+              else;
+                rules.getRuleUnit myRuleUnit "STR_SLAANESH_CHOSEN";
+              end;
+          end;
+          if or lt portalPower portalPowerCost eq portalPowerCost 0;
+            unit.getTimeUnitsMax temp;
+            unit.setTimeUnits temp;
+            add portalPower 100;
+            battle_game.setTag Tag.DAEMON_PORTAL_POWER portalPower;
+            # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | Portal power after tick:" portalPower;
+            return;
+          end;
+          unit.setSpawnUnit myRuleUnit;
+          unit.setSpawnUnitFaction FACTION_HOSTILE;
+          unit.setSpawnUnitInstantRespawn 1;
+          sub portalPower portalPowerCost; #deduct the cost of the summon
+          battle_game.setTag Tag.DAEMON_PORTAL_POWER portalPower;
+          # debug_log "newTurnUnit | ROSIGMA_dU_dark_apostle_daemon_portal_spawn | offset: 2 | New portal power:" portalPower;
+          return;
+
+      - new: ROSIGMA_dU_dark_apostle_ruinous_blessing_trigger_end
+        offset: 2
+        code: |
+          var int temp;
+          var int temp2;
+
+          unit.getTag temp Tag.UNIT_HAS_RUINOUS_BLESSING_PROTECTION;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTurnSide temp;
+          if neq temp FACTION_PLAYER; #if it's not a player unit we don't care
+            # debug_log "createUnit | ROSIGMA_dU_dark_apostle_ruinous_blessing_trigger_end | offset: 2 | Turn isn't player turn. Aborting.";
+            return;
+          end;
+
+          unit.setTag Tag.UNIT_HAS_RUINOUS_BLESSING_PROTECTION 0;
+
+          return;
+
+
+    hitUnit:
+      - new: ROSIGMA_hU_dark_apostle_ruinous_blessing_invulnerability
+        offset: 99
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_HAS_RUINOUS_BLESSING_PROTECTION;
+          if eq temp 0;
+            return power part side;
+          end;
+
+          battle_game.flashMessage "STR_RUINOUS_BLESSING";
+          return 0 part side;
+
+
+    recolorUnitSprite:
+      #*** Handles periodic recolors due to buffs/debuffs on units ***
+      - new: 40k_rUS_dark_apostle_colour_change
+        offset: 10
+        code: |
+          var int frame;
+          var int frameLength;
+          var int recolorPeriod;
+          var int animFrame;
+          var int color;
+          var int newShade;
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_HAS_RUINOUS_BLESSING_PROTECTION;
+          if lt temp 1;
+            return new_pixel;
+          end;
+
+          set animFrame anim_frame; #set up frame timer
+          if gt animFrame 40;
+            set temp animFrame;
+            muldiv temp 1 40;
+            mul temp 40;
+            sub animFrame temp;
+            if lt animFrame 0;
+              add animFrame 40;
+            end;
+          end;
+
+          if le animFrame 11;
+            get_shade newShade old_pixel;
+            add newShade animFrame;
+            add newShade 2;
+            set_shade new_pixel newShade;
+            set_color new_pixel COLOR_X1_RED;
+          else le animFrame 21;
+            get_shade newShade old_pixel;
+            add newShade animFrame;
+            add newShade 2;
+            set_shade new_pixel newShade;
+            set_color new_pixel COLOR_X1_PURPLE0;
+          else le animFrame 31;
+            get_shade newShade old_pixel;
+            sub newShade animFrame;
+            sub newShade 2;
+            set_shade new_pixel newShade;
+            set_color new_pixel COLOR_X1_BLUE0;
+          else;
+            get_shade newShade old_pixel;
+            sub newShade animFrame;
+            sub newShade 2;
+            set_shade new_pixel newShade;
+            set_color new_pixel COLOR_X1_GREEN0;
+          end;
+
+          return new_pixel;
