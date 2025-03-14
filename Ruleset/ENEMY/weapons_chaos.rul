@@ -3685,10 +3685,56 @@ items:
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
+  - type: STR_BLIGHT_HAULER_GRAVCANNON  # High powered Blight Hauler Grav Gun
+    categories: [STR_CAT_GRAVGUN, STR_CAT_DEVASTATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    dropoff: 3  #mounted heavy weapon
+    weight: 5  # heavier
+    bigSprite: 2616
+    bulletSprite: {mod: 40k, index: 14}
+    fireSound: {mod: 40k, index: 829}
+    accuracySnap: 70
+    accuracyAimed: 100
+    tuSnap: 35
+    tuAimed: 65
+    powerRangeThreshold: 30
+    powerRangeReduction: 2
+    snapRange: 18
+    aimRange: 30
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    minRange: 10  # cumbersome heavy weapon
+    clipSize: -1
+    explosionHitSound: { mod: 40k, index: 830 }
+    hitAnimation: 2200
+    hitAnimFrames: 16
+    power: 60
+    powerForAnimation: 64
+    damageType: 12
+    damageAlter: #GRAV GUN
+      ToArmorPre: 2.0
+      ToArmor: 0.0
+      ToHealth: 1.5
+      ToStun: 1.0
+      ToEnergy: 1.0
+      ToTile: 1.0
+      ToItem: 1.0
+      RadiusReduction: 5 #because the base power is already very low
+    blastRadius: 3
+    fixedWeapon: true
+    recover: false
+    tags:
+      GravPercentage: 7
+      INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
   - type: STR_BLIGHT_HAULER_HEAVY_BOLTER     # CHAOS NURGLE HBOLTER ROSEMOD
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     size: 0.3
-    dropoff: 4
+    dropoff: 3 #mounted heavy weapon
     requires:
       - STR_ALIENS_ONLY
     weight: 1
@@ -3696,7 +3742,7 @@ items:
     bulletSprite: {mod: 40k, index: 6}
     hitSound: {mod: 40k, index: 708}
     explosionHitSound: {mod: 40k, index: 832}
-    hitAnimation: {mod: 40k, index: 120}  # Green EX
+    hitAnimation: 1170  # Green EX
     fireSound: 2138
     accuracyAimed: 0
     accuracySnap: 85
@@ -3790,7 +3836,7 @@ items:
     specialUseEmptyHand: false
 
 
-  - type: STR_BLIGHT_HAULER_MORTAR
+  - type: STR_BLIGHT_HAULER_MORTAR #long range and indirect but somewhat inaccurate firepower
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
@@ -3805,10 +3851,15 @@ items:
     vaporColorSurface: 12
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
-    accuracyAuto: 67
+    accuracyAuto: 60
+    accuracySnap: 70
     tuAuto: 60
-    autoRange: 27
+    tuSnap: 35
+    autoRange: 20
+    snapRange: 35
     autoShots: 4
+    confSnap:
+      shots: 2
     fixedWeapon: true
     recover: false
     arcingShot: true
@@ -3818,7 +3869,7 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12120
-    power: 80
+    power: 120
     damageType: 3
     damageAlter:  # DA BLIGHT
       RandomType: 6  # gaussian
@@ -3828,25 +3879,25 @@ items:
       ToMana: 0.6  # infectious blight
       ToStun: 0.6  # concussive
       ToEnergy: 0.5  # concussive
-      ToTime: 0.3  # concussive
+      ToTime: 0.5  # concussive
       ToTile: 0.75  # caustic + high explosive
       ToItem: 0.75  # caustic + high explosive
       SmokeThreshold: 0  # plague gasssss
       ResistType: 8  # explosive but tests against acid resistance
-      FixRadius: 8
+      FixRadius: 10
     powerForAnimation: 240  # Fix radius * 32 - 16.
     clipSize: -1
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
     spawnUnitChance: 25
     explosionHitSound: {mod: 40k, index: 832}
-    hitAnimation: {mod: 40k, index: 120}  # Green EX
+    hitAnimation: 1030 # Green EX
     noLOSAccuracyPenalty: 75  # indirect fire weapon
     tags:
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: STR_BLIGHT_HAULER_MULTI_MISSILE_LAUNCHER
+  - type: STR_BLIGHT_HAULER_MULTI_MISSILE_LAUNCHER #low powered but numerous missiles
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
@@ -3866,10 +3917,10 @@ items:
     tuAuto: 60
     autoRange: 17
     tuSnap: 35
-    snapRange: 20
+    snapRange: 25
     confSnap:
-      shots: 2
-    autoShots: 4
+      shots: 3
+    autoShots: 5
     fixedWeapon: true
     recover: false
     arcingShot: false
@@ -3879,7 +3930,7 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12120
-    power: 80
+    power: 90
     damageType: 3
     damageAlter:  # DA BLIGHT
       RandomType: 6  # gaussian
@@ -3895,13 +3946,13 @@ items:
       SmokeThreshold: 0  # plague gasssss
       ResistType: 8  # explosive but tests against acid resistance
       FixRadius: 8
-    powerForAnimation: 240  # Fix radius * 32 - 16.
+    powerForAnimation: 200  # Fix radius * 32 - 16.
     clipSize: -1
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
     spawnUnitChance: 25
     explosionHitSound: {mod: 40k, index: 832}
-    hitAnimation: {mod: 40k, index: 120}  # Green EX
+    hitAnimation: 1030  # Green EX
     tags:
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
@@ -3910,7 +3961,7 @@ items:
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_NURGLE]
     requires:
       - STR_ALIENS_ONLY
-    dropoff: 4
+    dropoff: 3
     size: 0.1
     weight: 1
     bigSprite: 2630
@@ -3923,10 +3974,10 @@ items:
     vaporProbabilitySurface: 18
     accuracySnap: 67
     accuracyAimed: 127
-    tuSnap: 30
+    tuSnap: 33
     tuAimed: 60
     snapRange: 20
-    aimRange: 27
+    aimRange: 35
     fixedWeapon: true
     recover: false
     battleType: 1
@@ -3935,7 +3986,7 @@ items:
     invWidth: 2
     invHeight: 3
     listOrder: 12120
-    power: 100
+    power: 150 #higher power missiles, but less of them vs the multimissile launcher
     damageType: 3
     damageAlter:  # DA BLIGHT
       RandomType: 6  # gaussian
@@ -3954,7 +4005,7 @@ items:
     powerForAnimation: 272  # Fix radius * 32 - 16.
     clipSize: -1
     explosionHitSound: {mod: 40k, index: 832}
-    hitAnimation: {mod: 40k, index: 120}  # Green EX
+    hitAnimation: 1030  # Green EX
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: -1
     spawnUnitChance: 50
@@ -4078,10 +4129,12 @@ items:
     # bulletSpeed: 50
     # explosionSpeed: 10
     powerForAnimation: 80  # Fix radius * 32 - 16.
+    spawnItem: STR_PLAGUE_TOAD_MINE
+    spawnItemChance: 100
+    zombieUnitChance: 1  # low chance of insta zombifying
     tags:
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
-    specialChance: 1  # low chance of insta zombifying
 
 
   - type: STR_CHAOS_SENTINEL_HB  # Chaos sentinel heavybolter               12000
