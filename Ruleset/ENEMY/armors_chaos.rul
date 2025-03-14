@@ -1970,6 +1970,7 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
       ARMOR_OVERWATCH_TU_RESTORED: 50
       INFECTION_RESIST: 100 #is a daemon
       INTIMIDATION_RESISTANCE: 75 #too crazy to be easily intimidated
@@ -2051,6 +2052,7 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
       ARMOR_OVERWATCH_TU_RESTORED: 100
       INFECTION_RESIST: 100 #is a daemon
       INTIMIDATION_RESISTANCE: 75 #too crazy to be easily intimidated
@@ -2284,15 +2286,15 @@ armors:
 
   - type: STR_WORDBEARER_TERMINATORELITE_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 30  # terminator sensors
-    antiCamouflageAtDay: 5  # terminator sensors
-    antiCamouflageAtDark: 5  # terminator sensors
-    heatVision: 35  # terminator sensors
+    visibilityAtDark: 35  # terminator sensors + artificer
+    antiCamouflageAtDay: 10  # terminator sensors + keen senses
+    antiCamouflageAtDark: 10  # terminator sensors + keen senses
+    heatVision: 40  # terminator sensors + artificer
     spriteSheet: WORDBEARERterminatorelitebattle.PCK
     spriteInv: WORDBEARERterminatoreliteinvent.SPK
     corpseBattle:
       - STR_WORDBEARER_TERMINATORELITE_CORPSE
-    frontArmor: 160
+    frontArmor: 160 #+10 from artificer armor
     sideArmor: 150
     rearArmor: 110
     underArmor: 160
@@ -2315,26 +2317,30 @@ armors:
     tags:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50  # (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      UNIT_TYPE_DAEMONIC: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 75  # (50 * 100 / 25) = 300. Regenerates from 75 (at 0) to 0 (at 200) / Turn; artificer shields
       ARMOR_ENERGY_SHIELD_DECAY: 25
+      UNIT_POSSESSION_TYPE: 3 #1 means it will spawn STR_WORDBEARER_GALVWARRIORPOSSELITE
+      UNIT_POSSESSION_MANIFESTATION_CHANCE: 4 #this is a percent
       INFECTION_RESIST: 100 #blessed by the dark gods
       INTIMIDATION_RESISTANCE: 75 #zealous convictions
 
   - type: STR_WORDBEARER_DEMONLORD_ARMOR
     movementType: 1  # flying
     visibilityAtDay: 40
-    visibilityAtDark: 30  # terminator sensors
-    antiCamouflageAtDay: 5  # terminator sensors
-    antiCamouflageAtDark: 5  # terminator sensors
-    heatVision: 35  # terminator sensors
+    visibilityAtDark: 40  # terminator sensors + artificer + daemonic senses
+    antiCamouflageAtDay: 10  # terminator sensors + keen senses
+    antiCamouflageAtDark: 10  # terminator sensors + keen senses
+    heatVision: 50  # terminator sensors + artificer
+    psiVision: 10 #daemonic senses
     spriteSheet: WORDBEARERdemonlordbattle.PCK
     spriteInv: WORDBEARERdemonlordinvent.SPK
     corpseBattle:
       - STR_WORDBEARER_DEMONLORD_CORPSE
-    frontArmor: 180
-    sideArmor: 160
-    rearArmor: 120
-    underArmor: 170
+    frontArmor: 120 #-40 from shredded terminator armor across the board; has much higher HP in compensation
+    sideArmor: 110
+    rearArmor: 70
+    underArmor: 120
     specialWeapon: STR_POWERFIST
     damageModifier:  # TERMINATOR ARMOR
       - 1.0  # none
@@ -2345,16 +2351,21 @@ armors:
       - 0.9  # PLASMA
       - 0.7  # STUN; Word Bearer Resistance -0.1
       - 0.7  # MELEE; Word Bearer Resistance -0.1
-      - 0.7  # ACID; Word Bearer Resistance -0.1
+      - 0.2  # ACID; Word Bearer Resistance -0.1 + Daemonic resistance
       - 0.0  # SMOKE
       - 0.2  # IMPACT
       - 1.1  # MELTA Word Bearer Weakness +0.1
     loftempsSet: [4]
     allowsRunning: false  # NPC limits for BAI
+    recovery: #loses shield but regenerates rapidly
+      health:
+        healthCurrent: 0.5
+        fatalWounds: 5
     tags:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50  # (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
-      ARMOR_ENERGY_SHIELD_DECAY: 25
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
       INFECTION_RESIST: 100 #blessed by the dark gods
-      INTIMIDATION_RESISTANCE: 75 #zealous convictions
+      INTIMIDATION_RESISTANCE: 100 #zealous convictions
