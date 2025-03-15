@@ -1,7 +1,7 @@
 extended:
   tags:
     RuleItem:
-      ITEM_IS_KAMIKAZI_TRIGGER: int  # does attacking with this trigger bombs to activate?
+      ITEM_IS_KAMIKAZI_TRIGGER: int  # does attacking with this trigger bombs to activate? If this is 2 then the triggering attack will deplete all remaining TU
       ITEM_IS_BOMB: int  # does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_BOMB_ON_DEATH: int  # does this blow up on death? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_RANDOM_FUSE: int  # sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
@@ -26,22 +26,14 @@ extended:
           var int numInventoryItems;
           var int randomFuse;
 
-          if neq battle_action BA_HIT; # only triggers on melee attacks
-            return power part side;
-          end;
-
-          attacker.getFaction temp;
-          battle_game.getTurnSide temp2;
-          if neq temp temp2; # abort if it's not our turn
-            # debug_log "Bomberman Scripts; hitUnit, offset 44: Aborted. Faction turn doesn't equal user turn."; # only trigger self-destruct on the attacker's turn
-            return power part side;
-          end;
-
           # if our weapon doesn't have the kamikazi tag, cancel out
           weapon_item.getTag temp Tag.ITEM_IS_KAMIKAZI_TRIGGER; # we check the weapon for this tag to avoid having to cycle through items every time we damage something
           if lt temp 1;
             # debug_log "Bomberman Scripts; hitUnit, offset 44: Aborted. No ITEM_IS_KAMIKAZI_TRIGGER Tag Detected";
             return power part side;
+          else ge temp 2; #this weapon is for triggering purposes only
+            attacker.setTimeUnits 0;
+            # debug_log "Bomberman Scripts; hitUnit, offset 44: ITEM_IS_KAMIKAZI_TRIGGER value of 2. temp: " temp;
           end;
 
           # if our armor doesn't have the kamikazi tag, cancel out
@@ -101,7 +93,7 @@ extended:
           # if our armor doesn't have the kamikazi tag, cancel out
           unit.getRuleArmor armorRule;
           armorRule.getTag temp Tag.ARMOR_IS_EXPLODE_ON_DEATH; # Are we set to explode on death? If greater than 1, we kamikazi through melee attacks only.
-          if neq temp 1;
+          if lt temp 1;
             # debug_log "Bomberman Scripts; damageUnit, offset 99: Aborted. No ARMOR_IS_EXPLODE_ON_DEATH Tag Detected";
             return;
           end;

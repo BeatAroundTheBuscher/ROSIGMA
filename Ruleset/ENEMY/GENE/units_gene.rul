@@ -5,6 +5,15 @@ weaponSets:
     weapons: [STR_WARRIOR_DEVOURER, STR_WARRIOR_TALONS]
   - type: WARRIOR_DEATHSPITTER
     weapons: [STR_DEATHSPITTER_WEAPON, STR_WARRIOR_TALONS]
+#Spore mines
+  - type: SPOREMINE_FRAG_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED, STR_SPOREMINE_TRIGGER_MELEE, STR_SPOREMINE_FRAG_CHARGE]
+  - type: SPOREMINE_EXPLOSIVE_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED, STR_SPOREMINE_TRIGGER_MELEE, STR_SPOREMINE_EXPLOSIVE_CHARGE]
+  - type: SPOREMINE_ACID_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED, STR_SPOREMINE_TRIGGER_MELEE, STR_SPOREMINE_ACID_CHARGE]
+  - type: SPOREMINE_BIOPLASMA_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED, STR_SPOREMINE_TRIGGER_MELEE, STR_SPOREMINE_BIOPLASMA_CHARGE]
 
 units:
 #    Tyranid
@@ -2607,41 +2616,60 @@ units:
     standHeight: 6
     kneelHeight: 3
     deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: 0
+    moveSound: -1
     livingWeapon: true
     value: 5
     spawnUnit: STR_RIPPERSWARM_4
     builtInWeaponSets:
       - - STR_RIPPERSWARM_ATTACK
 
-  - type: STR_SPOREMINE_FRAG
+  - type: STR_SPOREMINE
     race: STR_GENE
     rank: STR_LIVE_SOLDIER
-    avoidsFire: false
-    isLeeroyJenkins: true
     stats:
-      tu: 630
-      stamina: 100
+      tu: 40
+      stamina: 200
       health: 10
-      bravery: 100
-      reactions: 30
+      bravery: 110
+      reactions: 100
       firing: 100
       throwing: 10
-      strength: 0
+      strength: 20
       psiStrength: 25
       psiSkill: 0
-      melee: 0
-    armor: STR_SPOREMINE_FRAG_ARMOR
+      melee: 100
+    armor: STR_SPOREMINE_ARMOR
     intelligence: 0 #mindless
     aggression: 8
+    spotter: 1
     canPanic: false
     canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
+    energyRecovery: 200
     standHeight: 6
     kneelHeight: 3
     moveSound: 0
     livingWeapon: true
-    value: 5
+    avoidsFire: false
+    isLeeroyJenkins: true
+    moraleLossWhenKilled: 0 #no one cares
+    value: 1
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        SPOREMINE_FRAG_CHARGE: 55
+        SPOREMINE_EXPLOSIVE_CHARGE: 20
+        SPOREMINE_ACID_CHARGE: 20
+        SPOREMINE_BIOPLASMA_CHARGE: 5
+      -  # Tier 2
+        SPOREMINE_FRAG_CHARGE: 20
+        SPOREMINE_EXPLOSIVE_CHARGE: 30
+        SPOREMINE_ACID_CHARGE: 30
+        SPOREMINE_BIOPLASMA_CHARGE: 20
+      -  # Tier 3
+        SPOREMINE_FRAG_CHARGE: 5
+        SPOREMINE_EXPLOSIVE_CHARGE: 20
+        SPOREMINE_ACID_CHARGE: 20
+        SPOREMINE_BIOPLASMA_CHARGE: 55
 
   - type: STR_CARNI_TERRORIST
     race: STR_GENE
