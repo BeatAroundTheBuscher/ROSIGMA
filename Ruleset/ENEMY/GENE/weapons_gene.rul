@@ -161,7 +161,7 @@ items:
     aimRange: 25
     damageType: 8  # acid
     damageAlter:
-      ArmorEffectiveness: 0.5  # low power but high penetration
+      ArmorEffectiveness: 0.5  # low power but high penetration 
       ToHealth: 0.7
       ToWound: 0.05
       RandomWound: false
@@ -252,6 +252,28 @@ items:
     invHeight: 3
     recover: false
 
+  - type: STR_RIPPERSWARM_ATTACK  # bite attacks
+    weight: 3
+    bigSprite: 3036
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: 2240
+    clipSize: -1  # unlimited ammo
+    strengthApplied: true
+    meleePower: 0
+    strengthApplied: True
+    damageType: 7
+    damageAlter:
+      RandomType: 1
+      IgnoreSelfDestruct: false
+    accuracyMelee: 100
+    tuMelee: 15
+    flatRate: true
+    battleType: 3
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+
   - type: STR_FLESHBORER_WEAPON
     categories: [STR_CAT_SNIPER]
     requires:
@@ -266,19 +288,17 @@ items:
     hitSound: 3992
     hitAnimation: 2240
     power: 40
-    accuracySnap: 30
+    accuracyAimed: 65
+    tuAimed: 45
+    accuracySnap: 50
     tuSnap: 25
-    snapRange: 15
+    snapRange: 12
     damageType: 0
     damageAlter:
-      ArmorEffectiveness: 0.80  # very poor armor penetration
-      ToHealth: 0.7
-      ToWound: 0.5  # can cause nasty wounds
-      RandomWound: true
-      ToArmor: 0.1
-      ToTime: 0.0
+      ToHealth: 0.5 
       ToStun: 0.0
-      ToEnergy: 0.0
+      ToWound: 0.3  # devasting wounds
+      RandomWound: false
       RandomType: 6
     battleType: 1
     twoHanded: true
@@ -305,27 +325,20 @@ items:
     fireSound: 3993
     hitSound: 3994
     hitAnimation: 2250
-    power: 40
-    accuracySnap: 30
-    tuSnap: 20
+    power: 50
+    accuracySnap: 40
+    tuSnap: 30
     snapRange: 12
-    tuAuto: 40
-    accuracyAuto: 20
-    autoRange: 8
-    autoShots: 3
+    snapShots: 2
     damageType: 0
     damageAlter:
-      ArmorEffectiveness: 0.95  # very low armor penetration
       ToHealth: 0.3
-      ToWound: 0.4  # can cause wounds
-      RandomWound: true
       ToArmor: 0.0
-      ToTime: 0.1  # attacks the nerve system
-      RandomTime: true
-      ToStun: 0.2
-      RandomStun: true
-      ToEnergy: 0.2
-      RandomEnergy: true
+      ToWound: 0.15  # devastating wounds
+      RandomWound: false
+      ToTime: 0.15  # attacks the nerve system
+      RandomTime: false
+      ToStun: 0.2 # attacks the nerve system
       RandomType: 1
     battleType: 1
     twoHanded: true
@@ -352,27 +365,20 @@ items:
     fireSound: 3993
     hitSound: 3994
     hitAnimation: 2250
-    power: 50
-    accuracySnap: 30
-    tuSnap: 20
+    power: 60
+    accuracySnap: 40
+    tuSnap: 35
     snapRange: 14
-    tuAuto: 45
-    accuracyAuto: 20
-    autoRange: 10  # slightly larger and more powerful than termagant version
-    autoShots: 4
+    snapShots: 3
     damageType: 0
     damageAlter:
-      ArmorEffectiveness: 0.95  # very low armor penetration
       ToHealth: 0.3
-      ToWound: 0.4  # can cause wounds
-      RandomWound: true
       ToArmor: 0.0
-      ToTime: 0.1  # attacks the nerve system
-      RandomTime: true
-      ToStun: 0.2
-      RandomStun: true
-      ToEnergy: 0.2
-      RandomEnergy: true
+      ToWound: 0.15  # devastating wounds
+      RandomWound: false
+      ToTime: 0.15  # attacks the nerve system
+      RandomTime: false
+      ToStun: 0.2 # attacks the nerve system
       RandomType: 1
     battleType: 1
     twoHanded: true
@@ -399,14 +405,17 @@ items:
     fireSound: 3995
     explosionHitSound: 3996
     hitAnimation: 1170
-    power: 60  # middling damage?
-    accuracySnap: 65
+    power: 70
     accuracyAimed: 80
+    tuAimed: 60
+    aimRange: 20
+    accuracySnap: 50
     tuSnap: 35
-    tuAimed: 70
     snapRange: 16
-    aimRange: 25
     damageType: 8  # acid
+    damageAlter:
+      ToArmor: 0.15 #highly caustic acid
+      RandomWound: false
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -425,22 +434,24 @@ items:
     meleeAnimation: 16
     clipSize: -1
     strengthApplied: true
-    power: 80  # a bit stronger than hormagaunt talons
+    power: 70  # a bit stronger than hormagaunt talons
     damageType: 7
     damageAlter:
       RandomType: 1
       IgnoreSelfDestruct: false
-      ArmorEffectiveness: 0.45  # not very effective against armor
-      ToArmorPre: 0.15
-      ToHealth: 0.5
+      ArmorEffectiveness: 0.7  # 30% armor pierce
+      ToArmor: 0.2 
+      ToWound: 0.1  # Slashing Barbed Talons + Toxin wounds
+      RandomWound: false
+      ToHealth: 0.5 
     accuracyMelee: 100
     tuMelee: 15
-    battleType: 3
+    flatRate: true
     fixedWeapon: true
+    battleType: 3
     invWidth: 2
     invHeight: 3
     recover: false
-    flatRate: true
 
   - type: STR_WARRIOR_CLAWS  # Warrior Rending Claws
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
@@ -455,9 +466,9 @@ items:
     power: 90  # should use over scything talons
     damageAlter:
       RandomType: 2  # TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2  # high armor piercing
-      ToArmorPre: 0.6  # Rending, 30% or x armor points of damage per hit
-      ToHealth: 0.8
+      ArmorEffectiveness: 0.4  # high armor piercing
+      ToArmorPre: 0.5  # Rending 
+      ToHealth: 0.6
     damageType: 7
     accuracyMelee: 100
     tuMelee: 10
@@ -466,7 +477,6 @@ items:
     twoHanded: false
     invWidth: 2
     invHeight: 3
-    armor: 20
     skillApplied: true
     meleeMultiplier:
       melee: 1.0
