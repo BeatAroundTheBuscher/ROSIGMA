@@ -27,11 +27,6 @@ extended:
       UNIT_TYPE_MUTANT: int
       # *** Intimidation ***
       INTIMIDATION_RESISTANCE: int  # Reduces the effectiveness of Intimidate attacks by this percentage
-      # *** Bomberman scripts ***
-      ARMOR_IS_EXPLODE_ON_DEATH: int  # do we check this unit on death for bombs to activate?
-      ARMOR_IS_KAMIKAZI: int  # do we kamikazi when we hit regardless of the weapon used?
-      ARMOR_IS_DUMMY: int  # is this a dummy we immediately kill off and trigger the bomb for?
-      ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS: int  # if true, melee type damage bypasses the self-destruct
       # *** Reinforcement TU scripts ***
       ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
       # *** Dodge bypass scripts ***
@@ -75,6 +70,13 @@ extended:
       INFECTION_RESIST: int  # reduces infection damage by this as a %
       INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
       INFECTION_RESIST_TYPE: int  # bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
+      # *** Bomberman/Kamikazi Scripts
+      ARMOR_IS_EXPLODE_ON_DEATH: int  # do we check this unit on death for bombs to activate? If > 1 we don't trigger on lethal damage; mainly for relying on native selfDestruct
+      ARMOR_IS_KAMIKAZI: int  # do we kamikazi when we hit regardless of the weapon used?
+      ARMOR_FORCE_DEATH_ON_KAMIKAZI: int  # do we force a death if we kamikazi?
+      ARMOR_IS_DUMMY: int  # is this a dummy we immediately kill off and trigger the bomb for?
+      ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS: int  # if true, melee type damage bypasses the self-destruct
+
 
     RuleSoldierBonus:
       BONUS_ENERGY_SHIELD_HP_PER_TURN: int
@@ -96,10 +98,6 @@ extended:
       ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: int
       ITEM_ENERGY_SHIELD_REDUCTION_FLAT_AMOUNT: int
       ITEM_ENERGY_SHIELD_IGNORE_TYPE_BYPASS: int  # overrides damage type bypassing if true
-      # *** Bomb/kamikazi scripts ***
-      ITEM_IS_BOMB: int
-      ITEM_IS_BOMB_ON_DEATH: int  # does this blow up on death?
-      ITEM_IS_RANDOM_FUSE: int  # sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
       # *** Vampiric on kill; weapons ***
       TAG_HP_RETURNED_ON_KILL: int
       TAG_ENERGY_RETURNED_ON_KILL: int
@@ -158,6 +156,14 @@ extended:
       INFECTION_DAMAGE_FLAT: int  # if 0 uses damage dealt
       INFECTION_DAMAGE_PERCENT: int  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: int  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      # *** Dummy Munitions
+      ITEM_IS_DUMMY_MUNITION: int
+      # *** Bomberman/Kamikazi Scripts
+      ITEM_IS_KAMIKAZI_TRIGGER: int  # does attacking with this trigger bombs to activate? If this is 2 then the triggering attack will deplete all remaining TU
+      ITEM_IS_BOMB: int  # does this blow up with manual activation? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_BOMB_ON_DEATH: int  # does this blow up on death? The bomb fuse timer is equal to this value - 1.
+      ITEM_IS_RANDOM_FUSE: int  # sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
+      ITEM_IS_KAMIKAZI_BOMB: int  # damage from this will kill the source if they have the Kamikazi armor tag.
 
     RuleSkill:
       # *** Misc ***
