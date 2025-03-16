@@ -98,6 +98,13 @@ extended:
             return;
           end;
 
+          # if our weapon doesn't have the kamikazi tag, cancel out
+          weapon_item.getTag temp Tag.ITEM_IS_KAMIKAZI_TRIGGER; # if this is negative we don't trigger
+          if lt temp 0;
+            # debug_log "Bomberman Scripts; hitUnit, offset 44: Aborted. No ITEM_IS_KAMIKAZI_TRIGGER Tag Detected";
+            return;
+          end;
+
           unit.getHealth remainingHealth;
           sub remainingHealth to_health;
 
