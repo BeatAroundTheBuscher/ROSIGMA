@@ -156,14 +156,14 @@ extended:
             div rollBonus 2;
           end;
 
+          attacker.getRuleArmor armorRule;
           armorRule.getTag armorMod Tag.UNIT_TYPE_MECHANICAL;
           if eq armorMod 1; # we ignore mechanical units
             set rollBonus 0; # negate all modifiers, but we still have a 1% chance of a mechanical unit being an Alpha Legion
             # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Attacker is mechanical; rollBonus negated:" rollBonus;
           end;
 
-          attacker.getRuleArmor armorRule; # if the attacker is a 2x2 unit, we abort.
-          armorRule.getSize temp;
+          armorRule.getSize temp; # if the attacker is a 2x2 unit, we abort.
           if eq temp 2; # we ignore tanks
             set rollBonus 0; # negate all modifiers, but we still have a 1% chance of a 2x2 unit being an Alpha Legion
             # debug_log "ROSIGMA_dU_alpha_infiltration Scripts; damageUnit, offset 90: Aborting. Attacker is 2x2; rollBonus negated:" rollBonus;
