@@ -676,6 +676,21 @@ weaponSets:  # these can be re-used for any unit
     weapons: [STR_GAUSS_FLAYER, STR_MGRENADE, STR_ELDAR_MGRENADE]
   - type: RANGED_INQUISITORIAL_STORMTROOPER_LIGHT_LASCANNON
     weapons: [STR_INQ_LIGHT_LASCANNON, STR_MGRENADE, STR_ELDAR_MGRENADE]
+  # Alpha Legion Loadouts
+  # CQC Infiltrator
+  - type: ALPHA_LEGION_CQC_BOLTPISTOL_AXE
+    weapons: [STR_BOLTPISTOL_CHAOS, STR_PISTOL_CLIP_AP, STR_PISTOL_CLIP_AP, STR_PISTOL_CLIP_AP, STR_AXE, STR_ALIEN_GRENADE, STR_KRAK_GRENADE]
+  - type: ALPHA_LEGION_CQC_TIGRUS_CLAWS
+    weapons: [STR_PISTOLH, STR_RIFLE_CLIP_AP, STR_RIFLE_CLIP_AP, STR_CHAOS_CLAWS, STR_ALIEN_GRENADE, STR_KRAK_GRENADE]
+  - type: ALPHA_LEGION_CQC_TIGRUS_DAGGER
+    weapons: [STR_PISTOLH, STR_RIFLE_CLIP_MC, STR_RIFLE_CLIP_AP, STR_CPOWER_DAGGER, STR_MGRENADE, STR_MGRENADE]
+  - type: ALPHA_LEGION_CQC_PLASMAPISTOL_CLAWS
+    weapons: [STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_CHAOS_CLAWS, STR_KRAK_GRENADE, STR_MGRENADE]
+  - type: ALPHA_LEGION_CQC_PLASMAPISTOL_PDAGGER
+    weapons: [STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_CPOWER_DAGGER, STR_MGRENADE, STR_MGRENADE]
+  - type: ALPHA_LEGION_CQC_COMBIBOLTER_PDAGGER
+    weapons: [STR_CHB, STR_HB_CLIP_MC, STR_HB_CLIP, STR_CPOWER_DAGGER, STR_MGRENADE, STR_MGRENADE]
+
 
 units:
   - delete: STR_TANK_CANNON
@@ -7693,7 +7708,7 @@ units:
       reactions: 75
       firing: 100
       throwing: 80
-      strength: 60
+      strength: 80
       psiStrength: 70
       psiSkill: 0
       melee: 80
@@ -7710,23 +7725,35 @@ units:
     deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
     value: 25
     livingWeapon: true
-    builtInWeaponSets:
-      - - STR_RIFLEC
-        - STR_RIFLE_CLIP_AP
-        - STR_RIFLE_CLIP_AP
-        - STR_ALIEN_GRENADE
-      - - STR_PLASMA_RIFLE
-        - STR_PLASMA_RIFLE_CLIP
-        - STR_PLASMA_RIFLE_CLIP
-        - STR_KRAK_GRENADE
-        - STR_ALIEN_GRENADE
-      - - STR_SNIPER_CHAOS
-        - STR_HC_AP_AMMO  # only 3 shots per, so we have 4 units for 12 shots total.
-        - STR_HC_AP_AMMO
-        - STR_HC_AP_AMMO
-        - STR_HC_AP_AMMO
-        - STR_MGRENADE
-
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 5
+        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 10
+        ALPHA_LEGION_CQC_TIGRUS_CLAWS: 10
+        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 10
+        ALPHA_LEGION_CQC_TIGRUS_DAGGER: 10
+        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 45
+        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 5
+        BASIC_CSM_CHAOS_PLASMAPISTOL_POWERSWORD_LOADOUT: 5
+      -  # Tier 2
+        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 10
+        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 10
+        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 20
+        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 30
+        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 10
+        ALPHA_LEGION_CQC_TIGRUS_CLAWS: 15
+        ALPHA_LEGION_CQC_TIGRUS_DAGGER: 10
+        BASIC_CSM_CHAOS_PLASMAPISTOL_POWERSWORD_LOADOUT: 5
+      -  # Tier 3
+        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 5
+        ALPHA_LEGION_CQC_TIGRUS_CLAWS: 5
+        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 5
+        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 20
+        ALPHA_LEGION_CQC_TIGRUS_DAGGER: 10
+        BASIC_CSM_CHAOS_PLASMAPISTOL_POWERSWORD_LOADOUT: 10
+        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 20
+        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 25
 
   - type: STR_ALPHA_SOLDIER_CORVUS  # Alpha Legionnaire BEAKIE; Assault/CQC
     race: STR_ETHEREAL
@@ -7739,7 +7766,7 @@ units:
       reactions: 85
       firing: 80
       throwing: 80
-      strength: 60
+      strength: 80
       psiStrength: 70
       psiSkill: 0
       melee: 90
@@ -7785,7 +7812,7 @@ units:
       reactions: 75
       firing: 100
       throwing: 80
-      strength: 60
+      strength: 80
       psiStrength: 70
       psiSkill: 0
       melee: 95
@@ -7985,12 +8012,14 @@ units:
     deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
     value: 0  # to minimize farming
     livingWeapon: true
-    builtInWeaponSets:  # one set because spawn loadouts don't vary with tech level
-      - - STR_PISTOLH
-        - STR_CHAOS_CLAWS
-        - STR_RIFLE_CLIP_AP
-        - STR_RIFLE_CLIP_AP
-        - STR_MGRENADE
+    builtInWeaponSets: [] # one set because spawn loadouts don't vary with tech level
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        ALPHA_LEGION_CQC_BOLTPISTOL_AXE: 20
+        ALPHA_LEGION_CQC_TIGRUS_CLAWS: 20
+        ALPHA_LEGION_CQC_PLASMAPISTOL_CLAWS: 20
+        ALPHA_LEGION_CQC_TIGRUS_DAGGER: 20
+        ALPHA_LEGION_CQC_COMBIBOLTER_PDAGGER: 20
 
   - type: STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR  # Alpha Legionnaire BEAKIE; Assault/CQC; for amongus/infiltrator spawning
     race: STR_ETHEREAL
@@ -8020,14 +8049,14 @@ units:
     deathSound: [{mod: 40k, index: 161}, {mod: 40k, index: 162}, {mod: 40k, index: 163}, {mod: 40k, index: 164}, {mod: 40k, index: 165}, {mod: 40k, index: 166}, {mod: 40k, index: 167}, {mod: 40k, index: 168}]
     value: 0  # to minimize farming
     livingWeapon: true
-    builtInWeaponSets:  # one set because spawn loadouts don't vary with tech level
-      - - STR_PLASMA_PISTOL  # Chaos Plasma Pistol
-        - STR_CHAOS_CLAWS
-        - STR_PLASMA_PISTOL_CLIP  # 4 mags as they're only 6 shots each
-        - STR_PLASMA_PISTOL_CLIP
-        - STR_PLASMA_PISTOL_CLIP
-        - STR_PLASMA_PISTOL_CLIP
-        - STR_MGRENADE
+    builtInWeaponSets: [] # one set because spawn loadouts don't vary with tech level
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        ALPHA_LEGION_CQC_BOLTPISTOL_AXE: 20
+        ALPHA_LEGION_CQC_TIGRUS_CLAWS: 20
+        ALPHA_LEGION_CQC_PLASMAPISTOL_CLAWS: 20
+        ALPHA_LEGION_CQC_PLASMAPISTOL_PDAGGER: 20
+        ALPHA_LEGION_CQC_COMBIBOLTER_PDAGGER: 20
 
   - type: STR_ALPHA_SOLDIER_ULTRA  # Alpha Legionnaire disguised as Ultramarine
     race: STR_ALPHA_SOLDIER_ULTRA  # Loyalist Marine fakeout
