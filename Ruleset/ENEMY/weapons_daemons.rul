@@ -274,7 +274,7 @@ items:
 
   - type: STR_PINK_FIRE_MAGIC_MISSILE  # can spawn Brimstone Horrors; currently only used by Tzeentch Sorcerer
     refNode: *STR_TZEENTCH_MAGIC_MISSILE_TEMPLATE
-    tuAimed: 20  # spammable
+    tuAimed: 14  # spammable
     spawnUnit: STR_BRIMSTONE_HORROR
     spawnUnitFaction: 1
     spawnUnitChance: 25
@@ -289,7 +289,7 @@ items:
     explosionHitSound: {mod: 40k, index: 771}
     bulletSpeed: 25
     hitAnimation: 2140  # pink fire impact
-    power: 39
+    power: 49
     damageType: 5  # plasma
     damageAlter:  # DA MELTA Double
       RandomType: 1  # Swingy damage
@@ -331,7 +331,7 @@ items:
     powerForAnimation: 176
     arcingShot: false
     accuracySnap: 40
-    tuSnap: 45  # got rid of the TU cost; dumb AI doesn't really know how to handle it
+    tuSnap: 45  # got rid of the Energy cost; dumb AI doesn't really know how to handle it
     battleType: 1
     twoHanded: false
     power: 75
@@ -382,13 +382,14 @@ items:
     damageAlter:
       RandomType: 1
       ToStun: 0.5
+      ToEnergy: 0.5
       ToHealth: 0.0
       ToWound: 0.0
-      ToMorale: 1.0
+      ToMorale: 5.0
       ToArmor: 0.0
       ToMana: 0.5
       ArmorEffectiveness: 0.0   # how effective armor is against this damage. Default `0.0` for smoke and stun, `1.0` rest.
-    damageType: 7
+    damageType: 5
     tags:
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
@@ -981,18 +982,18 @@ items:
 
   - &STR_BLIGHT_EXPLOSION_TEMPLATE
     type: STR_NURGLE_BOOM  # blight
-    bulletSprite: {mod: 40k, index: 22}
     fireSound: 2415  # boom explosion
     bigSprite: 1043  # zombie attack
     floorSprite: 957
     handSprite: 936
+    invHeight: 0
+    invWidth: 0
+    weight: 0
     hitAnimation: 1030  # 128 green from X1.pck
     explosionHitSound: {mod: 40k, index: 832}  # blight rocket SFX
     armor: 20
     power: 100
     damageType: 8
-    invWidth: 2
-    invHeight: 3
     damageAlter:  ## Plague-inflicting weapon
       RandomType: 2  # TFTD [50% - 150%]
       ArmorEffectiveness: 0.7
@@ -1008,27 +1009,28 @@ items:
     powerForAnimation: 208
     battleType: 4  # grenade
     recover: false
-    weight: 40
-    tuThrow: 50
+    tuThrow: 999
     tuUnprime: 999  # not meant to be unprimed
     tuPrime: 999  # only to be thrown via scripts
+    inventoryMoveCost:
+      basePercent: 999
     throwRange: 1  # not meant to be thrown
-    fixedWeapon: false  # has to be false so kamikazi tag and scripts work properly
     isExplodingInHands: true
-    hiddenOnMinimap: false
-    defaultInventorySlot: STR_BACK_PACK
+    hiddenOnMinimap: true
     spawnUnit: STR_NURGLINGS
     spawnUnitFaction: 1
-    specialChance: 50
+    spawnUnitChance: 50
     tags:
       ITEM_IS_BOMB: 1
-      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
+      ITEM_IS_KAMIKAZI_BOMB: 1
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - type: STR_PLAGUE_TOAD_MINE
     bigSprite: 2649
     floorSprite: 2647
+    invHeight: 2
+    invWidth: 2
     refNode: *STR_BLIGHT_EXPLOSION_TEMPLATE
     armor: 20  # you're supposed to be able to burn/destroy these
     battleType: 4  # proximity explosive
@@ -1055,10 +1057,11 @@ items:
     fuseTriggerEvents:
       proximityExplode: true
     powerForAnimation: 48
+    hiddenOnMinimap: false
     tags:
       MUNITION_DELAY: 3
       ITEM_IS_BOMB: 0
-      ITEM_IS_BOMB_ON_DEATH: 0  # we blow this bomb up on death
+      ITEM_IS_KAMIKAZI_BOMB: 0
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
@@ -1507,12 +1510,9 @@ items:
     hiddenOnMinimap: false
     tags:
       ITEM_IS_BOMB: 1
-      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       ITEM_IS_KAMIKAZI_BOMB: 1
-
-
 
   - type: REAPER_WEAPON  # Juggernaut Bite/Reaper Terrorist Bite
     power: 8
