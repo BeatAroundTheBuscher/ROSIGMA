@@ -1156,10 +1156,10 @@ items:
     type: STR_SPOREMINE_TRIGGER_RANGED_ACID  # STR_SPOREMINE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
     hitAnimation: 0
-    bigSprite: 2728
+    bigSprite: 3038 #placeholder; this needs to be sized to 32x48 pixels
     handSprite: 3440
     invHeight: 2
-    invWidth: 3
+    invWidth: 2
     weight: 1
     costSnap:
       time: 1
@@ -1176,6 +1176,8 @@ items:
     damageAlter:
       RandomType: 6
       ArmorEffectiveness: 0.0
+      ToArmor: 0.0
+      ToArmorPre: 0.0
       ToTile: 0.0
       ToItem: 0.0
       ToWound: 0.0
@@ -1194,7 +1196,7 @@ items:
   - type: STR_SPOREMINE_TRIGGER_RANGED_FRAG  # STR_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
-    bigSprite: 2727
+    bigSprite: 3038 #placeholder; this needs to be sized to 32x48 pixels
     handSprite: 3450
 
   #Poison
@@ -1202,7 +1204,7 @@ items:
   - type: STR_SPOREMINE_TRIGGER_RANGED_POISON  # STR_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
-    bigSprite: 3037
+    bigSprite: 3038 #placeholder; this needs to be sized to 32x48 pixels
     handSprite: 3460
 
   - type: STR_SPOREMINE_TRIGGER_MELEE  # STR_SPOREMINE
@@ -1210,7 +1212,7 @@ items:
     meleeAnimation: 0
     bigSprite: 3038
     invHeight: 2
-    invWidth: 1
+    invWidth: 2
     weight: 1
     costMelee:
       time: 1
@@ -1349,29 +1351,39 @@ items:
   - type: STR_SPORECANNON
     weight: 3
     bigSprite: 3039
-    floorSprite: 31
-    handSprite: 104
-    bulletSprite: 8
-    fireSound: 51
-    hitSound: 19
-    hitAnimation: 46
-    power: 1
+    bulletSprite: {mod: 40k, index: 8}
+    fireSound: {mod: 40k, index: 51}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: 1200
+    dropoff: 5
+    power: 100
     damageAlter: #DA SPIT
       RandomType: 2 #TFTD [50% - 150%]
       ToArmor: 0.3
       ToHealth: 0.3
       ToStun: 0.2
-      ArmorEffectiveness: 0.8
-    damageType: 8
-    accuracyAimed: 15
+      ArmorEffectiveness: 0.1
+      FixRadius: 3
+    powerForAnimation: 1
+    damageType: 1
+    accuracySnap: 20 #highly inaccurate
+    accuracyAimed: 30 #highly inaccurate
     tuAimed: 60
+    tuSnap: 50
+    snapRange: 20
+    aimRange: 40
     battleType: 1
     fixedWeapon: true
+    fixedWeaponShow: true
     invWidth: 2
     invHeight: 3
-    clipSize: 18
+    clipSize: -1
     recover: false
     arcingShot: true
-    noLOSAccuracyPenalty: 15  # indirect fire weapon
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    minRange: 10
     spawnUnit: STR_SPOREMINE
     spawnUnitFaction: 1
+    spawnUnitChance: 100
+    tags:
+      ITEM_IS_DUMMY_MUNITION: 1
