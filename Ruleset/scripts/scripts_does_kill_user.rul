@@ -9,17 +9,28 @@ extended:
         offset: 22
         code: |
           var ptr RuleItem ruleItem;
-          var int doesKillUser;
           var int temp;
+          var ptr RuleArmor myRuleArmor;
 
 
           damaging_item.getRuleItem ruleItem;
-          ruleItem.getTag doesKillUser Tag.ITEM_DOES_KILL_USER;
+          ruleItem.getTag temp Tag.ITEM_DOES_KILL_USER;
+          # debug_log "ROSIGMA_dU_item_kills_user, offset 22: damaging_item:" damaging_item;
+          # debug_log "ROSIGMA_dU_item_kills_user, offset 22: temp:" temp;
+          # debug_log "ROSIGMA_dU_item_kills_user, offset 22: unit:" unit;
+          # debug_log "ROSIGMA_dU_item_kills_user, offset 22: attacker:" attacker;
 
           # kill itself when AoE'ing  # explosive collar
-          if and eq unit attacker eq doesKillUser 1;
+          if and eq unit attacker eq temp 1;
             unit.getHealth temp;
             set to_health temp;
+            # debug_log "ROSIGMA_dU_item_kills_user, offset 22: Self-kill script triggered for:" unit;
+            unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag temp Tag.ARMOR_ALWAYS_OVERKILL;
+            if gt temp 0; #if we're set to always overkill, kill and disintegrate us;
+              unit.setHealthWithOverkill -9999;
+              # debug_log "ROSIGMA_dU_item_kills_user, offset 22: ARMOR_ALWAYS_OVERKILL is true." temp;
+            end;
           end;
 
           return;
