@@ -2,8 +2,11 @@ extended:
   tags:
     RuleArmor:
       ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
+      ARMOR_REINFORCEMENT_TU_PERCENT_PENDING: int # passes along data to UNIT_REINFORCEMENT_TU_PERCENT_PENDING
       ARMOR_REINFORCEMENT_PLAYER_HP_PERCENT: int #% of HP a player summoned unit starts with
       ARMOR_REINFORCEMENT_PLAYER_HP_FLAT: int #flat amount of HP a player summoned unit starts with
+    BattleUnit:
+      UNIT_REINFORCEMENT_TU_PERCENT_PENDING: int  # for units that spawn at the end of the enemy or neutral turn, this is the % they should start their next turn with
 
   scripts:
     createUnit:
@@ -15,14 +18,21 @@ extended:
           var int reinforcementTU;
 
           # might mess with spawner grenades but seems to be handled differently anyhow
-          if le turn 0; # we don't care about Turn 0; abort.
+          if lt turn 1; # we don't care about Turn 0 and less; abort.
             # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Turn 0. Aborting.";
             return;
           end;
 
-          unit.getRuleArmor armorRule;
-          armorRule.getTag reinforcementTU Tag.ARMOR_REINFORCEMENT_TU_PERCENT;
+          unit.getFaction temp;
+          if eq temp FACTION_PLAYER;
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Player unit. Aborting.";
+            return;
+          end;
 
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_REINFORCEMENT_TU_PERCENT;
+
+          armorRule.getTag reinforcementTU Tag.ARMOR_REINFORCEMENT_TU_PERCENT;
           if le reinforcementTU 0; # default to 25% of max TUs if this tag is unspecified
             set reinforcementTU 25;
             # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | No reinforcement TU tag detected. Defaulting to: " reinforcementTU;
@@ -33,8 +43,14 @@ extended:
           unit.getTimeUnitsMax temp;
           muldiv temp reinforcementTU 100;
           unit.setTimeUnits temp;
-            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Unit: " unit;
-            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Set time units to " temp;
+
+          # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Unit: " unit;
+          # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Set time units to " temp;
+
+          armorRule.getTag temp Tag.ARMOR_REINFORCEMENT_TU_PERCENT_PENDING;
+          unit.setTag Tag.UNIT_REINFORCEMENT_TU_PERCENT_PENDING temp;
+          # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Unit: " unit;
+          # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Pending TU value set to " 25;
 
           return;
 
@@ -79,5 +95,50 @@ extended:
             unit.setHealthWithOverkill HPflat;
             return;
           end;
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_reinforcements_summon_on_playerturn
+        offset: 98
+        code: |
+          var int TUPercent;
+          var int temp;
+          var int temp2;
+
+          if lt turn 1; # we don't care about Turn 0; abort.
+            # debug_log "createUnit | ROSIGMA_cU_reinforcements_less_tus | offset: 2 | Turn 0. Aborting.";
+            return;
+          end;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Turn Faction:" temp2;
+          # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Faction:" temp;
+          if neq temp temp2; #we only check on our turn
+            # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Not our turn, aborting." unit;
+            return;
+          end;
+
+          unit.getTag TUPercent Tag.UNIT_REINFORCEMENT_TU_PERCENT_PENDING;
+          if lt TUPercent 1;
+            # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | No pending tag detected, aborting." unit;
+            return;
+          else;
+            limit_upper TUPercent 100; # cannot exceed 100% of max TUs
+          end;
+
+          unit.getTimeUnits temp;
+          unit.getTimeUnitsMax temp2;
+          muldiv temp2 TUPercent 100;
+          if le temp temp2; #if our current TUs are lower than our pending %, cancel out
+            # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Existing TUs less than pending %, aborting.";
+            return;
+          end;
+
+          unit.setTimeUnits temp2;
+          # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Unit: " unit;
+          # debug_log "newTurnUnit | ROSIGMA_nTU_reinforcements_summon_on_playerturn | offset: 4 | Set time units to " temp2;
+          unit.setTag Tag.UNIT_REINFORCEMENT_TU_PERCENT_PENDING 0; #zero this out
 
           return;

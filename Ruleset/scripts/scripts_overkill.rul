@@ -4,6 +4,7 @@ extended:
       UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
     RuleArmor:
       ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: int  # do we disable our self-destruct if the unit is overkilled?
+      ARMOR_ALWAYS_OVERKILL: int #do we always overkill?
 
   scripts:
     damageUnit:
@@ -17,21 +18,24 @@ extended:
           var int multiplier;
           var ptr RuleArmor rArmor;
 
-          if eq damaging_type 2;
-            set check 1;
-            set multiplier 3;
+          if or eq damaging_type 2 eq damaging_type 3 eq damaging_type 5 eq damaging_type 11;
+            set check 1; #we have a special overkill damage type, so we apply our multipliers
+            if eq damaging_type 2;
+              set multiplier 3;
+            else eq damaging_type 3;
+              set multiplier 2;
+            else eq damaging_type 5;
+              set multiplier 2;
+            else;
+              set multiplier 4;
+            end;
           end;
-          if eq damaging_type 3;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.ARMOR_ALWAYS_OVERKILL;
+          if gt temp 0;
+            #debug_log "ROSIGMA_dU_overkill Scripts; damageUnit, offset 98: ARMOR_ALWAYS_OVERKILL is active for unit:" unit;
             set check 1;
-            set multiplier 2;
-          end;
-          if eq damaging_type 5;
-            set check 1;
-            set multiplier 2;
-          end;
-          if eq damaging_type 11;
-            set check 1;
-            set multiplier 4;
           end;
 
           if eq check 1;
@@ -43,11 +47,14 @@ extended:
               mul difference multiplier;
               mul difference -1;
               # debug_log difference;
+              if gt temp 0; #if we are set to always overkill, subtract our difference by 9999
+                sub difference 9999;
+                #debug_log "ROSIGMA_dU_overkill Scripts; damageUnit, offset 98: ARMOR_ALWAYS_OVERKILL difference:" difference;
+              end;
               unit.setHealthWithOverkill difference;
             end;
           end;
 
-          unit.getRuleArmor rArmor;
           rArmor.getTag temp Tag.ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT; # if overkill stops us our scripted forced self-destruct, set the tag appropriately as follows
           if lt temp 1;
             # debug_log "ROSIGMA_dU_overkill Scripts; damageUnit, offset 98: Aborting. Target has no disable self-destruct on kill:" temp;

@@ -10,7 +10,7 @@ items:
     costSell: 1000
     weight: 4
     explosionHitSound: 2122
-    hitAnimation: {mod: 40k, index: 254}  # XStun
+    hitAnimation: 1030
     throwRange: 16
     bigSprite: 2120
     floorSprite: {mod: 40k, index: 20}  # needs new sprite
@@ -201,22 +201,22 @@ items:
     compatibleAmmo:
       - STR_AMMO_BIT10SNEAKY
     accuracySnap: 85
-    accuracyAimed: 90
-    tuSnap: 21
+    accuracyAimed: 95
+    tuSnap: 20
     tuAimed: 45
-    snapRange: 8
-    maxRange: 14
+    snapRange: 12
+    aimRange: 18
     battleType: 1
     twoHanded: false
     invWidth: 2
     invHeight: 3
-    armor: 30
+    armor: 200
     bulletSpeed: 30
     attraction: 2
     listOrder: 17000
     tags:
       REACTION_MULTIPLIER: 200
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 25  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25  # Long barrel pistol; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1  # use %
 
   - type: STR_AMMO_BIT10  #              17010                    ToStun
@@ -244,6 +244,7 @@ items:
     armor: 30
     attraction: 1
     listOrder: 17010
+
   - type: STR_AMMO_BIT10SNEAKY  #              17010                    ToStun
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
     requires:
@@ -272,6 +273,11 @@ items:
     armor: 30
     attraction: 1
     listOrder: 17010
+    tags:
+      ITEM_SNEAKY_BONUS: 150 # 50% bonus power if we attack without being spotted
+      ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
+      ITEM_REAR_DAMAGE_BONUS: 150 # 50% bonus power if we attack the rear
+
   - type: STR_AMMO_BIT20  #              17020                    ToStun
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
     requires:
@@ -1185,11 +1191,21 @@ items:
       - STR_XENO_ONLY
     size: 0.2
     costSell: 50
-    weight: 5
+    weight: 7
     power: 70
+    damageBonus:
+      strength: 0.3
+      melee: 0.2
+    damageAlter:     # DA POWER
+      ArmorEffectiveness: 0.9
+      ToArmorPre: 0.2
+      ToHealth: 1.1
     damageType: 7
-    accuracyMelee: 110
-    tuMelee: 15
+    accuracyMelee: 80
+    costMelee: #heavy and unwieldy
+      time: 15
+      energy: 4
+    flatRate: true
     clipSize: -1
     battleType: 3
     twoHanded: false
@@ -1203,6 +1219,7 @@ items:
     strengthApplied: false
     attraction: 7
     listOrder: 17080
+
   - type: STR_THROATSLITTA  #                17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
     size: 0.2
@@ -1217,13 +1234,19 @@ items:
     meleeHitSound: {mod: 40k, index: 101}  # Stabhit
     meleeAnimation: 4
     power: 60
+    damageBonus:
+      strength: 0.2
+      melee: 0.3
     damageType: 7
     damageAlter:  # THROAT SLITTA
       ArmorEffectiveness: 0.5
       ToHealth: 1.2
       ToWound: 0.05
     accuracyMelee: 110
-    tuMelee: 25
+    costMelee: #heavy and unwieldy
+      time: 12
+      energy: 1
+    flatRate: true
     clipSize: -1
     battleType: 3
     twoHanded: false
@@ -1237,6 +1260,12 @@ items:
     strengthApplied: false
     attraction: 7
     listOrder: 17080
+    tags:
+      ITEM_SNEAKY_BONUS: 200 # 100% bonus power if we attack without being spotted
+      ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
+      ITEM_REAR_DAMAGE_BONUS: 200 # 100% bonus power if we attack the rear
+
+
   - type: STR_SNEAKYSTABBA  #  AP dagger              17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
     size: 0.2
@@ -1252,12 +1281,18 @@ items:
     meleeAnimation: 4
     power: 60
     damageType: 7
+    damageBonus:
+      strength: 0.2
+      melee: 0.3
     damageAlter:  # THROAT SLITTA
       ArmorEffectiveness: 0.8
       ToArmorPre: 0.3
       ToWound: 0.05
     accuracyMelee: 110
-    tuMelee: 25
+    costMelee: #heavy and unwieldy
+      time: 12
+      energy: 1
+    flatRate: true
     clipSize: -1
     battleType: 3
     twoHanded: false
@@ -1271,6 +1306,11 @@ items:
     strengthApplied: false
     attraction: 7
     listOrder: 17080
+    tags:
+      ITEM_SNEAKY_BONUS: 200 # 100% bonus power if we attack without being spotted
+      ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
+      ITEM_REAR_DAMAGE_BONUS: 200 # 100% bonus power if we attack the rear
+
   - type: STR_BIGCHOPPA  #         17090          DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_ORK]
     requires:
@@ -1278,19 +1318,24 @@ items:
     size: 0.1
     costSell: 10000
     weight: 60
-    power: 110
+    power: 90
+    damageBonus:
+      strength: 0.4
+      melee: 0.1
     damageAlter:     # DA POWER
-      ArmorEffectiveness: 0.7
+      ArmorEffectiveness: 0.8
       ToArmorPre: 0.2
-      ToHealth: 0.9
+      ToHealth: 1.5
     damageType: 7
-    accuracyMelee: 100
-    tuMelee: 10
+    accuracyMelee: 70
+    costMelee: #heavy and unwieldy
+      time: 20
+      energy: 4
+    flatRate: true
     clipSize: -1
     battleType: 3
     invWidth: 2
     invHeight: 3
-    flatRate: true
     armor: 60
     skillApplied: true
     meleeMultiplier:
@@ -1341,8 +1386,8 @@ items:
     meleeSound: {mod: 40k, index: 753}  # 753 Powersword miss
     meleeHitSound: {mod: 40k, index: 754}  # 744 Powersword hit
     meleeAnimation: {mod: 40k, index: 12}
-    power: 65
-    damageType: 7
+    power: 75
+    damageType: 5 #power weapon
     damageBonus:
       strength: 0.3
       melee: 0.3
@@ -1352,9 +1397,9 @@ items:
       ToHealth: 0.9
       IgnoreSelfDestruct: false  # default true for HE, fire, smoke, stun, mel
     accuracyMelee: 70
-    costMelee:
-      time: 30
-      energy: 20
+    costMelee: #heavy and unwieldy
+      time: 20
+      energy: 4
     flatRate: true
     twoHanded: false
     fixedWeapon: true
@@ -1663,9 +1708,10 @@ items:
     accuracyAimed: 125
     accuracyMultiplier:
       firing: [0.5, 0.005]
-    tuSnap: 40
+    tuSnap: 50
     tuAimed: 75
-    snapRange: 20
+    snapRange: 16
+    aimRange: 32
     compatibleAmmo:
       - STR_ORK_AUTOCANNON_CLIP
     battleType: 1
@@ -1676,6 +1722,8 @@ items:
     bulletSpeed: 50
     listOrder: 6940
     kneelBonus: 150
+    tuLoad: 40
+    minRange: 7
     tags:
       ITEM_AIMED_ACCURACY_POWER_BONUS: 25  # Sniper rifle bonus to aimed shots; power of precision
       ITEM_POWER_BONUS_PERCENTILE: 1  # use %

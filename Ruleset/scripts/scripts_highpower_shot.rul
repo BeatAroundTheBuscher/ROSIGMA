@@ -20,6 +20,9 @@ extended:
       ITEM_SNAP_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_AUTO_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
       ITEM_POWER_BONUS_PERCENTILE: int  # 0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
+      ITEM_SNEAKY_BONUS: int #bonus damage as a % if this unit has gone at least 1 turn without being spotted.
+      ITEM_SIDE_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the side
+      ITEM_REAR_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the rear
 
   scripts:
     hitUnit:  # increase power if bonus exists for fire mode
@@ -31,8 +34,16 @@ extended:
           var int flatBonus;
           var int accuracyBonus;
           var int temp;
+          var int temp2;
           var ptr RuleItem rItem;
           var ptr BattleItem ammoItem;
+
+          attacker.getFaction temp;
+          unit.getFaction temp2;
+          if eq temp temp2;
+            # debug_log "ROSIGMA_hU_highpower_shot, offset 20: Aborting. Target is friendly." unit;
+            return power part side;
+          end;
 
           weapon_item.getRuleItem rItem;
 
@@ -94,5 +105,85 @@ extended:
 
           # debug_log "ROSIGMA_hU_highpower_shot, line 89: Final Bonus Power" powerBonus;
           # debug_log "ROSIGMA_hU_highpower_shot, line 90: New Power" power;
+
+          return power part side;
+
+      - new: ROSIGMA_hU_sneaky_shot
+        offset: 21
+        code: |
+          var int weaponPower;
+          var int sneakyBonus;
+          var int temp;
+          var int temp2;
+          var ptr RuleItem rItem;
+          var ptr BattleItem ammoItem;
+
+          attacker.getFaction temp;
+          unit.getFaction temp2;
+          if eq temp temp2;
+            # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Aborting. Target is friendly." unit;
+            return power part side;
+          end;
+
+          damaging_item.getRuleItem rItem;
+          rItem.getTag sneakyBonus Tag.ITEM_SNEAKY_BONUS;
+          if lt sneakyBonus 1;
+            # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Aborting. Damaging item don't have a sneakyBonus.";
+            return power part side;
+          end;
+
+          # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Initial power:" power;
+          attacker.isVisible temp;
+          if gt temp 0;
+            # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Aborting. Unit is visible:" temp;
+            return power part side;
+          end;
+
+          muldiv power sneakyBonus 100; # we deal powerBonus % more damage relative to the base power;
+          # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. Unit not visible. Temp:" temp;
+          # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. New power:" power;
+
+          return power part side;
+
+      - new: ROSIGMA_hU_facing_bonus_damage
+        offset: 22
+        code: |
+          var int facingBonus;
+          var int temp;
+          var int temp2;
+          var ptr RuleItem rItem;
+
+          if or eq side SIDE_FRONT eq side SIDE_UNDER; #no relevant facings; abort.
+            # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Aborting. No relevant facing. Side:" side;
+            return power part side;
+          end;
+
+          attacker.getFaction temp;
+          unit.getFaction temp2;
+          if eq temp temp2;
+            # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Aborting. Target is friendly." unit;
+            return power part side;
+          end;
+
+          damaging_item.getRuleItem rItem;
+          if or eq side SIDE_LEFT neq side SIDE_RIGHT;
+            rItem.getTag facingBonus Tag.ITEM_SIDE_DAMAGE_BONUS;
+            if lt facingBonus 1;
+              # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Aborting. Side damage without side damage bonus. Side:" side;
+              return power part side;
+            end;
+          else;
+            rItem.getTag facingBonus Tag.ITEM_REAR_DAMAGE_BONUS;
+          end;
+
+          if lt facingBonus 1;
+            # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Aborting. No facing bonus damage. Side:" side;
+            return power part side;
+          end;
+          # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Initial power:" power;
+
+          muldiv power facingBonus 100; # we deal powerBonus % more damage relative to the base power;
+          # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Success. Facing:" side;
+          # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Success. New power:" power;
 
           return power part side;

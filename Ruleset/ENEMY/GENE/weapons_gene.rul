@@ -1150,16 +1150,16 @@ items:
     bulletSpeed: 10
 
 # dungeon specific end
-#Acid
 
-  - type: STR_SPOREMINE_TRIGGER_RANGED_ACID  # STR_SPOREMINE
+# Reaction Trigger
+
+  - &STR_SPOREMINE_TRIGGER_TEMPLATE
+    type: STR_SPOREMINE_TRIGGER_RANGED_ACID  # STR_SPOREMINE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
     hitAnimation: 0
     bigSprite: 2728
-    handSprite: 3440
-    floorOb: 3028
     invHeight: 2
-    invWidth: 3
+    invWidth: 2
     weight: 1
     costSnap:
       time: 1
@@ -1176,6 +1176,8 @@ items:
     damageAlter:
       RandomType: 6
       ArmorEffectiveness: 0.0
+      ToArmor: 0.0
+      ToArmorPre: 0.0
       ToTile: 0.0
       ToItem: 0.0
       ToWound: 0.0
@@ -1183,96 +1185,38 @@ items:
       RandomWound: false
     battleType: 1
     clipSize: -1
-    fixedWeapon: false
-    fixedWeaponShow: false
+    fixedWeapon: true
+    fixedWeaponShow: true
     tags:
+      ITEM_DOES_KILL_USER: 1
       ITEM_IS_KAMIKAZI_TRIGGER: 2  # triggers self-destruct on reaction fire
       ITEM_IS_DUMMY_MUNITION: 1
 
-  #Frag
-
-  - type: STR_SPOREMINE_TRIGGER_RANGED_FRAG  # STR_SPOREMINE
+  - type: STR_SPOREMINE_TRIGGER_RANGED_FRAG
+    refNode: *STR_SPOREMINE_TRIGGER_TEMPLATE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
-    hitAnimation: 0
     bigSprite: 2727
     handSprite: 3450
-    floorOb: 3029
-    invHeight: 2
-    invWidth: 3
-    weight: 1
-    costSnap:
-      time: 1
-    flatSnap: true
-    accuracySnap: 200
-    snapRange: 2
-    dropoff: 900
-    bulletSpeed: 900
-    maxRange: 3
-    powerRangeThreshold: 3
-    powerRangeReduction: 100
-    damageType: 1
-    power: 100 #meant to trick AI into triggering the attack
-    damageAlter:
-      RandomType: 6
-      ArmorEffectiveness: 0.0
-      ToTile: 0.0
-      ToItem: 0.0
-      ToWound: 0.0
-      ToStun: 0.0
-      RandomWound: false
-    battleType: 1
-    clipSize: -1
-    fixedWeapon: false
-    fixedWeaponShow: false
-    tags:
-      ITEM_IS_KAMIKAZI_TRIGGER: 2  # triggers self-destruct on reaction fire
-      ITEM_IS_DUMMY_MUNITION: 1
 
   #Poison
 
-  - type: STR_SPOREMINE_TRIGGER_RANGED_POISON  # STR_SPOREMINE
+  - type: STR_SPOREMINE_TRIGGER_RANGED_POISON
+    refNode: *STR_SPOREMINE_TRIGGER_TEMPLATE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
-    hitAnimation: 0
     bigSprite: 3037
     handSprite: 3460
-    floorOb: 3030
-    invHeight: 2
-    invWidth: 3
-    weight: 1
-    costSnap:
-      time: 1
-    flatSnap: true
-    accuracySnap: 200
-    snapRange: 2
-    dropoff: 900
-    bulletSpeed: 900
-    maxRange: 3
-    powerRangeThreshold: 3
-    powerRangeReduction: 100
-    damageType: 1
-    power: 100 #meant to trick AI into triggering the attack
-    damageAlter:
-      RandomType: 6
-      ArmorEffectiveness: 0.0
-      ToTile: 0.0
-      ToItem: 0.0
-      ToWound: 0.0
-      ToStun: 0.0
-      RandomWound: false
-    battleType: 1
-    clipSize: -1
-    fixedWeapon: false
-    fixedWeaponShow: false
-    tags:
-      ITEM_IS_KAMIKAZI_TRIGGER: 2  # triggers self-destruct on reaction fire
-      ITEM_IS_DUMMY_MUNITION: 1
 
-  - type: STR_SPOREMINE_TRIGGER_MELEE  # STR_SPOREMINE
+# Melee trigger
+
+  - &STR_SPOREMINE_MELEE_TEMPLATE
+    type: STR_SPOREMINE_TRIGGER_MELEE_ACID
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
     meleeAnimation: 0
     bigSprite: 3038
+    handSprite: 3440
+    floorSprite: 3027
     invHeight: 2
-    invWidth: 3
+    invWidth: 2
     weight: 1
     costMelee:
       time: 1
@@ -1290,11 +1234,26 @@ items:
       RandomWound: false
     battleType: 3
     clipSize: -1
-    fixedWeapon: true
-    fixedWeaponShow: false
+    fixedWeapon: false
+    recover: false
     tags:
+      ITEM_DOES_KILL_USER: 1
       ITEM_IS_KAMIKAZI_TRIGGER: 2  # triggers self-destruct on melee
       ITEM_IS_DUMMY_MUNITION: 1
+
+  - type: STR_SPOREMINE_TRIGGER_MELEE_FRAG  # STR_SPOREMINE
+    refNode: *STR_SPOREMINE_MELEE_TEMPLATE
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
+    handSprite: 3450
+    floorSprite: 3028
+
+  - type: STR_SPOREMINE_TRIGGER_MELEE_POISON  # STR_SPOREMINE
+    refNode: *STR_SPOREMINE_MELEE_TEMPLATE
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
+    handSprite: 3460
+    floorSprite: 3029
+
+# Charges
 
   - &STR_SPOREMINE_CHARGE_TEMPLATE
     type: STR_SPOREMINE_FRAG_CHARGE  # STR_SPOREMINE
@@ -1302,7 +1261,9 @@ items:
     hitAnimation: {mod: 40k, index: 104}
     hitSound: {mod: 40k, index: 704}
     explosionHitSound: {mod: 40k, index: 792}  # 792 Smoke
+    floorSprite: 3028 #placeholder; to be replaced with payload specific floor sprites
     bigSprite: 250  # placeholder
+    handSprite: 3450
     invHeight: 3
     invWidth: 2
     weight: 1
@@ -1329,13 +1290,15 @@ items:
     inventoryMoveCost:
       basePercent: 9999
     throwRange: 1  # not meant to be thrown
-    armor: 100
+    armor: 50
     isExplodingInHands: true
     hiddenOnMinimap: false
     fuseTriggerEvents:
       proximityExplode: true
     fixedWeapon: false
+    fixedWeaponShow: false
     tags:
+      ITEM_DOES_KILL_USER: 1
       ITEM_IS_BOMB: 1
       ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
       ITEM_IS_KAMIKAZI_BOMB: 1
@@ -1345,6 +1308,8 @@ items:
     explosionHitSound: 5
     hitSound: {mod: 40k, index: 704}
     hitAnimation: 1200
+    handSprite: 3460
+    floorSprite: 3029
     power: 140
     damageType: 3
     damageAlter:  # high explosive
@@ -1356,17 +1321,14 @@ items:
       ToTime: 0.3  # concussive
       ToTile: 0.75  # high explosive
       ToItem: 0.75  # high explosive
-    tags:
-      ITEM_IS_BOMB: 1
-      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
-      ITEM_IS_KAMIKAZI_BOMB: 1
-
 
   - type: STR_SPOREMINE_ACID_CHARGE  # STR_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     hitSound: {mod: 40k, index: 704}
     explosionHitSound: 3996
     hitAnimation: 1170
+    handSprite: 3440
+    floorSprite: 3027
     power: 140
     damageType: 8
     damageAlter: #deadly acid
@@ -1380,16 +1342,13 @@ items:
       ToItem: 1.0
       SmokeThreshold: 60
       FixRadius: 12
-    tags:
-      ITEM_IS_BOMB: 1
-      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
-      ITEM_IS_KAMIKAZI_BOMB: 1
-
 
   - type: STR_SPOREMINE_BIOPLASMA_CHARGE  # STR_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     explosionHitSound: {mod: 40k, index: 690}  # *** PLASMA rebalance
     hitAnimation: {mod: 40k, index: 112}  # 100  # *** PLASMA rebalance
+    handSprite: 3440
+    floorSprite: 3030
     power: 140
     damageType: 5
     damageAlter:
@@ -1399,7 +1358,45 @@ items:
       FireThreshold: 70  # can ignite at high damage
       ToArmor: 0.1
       FixRadius: 12
+
+# Sporemine End
+
+  - type: STR_SPORECANNON
+    weight: 3
+    bigSprite: 3039
+    bulletSprite: {mod: 40k, index: 8}
+    fireSound: {mod: 40k, index: 51}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: 1200
+    dropoff: 5
+    power: 100
+    damageAlter: #DA SPIT
+      RandomType: 2 #TFTD [50% - 150%]
+      ToArmor: 0.3
+      ToHealth: 0.3
+      ToStun: 0.2
+      ArmorEffectiveness: 0.1
+      FixRadius: 3
+    powerForAnimation: 1
+    damageType: 1
+    accuracySnap: 20 #highly inaccurate
+    accuracyAimed: 30 #highly inaccurate
+    tuAimed: 60
+    tuSnap: 50
+    snapRange: 20
+    aimRange: 40
+    battleType: 1
+    fixedWeapon: true
+    fixedWeaponShow: true
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+    arcingShot: true
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    minRange: 10
+    spawnUnit: STR_SPOREMINE
+    spawnUnitFaction: 1
+    spawnUnitChance: 100
     tags:
-      ITEM_IS_BOMB: 1
-      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
-      ITEM_IS_KAMIKAZI_BOMB: 1
+      ITEM_IS_DUMMY_MUNITION: 1
