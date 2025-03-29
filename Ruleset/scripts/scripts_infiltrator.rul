@@ -112,8 +112,6 @@ extended:
         offset: 1  # hide unit
         code: |
           var int temp;
-          var ptr RuleDamageType damageType;
-          var ptr RuleItem damagingItem;
           var ptr RuleArmor myRuleArmor;
 
           unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
@@ -121,11 +119,8 @@ extended:
             return power part side;
           end;
 
-          damaging_item.getRuleItem damagingItem;
-          damagingItem.getDamageType damageType;
-          damageType.getResistType temp;
           # disable stealth for unit from non-impact damage
-          if neq temp 10;
+          if neq damaging_type 10;
             battle_game.flashMessage "STR_SCRIPT_INFILTRATION_NO_TIME_REMAINING";
             unit.setTag Tag.UNIT_STEALTH_IS_ACTIVE 0;
             unit.getRuleArmor myRuleArmor;
@@ -214,7 +209,7 @@ extended:
           return;
 
     recolorUnitSprite:
-      - new: ROSIGMA_rUS_infiltration
+      - new: ROSIGMA_rUS_infiltration_visual_effect
         offset: 5  # change unit color to grey so player knows target is in infiltrator mode
         code: |
           var int temp;
@@ -265,14 +260,13 @@ extended:
           return new_pixel;
 
     visibilityUnit:
-      - new: ROSIGMA_vU_infiltration
+      - new: ROSIGMA_vU_infiltration_proximity_detection
         offset: 5  # hide unit
         code: |
           var int temp;
           var ptr RuleArmor myRuleArmor;
 
           target_unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
-
           if lt temp 1;
             return current_visibility visibility_mode;
           end;
@@ -281,12 +275,14 @@ extended:
           # debug_log "ROSIGMA_vU_infiltration, offset 5: distance:" distance;
           # debug_log "ROSIGMA_vU_infiltration, offset 5: making unit invisible per ARMOR_STEALTH_IS_ACTIVE tag, temp:" temp;
           target_unit.getRuleArmor myRuleArmor;
-          myRuleArmor.getTag temp Tag.ARMOR_RESTEALTH_TURN_REQUIREMENT; #see if we have the camo cloak
+          myRuleArmor.getTag temp Tag.ARMOR_STEALTH_DETECTION_RANGE;
           if lt temp 1;
             return 0 visibility_mode;
           end;
 
-          if lt distance 80; #enemies can see camo cloaks at range 5 and less; each tile = ~15.75 units of distance
+          mul temp 16;
+
+          if le distance temp; #enemies can see camo cloaks at range 5 and less; each tile = ~15.75 units of distance
             # debug_log "ROSIGMA_vU_infiltration, offset 5: Camo Cloak unit spotted. distance:" distance;
             return current_visibility visibility_mode;
           end;
@@ -433,6 +429,8 @@ extended:
         offset: 10  # Turn off reactions while stealthed
         code: |
           var int temp;
+          var ptr RuleArmor myRuleArmor;
+          var int reactRange;
 
           action_unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
           if gt temp 0;
@@ -442,7 +440,14 @@ extended:
 
           reaction_unit.getTag temp Tag.UNIT_STEALTH_IS_ACTIVE;
           if gt temp 0;
-            #` "reactionUnitAction | ROSIGMA_rUA_infiltration_no_reactions | offset: 10 | Reacting unit has UNIT_STEALTH_IS_ACTIVE. Abort reaction." temp;
+            reaction_unit.getRuleArmor myRuleArmor;
+            myRuleArmor.getTag reactRange Tag.ARMOR_STEALTH_DETECTION_RANGE;
+            mul reactRange 8; #15.75 / 2 = 8
+            if le distance reactRange;
+              # debug_log "reactionUnitAction | ROSIGMA_rUA_infiltration_no_reactions | offset: 10 | Reacting within half ARMOR_STEALTH_DETECTION_RANGE." reactRange;
+              return reaction_chance;
+            end;
+            # debug_log "reactionUnitAction | ROSIGMA_rUA_infiltration_no_reactions | offset: 10 | Reacting unit has UNIT_STEALTH_IS_ACTIVE. Abort reaction." temp;
             return 0;
           end;
 

@@ -747,6 +747,19 @@ weaponSets:  # these can be re-used for any unit
     weapons: [STR_KHORNE_BERSERKER_AXE, STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP]
   - type: KHORNE_BERSERKER_AXE_COMBIBOLTER
     weapons: [STR_KHORNE_BERSERKER_AXE, STR_CHB, STR_HB_CLIP_MC, STR_HB_CLIP]
+  # Diabolist Loadouts
+  - type: DIABOLIST_SCEPTRE_BOLTPISTOL
+    weapons: [STR_DIABLOIST_SCEPTRE, STR_BOLTPISTOL_CHAOS, STR_PISTOL_CLIP_AP, STR_PISTOL_CLIP_AP, STR_PISTOL_CLIP_AP, STR_KRAK_GRENADE, STR_ALIEN_GRENADE]
+  - type: DIABOLIST_SCEPTRE_PLASMAPISTOL
+    weapons: [STR_DIABLOIST_SCEPTRE, STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_KRAK_GRENADE, STR_MGRENADE]
+  - type: DIABOLIST_SCEPTRE_COMBIBOLTER
+    weapons: [STR_DIABLOIST_SCEPTRE, STR_CHB, STR_HB_CLIP_MC, STR_HB_CLIP, STR_MGRENADE, STR_MGRENADE]
+  # Arch Diabolist Loadouts
+  - type: ARCH_DIABOLIST_SCEPTRE_PLASMAPISTOL
+    weapons: [STR_ARCH_DIABLOIST_SCEPTRE, STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_MGRENADE, STR_MGRENADE]
+  - type: ARCH_DIABOLIST_SCEPTRE_COMBIBOLTER
+    weapons: [STR_ARCH_DIABLOIST_SCEPTRE, STR_CHB, STR_HB_CLIP_MC, STR_HB_CLIP, STR_PINKHORRORSPAWNER_GRENADE, STR_BLOODLETTERSPAWNER_GRENADE, STR_PLAGUEBEARERSPAWNER_GRENADE, STR_DAEMONETTESPAWNER_GRENADE]
+
 
 units:
   - delete: STR_TANK_CANNON
@@ -2114,7 +2127,7 @@ units:
     standHeight: 20
     kneelHeight: 15
     moraleLossWhenKilled: 120
-    value: 30
+    value: 50
     deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
     intelligence: 5
     aggression: 8
@@ -5891,7 +5904,7 @@ units:
     armor: STR_WORDBEARER_DARKAPOSTLE_ARMOR
     standHeight: 21
     kneelHeight: 16
-    value: 25
+    value: 50
     deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
     intelligence: 5
     aggression: 1
@@ -5902,14 +5915,13 @@ units:
     weightedBuiltInWeaponSets:
       -  # Tier 1
         CHAOS_WORDBEARER_DARK_APOSTLE_SET: 100
-
       -  # Tier 2
         CHAOS_WORDBEARER_DARK_APOSTLE_SET: 100
-
       -  # Tier 3
         CHAOS_WORDBEARER_DARK_APOSTLE_SET: 100
 
-  - type: STR_DAEMON_PORTAL
+  - &STR_DAEMON_PORTAL_TEMPLATE
+    type: STR_DAEMON_PORTAL
     stats:
       tu: 100
       stamina: 0
@@ -5927,7 +5939,7 @@ units:
     avoidsFire: false
     canBeMindControlled: false
     moraleLossWhenKilled: 0  #it's a portal
-    value: 1 #it's a portal
+    value: 0 #it's a portal
     standHeight: 21
     kneelHeight: 21
     deathSound: {mod: 40k, index: 737}
@@ -5942,6 +5954,39 @@ units:
       - - STR_DARK_SERMON_PORTAL
       - - STR_DARK_SERMON_PORTAL
 
+  - type: STR_DAEMON_PORTAL_LESSER
+    armor: STR_DAEMON_PORTAL_ARMOR_LESSER
+    refNode: *STR_DAEMON_PORTAL_TEMPLATE
+    stats:
+      tu: 100
+      stamina: 0
+      health: 100
+      bravery: 130
+      reactions: 30 #for Dark Sermon
+      firing: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 100 #can attempt to mind control when it doesn't spawn a demon or blaspheme Event Horizon style
+      psiSkill: 80
+      melee: 0
+
+  - type: STR_DAEMON_PORTAL_MINOR
+    armor: STR_DAEMON_PORTAL_ARMOR_MINOR
+    refNode: *STR_DAEMON_PORTAL_TEMPLATE
+    stats:
+      tu: 100
+      stamina: 0
+      health: 100
+      bravery: 110
+      reactions: 20 #for Dark Sermon
+      firing: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 100 #can attempt to mind control when it doesn't spawn a demon or blaspheme Event Horizon style
+      psiSkill: 60
+      melee: 0
+
+
   - type: STR_WORDBEARER_TERMINATOR
     race: STR_ETHEREAL
     rank: STR_LIVE_SOLDIER
@@ -5950,7 +5995,7 @@ units:
       stamina: 100
       health: 110
       bravery: 150
-      reactions: 90
+      reactions: 70
       firing: 90
       throwing: 90
       strength: 160
@@ -6067,7 +6112,7 @@ units:
       stamina: 110
       health: 120
       bravery: 150
-      reactions: 100
+      reactions: 80
       firing: 100
       throwing: 100
       strength: 170
@@ -6099,7 +6144,6 @@ units:
         TERMINATOR_MULTIMELTA: 10
         TERMINATOR_HEAVYPLASMA: 5
         TERMINATOR_AUTOCANNON: 5
-
       -  # Tier 2
         TERMINATOR_ASSAULTCANNON: 30
         TERMINATOR_LASCANNON: 20
@@ -6108,7 +6152,6 @@ units:
         TERMINATOR_AUTOCANNON: 10
         TERMINATOR_MULTIMELTA: 10
         TERMINATOR_HEAVYPLASMA: 10
-
       -  # Tier 3
         TERMINATOR_HEAVYPLASMA: 30
         TERMINATOR_AUTOCANNON: 20
@@ -6168,17 +6211,58 @@ units:
     rank: STR_LIVE_SOLDIER
     stats:
       tu: 90
-      stamina: 90
+      stamina: 100
       health: 70
-      bravery: 110
+      bravery: 150
       reactions: 50
-      firing: 70
+      firing: 80
       throwing: 70
-      strength: 60
+      strength: 65
       psiStrength: 90
-      psiSkill: 10
-      melee: 70
+      psiSkill: 90
+      melee: 90
     armor: STR_WORDBEARER_DIABOLIST_ARMOR
+    standHeight: 21
+    kneelHeight: 16
+    value: 20
+    deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
+    intelligence: 4
+    aggression: 1
+    spotter: 2
+    sniper: 90
+    energyRecovery: 60
+    livingWeapon: true
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        DIABOLIST_SCEPTRE_BOLTPISTOL: 70
+        DIABOLIST_SCEPTRE_PLASMAPISTOL: 20
+        DIABOLIST_SCEPTRE_COMBIBOLTER: 10
+      -  # Tier 2
+        DIABOLIST_SCEPTRE_BOLTPISTOL: 30
+        DIABOLIST_SCEPTRE_PLASMAPISTOL: 40
+        DIABOLIST_SCEPTRE_COMBIBOLTER: 30
+      -  # Tier 3
+        DIABOLIST_SCEPTRE_BOLTPISTOL: 5
+        DIABOLIST_SCEPTRE_PLASMAPISTOL: 25
+        DIABOLIST_SCEPTRE_COMBIBOLTER: 70
+
+  - type: STR_WORDBEARER_DIABOLISTELITE
+    race: STR_ETHEREAL  # CHAOS TRAITOR
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 110
+      stamina: 120
+      health: 90
+      bravery: 150
+      reactions: 70
+      firing: 100
+      throwing: 90
+      strength: 85
+      psiStrength: 90
+      psiSkill: 110
+      melee: 90
+    armor: STR_WORDBEARER_DIABOLISTELITE_ARMOR
     standHeight: 21
     kneelHeight: 16
     value: 25
@@ -6186,85 +6270,20 @@ units:
     intelligence: 5
     aggression: 1
     spotter: 2
-    sniper: 50
+    sniper: 90
     energyRecovery: 60
     livingWeapon: true
     builtInWeaponSets: []
     weightedBuiltInWeaponSets:
       -  # Tier 1
-        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 60
-        BASIC_CSM_EX_CHAOS_BOLTER_LOADOUT: 10
-        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 10
-        BASIC_CSM_MELTAGUN_LOADOUT: 10
-        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 5
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 5
+        ARCH_DIABOLIST_SCEPTRE_PLASMAPISTOL: 75
+        ARCH_DIABOLIST_SCEPTRE_COMBIBOLTER: 25
       -  # Tier 2
-        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 40
-        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 20
-        BASIC_CSM_MELTAGUN_LOADOUT: 10
-        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 10
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 10
-        BASIC_CSM_EX_CHAOS_BOLTER_LOADOUT: 10
+        ARCH_DIABOLIST_SCEPTRE_PLASMAPISTOL: 50
+        ARCH_DIABOLIST_SCEPTRE_COMBIBOLTER: 50
       -  # Tier 3
-        BASIC_CSM_CHAOS_BOLTER_LOADOUT: 5
-        BASIC_CSM_EX_CHAOS_BOLTER_LOADOUT: 5
-        BASIC_CSM_MELTAGUN_LOADOUT: 10
-        BASIC_CSM_AP_CHAOS_BOLTER_LOADOUT: 20
-        BASIC_CSM_AP_STALKER_BOLTER_LOADOUT: 20
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 40
-
-  - type: STR_WORDBEARER_DIABOLISTELITE
-    race: STR_ETHEREAL  # CHAOS TRAITOR
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 100
-      stamina: 100
-      health: 90
-      bravery: 130
-      reactions: 70
-      firing: 90
-      throwing: 80
-      strength: 75
-      psiStrength: 90
-      psiSkill: 90
-      melee: 80
-    armor: STR_WORDBEARER_DIABOLISTELITE_ARMOR
-    standHeight: 21
-    kneelHeight: 16
-    value: 25
-    deathSound: [{mod: 40k, index: 723}, {mod: 40k, index: 724}, {mod: 40k, index: 725}, {mod: 40k, index: 726}, {mod: 40k, index: 727}, {mod: 40k, index: 728}, {mod: 40k, index: 729}, {mod: 40k, index: 730}, {mod: 40k, index: 731}, {mod: 40k, index: 732}]
-    intelligence: 6
-    aggression: 1
-    spotter: 2
-    sniper: 75
-    energyRecovery: 60
-    livingWeapon: true
-    builtInWeaponSets: []
-    weightedBuiltInWeaponSets:
-      -  # Tier 1
-        BASIC_CSM_GRENADE_LAUNCHER_LOADOUT: 30
-        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 20
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 10
-        BASIC_CSM_HANDHELD_LASCANNON_LOADOUT: 10
-        BASIC_CSM_MULTIMELTA_LOADOUT: 10
-        BASIC_CSM_ROCKET_LAUNCHER_LOADOUT: 10
-        BASIC_CSM_HEAVY_PLASMA_LOADOUT: 10
-      -  # Tier 2
-        BASIC_CSM_GRENADE_LAUNCHER_LOADOUT: 20
-        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 20
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 20
-        BASIC_CSM_HANDHELD_LASCANNON_LOADOUT: 10
-        BASIC_CSM_MULTIMELTA_LOADOUT: 10
-        BASIC_CSM_ROCKET_LAUNCHER_LOADOUT: 10
-        BASIC_CSM_HEAVY_PLASMA_LOADOUT: 10
-      -  # Tier 3
-        BASIC_CSM_GRENADE_LAUNCHER_LOADOUT: 5
-        BASIC_CSM_PLASMA_RIFLE_LOADOUT: 10
-        BASIC_CSM_SNIPER_RIFLE_LOADOUT: 15
-        BASIC_CSM_HANDHELD_LASCANNON_LOADOUT: 15
-        BASIC_CSM_MULTIMELTA_LOADOUT: 15
-        BASIC_CSM_ROCKET_LAUNCHER_LOADOUT: 20
-        BASIC_CSM_HEAVY_PLASMA_LOADOUT: 20
+        ARCH_DIABOLIST_SCEPTRE_PLASMAPISTOL: 25
+        ARCH_DIABOLIST_SCEPTRE_COMBIBOLTER: 75
 
   # dungeon specific end
 
@@ -6590,7 +6609,7 @@ units:
       reactions: 88  # higher reactions so they're not so easy to kill when they rush a firing line
       firing: 78
       throwing: 88
-      strength: 88
+      strength: 98
       psiStrength: 110  # khorne protects from psykers
       psiSkill: 0
       melee: 118  # they're Khorne Berserkers; they're supposed to have great melee
@@ -6600,7 +6619,7 @@ units:
     energyRecovery: 88
     canPanic: false
     avoidsFire: false
-    value: 30
+    value: 25
     canBeMindControlled: false
     moraleLossWhenKilled: 75  # expected to die
     livingWeapon: true
