@@ -114,13 +114,13 @@ extended:
           var int weaponPower;
           var int sneakyBonus;
           var int temp;
-          var int temp2;
+          var int unitFaction;
           var ptr RuleItem rItem;
           var ptr BattleItem ammoItem;
 
           attacker.getFaction temp;
-          unit.getFaction temp2;
-          if eq temp temp2;
+          unit.getFaction unitFaction;
+          if eq temp unitFaction;
             # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Aborting. Target is friendly." unit;
             return power part side;
           end;
@@ -142,6 +142,10 @@ extended:
           muldiv power sneakyBonus 100; # we deal powerBonus % more damage relative to the base power;
           # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. Unit not visible. Temp:" temp;
           # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. New power:" power;
+
+          if eq unitFaction FACTION_PLAYER;
+            battle_game.flashMessage "STR_SCRIPT_SNEAK_ATTACK";
+          end;
 
           return power part side;
 

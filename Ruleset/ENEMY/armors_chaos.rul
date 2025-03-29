@@ -1988,7 +1988,7 @@ armors:
       - STR_WORDBEARER_GALVELITE_CORPSE
     frontArmor: 130 #artificer armor
     sideArmor: 120
-    rearArmor: 100
+    rearArmor: 90
     underArmor: 130
     damageModifier:  # CHAOS ARMOR WEAKER
       - 1.0  # none
@@ -2027,7 +2027,7 @@ armors:
       - STR_WORDBEARER_GALVELITE_POSSCORPSE
     frontArmor: 130
     sideArmor: 120
-    rearArmor: 100
+    rearArmor: 90
     underArmor: 130
     damageModifier:  # CHAOS ARMOR
       - 1.0  # none
@@ -2218,7 +2218,8 @@ armors:
       INFECTION_RESIST: 100 #blessed by the dark gods
       INTIMIDATION_RESISTANCE: 50 #zealous convictions
 
-  - type: STR_DAEMON_PORTAL_ARMOR
+  - &STR_DAEMON_PORTAL_TEMPLATE
+    type: STR_DAEMON_PORTAL_ARMOR
     visibilityAtDay: 1
     visibilityAtDark: 1
     psiVision: 10
@@ -2277,12 +2278,35 @@ armors:
     tags:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_PSYKER: 1
-      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_DAEMONIC: 1
+      IS_DAEMONIC_PORTAL: 3
+      INFECTION_RESIST: 100 #it's a hell portal
+      INTIMIDATION_RESISTANCE: 100 #it's a hell portal
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 100  # (100 * 100 / 25) = 400. Regenerates from 100 (at 0) to 0 (at 500) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+
+  - type: STR_DAEMON_PORTAL_ARMOR_LESSER
+    refNode: *STR_DAEMON_PORTAL_TEMPLATE
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_PSYKER: 1
+      UNIT_TYPE_DAEMONIC: 1
+      IS_DAEMONIC_PORTAL: 2
+      INFECTION_RESIST: 100 #it's a hell portal
+      INTIMIDATION_RESISTANCE: 100 #it's a hell portal
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 75  # (100 * 100 / 25) = 300. Regenerates from 100 (at 0) to 0 (at 500) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+
+  - type: STR_DAEMON_PORTAL_ARMOR_MINOR
+    refNode: *STR_DAEMON_PORTAL_TEMPLATE
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_PSYKER: 1
       UNIT_TYPE_DAEMONIC: 1
       IS_DAEMONIC_PORTAL: 1
       INFECTION_RESIST: 100 #it's a hell portal
       INTIMIDATION_RESISTANCE: 100 #it's a hell portal
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 100  # (100 * 100 / 25) = 400. Regenerates from 100 (at 0) to 0 (at 500) / Turn
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50  # (100 * 100 / 25) = 200. Regenerates from 100 (at 0) to 0 (at 500) / Turn
       ARMOR_ENERGY_SHIELD_DECAY: 25
 
   - type: STR_WORDBEARER_TERMINATORELITE_ARMOR
@@ -2379,45 +2403,9 @@ armors:
     spriteInv: WORDBEARERdiabolistinvent.SPK
     corpseBattle:
       - STR_WORDBEARER_DIABOLIST_CORPSE
-    frontArmor: 100
-    sideArmor: 100
-    rearArmor: 80
-    underArmor: 100
-    damageModifier:  # CHAOS ARMOR WEAKER
-      - 1.0  # none
-      - 0.9  # AP
-      - 0.6  # FLAMES
-      - 0.7  # HE
-      - 0.8  # LASCANON
-      - 1.1  # PLASMA
-      - 1.1  # STUN
-      - 1.1  # MELEE Weakness
-      - 1.0  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.2  # MELTA
-    loftempsSet: [4]
-    allowsRunning: false  # NPC limits for BAI
-    tags:
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_DAEMONIC: 1
-      INFECTION_RESIST: 50
-      INTIMIDATION_RESISTANCE: 50
-
-  - type: STR_WORDBEARER_DIABOLISTELITE_ARMOR
-    visibilityAtDay: 40
-    visibilityAtDark: 30 #artificer armor
-    heatVision: 30 #artificer armor
-    antiCamouflageAtDay: 5  #Keen senses
-    antiCamouflageAtDark: 5  #Keen senses
-    spriteSheet: WORDBEARERarchdiabolistbattle.PCK
-    spriteInv: WORDBEARERarchdiabolistinvent.SPK
-    corpseBattle:
-      - STR_WORDBEARER_DIABOLISTELITE_CORPSE
     frontArmor: 120
     sideArmor: 110
-    rearArmor: 100
+    rearArmor: 80
     underArmor: 120
     damageModifier:  # CHAOS ARMOR WEAKER
       - 1.0  # none
@@ -2438,7 +2426,45 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_DAEMONIC: 1
-      INFECTION_RESIST: 50
+      UNIT_TYPE_PSYKER: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 50
+
+  - type: STR_WORDBEARER_DIABOLISTELITE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #artificer armor
+    heatVision: 30 #artificer armor
+    antiCamouflageAtDay: 5  #Keen senses
+    antiCamouflageAtDark: 5  #Keen senses
+    spriteSheet: WORDBEARERarchdiabolistbattle.PCK
+    spriteInv: WORDBEARERarchdiabolistinvent.SPK
+    corpseBattle:
+      - STR_WORDBEARER_DIABOLISTELITE_CORPSE
+    frontArmor: 130
+    sideArmor: 120
+    rearArmor: 90
+    underArmor: 130
+    damageModifier:  # CHAOS ARMOR WEAKER
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.5  # FLAMES
+      - 0.6  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [4]
+    allowsRunning: false  # NPC limits for BAI
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 50
 
     scripts:

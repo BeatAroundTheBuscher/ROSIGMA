@@ -12,9 +12,26 @@ extended:
           damaging_item.getTag temp Tag.ITEM_IS_DUMMY_MUNITION;
           weapon_item.getTag temp2 Tag.ITEM_IS_DUMMY_MUNITION;
           add temp temp2;
-          if lt temp 1; # don't bother if we don't have the dug-in bonus
-            # debug_log "Dig In Scripts; hitUnitAmmo, offset 1: Aborting. No ammo/weapon dummy trait detected:" temp;
+          if lt temp 1;
+            # debug_log "Dummy Scripts; ROSIGMA_hUA_dummy_munition, offset 1: Aborting. No ammo/weapon dummy trait detected:" temp;
             return power part side;
           end;
 
           return 0 part side;
+
+    damageUnit:
+      - new: ROSIGMA_dU_dummy_change_health_damage_percent
+        offset: 1
+        code: |
+          var int toHealthPercent;
+          var int temp;
+
+          damaging_item.getTag toHealthPercent Tag.ITEM_DUMMY_HEALTH_DAMAGE_PERCENT;
+          if eq toHealthPercent 0;
+            # debug_log "Dummy Scripts; ROSIGMA_dU_dummy_change_health_damage_percent, offset 1: Aborting. No ammo/weapon dummy trait detected:" temp;
+            return;
+          end;
+
+          muldiv to_health toHealthPercent 100;
+
+          return;
