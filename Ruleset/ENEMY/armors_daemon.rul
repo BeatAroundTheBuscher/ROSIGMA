@@ -1026,3 +1026,60 @@ armors:
       INTIMIDATION_RESISTANCE: 50  # intimidation resistant
       UNIT_TYPE_DAEMONIC: 1
       UNIT_TYPE_CHAOS: 1
+
+  - type: STR_CHAOSFURY_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40  # sees in the dark
+    heatVision: 33  # daemons have 33% heat vision as standard
+    psiVision: 10
+    size: 1
+    spriteSheet: chaosfurybattle.PCK
+    spriteInv: chaosfuryinvent.SPK
+    corpseBattle:
+      - STR_CHAOSFURY_CORPSE
+    movementType: 1
+    zombiImmune: true  # It's a daemon; can't zombify this.
+    frontArmor: 40
+    sideArmor: 30
+    rearArmor: 30
+    underArmor: 20
+    drawingRoutine: 4
+    scripts:
+      selectUnitSprite: |
+        # this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    damageModifier:
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.4  # FLAMES
+      - 0.6  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 0.5  # ACID; daemons innately resist poisons/hazardous chems
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [2]
+    deathFrames: 4
+    allowsRunning: true
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_DAEMONIC: 1
