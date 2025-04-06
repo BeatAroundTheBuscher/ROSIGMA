@@ -1326,10 +1326,16 @@ items:
   - type: STR_RAZORBACK_SPAWNER
     spawnUnit: STR_RAZORBACK_WITH_SMOKE
 
-  - type: STR_GK_HB
+  - &STR_GK_STORMBOLTER_TEMPLATE
+    type: STR_GK_HB
+    compatibleAmmo:
+      - STR_HB_CLIP
+      - STR_HB_CLIP_MC
+      - STR_STORMBOLTER_PSI_MAG
     bigSprite: 2520
 
   - type: STR_GK_HB_MC
+    refNode: *STR_GK_STORMBOLTER_TEMPLATE
     bigSprite: 2521
 
 # dungeon specific start
@@ -2050,7 +2056,7 @@ items:
     categories: [STR_CAT_AUTO]
     weight: 70
     size: 0.4
-    costSell: 72000
+    costSell: 10000
     bigSprite: 3091
     floorSprite: 3040
     handSprite: 3510
@@ -2061,22 +2067,32 @@ items:
       - STR_AUTOCANNON_AMMO
       - STR_AUTOCANNON_HE_AMMO
       - STR_AUTOCANNON_BOX_AMMO
-    accuracyAuto: 60 #20 kneel bonus handled by recoil script
-    tuAuto: 45
-    dropoff: 3
-    #kneelBonus: 300
+    dropoff: 4
     battleType: 1
     twoHanded: true
     blockBothHands: true
     invWidth: 2
     invHeight: 3
     armor: 30
-    autoRange: 20
+    snapRange: 25
+    accuracySnap: 80
+    tuSnap: 33
+    accuracyAuto: 60 #20 kneel bonus handled by recoil script
+    tuAuto: 50
+    autoRange: 18
     autoShots: 3
+    minRange: 7
     bulletSpeed: 50
+    kneelBonus: 150 #heavy weapon
     listOrder: 10775
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
 
-  - type: STR_AUTOCANNON_AMMO                     #recolour of guard STR_AUTOCANNON_CLIP
+  - &STR_AUTOCANNON_AMMO_TEMPLATE
+    type: STR_AUTOCANNON_AMMO                     #recolour of guard STR_AUTOCANNON_CLIP
     categories: [STR_CAT_AUXILIARY, STR_CAT_AUTO]
     size: 0.3
     costSell: 1000
@@ -2086,12 +2102,12 @@ items:
     handSprite: 3520
     hitSound: {mod: 40k, index: 13}
     hitAnimation: {mod: 40k, index: 26}
-    power: 110
-    damageType: 1
     clipSize: 60
     battleType: 2
     invWidth: 2
     invHeight: 2
+    power: 110
+    damageType: 1
     damageAlter: #DA BOLTER
       ToArmorPre: 0.05
       ArmorEffectiveness: 0.9
@@ -2104,29 +2120,73 @@ items:
     listOrder: 6930
 
   - type: STR_AUTOCANNON_HE_AMMO
-    categories: [STR_CAT_AUXILIARY, STR_CAT_AUTO]
-    size: 0.3
-    costSell: 4000
-    weight: 15
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
     bigSprite: 3093
     floorSprite: 3042
     handSprite: 3530
-    hitSound: {mod: 40k, index: 13}
-    hitAnimation: {mod: 40k, index: 26}
-    power: 110
-    damageType: 1
-    clipSize: 60
-    battleType: 2
-    invWidth: 2
-    invHeight: 2
-    damageAlter:
-      ToArmorPre: 0 #loses armor stripping
-      ArmorEffectiveness: 0.3 #loses most armor pen
-      ToHealth: 1.15
-      ToStun: 0.5
-      FixRadius: 1
+    hitAnimation: 1200
+    power: 100
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.02
       RandomType: 6
-    bulletSpeed: 50
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 32
+    listOrder: 6931
+
+  - type: STR_AUTOCANNON_AP_AMMO
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
+    bigSprite: 3093
+    floorSprite: 3042
+    handSprite: 3530
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.7
+      ToStun: 0.25
+    listOrder: 6932
+
+  - type: STR_STORMBOLTER_PSI_MAG
+    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
+    size: 0.2
+    costSell: 1000
+    weight: 10
+    bigSprite: 1107
+    floorSprite: {mod: 40k, index: 116}
+    handSprite: {mod: 40k, index: 656}
+    hitSound: 13
+    hitAnimation: 26
+    damageBonus: #psionically charged
+      psiStrength: 0.5
+    damageAlter:  # DA BOLTER  DOUBLE SHOT
+      RandomType: 1
+      ToArmorPre: 0.2
+      ArmorEffectiveness: 0.8
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5  # was 1.0
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
     explosionSpeed: 5
+    power: 70
+    damageType: 1
+    clipSize: 20
+    battleType: 2
     armor: 30
-    listOrder: 6930
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13122
+    tags: #lethal vs daemons
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 150
