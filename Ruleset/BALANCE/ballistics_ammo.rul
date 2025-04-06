@@ -222,6 +222,7 @@ items:
       ToEnergy: 0.4  # concussive
       ToTime: 0.3  # concussive
       FixRadius: 2
+    powerForAnimation: 32
 
 # storm bolter ammo
   - &STR_STORMBOLTER_AMMO
@@ -241,6 +242,17 @@ items:
     shotgunSpread: 1  # 1/100; hit together
     shotgunBehavior: 1  # new behaviour
     shotgunPellets: 2
+
+  - type: STR_STORMBOLTER_PSI_MAG                      # change all
+    refNode: *STR_STORMBOLTER_AMMO  # done
+    power: 70
+    damageBonus: #psionically charged
+      psiStrength: 0.5
+    damageAlter:
+      ToArmorPre: 0.2
+      ArmorEffectiveness: 0.8
+    tags: #lethal vs daemons
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 150
 
   - type: STR_HB_CLIP_MC
     refNode: *STR_STORMBOLTER_AMMO  # done
@@ -471,7 +483,9 @@ items:
     clipSize: 40
 
   - &STR_ASSAULT_CANNON_AMMO
-    type: STR_ASSC_CLIP                                                         # 13230              ToStun
+    type: STR_ASSC_CLIP
+    size: 0.3
+    weight: 15
     power: 100
     damageType: 1
     clipSize: 100
@@ -481,25 +495,23 @@ items:
       ToArmor: 0.1
       ToHealth: 1.0
       ToStun: 0.5
+    invWidth: 2
+    invHeight: 2
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    armor: 200
+    bulletSpeed: 50
+    explosionSpeed: 5
+    attraction: 8
 
   - type: STR_ASSC_CLIP_INFERNO  # Assault Cannon Inferno Bolt Rounds
     refNode: *STR_ASSAULT_CANNON_AMMO
     categories: [STR_CAT_TERMINATOR, STR_CAT_TZEENTCH]
-    size: 0.3
     costSell: 1000
-    weight: 15
     bigSprite: 2948
     floorSprite: 960
     handSprite: 2980
-    hitSound: {mod: 40k, index: 13}
-    hitAnimation: {mod: 40k, index: 26}
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 2
-    bulletSpeed: 50
-    explosionSpeed: 5
-    attraction: 8
     vaporColorSurface: 14  # blue warpfire
     vaporDensitySurface: 6
     vaporProbabilitySurface: 18
@@ -514,6 +526,45 @@ items:
       ToWound: 0.05  # melta type injuries
       RandomWound: false
       ToMorale: 5.0  # incendiary + Tzeentch spook
+    listOrder: 13233
+
+  - type: STR_ASSC_CLIP_AP
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    categories: [STR_CAT_TERMINATOR]
+    costSell: 2000
+    bigSprite: 1108
+    floorSprite: 993
+    handSprite: 3500
+    damageAlter:
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.65
+      ToStun: 0.25
+    listOrder: 13231
+
+  - type: STR_ASSC_CLIP_HE
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    categories: [STR_CAT_TERMINATOR]
+    costSell: 2000
+    bigSprite: 1109
+    floorSprite: 993
+    handSprite: 3500
+    hitAnimation: 1200
+    power: 90
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.05
+      RandomType: 6
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 40
+    listOrder: 13232
 
   - type: STR_GALGALIM_ASSC_CLIP                                                         # 13230              ToStun
     power: 80

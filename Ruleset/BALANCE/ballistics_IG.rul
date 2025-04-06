@@ -520,10 +520,11 @@ items:
       ITEM_RECOIL: 60
       ITEM_HAS_BIPOD: 1
 
-  - type: STR_AUTOCANNON_HANDHELD  # done
+  - &STR_AUTOCANNON_TEMPLATE
+    type: STR_AUTOCANNON_HANDHELD  # done
     dropoff: 3  # better than heavy bolters
     autoRange: 20  # + 3 for tuAuto > 50 %
-    snapRange: 23
+    snapRange: 25
     aimRange: 0
 
     accuracySnap: 70
@@ -533,9 +534,47 @@ items:
     tuSnap: 40
     tuAimed: 0
 
+    sprayWaypoints: 2
+    minRange: 7
+
     tags:
       REACTION_MULTIPLIER: 50
       REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_AUTOCANNON_HANDHELD_ANY #generic autocannon
+    refNode: *STR_AUTOCANNON_TEMPLATE
+
+  - type: STR_CASSC #compact autocannon; much faster firing, more reactive but reduced range and dropoff
+    dropoff: 4
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    confSnap:
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+    autoShots: 10
+
+    accuracyAuto: 50
+    accuracySnap: 60
+    tuAuto: 45
+    tuSnap: 40
+    snapRange: 20
+    autoRange: 16
+
+    minRange: 5
+
+    tags:
+      REACTION_MULTIPLIER: 100
+
+  - type: STR_AUTOCANNON_KALIBRAX #high fire rate autocannon; mid range
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    confSnap:
+      shots: 3
+      name: STR_BURST_SNAP_SHOT
+    autoShots: 10
+
+    autoRange: 18
+    snapRange: 23
 
   - type: STR_HEAVY_STUBBER_KRIEG  # done
     dropoff: 4
