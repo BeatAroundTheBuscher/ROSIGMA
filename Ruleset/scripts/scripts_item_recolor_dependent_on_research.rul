@@ -3,6 +3,7 @@ extended:
     RuleItem:
       ITEM_SPRITE_COLOR: int
       ITEM_NEW_COLOR: int
+      ITEM_CHAOS_COLOR: int
 
 items:
   - &STR_ITEM_CHANGE_COLOR
@@ -10,26 +11,35 @@ items:
     tags:
       ITEM_SPRITE_COLOR: 4
       ITEM_NEW_COLOR: 15
+      ITEM_CHAOS_COLOR: 10
     scripts:
       recolorItemSprite: |
         var ptr RuleItem weaponRuleset;
         var int newWeaponColor;
         var int oldWeaponColor;
         var int color;
-        var int temp;
+        var int isArbites;
+        var int isChaos;
         var ptr GeoscapeGame geoScape;
         var ptr RuleResearch researchTopic;
 
-        if eq blit_part blit_item_big;
+        if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
 
           battle_game.getGeoscapeGame geoScape;
           rules.getRuleResearch researchTopic "STR_ARBITES";
-          geoScape.isResearched temp researchTopic;
+          geoScape.isResearched isArbites researchTopic;
 
-          if eq temp 1;
+          rules.getRuleResearch researchTopic "STR_CHAOS_STRATEGY_ARBITES";
+          geoScape.isResearched isChaos researchTopic;
+
+          if or eq isArbites 1 eq isChaos 1;
 
             item.getRuleItem weaponRuleset;
-            weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_COLOR;
+            if eq isArbites 1;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_COLOR;
+            else;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_CHAOS_COLOR;
+            end;
             if neq newWeaponColor 0;
               weaponRuleset.getTag oldWeaponColor Tag.ITEM_SPRITE_COLOR;
               get_color color new_pixel;
@@ -110,4 +120,10 @@ items:
     refNode: *STR_ITEM_CHANGE_COLOR
 
   - type: STR_GRENADE_LAUNCHER
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: STR_BOLTER_LIGHT_LMG
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: STR_HEAVY_STUBBER
     refNode: *STR_ITEM_CHANGE_COLOR
