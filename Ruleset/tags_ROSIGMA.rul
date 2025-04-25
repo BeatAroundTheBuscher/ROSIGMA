@@ -44,7 +44,6 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: int
-      ARMOR_REGENERATES_WOUNDS: int
       # *** Alpha Legion Scripts ***
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: int  # attacker armor property; modifies the final modifier by this as a percent after all other modifiers; -1 means no chance of triggering
       ARMOR_ALPHA_TARGET_VALUE_MODIFIER: int  # target armor property; modifies the final modifier by this as a percent after all other modifiers; -1 means no chance of triggering
@@ -77,6 +76,17 @@ extended:
       ARMOR_FORCE_DEATH_ON_KAMIKAZI: int  # do we force a death if we kamikazi?
       ARMOR_IS_DUMMY: int  # is this a dummy we immediately kill off and trigger the bomb for?
       ARMOR_IS_EXPLODE_ON_DEATH_MELEE_BYPASS: int  # if true, melee type damage bypasses the self-destruct
+      # *** Regeneration Armor/Scripts: scripts_psi_mend_wounds
+      ARMOR_REGENERATES_WOUNDS: int  # do we regenerate wounds? If so, how many?
+      ARMOR_REGENERATES_HEALTH: int  # does this armor regenerate health? Yes/no
+      ARMOR_HEALTH_REGENERATE_DYNAMIC_MAX: int # is the max health % we can regenerate proportionate to our lost health?
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: int  # what's the max % we can regenerate up to?
+      ARMOR_HEALTH_REGENERATE_FLAT_AMOUNT: int # regenerate this fixed amount of health each turn
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_CURRENT_HP: int #regenerate this % of our current HP
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: int #regenerate this % of our max HP
+      ARMOR_PSI_REGENERATE_DIVISOR: int  # what we divide our psi by; lower is better; recommend at least 1000.
+      ARMOR_HEALTH_PER_WOUND_REGENERATED: int
+      ARMOR_WOUND_TIME_MULTIPLIER: int  # what percent do we multiply our wound recovery time by?
 
 
     RuleSoldierBonus:
@@ -166,6 +176,17 @@ extended:
       ITEM_IS_BOMB_ON_DEATH: int  # does this blow up on death? The bomb fuse timer is equal to this value - 1.
       ITEM_IS_RANDOM_FUSE: int  # sets the fuse to a random value between 0 and ITEM_RANDOM_FUSE values.
       ITEM_IS_KAMIKAZI_BOMB: int  # damage from this will kill the source if they have the Kamikazi armor tag.
+      # *** Regeneration Armor/Scripts: scripts_psi_mend_wounds
+      ITEM_MENDS_WOUNDS: int
+      ITEM_MEND_HEAL_CAP_PERCENT: int  # max % this heals up to
+      ITEM_MEND_HARMS_ENEMIES: int
+      ITEM_MEND_STUN_PERCENT: int  # percent of rolled power removed from target stun
+      ITEM_MEND_ENERGY_PERCENT: int  # percent of rolled power removed from target energy
+      ITEM_MEND_TIME_PERCENT: int  # percent of rolled power removed from target TU
+      # *** Armor Penetration Armor/Scripts: scripts_resist_penetration
+      DAMAGE_RESIST_PENETRATION_PERCENT: int #what percent of the target's % damage reduction from resistance we ignore.
+      DAMAGE_RESIST_PENETRATION_FLAT: int #we reduce the target's % damage reduction by this flat amount
+
 
     RuleSkill:
       # *** Misc ***
@@ -225,6 +246,8 @@ extended:
       CURRENT_INFECTION_TYPE: int  # type of infection the unit has. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh
       CURRENT_INFECTION_FACTION: int  # the faction that caused the infection; also determines which faction an infection spawned unit aligns with
       LAST_INFECTION_DAMAGE: int  # infection damage accumulated since last start of unit turn
+      # *** Regeneration Armor/Scripts: scripts_psi_mend_wounds
+      UNIT_LOWEST_HEALTH: int  #the lowest HP we have reached on this mission
 
     RuleSoldier:
       # *** Bonehead orders ***
