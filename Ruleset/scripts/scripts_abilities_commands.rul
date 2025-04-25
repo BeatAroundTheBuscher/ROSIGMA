@@ -12,6 +12,7 @@ extended:
       CHOICE_ACTIVE_COMMAND: int
       COMMAND_POINTS: int
       NUMBER_SOLDIERS: int
+      NUMBER_OFFICERS: int
     RuleSkill:
       SKILL_COMMAND_ID: int
     RuleSoldier:
@@ -20,9 +21,39 @@ extended:
 
   scripts:
     createUnit:
-      - offset: 1
+      - new: ROSIGMA_cU_command_set_officer_count #tally the number of Officers
+        offset: 1
         code: |
           var int temp;
+          var int temp2;
+          var ptr RuleSoldier rSoldier;
+
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER;
+            return;
+          end;
+
+          unit.getRuleSoldier rSoldier;
+          if eq rSoldier null;
+            return;
+          end;
+
+          rSoldier.getTag temp Tag.SOLDIER_IS_OFFICER;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTag temp2 Tag.NUMBER_OFFICERS;
+          add temp2 1;
+          battle_game.setTag Tag.NUMBER_OFFICERS temp2;
+
+          return;
+
+      - new: ROSIGMA_cU_command_set_command_points
+        offset: 2
+        code: |
+          var int temp;
+          var int temp2;
           var int rank;
           var int commandPoints;
           var ptr RuleSoldier rSoldier;
@@ -41,6 +72,12 @@ extended:
           unit.getRank rank;
           add rank 1;
           rSoldier.getTag commandPoints Tag.SOLDIER_COMMAND_POINTS;
+          rSoldier.getTag temp Tag.SOLDIER_IS_OFFICER;
+          if gt temp 0; #double command points, then divide by the number of officers
+            battle_game.getTag temp Tag.NUMBER_OFFICERS;
+            limit_lower temp 1;
+            muldiv commandPoints 2 temp;
+          end;
           mul commandPoints rank;
           battle_game.getTag temp Tag.COMMAND_POINTS;
           add temp commandPoints;
