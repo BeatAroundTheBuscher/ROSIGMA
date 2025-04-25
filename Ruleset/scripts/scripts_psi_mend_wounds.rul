@@ -73,66 +73,146 @@ extended:
       ITEM_MEND_TIME_PERCENT: int  # percent of rolled power removed from target TU
     RuleArmor:
       ARMOR_REGENERATES_WOUNDS: int  # do we regenerate wounds? If so, how many?
-      ARMOR_WOUND_REGENERATE_MAX_PERCENT: int  # what's the max % we can regenerate up to?
+      ARMOR_REGENERATES_HEALTH: int  # does this armor regenerate health? Yes/no
+      ARMOR_HEALTH_REGENERATE_DYNAMIC_CEILING_PERCENT: int # is the max health % we can regenerate proportionate to our lost health?
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: int  # the max % of our health we can regenerate up to
+      ARMOR_HEALTH_REGENERATE_FLAT_AMOUNT: int # regenerate this fixed amount of health each turn
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_CURRENT_HP: int #regenerate this % of our current HP
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: int #regenerate this % of our max HP
       ARMOR_PSI_REGENERATE_DIVISOR: int  # what we divide our psi by; lower is better; recommend at least 1000.
       ARMOR_HEALTH_PER_WOUND_REGENERATED: int
       ARMOR_WOUND_TIME_MULTIPLIER: int  # what percent do we multiply our wound recovery time by?
+    BattleUnit:
+      UNIT_LOWEST_HEALTH: int  #the lowest HP we have reached on this mission
 
   scripts:
-    newTurnUnit:
-      - new: ROSIGMA_nTU_armor_regenerates_wounds_1
+    createUnit:
+      - new: ROSIGMA_cU_armor_regenerates_health
         offset: 1
         code: |
           var int temp;
-          var int temp2;
-          var int regenDivisor;
-          var int maxPercent;
-          var int maxHealth;
-          var int totalWounds;
-          var int unitFaction;
           var ptr RuleArmor armorRule;
 
           unit.getRuleArmor armorRule;
-          armorRule.getTag maxPercent Tag.ARMOR_WOUND_REGENERATE_MAX_PERCENT;
-          if lt maxPercent 1;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; no maxPercent:" maxPercent;
-            return;
-          end;
-
-          armorRule.getTag regenDivisor Tag.ARMOR_PSI_REGENERATE_DIVISOR;
-          if lt regenDivisor 1;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; no regenDivisor:" regenDivisor;
+          armorRule.getTag temp Tag.ARMOR_REGENERATES_HEALTH;
+          if lt temp 1;
             return;
           end;
 
           unit.getHealth temp;
-          unit.getHealthMax maxHealth;
-          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: maxHealth amount:" maxHealth;
-          muldiv maxHealth maxPercent 100;
-          if gt temp maxHealth; # don't bother if our current health exceeds the maximum health we can regenerate up to
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Aborting; current health above ARMOR_WOUND_REGENERATE_MAX_PERCENT:" maxPercent;
-            return;
+          unit.setTag Tag.UNIT_LOWEST_HEALTH temp;
+          # debug_log "ROSIGMA_cU_armor_regenerates_health, offset 1: initial UNIT_LOWEST_HEALTH set for unit:" unit;
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_armor_regenerates_health
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var int healthCap;
+          var int currentHealth;
+          var int regenPercent;
+          var int regenDivisor;
+          var int maxHealth;
+          var int maxPercent;
+          var int totalWounds;
+          var int unitFaction;
+          var ptr RuleArmor armorRule;
+
+          if eq turn 0;
+            unit.getHealth currentHealth;
+            unit.setTag Tag.UNIT_LOWEST_HEALTH currentHealth;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: initial UNIT_LOWEST_HEALTH set for unit:" unit;
           end;
 
           unit.getFaction unitFaction;
           if neq side unitFaction; # don't reset on others' turns
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Not the unit's turn. Aborting. side:" side;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: Not the unit's turn. Aborting. side:" side;
             return;
           end;
 
-          unit.Stats.getPsiSkill temp; # regeneration equals psi divided by regenDivisor;
-          unit.Stats.getPsiStrength temp2;
-          muldiv temp temp2 regenDivisor;
-          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Psi Regenerate amount:" temp;
-          unit.getHealth temp2;
-          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Current health amount:" temp2;
-          add temp2 temp;
-          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_1, offset 1: Post Regenerate amount:" temp2;
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_REGENERATES_HEALTH;
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_REGENERATES_HEALTH is false. Aborting. temp:" temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_REGENERATES_HEALTH is false. Aborting. unit:" unit;
+            return;
+          end;
+
+          unit.getHealth currentHealth;
+          unit.getHealthMax maxHealth;
+          # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: maxHealth amount:" maxHealth;
+          armorRule.getTag maxPercent Tag.ARMOR_HEALTH_REGENERATE_DYNAMIC_CEILING_PERCENT;
+          if gt maxPercent 0;
+            set temp maxHealth;
+            unit.getTag temp2 Tag.UNIT_LOWEST_HEALTH;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: UNIT_LOWEST_HEALTH currently:" temp2;
+            sub temp temp2;
+            muldiv temp maxPercent 100;
+            add temp2 temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_DYNAMIC_CEILING_PERCENT set to:" temp2;
+          else;
+            armorRule.getTag maxPercent Tag.ARMOR_HEALTH_REGENERATE_CEILING_PERCENT;
+            set temp2 maxHealth;
+            muldiv temp2 maxPercent 100;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_CEILING_PERCENT set to:" temp2;
+          end;
+          set healthCap temp2;
+          if gt currentHealth healthCap; # don't bother if our current health exceeds the maximum health we can regenerate up to
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: Aborting; current health above healthCap:" healthCap;
+            return;
+          end;
+
+          armorRule.getTag regenPercent Tag.ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP;
+          if gt regenPercent 0;
+            set temp maxHealth;
+            muldiv temp regenPercent 100;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP health increment:" temp;
+            set temp2 currentHealth;
+            add temp2 temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP health final:" temp2;
+          else;
+            armorRule.getTag regenPercent Tag.ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_CURRENT_HP;
+            if gt regenPercent 0;
+              set temp currentHealth;
+              muldiv temp regenPercent 100;
+              # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_CURRENT_HP health increment:" temp;
+              set temp2 currentHealth;
+              add temp2 temp;
+              # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_CURRENT_HP health final:" temp2;
+            end;
+          end;
+
+          armorRule.getTag temp Tag.ARMOR_HEALTH_REGENERATE_FLAT_AMOUNT;
+          # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_FLAT_AMOUNT health increment:" temp;
+          if gt temp 0;
+            add temp2 temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ARMOR_HEALTH_REGENERATE_FLAT_AMOUNT health final:" temp2;
+            return;
+          end;
+
+          armorRule.getTag regenDivisor Tag.ARMOR_PSI_REGENERATE_DIVISOR;
+          if gt regenDivisor 0;
+            unit.Stats.getPsiSkill temp; # regeneration equals psi divided by regenDivisor;
+            unit.Stats.getPsiStrength temp2;
+            muldiv temp temp2 regenDivisor;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: Psi Regenerate amount:" temp;
+            set temp2 currentHealth;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: Current health amount:" temp2;
+            add temp2 temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: Post Regenerate amount:" temp2;
+            return;
+          end;
+
+          limit_upper temp2 healthCap; #set health
+          debug_log "ROSIGMA_nTU_armor_regenerates_health, offset 1: ROSIGMA_nTU_armor_regenerates_health final health regen:" temp2;
           unit.setHealth temp2;
 
           return;
 
-      - new: ROSIGMA_nTU_armor_regenerates_wounds_2
+      - new: ROSIGMA_nTU_armor_regenerates_wounds
         offset: 2
         code: |
           var int temp;
@@ -147,20 +227,20 @@ extended:
 
           unit.getFaction unitFaction;
           if neq side unitFaction; # don't reset on others' turns
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Not the unit's turn. Aborting. side:" side;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Not the unit's turn. Aborting. side:" side;
             return;
           end;
 
           unit.getFatalwoundsTotal totalWounds;
           if lt totalWounds 1;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: No wounds to regenerate. Aborting. temp:" temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: No wounds to regenerate. Aborting. temp:" temp;
             return;
           end;
 
           unit.getRuleArmor armorRule;
           armorRule.getTag woundRecovery Tag.ARMOR_REGENERATES_WOUNDS; # we check the armor for this tag to avoid having to cycle through items every time we damage something
           if eq woundRecovery 0;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: No ARMOR_REGENERATES_WOUNDS Tag. Aborting. temp:" temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: No ARMOR_REGENERATES_WOUNDS Tag. Aborting. temp:" temp;
             return;
           end;
 
@@ -170,39 +250,39 @@ extended:
             unit.Stats.getPsiStrength temp2;
             muldiv temp temp2 regenDivisor;
             add woundRecovery temp;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Wound recovery from psi:" temp;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Total wound recovery:" woundRecovery;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Wound recovery from psi:" temp;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Total wound recovery:" woundRecovery;
           end;
 
           armorRule.getTag regenPerWound Tag.ARMOR_HEALTH_PER_WOUND_REGENERATED;
-          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing unit. Total HP regenerated per wound: regenPerWound:" regenPerWound;
+          # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing unit. Total HP regenerated per wound: regenPerWound:" regenPerWound;
           if gt regenPerWound 0; # calculate if we regenerate wounds
             set temp2 woundRecovery;
             limit_upper temp2 totalWounds; # cap the multiplier to the total number of wounds
             mul temp2 regenPerWound; # multiply the lesser of wounds to heal or total number of wounds by regeneration value per wound.
             unit.addHealth temp2;
-            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing unit. Regenerated extra health due to wounds recovered: totalWounds:" temp2;
+            # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing unit. Regenerated extra health due to wounds recovered: totalWounds:" temp2;
           end;
 
           begin;
             var int numWounds 0;
             var int healWounds woundRecovery;
             loop var i 6; # cycle through the body parts
-              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Body Part Loop i#:" i;
-              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Number of Heals, healWounds:" healWounds;
+              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Body Part Loop i#:" i;
+              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Number of Heals, healWounds:" healWounds;
               unit.getFatalwounds numWounds i; # check the number of wounds in this bodypart
-              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Number of wounds in bodypart, numWounds:" numWounds;
+              # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Number of wounds in bodypart, numWounds:" numWounds;
               if and gt numWounds 0 gt healWounds 0; # if there are any wounds in this body part and any heals remaining, remove as many as we can
                 set temp numWounds; # save the initial number of wounds
                 sub numWounds healWounds; # remove wounds equal to our heal wound count
                 sub healWounds temp; # decrement the number of heals by the initial number of wounds
                 limit_lower numWounds 0; # ensure wounds do not go below 0
                 limit_lower healWounds 0; # ensure heals do not  go below 0
-                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Remaining number of wounds in bodypart, numWounds:" numWounds;
-                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Remaining number of heals, healWounds:" healWounds;
+                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Remaining number of wounds in bodypart, numWounds:" numWounds;
+                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Remaining number of heals, healWounds:" healWounds;
                 unit.setFatalwounds i numWounds; # remove the wounds
                 unit.getFatalwoundsTotal numWounds; # recalculate wounds
-                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds_2, offset 1: Healing ally. Total number of wounds remaining, numWounds:" numWounds;
+                # debug_log "ROSIGMA_nTU_armor_regenerates_wounds, offset 1: Healing ally. Total number of wounds remaining, numWounds:" numWounds;
               end;
             end;
           end;
@@ -235,7 +315,31 @@ extended:
 
           return;
 
+      - new: ROSIGMA_rFMU_clear_regeneration_vars
+        offset: 1
+        code: |
+          var int temp;
+
+          unit.setTag Tag.UNIT_LOWEST_HEALTH 0;
+
     damageUnit:
+      - new: ROSIGMA_dU_armor_set_UNIT_LOWEST_HEALTH
+        offset: 98
+        code: |
+          var int temp;
+          var int currentHealth;
+
+          unit.getHealth currentHealth;
+          unit.getTag temp Tag.UNIT_LOWEST_HEALTH;
+          if gt currentHealth temp;
+            return;
+          end;
+
+          unit.setTag Tag.UNIT_LOWEST_HEALTH currentHealth;
+          # debug_log "ROSIGMA_ndU_armor_set_UNIT_LOWEST_HEALTH, offset 98: new UNIT_LOWEST_HEALTH set for unit:" unit;
+          # debug_log "ROSIGMA_ndU_armor_set_UNIT_LOWEST_HEALTH, offset 98: new UNIT_LOWEST_HEALTH set for unit, currentHealth:" currentHealth;
+          return;
+
       - new: ROSIGMA_dU_psi_mend_wounds
         offset: 1
         code: |
@@ -391,4 +495,3 @@ extended:
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Harming enemy. Wound damage:" to_wound;
 
           return;
-

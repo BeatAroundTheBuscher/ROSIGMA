@@ -1,0 +1,71 @@
+extended:
+  tags:
+    RuleItem:
+      DAMAGE_RESIST_PENETRATION_PERCENT: int #what percent of the target's % damage reduction from resistance we ignore.
+      DAMAGE_RESIST_PENETRATION_FLAT: int #we reduce the target's % damage reduction by this flat amount
+
+  scripts:
+    # hitUnit required to find side hit
+    # Otherwise we cannot get the armor value delta
+    hitUnit:
+      - new: ROSIGMA_hU_resist_penetration
+        offset: 1
+        code: |
+          var int temp;
+          var int netResistance;
+          var int resistanceValue;
+          var int resistPenetrationPercent;
+          var int resistPenetrationFlat;
+          var ptr RuleItem itemRule;
+          var ptr BattleItem ammoItem;
+          var ptr RuleDamageType damageType;
+
+          damaging_item.getRuleItem itemRule;
+          itemRule.getDamageType damageType;
+          set resistanceValue 100;
+          unit.reduceByResistance resistanceValue damaging_type;
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: Armor Effectiveness:" resistanceValue;
+
+          if gt resistanceValue 99; #if there's no damage resistance, abort
+            return power part side;
+          end;
+
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: initial power:" power;
+
+          weapon_item.getRuleItem itemRule;
+          weapon_item.getAmmoItem ammoItem;
+          itemRule.getTag resistPenetrationPercent Tag.DAMAGE_RESIST_PENETRATION_PERCENT;
+          ammoItem.getTag temp Tag.DAMAGE_RESIST_PENETRATION_PERCENT;
+          if gt temp resistPenetrationPercent; #apply the higher of the two
+            set resistPenetrationPercent temp;
+          end;
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: DAMAGE_RESIST_PENETRATION_PERCENT:" resistPenetrationPercent;
+
+          itemRule.getTag resistPenetrationFlat Tag.DAMAGE_RESIST_PENETRATION_FLAT;
+          ammoItem.getTag temp Tag.DAMAGE_RESIST_PENETRATION_FLAT;
+          if gt temp resistPenetrationFlat; #apply the higher of the two
+            set resistPenetrationFlat temp;
+          end;
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: DAMAGE_RESIST_PENETRATION_FLAT:" resistPenetrationFlat;
+
+          if gt resistPenetrationPercent 1;
+
+            set temp 10000;
+            div temp resistanceValue;
+            sub temp 100;
+            muldiv temp resistPenetrationPercent 100;
+            add temp 100;
+            muldiv power temp 100;
+          end;
+
+          if gt resistPenetrationFlat 1;
+
+            set temp resistanceValue;
+            add temp resistPenetrationFlat;
+            div temp resistanceValue;
+            muldiv power temp 100;
+          end;
+
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: final power:" power;
+
+          return power part side;

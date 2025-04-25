@@ -469,6 +469,7 @@ items:
     blastRadius: 7
     listOrder: 17100
     throwRange: 18
+
   - type: STR_ORK_KRAKSTIKKBOMB  # ORK Krak Grenade  17100
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_ORK]
     size: 0.1
@@ -480,7 +481,7 @@ items:
     floorSprite: {mod: 40k, index: 304}
     handSprite: {mod: 40k, index: 904}
     power: 100
-    damageType: 1
+    damageType: 3
     damageAlter:  # DA KRAKKIT
       RandomType: 6
       ToArmorPre: 0.6
@@ -488,12 +489,16 @@ items:
       ToHealth: 0.4
       ToStun: 0.2
       ToTime: 0.2
+      ResistType: 1
     battleType: 4
     invWidth: 1
     invHeight: 3
     blastRadius: 1
     listOrder: 17100
     throwRange: 14
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
+
   - type: STR_TANKBUSTA_BOMB  # ORK Krak Grenade  17100
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_ORK]
     size: 0.1
@@ -513,12 +518,16 @@ items:
       ToHealth: 0.4
       ToStun: 0.2
       ToTime: 0.2
+      ResistType: 1
     battleType: 4
     invWidth: 1
     invHeight: 3
     blastRadius: 4
     throwRange: 8
     listOrder: 17100
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
+
   - type: STR_TANKHAMMER  #  Tankbusta hammer           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
     size: 0.3
@@ -532,16 +541,22 @@ items:
     meleeAnimation: 20  # Meleeredblast
     meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 743}  # 743 T hammer Hit
-    power: 120
+    power: 90
+    damageType: 3
+    damageBonus:
+      strength: 0.4
+      melee: 0.1
     damageAlter:     # DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.5
       ToArmor: 0.3
       ToHealth: 0.4
-    damageType: 3
+      ResistType: 1
     accuracyMelee: 90
-    flatRate: true
-    tuMelee: 15
+    costMelee:
+      time: 15
+      energy: 2
+    flatMelee: true
     clipSize: -1
     battleType: 3
     twoHanded: false
@@ -551,6 +566,9 @@ items:
     armor: 60
     skillApplied: true
     listOrder: 13400
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
+
   - type: STR_BIG_SHOOTA  # HEAVYBOLTER                17050
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
     requires:
