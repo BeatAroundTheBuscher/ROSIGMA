@@ -1,3 +1,6 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
 # Grenade Launchers and Handgrenades
 items:
 ## Heavy Weapons
@@ -119,6 +122,7 @@ items:
     tags:
       REACTION_MULTIPLIER: 50
       REACTION_PENALTY_KNEELING_BYPASS: 1
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
 
 ## SMOKE
 
@@ -250,8 +254,8 @@ items:
 
 
 ## KRAK
-
-  - type: STR_LARGE_ROCKET  # KRAK
+  - &KRAK_ROCKET_TEMPLATE
+    type: STR_LARGE_ROCKET  # KRAK
     power: 110  # heavy version now has 150
     powerForAnimation: 16  # 5 / 5 = 1
     weight: 6  # was 8
@@ -268,11 +272,13 @@ items:
       ToItem: 1.0
       ArmorEffectiveness: 0.5
       FixRadius: 1  # 1 for hand grenade version
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
 
   - type: STR_HEAVY_ROCKET_KRAK  # KRAK
+    refNode: *KRAK_ROCKET_TEMPLATE
     power: 150
-    powerForAnimation: 16  # Power / 5 = tiles of explosion
-    damageType: 1
+    weight: 8
     damageAlter:
       ResistType: 1
       RandomType: 6  # gaussian
@@ -283,6 +289,9 @@ items:
       ToItem: 1.0
       ArmorEffectiveness: 0.5
       FixRadius: 2  # 1 for hand grenade version
+    powerForAnimation: 48  # 5 / 5 = 1
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
 
   - type: STR_SENTINEL_KRAKK_MISSILES  # krak munition
     damageType: 3  # inherit from HE
@@ -297,6 +306,8 @@ items:
       ToItem: 1.0
       FixRadius: 2
     powerForAnimation: 48  # 5 / 5 = 1
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
 
   - type: STR_KRAK_GRENADE  # krak munition
     costBuy: 2000
@@ -332,6 +343,8 @@ items:
       FixRadius: 1  # 1 for hand grenade version
     powerForAnimation: 16  # 5 / 5 = 1
     noLOSAccuracyPenalty: 75  # indirect fire weapon
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
 
   - type: STR_KRAK_GRENADE_DRUM  # krak munition
     damageType: 3
@@ -346,7 +359,24 @@ items:
       ArmorEffectiveness: 0.5
       FixRadius: 1  # 1 for hand grenade version
     powerForAnimation: 16  # 5 / 5 = 1
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
 
+  - type: STR_KRAK_GRENADE40  # underslung grenade; krak munition
+    power: 80  # melta40 is at 90
+    damageType: 3
+    damageAlter:
+      RandomType: 6  # gaussian
+      ArmorEffectiveness: 0.5
+      ToHealth: 0.8
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ToItem: 1.0
+      ToTile: 1.0
+      FixRadius: 1
+      ResistType: 1
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
 
 ## INC
 
@@ -695,7 +725,8 @@ items:
       ToItem: 1.0
       ArmorEffectiveness: 0.5
       FixRadius: 1
-
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 95
 
   - type: STR_ELDAR_MGRENADE
     throwRange: 15
