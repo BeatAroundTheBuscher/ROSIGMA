@@ -15,17 +15,70 @@ armors:
     rearArmor: 50
     underArmor: 50
     drawingRoutine: 0
-    damageModifier: #GUARD ARMOR
-      - 1.0 #none
-      - 1.0 #AP
-      - 1.2 #FLAMES
-      - 1.0 #HE
-      - 0.8 #LASCANON
-      - 1.0 #PLASMA
-      - 1.0 #STUN
-      - 1.1 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 1.0 #IMPACT
-      - 1.0 #MELTA
+    allowsKneeling: true
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
     loftempsSet: [3]
+
+  - type: STR_TAUDRONE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    heatVision: 15
+    size: 1
+    spriteSheet: TAUDRONEbattle.PCK
+    spriteInv: TAUDRONESARMOR.PCK
+    corpseBattle:
+      - STR_TAUDRONE_AICORPSE
+    movementType: 1
+    zombiImmune: true  # It's a drone; can't zombify this.
+    frontArmor: 20
+    sideArmor: 20
+    rearArmor: 20
+    underArmor: 15
+    drawingRoutine: 4
+    scripts:
+      selectUnitSprite: |
+        # this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    damageModifier:
+      - 1.0  # none
+      - 0.9  # AP
+      - 1.0  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 0.9  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 0.9  # MELTA
+    loftempsSet: [2]
+    deathFrames: 4
+    allowsRunning: true
