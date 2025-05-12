@@ -370,7 +370,7 @@ missionScripts:
         STR_INTERCEPT_PDF_VALKYRIE: 30  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
         STR_SUPPORT_CHAOSGUARD_ASSAULT: 20
       4:
-        STR_INTERCEPT_PDF_VALKYRIE: 33
+        STR_CHAOSRESCUE_PDF_VALKYRIE: 33
         STR_ELDAR_ARTIFACT: 50
         STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
         STR_SUPPORT_CHAOSMARINE_ASSAULT: 20
@@ -398,15 +398,16 @@ missionScripts:
   - type: MMChaosCultPath
     missionWeights:
       1:
-        STR_INTERCEPT_PDF_VALKYRIE: 30  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+        STR_CHAOSRESCUE_PDF_VALKYRIE: 30  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
         STR_SUPPORT_CHAOSGUARD_ASSAULT: 20
       3:
-        STR_INTERCEPT_PDF_VALKYRIE: 33
+        STR_CHAOSRESCUE_PDF_VALKYRIE: 33
         STR_ELDAR_ARTIFACT: 50
         STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
         STR_SUPPORT_CHAOSMARINE_ASSAULT: 20
         STR_ALIEN_ARTIFACT: 20
       7:
+        STR_CHAOSRESCUE_PDF_VALKYRIE: 20
         STR_ELDAR_ARTIFACT: 40
         STR_SUPPORT_CHAOSMARINE_ASSAULT: 20
         #STR_SUPPORT_CATAMARINE_ASSAULT: 20  # TODO Replace
@@ -1042,3 +1043,133 @@ missionScripts:
     maxRuns: 1
     executionOdds: 100
     startDelay: 2890  # not too much as it is the base creating itself
+
+  # ported from 40k to get chaos versions
+
+  - type: RepeatingFallthroughMissions
+    conditionals:
+      - -1101
+      - -1198
+    missionWeights:
+      0:
+        STR_GUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_PDF_ASSAULT: 33 # PDF assaulting chaos base of cult or traitor guard
+        STR_SUPPORT_MARINE_ASSAULT: 33 # Marines assaulting chaos base of traitor marines or raptors
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_NOTCHAOSCULT: true
+    label: 1199
+
+  - type: SecondRepeatingFallthroughMissions
+    conditionals:
+      - 1200
+      - -1298
+    missionWeights:
+      0:
+        STR_GUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_PDF_ASSAULT: 33 # PDF assaulting chaos base of cult or traitor guard
+        STR_SUPPORT_MARINE_ASSAULT: 33 # Marines assaulting chaos base of traitor marines or raptors
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 0
+    executionOdds: 50
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_NOTCHAOSCULT: true
+    label: 1299
+
+  - type: CCultRepeatingFallthroughMissions
+    conditionals:
+      - -1101
+      - -1198
+    missionWeights:
+      0:
+        STR_CHAOSGUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
+        STR_SUPPORT_CHAOSMARINE_ASSAULT: 33
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_CHAOS_STRATEGY_ARBITES: true
+    label: 1199
+
+  - type: CCultSecondRepeatingFallthroughMissions
+    conditionals:
+      - 1200
+      - -1298
+    missionWeights:
+      0:
+        STR_CHAOSGUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
+        STR_SUPPORT_CHAOSMARINE_ASSAULT: 33
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 0
+    executionOdds: 50
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_CHAOS_STRATEGY_ARBITES: true
+    label: 1299
