@@ -1,0 +1,233 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+## For snap/auto/etc values see BALANCE/ballistics_allfactions.rul
+items:
+  # Autocannons
+  - &STR_AUTOCANNON_TEMPLATE  #anti-light vehicle weapon
+    type: STR_AUTOCANNON_HANDHELD  # done
+    categories: [STR_CAT_AUTO]
+    armor: 200
+    weight: 70
+    size: 0.4
+    costSell: 72000
+    invWidth: 2
+    invHeight: 3
+    bigSprite: {mod: 40k, index: 1014}
+    floorSprite: {mod: 40k, index: 1014}
+    handSprite: {mod: 40k, index: 1112}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    bulletSpeed: 50
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    kneelBonus: 150 #heavy weapon
+    listOrder: 10775
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_AUTOCANNON_HANDHELD_ANY  # Generic autocannon for use by any faction
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 450000
+    costSell: 10000
+    bigSprite: 3091
+    floorSprite: 3040
+    handSprite: 3510
+    ufopediaType: STR_AUTOCANNON_HANDHELD
+
+  - type: STR_AUTOCANNON_KALIBRAX #used by SM and CSM #lower fire rate but more punch, more accuracy, and more range #as IW autocannon
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    categories: [STR_CAT_AUTO]
+    costSell: 30000
+    bigSprite: 3096
+    floorSprite: 3045
+    handSprite: 3560
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+
+  - type: STR_INQ_AUTOCANNON  # Fixed weapon
+    categories: [STR_CAT_AUTO]
+    weight: 50  # Somewhat lighter than guard crew-served version
+    size: 0.4
+    bigSprite: 1034
+    floorSprite: 949
+    handSprite: 864
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_ASSC_CLIP
+      - STR_GALGALIM_ASSC_CLIP
+    # kneelBonus: 300
+    battleType: 1
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    bulletSpeed: 50
+    listOrder: 10775
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+  - type: STR_CHAOS_AUTOCANNON_HANDHELD         #older Armageddon pattern ; less range but lower TU use #common among traitor guard and gangs
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    costSell: 20000
+    bigSprite: 3094
+    floorSprite: 3043
+    handSprite: 3540
+    listOrder: 10775
+
+  - type: STR_IW_AUTOCANNON  # Autocannon      #Kalibrax pattern                                                       # 13210; IRON WARRIOR AC is very slow firing but more powerful and accurate
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    costSell: 20000
+    weight: 100
+    bigSprite: 2880
+    floorSprite: 2880
+    handSprite: 2880
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoShots: 2
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - &STR_REAPER_AUTOCANNON_TEMPLATE
+    type: STR_CASSC   #reaper autocannon, double firerate of standard autocannons
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    costSell: 20000
+    weight: 100
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - type: STR_IW_REAPER_AUTOCANNON
+    refNode: *STR_REAPER_AUTOCANNON_TEMPLATE
+    bigSprite: 3097
+    floorSprite: 3046
+    handSprite: 3570
+
+  # Assault Cannons, does not include Adeptas Galgalim Assault Cannon which is unique and weaker. See weapons_adeptas.rul
+  - &STR_ASSAULTCANNON_TEMPLATE  #anti-light vehicle weapon
+    type: STR_ASSC  # done
+    categories: [STR_CAT_TERMINATOR]
+    size: 0.6
+    armor: 200
+    costSell: 40000
+    weight: 100
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    attraction: 8
+    compatibleAmmo:
+      - STR_ASSC_CLIP
+      - STR_ASSC_CLIP_AP
+      - STR_ASSC_CLIP_HE
+    listOrder: 13200
+    tags:
+      REACTION_MULTIPLIER: 100
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_CHAOS_ASSAULT_CANNON             #Chaos variant doesnt exist in game yet                                               # 13210
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    costSell: 20000
+    weight: 100
+    compatibleAmmo:
+      - STR_ASSC_CLIP
+      - STR_ASSC_CLIP_AP
+      - STR_ASSC_CLIP_HE
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - type: STR_ASSCTZ  # TZEENTCH SOULREAPER ASSAULT CANNON
+    categories: [STR_CAT_TERMINATOR, STR_CAT_CHAOS, STR_CAT_TZEENTCH]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    compatibleAmmo:
+      - STR_ASSC_CLIP
+      - STR_ASSC_CLIP_AP
+      - STR_ASSC_CLIP_HE
+      - STR_ASSC_CLIP_INFERNO
+    costSell: 20000
+    weight: 50
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    vaporColorSurface: 14  # blue warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13220
