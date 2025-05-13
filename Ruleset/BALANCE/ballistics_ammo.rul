@@ -482,6 +482,176 @@ items:
       FixRadius: 2
     clipSize: 40
 
+  - &STR_AUTOCANNON_AMMO_TEMPLATE
+    type: STR_AUTOCANNON_AMMO
+    categories: [STR_CAT_AUXILIARY, STR_CAT_AUTO]
+    size: 0.3
+    costSell: 1000
+    weight: 15
+    bigSprite: 3092
+    floorSprite: 3041
+    handSprite: 3520
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    clipSize: 20
+    battleType: 2
+    invWidth: 2
+    invHeight: 2
+    power: 120
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    armor: 30
+    listOrder: 6930
+
+  - type: STR_AUTOCANNON_CLIP  # Overwrites version from 40k mod
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    bigSprite: {mod: 40k, index: 1061}
+    floorSprite: {mod: 40k, index: 1061}
+    handSprite: {mod: 40k, index: 1488}
+    clipSize: 60  # It's like this because this is used for Guard Autocannon HWPs, which I guess just means guard have special really big autocannon ammo somehow.
+
+  - type: STR_AUTOCANNON_BOX_AMMO # Only found on chaos previously, now also an expensive [TRADE] item.
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    size: 0.3
+    costBuy: 12500
+    requiresBuyBaseFunc: [TRADE]
+    costSell: 1250
+    weight: 25
+    bigSprite: 3095
+    floorSprite: 3044
+    handSprite: 3550
+    clipSize: 30
+    listOrder: 6931
+
+  - type: STR_AUTOCANNON_HE_AMMO
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
+    bigSprite: 3093
+    floorSprite: 3042
+    handSprite: 3530
+    hitAnimation: 1200
+    power: 100
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.02
+      RandomType: 6
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 32
+    listOrder: 6932
+
+  - type: STR_AUTOCANNON_AP_AMMO
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
+    bigSprite: 3099
+    floorSprite: 3042
+    handSprite: 3530
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.7
+      ToStun: 0.25
+    listOrder: 6933
+
+  - &STR_ASSAULT_CANNON_AMMO
+    type: STR_ASSC_CLIP
+    size: 0.3
+    costSell: 1000
+    weight: 15
+    power: 100
+    damageType: 1
+    clipSize: 100
+    damageAlter:  # between normal and mastercraft ammo
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.85
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    invWidth: 2
+    invHeight: 2
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    armor: 200
+    bulletSpeed: 50
+    explosionSpeed: 5
+    attraction: 8
+  - type: STR_ASSC_CLIP
+    categories: [STR_CAT_TERMINATOR]
+    listOrder: 13230
+
+  - type: STR_ASSC_CLIP_INFERNO  # Assault Cannon Inferno Bolt Rounds
+    refNode: *STR_ASSAULT_CANNON_AMMO
+    categories: [STR_CAT_TERMINATOR, STR_CAT_TZEENTCH]
+    costSell: 1000
+    bigSprite: 2948
+    floorSprite: 960
+    handSprite: 2980
+    vaporColorSurface: 14  # blue warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    damageAlter:
+      RandomType: 1  # swingy random damage
+      ResistType: 5  # plasma typing
+      ToArmorPre: 0.5  # melts armor on the way in
+      ToArmor: 0.0  # does damage on the way in
+      ArmorEffectiveness: 0.7  # armor piercing
+      FireThreshold: 19  # can ignite
+      ToHealth: 0.8  # compensates a bit for the extra AP and power
+      ToWound: 0.05  # melta type injuries
+      RandomWound: false
+      ToMorale: 5.0  # incendiary + Tzeentch spook
+    listOrder: 13233
+
+  - type: STR_ASSC_CLIP_AP
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    costSell: 2000
+    bigSprite: 1108
+    floorSprite: 993
+    handSprite: 3500
+    damageAlter:
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.65
+      ToStun: 0.25
+    listOrder: 13231
+
+  - type: STR_ASSC_CLIP_HE
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    costSell: 2000
+    bigSprite: 1109
+    floorSprite: 993
+    handSprite: 3500
+    hitAnimation: 1200
+    power: 90
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.05
+      RandomType: 6
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 40
+    listOrder: 13232
+
   - &STR_STUBBERS_AMMO
     type: STR_STUB_GUN_AMMO
     damageAlter:
