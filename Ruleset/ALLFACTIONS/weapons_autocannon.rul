@@ -1,0 +1,530 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+items:
+  # Autocannons
+  ## Ammo
+  - &STR_AUTOCANNON_AMMO_TEMPLATE
+    type: STR_AUTOCANNON_AMMO
+    categories: [STR_CAT_AUXILIARY, STR_CAT_AUTO]
+    size: 0.3
+    costSell: 1000
+    weight: 15
+    bigSprite: 3092
+    floorSprite: 3041
+    handSprite: 3520
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    clipSize: 20
+    battleType: 2
+    invWidth: 2
+    invHeight: 2
+    power: 120
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    armor: 30
+    listOrder: 6930
+
+  - type: STR_AUTOCANNON_CLIP  # Overwrites version from 40k mod
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    bigSprite: {mod: 40k, index: 1061}
+    floorSprite: {mod: 40k, index: 1061}
+    handSprite: {mod: 40k, index: 1488}
+    clipSize: 60  # It's like this because this is used for Guard Autocannon HWPs, which I guess just means guard have special really big autocannon ammo somehow.
+
+  - type: STR_AUTOCANNON_BOX_AMMO # Only found on chaos previously, now also an expensive [TRADE] item.
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    size: 0.3
+    costBuy: 12500
+    requiresBuyBaseFunc: [TRADE]
+    costSell: 1250
+    weight: 25
+    bigSprite: 3095
+    floorSprite: 3044
+    handSprite: 3550
+    clipSize: 30
+    listOrder: 6931
+
+  - type: STR_AUTOCANNON_HE_AMMO
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
+    bigSprite: 3093
+    floorSprite: 3042
+    handSprite: 3530
+    hitAnimation: 1200
+    power: 100
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.02
+      RandomType: 6
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 32
+    listOrder: 6932
+
+  - type: STR_AUTOCANNON_AP_AMMO
+    refNode: *STR_AUTOCANNON_AMMO_TEMPLATE
+    costSell: 2000
+    bigSprite: 3099
+    floorSprite: 3042
+    handSprite: 3530
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.7
+      ToStun: 0.25
+    listOrder: 6933
+
+  ## Weapons
+  - &STR_AUTOCANNON_TEMPLATE  #anti-light vehicle weapon
+    type: STR_AUTOCANNON_HANDHELD  # done
+    categories: [STR_CAT_AUTO]
+    armor: 200
+    weight: 70
+    size: 0.4
+    costSell: 72000
+    invWidth: 2
+    invHeight: 3
+    bigSprite: {mod: 40k, index: 1014}
+    floorSprite: {mod: 40k, index: 1014}
+    handSprite: {mod: 40k, index: 1112}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    accuracyAuto: 65
+    tuAuto: 60
+    dropoff: 3
+    autoRange: 20
+    autoShots: 3
+    sprayWaypoints: 2
+
+    accuracySnap: 70
+    tuSnap: 40
+    snapRange: 25
+
+    tuAimed: 0
+    aimRange: 0
+    accuracyAimed: 0
+
+    minRange: 7
+    bulletSpeed: 50
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    kneelBonus: 150 #heavy weapon
+    listOrder: 10775
+
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_AUTOCANNON_HANDHELD_ANY  # Generic autocannon for use by any faction
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+    requiresBuyBaseFunc: [TRADE]
+    costBuy: 450000
+    costSell: 10000
+    bigSprite: 3091
+    floorSprite: 3040
+    handSprite: 3510
+    ufopediaType: STR_AUTOCANNON_HANDHELD
+
+  - type: STR_AUTOCANNON_KALIBRAX #used by SM and CSM #lower fire rate but more punch, more accuracy, and more range #as IW autocannon
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    categories: [STR_CAT_AUTO]
+    costSell: 30000
+    bigSprite: 3096
+    floorSprite: 3045
+    handSprite: 3560
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    accuracySnap: 80
+    accuracyAuto: 70 #20 kneel bonus handled by recoil script
+    autoRange: 22
+    snapRange: 28
+    autoShots: 2
+    tuAuto: 50
+    tuSnap: 30
+    damageBonus:
+      flatHundred: 0.1  # 10% power bonus
+
+  - type: STR_INQ_AUTOCANNON  # Fixed weapon, does not follow generic handheld template.
+    categories: [STR_CAT_AUTO]
+    weight: 50  # Somewhat lighter than guard crew-served version
+    size: 0.4
+    bigSprite: 1034
+    floorSprite: 949
+    handSprite: 864
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_ASSC_CLIP
+      - STR_GALGALIM_ASSC_CLIP
+    dropoff: 3  # better than heavy bolters
+    autoRange: 20  # + 3 for tuAuto > 50 %
+    snapRange: 23
+    aimRange: 0
+    accuracySnap: 60  # Meant to be used while kneeling
+    accuracyAuto: 50
+    accuracyAimed: 0
+    tuAuto: 60
+    tuSnap: 40
+    tuAimed: 0
+    # kneelBonus: 300
+    battleType: 1
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoShots: 4  # Slightly improved fire rate, though you can still only do one auto salvo per turn
+    bulletSpeed: 50
+    minRange: 7  # cumbersome heavy weapon
+    listOrder: 10775
+    kneelBonus: 150  # heavy weapon
+    tags:
+      ITEM_IS_HEAVY_WEAPON: 1
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+  - type: STR_CHAOS_AUTOCANNON_HANDHELD         #older Armageddon pattern ; less range but lower TU use #common among traitor guard and gangs
+    refNode: *STR_AUTOCANNON_TEMPLATE
+    costSell: 20000
+    bigSprite: 3094
+    floorSprite: 3043
+    handSprite: 3540
+    dropoff: 4 #less range accuracy
+    snapRange: 25
+    accuracySnap: 65
+    tuSnap: 35
+    accuracyAuto: 60 #20 kneel bonus handled by recoil script
+    tuAuto: 55
+    autoRange: 20
+    autoShots: 3
+    listOrder: 10775
+
+  - type: STR_IW_AUTOCANNON  # Autocannon      #Kalibrax pattern                                                       # 13210; IRON WARRIOR AC is very slow firing but more powerful and accurate
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    dropoff: 3
+    costSell: 20000
+    weight: 100
+    bigSprite: 2880
+    floorSprite: 2880
+    handSprite: 2880
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    accuracySnap: 80
+    accuracyAuto: 70
+    tuSnap: 30
+    tuAuto: 50
+    snapRange: 22
+    autoRange: 28
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    damageBonus:
+      flatHundred: 0.1  # 10% power bonus
+    minRange: 7
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoShots: 2
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - &STR_REAPER_AUTOCANNON_TEMPLATE
+    type: STR_CASSC   #actually a reaper autocannon #double firerate of standard autocannons                                                       # 13210
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    dropoff: 4
+    costSell: 20000
+    weight: 100
+    compatibleAmmo:
+      - STR_AUTOCANNON_CLIP
+      - STR_AUTOCANNON_AMMO
+      - STR_AUTOCANNON_HE_AMMO
+      - STR_AUTOCANNON_AP_AMMO
+      - STR_AUTOCANNON_BOX_AMMO
+    accuracyAuto: 50
+    accuracySnap: 60
+    tuAuto: 60
+    tuSnap: 40
+    autoRange: 18
+    snapRange: 23
+    autoShots: 6
+    confSnap:
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+    damageBonus:
+      flatHundred: 0.2  # 20% power bonus
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    minRange: 7
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - type: STR_IW_REAPER_AUTOCANNON
+    refNode: *STR_REAPER_AUTOCANNON_TEMPLATE
+    bigSprite: 3097
+    floorSprite: 3046
+    handSprite: 3570
+
+  # Assault Cannons, does not include Adeptas Galgalim Assault Cannon which is unique and weaker. See weapons_adeptas.rul
+  ## Ammo
+  - &STR_ASSAULT_CANNON_AMMO
+    type: STR_ASSC_CLIP
+    size: 0.3
+    costSell: 1000
+    weight: 15
+    power: 100
+    damageType: 1
+    clipSize: 100
+    damageAlter:  # between normal and mastercraft ammo
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.85
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    invWidth: 2
+    invHeight: 2
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    armor: 200
+    bulletSpeed: 50
+    explosionSpeed: 5
+    attraction: 8
+  - type: STR_ASSC_CLIP
+    categories: [STR_CAT_TERMINATOR]
+    listOrder: 13230
+
+  - type: STR_ASSC_CLIP_INFERNO  # Assault Cannon Inferno Bolt Rounds
+    refNode: *STR_ASSAULT_CANNON_AMMO
+    categories: [STR_CAT_TERMINATOR, STR_CAT_TZEENTCH]
+    costSell: 1000
+    bigSprite: 2948
+    floorSprite: 960
+    handSprite: 2980
+    vaporColorSurface: 14  # blue warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    damageAlter:
+      RandomType: 1  # swingy random damage
+      ResistType: 5  # plasma typing
+      ToArmorPre: 0.5  # melts armor on the way in
+      ToArmor: 0.0  # does damage on the way in
+      ArmorEffectiveness: 0.7  # armor piercing
+      FireThreshold: 19  # can ignite
+      ToHealth: 0.8  # compensates a bit for the extra AP and power
+      ToWound: 0.05  # melta type injuries
+      RandomWound: false
+      ToMorale: 5.0  # incendiary + Tzeentch spook
+    listOrder: 13233
+
+  - type: STR_ASSC_CLIP_AP
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    costSell: 2000
+    bigSprite: 1108
+    floorSprite: 993
+    handSprite: 3500
+    damageAlter:
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.5
+      ToArmor: 0.05
+      ToHealth: 0.65
+      ToStun: 0.25
+    listOrder: 13231
+
+  - type: STR_ASSC_CLIP_HE
+    refNode: *STR_ASSAULT_CANNON_AMMO                         # change all
+    costSell: 2000
+    bigSprite: 1109
+    floorSprite: 993
+    handSprite: 3500
+    hitAnimation: 1200
+    power: 90
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.05
+      RandomType: 6
+      ArmorEffectiveness: 0.95  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.2  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 2
+    powerForAnimation: 40
+    listOrder: 13232
+
+  ## Weapon
+  - &STR_ASSAULTCANNON_TEMPLATE  #anti-light vehicle weapon
+    type: STR_ASSC  # done
+    categories: [STR_CAT_TERMINATOR]
+    size: 0.6
+    armor: 200
+    costSell: 40000
+    weight: 100
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    attraction: 8
+    dropoff: 4
+    minRange: 5
+    compatibleAmmo:
+    - STR_ASSC_CLIP
+    - STR_ASSC_CLIP_AP
+    - STR_ASSC_CLIP_HE
+    autoRange: 16
+    accuracyAuto: 50
+    tuAuto: 45
+    autoShots: 10
+    sprayWaypoints: 2
+    snapRange: 20
+    accuracySnap: 60
+    tuSnap: 40
+    confSnap:
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+    aimRange: 0
+    accuracyAimed: 0
+    tuAimed: 0
+    listOrder: 13200
+    tags:
+      REACTION_MULTIPLIER: 100
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 70
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_CHAOS_ASSAULT_CANNON             #Chaos variant doesnt exist in game yet                                               # 13210
+    categories: [STR_CAT_TERMINATOR]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    dropoff: 4
+    costSell: 20000
+    weight: 100
+    compatibleAmmo:
+      - STR_ASSC_CLIP
+      - STR_ASSC_CLIP_AP
+      - STR_ASSC_CLIP_HE
+    accuracyAuto: 50
+    tuAuto: 45
+    accuracySnap: 60
+    tuSnap: 40
+    snapRange: 20
+    autoRange: 16
+    confSnap:
+      shots: 5
+      name: STR_BURST_SNAP_SHOT
+    autoShots: 10
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13210
+
+  - type: STR_ASSCTZ                                                            # 1050         TZEENTCH SOULREAPER ASSAULT CANNON
+    categories: [STR_CAT_TERMINATOR, STR_CAT_CHAOS, STR_CAT_TZEENTCH]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.6
+    compatibleAmmo:
+      - STR_ASSC_CLIP
+      - STR_ASSC_CLIP_AP
+      - STR_ASSC_CLIP_HE
+      - STR_ASSC_CLIP_INFERNO
+    dropoff: 4
+    costSell: 20000
+    weight: 50
+    accuracyAuto: 50
+    tuAuto: 45
+    accuracySnap: 60
+    tuSnap: 33
+    confSnap:
+      name: STR_BURST_SNAP_SHOT
+      shots: 3
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100
+    vaporColorSurface: 14  # blue warpfire
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 18
+    damageType: 1
+    damageAlter:
+      RandomType: 1  # swingy random damage
+      ResistType: 5  # plasma typing
+      ToArmorPre: 0.5  # melts armor on the way in
+      ToArmor: 0.0  # does damage on the way in
+      ArmorEffectiveness: 0.7  # armor piercing
+      FireThreshold: 19  # can ignite
+      ToHealth: 0.8  # compensates a bit for the extra AP and power
+      ToWound: 0.05  # melta type injuries
+      RandomWound: false
+      ToMorale: 5.0  # incendiary + Tzeentch spook
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoRange: 18
+    snapRange: 22
+    autoShots: 9
+    sprayWaypoints: 2
+    bulletSpeed: 50
+    attraction: 8
+    listOrder: 13220
