@@ -3,18 +3,18 @@ extended:
 
 weaponSets:
   - type: TAU_FIREWARRIOR_SET1
-    weapons: [STR_LASER_RIFLE_G_HIGH_GRADE, STR_LASGUN_CLIP_HOTSHOT, STR_LASGUN_CLIP_HOTSHOT, STR_LASGUN_CLIP_HOTSHOT, STR_SMOKE_GRENADE, STR_GRENADE]
+    weapons: [STR_TAU_PULSE_RIFLE, STR_PHOTON_GRENADE, STR_PHOTON_GRENADE]
   - type: TAU_FIREWARRIOR_SET2
-    weapons: [STR_LONGLAS, STR_LASGUN_CLIP_HOTSHOT, STR_LASGUN_CLIP_HOTSHOT, STR_SMOKE_GRENADE]
+    weapons: [STR_TAU_PULSE_RIFLE, STR_KRAK_GRENADE, STR_KRAK_GRENADE]
   - type: TAU_FIREWARRIOR_SET3
     weapons: [STR_GRENADE_LAUNCHER, STR_KRAK_GRENADE_DRUM, STR_KRAK_GRENADE_DRUM, STR_KRAK_GRENADE_DRUM]
   - type: TAU_FIREWARRIOR_SET4
-    weapons: [STR_FLAMETHROWER, STR_FLAMETHROWER_CLIP, STR_FLAMETHROWER_CLIP, STR_GRENADE]
+    weapons: [STR_FLAMETHROWER, STR_FLAMETHROWER_CLIP, STR_FLAMETHROWER_CLIP, STR_KRAK_GRENADE, STR_KRAK_GRENADE]
 
   - type: TAU_FIREWARRIORLEADER_SET1
-    weapons: [STR_PLASMA_RIFLE, STR_PLASMA_RIFLE_CLIP, STR_PLASMA_RIFLE_CLIP, STR_PLASMA_RIFLE_CLIP, STR_SMOKE_GRENADE, STR_GRENADE]
+    weapons: [STR_TAU_PULSE_RIFLE, STR_PHOTON_GRENADE, STR_PHOTON_GRENADE]
   - type: TAU_FIREWARRIORLEADER_SET2
-    weapons: [STR_PLASMA_PISTOL, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_PLASMA_PISTOL_CLIP, STR_HYPERPHASESWORD, STR_SMOKE_GRENADE, STR_GRENADE]
+    weapons: [STR_TAU_PULSE_RIFLE, STR_KRAK_GRENADE, STR_KRAK_GRENADE]
 
 units:
 
@@ -36,50 +36,69 @@ units:
     armor: STR_TAUFIREWARRIOR_ARMOR
     standHeight: 21
     kneelHeight: 14
-    value: 20
+    value: 15
     intelligence: 4
+    aggression: 1
     spotter: 3
-    sniper: 90
-    energyRecovery: 20
+    sniper: 100
+    energyRecovery: 40
     livingWeapon: true
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     builtInWeaponSets: []
     weightedBuiltInWeaponSets:
-      -
-        TAU_FIREWARRIOR_SET1: 30
-        TAU_FIREWARRIOR_SET2: 15
+      -  # Tier 1
+        TAU_FIREWARRIOR_SET1: 50
+        TAU_FIREWARRIOR_SET2: 10
         TAU_FIREWARRIOR_SET3: 20
         TAU_FIREWARRIOR_SET4: 20
+      -  # Tier 2
+        TAU_FIREWARRIOR_SET1: 20
+        TAU_FIREWARRIOR_SET2: 30
+        TAU_FIREWARRIOR_SET3: 30
+        TAU_FIREWARRIOR_SET4: 20
+      -  # Tier 3
+        TAU_FIREWARRIOR_SET1: 10
+        TAU_FIREWARRIOR_SET2: 50
+        TAU_FIREWARRIOR_SET3: 30
+        TAU_FIREWARRIOR_SET4: 10
 
   - type: STR_TAU_DRONEAI
     race: STR_SECTOID  # trying to avoid setting them as civilians
     rank: STR_LIVE_SOLDIER
     stats:
       tu: 80
-      stamina: 84
+      stamina: 100
       health: 45
-      bravery: 80
-      reactions: 70
-      firing: 100
+      bravery: 110
+      reactions: 90
+      firing: 70
       throwing: 15
       strength: 20
-      psiStrength: 0
+      psiStrength: 200
       psiSkill: 0
       melee: 1
     armor: STR_TAUDRONE_ARMOR
     standHeight: 12
     kneelHeight: 12
-    value: 10
+    value: 5
     intelligence: 1
+    aggression: 8
     spotter: 4
-    sniper: 90
-    energyRecovery: 20
+    sniper: 100
+    energyRecovery: 100 #tireless; it's a machine
     livingWeapon: true
+    canBeMindControlled: false
+    canPanic: false
+    canSurrender: false
     deathSound: 23
+    moveSound: {mod: 40k, index: 845}
     builtInWeaponSets:
-      - - TAUDRONE_GUN
-      - - TAUDRONE_GUN
-      - - TAUDRONE_GUN
+      - - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+        - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+      - - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+        - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+      - - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+        - STR_TAU_DRONE_BURST_CANNON_TWINLINKED
 
 
   - type: STR_TAU_FIREWARRIORLEADERAI
@@ -89,26 +108,33 @@ units:
       tu: 85
       stamina: 90
       health: 65
-      bravery: 90
+      bravery: 100
       reactions: 70
-      firing: 100
-      throwing: 65
+      firing: 110
+      throwing: 75
       strength: 40
-      psiStrength: 50
+      psiStrength: 70
       psiSkill: 0
       melee: 65
     armor: STR_TAUFIREWARRIORLEADER_ARMOR
     standHeight: 21
     kneelHeight: 14
-    value: 20
-    intelligence: 8
+    value: 30
+    intelligence: 5
+    aggression: 1
     spotter: 3
     sniper: 100
-    energyRecovery: 20
+    energyRecovery: 40
     livingWeapon: true
     deathSound: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
     builtInWeaponSets: []
     weightedBuiltInWeaponSets:
-      -
+      -  # Tier 1
+        TAU_FIREWARRIORLEADER_SET1: 90
+        TAU_FIREWARRIORLEADER_SET2: 10
+      -  # Tier 1
         TAU_FIREWARRIORLEADER_SET1: 50
         TAU_FIREWARRIORLEADER_SET2: 50
+      -  # Tier 1
+        TAU_FIREWARRIORLEADER_SET1: 10
+        TAU_FIREWARRIORLEADER_SET2: 90
