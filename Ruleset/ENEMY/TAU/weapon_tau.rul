@@ -2,22 +2,28 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 items:
-  - type: TAUDRONE_GUN
+  - type: STR_TAU_DRONE_BURST_CANNON_TWINLINKED
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
     weight: 1
+    dropoff: 4 #tau carbine
     bigSprite: 3140
     floorSprite: 949
     handSprite: 864
-    bulletSprite: {mod: 40k, index: 6}
-    fireSound: {mod: 40k, index: 12}
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
     explosionSpeed: 10
     bulletSpeed: 50
     clipSize: -1
-    accuracyAuto: 40
-    accuracySnap: 60
-    tuAuto: 45
-    tuSnap: 30
-    autoShots: 7
-    sprayWaypoints: 3
+    accuracyAuto: 50
+    accuracySnap: 70
+    autoRange: 12
+    snapRange: 16
+    tuAuto: 50
+    tuSnap: 33
+    autoShots: 6
+    sprayWaypoints: 2
     confSnap:
       name: TAUDRONEGUN_BURST
       shots: 3
@@ -25,21 +31,86 @@ items:
     confAuto:
       name: TAUDRONEGUN_AUTO
       followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
-    hitSound: 0
-    hitAnimation: 0
-    power: 50
-    damageType: 1
-    damageAlter:
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.90
+    power: 90
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.2  # melts some armor on the way in
+      ArmorEffectiveness: 0.8  # some armor penetration
     battleType: 1
     twoHanded: false
     invWidth: 2
     invHeight: 3
     arcingShot: false
-    minRange: 1
-    autoRange: 18
-    dropoff: 12
     recover: false
     fixedWeapon: true
     fixedWeaponShow: false  # do not appear in the drone sprites hand
+    shotgunSpread: 1  # twin linked
+    shotgunBehavior: 1  # twin linked
+    shotgunPellets: 2
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+
+  - type: STR_TAU_PULSE_RIFLE
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
+    requires:
+      - STR_TAU_RESEARCH
+    weight: 7
+    bigSprite: 3143
+    floorSprite: 3141
+    handSprite: 3700
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    reloadSound: 2451
+    costSell: 20000
+    explosionSpeed: 10
+    bulletSpeed: 100
+    clipSize: -1
+    accuracyAuto: 70
+    accuracySnap: 90
+    accuracyAimed: 110
+    tuAimed: 70
+    tuAuto: 45
+    tuSnap: 30
+    autoShots: 2
+    power: 90
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.2  # melts some armor on the way in
+      ArmorEffectiveness: 0.8  # some armor penetration
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 25
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    minRange: 5
+    aimRange: 25
+    snapRange: 20
+    autoRange: 16
+    dropoff: 3 #tau rifle has exceptional range
+    recover: true
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    kneelBonus: 120
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 25  # Battle rifle
+      ITEM_SNAP_ACCURACY_POWER_BONUS: 10  # Battle rifle
+      ITEM_POWER_BONUS_PERCENTILE: 1  # use %

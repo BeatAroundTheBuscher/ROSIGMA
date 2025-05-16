@@ -5,36 +5,48 @@ armors:
 
   - type: STR_TAUFIREWARRIOR_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 30 #advanced NV
+    heatVision: 25
     spriteSheet: TAUFIREWARRIORbattle_GOG.PCK
     spriteInv: TAUFIREWARRIORSARMOR.PCK
     corpseBattle:
       - STR_TAUFIREWARRIOR_AICORPSE
-    frontArmor: 50
-    sideArmor: 50
+    frontArmor: 70
+    sideArmor: 60
     rearArmor: 50
-    underArmor: 50
+    underArmor: 60
+    standHeight: 22
+    kneelHeight: 14
     drawingRoutine: 0
     allowsKneeling: true
     damageModifier:  # GUARD ARMOR
       - 1.0  # none
-      - 1.0  # AP
-      - 1.2  # FLAMES
+      - 0.9  # AP
+      - 0.7  # FLAMES; partially environmentally sealed
       - 1.0  # HE
       - 0.8  # LASCANON
       - 1.0  # PLASMA
       - 1.0  # STUN
-      - 1.1  # MELEE
-      - 1.0  # ACID
+      - 1.2  # MELEE
+      - 1.0  # ACID; partially environmentally sealed
       - 0.0  # SMOKE
       - 1.0  # IMPACT
       - 1.0  # MELTA
     loftempsSet: [3]
+    allowsRunning: false
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+
 
   - type: STR_TAUDRONE_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 30
-    heatVision: 15
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10 #scouts
+    antiCamouflageAtDay: 10
+    heatVision: 35
+    psiVision: 5 #advanced sensors
     size: 1
     spriteSheet: TAUDRONEbattle.PCK
     spriteInv: TAUDRONESARMOR.PCK
@@ -42,10 +54,10 @@ armors:
       - STR_TAUDRONE_AICORPSE
     movementType: 1
     zombiImmune: true  # It's a drone; can't zombify this.
-    frontArmor: 20
-    sideArmor: 20
-    rearArmor: 20
-    underArmor: 15
+    frontArmor: 60
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 50
     drawingRoutine: 4
     scripts:
       selectUnitSprite: |
@@ -66,47 +78,66 @@ armors:
           add sprite_index sprite_offset;
         end;
         return sprite_index;
-    damageModifier:
+    bleedImmune: true
+    fearImmune: true
+    damageModifier:  # GUARD ARMOR
       - 1.0  # none
       - 0.9  # AP
-      - 1.0  # FLAMES
+      - 0.6  # FLAMES
       - 1.0  # HE
-      - 1.0  # LASCANON
-      - 0.9  # PLASMA
-      - 1.0  # STUN
-      - 1.1  # MELEE
-      - 1.0  # ACID
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 1.2  # MELEE
+      - 0.5  # ACID
       - 0.0  # SMOKE
       - 1.0  # IMPACT
-      - 0.9  # MELTA
+      - 1.0  # MELTA
     loftempsSet: [2]
     deathFrames: 4
-    allowsRunning: true
+    allowsKneeling: false
+    allowsRunning: false
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100
 
   - type: STR_TAUFIREWARRIORLEADER_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 35
+    antiCamouflageAtDark: 7
+    antiCamouflageAtDay: 7
+    heatVision: 35
     spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
     spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     corpseBattle:
       - STR_TAUFIREWARRIORLEADER_AICORPSE
-    frontArmor: 70
-    sideArmor: 60
-    rearArmor: 50
-    underArmor: 50
+    standHeight: 22
+    kneelHeight: 14
+    frontArmor: 80
+    sideArmor: 70
+    rearArmor: 60
+    underArmor: 70
     drawingRoutine: 0
     allowsKneeling: true
     damageModifier:  # GUARD ARMOR
       - 1.0  # none
-      - 1.0  # AP
-      - 1.1  # FLAMES
-      - 1.0  # HE
+      - 0.9  # AP
+      - 0.6  # FLAMES; partially environmentally sealed
+      - 0.0  # HE
       - 0.8  # LASCANON
       - 0.9  # PLASMA
       - 0.9  # STUN
-      - 1.0  # MELEE
-      - 1.0  # ACID
+      - 1.1  # MELEE
+      - 0.9  # ACID
       - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
+      - 0.5  # IMPACT
+      - 0.9  # MELTA
     loftempsSet: [3]
+    allowsRunning: false
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
