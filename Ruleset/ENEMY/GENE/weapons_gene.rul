@@ -410,6 +410,7 @@ items:
     bulletSprite: 27
     fireSound: 3995
     explosionHitSound: 3996
+    explosionSpeed: -1
     hitAnimation: 1170
     accuracyAimed: 80
     tuAimed: 60
@@ -1256,9 +1257,9 @@ items:
 # Charges
 
   - &STR_SPOREMINE_CHARGE_TEMPLATE
-    type: STR_SPOREMINE_FRAG_CHARGE  # STR_SPOREMINE
+    type: STR_SPOREMINE_FRAG_CHARGE  # STR_FRAG_SPOREMINE
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_TYRANID]
-    hitAnimation: {mod: 40k, index: 104}
+    hitAnimation: 1200
     hitSound: {mod: 40k, index: 704}
     explosionHitSound: {mod: 40k, index: 792}  # 792 Smoke
     floorSprite: 3030 #placeholder; to be replaced with payload specific floor sprites
@@ -1268,21 +1269,19 @@ items:
     invWidth: 2
     weight: 1
     power: 140
-    damageType: 1
+    damageType: 3
     damageAlter:  # fragmentation blast
       RandomType: 6
       ToArmorPre: 0.05  # small ablation
       ArmorEffectiveness: 1.1  # concussive + shrapnel everywhere
-      ToHealth: 0.4  # much damage dealt in the form of debuffs, was 0.7
-      ToTime: 0.2  # painful
-      ToStun: 0.4  # painful
-      ToMorale: 1.0  # painful
-      ToEnergy: 0.4  # painful
-      ToWound: 0.4  # shrapnel
+      ToHealth: 0.7
+      ToStun: 0.1  # concussive force
+      ToMorale: 1.0  # concussive force
+      ToWound: 0.1
       RandomWound: false
       ToTile: 0.25  # it's shrapnel; deals relatively little damage to the terrain.
       ToItem: 0.25  # it's shrapnel; deals relatively little damage to the terrain.
-      FixRadius: 12
+      FixRadius: 3
     battleType: 4  # grenade
     recover: false
     tuThrow: 999  # only to be thrown via scripts
@@ -1303,48 +1302,57 @@ items:
       ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
       ITEM_IS_KAMIKAZI_BOMB: 1
 
-  - type: STR_SPOREMINE_EXPLOSIVE_CHARGE  # STR_SPOREMINE
+  - type: STR_SPOREMINE_EXPLOSIVE_CHARGE  # STR_POISON_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     explosionHitSound: 5
-    hitSound: {mod: 40k, index: 704}
-    hitAnimation: 1200
+    hitSound: -1
+    hitAnimation: 1020
+    explosionSpeed: -2
     bigSprite: 3037 #placeholder; to be replaced with payload specific floor sprites
     handSprite: 3460
     floorSprite: 3029
     power: 140
-    damageType: 3
-    damageAlter:  # high explosive
-      ToArmorPre: 0.1
-      RandomType: 6
-      ArmorEffectiveness: 0.9  # concussive
-      ToStun: 0.6  # concussive
-      ToEnergy: 0.4  # concussive
-      ToTime: 0.3  # concussive
-      ToTile: 0.75  # high explosive
-      ToItem: 0.75  # high explosive
+    damageType: 6 #stun
+    ignorePainImmune: false
+    ignoreSelfDestruct: false
+    ignoreOverKill: false
+    damageAlter:  # poisonous gas cloud
+      ToArmorPre: 0
+      ToArmor: 0
+      RandomType: 7 #50-200%
+      ArmorEffectiveness: 0.1 #armor helps little
+      ToHealth: 0.1 #little direct damage
+      ToMoral: 0.5
+      ToStun: 0.25
+      ToEnergy: 0.5
+      ToTime: 0.5
+      ToWound: 1 #1-3 fatal wounds
+      FixRadius: 4
 
-  - type: STR_SPOREMINE_ACID_CHARGE  # STR_SPOREMINE
+  - type: STR_SPOREMINE_ACID_CHARGE  # STR_ACID_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     hitSound: {mod: 40k, index: 704}
     explosionHitSound: 3996
+    explosionSpeed: -1
     hitAnimation: 1170
     handSprite: 3440
     floorSprite: 3027
     power: 140
     damageType: 8
+    ignoreOverKill: false
     damageAlter: #deadly acid
-      ToArmorPre: 0.5
+      ToArmorPre: 0.6
       RandomType: 6
       ToArmor: 0.0 #damage done on the way in
-      ToMorale: 5.0 #corrosive; painful
-      ToWound: 0.5 #corrosive
+      ToMorale: 4.0 #corrosive; painful
+      ToWound: 0.3 #corrosive
       RandomWound: false
-      ToTile: 0.5
-      ToItem: 1.0
-      SmokeThreshold: 60
-      FixRadius: 12
+      ToTile: 0.1
+      ToItem: 0.5
+      SmokeThreshold: 150
+      FixRadius: 4
 
-  - type: STR_SPOREMINE_BIOPLASMA_CHARGE  # STR_SPOREMINE
+  - type: STR_SPOREMINE_BIOPLASMA_CHARGE  # STR_BIOPLASMA_SPOREMINE   #Higher tier sporemine
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
     explosionHitSound: {mod: 40k, index: 690}  # *** PLASMA rebalance
     hitAnimation: {mod: 40k, index: 112}  # 100  # *** PLASMA rebalance
@@ -1358,7 +1366,7 @@ items:
       ArmorEffectiveness: 0.75  # *** PLASMA rebalance
       FireThreshold: 70  # can ignite at high damage
       ToArmor: 0.1
-      FixRadius: 12
+      FixRadius: 3
 
 # Sporemine End
 
@@ -1376,8 +1384,9 @@ items:
       ToArmor: 0.3
       ToHealth: 0.3
       ToStun: 0.2
+      ToTile: 0
       ArmorEffectiveness: 0.1
-      FixRadius: 3
+      FixRadius: 1
     powerForAnimation: 1
     damageType: 1
     accuracySnap: 20 #highly inaccurate

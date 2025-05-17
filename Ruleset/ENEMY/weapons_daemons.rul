@@ -398,7 +398,7 @@ items:
   - type: STR_SILACOID_WEAPON  # Bloodletter Hellblade
     bigSprite: 3016
     floorSprite: 991 #blank
-    handSprite: 3480 #blank
+    handSprite: 3630
     power: 50  # base damage lowered per Damage Alter and Damage Scaling; works out to about 162 after Damage Bonuses
     weight: 3
     accuracyMelee: 100
@@ -431,6 +431,23 @@ items:
       RandomWound: false
       ToEnergy: 0.3
       ArmorEffectiveness: 0.7
+    scripts:
+      selectItemSprite: |
+
+        var int temp;
+        var int numOfFrames;
+        set numOfFrames 4;
+
+        if or eq blit_part blit_item_lefthand eq blit_part blit_item_righthand;
+
+            add temp anim_frame;
+            mod temp numOfFrames;
+            mul temp 8;
+            add sprite_index temp;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+        return sprite_index;
     tags:  # Bloodletter Hellblade is vampiric, granting them power as they spill blood for Khorne
       TAG_HP_RETURNED_ON_KILL: 88  # regains 88 HP on kill; Sacred Khorne Number
       TAG_ENERGY_RETURNED_ON_KILL: 88  # regains 88 Energy on kill
