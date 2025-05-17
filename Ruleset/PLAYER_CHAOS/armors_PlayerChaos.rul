@@ -2074,7 +2074,7 @@ armors:
     spriteSheet: IRON_GUARD_FLAK_BS.PCK
     spriteInv: IRON_GUARD_FLAK_INV.SPK
     storeItem: STR_NONE
-    customArmorPreviewIndex: 990
+    customArmorPreviewIndex: 1080
     corpseBattle:
       - STR_IRON_GUARD_FLAK_CORPSE_PLAYER
     drawingRoutine: 0
@@ -2089,7 +2089,7 @@ armors:
     spriteSheet: BLACKGUARD_FLAK_BS.PCK
     spriteInv: BLACKGUARD_FLAK_INV.SPK
     storeItem: STR_NONE
-    customArmorPreviewIndex: 991
+    customArmorPreviewIndex: 1081
     corpseBattle:
       - STR_BLACKGUARD_FLAK_CORPSE_PLAYER
     drawingRoutine: 0
@@ -2137,7 +2137,7 @@ armors:
     spriteSheet: IRON_GUARD_CARA_BS.PCK
     spriteInv: IRON_GUARD_CARA_INV.SPK
     storeItem: STR_GUARD_ARMORH
-    customArmorPreviewIndex: 992
+    customArmorPreviewIndex: 1082
     corpseBattle:
       - STR_IRON_GUARD_CARAPACE_CORPSE_PLAYER
     drawingRoutine: 0
@@ -2152,7 +2152,7 @@ armors:
     spriteSheet: BLACKGUARD_CARA_BS.PCK
     spriteInv: BLACKGUARD_CARA_INV.SPK
     storeItem: STR_GUARD_ARMORH
-    customArmorPreviewIndex: 993
+    customArmorPreviewIndex: 1083
     corpseBattle:
       - STR_BLACKGUARD_CARAPACE_CORPSE_PLAYER
     drawingRoutine: 0
@@ -2171,7 +2171,7 @@ armors:
     spriteSheet: IRON_GUARD_BS.PCK
     spriteInv: IRON_GUARD_INV.SPK  # Iron Warriors traitor Guard
     fearImmune: true
-    customArmorPreviewIndex: 994
+    customArmorPreviewIndex: 1084
     corpseBattle:
       - STR_IRON_GUARD_SERVITOR_CORPSE
     stats:
@@ -2202,6 +2202,107 @@ armors:
       INTIMIDATION_RESISTANCE: 100  # offset 4x
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+
+  - &STR_IRON_GUARD_ARMOR_MOUNTED  # DAMAGE + STATS
+    type: STR_IRON_GUARD_ARMOR_MOUNTED_AUTOCANNON
+    refNode: *STR_IRON_GUARD_ARMOR_PLAYER
+    spriteSheet: IRON_GUARD_MOUNTED.PCK
+    corpseBattle:
+      - IRON_GUARD_MOUNT_CORPSE1
+      - IRON_GUARD_MOUNT_CORPSE2
+      - IRON_GUARD_MOUNT_CORPSE3
+      - IRON_GUARD_MOUNT_CORPSE4
+    size: 2
+    drawingRoutine: 20
+    units:
+      - STR_IRON_GUARDSMAN
+      - STR_BLACKGUARD
+    loftempsSet: [92, 89, 90, 91]
+    moveSound: {mod: 40k, index: 14}
+
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 5
+    frontArmor: 150
+    sideArmor: 120
+    rearArmor: 30
+    underArmor: 30
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.8  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 1.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    stats:
+      tu: -15
+      health: 20
+      firing: 20
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    weight: -110
+    allowsKneeling: false
+    tags:
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+
+  - type: STR_IRON_GUARD_ARMOR_MOUNTED_AUTOCANNON
+    refNode: *STR_IRON_GUARD_ARMOR_MOUNTED
+    spriteInv: IRON_GUARD_MOUNTED_AUTOCANNON_INV.SPK
+    customArmorPreviewIndex: [1105, 1106]
+    storeItem: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_IW_AUTOCANNON_MOUNTED
+    scripts:
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+      # 0 las, 1 auto, 2 heavy bolter
+      selectUnitSprite:
+        var int unitDirection;
+
+        add sprite_index 1;
+
+        set sprite_offset 0;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
 
   # Chaos 'Civilian' Armors
   - type: STR_CHAOS_FANATIC_ARMOR
