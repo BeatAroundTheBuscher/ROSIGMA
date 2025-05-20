@@ -127,7 +127,7 @@ items:
     requiresBuyBaseFunc: [TRADE]
     size: 0.4
     bigSprite: 3153
-    floorSprite: 3155
+    floorSprite: 3154
     handSprite: 3740
     aimRange: 22
     snapRange: 18
@@ -186,7 +186,7 @@ items:
 
   - &STR_TAU_PULSE_CARBINE_TEMPLATE
     type: STR_TAU_PULSE_CARBINE
-    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
+    categories: [STR_CAT_PLASMA, STR_CAT_ASSAULT, STR_CAT_TAU]
     requires:
       - STR_TAU_XENOTECH
     size: 0.3
@@ -204,10 +204,10 @@ items:
     bulletSpeed: 100
     accuracyAuto: 60
     accuracySnap: 80
-    #accuracyAimed: 80
+    accuracyAimed: 80
     tuAuto: 40
     tuSnap: 25
-    #tuAimed: 25
+    tuAimed: 25
     autoShots: 4
     power: 90
     damageType: 5
@@ -217,26 +217,29 @@ items:
       ArmorEffectiveness: 0.9  # some armor penetration
     battleType: 1
     confSnap: # 2 shot burst
-    #  ammoSlot: 0
+      ammoSlot: 0
       name: STR_BURST_SNAP_SHOT
       arcing: false
       shots: 2
-    #confAimed:  # Photon Underslung Grenade Launcher
-    #  ammoSlot: 1  # Grenades
-    #  name: STR_LAUNCH_GRENADE
-    #  shortName: STR_LAUNCH_GRENADE_SHORT
-    #  arcing: true
+    confAuto:
+      ammoSlot: 0
+      arcing: false
+    confAimed:  # Photon Underslung Grenade Launcher
+      ammoSlot: 1  # Grenades
+      name: STR_LAUNCH_GRENADE
+      shortName: STR_LAUNCH_GRENADE_SHORT
+      arcing: true
     ammo:
       0:
         compatibleAmmo: [STR_TAU_PULSE_MAG]
-      #1:
-        #compatibleAmmo: [STR_TAU_PHOTON_GRENADE_CARBINE]
+      1:
+        compatibleAmmo: [STR_TAU_PHOTON_GRENADE_CARBINE]
     twoHanded: true
     oneHandedPenalty: 50
     invWidth: 2
     invHeight: 3
     arcingShot: false
-    #aimRange: 16
+    aimRange: 16
     snapRange: 16
     autoRange: 12
     dropoff: 4
@@ -254,7 +257,7 @@ items:
       REACTION_MULTIPLIER: 150
 
   - type: STR_TAU_PULSE_CARBINE_DRONE_TWINLINKED
-    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
+    categories: [STR_CAT_PLASMA, STR_CAT_ASSAULT, STR_CAT_TAU]
     requires:
       - STR_TAU_XENOTECH
     weight: 1
@@ -313,14 +316,14 @@ items:
   - type: STR_TAU_PHOTON_GRENADE_CARBINE
     categories: [STR_CAT_TACTICAL, STR_CAT_TAU]
     size: 0.1
-    weight: 1 # Light grenade
+    weight: 3
     invWidth: 1
     invHeight: 1
     requires:
       - STR_TAU_XENOTECH
-    bigSprite: 3149
-    floorSprite: 3150
-    handSprite: 3703
+    bigSprite: 3157
+    floorSprite: 3158
+    handSprite: 3756
     fireSound: 2450
     hitSound: {mod: 40k, index: 19}
     bulletSprite: {mod: 40k, index: 21}
@@ -333,6 +336,7 @@ items:
         set particle_lifetime 20;
         set subvoxel_drift 3;
         return;
+    extendedItemReloadCostLocal: 5
     battleType: 2
     power: 80
     clipSize: 3
@@ -357,14 +361,14 @@ items:
     invHeight: 1
     requires:
       - STR_TAU_XENOTECH
-    bigSprite: {mod: 40k, index: 1009}
-    floorSprite: {mod: 40k, index: 1009}
-    handSprite: {mod: 40k, index: 1072}
+    bigSprite: 3157
+    floorSprite: 3158
+    handSprite: 3756
     bulletSprite: {mod: 40k, index: 21}
     explosionHitSound: {mod: 40k, index: 803}
     hitAnimation: 2100
     costSell: 500
-    primeSound: 2424
+    primeSound: 2426
     throwRange: 20
     battleType: 4  # turn into grenade
     armor: 200
@@ -398,6 +402,112 @@ items:
       RandomWound: false
       FixRadius: 3
     noLOSAccuracyPenalty: 75  # indirect fire weapon
+
+  - type: STR_TAU_FUSION_GRENADE
+    categories: [STR_CAT_TACTICAL, STR_CAT_TAU, STR_CAT_MELTA]
+    size: 0.1
+    weight: 2 # Light grenade
+    invWidth: 1
+    invHeight: 2
+    requires:
+      - STR_TAU_XENOTECH
+    bigSprite: 3159
+    floorSprite: 3160
+    handSprite: 3764
+    bulletSprite: {mod: 40k, index: 21}
+    explosionHitSound: {mod: 40k, index: 690}
+    hitAnimation: 2180
+    costSell: 1000
+    primeSound: 2426
+    throwRange: 16
+    battleType: 4  # turn into grenade
+    armor: 200
+    fuseType: -2
+    costThrow:
+      time: 55
+      energy: 5
+    costPrime:
+      time: 5
+    costUnprime:
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    tuAimed: 0
+    accuracyAimed: 0
+    power: 130
+    damageType: 11
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 1.0  # it's a melta grenade; it will melt armor
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmor: 0.0  # melts armor on the way in
+      ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0
+      FixRadius: 5
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+
+  - type: STR_TAU_EMP_GRENADE
+    categories: [STR_CAT_TACTICAL, STR_CAT_TAU]
+    size: 0.1
+    weight: 2 # Light grenade
+    invWidth: 1
+    invHeight: 2
+    requires:
+      - STR_TAU_XENOTECH
+    bigSprite: 3161
+    floorSprite: 3162
+    handSprite: 3772
+    bulletSprite: {mod: 40k, index: 21}
+    explosionHitSound: {mod: 40k, index: 803}
+    hitAnimation: 2070
+    costSell: 1000
+    primeSound: 2426
+    throwRange: 20
+    battleType: 4  # turn into grenade
+    armor: 200
+    fuseType: -2
+    costThrow:
+      time: 55
+      energy: 5
+    costPrime:
+      time: 5
+    costUnprime:
+      time: 5
+    unprimeActionName: STR_UNPRIME_GRENADE
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    tuAimed: 0
+    accuracyAimed: 0
+    power: 150
+    damageType: 5 #EMP
+    damageAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.1
+      ToTime: 0.2
+      ToStun: 0.2
+      ToEnergy: 0.2
+      ToMorale: 0.2
+      ToTile: 0.0
+      ToItem: 0.0
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToWound: 0.0
+      RandomWound: false
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    tags:
+      DAMAGE_BONUS_PERCENT_MECHANICAL: 1000
 
   - type: STR_TAU_PULSE_BLASTER
     size: 0.3
@@ -451,3 +561,118 @@ items:
         return;
     tags:
       REACTION_MULTIPLIER: 150
+
+  - type: STR_TAU_PULSE_PISTOL
+    categories: [STR_CAT_PLASMA, STR_CAT_ASSAULT, STR_CAT_TAU]
+    requires:
+      - STR_TAU_XENOTECH
+    size: 0.2
+    weight: 3
+    bigSprite: 3155
+    floorSprite: 3156
+    handSprite: 3748
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    reloadSound: 2451
+    costSell: 10000
+    explosionSpeed: 10
+    bulletSpeed: 100
+    accuracySnap: 80
+    accuracyAimed: 100
+    tuSnap: 20
+    tuAimed: 40
+    power: 90
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.3  # melts some armor on the way in
+      ArmorEffectiveness: 0.9  # some armor penetration
+    battleType: 1
+    ammo:
+      0:
+        compatibleAmmo: [STR_TAU_PULSE_MAG]
+    twoHanded: false
+    costDispose: 0
+    invWidth: 1
+    invHeight: 2
+    arcingShot: false
+    aimRange: 16
+    snapRange: 14
+    dropoff: 5
+    recover: true
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+    tuLoad: 5 #quick pistol reload
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      REACTION_MULTIPLIER: 200
+      ITEM_AIMED_ACCURACY_POWER_BONUS: 15
+
+  - type: STR_TAU_RAIL_RIFLE
+    categories: [STR_CAT_DEVASTATOR, STR_CAT_TAU]
+    size: 0.6
+    requires:
+      - STR_TAU_XENOTECH
+    weight: 15
+    bigSprite: 3163
+    floorSprite: 3164
+    handSprite: 3780
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    explosionHitSound: {mod: 40k, index: 690}
+    hitAnimation: 1200
+    reloadSound: 2451
+    costSell: 30000
+    explosionSpeed: 10
+    bulletSpeed: 100
+    accuracySnap: 50
+    accuracyAimed: 80
+    tuAimed: 80
+    tuSnap: 60
+    power: 200
+    damageType: 1
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmorPre: 0.5  # destroys armor on the way in
+      ArmorEffectiveness: 0.5
+      FixRadius: 1 #just has to be close
+      RadiusReduction: 100  #still deals a lot of damage if it gets close, but it may be survivable
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    minRange: 10
+    snapRange: 20
+    aimRange: 30
+    dropoff: 3 #has exceptional range
+    recover: true
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    kneelBonus: 150 #extremely hard to wield otherwise
+    clipSize: -1 #unlimited ammo for now; placeholder
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 95 #resistance isn't very effective against this
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
