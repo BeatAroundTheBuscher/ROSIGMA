@@ -165,7 +165,7 @@ items:
     bulletSpeed: 100
     battleType: 2
     power: 90
-    clipSize: 60
+    clipSize: 50
     damageType: 5
     damageAlter:  # DA PLASMA
       RandomType: 6
@@ -528,7 +528,7 @@ items:
     bulletSpeed: 100
     accuracySnap: 80
     tuSnap: 25
-    power: 50
+    power: 60
     damageType: 5
     damageAlter:  # DA PLASMA
       RandomType: 1
@@ -551,6 +551,8 @@ items:
     vaporColorSurface: {mod: 40k, index: 2}
     vaporDensitySurface: 3
     vaporProbabilitySurface: 50
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 5.0
     clipSize: -1
     scripts:
       vaporParticleAmmo: |
@@ -645,9 +647,10 @@ items:
       RandomType: 6
       ToTile: 1.0
       ToItem: 1.0
-      ToArmorPre: 0.5  # destroys armor on the way in
-      ArmorEffectiveness: 0.5
+      ToArmorPre: 0.3  # destroys armor on the way in
+      ArmorEffectiveness: 0.3
       FixRadius: 1 #just has to be close
+      IgnoreOverKill: false
       RadiusReduction: 100  #still deals a lot of damage if it gets close, but it may be survivable
     battleType: 1
     twoHanded: true
@@ -699,13 +702,11 @@ items:
           add vapor_color -2;
           set subvoxel_drift 50;
           set subvoxel_velocity subvoxel_trajectory_forward;
+
         else lt particle_number 12;
-          # set off subvoxel_trajectory_distance;
-          # wavegen_sin off 1200 5;
+
           set vapor_color -1;
-          # add vapor_color +1;
-          # set subvoxel_velocity 0 0 150;
-          # set subvoxel_acceleration 0 0 off;
+
         else;
           var int sin;
           var int last 6400;
