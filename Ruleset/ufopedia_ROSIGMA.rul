@@ -1,20 +1,35 @@
-#
+#####################################
 # The Unified Rosigma Codex
+#####################################
 #
-# Entries must appear in this file in the order you want them to appear in-game.
-# Codex entries are indexed by automated script
+# Before adding or modifying entries in this file, please review the information in this header.
+# See the header for each chapter for further guidelines specific to entries for those areas.
 #
-# Entries should be appended with a comment giving their string entry as it appears in the language file
+# The use of listOrder to order codex entries has been depriciated for now,
+#   entries must appear in this file in the order you want them to be viewed in the codex.
+# All entries within the same section (other than hidden articles using STR_NOT_AVAILABLE) must
+#   use same value for their section: entry to avoid ordering issues.
+#
+# Avoid creating placeholder articles if you don't plan on finishing them.
+#   It is easier to find missing articles than it is to identify incomplete or unifinished ones.
+# If you DO create a placeholder article, add STR_DONTSHOWYET as a requirement to view it.
+#
+# Each entry should be appended with a comment giving it's string value as it appears in the language file.
 #
 # Many entries have a - delete: entry immediately above them.
-#   This is (usually) deleting the original entry from 40k mod and reproducing it without relying on submod inheritence.
+#   This is an indication that the article existed in 40k mod,
+#   and has been migrated to ROSIGMA to avoid inheritance issue and make this file readable.
 #   Please don't remove them.
+#
+#####################################
+# Seach Codes - AKA Finding the article you want
+#####################################
 #
 # Search codes have been added to the file to facilitate looking up sections of the codex.
 # Search query should look like this and is case insensitive: #CHAPTER.SECTION#
 # Example: Searching for #CRAFTS.SM.SCOUT# will take you to the Craft codex entries for the Space Marine Scout strategy
 #
-# Chapters:
+# Chapters (And their section entry):
 #
 # #GUIDES#          Tutorial Section (STR_HELP)
 # #STRATEGY#        Faction strategies (STR_STRATEGY)
@@ -30,8 +45,8 @@
 # #WEAPONS#         Weapons (STR_WEAPONS_AND_EQUIPMENT)
 # #PSYKER#          Psyker Powers and Spells (STR_BOOKS)
 # #ITEMS#           Items (STR_TOOLS_AND_RESOURCES)
-# #FOES#            Enemy Units (ENEMIES OF MEN)
-# #UFO#             Enemy UFOs (ENEMY CRAFT)
+# #FOES#            Enemy Units (STR_ALIEN_LIFE_FORMS)
+# #UFO#             Enemy UFOs (STR_UFOS)
 # #
 # #CREDITS#         Credits (STR_HERALDRY)
 #
@@ -90,8 +105,9 @@
   #WEAPONS.TAU#         Tau Weapons
 #
 # Use these search codes for the Foes chapter:
+# Use the same codes but with UFO instead of FOES for the Ufo chapter.
 #
-#FOE#                 Enemy Units
+#FOES#                 Enemy Units
   #FOES.CIV#             Civilian Units
   #FOES.SM#              Space Marines Units
   #FOES.CM#              Chamber Militant Units
@@ -514,80 +530,6 @@ ufopaedia:
     requires:
       - STR_MARINES_STRATEGY
 
-  # Heraldry
-  - delete: STR_ULTRAMARINES
-  - id: STR_ULTRAMARINES
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: ULT.SPK
-    text: STR_ULTRAMARINES_INFO
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-  - delete: STR_IF
-  - id: STR_IF
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: IF.SPK
-    text: STR_IF_INFO
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-  - delete: STR_BA
-  - id: STR_BA
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: BA.SPK
-    text: STR_BA_INFO
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-  - delete: STR_SALA
-  - id: STR_SALA
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: SALA.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_SALA_INFO
-  - delete: STR_BT
-  - id: STR_BT
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: BT.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_BT_INFO
-  - delete: STR_WS
-  - id: STR_WS
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: WS.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_WS_INFO
-  - delete: STR_SW
-  - id: STR_SW
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: SW.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_SW_INFO
-  - delete: STR_DA
-  - id: STR_DA
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: DA.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_DA_INFO
-  - delete: STR_CF
-  - id: STR_CF
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: CF.SPK
-    requires:
-      - STR_MARINES_AND_DEATHWATCH
-    text: STR_CF_INFO
-
 ### #STRATEGY.SM.ASS#            Assault Strategy
   - delete: STR_CHOSEN_ASSAULT
   - id: STR_CHOSEN_ASSAULT
@@ -686,15 +628,8 @@ ufopaedia:
       - STR_CHAMBERMILITANT
     image_id: INQUISITOR_CODEX.SPK
     text: STR_INQUISITION_FAVOR_CODEX
-### #STRATEGY.CM.DW#
 
-  - delete: STR_CHOSEN_DEATHWATCH
-  - id: STR_CHOSEN_DEATHWATCH
-    type_id: 10
-    section: STR_STRATEGY
-    requires:
-      - STR_DEATHWATCH
-    image_id: 4DWC.SPK
+### #STRATEGY.CM.DW#
   - delete: STR_DEATHWATCH
   - id: STR_DEATHWATCH
     type_id: 10
@@ -703,14 +638,90 @@ ufopaedia:
     text: STR_DEATHWATCH_TEXT
     requires:
       - STR_CHAMBERMILITANT
-### #STRATEGY.CM.GK#
-  - delete: STR_CHOSEN_GREYKNIGHTS
-  - id: STR_CHOSEN_GREYKNIGHTS
+  - delete: STR_CHOSEN_DEATHWATCH
+  - id: STR_CHOSEN_DEATHWATCH
     type_id: 10
     section: STR_STRATEGY
     requires:
-      - STR_GREYKNIGHTS
-    image_id: 4GKC.SPK
+      - STR_DEATHWATCH
+    image_id: 4DWC.SPK
+
+  # Heraldry
+  # Available to marines to view, but provides mechanically important information to deathwatch players
+  - delete: STR_ULTRAMARINES
+  - id: STR_ULTRAMARINES
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: ULT.SPK
+    text: STR_ULTRAMARINES_INFO
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+  - delete: STR_IF
+  - id: STR_IF
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: IF.SPK
+    text: STR_IF_INFO
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+  - delete: STR_BA
+  - id: STR_BA
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: BA.SPK
+    text: STR_BA_INFO
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+  - delete: STR_SALA
+  - id: STR_SALA
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: SALA.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_SALA_INFO
+  - delete: STR_BT
+  - id: STR_BT
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: BT.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_BT_INFO
+  - delete: STR_WS
+  - id: STR_WS
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: WS.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_WS_INFO
+  - delete: STR_SW
+  - id: STR_SW
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: SW.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_SW_INFO
+  - delete: STR_DA
+  - id: STR_DA
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: DA.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_DA_INFO
+  - delete: STR_CF
+  - id: STR_CF
+    type_id: 10
+    section: STR_STRATEGY
+    image_id: CF.SPK
+    requires:
+      - STR_MARINES_AND_DEATHWATCH
+    text: STR_CF_INFO
+
+### #STRATEGY.CM.GK#
   - delete: STR_GREYKNIGHTS
   - id: STR_GREYKNIGHTS
     type_id: 10
@@ -719,12 +730,21 @@ ufopaedia:
     text: STR_GREYKNIGHTS_TEXT
     requires:
       - STR_CHAMBERMILITANT
+
+  - delete: STR_CHOSEN_GREYKNIGHTS
+  - id: STR_CHOSEN_GREYKNIGHTS
+    type_id: 10
+    section: STR_STRATEGY
+    requires:
+      - STR_GREYKNIGHTS
+    image_id: 4GKC.SPK
+
 ### #STRATEGY.CM.RAD#
   - id: STR_RADICAL_INQUISITOR_STRATEGY
     type_id: 10
     section: STR_STRATEGY
     requires:
-      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_CHAMBERMILITANT
     image_id: INQUISITOR_CODEX.SPK
     text: STR_RADICAL_INQUISITOR_STRATEGY_DESCRIPTION
 
@@ -735,7 +755,10 @@ ufopaedia:
     section: STR_STRATEGY
     image_id: INQUISITOR_CODEX.SPK
     text: STR_HERETICAL_INQUISITOR_STRATEGY_DESCRIPTION
+
 ## #STRATEGY.AT#
+  # The topics in this section should be reworked. Need top level adeptus terra articles.
+
 ### #STRATEGY.AT.LAW#
   - delete: STR_STRATEGY_INTROPD
   - id: STR_STRATEGY_INTROPD
@@ -750,7 +773,7 @@ ufopaedia:
     type_id: 10
     section: STR_STRATEGY
     requires:
-      - STR_ARBITES
+      - STR_THE_IMPERIAL_LAW_STRATEGY
     image_id: 4ARR.SPK
   - delete: STR_ARBITES
   - id: STR_ARBITES
@@ -760,6 +783,7 @@ ufopaedia:
     text: STR_ARBITES_TEXT
     requires:
       - STR_ARBITES
+
 ### #STRATEGY.AT.CULT#
   - id: STR_CHAOS_STRATEGY_ARBITES
     type_id: 10
@@ -767,7 +791,7 @@ ufopaedia:
     image_id: THECHAOSPATH.SPK
     text: STR_THE_CHAOS_PATH_STRATEGY_CODEX
     requires:
-      - STR_CHAOS_STRATEGY_ARBITES
+      - STR_ARBITES
   - id: STR_CHAOSCULT_HELPER
     type_id: 10
     section: STR_STRATEGY
@@ -800,14 +824,6 @@ ufopaedia:
         text: STR_CHAOSCULTHINTS_CODEX_PAGE11
 
 ## #STRATEGY.SOB#
-  - delete: STR_STRATEGY_INTROA
-  - id: STR_STRATEGY_INTROA
-    type_id: 10
-    section: STR_STRATEGY
-    image_id: 2AAA.SPK
-    text: STR_STRATEGY_TEXT_INTRO
-    requires:
-      - STR_ADEPTAS
   - delete: STR_CHOSEN_ADEPTAS
   - id: STR_CHOSEN_ADEPTAS
     type_id: 10
@@ -825,13 +841,14 @@ ufopaedia:
     requires:
       - STR_ADEPTAS
 
-  - id: STR_ADEPTAS_HARD_START  # SoB Requisition
+  - delete: STR_STRATEGY_INTROA
+  - id: STR_STRATEGY_INTROA
     type_id: 10
     section: STR_STRATEGY
+    image_id: 2AAA.SPK
+    text: STR_STRATEGY_TEXT_INTRO
     requires:
       - STR_ADEPTAS
-    image_id: SoBBesieged.SPK
-    text: STR_ADEPTAS_BESIEGED_UFOPEDIA
 
 ### #STRATEGY.SOB.REP#           Repentia Strategy
   - id: STR_REPENTIA_STRATEGY_ADEPTAS
@@ -866,7 +883,22 @@ ufopaedia:
     requires:
       - STR_ADEPTAS
 
+  - id: STR_ADEPTAS_HARD_START  # A Sisterhood Besieged
+    type_id: 10
+    section: STR_STRATEGY
+    requires:
+      - STR_ELITE_STRATEGY_ADEPTAS
+    image_id: SoBBesieged.SPK
+    text: STR_ADEPTAS_BESIEGED_UFOPEDIA
+
 ## #STRATEGY.IG#
+  - delete: STR_CHOSEN_IGS
+  - id: STR_CHOSEN_IGS
+    type_id: 10
+    section: STR_STRATEGY
+    requires:
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    image_id: 4G.SPK
   - delete: STR_STRATEGY_INTROG
   - id: STR_STRATEGY_INTROG
     type_id: 10
@@ -875,13 +907,6 @@ ufopaedia:
     text: STR_STRATEGY_TEXT_INTRO
     requires:
       - STR_IMPERIAL_GUARD_OPERATIONS
-  - delete: STR_CHOSEN_IGS
-  - id: STR_CHOSEN_IGS
-    type_id: 10
-    section: STR_STRATEGY
-    requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    image_id: 4G.SPK
   - delete: STR_IGS
   - id: STR_IGS
     type_id: 10
