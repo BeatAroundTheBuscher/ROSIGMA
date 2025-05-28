@@ -4897,7 +4897,7 @@ research:
     points: 15
     needItem: true
 
-  - name: STR_STANDARD_SMALL_ARMS_RESEARCH_REQ
+  - name: STR_STANDARD_SMALL_ARMS_RESEARCH  # Small Arms
     cost: 0
     points: 0
     dependencies:
@@ -4905,13 +4905,8 @@ research:
       - STR_PUMP_SHOTGUN
       - STR_SMG_STUB_GUN
 
-  - name: STR_STANDARD_SMALL_ARMS_RESEARCH  # Small Arms
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_STANDARD_SMALL_ARMS_RESEARCH_REQ
-
   - name: STR_BALLISTIC_WEAPONS_HIGHGRADE  # Highgrade Ballistic Weapons
+    # Unlocked directly via some faction midtier research
     dependencies:
       - STR_GENERALLOCK
 
@@ -4924,6 +4919,8 @@ research:
     cost: 100
     points: 15
     needItem: true
+    getOneFree:
+      - STR_AUTOSTUB_AMMO
   - name: STR_AUTOSTUB_AMMO  # Autostub Ammo
     cost: 100
     points: 15
@@ -4955,14 +4952,13 @@ research:
       - STR_GENERALLOCK
 
   - name: STR_HB  # Storm Bolter
-    cost: 860
-    points: 20
+    cost: 980
+    points: 30
     dependencies:
       - STR_HB_DEP1
-
   - name: STR_HB_CLIP  # Storm Bolter Clip
-    cost: 120
-    points: 10
+    cost: 0
+    points: 0
     dependencies:
       - STR_HB
 
@@ -4997,12 +4993,11 @@ research:
       - STR_UFO_CONSTRUCTION
 
   # Melta
-  - name: STR_LIGHT_MELTA_AMMO  # Light Melta Ammo
-    # used for both potestas and combi melta guns
+  - name: STR_LIGHT_MELTAGUN_TECH  # Light Meltagun Technology
     cost: 120
     points: 10
     dependencies:
-      - STR_LASER_WEAPONS  # weapon requisition, available early.
+      - STR_LASER_WEAPONS
 
   - name: STR_HEAVY_LASER  # Meltagun
     cost: 460
@@ -5043,10 +5038,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_HFLAMER_FUEL_MANUFACTURING  # (Heavy Flamer Fuel pre-req.)
-    dependencies:
-      - STR_GENERALLOCK
-
   - name: STR_HFLAMERR  # Heavy Flamer Requisition
     cost: 1000
     points: 20
@@ -5056,74 +5047,30 @@ research:
     unlocks:
       - STR_HFLAMER_FUEL_MANUFACTURING  # uses unlocks since IG needs access to the fuel for Heavy Sentinels
 
+  - name: STR_HFLAMER_FUEL_MANUFACTURING  # (Heavy Flamer Fuel pre-req.)
+    # Allows IG to access fuel manufacturing for Heavy Sentinels
+    dependencies:
+      - STR_GENERALLOCK
+
   # Plasma
   - name: STR_PLASMA_PISTOL_DEP1  # Plasma Pistol Technology
-    cost: 450
+    cost: 800
     points: 0
     dependencies:
       - STR_MIDTIER_PREREQ
-
-  - name: STR_PLASMA_PISTOL_CLIP  # Plasma Pistol Charge
-    # Found on foes, but a general item.
-    cost: 300
-    points: 30
-    dependencies: []
-    needItem: true
-    getOneFree:
-      - STR_PLASMA_PISTOL_DEP2
-  - name: STR_PLASMA_PISTOL_DEP2  # Plasma Pistol Charge Technology
-    cost: 450
-    points: 0
-    dependencies:
-      - STR_MIDTIER_PREREQ
-
-  - name: STR_PLASMA_SPRAY_CLIP  # Light Plasma Charge
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_PLASMA_PISTOL_DEP2
-    needItem: true
 
   - name: STR_PLASMA_RIFLE_DEP1  # Plasma Gun Technology
-    cost: 1050
-    points: 0
-    dependencies:
-      - STR_MIDTIER_PREREQ
-
-  - name: STR_PLASMA_RIFLE_CLIP  # Plasma Gun Charge
-    # Found on foes, but a general item.
-    cost: 350
-    points: 35
-    dependencies: []
-    needItem: true
-    getOneFree:
-      - STR_PLASMA_RIFLE_DEP2
-  - name: STR_PLASMA_RIFLE_DEP2  # Plasma Gun Charge Technology
-    cost: 475
+    cost: 1500
     points: 0
     dependencies:
       - STR_MIDTIER_PREREQ
 
   - name: STR_HEAVY_PLASMA_DEP1  # Heavy Plasma Technology
-    cost: 1200
+    cost: 1800
     points: 0
     dependencies:
       - STR_MIDTIER_PREREQ
       - STR_COMMANDER_PLUS
-
-  - name: STR_HEAVY_PLASMA_CLIP_DEP1  # Heavy Plasma Charge Technology
-    cost: 600
-    points: 0
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_COMMANDER_PLUS
-
-  - name: STR_BARRAGE_PLASMA_CLIP  # Barrage Plasma Charge
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_HEAVY_PLASMA_CLIP_DEP1
-    needItem: true
 
   - name: STR_HEAVY_PLASMA_MC  # Master Crafted Heavy Plasma
     cost: 100
@@ -5132,18 +5079,17 @@ research:
       - STR_DEVASTATOR
       - STR_MIDTIER_PREREQ
       - STR_MASTER_CRAFTING
+      - STR_HEAVY_PLASMA_DEP1
 
   - name: STR_PLASMA_CANNON_DEP1  # Craft Plasma Cannon Technology 1
     dependencies:
       - STR_HEAVY_PLASMA_DEP1
-      - STR_HEAVY_PLASMA_CLIP_DEP1
     unlocks:
       - STR_PLASMA_CANNON
 
   - name: STR_PLASMA_CANNON_DEP2  # Craft Plasma Cannon Technology 2
     dependencies:
       - STR_PLASMA_RIFLE_DEP1
-      - STR_PLASMA_RIFLE_DEP2
     unlocks:
       - STR_PLASMA_CANNON
 
@@ -5164,8 +5110,6 @@ research:
     points: 20
     dependencies:
       - STR_PLASMA_BATTLERIFLE_DEP1
-      # - STR_PLASMA_GUN_TWINCORE
-      # - STR_TZ_PLASMA_GUN_TWINCORE
 
   - name: STR_PLASMA_TWINCORE_CLIP  # Twin Core Plasma Charge
     cost: 120
@@ -5432,23 +5376,12 @@ research:
     points: 20
     dependencies:
       - STR_ADEPTAS_MIDTIER  # you have to have heavy laser researched for midtier
-    unlocks:
-      - STR_LIGHT_MELTA_AMMO
 
-  - name: STR_PLASMA_RIFLE_ADEPTAS  # Plasma Spray Gun
+  - name: STR_LIGHT_PLASMA_TECH # Light Plasma Technology
     cost: 500
     points: 20
     dependencies:
       - STR_ADEPTAS_MIDTIER
-      - STR_PLASMA_SPRAYGUN_CHAOS
-      - STR_PLASMA_CARBINE_CHAOS
-
-  - name: STR_PLASMA_CARBINE_ADEPTAS  # Plasma Carbine De'az pattern
-    cost: 500
-    points: 20
-    dependencies:
-      - STR_ADEPTAS_MIDTIER
-      - STR_PLASMA_SPRAYGUN_CHAOS
 
   - name: STR_PLASMA_GUN_TWINCORE_ADEPTAS_DEPENDENCY  # Adeptas Twin Core Plasma Technology
     dependencies:
@@ -5694,7 +5627,7 @@ research:
     getOneFree:
       - STR_PLASMA_PISTOL_DEP1
   - name: STR_PLASMA_RIFLE  # Chaos Plasma Gun
-    cost: 700
+    cost: 100
     points: 70
     dependencies: []
     needItem: true
@@ -5704,30 +5637,26 @@ research:
     cost: 700
     points: 25
     dependencies:
-      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+    unlocks:
+      - STR_LIGHT_PLASMA_TECH
     needItem: true
   - name: STR_PLASMA_CARBINE_CHAOS  # Chaos Plasma Carbine
     cost: 700
     points: 25
     dependencies:
-      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+    unlocks:
+      - STR_LIGHT_PLASMA_TECH
     needItem: true
   - name: STR_HEAVY_PLASMA  # Chaos Heavy Plasma
-    cost: 800
+    cost: 1200
     points: 80
     dependencies:
       - STR_MIDTIER_PREREQ
     needItem: true
     getOneFree:
       - STR_HEAVY_PLASMA_DEP1
-  - name: STR_HEAVY_PLASMA_CLIP  # Heavy Plasma Charge
-    cost: 400
-    points: 40
-    dependencies:
-      - STR_MIDTIER_PREREQ
-    needItem: true
-    getOneFree:
-      - STR_HEAVY_PLASMA_CLIP_DEP1
   - name: STR_PLASMA_GUN_TWINCORE  # Chaos Twin Core Plasma Gun
     cost: 700
     points: 20
@@ -5964,14 +5893,6 @@ research:
     needItem: true
     getOneFree:
       - STR_PLASMA_PISTOL_DEP1
-  - name: STR_PLASMA_PISTOL_CLIP_SLAAN  # Slaanesh Plasma Pistol Ammo
-    cost: 300
-    points: 30
-    #    dependencies:
-    #      - STR_MIDTIER_PREREQ
-    needItem: true
-    getOneFree:
-      - STR_PLASMA_PISTOL_DEP2
 
   - name: STR_SLAANESH_ROCKET_LAUNCHER  # Slaanesh Missile Launcher
     cost: 50
@@ -6297,12 +6218,13 @@ research:
     points: 25
     needItem: true
   - name: STR_SNAZZY_MEGA_BLASTA  # Snazzy Mega-Blasta
-    cost: 800
+    cost: 1200
     points: 25
     needItem: true
-    # Why the dependency? It doesn't unlock anything. Maybe it should give STR_HEAVY_PLASMA_DEP1
     dependencies:
       - STR_MIDTIER_PREREQ
+    getOneFree:
+      - STR_HEAVY_PLASMA_DEP1
   - name: STR_ORK_RL  # Rokkit Launcha
     cost: 50
     points: 15
