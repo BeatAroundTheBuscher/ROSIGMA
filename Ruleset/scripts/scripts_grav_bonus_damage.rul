@@ -54,6 +54,7 @@ extended:
           var ptre BattleItem ammo;
           var ptr RuleArmor rArmor;
           var ptr RuleDamageType damageType;
+          var ptr RuleItem damagingItem;
 
           set temp to_health;
           if lt temp 1; # if no damage gets through the shield, abort; sanity check.
@@ -87,6 +88,8 @@ extended:
           add armor temp;
           muldiv armor percentage 100;
 
+          damaging_item.getRuleItem damagingItem;
+          damagingItem.getDamageType damageType;
           damageType.isAreaOfEffect temp2;
           if lt temp2 1;
             unit.getRuleArmor rArmor;
