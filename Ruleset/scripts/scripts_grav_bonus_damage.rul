@@ -46,11 +46,14 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var int temp2;
           var int armor;
           var int percentage;
           var int weaponpercentage;
           var int ammopercentage;
           var ptre BattleItem ammo;
+          var ptr RuleArmor rArmor;
+          var ptr RuleDamageType damageType;
 
           set temp to_health;
           if lt temp 1; # if no damage gets through the shield, abort; sanity check.
@@ -64,23 +67,36 @@ extended:
           if gt ammopercentage 0;
             set percentage ammopercentage;
           end;
-          if gt weaponpercentage 0; # if both ammo and weapon have tag, weapon overwrites
+          if gt weaponpercentage percentage; # use highest of weapon and ammo
             set percentage weaponpercentage;
           end;
 
-          if gt percentage 0;
-            unit.getArmor temp SIDE_FRONT;
-            add armor temp;
-            unit.getArmor temp SIDE_LEFT;
-            add armor temp;
-            unit.getArmor temp SIDE_REAR;
-            add armor temp;
-            unit.getArmor temp SIDE_RIGHT;
-            add armor temp;
-            unit.getArmor temp SIDE_UNDER;
-            add armor temp;
-            muldiv armor percentage 100;
-            add to_health armor;
+          if lt percentage 0; #continue only if we have a %
+            return;
           end;
+
+          unit.getArmor temp SIDE_FRONT;
+          add armor temp;
+          unit.getArmor temp SIDE_LEFT;
+          add armor temp;
+          unit.getArmor temp SIDE_REAR;
+          add armor temp;
+          unit.getArmor temp SIDE_RIGHT;
+          add armor temp;
+          unit.getArmor temp SIDE_UNDER;
+          add armor temp;
+          muldiv armor percentage 100;
+
+          damageType.isAreaOfEffect temp2;
+          if lt temp2 1;
+            unit.getRuleArmor rArmor;
+            rArmor.getSize temp2; # double our damage if we're not already AoE
+            if gt temp2 1;
+              mul armor temp;
+            end;
+          end;
+
+          add to_health armor;
+
           return;
 
