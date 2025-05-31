@@ -1,0 +1,112 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    # if we have markerlight armor, mark the target on a ranged attack
+    hitUnit:
+      - new: ROSIGMA_hU_markerlight_damage_bonus
+        offset: 4
+        code: |
+          var ptr RuleArmor armorRule;
+          var int temp;
+          var int attackerFaction;
+
+          if and neq battle_action BA_AIMEDSHOT neq battle_action BA_AUTOSHOT neq battle_action BA_SNAPSHOT neq battle_action BA_LAUNCH;
+            # debug_log "ROSIGMA_hU_markerlight | Action doesn't benefit from Markerlight. Aborting.";
+            return power part side;
+          end;
+
+          unit.getTag temp Tag.IS_MARKERLIT;
+          attacker.getFaction attackerFaction;
+
+          sub temp 1;
+          if neq temp attackerFaction;
+            # debug_log "ROSIGMA_hU_markerlight_damage_bonus | Markerlight faction mismatch, or Markerlight is absent. Aborting.";
+            return power part side;
+          end;
+
+          muldiv power 130 100; #markerlight increases damage by 30%
+          battle_game.flashMessage "STR_SCRIPT_TARGET_TOOK_MARKERLIGHT_DAMAGE_NOTICE";
+          return power part side;
+
+      - new: ROSIGMA_hU_markerlight_target
+        offset: 5
+        code: |
+          var ptr RuleArmor armorRule;
+          var ptr RuleDamageType damageType;
+          var ptr RuleItem damagingItem;
+          var int faction;
+          var int temp;
+          var int attackerFaction;
+
+          attacker.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.HAS_MARKERLIGHT;
+
+          if lt temp 1;
+            # debug_log "ROSIGMA_hU_markerlight_target | Attacker doesn't have Markerlight. Aborting.";
+            return power part side;
+          end;
+
+          damaging_item.getRuleItem damagingItem;
+          damagingItem.getDamageType damageType;
+          damageType.isAreaOfEffect temp;
+          if gt temp 0;
+            # debug_log "ROSIGMA_hU_markerlight_target | Attack is AoE. Aborting.";
+            return power part side;
+          end;
+
+          if and neq battle_action BA_AIMEDSHOT neq battle_action BA_AUTOSHOT neq battle_action BA_SNAPSHOT neq battle_action BA_LAUNCH;
+            # debug_log "ROSIGMA_hU_markerlight_target | Action doesn't generate Markerlight. Aborting.";
+            return power part side;
+          end;
+
+          unit.getFaction temp;
+          attacker.getFaction attackerFaction;
+
+          if eq temp attackerFaction; #don't mark our own faction
+            # debug_log "ROSIGMA_hU_markerlight_target | Markerlight faction mismatch. Aborting.";
+            return power part side;
+          end;
+
+          set temp attackerFaction;
+          add temp 1;
+          unit.setTag Tag.IS_MARKERLIT temp;
+          # debug_log "ROSIGMA_hU_markerlight_target | Markerlight applied" attackerFaction;
+          battle_game.flashMessage "STR_SCRIPT_TARGET_IS_MARKERLIT_NOTICE";
+          return power part side;
+
+    recolorUnitSprite:
+      - new: ROSIGMA_rUS_markerlight_target_colour
+        offset: 21  # change unit color to red so player knows who's marked
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.IS_MARKERLIT;
+          if lt temp 1;
+            return new_pixel;
+          end;
+
+          set_color new_pixel COLOR_X1_RED;
+
+          return new_pixel;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_markerlight_reset
+        offset: 3
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.IS_MARKERLIT; #reset the markerlight at the start of the turn of the faction that created it
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_markerlight_reset | No Markerlight Detected. Aborting.";
+            return;
+          end;
+
+          sub temp 1;
+          if neq side temp; #reset the markerlight at the start of the turn of the faction that created it
+            return;
+          end;
+
+          unit.setTag Tag.IS_MARKERLIT 0;
+
+          return;
