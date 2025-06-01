@@ -144,6 +144,8 @@ items:
     type: STR_TAU_PULSE_MAG #universal ammo
     size: 0.05
     weight: 1 #light weight
+    invHeight: 1
+    invWidth: 1
     bigSprite: 3149
     floorSprite: 3150
     handSprite: 3703
@@ -335,7 +337,7 @@ items:
         set particle_lifetime 20;
         set subvoxel_drift 3;
         return;
-    extendedItemReloadCostLocal: 5
+    tuLoad: 5 #quick reload; mainly for underslung
     battleType: 2
     power: 80
     clipSize: 3
@@ -612,7 +614,8 @@ items:
         set particle_lifetime 20;
         set subvoxel_drift 3;
         return;
-    tuLoad: 5 #quick pistol reload
+    tuLoad: 5 #quick reload
+    tuUnload: 5
     inventoryMoveCost: #quickdraw
       basePercent: 50
     tags:
@@ -622,8 +625,12 @@ items:
   - type: STR_TAU_RAIL_RIFLE
     categories: [STR_CAT_DEVASTATOR, STR_CAT_TAU]
     size: 0.6
+    invWidth: 2
+    invHeight: 3
     requires:
       - STR_TAU_XENOTECH
+    compatibleAmmo:
+      - STR_TAU_RAIL_MAG
     weight: 20
     bigSprite: 3163
     floorSprite: 3164
@@ -641,22 +648,9 @@ items:
     accuracyAimed: 80
     tuAimed: 80
     tuSnap: 60
-    power: 200
-    damageType: 1
-    damageAlter:
-      RandomType: 6
-      ToTile: 1.0
-      ToItem: 1.0
-      ToArmorPre: 0.3  # destroys armor on the way in
-      ArmorEffectiveness: 0.3
-      FixRadius: 1 #just has to be close
-      IgnoreOverKill: false
-      RadiusReduction: 100  #still deals a lot of damage if it gets close, but it may be survivable
     battleType: 1
     twoHanded: true
     blockBothHands: true
-    invWidth: 2
-    invHeight: 3
     arcingShot: false
     minRange: 10
     snapRange: 20
@@ -664,7 +658,25 @@ items:
     dropoff: 3 #has exceptional range
     recover: true
     kneelBonus: 150 #extremely hard to wield otherwise
-    clipSize: -1 #unlimited ammo for now; placeholder
+    tuLoad: 5 #quick reload
+    tuUnload: 5
+    tags:
+      REACTION_MULTIPLIER: 50
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+
+  - type: STR_TAU_RAIL_MAG
+    size: 0.05
+    weight: 1 #light weight
+    invWidth: 1
+    invHeight: 1
+    bigSprite: 3171
+    floorSprite: 3172
+    handSprite: 3788
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: [2452, 2453]
+    hitSound: {mod: 40k, index: 19}
+    explosionHitSound: {mod: 40k, index: 690}
+    costSell: 1000
     vaporColorSurface: {mod: 40k, index: 2}
     vaporDensitySurface: 17
     vaporProbabilitySurface: 100
@@ -747,7 +759,20 @@ items:
         end;
 
         return;
+    explosionSpeed: 10
+    bulletSpeed: 100
+    battleType: 2
+    power: 200
+    damageType: 1
+    damageAlter:
+      RandomType: 6
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmorPre: 0.3  # destroys armor on the way in
+      ArmorEffectiveness: 0.3
+      FixRadius: 1 #just has to be close
+      IgnoreOverKill: false
+      RadiusReduction: 100  #still deals a lot of damage if it gets close, but it may be survivable
+    clipSize: 2
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 95 #resistance isn't very effective against this
-      REACTION_MULTIPLIER: 50
-      REACTION_PENALTY_KNEELING_BYPASS: 1
