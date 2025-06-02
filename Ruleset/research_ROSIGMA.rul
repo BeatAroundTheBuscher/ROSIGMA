@@ -430,7 +430,7 @@ research:
 # The topics in this section should all be used for or relate to initial strategy selection.
 ####################################
 # Multifaction Research #STRATEGY.MULT#
-## Space Marines #FACTION#SM#
+## Space Marines #STRATEGY.SM#
   - name: STR_MARINES_STRATEGY  # Space Marines
     cost: 0
     points: 0
@@ -655,7 +655,7 @@ research:
       - STR_CHAMBERMILITANT
     lookup: STR_CHOSEN_GREYKNIGHTS
     getOneFree:
-      - STR_HB
+      - STR_HB_DEP1
     unlocks:
       - STR_MOTION_SCANNER
       - STR_APOTHECARY_GK
@@ -1456,7 +1456,7 @@ research:
       - STR_CARAPACE_ARMOR_IG
       - STR_CREATE_IRON_MAIDEN_RESEARCH
       - STR_IRON_SERVITOR_TECHNOLOGY
-      - STR_CASS_R
+      - STR_AUTOCANNON_TECH
     getOneFree:
       - STR_IRON_GUARD_LOWTIER_REQUISITIONS
 
@@ -1518,7 +1518,7 @@ research:
       - STR_CHAOS_PATH
       - STR_NOTCHAOSCULT
     getOneFree:
-      - STR_SMALL_LAUNCHER  # Nurgle Gravgun specialty
+      - STR_GRAVITON_TECH  # Nurgle Gravgun specialty
 
   - name: STR_NURGLE_PATH  # Devote to Nurgle
     cost: 1000
@@ -2054,6 +2054,9 @@ research:
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_7
 
 ### Deathwatch #PROGRESSION.CM.DW#
+  - delete: STR_HB_DW
+    # depreciated DW stormbolter unlock
+
   - name: STR_APOTHECARY_DW  # Apothecary Requisition
     # apothecary for DEATHWATCH
     refNode: *STR_APOTHECARY
@@ -2492,6 +2495,7 @@ research:
       - STR_HEAVY_LASER
     unlocks:
       - STR_LIGHT_BOLTERS
+      - STR_AUTOCANNON_TECH
 
   - name: STR_CULTIST_GUARD  # The Chaos Cult grows
     cost: 150
@@ -2724,6 +2728,10 @@ research:
     destroyItem: false  # do not destroy item we need it for manufacture
 
 ## Adeptas #PROGRESSION.SOB#
+  - delete: STR_STORMBOLTER_DEAZ
+  - delete: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
+    # Depreciated adeptas specific stormbolter research
+
   - name: STR_SPELLS_ADEPTAS  # Orders' Teachings
     cost: 120
     points: 10
@@ -2965,7 +2973,7 @@ research:
     unlocks:
       - STR_HARDER_MISSIONS
       - STR_ADEPTAS_ARMORB  # leads to DCA armor and DCA promotion once researched
-      - STR_STORMBOLTER_DEAZ
+      - STR_HB_DEP1
       - STR_GALGALIM_ASSCANNON
       - STR_BOLTER_DOMINION
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ
@@ -2998,7 +3006,7 @@ research:
       - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_ADEPTAS_ARMORB  # leads to DCA armor and DCA promotion once researched
-      - STR_STORMBOLTER_DEAZ
+      - STR_HB_DEP1
       - STR_GALGALIM_ASSCANNON
       - STR_BOLTER_DOMINION
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ
@@ -3013,7 +3021,7 @@ research:
     unlocks:
       - STR_LANDRAIDER_ADEPTAS
       - STR_ADEPTAS_CASTIGATOR_AC_RESEARCH
-      - STR_STORMBOLTER_DEAZ  # early unlock
+      - STR_HB_DEP1  # early unlock
       - STR_GALGALIM_ASSCANNON  # early unlock
       - STR_BOLTER_DOMINION  # early unlock
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ  # early unlock
@@ -3467,6 +3475,7 @@ research:
       - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE  # TAUROS craft access and Jump Armor
       - STR_HARDER_MISSIONS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
+      - STR_AUTOCANNON_TECH
   - name: STR_CERAMITE_TIER_GUARDSMEN  # Guardsmen Ceramite-Tier Requisitions
     dependencies:
       - STR_MIDTIER_GUARDSMEN
@@ -3488,6 +3497,7 @@ research:
       - STR_BASIC_SENTINEL
       - STR_HARDER_MISSIONS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
+      - STR_AUTOCANNON_TECH
   - name: STR_CERAMITE_TIER_ELITE  # Elite Ceramite-Tier Requisitions
     dependencies:
       - STR_MIDTIER_ELITE
@@ -3510,6 +3520,7 @@ research:
       - STR_HARDER_MISSIONS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
       - STR_ABHUMAN_VETERAN
+      - STR_AUTOCANNON_TECH
 
 ### Steel Legion Strategy #PROGRESSION.IG.STEEL#
   - name: STR_STEEL_LEGION_STRATEGY_MIDTIER  # STEEL LEGION MID-TIER
@@ -3530,6 +3541,7 @@ research:
       # - STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE
       - STR_HARDER_MISSIONS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
+      - STR_AUTOCANNON_TECH
   - name: STR_STEEL_LEGION_STRATEGY_CERAMITETIER  # STEEL LEGION CERAMITE-TIER
     dependencies:
       - STR_STEEL_LEGION_STRATEGY_MIDTIER
@@ -3629,6 +3641,7 @@ research:
     dependencies:
       - STR_GUARD_AND_ARBITES
       - STR_MIDTIER_PREREQ
+      - STR_AUTOCANNON_TECH
   - name: STR_LASER_CANNON  # Craft Lascannon
     cost: 420
     points: 15
@@ -4949,24 +4962,23 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_HB
+  - delete: STR_HB_CLIP
+    # Depreciated storm bolter research
+
   - name: STR_HB_DEP1  # Storm Bolter Technology
-    cost: 300
-    points: 15
+    cost: 1250
+    points: 45
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_HB  # Storm Bolter
-    cost: 980
-    points: 30
-    dependencies:
-      - STR_HB_DEP1
-  - name: STR_HB_CLIP  # Storm Bolter Clip
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_HB
-
   # Auto/Assault Cannons
+  - name: STR_AUTOCANNON_TECH  # Autocannon Technology
+    cost: 200
+    points: 25
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_CASS_R  # Assault Cannon Technology
     cost: 300
     points: 30
@@ -5069,6 +5081,9 @@ research:
     dependencies:
       - STR_MIDTIER_PREREQ
 
+  - delete: STR_PLASMA_RIFLE_CLIP
+    # Ammo no longer needs research
+
   - name: STR_HEAVY_PLASMA_DEP1  # Heavy Plasma Technology
     cost: 1800
     points: 0
@@ -5097,13 +5112,8 @@ research:
     unlocks:
       - STR_PLASMA_CANNON
 
-  - name: STR_PLASMA_INC_R  # Plasma Incinerator Requesition
-    cost: 860
-    points: 20
-    dependencies:
-      - STR_CASSC
-      - STR_MIDTIER_PREREQ
-      - STR_PRIMARIS_AND_ADEPTAS
+  - delete: STR_PLASMA_INC_R  # Plasma Incinerator Requesition
+    # Depreciated. Plasma incinerator is the baseline primaris plasma weapon.
 
   - name: STR_PLASMA_BATTLERIFLE_DEP1  # Twin Core Plasma Rifle Technology
     dependencies:
@@ -5135,11 +5145,11 @@ research:
       - STR_IMPERIAL_WEBBER_DEP1
 
   # Graviton
-  - name: STR_STUN_BOMB  # Graviton Gun Round
-    # Found on foes, but a general item
-    cost: 180
-    points: 10
-    needItem: true
+  - name: STR_GRAVITON_TECH  # Graviton Technology
+    cost: 800
+    points: 30
+    dependencies:
+      - STR_HIGHTIER_PREREQ
 
   # Grenades
   - name: STR_SMOKE  # Smoke Grenade Requisition
@@ -5180,7 +5190,7 @@ research:
     dependencies:
       - STR_HIGHTIER_PREREQ
       - STR_MARINES_STRATEGY
-      - STR_HB
+      - STR_HB_DEP1
 
 ### Assault Strategy #WEAPONS.SM.ASS#
 ### Devastator Strategy #WEAPONS.SM.DEV#
@@ -5204,16 +5214,6 @@ research:
       - STR_POWER_SWORD
 
 ### Deathwatch #WEAPONS.CM.DW#
-  - name: STR_HB_DW  # Storm Bolter
-    cost: 860
-    points: 20
-    dependencies:
-      - STR_CHB
-      - STR_MIDTIER_PREREQ
-      - STR_DEATHWATCH
-    getOneFree:
-      - STR_HB
-
 ### Grey Knights #WEAPONS.CM.GK#
   - name: STR_ASSC_CLIP_UNLOCK  # Assault Cannon Box
     cost: 0
@@ -5334,23 +5334,6 @@ research:
     dependencies:
       - STR_BOLTER_DOMINION
 
-  - name: STR_STORMBOLTER_DEAZ  # Storm Bolter De'az
-    cost: 860
-    points: 20
-    dependencies:
-      - STR_HB_DEP1
-      - STR_ADEPTAS
-      - STR_UFO_CONSTRUCTION
-      - STR_MIDTIER_ELITE_ADEPTAS
-      - STR_CERAMITE_TIER_ADEPTAS
-      - STR_ADEPTAS_CERAMITE_TIER_NOVICE
-
-  - name: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_STORMBOLTER_DEAZ
-
   - name: STR_ADEPTAS_MELTAGUN_NECRO  # Mk.V Meltagun
     cost: 200
     points: 20
@@ -5402,28 +5385,12 @@ research:
       - STR_PLASMA_GUN_TWINCORE_ADEPTAS_DEPENDENCY
 
   - name: STR_ADEPTAS_GRAVGUN_DEP1  # Adeptas Gravgun Technology
-    requires:
+    cost: 1000
+    points: 40
+    dependencies:
       - STR_ADEPTAS
-    dependencies:
-      - STR_SMALL_LAUNCHER
-      - STR_GRAVGUN_AOE_CHAOS
-      - STR_GRAVGUN_NURGLE
-      - STR_NURGLE_KOMBIBOLTER_GRAV
-      - STR_NURGLE_GRAVPISTOL
-      - STR_GRAVCANNON_NURGLE
-
-  - name: STR_GRAVGUN_ADEPTAS  # Adeptas Graviton Gun
-    cost: 860
-    points: 20
-    dependencies:
-      - STR_ADEPTAS_GRAVGUN_DEP1
-      - STR_ADEPTAS_HIGHTIER
-
-  - name: STR_GRAVGUN_AOE_AMMO  # Jupiter Graviton Power Pack
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_GRAVGUN_ADEPTAS
+      - STR_MIDTIER_PREREQ
+      - STR_GRAVITON_TECH
 
   - name: STR_CHOIR_GUN  # Choir Projector
     # needs manufacture
@@ -5506,12 +5473,8 @@ research:
     unlocks:
       - STR_LIGHT_BOLTERS
 
-  - name: STR_AUTOCANNON_GUARD  # Autocannon
-    cost: 200
-    points: 25
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
+  - delete: STR_AUTOCANNON_GUARD
+    # Research depreciated in favor of general autocannon research
 
   - name: STR_ROTOR_CANNON_RESEARCH  # Rotor Cannon Requisition
     # dependent on STR_GUARD_POWER_ARMOR_RESEARCH, could be available as its own midtier topic though
@@ -5596,9 +5559,11 @@ research:
     points: 30
     needItem: true
   - name: STR_CHB  # Chaos Storm Bolter
-    cost: 200
+    cost: 500
     points: 25
     needItem: true
+    dependencies:
+      - STR_MARINES_AND_DEATHWATCH
     getOneFree:
       - STR_HB_DEP1
   - name: STR_CHAOS_MELTAGUN  # Chaos Meltagun
@@ -5674,10 +5639,19 @@ research:
     cost: 500
     points: 30
     needItem: true
+    getOneFree:
+      - STR_GRAVITON_TECH
   - name: STR_GRAVGUN_AOE_CHAOS  # Corrupted Graviton Field Gun
-    cost: 500
+    cost: 600
     points: 25
     needItem: true
+    dependencies:
+      - STR_GRAVITON_TECH
+      - STR_ADEPTAS
+      - STR_MIDTIER_PREREQ
+    getOneFree:
+      - STR_ADEPTAS_GRAVGUN_DEP1
+
   - name: STR_CHAOS_ROCKET_LAUNCHER  # Chaos Missile Launcher
     cost: 150
     points: 25
@@ -5747,46 +5721,39 @@ research:
     needItem: true
 
   - name: STR_NURGLE_KOMBIBOLTER_GRAV  # Nurgle Kombigravgun
-    cost: 300
-    points: 25
-    needItem: true
-    getOneFree:
-      - STR_SMALL_LAUNCHER
-  - name: STR_NURGLE_GRAVPISTOL  # Nurgle Gravpistol
-    cost: 250
-    points: 25
-    needItem: true
-    getOneFree:
-      - STR_SMALL_LAUNCHER
-  - name: STR_GRAVPISTOL_AMMO  # Gravpistol Cell
-    # Nurgle gravpistol only currently
-    cost: 100
-    points: 25
-    needItem: true
-  - name: STR_GRAVGUN_NURGLE  # Bloated Graviton Burst Gun
     cost: 500
     points: 25
     needItem: true
     getOneFree:
-      - STR_SMALL_LAUNCHER
-  - name: STR_GRAVGUN_AOE_AMMO_SHOTGUN  # Graviton Burst Cell
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_GRAVGUN_NURGLE
-      - STR_NURGLE_KOMBIBOLTER_GRAV
-  - name: STR_GRAVCANNON_NURGLE  # Nurgle Gravcannon
-    cost: 1000
+      - STR_GRAVITON_TECH
+  - name: STR_NURGLE_GRAVPISTOL  # Nurgle Gravpistol
+    cost: 500
     points: 25
     needItem: true
     getOneFree:
-      - STR_SMALL_LAUNCHER
-  - name: STR_GRAVCANNON_AMMO  # Gravcannon Cell
-    cost: 250
+      - STR_GRAVITON_TECH
+
+  - name: STR_GRAVGUN_NURGLE  # Bloated Graviton Burst Gun
+    cost: 600
     points: 25
     needItem: true
     dependencies:
-      - STR_GRAVCANNON_NURGLE
+      - STR_GRAVITON_TECH
+      - STR_ADEPTAS
+      - STR_MIDTIER_PREREQ
+    getOneFree:
+      - STR_ADEPTAS_GRAVGUN_DEP1
+
+  - name: STR_GRAVCANNON_NURGLE  # Nurgle Gravcannon
+    cost: 600
+    points: 25
+    needItem: true
+    dependencies:
+      - STR_GRAVITON_TECH
+      - STR_ADEPTAS
+      - STR_MIDTIER_PREREQ
+    getOneFree:
+      - STR_ADEPTAS_GRAVGUN_DEP1
 
   - name: STR_NURGLE_NEEDLER_RIFLE  # Nurgle Needler Rifle
     cost: 250
@@ -6012,11 +5979,6 @@ research:
     points: 15
     needItem: true
 
-  - name: STR_NURGLE_DAEMONETTE_WEAPON  # Midwife Touch
-    cost: 100
-    points: 15
-    needItem: true
-
 #### Traitor Guard #WEAPONS.FOE.CHAOS.TG#
 #### Heretic Sisters #WEAPONS.FOE.CHAOS.HS#
   - name: STR_BOLTER_HERETIC_DEAZ  # Heretical Light Bolter
@@ -6079,6 +6041,7 @@ research:
     dependencies:
       - STR_ASSC_CLIP
       - STR_UFO_CONSTRUCTION
+      - STR_TZEENTCH_OPTIONS
 
   #Iron Warriors
   - name: STR_IWCOMBIBOLTER  # Iron Warrior Combi-Bolter
@@ -8806,16 +8769,14 @@ research:
       - STR_LEADER_PLUS
       - STR_COMMANDER_PLUS
       - STR_ALIEN_ORIGINS
-      - STR_PLASMA_RIFLE
-      - STR_PLASMA_RIFLE_CLIP
-      - STR_HFLAMERR
-      - STR_ALIEN_ALLOYS
       - STR_MASTER_CRAFTING
-      - STR_BLASTER_LAUNCHER
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
-      - STR_IRON_SERVITOR_TECHNOLOGY
     getOneFree:
       - STR_IRON_GUARD_ENGINEER
+      - STR_PLASMA_RIFLE
+      - STR_HFLAMERR
+      - STR_ALIEN_ALLOYS
+      - STR_BLASTER_LAUNCHER
     destroyItem: true
 
   # Night Lords
