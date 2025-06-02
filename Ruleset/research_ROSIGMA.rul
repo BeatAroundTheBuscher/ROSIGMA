@@ -430,7 +430,7 @@ research:
 # The topics in this section should all be used for or relate to initial strategy selection.
 ####################################
 # Multifaction Research #STRATEGY.MULT#
-## Space Marines #FACTION#SM#
+## Space Marines #STRATEGY.SM#
   - name: STR_MARINES_STRATEGY  # Space Marines
     cost: 0
     points: 0
@@ -655,7 +655,7 @@ research:
       - STR_CHAMBERMILITANT
     lookup: STR_CHOSEN_GREYKNIGHTS
     getOneFree:
-      - STR_HB
+      - STR_HB_DEP1
     unlocks:
       - STR_MOTION_SCANNER
       - STR_APOTHECARY_GK
@@ -2054,6 +2054,9 @@ research:
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_7
 
 ### Deathwatch #PROGRESSION.CM.DW#
+  - delete: STR_HB_DW
+    # depreciated DW stormbolter unlock
+
   - name: STR_APOTHECARY_DW  # Apothecary Requisition
     # apothecary for DEATHWATCH
     refNode: *STR_APOTHECARY
@@ -2725,6 +2728,10 @@ research:
     destroyItem: false  # do not destroy item we need it for manufacture
 
 ## Adeptas #PROGRESSION.SOB#
+  - delete: STR_STORMBOLTER_DEAZ
+  - delete: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
+    # Depreciated adeptas specific stormbolter research
+
   - name: STR_SPELLS_ADEPTAS  # Orders' Teachings
     cost: 120
     points: 10
@@ -2966,7 +2973,7 @@ research:
     unlocks:
       - STR_HARDER_MISSIONS
       - STR_ADEPTAS_ARMORB  # leads to DCA armor and DCA promotion once researched
-      - STR_STORMBOLTER_DEAZ
+      - STR_HB_DEP1
       - STR_GALGALIM_ASSCANNON
       - STR_BOLTER_DOMINION
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ
@@ -2999,7 +3006,7 @@ research:
       - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_ADEPTAS_ARMORB  # leads to DCA armor and DCA promotion once researched
-      - STR_STORMBOLTER_DEAZ
+      - STR_HB_DEP1
       - STR_GALGALIM_ASSCANNON
       - STR_BOLTER_DOMINION
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ
@@ -3014,7 +3021,7 @@ research:
     unlocks:
       - STR_LANDRAIDER_ADEPTAS
       - STR_ADEPTAS_CASTIGATOR_AC_RESEARCH
-      - STR_STORMBOLTER_DEAZ  # early unlock
+      - STR_HB_DEP1  # early unlock
       - STR_GALGALIM_ASSCANNON  # early unlock
       - STR_BOLTER_DOMINION  # early unlock
       - STR_ADEPTAS_SENTINEL_MELTALANCE_REQ  # early unlock
@@ -3634,6 +3641,7 @@ research:
     dependencies:
       - STR_GUARD_AND_ARBITES
       - STR_MIDTIER_PREREQ
+      - STR_AUTOCANNON_TECH
   - name: STR_LASER_CANNON  # Craft Lascannon
     cost: 420
     points: 15
@@ -4954,6 +4962,10 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_HB
+  - delete: STR_HB_CLIP
+    # Depreciated storm bolter research
+
   - name: STR_HB_DEP1  # Storm Bolter Technology
     cost: 1250
     points: 45
@@ -5324,23 +5336,6 @@ research:
     dependencies:
       - STR_BOLTER_DOMINION
 
-  - name: STR_STORMBOLTER_DEAZ  # Storm Bolter De'az
-    cost: 860
-    points: 20
-    dependencies:
-      - STR_HB_DEP1
-      - STR_ADEPTAS
-      - STR_UFO_CONSTRUCTION
-      - STR_MIDTIER_ELITE_ADEPTAS
-      - STR_CERAMITE_TIER_ADEPTAS
-      - STR_ADEPTAS_CERAMITE_TIER_NOVICE
-
-  - name: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
-    cost: 120
-    points: 10
-    dependencies:
-      - STR_STORMBOLTER_DEAZ
-
   - name: STR_ADEPTAS_MELTAGUN_NECRO  # Mk.V Meltagun
     cost: 200
     points: 20
@@ -5569,6 +5564,8 @@ research:
     cost: 500
     points: 25
     needItem: true
+    dependencies:
+      - STR_MARINES_AND_DEATHWATCH
     getOneFree:
       - STR_HB_DEP1
   - name: STR_CHAOS_MELTAGUN  # Chaos Meltagun
