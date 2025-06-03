@@ -217,7 +217,7 @@ research:
       - STR_CHAMBERMILITANT
       - STR_GENERALLOCK
 
-  - name: STR_NOTCHAOSCULT  # Not Chaos Cult
+  - name: STR_NOT_CHAOSCULT  # Not Chaos Cult
     # Locking research used to block cult access to Imperial research topics
     dependencies:
       - STR_GENERALLOCK
@@ -258,6 +258,13 @@ research:
   - name: STR_CHOSEN_GREYKNIGHTS  # Grey Knights Selected
     refNode: *STR_LOCKED
 
+  - name: STR_NOT_MARINES  # (Not Space Marines)
+  - name: STR_NOT_ARBITES  # (Not Arbites)
+  - name: STR_NOT_CHAOSCULT  # (Not Chaos Cult)
+  - name: STR_NOT_CHAMBER  # (Not Chamber Militant)
+  - name: STR_NOT_ADEPTAS  # (Not Adeptas Sororitas)
+  - name: STR_NOT_GUARD  # (Not Imperial Guard)
+
   - name: STR_NOT_NORMAL_STRATEGY  # (Not Guardsmen Strategy)
     refNode: *STR_LOCKED
   - name: STR_NOT_ELITE_STRATEGY  # (Not Elite Strategy)
@@ -265,8 +272,6 @@ research:
   - name: STR_NOT_ABHUMAN_STRATEGY  # (Not Abhuman Strategy)
     refNode: *STR_LOCKED
   - name: STR_NOT_STEEL_LEGION_STRATEGY  # (Not Steel Legion)
-    refNode: *STR_LOCKED
-  - name: STR_NOT_ARBITES  # (Not Arbites)
     refNode: *STR_LOCKED
   - name: STR_NOT_PRIMARIS  # (Not Primaris Strategy)
     refNode: *STR_LOCKED
@@ -300,7 +305,7 @@ research:
     cost: 10
     points: 100
     dependencies:
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
   - name: STR_THE_EMPEROR_PROTECTS_ARBITES_SUPPORT_RESEARCH  # "Request Additional Arbites Support"
     cost: 10
     points: 250
@@ -448,8 +453,8 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
-      - STR_NOTCHAOSCULT
     disables:
+      - STR_NOT_MARINES
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
@@ -610,8 +615,8 @@ research:
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
       - STR_IMPERIUM_RESEARCH
-      - STR_NOTCHAOSCULT
     disables:
+      - STR_NOT_CHAMBER
       - STR_ARBITES
       - STR_MARINES_STRATEGY
       - STR_IMPERIAL_GUARD_OPERATIONS
@@ -750,9 +755,10 @@ research:
       - STR_BASIC_SENTINEL_MISSILE
       - STR_PILOT_GUARDSMEN
       - STR_CHAPTER_PURITY
-      - STR_NOTCHAOSCULT
     disables:
       - STR_CHAOS_STRATEGY_ARBITES
+      - STR_NOT_ARBITES
+      - STR_HB_DEP1
 
 ### Chaos Cult #STRATEGY.AT.CULT#
   - name: STR_CHAOS_STRATEGY  # Ruinous Powers
@@ -774,6 +780,7 @@ research:
       - STR_CHAPTER_PURITY
       - STR_LASER_WEAPONS
       - STR_HEAVY_LASER
+      - STR_NOT_CHAOSCULT
     unlocks:
       - STR_CHAOS_STRATEGY
       - STR_MOTION_SCANNER
@@ -819,8 +826,8 @@ research:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_IMPERIUM_RESEARCH
-      - STR_NOTCHAOSCULT
     disables:
+      - STR_NOT_ADEPTAS
       - STR_ARBITES
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_MARINES_STRATEGY
@@ -986,12 +993,13 @@ research:
       - STR_GUARD_AND_ARBITES
       # - STR_GUARD_SUPORT
       - STR_IMPERIUM_RESEARCH
-      - STR_NOTCHAOSCULT
     disables:
+      - STR_NOT_GUARD
       - STR_ARBITES
       - STR_ADEPTAS
       - STR_MARINES_STRATEGY
       - STR_PERSONAL_ARMOR
+      - STR_HB_DEP1
 
 ### Guardsman Strategy #STRATEGY.IG.GUARD#
   - name: STR_NORMAL_STRATEGY_IG  # Guardsmen Strategy
@@ -1393,7 +1401,7 @@ research:
     points: -250
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
     spawnedEvent: STR_HERETIC_SISTER_ADVISOR
@@ -1412,7 +1420,7 @@ research:
     points: -500
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_MIDTIER_PREREQ
     spawnedEvent: STR_CHAOS_MARINE_ADVISOR
 
@@ -1436,7 +1444,7 @@ research:
     points: -150
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
     # spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT  # todo: create a mission event that then allows the player to progress the iron guard path
 
@@ -1483,13 +1491,13 @@ research:
     points: 0
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
 
   - name: STR_CHAOS_SORCERY  # Chaos Sorcery
     cost: 400
     points: 20
     dependencies:
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_ALIENS_ONLY
     getOneFree:
       - STR_PSI_AMP  # Tome of the Mind
@@ -1499,7 +1507,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
 
   - name: STR_KHORNE_PATH  # Follow to Khorne # lmao
     cost: 1000
@@ -1516,7 +1524,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
     getOneFree:
       - STR_GRAVITON_TECH  # Nurgle Gravgun specialty
 
@@ -1535,7 +1543,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
 
   - name: STR_SLAANESH_PATH  # Embrace Slaanesh
     cost: 1000
@@ -1552,7 +1560,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_PATH
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
 
   - name: STR_TZEENTCH_PATH  # Worship Tzeentch
     cost: 1000
@@ -4894,34 +4902,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_GENERIC_HEAVY_STUBBER  # Heavy Stubber
-    cost: 25
-    points: 15
-    needItem: true
-
-  - name: STR_PUMP_SHOTGUN  # Pump-Action Shotgun
-    cost: 25
-    points: 15
-    needItem: true
-
-  - name: STR_SMG_STUB_GUN  # AutoStubber
-    cost: 25
-    points: 15
-    needItem: true
-
-  - name: STR_STUB_GUN_AMMO_LONG  # AutoStubber Magazine
-    cost: 25
-    points: 15
-    needItem: true
-
-  - name: STR_STANDARD_SMALL_ARMS_RESEARCH  # Small Arms
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERIC_HEAVY_STUBBER
-      - STR_PUMP_SHOTGUN
-      - STR_SMG_STUB_GUN
-
   - name: STR_BALLISTIC_WEAPONS_HIGHGRADE  # Highgrade Ballistic Weapons
     # Unlocked directly via some faction midtier research
     dependencies:
@@ -5562,8 +5542,6 @@ research:
     cost: 500
     points: 25
     needItem: true
-    dependencies:
-      - STR_MARINES_AND_DEATHWATCH
     getOneFree:
       - STR_HB_DEP1
   - name: STR_CHAOS_MELTAGUN  # Chaos Meltagun
@@ -6710,7 +6688,7 @@ research:
     cost: 192
     points: 30
     dependencies:
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_CHAOSCULT_SOLDIERM_LV1_AI
       - STR_CHAOSCULT_SOLDIERF_LV1_AI
       - STR_CHAOSCULT_SOLDIERM_LV2_AI
@@ -6729,7 +6707,7 @@ research:
     cost: 192
     points: 30
     dependencies:
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_CHAOSCULT_GUARDFLAKM_AI
       - STR_CHAOSCULT_GUARDCARAPM_AI
       - STR_CHAOSCULT_GUARDFLAKF_AI
@@ -6745,7 +6723,7 @@ research:
     cost: 192
     points: 30
     dependencies:
-      - STR_NOTCHAOSCULT
+      - STR_NOT_CHAOSCULT
       - STR_CHAOSCULT_LEGIONSCOUT_AI
       - STR_CHAOSCULT_LEGIONSCOUTF_AI
       - STR_CHAOSCULT_LEGIONARIE_AI
