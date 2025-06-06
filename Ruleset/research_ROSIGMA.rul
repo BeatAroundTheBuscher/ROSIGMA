@@ -719,7 +719,6 @@ research:
     unlocks:
       - STR_IMPERIUM_RESEARCH
       - STR_THE_IMPERIAL_LAW_STRATEGY
-      - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_CHAOS_STRATEGY_ARBITES
     disables:
       - STR_CHAPTER_PURITY
@@ -750,6 +749,7 @@ research:
       - STR_HEAVY_WEAPONS_IG
       - STR_BASIC_SENTINEL_MISSILE
       - STR_PILOT_GUARDSMEN
+      - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_CHAPTER_PURITY
     disables:
       - STR_CHAOS_STRATEGY_ARBITES
@@ -1493,47 +1493,140 @@ research:
     getOneFree:
       - STR_PSI_AMP  # Tome of the Mind
 
+  - name: STR_CHAOS_DEVOTION_WARNING  # Devotion to the Dark Gods
+    cost: 1
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_NOT_CHAOSCULT
+    spawnedEvent: STR_CHAOS_DEVOTION_WARNING  # Warns player of consequences of choosing a god
+
+  - name: STR_DEVOTION_SELECTED  # (Devotion Selected)
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_DEVOTION_WARNING_READ  # (Devotion Instructions Delivered)
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_UNDIVIDED_PATH  # The Eightfold Path
+    cost: 100
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DEVOTION_WARNING_READ
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_DEVOTION_SELECTED
+    disables:
+      - STR_KHORNE_PATH
+      - STR_NURGLE_PATH
+      - STR_SLAANESH_PATH
+      - STR_TZEENTCH_PATH
+
+  - name: STR_KHORNE_DEVOTION  # Devote to Khorne
+    cost: 10
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DEVOTION_WARNING_READ
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_DEVOTION_SELECTED
+    getOneFree:
+      - STR_KHORNE_OPTIONS
+    disables:
+      - STR_SLAANESH_OPTIONS
+      - STR_SLAANESH_PATH
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+
+  - name: STR_NURGLE_DEVOTION  # Devote to Nurgle
+    cost: 10
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DEVOTION_WARNING_READ
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_DEVOTION_SELECTED
+    getOneFree:
+      - STR_NURGLE_OPTIONS
+    disables:
+      - STR_TZEENTCH_OPTIONS
+      - STR_TZEENTCH_PATH
+      - STR_KHORNE_PATH
+      - STR_SLAANESH_PATH
+
+  - name: STR_SLAANESH_DEVOTION  # Devote to Slaanesh
+    cost: 10
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DEVOTION_WARNING_READ
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_DEVOTION_SELECTED
+    getOneFree:
+      - STR_SLAANESH_OPTIONS
+    disables:
+      - STR_KHORNE_OPTIONS
+      - STR_KHORNE_PATH
+      - STR_NURGLE_PATH
+      - STR_TZEENTCH_PATH
+
+  - name: STR_TZEENTCH_DEVOTION  # Devote to Tzeentch
+    cost: 10
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_DEVOTION_WARNING_READ
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_DEVOTION_SELECTED
+    getOneFree:
+      - STR_TZEENTCH_OPTIONS
+    disables:
+      - STR_NURGLE_OPTIONS
+      - STR_NURGLE_PATH
+      - STR_KHORNE_PATH
+      - STR_SLAANESH_PATH
+
   - name: STR_KHORNE_OPTIONS  # Gain the Favor of Khorne
     cost: 250
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
 
-  - name: STR_KHORNE_PATH  # Follow to Khorne # lmao
+  - name: STR_KHORNE_PATH  # Follow Khorne
     cost: 1000
     points: 100
     dependencies:
       - STR_KHORNE_OPTIONS
-    disables:
-      - STR_NURGLE_PATH
-      - STR_TZEENTCH_PATH
-      - STR_SLAANESH_PATH
 
   - name: STR_NURGLE_OPTIONS  # Gain the Favor of Nurgle
     cost: 250
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
-    getOneFree:
+    unlocks:
       - STR_GRAVITON_TECH  # Nurgle Gravgun specialty
 
-  - name: STR_NURGLE_PATH  # Devote to Nurgle
+  - name: STR_NURGLE_PATH  # Grow With Nurgle
     cost: 1000
     points: 100
     dependencies:
       - STR_NURGLE_OPTIONS
-    disables:
-      - STR_TZEENTCH_PATH
-      - STR_KHORNE_PATH
-      - STR_SLAANESH_PATH
 
   - name: STR_SLAANESH_OPTIONS  # Gain the Favor of Slaanesh
     cost: 250
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
 
   - name: STR_SLAANESH_PATH  # Embrace Slaanesh
@@ -1541,16 +1634,13 @@ research:
     points: 100
     dependencies:
       - STR_SLAANESH_OPTIONS
-    disables:
-      - STR_NURGLE_PATH
-      - STR_TZEENTCH_PATH
-      - STR_KHORNE_PATH
 
   - name: STR_TZEENTCH_OPTIONS  # Gain the Favor of Tzeentch
     cost: 250
     points: 100
     dependencies:
       - STR_CHAOS_PATH
+      - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
 
   - name: STR_TZEENTCH_PATH  # Worship Tzeentch
@@ -1558,10 +1648,6 @@ research:
     points: 100
     dependencies:
       - STR_TZEENTCH_OPTIONS
-    disables:
-      - STR_NURGLE_PATH
-      - STR_KHORNE_PATH
-      - STR_SLAANESH_PATH
 
   - name: STR_UNLOCK_CHAOSLEMAN_ALT  # Chaos Battle Tank
     # Alternate unlock for the CHAOS ARMOR COLUMN for general non-cult chaos.
@@ -2416,7 +2502,7 @@ research:
 ### Chaos Cult #PROGRESSION.AT.CULT#
   - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
     # To enable popup before selecting midtier path
-    cost: 0
+    cost: 1
     points: 0
     dependencies:
       - STR_UNHOLY_WARTOOLS
@@ -2426,6 +2512,10 @@ research:
       - STR_CHAOS_STRATEGY
       - STR_CHAOS_PATH
     spawnedEvent: STR_CHAOS_CULT_MIDTIER_WARNING
+
+  - name: STR_CHAOS_CULT_MIDTIER_WARNING_READ  # (Cult Instructions Delivered)
+    dependencies:
+      - STR_GENERALLOCK
 
   - name: STR_CHAOS_MIDTIER  # Chaos Mid-tier Requisitions
     cost: 200
@@ -2437,6 +2527,7 @@ research:
       - STR_MEDI_KIT_PREREQ
       - STR_CHAOS_STRATEGY
       - STR_CHAOS_PATH
+      - STR_CHAOS_CULT_MIDTIER_WARNING_READ
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_LASER_WEAPONS
@@ -2446,7 +2537,7 @@ research:
       - STR_HB_DEP1
       - STR_SIDEOPERATIONS
     disables:
-      - STR_CHAOS_MIDTIER_WARBAND
+      - STR_CHAOS_MIDTIER_ALTERNATE
     cutscene: c2
 
   - name: STR_CHAOS_MIDTIER_ALTERNATE  # Embrace the True Powers
@@ -2460,6 +2551,7 @@ research:
       - STR_MEDI_KIT_PREREQ
       - STR_CHAOS_STRATEGY
       - STR_CHAOS_PATH
+      - STR_CHAOS_CULT_MIDTIER_WARNING_READ
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_LASER_WEAPONS
