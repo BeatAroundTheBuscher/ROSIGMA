@@ -787,14 +787,9 @@ research:
       - STR_LIGHT_BOLTERS_LOWTIER
       - STR_GUARD_BARRACKS
   #      - STR_REGIMENT_OFFICERS
-      - STR_KRIEG_GUARDSMEN
-      - STR_CATACHAN_GUARDSMEN
-      - STR_PENITENT_GUARD
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-      - STR_GUARDSMEN
   #      - STR_VALKYRIE_GRAV_DROP_IG
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
-      - STR_BASIC_SENTINEL
       - STR_PILOT_GUARDSMEN
       - STR_NOT_ELITE_STRATEGY
       - STR_NOT_ABHUMAN_STRATEGY
@@ -1567,6 +1562,19 @@ research:
       - STR_NURGLE_PATH
       - STR_KHORNE_PATH
       - STR_SLAANESH_PATH
+
+  - name: STR_UNLOCK_CHAOSLEMAN_ALT  # Chaos Battle Tank
+    # Alternate unlock for the CHAOS ARMOR COLUMN for general non-cult chaos.
+    lookup: STR_UNLOCK_CHAOSLEMAN
+    cost: 200
+    points: 10
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION
+      - STR_NOT_CHAOSCULT
+    getOneFree:
+      - STR_UNLOCK_CHAOSLEMAN
 
 ### Missions
   - name: STR_SIDEOPERATIONS  # CHAPTER SIDEOPERATIONS # MISSION 1
@@ -2406,6 +2414,19 @@ research:
     unlockFinalMission: false
 
 ### Chaos Cult #PROGRESSION.AT.CULT#
+  - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
+    # To enable popup before selecting midtier path
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_UNHOLY_WARTOOLS
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
+    spawnedEvent: STR_CHAOS_CULT_MIDTIER_WARNING
+
   - name: STR_CHAOS_MIDTIER  # Chaos Mid-tier Requisitions
     cost: 200
     points: 200
@@ -2424,18 +2445,59 @@ research:
       - STR_CASS_R
       - STR_HB_DEP1
       - STR_SIDEOPERATIONS
+    disables:
+      - STR_CHAOS_MIDTIER_WARBAND
+    cutscene: c2
+
+  - name: STR_CHAOS_MIDTIER_ALTERNATE  # Embrace the True Powers
+    # Alternate midtier to enter the general chaos path from cult low-tier
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_UNHOLY_WARTOOLS
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_LASER_WEAPONS
+      - STR_HARDER_MISSIONS
+      - STR_HFLAMERR
+      - STR_CASS_R
+      - STR_HB_DEP1
+      - STR_SIDEOPERATIONS
+      - STR_NEW_FIGHTER_TRANSPORTER
+    getOneFree:
+      - STR_MARINE_CHAOS_PATH
+    disables:
+      - STR_CHAOS_MIDTIER
+    reenables:
+      - STR_NOT_CHAOSCULT
     cutscene: c2
 
   - name: STR_CHAOS_HIGHTIER  # Chaos High-tier Requisitions
     cost: 900
     points: 30
     dependencies:
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CHAOS_STRATEGY
       - STR_UFO_CONSTRUCTION
       - STR_CYDONIA_OR_BUST
     unlocks:
       - STR_HIGHTIER_PREREQ
+
+  - name: STR_CHAOS_HIGHTIER_ALT  # Warband High-tier Requisitions
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_CHAOS_MIDTIER_ALTERNATE
+      - STR_UFO_CONSTRUCTION
+      - STR_CYDONIA_OR_BUST
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+      - STR_NEW_FIGHTER_TRANSPORTER
 
   - name: STR_CULTIST_GUARDUPGRADE  # Chaos powered Guard
     dependencies:
@@ -2495,7 +2557,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
     reenables:
       - STR_LASER_WEAPONS
       - STR_MELTAGUN_TECH
@@ -2508,7 +2570,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_GUARDSMEN_WEAPONS
 
   - name: STR_CULTIST_CHAOSREGIMENT  # The Chaos Guards Regiment
@@ -2516,7 +2578,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_GUARD
 
   - name: STR_CULTIST_GUARD_CARAPACE  # Increase the strength of Chaos Guards
@@ -2524,7 +2586,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_CHAOSREGIMENT
 
   - name: STR_CULTIST_MIDTIER_OGRYN  # Twist the Ogryns
@@ -2532,7 +2594,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_GUARD_CARAPACE
 
   - name: STR_CULTIST_MIDTIER_PRIEST  # Voice of Chaos
@@ -2540,7 +2602,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_MIDTIER_OGRYN
 
   - name: STR_UNLOCK_CHAOSLEMAN  # Chaos Battle Tank
@@ -2556,14 +2618,14 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
 
   - name: STR_CULTIST_LEGION_SCOUT  # Chaos Legion Aspirants
     cost: 150
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION
 
   - name: STR_CULTIST_LEGIONGROWTH  # A Chaos Legion
@@ -2571,7 +2633,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_SCOUT
 
   - name: STR_CULTIST_LEGION_CSM  # Chaos Legionaries
@@ -2579,7 +2641,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGIONGROWTH
 
   - name: STR_CULTIST_LEGION_SORC  # Chaos Sorcerer
@@ -2587,7 +2649,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_CSM
 
   - name: STR_UNLOCK_CHAOSTHUNDERRHINO  # Chaos Thunderhawk Heavy
@@ -2595,7 +2657,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_CSM
 
   - name: STR_CULTIST_TERMINAL  # Chaos Terminator
@@ -2603,7 +2665,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_SORC
 
   - name: STR_UNLOCK_CHAOSMOBILEFORT  # Chaos Mobile Fortress
@@ -2612,7 +2674,7 @@ research:
     points: 10
     dependencies:
       - STR_CHAOS_STRATEGY
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_TERMINAL
 
   # Chaos Boons Beginner Mode Options
@@ -2648,7 +2710,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_GUARD
 
   - name: STR_BOONS_OGRYNDEFENSE_RESEARCH  # Request Chaos Bullgryns
@@ -2656,7 +2718,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
-      - STR_MIDTIER_PREREQ
+      - STR_CHAOS_MIDTIER
       - STR_CULTIST_MIDTIER_OGRYN
 
   - name: STR_BOONS_LEGIONSCOUT_RESEARCH  # Request Chaos Legion Aspirants
@@ -2664,7 +2726,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_SCOUT
 
   - name: STR_BOONS_LEGIONARIES_RESEARCH  # Request Chaos Warband
@@ -2672,7 +2734,7 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_TERMINAL
 
   - name: STR_BOONS_OBLITERATE_RESEARCH  # Request Chaos Miracle
@@ -2681,7 +2743,7 @@ research:
     points: 200
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
-      - STR_HIGHTIER_PREREQ
+      - STR_CHAOS_HIGHTIER
       - STR_CULTIST_LEGION_SORC
       - STR_CULTIST_TERMINAL
 
@@ -7889,6 +7951,8 @@ research:
 #      - STR_THREAT_ONE
 
   - name: STR_TZEENTCHS_SISTERCHAMP  # Bride of Tzeentch
+    cost: 100
+    points: 50
     needItem: true
     unlocks:
       - STR_LEADER_PLUS
