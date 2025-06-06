@@ -1909,7 +1909,176 @@ armors:
       UNIT_TYPE_TZEENTCH: 1
       UNIT_TYPE_PSYKER: 1  # counts as psyker due to psivision
 
+  # General Khorne
+  - &PLAYER_CHAOS_CULTIST_ARMOR
+    type: STR_KHORNE_CULTIST_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    forcedTorso: 1
+    drawingRoutine: 0
+    stats:
+      tu: 5
+      stamina: 5
+      bravery: 5
+      strength: 5
+    frontArmor: 25
+    sideArmor: 20
+    rearArmor: 20
+    underArmor: 20
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.0  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [2]
+  - type: STR_KHORNE_CULTIST_ARMOR_PLAYER
+    refNode: *PLAYER_CHAOS_CULTIST_ARMOR
+    customArmorPreviewIndex: 1067
+    spriteInv: KHORNECULTIST_PLAYER_INV
+    spriteSheet: CULTIST_ASPIRING_BS.PCK
+    corpseBattle:
+      - STR_KHORNE_CULTIST_CORPSE_PLAYER
+    units:
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV2
+    requires: STR_KHORNE_DEVOTION
+    frontArmor: 35
+    sideArmor: 25
+    tags:
+      INFECTION_RESIST: 25
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+      INTIMIDATION_RESISTANCE: 25
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 3
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 3
+
+  - type: STR_KHORNE_OGRYN_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    spriteSheet: CHAOS_OGRYN.PCK
+    forcedTorso: 1
+    spriteInv: CHAOS_OGRYN_INV
+    customArmorPreviewIndex: 1068
+    corpseBattle:
+      - STR_KHORNE_OGRYN_PLAYER_CORPSE
+    storeItem: STR_NONE
+    loftempsSet: [5]
+    requires: STR_KHORNE_OPTIONS
+    units:
+      - STR_OGRYN
+      - STR_CHAOSCULT_OGRYN
+    frontArmor: 70
+    sideArmor: 50
+    rearArmor: 40
+    underArmor: 50
+    damageModifier:  # OGRYN ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.0  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.6  # STUN
+      - 0.7  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.5  # IMPACT
+      - 1.0  # MELTA
+    specialWeapon: STR_OGRYN_UNARMED
+    psiDefence:
+      psiStrength: 1.0
+      moraleCurrent: 1.0
+      psiSkill: 0.2
+    recovery:
+      morale:
+        psiSkill: 0.5
+    weight: 10
+    stats:
+      tu: 5
+      stamina: 10
+      strength: 15
+      melee: 10
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+      INTIMIDATION_RESISTANCE: 25
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 3
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 3
+
+
   # General Nurgle
+  - type: STR_NURGLE_CULTIST_ARMOR_PLAYER
+    customArmorPreviewIndex: 1065
+    refNode: *PLAYER_CHAOS_CULTIST_ARMOR
+    spriteSheet: NURGLECULTIST_BS.PCK
+    spriteInv: NURGLECULTIST_PLAYER_INV
+    corpseBattle:
+      - STR_NURGLE_CULTIST_CORPSE_PLAYER
+    requires: STR_NURGLE_DEVOTION
+    units:
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV2
+    frontArmor: 30
+    sideArmor: 25
+    damageModifier:
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.3  # FLAMES
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    tags:
+      INFECTION_RESIST: 50  # infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -90
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 4;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
+
+
   - type: STR_NURGLE_OGRYN_ARMOR_PLAYER
     visibilityAtDay: 30
     visibilityAtDark: 25
@@ -2025,6 +2194,128 @@ armors:
       UNIT_TYPE_NURGLE: 1
       UNIT_IS_DIEHARD: 1
       DIEHARD_TEMP_MODIFIER_INCREMENT: -50
+
+  # Slaanesh
+  - type: STR_SLAANESH_CULTIST_ARMOR_PLAYER
+    refNode: *PLAYER_CHAOS_CULTIST_ARMOR
+    customArmorPreviewIndex: 1071
+    units:
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV2
+    requires: STR_SLAANESH_DEVOTION
+    spriteSheet: SLAANCULTIST_BS.PCK
+    spriteInv: SLAANCULTIST_PLAYER_INV
+    corpseBattle:
+      - STR_SLAANESH_CULTIST_CORPSE_PLAYER
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_SLAANESH: 1
+
+  - type: STR_SLAANGOR_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    heatVision: 20
+    spriteSheet: SLAANGOR.PCK
+    spriteInv: SlaangorInv.SPK
+    forcedTorso: 1
+    customArmorPreviewIndex: 1072
+    units:
+      - STR_SLAANGOR_PLAYER
+    allowInv: true
+    corpseBattle:
+      - STR_SLAANGOR_CORPSE_PLAYER
+    frontArmor: 45
+    sideArmor: 40
+    rearArmor: 20
+    underArmor: 45
+    drawingRoutine: 0
+    damageModifier:  # BEASTMEN ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.1  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+    loftempsSet: [3]
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_SLAANESH: 1
+      UNIT_TYPE_MUTANT: 1
+
+  # Tzeentch
+  - type: STR_TZEENTCH_CULTIST_ARMOR_PLAYER
+    refNode: *PLAYER_CHAOS_CULTIST_ARMOR
+    customArmorPreviewIndex: 1069
+    units:
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV2
+    requires: STR_TZEENTCH_DEVOTION
+    spriteSheet: CULTIST_THRALL_BS.PCK
+    spriteInv: CULTISTTZEENTCH_INV.SPK
+    corpseBattle:
+      - STR_TZEENTCH_CULTIST_CORPSE_PLAYER
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
+
+  - type: STR_TZEENTCH_CULT_WITCH_ARMOR_PLAYER
+    ufopediaType: STR_TZEENTCH_CULT_WITCH_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    psiVision: 3  # minor psi vision
+    heatVision: 10
+    spriteSheet: TZEENTCH_WITCH_BS.PCK
+    spriteInv: TZEENTCH_WITCH_INV.SPK
+    forcedTorso: 1
+    customArmorPreviewIndex: 1070
+    corpseBattle:
+      - STR_TZEENTCH_CULT_WITCH_CORPSE_PLAYER
+    frontArmor: 15
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 10
+    drawingRoutine: 0
+    movementType: 1  # flying Tzeentch flight
+    moveSound: 2430  # magical flight
+    specialWeapon: STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE
+    builtInWeapons:
+      - INV_NULL_3X3
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.4  # FLAMES
+      - 0.8  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.4  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [2]
+    allowsRunning: false  # She flies, doesn't need to be able to sprint in the air
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
+      ARMOR_ENERGY_SHIELD_DECAY: 40
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      INFECTION_RESIST: 50  # infection resist
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
+      UNIT_TYPE_PSYKER: 1
 
   # Iron Guard
   - &STR_IRON_GUARD_ARMOR_PLAYER
@@ -2334,50 +2625,3 @@ armors:
       - 1.0  # IMPACT
       - 1.0  # MELTA
     loftempsSet: [3]
-
-  - type: STR_TZEENTCH_CULT_WITCH_ARMOR_PLAYER
-    ufopediaType: STR_TZEENTCH_CULT_WITCH_ARMOR
-    visibilityAtDay: 40
-    visibilityAtDark: 25
-    psiVision: 3  # minor psi vision
-    heatVision: 10
-    spriteSheet: TZEENTCH_WITCH_BS.PCK
-    spriteInv: TZEENTCH_WITCH_INV.SPK
-    forcedTorso: 1
-    customArmorPreviewIndex: 1078
-    corpseBattle:
-      - STR_TZEENTCH_CULT_WITCH_CORPSE_PLAYER
-    frontArmor: 15
-    sideArmor: 10
-    rearArmor: 10
-    underArmor: 10
-    drawingRoutine: 0
-    movementType: 1  # flying Tzeentch flight
-    moveSound: 2430  # magical flight
-    specialWeapon: STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE
-    builtInWeapons:
-      - INV_NULL_3X3
-    damageModifier:  # CULTIST ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 1.4  # FLAMES
-      - 0.8  # HE
-      - 1.0  # LASCANON
-      - 1.0  # PLASMA
-      - 1.0  # STUN
-      - 1.4  # MELEE
-      - 1.0  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [2]
-    allowsRunning: false  # She flies, doesn't need to be able to sprint in the air
-    tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 40
-      ARMOR_ENERGY_SHIELD_DECAY: 40
-      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
-      INFECTION_RESIST: 50  # infection resist
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_TZEENTCH: 1
-      UNIT_TYPE_PSYKER: 1
