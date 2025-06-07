@@ -12,14 +12,23 @@
 extended:
   tags:
     RuleItem:
-      ITEM_AUTO_FLAT_POWER_BONUS: int  # percent bonus to damage equal to this amount for this fire mode
-      ITEM_SNAP_FLAT_POWER_BONUS: int
-      ITEM_AIMED_FLAT_POWER_BONUS: int
+      ITEM_SNAP_FLAT_POWER_BONUS: int  # value added to Snap power as a flat number
+      ITEM_SNAP_FLAT_POWER_BONUS_PERCENT: int  # value added to Snap power as a % multipler
+      ITEM_SNAP_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies to Snap power as a flat damage bonus; used for precision weapons like sniper rifles
+      ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT: int  # percent of the user's Firing Accuracy that applies to Snap power as a multiplier; used for precision weapons like sniper rifles
+
+      ITEM_AUTO_FLAT_POWER_BONUS: int  # value added to Auto power as a flat number
+      ITEM_AUTO_FLAT_POWER_BONUS_PERCENT: int  # value added to Auto power as a % multipler
+      ITEM_AUTO_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies to Auto power as a flat damage bonus; used for precision weapons like sniper rifles
+      ITEM_AUTO_ACCURACY_POWER_BONUS_PERCENT: int  # percent of the user's Firing Accuracy that applies to Auto power as a multiplier; used for precision weapons like sniper rifles
+
+      ITEM_AIMED_FLAT_POWER_BONUS: int  # value added to Aimed power as a flat number
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: int  # value added to Aimed power as a % multipler
+      ITEM_AIMED_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies to Aimed power as a flat damage bonus; used for precision weapons like sniper rifles
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: int  # percent of the user's Firing Accuracy that applies to Aimed power as a multiplier; used for precision weapons like sniper rifles
+
       ITEM_MELEE_POWER_BONUS: int
-      ITEM_AIMED_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_SNAP_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_AUTO_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_POWER_BONUS_PERCENTILE: int  # 0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
+
       ITEM_SNEAKY_BONUS: int #bonus damage as a % if this unit has gone at least 1 turn without being spotted.
       ITEM_SIDE_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the side
       ITEM_REAR_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the rear
@@ -32,7 +41,11 @@ extended:
           var int weaponPower;
           var int powerBonus;
           var int flatBonus;
+          var int flatBonusPercent;
           var int accuracyBonus;
+          var int accuracyBonusPercent;
+          var int flatBonusPercentBonus;
+          var int accuracyBonusPercentBonus;
           var int temp;
           var int temp2;
           var ptr RuleItem rItem;
@@ -49,62 +62,75 @@ extended:
 
           if eq battle_action battle_action_snapshot;
             rItem.getTag flatBonus Tag.ITEM_SNAP_FLAT_POWER_BONUS;
+            rItem.getTag flatBonusPercent Tag.ITEM_SNAP_FLAT_POWER_BONUS_PERCENT;
             rItem.getTag accuracyBonus Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
+            rItem.getTag accuracyBonusPercent Tag.ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT;
           end;
 
           if eq battle_action battle_action_autoshoot;
             rItem.getTag flatBonus Tag.ITEM_AUTO_FLAT_POWER_BONUS;
+            rItem.getTag flatBonusPercent Tag.ITEM_AUTO_FLAT_POWER_BONUS_PERCENT;
             rItem.getTag accuracyBonus Tag.ITEM_AUTO_ACCURACY_POWER_BONUS;
+            rItem.getTag accuracyBonusPercent Tag.ITEM_AUTO_ACCURACY_POWER_BONUS_PERCENT;
           end;
 
           if eq battle_action battle_action_aimshoot;
             rItem.getTag flatBonus Tag.ITEM_AIMED_FLAT_POWER_BONUS;
+            rItem.getTag flatBonusPercent Tag.ITEM_AIMED_FLAT_POWER_BONUS_PERCENT;
             rItem.getTag accuracyBonus Tag.ITEM_AIMED_ACCURACY_POWER_BONUS;
+            rItem.getTag accuracyBonusPercent Tag.ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT;
           end;
 
           if eq battle_action battle_action_hit;
             rItem.getTag flatBonus Tag.ITEM_MELEE_POWER_BONUS;
           end;
 
-          if and eq flatBonus 0 eq accuracyBonus 0;
-            # debug_log "ROSIGMA_hU_highpower_shot, line 59: No flatBonus or accuracyBonus detected; aborting.";
+          if and eq flatBonus 0 eq flatBonusPercent 0 eq accuracyBonus 0 eq accuracyBonusPercent 0;
+            # debug_log "ROSIGMA_hU_highpower_shot, line 59: No relevant variables detected; aborting.";
             return power part side;
           end;
 
-          # debug_log "ROSIGMA_hU_highpower_shot, line 85: Base Power" power;
-          if gt accuracyBonus 0; # if we're scaling the bonus with firing accuracy, we define the bonus here
-            attacker.Stats.getFiring temp; # get attacker's firing accuracy
-            # debug_log "ROSIGMA_hU_highpower_shot, line 59: Attacker's firing accuracy." temp;
-            muldiv accuracyBonus temp 100;
-            # debug_log "ROSIGMA_hU_highpower_shot, line 60: Attacker's accuracy power bonus." accuracyBonus;
+          # debug_log "ROSIGMA_hU_highpower_shot: Initial Power" power;
 
-            rItem.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE; # check whether we're using a percentile (1), flat bonus (2) or both (3)
-            if gt temp 0;
-              if or eq temp 1 eq temp 3;
-                muldiv accuracyBonus power 100; # we deal powerBonus % more damage relative to the base power;
-                # debug_log "ROSIGMA_hU_highpower_shot, line 76: Percentile damage bonus." accuracyBonus;
-                add powerBonus accuracyBonus;
-              end;
-              if or eq temp 2 eq temp 3;
-                # debug_log "ROSIGMA_hU_highpower_shot, line 82: Flat damage bonuses only." accuracyBonus;
-                add powerBonus accuracyBonus;
-              end;
-            end;
+          if gt flatBonusPercent 0; # flat multiplier
+            # debug_log "ROSIGMA_hU_highpower_shot: flatBonusPercent initial:" flatBonusPercent;
+            set flatBonusPercentBonus power;
+            muldiv flatBonusPercentBonus flatBonusPercent 100;
+            add powerBonus flatBonusPercentBonus;
+            # debug_log "ROSIGMA_hU_highpower_shot: powerBonus after flatBonusPercent:" powerBonus;
+          end;
+
+          if gt accuracyBonusPercent 0; # accuracy adjusted multiplier
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonusPercent initial:" accuracyBonusPercent;
+            attacker.Stats.getFiring temp; # get attacker's firing accuracy
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonusPercent Attacker's firing accuracy:" temp;
+            muldiv accuracyBonusPercent temp 100;
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonusPercent multiplier:" accuracyBonusPercent;
+            set accuracyBonusPercentBonus power;
+            muldiv accuracyBonusPercentBonus accuracyBonusPercent 100;
+            add powerBonus accuracyBonusPercentBonus;
+            # debug_log "ROSIGMA_hU_highpower_shot: powerBonus after accuracyBonusPercent." powerBonus;
+          end;
+
+          if gt accuracyBonus 0; # add the accuracy based flat amount
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonus initial:" accuracyBonus;
+            attacker.Stats.getFiring temp; # get attacker's firing accuracy
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonus Attacker's firing accuracy:" temp;
+            muldiv accuracyBonus temp 100;
+            # debug_log "ROSIGMA_hU_highpower_shot: accuracyBonus power bonus." accuracyBonus;
+            add powerBonus accuracyBonus;
+            # debug_log "ROSIGMA_hU_highpower_shot: powerBonus after adding accuracyBonus." powerBonus;
           end;
 
           if gt flatBonus 0; # add the flat bonus
+            # debug_log "ROSIGMA_hU_highpower_shot: flatBonus." flatBonus;
             add powerBonus flatBonus;
-          end;
-
-          if eq powerBonus 0; # cancel out if our powerBonus is undefined
-            # debug_log "ROSIGMA_hU_highpower_shot, line 67: No power bonus detected; aborting." powerBonus;
-            return power part side;
+            # debug_log "ROSIGMA_hU_highpower_shot: powerBonus after adding flatBonus." powerBonus;
           end;
 
           add power powerBonus;
 
-          # debug_log "ROSIGMA_hU_highpower_shot, line 89: Final Bonus Power" powerBonus;
-          # debug_log "ROSIGMA_hU_highpower_shot, line 90: New Power" power;
+          # debug_log "ROSIGMA_hU_highpower_shot: Final Power" power;
 
           return power part side;
 

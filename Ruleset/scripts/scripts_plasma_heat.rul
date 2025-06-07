@@ -1,19 +1,12 @@
 # https://openxcom.org/forum/index.php/topic, 8704.msg133355.html# msg133355
 
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
   tags:
     RuleItem:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
-      ITEM_AUTO_FLAT_POWER_BONUS: int
-      ITEM_SNAP_FLAT_POWER_BONUS: int
-      ITEM_AIMED_FLAT_POWER_BONUS: int
-      ITEM_MELEE_POWER_BONUS: int
-      ITEM_AIMED_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_SNAP_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_AUTO_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_POWER_BONUS_PERCENTILE: int  # 0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
       ITEM_OVERHEAT_DAMAGE: int  # how much damage we apply on average direct to the target's HP.
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
@@ -76,8 +69,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 100  # average damage dealt directly to the wielder's HP modified by plasma resistance if the weapon overheats
 
     tuUnload: 999  # DO NOT UNLOAD WEAPONS, THEY ARE LIKELY TO BE HOT
@@ -343,8 +335,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 5
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_HEAVY_PLASMA_TERRAN
     refNode: *STR_OVERHEATING_PLASMA
@@ -353,8 +344,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_MCPLASMA_RIFLE
@@ -364,8 +354,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_MCPLASMA_PISTOL
     refNode: *STR_OVERHEATING_PLASMA
@@ -382,8 +371,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_HEAVY_LASGUN_LUCIUS_XIV
@@ -404,8 +392,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PLASMA_GUN_TWINCORE_DEKKER  # Dekker Twincore Plasma
     refNode: *STR_OVERHEATING_PLASMA
@@ -414,8 +401,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2  # improved dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
 
   - type: STR_PLASMA_RIFLE_SEQUANA
@@ -428,9 +414,8 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 0  # No maximal Shot Bonus
-      ITEM_AIMED_ACCURACY_POWER_BONUS: 25  # battle rifle multiplier on aimed shots; this is a precision shot bonus, not maximal mode
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 0  # No maximal Shot Bonus
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 25  # battle rifle multiplier on aimed shots; this is a precision shot bonus, not maximal mode
 
   - type: STR_COMBIPISTOL_STUBPLASMA
     refNode: *STR_OVERHEATING_PLASMA
@@ -439,8 +424,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 5
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PRIMARIS_INCINERATOR_POWER_PACK
     refNode: *STR_OVERHEATING_PLASMA
@@ -449,8 +433,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 7  # Primaris heat dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PLASMA_INC_TERRAN  # Plasma Incinerator
     refNode: *STR_OVERHEATING_PLASMA
@@ -459,8 +442,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 7  # Primaris heat dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PRIMARIS_EXTERMINATOR
     refNode: *STR_OVERHEATING_PLASMA
@@ -469,8 +451,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 6  # Primaris heat dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PRIMARIS_EXTERMINATOR_POWER_PACK
     refNode: *STR_OVERHEATING_PLASMA
@@ -479,8 +460,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 6  # Primaris heat dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_GENERICSERVITOR_HEAVY_PLASMA
     refNode: *STR_OVERHEATING_PLASMA
@@ -489,8 +469,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 6
       ITEM_HEAT_DISSIPATION_PER_TURN: 1
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
-      ITEM_AIMED_FLAT_POWER_BONUS: 50  # Maximal Shot Bonus
-      ITEM_POWER_BONUS_PERCENTILE: 1  # use %
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
 
 # items:
