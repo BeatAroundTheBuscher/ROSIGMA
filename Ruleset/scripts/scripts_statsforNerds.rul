@@ -53,6 +53,7 @@ armors:
 
 
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
   tags:
     RuleItem:
       ITEM_RECOIL: int
@@ -60,14 +61,7 @@ extended:
       ITEM_STRENGTH_REQUIREMENT: int
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
-      ITEM_AUTO_FLAT_POWER_BONUS: int
-      ITEM_SNAP_FLAT_POWER_BONUS: int
-      ITEM_AIMED_FLAT_POWER_BONUS: int
       ITEM_MELEE_POWER_BONUS: int
-      ITEM_AIMED_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_SNAP_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_AUTO_ACCURACY_POWER_BONUS: int  # percent of the user's Firing Accuracy that applies as a damage bonus; used for precision weapons like sniper rifles
-      ITEM_POWER_BONUS_PERCENTILE: int  # 0-2+; if 0 we just add the flat bonus and add the % of applicable firing accuracy as bonus power. If 1, we apply the bonuses as a percentile bonus of the attack power. If 2+, we do both.
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
       GravPercentage: int
       # reaction modifier tags
@@ -83,7 +77,7 @@ extended:
       FLIGHT_DODGE_CHANCE: int
       MaxFlight: int
       MaxCoolDown: int
-     # corruption/infection script tags
+      # corruption/infection script tags
       INFECTION_RESIST: int  # reduces infection damage by this as a %
       INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
       # intimidation script tags
@@ -168,37 +162,55 @@ extended:
           end;
           rule.getTag temp Tag.ITEM_AIMED_FLAT_POWER_BONUS;
           if gt temp 0;
-            stats_state.addIntRow "STR_AIMED_POWER_BONUS" temp;
+            stats_state.addIntRow "STR_AIMED_FLAT_POWER_BONUS" temp;
           end;
-          rule.getTag temp Tag.ITEM_AUTO_FLAT_POWER_BONUS;
+          rule.getTag temp Tag.ITEM_AIMED_FLAT_POWER_BONUS_PERCENT;
           if gt temp 0;
-            stats_state.addIntRow "STR_AUTO_POWER_BONUS" temp;
-          end;
-          rule.getTag temp Tag.ITEM_SNAP_FLAT_POWER_BONUS;
-          if gt temp 0;
-            stats_state.addIntRow "STR_SNAP_POWER_BONUS" temp;
-          end;
-          rule.getTag temp Tag.ITEM_MELEE_POWER_BONUS;
-          if gt temp 0;
-            stats_state.addIntRow "STR_MELEE_POWER_BONUS" temp;
+            stats_state.addIntRow "STR_AIMED_FLAT_POWER_BONUS_PERCENT" temp;
           end;
           rule.getTag temp Tag.ITEM_AIMED_ACCURACY_POWER_BONUS;
           if gt temp 0;
             stats_state.addIntRow "STR_AIMED_ACCURACY_POWER_BONUS" temp;
           end;
-          rule.getTag temp Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
+          rule.getTag temp Tag.ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT;
           if gt temp 0;
-            stats_state.addIntRow "STR_SNAP_ACCURACY_POWER_BONUS" temp;
+            stats_state.addIntRow "STR_AIMED_ACCURACY_POWER_BONUS_PERCENT" temp;
+          end;
+          rule.getTag temp Tag.ITEM_AUTO_FLAT_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AUTO_FLAT_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_AUTO_FLAT_POWER_BONUS_PERCENT;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AUTO_FLAT_POWER_BONUS_PERCENT" temp;
           end;
           rule.getTag temp Tag.ITEM_AUTO_ACCURACY_POWER_BONUS;
           if gt temp 0;
             stats_state.addIntRow "STR_AUTO_ACCURACY_POWER_BONUS" temp;
           end;
-          rule.getTag temp Tag.ITEM_POWER_BONUS_PERCENTILE;
-          if eq temp 1;
-            stats_state.addTextRow "STR_POWER_BONUS_PERCENTILE" "STR_TRUE";
-          else ge temp 2;
-            stats_state.addTextRow "STR_POWER_BONUS_PERCENTILE" "STR_BOTH";
+          rule.getTag temp Tag.ITEM_AUTO_ACCURACY_POWER_BONUS_PERCENT;
+          if gt temp 0;
+            stats_state.addIntRow "STR_AUTO_ACCURACY_POWER_BONUS_PERCENT" temp;
+          end;
+          rule.getTag temp Tag.ITEM_SNAP_FLAT_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_FLAT_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_SNAP_FLAT_POWER_BONUS_PERCENT;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_FLAT_POWER_BONUS_PERCENT" temp;
+          end;
+          rule.getTag temp Tag.ITEM_SNAP_ACCURACY_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_ACCURACY_POWER_BONUS" temp;
+          end;
+          rule.getTag temp Tag.ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT;
+          if gt temp 0;
+            stats_state.addIntRow "STR_SNAP_ACCURACY_POWER_BONUS_PERCENT" temp;
+          end;
+          rule.getTag temp Tag.ITEM_MELEE_POWER_BONUS;
+          if gt temp 0;
+            stats_state.addIntRow "STR_MELEE_POWER_BONUS" temp;
           end;
           rule.getTag temp Tag.ITEM_HEAT_MAX_LEVEL;
           if gt temp 0;
