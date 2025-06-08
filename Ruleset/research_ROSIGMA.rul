@@ -183,6 +183,11 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - name: STR_OGRYN_AVAILABLE  # (Ogryn Recruitment)
+    # Because there are multiple ogryn recruiting factions now
+    dependencies:
+      - STR_GENERALLOCK
+
 ## Faction Tags
   - name: STR_IMPERIUM_RESEARCH  # (Imperium of Man)
     dependencies:
@@ -727,6 +732,7 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
       - STR_GUARD_SUPORT
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
 
 ### The Imperial Law Strategy #STRATEGY.AT.LAW#
   - name: STR_THE_IMPERIAL_LAW_STRATEGY  # The Imperial Law Strategy
@@ -736,6 +742,7 @@ research:
     points: 0
     reenables:
       - STR_CHAPTER_PURITY
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
     dependencies:
       - STR_ARBITES
     unlocks:
@@ -1395,6 +1402,8 @@ research:
       - STR_NOT_CHAOSCULT
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
+    reenables:
+      - STR_HB_DEP1
     spawnedEvent: STR_HERETIC_SISTER_ADVISOR
 
   - name: STR_CHAOS_ADEPTAS_HIRE_RESEARCH  # Recruit Heretic Sisters
@@ -1413,6 +1422,8 @@ research:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
       - STR_MIDTIER_PREREQ
+    reenables:
+      - STR_HB_DEP1
     spawnedEvent: STR_CHAOS_MARINE_ADVISOR
 
   - name: STR_CHAOS_MARINE_HIRE_RESEARCH  # Recruit Chaos Marines
@@ -1522,6 +1533,10 @@ research:
       - STR_NURGLE_PATH
       - STR_SLAANESH_PATH
       - STR_TZEENTCH_PATH
+      - STR_KHORNE_DEVOTION
+      - STR_NURGLE_DEVOTION
+      - STR_SLAANESH_DEVOTION
+      - STR_TZEENTCH_DEVOTION
 
   - name: STR_KHORNE_DEVOTION  # Devote to Khorne
     cost: 10
@@ -1539,6 +1554,9 @@ research:
       - STR_SLAANESH_PATH
       - STR_NURGLE_PATH
       - STR_TZEENTCH_PATH
+      - STR_NURGLE_DEVOTION
+      - STR_SLAANESH_DEVOTION
+      - STR_TZEENTCH_DEVOTION
 
   - name: STR_NURGLE_DEVOTION  # Devote to Nurgle
     cost: 10
@@ -1556,6 +1574,9 @@ research:
       - STR_TZEENTCH_PATH
       - STR_KHORNE_PATH
       - STR_SLAANESH_PATH
+      - STR_KHORNE_DEVOTION
+      - STR_SLAANESH_DEVOTION
+      - STR_TZEENTCH_DEVOTION
 
   - name: STR_SLAANESH_DEVOTION  # Devote to Slaanesh
     cost: 10
@@ -1573,6 +1594,9 @@ research:
       - STR_KHORNE_PATH
       - STR_NURGLE_PATH
       - STR_TZEENTCH_PATH
+      - STR_KHORNE_DEVOTION
+      - STR_NURGLE_DEVOTION
+      - STR_TZEENTCH_DEVOTION
 
   - name: STR_TZEENTCH_DEVOTION  # Devote to Tzeentch
     cost: 10
@@ -1590,6 +1614,9 @@ research:
       - STR_NURGLE_PATH
       - STR_KHORNE_PATH
       - STR_SLAANESH_PATH
+      - STR_KHORNE_DEVOTION
+      - STR_NURGLE_DEVOTION
+      - STR_SLAANESH_DEVOTION
 
   - name: STR_KHORNE_OPTIONS  # Gain the Favor of Khorne
     cost: 250
@@ -1598,6 +1625,8 @@ research:
       - STR_CHAOS_PATH
       - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_CHAOSOGRYN_RESEARCH  # For khorne ogryns if player isn't guard
 
   - name: STR_KHORNE_PATH  # Follow Khorne
     cost: 1000
@@ -1613,6 +1642,7 @@ research:
       - STR_DEVOTION_SELECTED
       - STR_NOT_CHAOSCULT
     unlocks:
+      - STR_CHAOSOGRYN_RESEARCH  # For plague ogryns if the player did not start as cult or guard.
       - STR_GRAVITON_TECH  # Nurgle Gravgun specialty
 
   - name: STR_NURGLE_PATH  # Grow With Nurgle
@@ -2807,6 +2837,8 @@ research:
     points: 100
     dependencies:
       - STR_CHAOS_BOONS_RESEARCH
+    unlocks:
+      - STR_OGRYN_AVAILABLE
 
   - name: STR_BOONS_CHAOSPRIEST_RESEARCH  # Request Chaos Priests
     cost: 70
@@ -3267,6 +3299,10 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
+    disables:
+      - STR_CHAOSOGRYN_RESEARCH
+    unlocks:
+      - STR_OGRYN_AVAILABLE
 
   - name: STR_BIOMANCER  # Biomancer
     cost: 0
