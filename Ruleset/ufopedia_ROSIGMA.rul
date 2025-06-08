@@ -3970,7 +3970,7 @@ ufopaedia:
   - delete: STR_GUARD_ARMORS_SENTINEL_MULTIMELTA_UC
   - id: STR_GUARD_ARMORS_SENTINEL_MULTIMELTA_UC
     requires:
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
       - STR_BLASTER_BOMB
       - STR_HEAVY_SENTINEL
     type_id: 15
@@ -4036,7 +4036,7 @@ ufopaedia:
     text: STR_STEELLEGION_ARMORS_LSENTINEL_MULTIMELTA_UC_UFOPEDIA
     requires:
       - STR_STEEL_LEGION_STRATEGY
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
 
   - id: STR_STEELLEGION_ARMORS_HSENTINEL_MISSILE_UC
     type_id: 15
@@ -4062,7 +4062,7 @@ ufopaedia:
     text: STR_STEELLEGION_ARMORS_HSENTINEL_MULTIMELTA_UC_UFOPEDIA
     requires:
       - STR_STEEL_LEGION_STRATEGY_MIDTIER
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
 
   - id: STR_GUARD_ARMORS_SENTINEL_HEAVY_PLASMA_UC
     type_id: 15
@@ -6608,6 +6608,8 @@ ufopaedia:
 # Within subcategories (IE Lasrifles or Autocannons) also try to order weapons in the order of the faction they are from as they appear in other groups in this document
 # Weapons exclusively used for HWPs and 2x2 armors should be placed in the HWP section
 # Chaos weapons should appear after Imperial weapons that they share an ammo type with.
+#
+# When determining research required to view weapon articles prefer to use technology based research gating instead of faction specific research, as there is a lot of crossover via events for weapon access.
 ####################################
     # Weapon Overview Articles
     # Consider unifying into one article
@@ -6682,8 +6684,6 @@ ufopaedia:
   - id: STR_FLECHETTE_PISTOL  # Flechette Pistol ✔
     requires:
       - STR_UFO_CONSTRUCTION
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: FLECHETTE_PISTOL_CODEX.SPK
@@ -6731,8 +6731,6 @@ ufopaedia:
   # Heavy Stubbers
   - delete: STR_HEAVY_STUBBER  # Heavy Stubber ✔
   - id: STR_HEAVY_STUBBER
-    requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: HEAVY_STUBBER.SPK
@@ -6740,52 +6738,47 @@ ufopaedia:
 
   - id: STR_GENERIC_HEAVY_STUBBER  # Heavy Stubber ✔
     type_id: 14
-    requires:
-      - STR_LASER_WEAPONS
     image_id: heavy_stubber.SPK
     section: STR_NOT_AVAILABLE
   - id: STR_HEAVY_STUBBER_LIGHT  # Heavy Stubber (Handheld) ✔
-    requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: HEAVY_STUBBER.SPK
     text: STR_HEAVY_STUBBER_LIGHT_UFOPEDIA
   - delete: STR_HEAVY_STUBBER_HANDHELD
-  - id: STR_HEAVY_STUBBER_HANDHELD  # Arbites Heavy Stubber
+  - id: STR_HEAVY_STUBBER_HANDHELD  # Arbites Heavy Stubber ✔
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: ARBITES_HEAVY_STUB_CODEX.SPK
     text: STR_HEAVY_STUBBER_HANDHELD_UFOPEDIA
-  - id: STR_HEAVY_STUBBER_ASSAULT
+  - id: STR_HEAVY_STUBBER_ASSAULT  # Assault Stubber ✔
     requires:
       - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: ASSAULT_STUBBER_CODEX.SPK
     text: STR_HEAVY_STUBBER_ASSAULT_CODEX
-  - id: STR_HEAVY_STUBBER_HYBRID
+  - id: STR_HEAVY_STUBBER_HYBRID  # Hybrid Stubber ✔
     requires:
       - STR_MIDTIER_PREREQ
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: HYBRID_STUBBER_CODEX.SPK
     text: STR_HEAVY_STUBBER_HYBRID_CODEX
 
-  - id: STR_HEAVY_STUBBER_CHAOS
+  - id: STR_HEAVY_STUBBER_CHAOS  # Chaos Heavy Stubber 
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     image_id: heavy_stubber.SPK
     text: STR_HEAVY_STUBBER_CHAOS_UFOPEDIA
   - id: STR_HEAVY_STUBBER_SLAAN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_HEAVY_STUBBER_SLAAN
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: heavy_stubber.SPK
 
   - delete: STR_HEAVY_STUBBER_CLIP
@@ -6797,16 +6790,10 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
   - id: STR_SLAAN_HEAVY_STUBBER_CLIP
     type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_HEAVY_STUBBER_CLIP
+    section: STR_NOT_AVAILABLE
     image_id: 1CH.SPK
 
   - id: STR_HEAVY_STUBBER_KRIEG  # Lucius Heavy Stubber
-    requires:
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: krieg_heavy_stubbercodex.SPK  # matches capitalization of extraSprites entry
@@ -6897,9 +6884,6 @@ ufopaedia:
   # Stubcannons
   - id: STR_STUBCANNON_GUARD
     requires:
-      - STR_MIDTIER_PREREQ
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: STUBCANNON_CODEX.SPK
@@ -6928,9 +6912,6 @@ ufopaedia:
       - STR_MASTER_CRAFTING_AMMO
   - id: STR_SHOTGUN_PISTOL
     requires:
-      - STR_MIDTIER_PREREQ
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: SHOTPISTOL_CODEX.SPK
@@ -7007,8 +6988,6 @@ ufopaedia:
 
   # Rippers
   - id: STR_RIPPER_PISTOL
-    requires:
-      - STR_MIDTIER_PREREQ
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: RIPPER_PISTOL.SPK
@@ -7026,6 +7005,8 @@ ufopaedia:
   - id: STR_CHAOS_RIPPERGUN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     image_id: ripper_gun.SPK
     text: STR_CHAOS_RIPPERGUN_UFOPEDIA
 
@@ -7101,8 +7082,8 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_AUTOPISTOL_BLIGHT
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     image_id: STR_AUTOPISTOL_BLIGHT_CODEX.SPK
     text: STR_AUTOPISTOL_BLIGHT_CODEX
 
@@ -7151,16 +7132,16 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_AUTOGUN_CHAOS_NURGLE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     image_id: STR_AUTOGUN_CHAOS_NURGLE_CODEX.SPK
     text: STR_AUTOGUN_CHAOS_NURGLE_CODEX
   - id: STR_AUTOGUN_SLAANESH
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_AUTOGUN_SLAANESH
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: 1CH.SPK
 
   - delete: STR_AUTOGUN_CLIP
@@ -7179,10 +7160,7 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
   - id: STR_AUTOGUN_SLAAN_CLIP
     type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_AUTOGUN_SLAAN_CLIP
+    section: STR_NOT_AVAILABLE
     image_id: 1CH.SPK
 
 #WEAPONS.SNIPER#
@@ -7205,7 +7183,7 @@ ufopaedia:
         text: STR_LONGRIFLE_CODEX
 
   - id: STR_SNIPER_ARCHE  # Arche Sniper Rifle
-    # Can fire
+    # Can fire a variety of ammo
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1SR.SPK
@@ -7316,7 +7294,6 @@ ufopaedia:
   # 'Solo' Light Bolters
   - id: STR_BOLTER_LIGHT_SOLO
     requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_LIGHT_BOLTERS_LOWTIER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7324,7 +7301,6 @@ ufopaedia:
     text: STR_BOLTER_SOLO_UFOPEDIA
   - id: STR_BOLTER_LIGHT_SOLO_SHORT
     requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_LIGHT_BOLTERS_LOWTIER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7332,8 +7308,7 @@ ufopaedia:
     text: STR_BOLTER_SOLO_SHORT_UFOPEDIA
   - id: STR_BOLTER_LIGHT_SOLO_DMR
     requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_LIGHT_BOLTERS_LOWTIER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: BOLTER_SOLO_DMR.SPK
@@ -7341,8 +7316,6 @@ ufopaedia:
   - id: STR_BOLTER_LIGHT_SOLO_COMBIMELTA
     requires:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_IMPERIAL_GUARD_MIDTIER
       - STR_MELTAGUN_TECH
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7353,15 +7326,15 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_TZEENTCH_BOLTER_LIGHT_SOLO
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     image_id: 1CH.SPK
   - id: STR_TZEENTCH_BOLTER_LIGHT_SOLO_SCOPED
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_TZEENTCH_BOLTER_LIGHT_SOLO_SCOPED
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     image_id: 1CH.SPK
 
   - id: STR_LIGHT_BOLTER_AMMO_SHORT  # Short Light Solo Bolter Mag
@@ -7372,10 +7345,7 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
   - id: STR_TZ_LIGHT_BOLTER_AMMO_R
     type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_TZ_LIGHT_BOLTER_AMMO_R
+    section: STR_NOT_AVAILABLE
     image_id: 1CH.SPK
 
   # Light Bolt Pistols
@@ -7412,8 +7382,6 @@ ufopaedia:
   - id: STR_LIGHT_BOLTPISTOL_PENITENCE_AMMO  # Seraphim Penitence Mag
     section: STR_NOT_AVAILABLE
     type_id: 14
-    requires:
-      - STR_ADEPTAS
   - id: STR_LIGHT_BOLTPISTOL_SERAPHIM_AMMO
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7462,7 +7430,6 @@ ufopaedia:
   - id: STR_BOLTER_LIGHT_UMBRA
     requires:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_MIDTIER
       - STR_UFO_CONSTRUCTION
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7471,7 +7438,6 @@ ufopaedia:
   - id: STR_BOLTER_LIGHT_UMBRA_UNDERSLUNG
     requires:
       - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_IMPERIAL_GUARD_MIDTIER
       - STR_UFO_CONSTRUCTION
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7535,14 +7501,16 @@ ufopaedia:
   - id: STR_BOLTERN_LIGHT  # Light Nurgle Bolter
     type_id: 14
     requires:
-      - STR_BOLTERN_LIGHT
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MB.SPK
     text: STR_LIGHT_BOLTER_CHAOSNURGLE_UFOPEDIA
   - id: STR_BOLTERN_LIGHT_GRENADELAUNCHER  # Nurgle Kombibolter Launcher
     type_id: 14
     requires:
-      - STR_BOLTERN_LIGHT_GRENADELAUNCHER
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MB.SPK
     pages:
@@ -7557,8 +7525,8 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_LIGHT_BOLTERSLAAN
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: 1CH.SPK
 
   - delete: STR_LIGHT_BOLTER_AMMO
@@ -7598,11 +7566,9 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
     requires:
       - STR_DONTSHOWYET
-      - STR_LIGHT_BOLTER_AMMO_SLAAN
 
-  - id: STR_BOLTER_LIGHT_LMG  # Accatran light bolter bipod
+  - id: STR_BOLTER_LIGHT_LMG  # Light Bolter Accatran
     requires:
-      - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_LIGHT_BOLTERS_MIDTIER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
@@ -7671,12 +7637,13 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_BOLTPISTOL_CHAOS
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
     text: STR_BOLTPISTOL_CHAOS_UFOPEDIA
   - id: STR_BOLTPISTOL_NURGLE  # Blightpistol
     type_id: 14
     requires:
-      - STR_BOLTPISTOL_NURGLE
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1BP.SPK
     text: STR_BOLTPISTOL_NURGLE_UFOPEDIA
@@ -7684,8 +7651,8 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_BOLTPISTOL_TZEENTCH
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     image_id: 1CH.SPK
 
   - delete: STR_PISTOL_CLIP
@@ -7696,8 +7663,6 @@ ufopaedia:
   - id: STR_PISTOL_CLIP_MC  # Master Crafted Boltpistol Clip
     type_id: 4
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_MASTER_CRAFTING_AMMO
   - delete: STR_PISTOL_CLIP_EX
   - id: STR_PISTOL_CLIP_EX  # Boltpistol Metal Storm Frag Clip
     type_id: 14
@@ -7781,7 +7746,7 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_BOLTERC
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
     text: STR_BOLTERC_UFOPEDIA
 
   - id: STR_BOLTERSLAAN_SCOPED  # Scoped Slaanesh Bolter
@@ -7789,14 +7754,14 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_BOLTERSLAAN_SCOPED
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
   - id: STR_BOLTERSLAAN  # Slaanesh Bolter
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_BOLTERSLAAN
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: 1CH.SPK
 
   - delete: STR_RIFLE_CLIP
@@ -7828,9 +7793,6 @@ ufopaedia:
   - id: STR_RIFLE_CLIP_S  # Penetrator Bolter Mag.
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_RIFLE_CLIP_S
 
   # Primaris Bolters
   - id: STR_PRIMARIS_HEAVY_BOLT_PISTOL  # Primaris Heavy Bolt Pistol
@@ -7945,6 +7907,7 @@ ufopaedia:
     image_id: 1CH.SPK
     requires:
       - STR_CHB
+      - STR_CHAOS_ARMORY_EXAM_BOLTER_STORM
     text: STR_CHB_UFOPEDIA
 
   - delete: STR_HB_CLIP
@@ -7977,9 +7940,6 @@ ufopaedia:
     # But I promise they're heavy bolters.
   - delete: STR_HEAVY_BOLTER_GUARD
   - id: STR_HEAVY_BOLTER_GUARD
-    requires:
-      - STR_GUARD_AND_ARBITES
-      - STR_NOT_CHAOSCULT
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: HEAVY_BOLTER_BIPOD.SPK
@@ -8019,7 +7979,7 @@ ufopaedia:
   - id: STR_AUTO_CANNON_CHAOSRETRIBUTOR  # Corrupted Retributor Heavy Bolter
     type_id: 14
     requires:
-      - STR_AUTO_CANNON_CHAOSRETRIBUTOR
+      - STR_CHAOS_ARMORY_EXAM_BOLTER_HEAVY
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1HB.SPK
     text: STR_AUTO_CANNON_CHAOSRETRIBUTOR_UFOPEDIA
@@ -8027,7 +7987,8 @@ ufopaedia:
   - id: STR_HEAVY_BOLTER_CHAOSNURGLE  # Blighted Heavy Bolter
     type_id: 14
     requires:
-      - STR_HEAVY_BOLTER_CHAOSNURGLE
+      - STR_CHAOS_ARMORY_EXAM_BOLTER_HEAVY
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1HB.SPK
     text: STR_HEAVY_BOLTER_CHAOSNURGLE_UFOPEDIA
@@ -8118,14 +8079,16 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_CASS_R # Assault Cannon, Autocannons need better research gating
+      - STR_AUTOCANNON_TECH
+      - STR_CHAOS_ARMORY_EXAM_AUTOCANNON
     image_id: 1CH.SPK
     text: STR_CHAOS_AUTOCANNON_HANDHELD_UFOPEDIA
   - id: STR_AUTOCANNON_KALIBRAX
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_CASS_R # Assault Cannon, Autocannons need better research gating
+      - STR_AUTOCANNON_TECH
+      - STR_CHAOS_ARMORY_EXAM_AUTOCANNON
     image_id: 1CH.SPK
     text: STR_AUTOCANNON_KALIBRAX_UFOPEDIA
   #  - id: STR_AUTOCANNON_REAPER
@@ -8138,7 +8101,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_CASSC
+      - STR_AUTOCANNON_TECH
+      - STR_CHAOS_ARMORY_EXAM_AUTOCANNON
     text: STR_CASSC_UFOPEDIA
 
   - id: STR_IW_AUTOCANNON
@@ -8146,7 +8110,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_CASS_R
+      - STR_AUTOCANNON_TECH
+      - STR_CHAOS_ARMORY_EXAM_AUTOCANNON
     text: STR_IW_AUTOCANNON_UFOPEDIA
 
   - delete: STR_AUTOCANNON_CLIP
@@ -8237,16 +8202,15 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LP.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_LASER_PISTOLCS
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     text: STR_LASER_PISTOLCS_UFOPEDIA
   - id: STR_TZEENTCH_LASPISTOL
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LP.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_TZEENTCH_LASPISTOL
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     text: STR_TZEENTCH_LASPISTOL_UFOPEDIA
 
   - delete: STR_LASPISTOL_CLIP
@@ -8259,11 +8223,7 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
   - id: STR_LASPISTOL_CLIP_SLAAN
     type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_LASPISTOL_CLIP_SLAAN
-    image_id: 1CH.SPK
+    section: STR_NOT_AVAILABLE
 
   # Las Rifles
   - delete: STR_LASER_RIFLE
@@ -8397,9 +8357,6 @@ ufopaedia:
 
   - delete: STR_LONGLAS
   - id: STR_LONGLAS
-    requires:
-      - STR_LASER_WEAPONS
-      - STR_IMPERIAL_GUARD_OPERATIONS
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: LONGLAS.SPK
@@ -8415,6 +8372,8 @@ ufopaedia:
   - id: STR_LONGLAS_CHAOS
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     image_id: deserter_longlas.SPK
     text: STR_CHAOS_LONGLAS_UFOPEDIA
 
@@ -8423,32 +8382,32 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LG.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_LASGUN
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_SLAAN_LASGUN_UFOPEDIA
   - id: STR_LASGUN_SLAANESH_ESCHER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: CODEX_ESCHER_LASGUN.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_LASGUN_SLAANESH_ESCHER
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_LASGUN_ESCHER_CODEX
   - id: STR_LASCARBINE_SLAAN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LG.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_LASCARBINE_SLAAN
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_LASCARBINE_SLAAN_UFOPEDIA
 
   - id: STR_TZEENTCH_LASGUN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_TZEENTCH_LASGUN
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     image_id: 1LG.SPK
     text: STR_TZEENTCH_LASGUN_UFOPEDIA
   - id: STR_LONGLAS_TZEENTCH
@@ -8456,8 +8415,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_LONGLAS_TZEENTCH
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
     text: STR_CHAOS_LONGLAS_UFOPEDIA
 
   - delete: STR_LASGUN_CLIP
@@ -8470,18 +8429,11 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
   - id: STR_LASGUN_CLIP_HOTSHOT_CHAOS
     type_id: 14
-    requires:
-      - STR_DONTSHOWYET
-      - STR_LASGUN_CLIP_HOTSHOT_CHAOS
-    section: STR_WEAPONS_AND_EQUIPMENT
+    section: STR_NOT_AVAILABLE
     image_id: 1CH.SPK
   - id: STR_LASGUN_CLIP_SLAAN
     type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_LASGUN_CLIP_SLAAN
-    image_id: 1CH.SPK
+    section: STR_NOT_AVAILABLE
 
   # Multilas
   - id: STR_HAND_MULTILASER
@@ -8515,6 +8467,8 @@ ufopaedia:
   - id: STR_CHAOS_VOLLEYGUN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_HEAVY_LAS
     image_id: hellgun.SPK
     text: STR_CHAOS_VOLLEYGUN_UFOPEDIA
 
@@ -8538,15 +8492,12 @@ ufopaedia:
   - id: STR_CHAOS_HELLGUN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_HEAVY_LAS
     image_id: hellgun.SPK
     text: STR_CHAOS_HELLGUN_UFOPEDIA
 
   - delete: STR_HELLGUN_CLIP_HOTSHOT
-  - id: STR_HELLGUN_CLIP_HOTSHOT
-    requires:
-      - STR_STORMTROOPER_REQUISITION
-    type_id: 14
-    section: STR_NOT_AVAILABLE
 
   #'Heavy' Las
   - id: STR_HEAVY_LASGUN_LUCIUS_XIV  # Lucius Heavy Lasgun
@@ -8605,14 +8556,16 @@ ufopaedia:
   - id: STR_CHAOS_LASCANNON_HANDHELD
     type_id: 14
     requires:
-      - STR_CHAOS_LASCANNON_HANDHELD
+      - STR_LASCAN_TECH
+      - STR_CHAOS_ARMORY_EXAM_HEAVY_LAS
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LC.SPK
     text: STR_CHAOS_LASCANNON_HANDHELD_UFOPEDIA
   - id: STR_CHAOS_LASCANNON_BIPOD
     type_id: 14
     requires:
-      - STR_CHAOS_LASCANNON_BIPOD
+      - STR_LASCAN_TECH
+      - STR_CHAOS_ARMORY_EXAM_HEAVY_LAS
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1LC.SPK
     text: STR_CHAOS_LASCANNON_BIPOD_UFOPEDIA
@@ -8625,14 +8578,10 @@ ufopaedia:
   - id: STR_LASCAN_CLIP
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_LASCAN_TECH
 
   # Lascutters
   - id: STR_LASCUTTER
     type_id: 14
-    requires:
-      - STR_LASER_WEAPONS
     text: STR_LASCUTTER_CODEX
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: CODEX_LASCUTTER.SPK
@@ -8728,7 +8677,7 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_CHAOS_MELTAGUN
+      - STR_CHAOS_ARMORY_EXAM_MELTA
     text: STR_HEAVY_LASER_UFOPEDIA
 
   - delete: STR_MELTA_AMMO
@@ -8753,7 +8702,7 @@ ufopaedia:
     image_id: 1MM.SPK
     text: STR_BLASTER_LAUNCHER_TERRAN_UFOPEDIA
     requires:
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
 
   - delete: STR_BLASTER_LAUNCHER
   - id: STR_BLASTER_LAUNCHER  # Chaos Multimelta
@@ -8761,7 +8710,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
+      - STR_CHAOS_ARMORY_EXAM_MELTA
     text: STR_BLASTER_LAUNCHER_UFOPEDIA
 
   - delete: STR_BLASTER_BOMB
@@ -8790,15 +8740,13 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MG.SPK
-    # requires:
-      # - STR_HARMONIC_MELTAGUN
     text: STR_HARMONIC_MELTAGUN_UFOPEDIA
   - id: STR_CHAOSHARMONIC_MELTAGUN
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MG.SPK
     requires:
-      - STR_CHAOSHARMONIC_MELTAGUN
+      - STR_CHAOS_ARMORY_EXAM_MELTA
     text: STR_CHAOSHARMONIC_MELTAGUN_UFOPEDIA
 
   - id: STR_MELTA_AMMO_HARMONIC
@@ -8811,7 +8759,7 @@ ufopaedia:
     type_id: 10
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_PLASMA_PISTOL
+      - STR_PLASMA_PISTOL_DEP1
     image_id: 1AMMO4.SPK
     text: STR_PLASMA_AMMO_UFOPEDIA
 
@@ -8866,7 +8814,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_PLASMA_PISTOL
+      - STR_PLASMA_PISTOL_DEP1
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_PISTOL
     text: STR_PLASMA_PISTOL_UFOPEDIA
 
   - id: STR_PLASMA_PISTOL_SLAAN
@@ -8874,16 +8823,18 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1PP.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_PLASMA_PISTOL_SLAAN
+      - STR_PLASMA_PISTOL_DEP1
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_PISTOL
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_PLASMA_PISTOL_SLAAN_UFOPEDIA
   - id: STR_PLASMA_PISTOL_TZEENTCH
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1PP.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_PLASMA_PISTOL_TZEENTCH
+      - STR_PLASMA_PISTOL_DEP1
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_PISTOL
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
 
   - delete: STR_PLASMA_PISTOL_CLIP
   - id: STR_PLASMA_PISTOL_CLIP
@@ -8896,7 +8847,7 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
       - STR_PLASMA_PISTOL_DEP1
     image_id: 1CH.SPK
 
@@ -8921,14 +8872,14 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_PLASMA_SPRAYGUN_CHAOS
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_RIFLE
     text: STR_PLASMA_SPRAYGUN_CHAOS_UFOPEDIA
   - id: STR_PLASMA_CARBINE_CHAOS  # Chaos Plasma Carbine
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_PLASMA_SPRAYGUN_CHAOS
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_RIFLE
     text: STR_PLASMA_CARBINE_CHAOS_UFOPEDIA
 
   - id: STR_PLASMA_SPRAY_CLIP  # Light Plasma Charge
@@ -8956,7 +8907,7 @@ ufopaedia:
     image_id: 1MCPR.SPK
     text: STR_MASTER_UFOPEDIA
     requires:
-      - STR_PLASMA_RIFLE
+      - STR_PLASMA_RIFLE_DEP1
       - STR_MASTER_CRAFTING
     pages:
       - title: STR_MCPLASMA_RIFLE
@@ -8978,15 +8929,14 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_PLASMA_RIFLE
+      - STR_PLASMA_RIFLE_DEP1
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_RIFLE
     text: STR_PLASMA_RIFLE_UFOPEDIA
 
   - delete: STR_PLASMA_RIFLE_CLIP
   - id: STR_PLASMA_RIFLE_CLIP
     type_id: 4
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_PLASMA_RIFLE_DEP1
 
   - delete: STR_PLASMA_INC_TERRAN
   - id: STR_PLASMA_INC_TERRAN  # Plasma Incinerator
@@ -9052,6 +9002,7 @@ ufopaedia:
     image_id: 1CH.SPK
     requires:
       - STR_HEAVY_PLASMA
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_ADVANCED
     text: STR_HEAVY_PLASMA_UFOPEDIA
 
   - delete: STR_HEAVY_PLASMA_CLIP
@@ -9096,8 +9047,9 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: TWIN_CORE_CODEX.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_TZ_PLASMA_GUN_TWINCORE
+      - STR_PLASMA_GUN_TWINCORE
+      - STR_CHAOS_ARMORY_EXAM_PLASMA_ADVANCED
+      - STR_CHAOS_ARMORY_EXAM_TZEENTCH
 
   - id: STR_PLASMA_TWINCORE_CLIP
     type_id: 14
@@ -9119,7 +9071,9 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1GG.SPK
     requires:
-      - STR_NURGLE_GRAVPISTOL
+      - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     text: STR_NURGLE_GRAVPISTOL_UFOPEDIA
   - id: STR_GRAVPISTOL_AMMO  # Gravpistol Cell
     type_id: 14
@@ -9152,14 +9106,13 @@ ufopaedia:
     image_id: 1CH.SPK
     requires:
       - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
     text: STR_SMALL_LAUNCHER_UFOPEDIA
 
   - delete: STR_STUN_BOMB
   - id: STR_STUN_BOMB
     type_id: 4
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_STUN_BOMB
     text: STR_STUN_BOMB_UFOPEDIA
 
   - id: STR_GRAVGUN_ADEPTAS  # Adeptas Graviton Gun
@@ -9174,14 +9127,17 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1GG.SPK
     requires:
-      - STR_GRAVGUN_AOE_CHAOS
+      - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
     text: STR_GRAVGUN_AOE_CHAOS_UFOPEDIA
   - id: STR_GRAVGUN_NURGLE  # Bloated Graviton Burst Gun
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1GG.SPK
     requires:
-      - STR_GRAVGUN_NURGLE
+      - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     text: STR_GRAVGUN_NURGLE_UFOPEDIA
 
   - id: STR_GRAVGUN_AOE_AMMO  # Jupiter Graviton Power Pack
@@ -9197,7 +9153,9 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1AMMO7.SPK
     requires:
-      - STR_GRAVGUN_NURGLE
+      - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     text: STR_GRAV_AMMO_SHOTGUN_UFOPEDIA
 
   - id: STR_GRAVCANNON_NURGLE  # Nurgle Gravcannon
@@ -9206,7 +9164,9 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1GGC.SPK
     requires:
-      - STR_GRAVCANNON_NURGLE
+      - STR_GRAVITON_TECH
+      - STR_CHAOS_ARMORY_EXAM_GRAV
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     text: STR_GRAVCANNON_NURGLE_UFOPEDIA
   - id: STR_GRAVCANNON_AMMO  # Gravcannon Cell
     type_id: 14
@@ -9219,29 +9179,32 @@ ufopaedia:
     image_id: 1CH.SPK
     text: STR_CHOIR_GUN_UFOPEDIA
 
+  - id: STR_SONIC_GUN
+    type_id: 14
+    section: STR_WEAPONS_AND_EQUIPMENT
+    image_id: 1CH.SPK
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_SONIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
+    text: STR_SONIC_GUN_UFOPEDIA
+
   - delete: STR_SONIC_CANON
   - id: STR_SONIC_CANON
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_SONIC_CANON
+      - STR_CHAOS_ARMORY_EXAM_SONIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_SONIC_CANON_UFOPEDIA
-
-  - id: STR_SONIC_GUN
-    type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    image_id: 1CH.SPK
-    requires:
-      - STR_SONIC_GUN
-    text: STR_SONIC_GUN_UFOPEDIA
 
   - id: STR_SCREAMER_PISTOL
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_SCREAMER_PISTOL
+      - STR_CHAOS_ARMORY_EXAM_SONIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_SCREAMER_PISTOL_CODEX
 
   - id: STR_BLASTMASTER
@@ -9249,7 +9212,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_BLASTMASTER
+      - STR_CHAOS_ARMORY_EXAM_SONIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_BLASTMASTER_CODEX
 
 
@@ -9258,8 +9222,7 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_GSC_WEBBER_PISTOL
+      - STR_IMPERIAL_WEBBER_DEP1
     image_id: 1WEB.SPK
   - id: STR_PISTOL_WEBBER_AMMO
     type_id: 14
@@ -9280,35 +9243,30 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_GSC_HEAVY_WEBBER
+      - STR_IMPERIAL_WEBBER_DEP1
     image_id: 1WEB.SPK
   - id: STR_HEAVY_WEBBER_AMMO
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_HEAVY_WEBBER_AMMO
 
   - id: STR_SLAAN_CONSTRICTOR_WEBBER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_CONSTRICTOR_WEBBER
+      - STR_IMPERIAL_WEBBER_DEP1
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: 1CH.SPK
   - id: STR_CONSTRICTOR_WEBBER_AMMO
     type_id: 14
     section: STR_NOT_AVAILABLE
     requires:
       - STR_DONTSHOWYET
-      - STR_CONSTRICTOR_WEBBER_AMMO
 
 #WEAPONS.COMBI#   Combi-Weapons
   - id: STR_COMBIPISTOL_STUBPLASMA
     type_id: 14
     requires:
-      - STR_PLASMA_PISTOL
+      - STR_PLASMA_PISTOL_DEP1
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: CODEX_COMBIPISTOL.SPK
     text: STR_COMBIPISTOL_STUBPLASMA_CODEX
@@ -9318,7 +9276,9 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MB.SPK
     requires:
-      - STR_NURGLE_KOMBIBOLTER_GRAV
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_GRAV
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     pages:
       - title: STR_NURGLE_KOMBIBOLTER_GRAV
         text: STR_NURGLE_KOMBIBOLTER_GRAV_UFOPEDIA
@@ -9331,8 +9291,9 @@ ufopaedia:
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_LARGE_KOMBIBOLTERSLAAN
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_SONIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     image_id: 1CH.SPK
     pages:
       - title: STR_LARGE_KOMBIBOLTERSLAAN
@@ -9342,22 +9303,21 @@ ufopaedia:
   - id: STR_SONICKOMBI_CHARGE  # Sonic Kombibolter Charge
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SONICKOMBI_CHARGE
 
   - id: STR_IWCOMBIBOLTER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_IWCOMBIBOLTER
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
     image_id: IW_COMBIBOLTER_CODEX.SPK
     text: STR_IWCOMBIBOLTER_UFOPEDIA
   - id: STR_IWCOMBIMELTA
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_IWCOMBIMELTA
+      - STR_MELTAGUN_TECH
+      - STR_CHAOS_ARMORY_EXAM_BOLTER
+      - STR_CHAOS_ARMORY_EXAM_MELTA
     image_id: IW_COMBIMELTA_CODEX.SPK
     text: STR_IWCOMBIMELTA_UFOPEDIA
 
@@ -9495,7 +9455,7 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_CHAOS_ROCKET_LAUNCHER
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     text: STR_ROCKET_LAUNCHER_UFOPEDIA
 
   - id: STR_NURGLE_ROCKET_LAUNCHER  # Nurgle Missile Launcher
@@ -9503,8 +9463,8 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_NURGLE_ROCKET_LAUNCHER
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     text: STR_ROCKET_LAUNCHER_UFOPEDIA
 
   - delete: STR_SMALL_ROCKET
@@ -9532,35 +9492,24 @@ ufopaedia:
   - id: STR_BLIGHT_ROCKET
     type_id: 4
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_CHAOS_ROCKET_LAUNCHER
 
   - id: STR_SLAANESH_ROCKET_LAUNCHER
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_ROCKET_LAUNCHER
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_SLAANESH_ROCKET_LAUNCHER_UFOPEDIA
   - id: STR_SLAANESH_MISSILE_PACK
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_MISSILE_PACK
   - id: STR_SONIC_MISSILE_PACK
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SONIC_MISSILE_PACK
   - id: STR_DAEMONETTE_MISSILE_PACK
     type_id: 14
     section: STR_NOT_AVAILABLE
-    requires:
-      - STR_DONTSHOWYET
-      - STR_DAEMONETTE_MISSILE_PACK
 
   # Disposable Launchers
   - id: STR_DISPOSABLE_LAUNCHER_KRAK  # Disposable Krak Launcher
@@ -9728,12 +9677,12 @@ ufopaedia:
     section: STR_NOT_AVAILABLE
 
   - delete: STR_ALIEN_GRENADE
-  - id: STR_ALIEN_GRENADE  # STR_ALIEN_GRENADE
+  - id: STR_ALIEN_GRENADE
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_ALIEN_GRENADE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     text: STR_ALIEN_GRENADE_UFOPEDIA
 
   - id: STR_SLAANESH_GRENADE
@@ -9741,24 +9690,23 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_GRENADE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
     text: STR_SLAANESH_GRENADE
   - id: STR_SONIC_GRENADE
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_SONIC_GRENADE
+      - STR_CHAOS_ARMORY_EXAM_SONIC
     text: STR_SONIC_GRENADE
 
   - id: STR_BLIGHT_GRENADE
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_DONTSHOWYET
-      - STR_BLIGHT_GRENADE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     image_id: STR_BLIGHT_GRENADE_CODEX.SPK
     text: STR_BLIGHT_GRENADE_CODEX
 
@@ -9767,8 +9715,7 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_DONTSHOWYET
-      - STR_SCARE_GRENADE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     text: STR_SCARE_GRENADE_UFOPEDIA
 
   # Bombs/Mines
@@ -9864,7 +9811,7 @@ ufopaedia:
     image_id: CODEX_STR_CHAINSWORD_STEEL_LEGION.SPK
 
   - delete: STR_CHAINSWORD_MC
-  - id: STR_CHAINSWORD_MC                 #12500
+  - id: STR_CHAINSWORD_MC
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MCCS.SPK
@@ -10004,29 +9951,27 @@ ufopaedia:
     image_id: NEURAL_SHREDDER.SPK
     text: STR_PHASE_BLADE_CODEX
 
-  - id: STR_VALKIA_SHIELD  # Valkia Daemon Shield
-    type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    image_id: ValkiaShield.SPK
-    requires:
-      - STR_VALKIA_SHIELD
-    text: STR_VALKIA_SHIELD_UFOPEDIA
-
   - delete: STR_AXE
   - id: STR_AXE  # Chaos Chain Axe
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_AXE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
     text: STR_AXE_UFOPEDIA
 
   - id: STR_KHORNE_CHAIN_AXE
     type_id: 14
     section: STR_NOT_AVAILABLE
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_KHORNE
   - id: STR_KHORNE_GREAT_CHAIN_AXE
     type_id: 14
     section: STR_NOT_AVAILABLE
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_KHORNE
 
   - id: STR_PLAGUE_KNIFE
     type_id: 14
@@ -10034,36 +9979,50 @@ ufopaedia:
     image_id: 1CK.SPK
     text: STR_PLAGUE_KNIFE_UFOPEDIA
     requires:
-      - STR_PLAGUE_KNIFE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
+
+  - id: STR_SLAAN_BLADE
+    type_id: 14
+    section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
+    image_id: 1CH.SPK
+  - id: STR_SLAAN_LONGBLADE
+    type_id: 14
+    section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
+    image_id: 1CH.SPK
+  - id: STR_SLAAN_CHAINSWORD
+    type_id: 14
+    section: STR_WEAPONS_AND_EQUIPMENT
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_SLAANESH
+    image_id: 1EV.SPK
+
+  - id: STR_VALKIA_SHIELD  # Valkia Daemon Shield
+    type_id: 14
+    section: STR_WEAPONS_AND_EQUIPMENT
+    image_id: ValkiaShield.SPK
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_POWER
+      - STR_CHAOS_ARMORY_EXAM_KHORNE
+    text: STR_VALKIA_SHIELD_UFOPEDIA
+
   - id: STR_NURGLE_BALESWORD
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1PS.SPK
     text: STR_NURGLE_BALESWORD_UFOPEDIA
     requires:
-      - STR_NURGLE_BALESWORD
+      - STR_CHAOS_ARMORY_EXAM_POWER
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
 
-  - id: STR_SLAAN_BLADE
-    type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_BLADE
-    image_id: 1CH.SPK
-  - id: STR_SLAAN_LONGBLADE
-    type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_LONGBLADE
-    image_id: 1CH.SPK
-  - id: STR_SLAAN_CHAINSWORD
-    type_id: 14
-    section: STR_WEAPONS_AND_EQUIPMENT
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAAN_CHAINSWORD
-    image_id: 1EV.SPK
+
 
 #WEAPONS.PSY#     Psyker Weapons
   # Weapons should be placed into this category with precence over others
@@ -10118,7 +10077,7 @@ ufopaedia:
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1CH.SPK
     requires:
-      - STR_CHAOS_CROZIUS
+      - STR_CHAOS_ARMORY_EXAM_POWER
     text: STR_CHAOS_CROZIUS_UFOPEDIA
 
 #WEAPONS.OTHER#   Other
@@ -10165,7 +10124,7 @@ ufopaedia:
   - id: STR_INQ_MULTIMELTA
     requires:
       - STR_INQ_STORMTROOPER_REQUISITION
-      - STR_BLASTER_LAUNCHER
+      - STR_FUSION_MISSILE
     type_id: 14
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: 1MM.SPK
@@ -10200,7 +10159,8 @@ ufopaedia:
   - id: STR_NURGLE_NEEDLER_RIFLE
     type_id: 14
     requires:
-      - STR_NURGLE_NEEDLER_RIFLE
+      - STR_CHAOS_ARMORY_EXAM_BASIC
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
     section: STR_WEAPONS_AND_EQUIPMENT
     image_id: NEEDLERIFLECODEX.SPK
     text: STR_NURGLE_NEEDLER_RIFLE_UFOPEDIA
@@ -10229,6 +10189,8 @@ ufopaedia:
   - id: STR_PLAGUE_SPEWER
     type_id: 14
     section: STR_NOT_AVAILABLE
+    requires:
+      - STR_CHAOS_ARMORY_EXAM_NURGLE
   - id: STR_PLAGUE_SPEWER_TANK
     type_id: 14
     section: STR_NOT_AVAILABLE
@@ -10429,7 +10391,7 @@ ufopaedia:
     type_id: 4
     section: STR_WEAPONS_AND_EQUIPMENT
     requires:
-      - STR_SHURIKEN_CLIP
+      - STR_DONTSHOWYET
   - delete: STR_ELDAR_GRENADE
   - id: STR_ELDAR_GRENADE
     type_id: 14
@@ -11345,22 +11307,23 @@ ufopaedia:
   - id: STR_SECTOID_ARMOR0  # Cultist
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_SECTOID_CORPSE
     image_id: UP024.SPK
     text: STR_SECTOID_UFOPEDIA
 
   - id: STR_SECTOID_FEMCULTIST
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
-    # requires:
-      # - STR_DONTSHOWYET
-      # - STR_SECTOID_FEMCULTIST
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
     image_id: UP024.SPK
     text: STR_SECTOID_UFOPEDIA
   - id: STR_FEM_CULTIST_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
-    # requires:
-      # - STR_SECTOID_FEMCULTIST
+    requires:
+      - STR_SECTOID_FEMCULTIST_CORPSE
     image_id: UP024.SPK
     text: STR_SECTOID_UFOPEDIA
 
@@ -11375,21 +11338,27 @@ ufopaedia:
     image_id: UP025.SPK
     text: STR_SECTOID_DARKDISCIPLE_AUTOPSY_UFOPEDIA
     requires:
-      - STR_SECTOID_DARKDISCIPLE_CORPSE
+      - STR_LIVE_CAPTURE_CULTIST
   - id: STR_DARK_DISCIPLE_ARMOR          # 20000     ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_SECTOID_DARKDISCIPLE_CORPSE
     image_id: FOES_DARK_DISCIPLE_CODEX.SPK
     text: STR_DARK_DISCIPLE_ARMOR_UFOPEDIA
 
   - id: STR_SECTOID_ASPIRING_CHAMPION  # Cultist Aspiring Champion
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
     image_id: UP024.SPK
     text: STR_SECTOID_UFOPEDIA
   - id: STR_CULTIST_ASPIRING_ARMOR  # Cultist Aspiring Champion
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_SECTOID_CORPSE
     image_id: UP024.SPK
     text: STR_CULTIST_ASPIRING_ARMOR_UFOPEDIA
 
@@ -11415,7 +11384,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SECTOID_COMMANDER
+      - STR_SECTOID_LEADER
     image_id: UP102.SPK
     text: STR_PRIEST_UFOPEDIA
 
@@ -11704,6 +11673,8 @@ ufopaedia:
   - id: NURGLE_CULTIST_GREENROBE_ARMOR
     type_id: 15
     section: STR_NOT_AVAILABLE
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
   - id: STR_NURGLE_CIV_CULTIST_BLESSED
     type_id: 10
     section: STR_NOT_AVAILABLE
@@ -11713,6 +11684,8 @@ ufopaedia:
   - id: NURGLE_CULTIST_GREENROBE_BLESSED_ARMOR
     type_id: 15
     section: STR_NOT_AVAILABLE
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
 
   - id: STR_NURGLE_CULTIST
     type_id: 10
@@ -11729,6 +11702,8 @@ ufopaedia:
   - id: STR_NURGLE_CULTIST_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
     image_id: NURGLECULTIST_ARMOR_CODEX.SPK
     text: STR_NURGLE_CULTIST_ARMOR_UFOPEDIA
 
@@ -11747,6 +11722,8 @@ ufopaedia:
   - id: STR_NURGLE_OGRYN_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_OGRYN
     image_id: NURGLE_OGRYN_ARMOR_CODEX.SPK
     text: STR_NURGLE_OGRYN_ARMOR_UFOPEDIA
 
@@ -11766,6 +11743,8 @@ ufopaedia:
   - id: SLAANESH_DEMIMONDE_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_WITCH
     image_id: SLAANESH_DEMIMONDE_ORIGINS.SPK
     text: STR_KHORNEGOR_UNGOR_ARMOR_UFOPEDIA
 
@@ -11785,6 +11764,8 @@ ufopaedia:
   - id: STR_TZCULTIST_FEM_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
     image_id: tzeentch_helot_armor_codex.SPK
     text: STR_TZCULTIST_FEM_ARMOR_UFOPEDIA
 
@@ -11804,6 +11785,8 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     image_id: tzacolyte_armorcodex.SPK
+    requires:
+      - STR_LIVE_CAPTURE_WITCH
     text: STR_TZEENTCH_CULT_WITCH_ARMOR_UFOPEDIA
 
   - id: STR_TZEENTCH_CULT_WITCH
@@ -11821,6 +11804,8 @@ ufopaedia:
   - id: STR_TZEENTCH_CULT_WITCH_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_WITCH
     image_id: tzwitch_armorcodex.SPK
     text: STR_TZEENTCH_CULT_WITCH_ARMOR_UFOPEDIA
 
@@ -11840,6 +11825,8 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     image_id: tzleader_armorcodex.SPK
+    requires:
+      - STR_LIVE_CAPTURE_WITCH_LEADER
     text: STR_TZEENTCH_CULT_WITCH_ARMOR_UFOPEDIA
 
   - id: STR_TZEENTCH_CULT_SUMMONER
@@ -11861,7 +11848,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_TZEENTCH_CULT_SUMMONER
+      - STR_LIVE_CAPTURE_WITCH_LEADER
     image_id: tzsummoner_armorcodex.SPK
     text: STR_TZEENTCH_CULT_WITCH_ARMOR_UFOPEDIA
 
@@ -11916,14 +11903,11 @@ ufopaedia:
   - id: STR_TZCULTIST_THRALL_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CULTIST
     image_id: tzzealot_armorcodex.SPK
     text: STR_TZCULTIST_THRALL_ARMOR_UFOPEDIA
 
-  - id: STR_TZEENTCH_COMBAT_SERVITOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: tzeentch_origin_generic.SPK
-    text: STR_TZEENTCH_COMBAT_SERVITOR_UFOPEDIA
   - id: STR_TZEENTCH_COMBAT_SERVITOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -11937,7 +11921,7 @@ ufopaedia:
     requires:
       - STR_TZEENTCH_COMBAT_SERVITOR
     image_id: tzeentch_origin_generic.SPK
-    text: STR_TZEENTCH_COMBAT_SERVITOR_ARMOR_UFOPEDIA
+    text: STR_TZEENTCH_COMBAT_SERVITOR_UFOPEDIA
 
   # Beastmen
   - id: STR_KHORNEGOR_UNGOR
@@ -11956,7 +11940,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNEGOR_UNGOR
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: KhorneungorArmorPedia.SPK
     text: STR_KHORNEGOR_UNGOR_ARMOR_UFOPEDIA
 
@@ -11976,7 +11960,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNE_GOR
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: KhorneungorArmorPedia.SPK
     text: STR_KHORNEGOR_GOR_ARMOR_UFOPEDIA
 
@@ -11995,6 +11979,8 @@ ufopaedia:
   - id: STR_SLAANGOR_BRAY_ARMORLIGHT
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: SlaanBraygorArmorPedia.SPK
     text: STR_SLAANGOR_BRAY_ARMORLIGHT_UFOPEDIA
 
@@ -12013,6 +11999,8 @@ ufopaedia:
   - id: STR_SLAANGOR_UNGOR_ARMORLIGHT
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: SlaanungorArmorPedia.SPK
     text: STR_SLAANUNGOR_GOR_ARMOR_UFOPEDIA
 
@@ -12031,6 +12019,8 @@ ufopaedia:
   - id: STR_SLAANGOR_GOR_ARMORMEDIUM
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: SlaangorArmorPedia.SPK
     text: STR_SLAANGOR_GOR_ARMOR_UFOPEDIA
 
@@ -12050,7 +12040,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANGOR_BULLGOR
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: SlaangorArmorPedia.SPK
     text: STR_SLAANGOR_BULLGOR_ARMOR_UFOPEDIA
 
@@ -12070,7 +12060,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANGOR_FIENDGOR
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: SlaanFiendgorArmorPedia.SPK
     text: STR_SLAANGOR_FIENDGOR_ARMOR_UFOPEDIA
 
@@ -12090,16 +12080,12 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_TZAANGOR
+      - STR_LIVE_CAPTURE_CHAOS_BEASTMAN
     image_id: tzaangor_armorcodex.SPK
     text: STR_TZAANGOR_ARMOR_UFOPEDIA
 
   # Squats
-  - id: STR_TRAITOR_SQUATS
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: traitorsquatsarmorcodex.SPK
-    text: STR_TRAITOR_SQUATS_UFOPEDIA
+
   - id: STR_TRAITOR_SQUATS_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12110,8 +12096,10 @@ ufopaedia:
   - id: STR_TRAITOR_SQUATS_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: traitorsquatsarmorcodex.SPK
-    text: STR_TRAITOR_SQUATS_ARMOR_UFOPEDIA
+    text: STR_TRAITOR_SQUATS_UFOPEDIA
 
   - id: STR_CULTIST_SQUATS
     type_id: 10
@@ -12128,14 +12116,11 @@ ufopaedia:
   - id: STR_CULTIST_SQUATS_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: cultistsquatsarmorcodex.SPK
     text: STR_CULTIST_SQUATS_ARMOR_UFOPEDIA
 
-  - id: STR_CULTIST_SQUATS_LEADER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: cultistsquatsleaderarmorcodex.SPK
-    text: STR_CULTIST_SQUATS_LEADER_UFOPEDIA
   - id: STR_CULTIST_SQUATS_LEADER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12146,14 +12131,11 @@ ufopaedia:
   - id: STR_CULTIST_SQUATS_ARMOR_LEADER
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: cultistsquatsleaderarmorcodex.SPK
-    text: STR_CULTIST_SQUATS_ARMOR_UFOPEDIA
+    text: STR_CULTIST_SQUATS_LEADER_UFOPEDIA
 
-  - id: STR_CHAOS_SQUATS
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: cultistsquatsarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_UFOPEDIA
   - id: STR_CHAOS_SQUATS_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12165,20 +12147,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_CHAOS_SQUATS
-      - STR_CHAOS_SQUATS_HEAVY
-      - STR_CHAOS_SQUATS_RANGER
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: chaossquatsarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_ARMOR_UFOPEDIA
+    text: STR_CHAOS_SQUATS_UFOPEDIA
 
-  - id: STR_CHAOS_SQUATS_EXO
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_CHAOS_SQUATS_EXO
-    image_id: chaossquatsexoarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_EXO_UFOPEDIA
   - id: STR_CHAOS_SQUATS_EXO_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12190,15 +12162,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_CHAOS_SQUATS_EXO
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: chaossquatsexoarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_EXOARMOR_UFOPEDIA
+    text: STR_CHAOS_SQUATS_EXO_UFOPEDIA
 
-  - id: STR_CHAOS_SQUATS_LEADER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: chaossquatsleaderarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_LEADER_UFOPEDIA
   - id: STR_CHAOS_SQUATS_LEADER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12210,9 +12177,9 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_CHAOS_SQUATS_LEADER
+      - STR_LIVE_CAPTURE_TG_SQUAT
     image_id: cultistsquatsleaderarmorcodex.SPK
-    text: STR_CHAOS_SQUATS_ARMOR_UFOPEDIA
+    text: STR_CHAOS_SQUATS_LEADER_UFOPEDIA
 
 #FOES.CHAOS.TG#          Traitor Guard
   - id: STR_CHAOS_PENETANTE
@@ -12230,6 +12197,8 @@ ufopaedia:
   - id: STR_CHAOS_PENETANTE_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG
     image_id: chaospenetantearmorcodex.SPK
     text: STR_CHAOS_PENETANTE_ARMOR_UFOPEDIA
 
@@ -12254,7 +12223,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SNAKEMAN
+      - STR_LIVE_CAPTURE_TG
     image_id: UP030.SPK
     text: STR_SNAKEMAN_UFOPEDIA
 
@@ -12262,7 +12231,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SNAKEMAN_ENGINEER
+      - STR_LIVE_CAPTURE_TG_VETERAN
     image_id: UP030.SPK
     text: STR_SNAKEMAN_UFOPEDIA
 
@@ -12281,14 +12250,11 @@ ufopaedia:
   - id: STR_TRAITORGUARD_OGRYN_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_OGRYN
     image_id: CHAOSOGRYArmorPedia.SPK
     text: STR_TRAITORGUARD_OGRYN_ARMOR_UFOPEDIA
 
-  - id: STR_TRAITORGUARD_OGRYN_REDBLACK
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: CHAOSOGRYArmorPedia.SPK
-    text: STR_TRAITORGUARD_OGRYN_REDBLACK_UFOPEDIA
   - id: STR_TRAITORGUARD_OGRYN_REDBLACK_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12299,8 +12265,10 @@ ufopaedia:
   - id: STR_TRAITORGUARD_OGRYN_REDBLACK_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_OGRYN
     image_id: CHAOSOGRYArmorPedia.SPK
-    text: STR_TRAITORGUARD_OGRYN_REDBLACK_ARMOR_UFOPEDIA
+    text: STR_TRAITORGUARD_OGRYN_REDBLACK_UFOPEDIA
 
   - id: STR_CHAOS_HERETEK
     type_id: 10
@@ -12401,17 +12369,6 @@ ufopaedia:
     text: STR_CHAOS_SENTINEL_UFOPEDIA
 
   # Blackstone Troopers
-  - id: STR_BLACKSTONE_STORMTROOPER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_BLACKSTONE_STORMTROOPER
-      - STR_BLACKSTONE_STORMTROOPER_HEAVY
-      - STR_BLACKSTONE_STORMTROOPER_SNIPER
-      - STR_BLACKSTONE_JUMPTROOPER
-    image_id: blackstonearmorcodex.SPK
-    text: STR_BLACKSTONE_STORMTROOPER_UFOPEDIA
   - id: STR_BLACKSTONE_STORMTROOPER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12438,12 +12395,9 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_BLACKSTONE_STORMTROOPER
-      - STR_BLACKSTONE_STORMTROOPER_HEAVY
-      - STR_BLACKSTONE_STORMTROOPER_SNIPER
-      - STR_BLACKSTONE_JUMPTROOPER
+      - STR_LIVE_CAPTURE_TG_STORMTROOPER
     image_id: blackstonearmorcodex.SPK
-    text: STR_BLACKSTONE_ARMOR_UFOPEDIA
+    text: STR_BLACKSTONE_STORMTROOPER_UFOPEDIA
 
   # Slaanesh Guard
   - id: STR_SLAANESH_GUARD_M
@@ -12462,22 +12416,17 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_GUARD_M
+      - STR_LIVE_CAPTURE_TG
     image_id: SLAANESH_FLAK_ARMOR_CODEX.SPK
     text: STR_SLAANGOR_FIENDGOR_ARMOR_UFOPEDIA
   - id: STR_SLAANESH_FLAK_F_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_GUARD_F
+      - STR_LIVE_CAPTURE_TG
     image_id: SLAANESH_FLAK_ARMOR_CODEX.SPK
     text: STR_SLAANESH_GUARD_UFOPEDIA
 
-  - id: STR_SLAANESH_GUARD_CARAPACE
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: SLAANESH_CARAPACE_ARMOR_CODEX.SPK
-    text: STR_SLAANESH_CARAPACE_UFOPEDIA
   - id: STR_SLAANESH_CARAPACE_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12489,18 +12438,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_GUARD_CARAPACE
+      - STR_LIVE_CAPTURE_TG_VETERAN
     image_id: SLAANESH_CARAPACE_ARMOR_CODEX.SPK
-    text: STR_SLAANGOR_FIENDGOR_ARMOR_UFOPEDIA
+    text: STR_SLAANESH_CARAPACE_UFOPEDIA
 
-  - id: STR_SLAANESH_GUARD_OFFICER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_GUARD_OFFICER
-    image_id: SLAANESH_OFFICER_ARMOR_CODEX.SPK
-    text: STR_SLAANESH_OFFICER_UFOPEDIA
   - id: STR_SLAANESH_OFFICER_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12512,18 +12453,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_GUARD_OFFICER
+      - STR_LIVE_CAPTURE_TG_LEADER
     image_id: SLAANESH_OFFICER_ARMOR_CODEX.SPK
-    text: STR_SLAANGOR_FIENDGOR_ARMOR_UFOPEDIA
+    text: STR_SLAANESH_OFFICER_UFOPEDIA
 
-  - id: STR_SLAANESH_GUARD_COMMISSAR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_GUARD_COMMISSAR
-    image_id: SLAANESH_OFFICER_ARMOR_CODEX.SPK
-    text: STR_SLAANESH_COMMISSAR_UFOPEDIA
   - id: STR_SLAANESH_COMMISSAR_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12535,9 +12468,9 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_GUARD_COMMISSAR
+      - STR_LIVE_CAPTURE_TG_LEADER
     image_id: SLAANESH_OFFICER_ARMOR_CODEX.SPK
-    text: STR_SLAANGOR_FIENDGOR_ARMOR_UFOPEDIA
+    text: STR_SLAANESH_COMMISSAR_UFOPEDIA
 
   - id: STR_SLAANESH_SONIC_PLATFORM_ORIGINS
     type_id: 10
@@ -12570,31 +12503,34 @@ ufopaedia:
   - id: STR_TZEENTCH_TRAITORGUARD_BASIC_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG
     image_id: tzeentch_guard_armor_codex.SPK
     text: STR_TZEENTCH_TRAITORGUARD_BASIC_ARMOR_UFOPEDIA
 
   - id: STR_TZEENTCH_TRAITORGUARD_HEAVY_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_VETERAN
     image_id: tzeentch_gunner_armor_codex.SPK
     text: STR_TZEENTCH_TRAITORGUARD_BASIC_ARMOR_UFOPEDIA
 
   - id: STR_TZEENTCH_TRAITORGUARD_SCOUT_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SCOUT
     image_id: tzeentch_scout_armor_codex.SPK
     text: STR_TZEENTCH_TRAITORGUARD_BASIC_ARMOR_UFOPEDIA
 
-  - id: STR_TZEENTCH_TRAITORGUARD_CARAPACE
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: tzeentch_carapace_armor_codex.SPK
-    text: STR_TZEENTCH_TRAITORGUARD_COMMANDO_UFOPEDIA
   - id: STR_TZEENTCH_TRAITORGUARD_CARAPACE_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SCOUT
     image_id: tzeentch_carapace_armor_codex.SPK
-    text: STR_TZEENTCH_TRAITORGUARD_COMMANDO_ARMOR_UFOPEDIA
+    text: STR_TZEENTCH_TRAITORGUARD_COMMANDO_UFOPEDIA
 
   - id: STR_TZEENTCH_TRAITORGUARD_COMMANDO_AUTOPSY
     type_id: 10
@@ -12609,11 +12545,6 @@ ufopaedia:
     image_id: tzeentch_commando_armor_codex.SPK
     text: STR_TZEENTCH_TRAITORGUARD_COMMANDO_ARMOR_UFOPEDIA
 
-  - id: STR_TZEENTCH_TRAITORGUARD_OFFICER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: tzeentch_officer_armor_codex.SPK
-    text: STR_TZEENTCH_TRAITORGUARD_OFFICER_UFOPEDIA
   - id: STR_TZEENTCH_TRAITORGUARD_OFFICER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12625,18 +12556,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_TZEENTCH_TRAITORGUARD_OFFICER
+      - STR_LIVE_CAPTURE_TG_LEADER
     image_id: tzeentch_officer_armor_codex.SPK
-    text: STR_TZEENTCH_TRAITORGUARD_OFFICER_ARMOR_UFOPEDIA
+    text: STR_TZEENTCH_TRAITORGUARD_OFFICER_UFOPEDIA
 
-  - id: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_TZEENTCH_BATTLE_SERVITOR_PLASMA
-    image_id: tzeentch_origin_generic.SPK
-    text: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA_UFOPEDIA
   - id: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12650,14 +12573,9 @@ ufopaedia:
     requires:
       - STR_TZEENTCH_BATTLE_SERVITOR_PLASMA
     image_id: tzeentch_origin_generic.SPK
-    text: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA_ARMOR_UFOPEDIA
+    text: STR_TZEENTCH_BATTLE_SERVITOR_PLASMA_UFOPEDIA
 
 #FOES.CHAOS.SIS#         Heretic Sisters
-  - id: STR_HERETIC_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPHereticSisterOrigins.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
   - id: STR_HERETIC_SISTER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12668,48 +12586,41 @@ ufopaedia:
   - id: STR_ADEPTAS_HERETIC_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
     image_id: UPHereticSisterArmor.SPK
-    text: STR_HERETIC_SISTERARMOR_UFOPEDIA
+    text: STR_HERETIC_SISTER_UFOPEDIA
 
-  - id: STR_HERETIC_SISTER_SERAPH
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPHereticSeraphimOrigins.SPK
-    text: STR_HERETIC_SISTER_SERAPH_UFOPEDIA
   - id: STR_HERETIC_SISTER_SERAPH_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_CHAOS_SERAPHIM_CORPSE
     image_id: UPHereticSeraphimOrigins.SPK
     text: STR_HERETIC_SERAPHIM_AUTOPSY_UFOPEDIA
   - id: STR_HERETIC_SERAPHIM_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_SERAPHIM
     image_id: UPHereticSeraphimArmor.spk
     text: STR_HERETIC_SERAPHIM_ARMOR_UFOPEDIA
 
-  - id: STR_HERETIC_SISTERHOSPITALLER
+  - id: STR_HERETIC_SISTERHOSPITALLER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_HERETIC_SISTER_CORPSE
     image_id: MEDICAEORIGINS.SPK
-    text: STR_HERETIC_HOSPITALLER_SISTER_UFOPEDIA
-  # - id: STR_HERETIC_SISTERHOSPITALLER_AUTOPSY
-    # type_id: 10
-    # section: STR_ALIEN_LIFE_FORMS
-    # requires:
-      # - STR_HERETIC_SISTER_CORPSE
-    # image_id: MEDICAEORIGINS.SPK
-    # text: STR_HERETIC_SISTER_AUTOPSY_UFOPEDIA
+    text: STR_HERETIC_SISTER_AUTOPSY_UFOPEDIA
   - id: STR_ADEPTAS_HERETIC_HOSPITALLER_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_SISTER
     image_id: 0ADH.SPK  # hospitaller image
-    text: STR_HERETIC_SISTER_SERAPH_UFOPEDIA
+    text: STR_HERETIC_HOSPITALLER_SISTER_UFOPEDIA
 
-  - id: STR_HERETIC_SISTERCANONESS
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: HereticCanonessArmor.SPK
-    text: STR_HERETIC_CANONESS_UFOPEDIA
   - id: STR_HERETIC_CANONESS_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12720,8 +12631,10 @@ ufopaedia:
   - id: STR_HERETIC_CANONESS_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_CHAOS_SUPERIOR
     image_id: HereticCanonessArmor.SPK
-    text: STR_HERETIC_CANONESS_ARMORPEDA
+    text: STR_HERETIC_CANONESS_UFOPEDIA
 
   - id: STR_FALLEN_SISTER_AUTOPSY
     type_id: 10
@@ -12730,19 +12643,13 @@ ufopaedia:
       - STR_ADEPTASZ_CORPSE
     image_id: SlaaneshSisterOrigins.SPK
     text: STR_FALLEN_SISTER_AUTOPSY_UFOPEDIA
-  - id: STR_FALLEN_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: SlaaneshFallenSisterArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
-  - id: STR_FALLEN_SISTERDAEMONETTE
-    type_id: 10
+  - id: STR_SLAAN_ADEPTAS_CORRUPTED_ARMOR
+    type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_DONTSHOWYET
-      - STR_FALLEN_SISTERDAEMONETTE
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
     image_id: SlaaneshFallenSisterArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
+    text: STR_FALLEN_SISTERARMOR_UFOPEDIA
 
   - id: STR_CHAOS_SISTER_SERAPH_AUTOPSY
     type_id: 10
@@ -12754,33 +12661,18 @@ ufopaedia:
   - id: STR_CHAOS_SERAPHIM
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_SERAPHIM
     image_id: SlaaneshSeraphimArmor.SPK
     text: STR_CHAOS_SERAPHIM_ARMOR_UFOPEDIA
 
-  - id: STR_HERETIC_SISTERCELEST
-    type_id: 10
+  - id: STR_SLAANCELESTIAN_ARMOR
+    type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_DONTSHOWYET
-      - STR_HERETIC_SISTERCELEST
+      - STR_LIVE_CAPTURE_SERAPHIM
     image_id: SlaaneshCelestialArmor.SPK
     text: STR_HERETIC_SISTER_SERAPH_UFOPEDIA
-
-  # Chaos Sisters
-  - id: STR_FILTHY_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTER_UFOPEDIA
-
-  - id: STR_SECONDBORN_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SECONDBORN_SISTER
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTER_UFOPEDIA
 
   # Khorne Sisters
   - id: STR_ROOKIEKHORNE_SISTER_AUTOPSY
@@ -12790,39 +12682,13 @@ ufopaedia:
       - STR_ADEPTAS_REDBLACK_CORPSE
     image_id: UPRookieKhorneSisterOrigins.SPK
     text: STR_RAGE_SISTER_AUTOPSY_UFOPEDIA
-  - id: STR_KHORNE_ROOKIESISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPRageSisterArmor.SPK
-    text: STR_KHORNE_ROOKIESISTER_UFOPEDIA
-
   - id: STR_ADEPTAS_KHORNENOVICEARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
     image_id: UPRookieKhorneSisterArmor.SPK
     text: STR_ROOKIE_KHORNESISTERARMOR_UFOPEDIA
-
-  - id: STR_KHORNE_ARMSISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPRageSisterArmor.SPK
-    text: STR_KHORNE_ARMSISTER_UFOPEDIA
-
-  - id: STR_ADEPTAS_KHORNEPARMOR
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPRageSisterArmor.SPK
-    text: STR_RAGE_SISTERARMOR_UFOPEDIA
-  - id: STR_ADEPTAS_KHORNEPARMOR_BLESSED
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPRageSisterArmor.SPK
-    text: STR_RAGE_SISTERARMOR_UFOPEDIA
-  - id: STR_ADEPTAS_KHORNEPARMOR_BLESSED2
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPRageSisterArmor.SPK
-    text: STR_RAGE_SISTERARMOR_UFOPEDIA
 
   - id: STR_RAGE_SISTER_AUTOPSY
     type_id: 10
@@ -12831,6 +12697,13 @@ ufopaedia:
       - STR_ADEPTA_KHORNESISTER_CORPSE
     image_id: UPSisterofRageOrigins.SPK
     text: STR_RAGE_SISTER_AUTOPSY_UFOPEDIA
+  - id: STR_ADEPTAS_KHORNEPARMOR
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
+    image_id: UPRageSisterArmor.SPK
+    text: STR_RAGE_SISTERARMOR_UFOPEDIA
 
   - id: STR_DEMI_VALKYRIA_AUTOPSY
     type_id: 10
@@ -12843,15 +12716,32 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNE_DEMIBLOODLETTERIN
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
+    image_id: DemiValkyriearmor.SPK
+    text: STR_KHORNE_VALKIA_ARMORBASIC_UFOPEDIA
+  - id: STR_KHORNESISTER_VALKIA_ARMOR
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
+    image_id: DemiValkyriearmor.SPK
+    text: STR_KHORNE_VALKIA_ARMORBASIC_UFOPEDIA
+  - id: STR_KHORNE_VALKIA_ARMORRETRIBUTOR
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
+    image_id: DemiValkyriearmor.SPK
+    text: STR_KHORNE_VALKIA_ARMORBASIC_UFOPEDIA
+  - id: STR_KHORNE_VALKIA_ARMORSUPERIOR
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SUPERIOR
     image_id: DemiValkyriearmor.SPK
     text: STR_KHORNE_VALKIA_ARMORBASIC_UFOPEDIA
 
-  - id: STR_KHORNE_SISREPENTINFERIOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: KhorneRepentiaArmorLight.SPK
-    text: STR_KHORNE_RETRIBUTOR_UFOPEDIA
+
   - id: STR_KHORNE_SISREPENTINFERIOR_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12862,19 +12752,11 @@ ufopaedia:
   - id: STR_KHORNE_REPENTIA_LIGHT
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
     image_id: KhorneRepentiaArmorLight.SPK
     text: STR_KHORNE_REPENTIA_LIGHT_UFOPEDIA
 
-  - id: STR_KHORNE_SISTERREPENT
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: KhorneRepentiaArmor.SPK
-    text: STR_KHORNE_RETRIBUTOR_UFOPEDIA
-  - id: STR_ADEPTAS_ARMOR_KHORNE_REPENTIA
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: KhorneRepentiaArmor.SPK
-    text: STR_ADEPTAS_ARMOR_KHORNE_REPENTIA_UFOPEDIA
   - id: STR_KHORNEREPENTIA_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12882,6 +12764,13 @@ ufopaedia:
       - STR_ADEPTAS_KHORNEREPENTIA_CORPSE
     image_id: UPKhorneRepentiaOrigins.SPK
     text: STR_RAGE_KHORNEREPENTIA_AUTOPSY_UFOPEDIA
+  - id: STR_ADEPTAS_ARMOR_KHORNE_REPENTIA
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
+    image_id: KhorneRepentiaArmor.SPK
+    text: STR_ADEPTAS_ARMOR_KHORNE_REPENTIA_UFOPEDIA
 
   - id: STR_KHORNE_SISTERASS
     type_id: 10
@@ -12899,15 +12788,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNE_SISTERASS
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
     image_id: KhorneAssassinArmor.SPK
     text: STR_KHORNE_REVENGEANCE_SUIT_UFOPEDIA
 
-  - id: STR_KHORNE_RETRIBUTOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPKHORNERetributorsArmor.SPK
-    text: STR_KHORNE_RETRIBUTOR_UFOPEDIA
   - id: STR_KHORNE_RETRIBUTOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12919,15 +12803,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNE_RETRIBUTOR
+      - STR_LIVE_CAPTURE_KHORNE_SISTER
     image_id: UPKHORNERetributorsArmor.SPK
     text: STR_KHORNE_RETRIBUTOR_ARMOR_UFOPEDIA
 
-  - id: STR_KHORNE_RETRIBUTOR_SUPERIOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPKhorneRetributorSuperiorArmor.SPK
-    text: STR_KHORNE_RETRIBUTOR_SUPERIOR_UFOPEDIA
   - id: STR_KHORNE_RETRIBUTOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -12939,64 +12818,19 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_KHORNE_RETRIBUTOR_SUPERIOR
+      - STR_LIVE_CAPTURE_KHORNE_SUPERIOR
     image_id: UPKhorneRetributorSuperiorArmor.SPK
     text: STR_KHORNE_RETRIBUTOR_ARMOR_SUPERIOR_UFOPEDIA
 
   # Nurgle Sisters
-    # Combine these via ufopediatype on the armors
-  - id: STR_NURGLE_SISTERBLESSED
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_NURGLE_SISTERBLESSED
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTER_UFOPEDIA
-  - id: STR_NURGLE_SISTERBLESSED_MIDWIFE
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_NURGLE_SISTERBLESSED_MIDWIFE
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTER_UFOPEDIA
-  - id: STR_NURGLE_SISTERBLESSED_NURGLING
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_NURGLE_SISTERBLESSED_NURGLING
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTER_UFOPEDIA
-
   - id: STR_ADEPTAS_NURGLE_BLESSED
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_NURGLE_SISTERBLESSED
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
     image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTERARMOR_UFOPEDIA
-  - id: STR_ADEPTAS_NURGLE_BLESSED_ARMOR_MIDWIFE
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_NURGLE_SISTERBLESSED_MIDWIFE
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTERARMOR_UFOPEDIA
-  - id: STR_ADEPTAS_NURGLE_BLESSED2
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_NURGLE_SISTERBLESSED_NURGLING
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTERARMOR_UFOPEDIA
+    text: STR_FILTHY_SISTER_UFOPEDIA
 
-  - id: STR_NURGLE_ADEPTAS_FILTHY_ARMOR
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTERARMOR_UFOPEDIA
   - id: STR_FILTHY_SISTER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13004,33 +12838,23 @@ ufopaedia:
       - STR_FILTH_SISTER_CORPSE
     image_id: UPNurgleSisterofFilth.SPK
     text: STR_FILTHY_SISTER_AUTOPSY_UFOPEDIA
-  - id: STR_NURGLE_ADEPTAS_FILTHY_ARMOR_BLESSED
+  - id: STR_NURGLE_ADEPTAS_FILTHY_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SECONDBORN_SISTER
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
     image_id: UPFilthySisterArmor.SPK
-    text: STR_FILTHY_SISTERARMOR_UFOPEDIA
+    text: STR_FILTHY_SISTER_UFOPEDIA
+
+  - id: STR_ADEPTAS_NURGLE
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_NURGLE_SISTER
+    image_id: UPFilthySisterArmor.SPK
+    text: STR_FILTHY_SISTER_UFOPEDIA
 
   # Slaanesh Sisters
-  - id: STR_SLAAN_ADEPTAS_CORRUPTED_ARMOR
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: SlaaneshFallenSisterArmor.SPK
-    text: STR_FALLEN_SISTERARMOR_UFOPEDIA
-  - id: STR_SLAAN_ADEPTAS_CORRUPTED_ARMOR_BLESSED
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_FALLEN_SISTERDAEMONETTE
-    image_id: SlaaneshFallenSisterArmor.SPK
-    text: STR_FALLEN_SISTERARMOR_UFOPEDIA
-
-  - id: STR_SLAANESH_PURPLESISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: SlaaneshPurpleSisterArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
 
   - id: STR_SLAANESH_PURPLESISTER_ORIGINS
     type_id: 10
@@ -13042,6 +12866,8 @@ ufopaedia:
   - id: STR_ADEPTAS_ARMORPURPLE
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
     image_id: SlaaneshPurpleSisterArmor.SPK
     text: STR_ADEPTAS_ARMORPURPLE_UFOPEDIA
 
@@ -13066,33 +12892,6 @@ ufopaedia:
     image_id: SlaaneshCelestialArmor.SPK
     text: STR_SLAANCELESTIAN_ARMOR_UFOPEDIA
 
-  - id: STR_ADEPTAS_SLAANDOM
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_SLAANESH_SISTERDOM
-      - STR_SLAANESH_SISTERDOM_SUPERIOR
-    image_id: SlaaneshDominionArmor.SPK
-    text: STR_ADEPTAS_SLAANDOM_UFOPEDIA
-  - id: STR_SLAANESH_SISTERDOM
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_SISTERDOM
-      - STR_SLAANESH_SISTERDOM_SUPERIOR
-    image_id: SlaaneshDominionArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
-
-  - id: STR_ADEPTAS_SLAANDOM_BLESSED
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_SLAANESH_FBLESSED
-      - STR_SLAANESH_FBLESSED_FALSE
-    image_id: SlaaneshDominionArmor.SPK
-    text: STR_ADEPTAS_SLAANDOM_UFOPEDIA
-
   - id: STR_SLAANESH_SISTERDOM_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13100,15 +12899,14 @@ ufopaedia:
       - STR_ADEPTAS_SLAANDOM_CORPSE
     image_id: SlaaneshDominionOrigin.SPK
     text: STR_SLAANESH_SISTERDOM_ORIGINS_UFOPEDIA
-
-  - id: STR_SLAANESH_SISTERPALATINE
-    type_id: 10
+  - id: STR_ADEPTAS_SLAANDOM
+    type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_SISTERPALATINE
-    image_id: SlaaneshPalatineArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
+    image_id: SlaaneshDominionArmor.SPK
+    text: STR_ADEPTAS_SLAANDOM_UFOPEDIA
+
   - id: STR_SLAANESH_SISTERPALATINE_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13120,18 +12918,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_SISTERPALATINE
+      - STR_LIVE_CAPTURE_SLAANESH_SISTER
     image_id: SlaaneshPalatineArmor.SPK
     text: STR_SLAANESH_PALATINE_ARMOR_UFOPEDIA
 
-  - id: STR_SLAANESH_SISDEVOTED
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_SISDEVOTED
-    image_id: SlaaneshDevotedArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
   - id: STR_SLAAN_DEVOTED_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13143,18 +12933,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_SISDEVOTED
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
     image_id: SlaaneshDevotedArmor.SPK
     text: STR_SLAAN_DEVOTED_SUIT_UFOPEDIA
 
-  - id: STR_SLAANESH_SISTERASS
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_SISTERASS
-    image_id: SlaaneshAssassinArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
   - id: STR_SLAANESH_SISTERASS_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13166,18 +12948,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_SISTERASS
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
     image_id: SlaaneshAssassinArmor.SPK
     text: STR_ADEPTAS_SLAANASSASSINARMOR_UFOPEDIA
 
-  - id: STR_SLAANESH_CHOSENASS
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_CHOSENASS
-    image_id: UPSLAANCHOSENASSARMOR.SPK
-    text: STR_SLAANESH_CHOSENASS_UFOPEDIA
   - id: STR_SLAANCHOSEN_ASSASSIN_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13189,18 +12963,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_CHOSENASS
+      - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
     image_id: UPSLAANCHOSENASSARMOR.SPK
     text: STR_SLAANCHOSEN_ASS_UFOPEDIA
 
-  - id: STR_SLAANESH_CHOSEN
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_CHOSEN
-    image_id: SlaaneshDemonPrincessArmor.SPK
-    text: STR_HERETIC_SISTER_UFOPEDIA
   - id: STR_SLAANESH_CHOSEN_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13217,16 +12983,6 @@ ufopaedia:
     text: STR_SLAANESH_DEMONPRINCESSARMOR_UFOPEDIA
 
   # Night Sisters
-  - id: STR_NIGHT_LORDS_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_NIGHT_LORDS_SISTER
-      - STR_NIGHT_LORDS_SISTER_SNIPER
-      - STR_NIGHT_LORDS_SISTER_SUPERIOR
-    image_id: NIGHTLORDS_SISTER_ARMOR_CODEX.SPK
-    text: STR_NIGHT_LORDS_SISTERS_UFOPEDIA
   - id: STR_NIGHT_LORD_SISTERS_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13238,11 +12994,9 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_NIGHT_LORDS_SISTER
-      - STR_NIGHT_LORDS_SISTER_SNIPER
-      - STR_NIGHT_LORDS_SISTER_SUPERIOR
+      - STR_LIVE_CAPTURE_NIGHT_SISTER
     image_id: NIGHTLORDS_SISTER_ARMOR_CODEX.SPK
-    text: STR_NIGHTLORD_CSM_ARMOR_UFOPEDIA
+    text: STR_NIGHT_LORDS_SISTERS_UFOPEDIA
 
 #FOES.CHAOS.CSM#         Chaos Marines
   - delete: STR_ETHEREAL_AUTOPSY
@@ -13272,6 +13026,8 @@ ufopaedia:
   - id: STR_MUTON_ARMOR2  # Chaos Terminator
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_MUTON_SOLDIER
     image_id: UP020.SPK
     text: STR_MUTON_UFOPEDIA
 
@@ -13287,6 +13043,8 @@ ufopaedia:
   - id: STR_FLOATER_ARMOR0  # Chaos Raptor
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_RAPTOR
     image_id: UP018.SPK
     text: STR_FLOATER_UFOPEDIA
 
@@ -13303,19 +13061,11 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_WARPTALON
+      - STR_LIVE_CAPTURE_RAPTOR
     image_id: UP098.SPK
     text: STR_WARPTALON_UFOPEDIA
 
   - delete: STR_ETHEREAL_LEADER
-  - id: STR_ETHEREAL_LEADER  # Chaos Sorcerer
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_ETHEREAL_LEADER
-    image_id: UP103.SPK
-    text: STR_SORCERER_UFOPEDIA
   - delete: STR_ETHEREAL_LEADER_AUTOPSY
   - id: STR_ETHEREAL_LEADER_AUTOPSY
     type_id: 10
@@ -13342,21 +13092,13 @@ ufopaedia:
     image_id: UP101.SPK
     text: STR_LORD_UFOPEDIA
 
-  - id: STR_CHAOS_MARINE_LEADER_RESEARCH
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_CHAOS_MARINE_LEADER
-    image_id: CSMLEADER_CODEX.SPK
-    text: STR_CHAOS_MARINE_LEADER_UFOPEDIA
   - id: STR_CHAOS_MARINE_LEADER_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
       - STR_CHAOS_MARINE_LEADER
     image_id: CSMLEADER_ARMOR_CODEX.SPK
-    text: STR_CHAOS_MARINE_LEADER_ARMOR_UFOPEDIA
+    text: STR_CHAOS_MARINE_LEADER_UFOPEDIA
 
   - delete: STR_OBLITERATOR
   - id: STR_OBLITERATOR
@@ -13427,14 +13169,6 @@ ufopaedia:
     text: STR_SECTOPOD_UFOPEDIA
 
   # Khorne
-  - delete: STR_MUTON_ARMORB
-  - id: STR_MUTON_ARMORB  # Khorne Berserker
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_KHRONE_TERRORIST
-    image_id: UP100.SPK
-    text: STR_BERSERKER_UFOPEDIA
   - delete: STR_KHRONE_TERRORIST_AUTOPSY
   - id: STR_KHRONE_TERRORIST_AUTOPSY
     type_id: 10
@@ -13443,6 +13177,14 @@ ufopaedia:
       - STR_BERSERKER_CORPSE
     image_id: UP089.SPK
     text: STR_KHRONE_TERRORIST_AUTOPSY_UFOPEDIA
+  - delete: STR_MUTON_ARMORB
+  - id: STR_MUTON_ARMORB  # Khorne Berserker
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_KHORNE_MARINE
+    image_id: UP100.SPK
+    text: STR_BERSERKER_UFOPEDIA
 
   - id: STR_KHORNE_DREADNOUGHT
     type_id: 10
@@ -13465,33 +13207,17 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_NURGLE_SOLDIER
+      - STR_LIVE_CAPTURE_NURGLE_MARINE
     image_id: UP108.SPK
     text: STR_NURGLE_UFOPEDIA
 
-  - id: MUTON_ARMORNURGLEA_BLESSED
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_NURGLE_SOLDIER_BLESSED
-    image_id: UP108.SPK
-    text: STR_NURGLE_UFOPEDIA
-
-  - id: STR_DEATHGUARD_SPEWER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_DEATHGUARD_SPEWER
-    image_id: PUTRIFIER_ORIGINS_CODEX.SPK
-    text: STR_DEATHGUARD_SPEWER_CODEX
   - id: STR_DEATHGUARD_SPEWER_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_DEATHGUARD_SPEWER
+      - STR_LIVE_CAPTURE_NURGLE_MARINE
     image_id: PUTRIFIER_ARMOR_CODEX.SPK
-    text: STR_NURGLE_UFOPEDIA
+    text: STR_DEATHGUARD_SPEWER_CODEX
 
   - id: STR_NURGLE_BLIGHT_HAULER_ORIGINS
     type_id: 10
@@ -13522,8 +13248,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_SLAANESH_SOLDIER
-      - STR_SLAANESH_MBLESSED
+      - STR_LIVE_CAPTURE_SLAANESH_MARINE
     image_id: UP106.SPK
     text: STR_SLAANESH_UFOPEDIA
 
@@ -13548,7 +13273,7 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_TZEENTCH_SOLDIER
+      - STR_LIVE_CAPTURE_TZEENTCH_MARINE
     image_id: UP110.SPK
     text: STR_TZEENTCH_UFOPEDIA
 
@@ -13556,48 +13281,25 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_TZEENTCH_BLESSED2
-      - STR_TZEENTCH_BLESSED
+      - STR_LIVE_CAPTURE_TZEENTCH_MARINE
     image_id: UP110.SPK
     text: STR_TZEENTCH_UFOPEDIA
 
   # Alpha Legion
-  - id: STR_ALPHA_SOLDIER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_ALPHA_SOLDIER
-      - STR_ALPHA_SOLDIER_CORVUS
-      - STR_ALPHA_SOLDIER_INFILTRATOR
-      - STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
-      - STR_ALPHA_SCOUT_ULTRA
-      - STR_ALPHA_SOLDIER_ULTRA
-      - STR_ALPHA_DEV_ULTRA
-      - STR_ALPHA_SARGE_ULTRA
-      - STR_ALPHA_ELOHIM
-      - STR_ALPHA_GREYKNIGHT
-      - STR_ALPHA_DAEMONETTE
-    image_id: alphalegionarmorcodex.SPK
-    text: STR_ALPHA_SOLDIER_UFOPEDIA
-  - id: STR_ALPHA_ARMOR
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_ALPHA_SOLDIER
-      - STR_ALPHA_SOLDIER_CORVUS
-      - STR_ALPHA_SOLDIER_INFILTRATOR
-      - STR_ALPHA_SOLDIER_CORVUS_INFILTRATOR
-    image_id: alphalegionarmorcodex.SPK
-    text: STR_ALPHA_SOLDIER_UFOPEDIA
   - id: STR_ALPHA_SOLDIER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
     requires:
       - STR_ALPHA_LEGION_CORPSE
-      - STR_ALPHA_LEGION_CORPSE_CORVUS
     image_id: ALPHALEGIONORIGINS.SPK
     text: STR_ALPHA_SOLDIER_AUTOPSY_UFOPEDIA
+  - id: STR_ALPHA_ARMOR
+    type_id: 15
+    section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_ALPHA_MARINE
+    image_id: alphalegionarmorcodex.SPK
+    text: STR_ALPHA_SOLDIER_UFOPEDIA
 
     # Consider redirecting disguised alpha legion armor articles directly to cultist armors via ufopediatype
   - id: STR_DARK_APOSTLE_ALPHA
@@ -13617,11 +13319,6 @@ ufopaedia:
     text: STR_SECTOID_UFOPEDIA
 
   # Black Legion
-  - id: STR_BLACK_LEGION_CSM_SOLDIER_RESEARCH
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: black_legion_csm_armor_codex.SPK
-    text: STR_BLACK_LEGION_CSM_SOLDIER_UFOPEDIA
   - id: STR_BLACK_LEGION_CSM_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13633,20 +13330,11 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_BLACK_LEGION_CSM_SOLDIER
+      - STR_LIVE_CAPTURE_CHAOS_MARINE
     image_id: black_legion_csm_armor_codex.SPK
-    text: STR_BLACK_LEGION_CSM_ARMOR_UFOPEDIA
+    text: STR_BLACK_LEGION_CSM_SOLDIER_UFOPEDIA
 
   # Iron Warriors
-  - id: STR_IRON_GUARD_SOLDIER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_IRON_GUARD_SOLDIER
-      - STR_IRON_GUARD_ENGINEER
-    image_id: DesertersArmor.SPK
-    text: STR_IRON_GUARD_UFOPEDIA
   - id: STR_IRON_GUARD_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13659,18 +13347,9 @@ ufopaedia:
     section: STR_ALIEN_LIFE_FORMS
     requires:
       - STR_IRON_GUARD_SOLDIER
-      - STR_IRON_GUARD_ENGINEER
     image_id: DesertersArmor.SPK
-    text: STR_IRON_WARRIOR_ARMOR_UFOPEDIA
+    text: STR_IRON_GUARD_UFOPEDIA
 
-  - id: STR_IRON_MAIDEN_SISTER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_IRON_MAIDEN_SISTER
-    image_id: IRON_MAIDEN_CODEX.SPK
-    text: STR_IRON_MAIDEN_UFOPEDIA
   - id: STR_IRON_MAIDEN_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13684,13 +13363,8 @@ ufopaedia:
     requires:
       - STR_IRON_MAIDEN_SISTER
     image_id: UPHereticSisterArmor.SPK
-    text: STR_IRON_WARRIOR_ARMOR_UFOPEDIA
+    text: STR_IRON_MAIDEN_UFOPEDIA
 
-  - id: STR_IRON_WARRIOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: IRONWARRIOR_ARMOR_CODEX.SPK
-    text: STR_IRON_WARRIOR_UFOPEDIA
   - id: STR_IRON_WARRIOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13701,14 +13375,11 @@ ufopaedia:
   - id: STR_IRON_WARRIOR_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_IRON_MARINE
     image_id: IRONWARRIOR_ARMOR_CODEX.SPK
-    text: STR_IRON_WARRIOR_ARMOR_UFOPEDIA
+    text: STR_IRON_WARRIOR_UFOPEDIA
 
-  - id: STR_IRON_BERSERKER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: IRONWARRIORS_BERSERKER_CODEX.SPK
-    text: STR_IRON_BERSERKER_UFOPEDIA
   - id: STR_IRON_BERSERKER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13720,18 +13391,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_IRON_BERSERKER
+      - STR_LIVE_CAPTURE_IRON_MARINE
     image_id: IRONBERSERKER_ARMOR_CODEX.SPK
-    text: STR_IRON_BERSERKER_ARMOR_UFOPAEDIA
+    text: STR_IRON_BERSERKER_UFOPEDIA
 
-  - id: STR_IRON_WARRIOR_WARSMITH
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_IRON_WARRIOR_WARSMITH
-    image_id: IRONWARRIOR_WARSMITH_ARMOR_CODEX.SPK
-    text: STR_IRON_WARRIOR_WARSMITH_UFOPEDIA
   - id: STR_IRON_WARRIOR_WARSMITH_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13745,13 +13408,8 @@ ufopaedia:
     requires:
       - STR_IRON_WARRIOR_WARSMITH
     image_id: IRONWARRIOR_WARSMITH_ARMOR_CODEX.SPK
-    text: STR_IRON_WARRIOR_WARSMITH_ARMOR_UFOPEDIA
+    text: STR_IRON_WARRIOR_WARSMITH_UFOPEDIA
 
-  - id: STR_IRON_TERMINATOR
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: IRONWARRIORS_TERMINATOR_CODEX.SPK
-    text: STR_IRON_TERMINATOR_UFOPEDIA
   - id: STR_IRON_TERMINATOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13765,14 +13423,9 @@ ufopaedia:
     requires:
       - STR_IRON_TERMINATOR
     image_id: IRONTERMINATOR_ARMOR_CODEX.SPK
-    text: STR_IRON_TERMINATOR_ARMOR_UFOPEDIA
+    text: STR_IRON_TERMINATOR_UFOPEDIA
 
   # Night Lords
-  - id: STR_NIGHTLORDS_CSM_SOLDIER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: NIGHTLORDSCSM_ARMOR_CODEX.SPK
-    text: STR_NIGHTLORDS_CSM_SOLDIER_UFOPEDIA
   - id: STR_NIGHTLORDS_CSM_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13784,15 +13437,10 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_NIGHTLORDS_CSM_SOLDIER
+      - STR_LIVE_CAPTURE_NIGHT_MARINE
     image_id: NIGHTLORDSCSM_ARMOR_CODEX.SPK
     text: STR_NIGHTLORD_CSM_ARMOR_UFOPEDIA
 
-  - id: STR_NIGHTLORDS_CSM_LEADER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: NIGHTLORDSCSM_LEADER_ARMOR_CODEX.SPK
-    text: STR_NIGHTLORDS_CSM_LEADER_UFOPEDIA
   - id: STR_NIGHTLORDS_CSM_LEADER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13806,13 +13454,8 @@ ufopaedia:
     requires:
       - STR_NIGHTLORDS_CSM_LEADER
     image_id: NIGHTLORDSCSM_LEADER_ARMOR_CODEX.SPK
-    text: STR_NIGHTLORD_CSM_LEADER_ARMOR_UFOPEDIA
+    text: STR_NIGHTLORDS_CSM_LEADER_UFOPEDIA
 
-  - id: STR_NIGHTLORDS_RAPTOR_RESEARCH
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: nightlord_raptor_armor_codex.SPK
-    text: STR_NIGHTLORDS_RAPTOR_UFOPEDIA
   - id: STR_NIGHTLORDS_RAPTOR_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -13825,16 +13468,15 @@ ufopaedia:
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_NIGHTLORDS_RAPTOR_RESEARCH
+      - STR_LIVE_CAPTURE_RAPTOR
     image_id: nightlord_raptor_armor_codex.SPK
-    text: STR_NIGHTLORD_RAPTOR_ARMOR0_UFOPEDIA
+    text: STR_NIGHTLORDS_RAPTOR_UFOPEDIA
 
-  - id: STR_NIGHTLORDS_WARPTALON_RESEARCH
-    type_id: 10
+  - id: STR_NIGHTLORDS_WARPTALON_ARMOR
+    type_id: 15
     section: STR_ALIEN_LIFE_FORMS
     requires:
-      - STR_DONTSHOWYET
-      - STR_NIGHTLORDS_WARPTALON_RESEARCH
+      - STR_LIVE_CAPTURE_RAPTOR
     image_id: nightlord_warptalon_armor_codex.SPK
     text: STR_NIGHTLORDS_WARPTALON_UFOPEDIA
   - id: STR_NIGHTLORDS_WARPTALON_AUTOPSY
@@ -13844,13 +13486,6 @@ ufopaedia:
       - STR_NIGHTLORD_WARPTALON_CORPSE
     image_id: nightlordwarptaloncodex.SPK
     text: STR_NIGHTLORDS_WARPTALON_AUTOPSY_UFOPEDIA
-  - id: STR_NIGHTLORDS_WARPTALON_ARMOR
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_NIGHTLORDS_WARPTALON_RESEARCH
-    image_id: nightlord_warptalon_armor_codex.SPK
-    text: STR_NIGHTLORD_RAPTOR_ARMOR0_UFOPEDIA
 
   # Word Bearers
   - id: STR_WORDBEARER_GALVWARRIOR
@@ -14358,13 +13993,6 @@ ufopaedia:
       - STR_DEMI_DAEMONETTE_FALSE
     image_id: Demidaemonettearmor.SPK
     text: STR_Demidaemonette_ARMOR_UFOPEDIA
-  - id: STR_DEMI_DAEMONETTE_ARMOR_BLESSED
-    type_id: 15
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DEMI_DAEMONETTE
-    image_id: Demidaemonettearmor.SPK
-    text: STR_Demidaemonette_ARMOR_UFOPEDIA
 
   - id: STR_DIRE_DAEMONETTE
     type_id: 10
@@ -14389,22 +14017,6 @@ ufopaedia:
     image_id: DIREDAEMONETTE_ORIGINS.SPK
     text: STR_KHORNEGOR_UNGOR_ARMOR_UFOPEDIA
 
-  - id: STR_SLAANESH_ANOINTED
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_ANOINTED
-    image_id: SlaanAnointedOrigins.SPK
-    text: STR_SLAANESHANOINTED_AUTOPSY_UFOPEDIA
-  - id: STR_SLAANESH_ANOINTED_MISSILE
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    requires:
-      - STR_DONTSHOWYET
-      - STR_SLAANESH_ANOINTED_MISSILE
-    image_id: SlaanAnointedOrigins.SPK
-    text: STR_SLAANESHANOINTED_AUTOPSY_UFOPEDIA
   - id: STR_SLAANESHANOINTED_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -14756,11 +14368,6 @@ ufopaedia:
     text: STR_GANGERBASE_SOLDIER_AI_UFOPEDIA
 
 #FOES.RENE.DESERT#       Deserters and Instigators
-  - id: STR_DESERTER_SOLDIER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: DesertersArmor.SPK
-    text: STR_DESERTER_SOLDIER_ARMOR_CODEX
   - id: STR_DESERTER_SOLDIER_ORIGINS
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -14769,8 +14376,10 @@ ufopaedia:
   - id: STR_DESERTER_SOLDIER_FEM_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG
     image_id: DesertersArmor.SPK
-    text: STR_DESERTER_SOLDIER_ARMOR_UFOPEDIAINFO
+    text: STR_DESERTER_SOLDIER_ARMOR_CODEX
 
   - id: STR_DESERTER_SCOUT_FEMALE
     type_id: 10
@@ -14780,14 +14389,11 @@ ufopaedia:
   - id: STR_DESERTER_SCOUT_FEMALE_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_SCOUT
     image_id: DeserterScoutArmor.SPK
     text: STR_DESERTER_SOLDIER_ARMOR_UFOPEDIAINFO
 
-  - id: STR_DESERTER_GREEN_FLAK
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: DesertersArmor.SPK
-    text: STR_DESERTER_GREEN_FLAK_UFOPEDIA
   - id: STR_DESERTER_GREEN_FLAK_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -14796,8 +14402,10 @@ ufopaedia:
   - id: STR_DESERTER_GUARD_BASIC_FLAKARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG
     image_id: DesertersArmor.SPK
-    text: STR_DESERTER_GUARD_BASIC_FLAKARMOR_UFOPEDIA
+    text: STR_DESERTER_GREEN_FLAK_UFOPEDIA
 
   - id: STR_DESERTER_GREEN_SHIRT
     type_id: 10
@@ -14807,14 +14415,11 @@ ufopaedia:
   - id: STR_DESERTER_GUARD_BASIC_GREENSHIRT
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG
     image_id: DesertersArmor.SPK
     text: STR_DESERTER_GUARD_BASIC_FLAKARMOR_UFOPEDIA
 
-  - id: STR_DESERTER_OFFICER
-    type_id: 10
-    section: STR_ALIEN_LIFE_FORMS
-    image_id: tzeentch_officer_armor_codex.SPK
-    text: STR_DESERTER_OFFICER_UFOPEDIA
   - id: STR_DESERTER_OFFICER_AUTOPSY
     type_id: 10
     section: STR_ALIEN_LIFE_FORMS
@@ -14825,8 +14430,10 @@ ufopaedia:
   - id: STR_DESERTER_GUARD_OFFICER_ARMOR
     type_id: 15
     section: STR_ALIEN_LIFE_FORMS
+    requires:
+      - STR_LIVE_CAPTURE_TG_LEADER
     image_id: tzeentch_officer_armor_codex.SPK
-    text: STR_DESERTER_OFFICER_ARMOR_UFOPEDIA
+    text: STR_DESERTER_OFFICER_UFOPEDIA
 
 #FOES.XENO#            Xenos Units
 #FOES.XENO.ELDAR#        Eldar
