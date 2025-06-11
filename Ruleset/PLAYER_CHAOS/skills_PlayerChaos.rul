@@ -1,4 +1,6 @@
 # Skills alongside any 0 size token items for them to call on. Mostly for Chaos Sorcery
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul  # Remember to add tag definitions to same file as item/armor rulesets!
 
 skills:
   - type: STR_SKILL_PSI_PANIC
@@ -31,6 +33,33 @@ skills:
     compatibleWeapons:
       - STR_WARPFIRE_FLAMER_TOKEN
     checkHandsOnly: false
+
+  # Witch Specific Skills
+  - type: STR_TZEENTCH_GLIMMERING_WEAPON_SNAP_SKILL
+    targetMode: 8  # Snap
+    costUse:
+      time: 55  # It's kinda cracked
+    compatibleWeapons:
+      - STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE
+    checkHandsOnly: false
+  - type: STR_TZEENTCH_GLIMMERING_WEAPON_AUTO_SKILL
+    targetMode: 7  # Auto
+    costUse:
+      time: 80
+    compatibleWeapons:
+      - STR_TZEENTCH_GLIMMERING_WEAPON_RAPIDFIRE
+    checkHandsOnly: false
+
+  # Chaos Sorcery Skills
+  - type: STR_SKILL_LESSER_WARPFIRE_SORCERY
+    targetMode: 8
+    costUse:
+      time: 50
+    compatibleWeapons:
+      - STR_LESSER_WARPFIRE_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
 
 items:
   - &SKILL_TOKEN
@@ -103,6 +132,61 @@ items:
       TileDamageMethod: 2
       IgnoreSelfDestruct: false
       IgnoreOverKill: true
+    clipSize: -1
+    bulletSpeed: 50
+    explosionSpeed: 10
+    tags:
+      INFECTION_DAMAGE_PERCENT: 50  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: STR_LESSER_WARPFIRE_TOKEN
+    categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
+    refNode: *SKILL_TOKEN
+    vaporColorSurface: 15  # pink warpfire
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    hitSound: {mod: 40k, index: 12}
+    powerForAnimation: 48
+    hitAnimation: 2140
+    accuracyAuto: 60
+    accuracySnap: 75
+    tuAuto: 33
+    tuSnap: 20
+    battleType: 1
+    twoHanded: false
+    arcingShot: true
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    confSnap:
+      shots: 2
+    autoRange: 7
+    snapRange: 9  # longer than normal range
+    maxRange: 12
+    dropoff: 5
+    autoShots: 6
+    power: 20
+    damageType: 2
+    damageAlter:
+      IgnoreDirection: false
+      FireBlastCalc: false
+      FixRadius: 2
+      RandomType: 1  # Swingy damage
+      ToArmorPre: 0.2
+      RandomArmorPre: true  # random armor degradation
+      ArmorEffectiveness: 0.7  # ephermal and magical; passes through most armor with ease
+      ToMorale: 0.5  # Tzeentch attacks assail the mind and are stunning
+      ToHealth: 1.0
+      ToArmor: 0.0
+      ToStun: 0.5  # Tzeentch attacks assail the mind and are stunning
+      ToTime: 0.4  # Tzeentch attacks assail the mind and are stunning
+      ToTile: 2.0
+      ToItem: 0.5
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: true
+    damageBonus:
+      psiStrength: 0.2  # magical
     clipSize: -1
     bulletSpeed: 50
     explosionSpeed: 10

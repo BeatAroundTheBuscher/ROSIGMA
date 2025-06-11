@@ -1912,6 +1912,7 @@ armors:
   # General Khorne
   - &PLAYER_CHAOS_CULTIST_ARMOR
     type: STR_KHORNE_CULTIST_ARMOR_PLAYER
+    storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 20
     forcedTorso: 1
@@ -1946,10 +1947,11 @@ armors:
     spriteSheet: CULTIST_ASPIRING_BS.PCK
     corpseBattle:
       - STR_KHORNE_CULTIST_CORPSE_PLAYER
+    requires: STR_KHORNE_DEVOTION
     units:
       - STR_KHORNE_CULTIST_PLAYER
       - STR_CHAOSCULT_SOLDIER_LV2
-    requires: STR_KHORNE_DEVOTION
+    storeItem: STR_NONE
     frontArmor: 35
     sideArmor: 25
     tags:
@@ -1960,6 +1962,46 @@ armors:
       INTIMIDATION_RESISTANCE: 25
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 3
       YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 3
+
+  - type: STR_KHORNGOR_ARMOR_PLAYER
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    heatVision: 25
+    spriteSheet: KHORNEUNGOR.PCK
+    spriteInv: KhorngorInv.SPK
+    allowInv: true
+    corpseBattle:
+      - STR_KHORNGOR_CORPSE_PLAYER
+    units:
+      - STR_KHORNGOR_PLAYER
+    storeItem: STR_NONE
+    customArmorPreviewIndex: 1074
+    frontArmor: 40
+    sideArmor: 35
+    rearArmor: 25
+    underArmor: 25
+    drawingRoutine: 0
+    damageModifier:  # BEASTMEN ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 1.3  # FLAMES
+      - 0.9  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+    specialWeapon: STR_OGRYN_UNARMED
+    loftempsSet: [4]
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 4
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 4
 
   - type: STR_KHORNE_OGRYN_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -2204,6 +2246,7 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
     requires: STR_SLAANESH_DEVOTION
     spriteSheet: SLAANCULTIST_BS.PCK
+    forcedTorso: 0
     spriteInv: SLAANCULTIST_PLAYER_INV
     corpseBattle:
       - STR_SLAANESH_CULTIST_CORPSE_PLAYER
@@ -2222,6 +2265,7 @@ armors:
     spriteSheet: SLAANGOR.PCK
     spriteInv: SlaangorInv.SPK
     forcedTorso: 1
+    allowsKneeling: false
     customArmorPreviewIndex: 1072
     units:
       - STR_SLAANGOR_PLAYER
@@ -2244,6 +2288,7 @@ armors:
       - 1.1  # MELEE
       - 1.0  # ACID
       - 0.0  # SMOKE
+    specialWeapon: STR_OGRYN_UNARMED
     loftempsSet: [3]
     tags:
       INFECTION_RESIST: 33  # infection resistant
@@ -2264,11 +2309,52 @@ armors:
     spriteInv: CULTISTTZEENTCH_INV.SPK
     corpseBattle:
       - STR_TZEENTCH_CULTIST_CORPSE_PLAYER
+    builtInWeapons:
+      - STR_LESSER_WARPFIRE_TOKEN
     tags:
       INFECTION_RESIST: 33  # infection resistant
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_TZEENTCH: 1
+
+  - type: STR_TZAANGOR_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 30
+    spriteSheet: tzaangor_bs.PCK
+    spriteInv: TZAANGOR_INV.SPK
+    customArmorPreviewIndex: 1075
+    forcedTorso: 1
+    allowInv: true
+    corpseBattle:
+      - STR_TZAANGOR_CORPSE_PLAYER
+    builtInWeapons:
+      - STR_LESSER_WARPFIRE_TOKEN
+    frontArmor: 50
+    sideArmor: 40
+    rearArmor: 20
+    underArmor: 40
+    drawingRoutine: 0
+    damageModifier:  # BEASTMEN ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 1.3  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.3  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+    specialWeapon: STR_OGRYN_UNARMED
+    loftempsSet: [3]
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 33  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
+      UNIT_TYPE_MUTANT: 1
 
   - type: STR_TZEENTCH_CULT_WITCH_ARMOR_PLAYER
     ufopediaType: STR_TZEENTCH_CULT_WITCH_ARMOR
