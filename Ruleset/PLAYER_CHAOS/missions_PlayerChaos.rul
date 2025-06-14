@@ -14,7 +14,9 @@ missionScripts:
       STR_ALIENS_ONLY: true
   - type: secondInquisitionOutpost  # So that two get made immediately
     refNode: *starterInquisitionOutposts
-  - type: firstInquisitionHQ
+
+  - &SPAWN_HQ
+    type: firstInquisitionHQNorthAmerica
     missionWeights:
       0:
         STR_INQUISITION_HQ_BUILD_INITIAL: 100
@@ -23,6 +25,118 @@ missionScripts:
     randomDelay: 1440 # Up to 1 weeks random delay
     executionOdds: 100
     maxRuns: 1  # Runs once after Chaos Corruption
+    varName: starterInquisitionHQ
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+  - type: firstInquisitionHQNorthAmerica
+    label: 2000
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_NORTH_AMERICA: false
+  - type: firstInquisitionHQEurope
+    refNode: *SPAWN_HQ
+    label: 2001
+    conditionals: [-2000]
+    regionWeights:
+      0:
+        STR_EUROPE: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_EUROPE: false
+  - type: firstInquisitionHQSouthAmerica
+    refNode: *SPAWN_HQ
+    label: 2002
+    conditionals: [-2000, -2002]
+    regionWeights:
+      0:
+        STR_SOUTH_AMERICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTH_AMERICA: false
+  - type: firstInquisitionHQNorthAfrica
+    refNode: *SPAWN_HQ
+    label: 2003
+    conditionals: [-2000, -2001, -2002]
+    regionWeights:
+      0:
+        STR_NORTH_AFRICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_NORTH_AFRICA: false
+  - type: firstInquisitionHQSouthernAfrica
+    refNode: *SPAWN_HQ
+    label: 2004
+    conditionals: [-2000, -2001, -2002, -2003]
+    regionWeights:
+      0:
+        STR_SOUTHERN_AFRICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTHERN_AFRICA: false
+  - type: firstInquisitionHQCentralAsia
+    refNode: *SPAWN_HQ
+    label: 2005
+    conditionals: [-2000, -2001, -2002, -2003, -2004]
+    regionWeights:
+      0:
+        STR_CENTRAL_ASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_CENTRAL_ASIA: false
+  - type: firstInquisitionHQSouthEastAsia
+    refNode: *SPAWN_HQ
+    label: 2006
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005]
+    regionWeights:
+      0:
+        STR_SOUTH_EAST_ASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTH_EAST_ASIA: false
+  - type: firstInquisitionHQAustralasia
+    refNode: *SPAWN_HQ
+    label: 2007
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006]
+    regionWeights:
+      0:
+        STR_AUSTRALASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_AUSTRALASIA: false
+  - type: firstInquisitionHQArctic
+    refNode: *SPAWN_HQ
+    label: 2008
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007]
+    regionWeights:
+      0:
+        STR_ARCTIC: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_ARCTIC: false
+  - type: firstInquisitionHQAntarctica
+    refNode: *SPAWN_HQ
+    label: 2009
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007, -2008]
+    regionWeights:
+      0:
+        STR_ANTARCTICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_ANTARCTICA: false
+  - type: firstInquisitionHQAnywhere
+    # Fallback, for if the player somehow had a base in every region at some point
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007, -2008, -2009]
+    missionWeights:
+      0:
+        STR_INQUISITION_HQ_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 1
     varName: starterInquisitionHQ
     researchTriggers:
       STR_ALIENS_ONLY: true
@@ -105,7 +219,7 @@ alienMissions:
     retaliationOdds: 0
     operationType: 0
     spawnZone: 4
-    objective: 1
+    objective: 2
     endlessInfiltration: false
     siteType: STR_INQUISITION_HQ
     points: 0

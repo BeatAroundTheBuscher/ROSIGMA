@@ -26,6 +26,12 @@ extended:
           unit.reduceByResistance resistanceValue damaging_type;
           # debug_log "ROSIGMA_hU_resist_penetration; offset 1: Armor Effectiveness:" resistanceValue;
 
+          # sanity check for later div lines  # can't divide by zero
+          # Example: STR_TARGET_SOLDIER_GUARD "Target Beacons" with armor "TARGET_INVINCIBLE" (see OXCE_40k)
+          if eq resistanceValue 0;
+            return power part side;
+          end;
+
           if gt resistanceValue 99; #if there's no damage resistance, abort
             return power part side;
           end;
