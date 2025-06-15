@@ -1260,6 +1260,8 @@ items:
     vaporColorSurface: 18  # purple haze
     vaporDensitySurface: 1
     vaporProbabilitySurface: 100
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 95 #Warp Weapon
 
   - type: STR_SONIC_GUN
     categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR]
@@ -1275,7 +1277,7 @@ items:
     clipSize: -1
     explosionHitSound: {mod: 40k, index: 863}  # Sound
     hitAnimation: {mod: 40k, index: 96}  # XSOUND
-    power: 60
+    power: 66
     damageType: 3
     damageAlter:  # DA Sound
       ToHealth: 1.0
@@ -1284,9 +1286,10 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 3
     powerRangeReduction: 5
@@ -1308,6 +1311,8 @@ items:
   - &STR_SONIC_WEAPON_TEMPLATE
     type: STR_SONIC_CANON  #                        11790
     categories: [STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
     size: 0.3
     dropoff: 5  # chaos
     costSell: 20000
@@ -1322,9 +1327,10 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 3
     powerRangeReduction: 5
@@ -1352,7 +1358,7 @@ items:
     dropoff: 6  # chaos
     costSell: 15000
     weight: 6
-    power: 75
+    power: 80
     damageType: 3
     damageAlter:  # DA Sound
       ToHealth: 1.0
@@ -1361,14 +1367,16 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 3
     powerRangeReduction: 5
     powerRangeThreshold: 18
-    tuSnap: 25
+    accuracySnap: 70
+    tuSnap: 21
     snapRange: 14
     twoHanded: false
     invWidth: 2
@@ -1377,9 +1385,18 @@ items:
       REACTION_MULTIPLIER: 200
       DAMAGE_RESIST_PENETRATION_PERCENT: 50
 
-  - type: STR_FIXED_SONIC_CANON  # CHAOSBEHEMOTH
+  - &STR_SONIC_CANNON_TEMPLATE
+    type: STR_FIXED_SONIC_CANNON  # CHAOSBEHEMOTH
     refNode: *STR_SONIC_WEAPON_TEMPLATE
     categories: [STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
+    requires:
+      - STR_ALIENS_ONLY
+      - STR_HEAVY_PLASMA_DEP1
+    bigSprite: {mod: 40k, index: 454}
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 861}
+    explosionHitSound: {mod: 40k, index: 863}  # Sound
+    hitAnimation: {mod: 40k, index: 96}  # XSOUND
     dropoff: 4  # mounted weapon
     costSell: 30000
     weight: 10
@@ -1392,17 +1409,18 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 4
     powerRangeReduction: 5
     powerRangeThreshold: 25
-    accuracySnap: 75
+    accuracySnap: 80
     accuracyAuto: 55
     tuSnap: 50
-    tuAuto: 40
+    tuAuto: 50
     snapRange: 25
     autoRange: 15
     autoShots: 3
@@ -1415,15 +1433,13 @@ items:
     fixedWeapon: true
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
-      ITEM_SNAP_FLAT_POWER_BONUS: 50
+      ITEM_SNAP_FLAT_POWER_BONUS: 66
 
   - type: STR_BLASTMASTER
-    refNode: *STR_SONIC_WEAPON_TEMPLATE
-    categories: [STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
+    refNode: *STR_SONIC_CANNON_TEMPLATE
     bigSprite: 3177
     floorSprite: 3178
     handSprite: 3804
-    dropoff: 4  # mounted weapon
     costSell: 30000
     weight: 60
     power: 100  # mounted weapon
@@ -1435,30 +1451,20 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 4
-    powerRangeReduction: 5
-    powerRangeThreshold: 25
-    accuracySnap: 75
-    accuracyAuto: 55
-    tuSnap: 50
-    tuAuto: 40
-    snapRange: 25
-    autoRange: 15
-    autoShots: 3
-    confSnap:
-      name: STR_SINGLE_FREQUENCY
-    confAuto:
-      name: STR_VARIED_FREQUENCY
     twoHanded: true
     blockBothHands: true
-    kneelBonus: 150
+    recover: true
+    fixedWeapon: false
+    kneelBonus: 130
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
-      ITEM_SNAP_FLAT_POWER_BONUS: 50
+      ITEM_SNAP_FLAT_POWER_BONUS: 66
       REACTION_MULTIPLIER: 50 #Heavy weapon
       REACTION_PENALTY_KNEELING_BYPASS: 1
       ITEM_RECOIL: 60
@@ -1466,23 +1472,9 @@ items:
 
 
   - type: STR_SLAANESH_CHIMERA_WEAPON_SONIC_CANON  #                        11790
-    refNode: *STR_SONIC_WEAPON_TEMPLATE
-    categories: [STR_CAT_DEVASTATOR, STR_CAT_SLAANESH]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_HEAVY_PLASMA_DEP1
+    refNode: *STR_SONIC_CANNON_TEMPLATE
     size: 1.0
-    bigSprite: {mod: 40k, index: 454}
-    bulletSprite: {mod: 40k, index: 11}
-    fireSound: {mod: 40k, index: 861}
-    explosionHitSound: {mod: 40k, index: 863}  # Sound
-    hitAnimation: {mod: 40k, index: 96}  # XSOUND
-    dropoff: 4  # mounted weapon
     weight: 100
-    confAuto:
-      name: STR_VARIED_FREQUENCY
-    confSnap:
-      name: STR_SINGLE_FREQUENCY
     battleType: 1
     costAuto:
       time: 1
@@ -1499,9 +1491,10 @@ items:
       ToEnergy: 2.0
       ToMorale: 2.0
       ToArmorPre: 0.3
-      ToArmor: 0.0
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
       ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 4
     powerRangeReduction: 5
@@ -1519,7 +1512,7 @@ items:
     armor: 50
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
-      ITEM_SNAP_FLAT_POWER_BONUS: 50
+      ITEM_SNAP_FLAT_POWER_BONUS: 66
 
   - &STR_SONIC_MUNITION_TEMPLATE
     type: STR_SONIC_GRENADE  # 4010
@@ -1538,8 +1531,11 @@ items:
       ToStun: 2.0
       ToEnergy: 2.0
       ToMorale: 2.0
-      ToTile: 0.75
+      ToArmorPre: 0.3
+      ToArmor: 0.0 #deals damage on the way in
       ArmorEffectiveness: 0.7
+      ToTile: 0.75
+      ToItem: 0.75
       RandomType: 6
       FixRadius: 4
     explosionHitSound: 2118  # Sonichit
@@ -1566,7 +1562,7 @@ items:
     explosionHitSound: {mod: 40k, index: 863}  # Sound
     bulletSprite: {mod: 40k, index: 11}
     hitAnimation: {mod: 40k, index: 96}
-    power: 80
+    power: 90
     damageType: 3
     damageAlter:  # DA Sound
       ToHealth: 1.0
@@ -1597,7 +1593,7 @@ items:
     bigSprite: 2326
     floorSprite: 2431
     handSprite: {mod: 40k, index: 448}
-    power: 100
+    power: 110
     damageType: 3
     damageAlter:  # DA Sound
       ToHealth: 1.0
