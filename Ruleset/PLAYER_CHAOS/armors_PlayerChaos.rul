@@ -2126,6 +2126,76 @@ armors:
         end;
         return;
 
+  - type: STR_PESTIGOR_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    heatVision: 20
+    spriteSheet: PESTIGOR_BS.PCK
+    spriteInv: PESTIGOR_INV.SPK
+    customArmorPreviewIndex: 1066
+    forcedTorso: 1
+    allowInv: true
+    corpseBattle:
+      - STR_PESTIGOR_CORPSE_PLAYER
+    units:
+      - STR_PESTIGOR_PLAYER
+    frontArmor: 40
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 40
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    drawingRoutine: 0
+    damageModifier:
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.3  # FLAMES
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -75
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 4;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
 
   - type: STR_NURGLE_OGRYN_ARMOR_PLAYER
     visibilityAtDay: 30
