@@ -51,12 +51,40 @@ skills:
     checkHandsOnly: false
 
   # Chaos Sorcery Skills
+  - type: STR_SKILL_SEDUCE_SORCERY
+    targetMode: 10
+    costUse:
+      time: 20
+    compatibleWeapons:
+      - STR_SEDUCE_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+
   - type: STR_SKILL_LESSER_WARPFIRE_SORCERY
     targetMode: 8
     costUse:
       time: 50
     compatibleWeapons:
       - STR_LESSER_WARPFIRE_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+  - type: STR_SKILL_TZEENTCH_WARPFIRE_SNAP_SORCERY
+    targetMode: 8
+    costUse:
+      time: 33
+    compatibleWeapons:
+      - STR_WARPFIRE_FLAMER_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+  - type: STR_SKILL_TZEENTCH_WARPFIRE_AUTO_SORCERY
+    targetMode: 7
+    costUse:
+      time: 66
+    compatibleWeapons:
+      - STR_WARPFIRE_FLAMER_TOKEN
     checkHandsOnly: false
     requiredBonuses:
       - STR_SORCERY_TRAINING
@@ -138,6 +166,8 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 50  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 5
 
   - type: STR_LESSER_WARPFIRE_TOKEN
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL, STR_CAT_TZEENTCH, STR_CAT_SPELL]
@@ -193,3 +223,42 @@ items:
     tags:
       INFECTION_DAMAGE_PERCENT: 50  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 4  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 3
+
+  - type: STR_SEDUCE_TOKEN
+    # Player variant as a psychic power. Scales with PsiSkill/Strength, small slaanesh corruption
+    refNode: *SKILL_TOKEN
+    confMelee:
+      name: STR_SEDUCE
+    meleeSound: {mod: 40k, index: 834}
+    meleeHitSound: {mod: 40k, index: 833}
+    meleeAnimation: 52
+    power: 25
+    damageBonus:
+      psiSkill: 0.5
+      psiStrength: 0.5
+    damageAlter:
+      RandomType: 3  # 3-> Flat  [100% - 100%]
+      ToStun: 0.5
+      ToHealth: 0.0
+      ToWound: 0.0
+      ToMorale: 1.0
+      ToArmor: 0.0
+      ArmorEffectiveness: 0.0   # how effective armor is against this damage. Default `0.0` for smoke and stun, `1.0` rest.
+    damageType: 7
+    accuracyMelee: 25
+    meleeMultiplier:
+      melee: 0.25
+      psiSkill: 0.5
+      psiStrength: 0.5
+    tuMelee: 20
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    tags:
+      ITEM_STUN_ON_LOW_MORALE: 1
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 2
+      INFECTION_DAMAGE_PERCENT: 20  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 3  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
