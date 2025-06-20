@@ -271,6 +271,94 @@ armors:
       INFECTION_RESIST: 100
       INTIMIDATION_RESISTANCE: 50  # intimidation
 
+
+  - &STR_DREADNOUGHT_ARMOR
+    type: DREAD_ARMOR_CHAOS_PLAYER
+    requires: STR_ALIENS_ONLY
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    instantWoundRecovery: true
+    allowInv: true
+    units:
+      - STR_FALLEN
+    drawingRoutine: 20
+    corpseBattle:
+      - CHAOS_DREAD_PLAYER_CORPSE_1
+      - CHAOS_DREAD_PLAYER_CORPSE_2
+      - CHAOS_DREAD_PLAYER_CORPSE_3
+      - CHAOS_DREAD_PLAYER_CORPSE_4
+    size: 2
+    moveSound: {mod: 40k, index: 700}
+    frontArmor: 240
+    sideArmor: 230
+    rearArmor: 180
+    underArmor: 240
+    damageModifier:  # DREAD ARMOR VENERABLE
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.2  # FLAMES
+      - 0.7  # HE
+      - 1.1  # LASCANON
+      - 0.8  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    stats:
+      strength: 50
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_MECHANICAL: 1
+  - type: DREAD_ARMOR_CHAOS_PLAYER
+    spriteSheet: CDREAD_ASSAULT.PCK
+    spriteInv: CDREAD_ASSUALT.SPK
+    customArmorPreviewIndex: [1099, 1100, 1101]
+    storeItem: STR_NONE
+    #deathSound: [859, 860]
+    builtInWeapons:
+      - STR_CHAOS_DREAD_MELEE_WEAPON
+      - AUX_DREAD_FLAMER_CHAOS
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
+    stats:
+      melee: 20
+  - type: DREAD_ARMOR_CHAOS_PLASMA_PLAYER
+    refNode: *STR_DREADNOUGHT_ARMOR
+    spriteSheet: CDREAD.PCK
+    spriteInv: CDREADINV1
+    customArmorPreviewIndex: [1098, 1100, 1101]
+    storeItem: STR_DREAD2_ARMOR
+    #deathSound: [859, 860]
+    builtInWeapons:
+      - SECTOPOD_WEAPON
+      - STR_CHAOS_DREAD_MELEE_WEAPON
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
+  - type: DREAD_ARMOR_CHAOS_MISSILE_PLAYER
+    refNode: *STR_DREADNOUGHT_ARMOR
+    spriteSheet: CDREAD2.PCK
+    spriteInv: CDREADINV2
+    customArmorPreviewIndex: [1097, 1100, 1101]
+    storeItem: STR_DREAD3_ARMOR
+    #deathSound: [859, 860]
+    builtInWeapons:
+      - AUX_DW_DREAD_LAUNCHER
+      - STR_CHAOS_DREAD_MELEE_WEAPON
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
+
   ## Alpha Legion
 
   - type: STR_ALPHA_ARMOR_PLAYER  # Warrior
@@ -2113,7 +2201,7 @@ armors:
         set targetHealth maxHealth;
         div targetHealth 3;
         set healAmount maxHealth;
-        div healAmount 4;
+        div healAmount 8;
 
         unit.getFaction unitFaction;
         if eq side unitFaction;
@@ -2126,6 +2214,76 @@ armors:
         end;
         return;
 
+  - type: STR_PESTIGOR_ARMOR_PLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    heatVision: 20
+    spriteSheet: PESTIGOR_BS.PCK
+    spriteInv: PESTIGOR_INV.SPK
+    customArmorPreviewIndex: 1074
+    forcedTorso: 1
+    allowInv: true
+    corpseBattle:
+      - STR_PESTIGOR_CORPSE_PLAYER
+    units:
+      - STR_PESTIGOR_PLAYER
+    frontArmor: 40
+    sideArmor: 35
+    rearArmor: 20
+    underArmor: 40
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    drawingRoutine: 0
+    damageModifier:
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.3  # FLAMES
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -75
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
 
   - type: STR_NURGLE_OGRYN_ARMOR_PLAYER
     visibilityAtDay: 30
