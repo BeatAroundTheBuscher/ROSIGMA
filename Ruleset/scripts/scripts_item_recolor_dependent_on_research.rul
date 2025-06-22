@@ -1,25 +1,31 @@
 extended:
   tags:
     RuleItem:
-      ITEM_SPRITE_COLOR: int
+      ITEM_GUARD_COLOR: int
+      ITEM_MARINE_COLOR: int
       ITEM_NEW_COLOR: int
       ITEM_CHAOS_COLOR: int
+      ITEM_CHAOS_PATH_COLOR: int
 
 items:
   - &STR_ITEM_CHANGE_COLOR
     type: STR_AUTOGUN
     tags:
-      ITEM_SPRITE_COLOR: 4
+      ITEM_GUARD_COLOR: 4
+      ITEM_MARINE_COLOR: 7
       ITEM_NEW_COLOR: 15
       ITEM_CHAOS_COLOR: 10
+      ITEM_CHAOS_PATH_COLOR: 2
     scripts:
       recolorItemSprite: |
         var ptr RuleItem weaponRuleset;
         var int newWeaponColor;
-        var int oldWeaponColor;
+        var int oldGuardColor;
+        var int oldMarineColor;
         var int color;
         var int isArbites;
         var int isChaos;
+        var int isGeneralChaos;
         var ptr GeoscapeGame geoScape;
         var ptr RuleResearch researchTopic;
 
@@ -32,7 +38,10 @@ items:
           rules.getRuleResearch researchTopic "STR_CHAOS_STRATEGY_ARBITES";
           geoScape.isResearched isChaos researchTopic;
 
-          if or eq isArbites 1 eq isChaos 1;
+          rules.getRuleResearch researchTopic "STR_CHAOS_PATH";
+          geoScape.isResearched isGeneralChaos researchTopic;
+
+          if or eq isArbites 1 eq isChaos 1 eq isGeneralChaos 1;
 
             item.getRuleItem weaponRuleset;
             if eq isArbites 1;
@@ -41,10 +50,14 @@ items:
               weaponRuleset.getTag newWeaponColor Tag.ITEM_CHAOS_COLOR;
             end;
             if neq newWeaponColor 0;
-              weaponRuleset.getTag oldWeaponColor Tag.ITEM_SPRITE_COLOR;
+              weaponRuleset.getTag oldGuardColor Tag.ITEM_GUARD_COLOR;
+              weaponRuleset.getTag oldMarineColor Tag.ITEM_MARINE_COLOR;
               get_color color new_pixel;
+            if and eq isChaos 0 eq isGeneralChaos 1;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_CHAOS_PATH_COLOR;
+            end;
 
-              if eq color oldWeaponColor;
+              if or eq color oldGuardColor eq color oldMarineColor eq color 1;
                 set_color new_pixel newWeaponColor;
               end;
             end;
@@ -132,4 +145,10 @@ items:
     refNode: *STR_ITEM_CHANGE_COLOR
 
   - type: STR_LASCANONATOR
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: AUX_HOVERTANK_LASER
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: AUX_HOVERTANK_LAUNCHER
     refNode: *STR_ITEM_CHANGE_COLOR
