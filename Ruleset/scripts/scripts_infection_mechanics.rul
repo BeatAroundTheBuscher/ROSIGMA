@@ -46,14 +46,8 @@ extended:
             end;
           end;
 
-          # research level 2 halves the effective infection damage
-          if eq researchLevel 2;
-            div infectionDamage 2;
-          end;
-          # research level 3 effectively nullifies infection damage
-          if eq researchLevel 3;
-            mul infectionDamage 0;
-          end;
+          # research reduces effective infection damage
+          div infectionDamage researchLevel;
 
           add recovery_time infectionDamage; # add infection damage to recovery time
 

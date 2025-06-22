@@ -12,6 +12,7 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var int powerCap;
           var int netResistance;
           var int resistanceValue;
           var int resistPenetrationPercent;
@@ -27,7 +28,6 @@ extended:
           # debug_log "ROSIGMA_hU_resist_penetration; offset 1: Armor Effectiveness:" resistanceValue;
 
           # sanity check for later div lines  # can't divide by zero
-          # Example: STR_TARGET_SOLDIER_GUARD "Target Beacons" with armor "TARGET_INVINCIBLE" (see OXCE_40k)
           if eq resistanceValue 0;
             return power part side;
           end;
@@ -42,38 +42,48 @@ extended:
           weapon_item.getAmmoItem ammoItem;
           itemRule.getTag resistPenetrationPercent Tag.DAMAGE_RESIST_PENETRATION_PERCENT;
           ammoItem.getTag temp Tag.DAMAGE_RESIST_PENETRATION_PERCENT;
-          if gt temp resistPenetrationPercent; #apply the higher of the two
+          if gt temp resistPenetrationPercent; # apply the higher of the two
             set resistPenetrationPercent temp;
           end;
           # debug_log "ROSIGMA_hU_resist_penetration; offset 1: DAMAGE_RESIST_PENETRATION_PERCENT:" resistPenetrationPercent;
 
           itemRule.getTag resistPenetrationFlat Tag.DAMAGE_RESIST_PENETRATION_FLAT;
           ammoItem.getTag temp Tag.DAMAGE_RESIST_PENETRATION_FLAT;
-          if gt temp resistPenetrationFlat; #apply the higher of the two
+          if gt temp resistPenetrationFlat; # apply the higher of the two
             set resistPenetrationFlat temp;
           end;
           # debug_log "ROSIGMA_hU_resist_penetration; offset 1: DAMAGE_RESIST_PENETRATION_FLAT:" resistPenetrationFlat;
 
+          set powerCap power;
+          muldiv powerCap 100 resistanceValue; # sanity; this is the max damage we can do after all modifiers with full resist offset; we cannot do actual extra damage
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: powerCap damage cap:" powerCap;
+
           if gt resistPenetrationPercent 1;
 
-            set temp 10000;
-            div temp resistanceValue;
+            set temp 10000; #no floating point number offset
+            div temp resistanceValue; # get the base coefficient that we need to adjust by resistanceValue
+            sub temp 100;
             # debug_log "ROSIGMA_hU_resist_penetration; offset 1: resistanceValue:" resistanceValue;
-            mul temp resistPenetrationPercent;
             # debug_log "ROSIGMA_hU_resist_penetration; offset 1: resistPenetrationPercent:" resistPenetrationPercent;
-            div temp 100;
-            # debug_log "ROSIGMA_hU_resist_penetration; offset 1: final resist multiplier:" temp;
+            muldiv temp resistPenetrationPercent 100; # get our offset coefficient
+            add temp 100;
+            # debug_log "ROSIGMA_hU_resist_penetration; offset 1: resistPenetrationPercent, final resist multiplier:" temp;
             # debug_log "ROSIGMA_hU_resist_penetration; offset 1: old power:" power;
-            muldiv power temp 100;
+            muldiv power temp 100; # get value to offset resistance coefficient
           end;
 
           if gt resistPenetrationFlat 1;
 
             set temp resistanceValue;
-            add temp resistPenetrationFlat;
-            div temp resistanceValue;
-            muldiv power temp 100;
+            add temp resistPenetrationFlat; # just add the penetration value; this will rarely be used but it's here as an option
+            # debug_log "ROSIGMA_hU_resist_penetration; offset 1: resistPenetrationFlat, final resist multiplier:" temp;
+            muldiv power 100 resistanceValue; #get our damage ceiling
+            muldiv power temp 100; # offset the damage ceiling with the sum of resistance and penetration coefficient; sanity checked later by powerCap
           end;
+
+          # debug_log "ROSIGMA_hU_resist_penetration; offset 1: final power pre-powerCap sanity check:" power;
+
+          limit_upper power powerCap; # sanity; this is the max damage we can do after all modifiers; especially important RE: flat resistance penetration
 
           # debug_log "ROSIGMA_hU_resist_penetration; offset 1: final power:" power;
 
