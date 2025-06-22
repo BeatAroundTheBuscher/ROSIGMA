@@ -36,9 +36,12 @@ items:
 
 
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
   tags:
     RuleItem:
       GravPercentage: int  # can be on ammo or weapon, weapon overwrites ammo
+    RuleArmor:
+      UNIT_SIZE: int #size modifier; mostly used as multiplier for grav weapons; if undefined defaults to 100. Tiny Enemies (Nurgling, Scarab): 25 Small Enemies (Squat, Plague Toad, Plague Flies): 50 Large Enemies (Space Marine, Ogryn): 150 Huge Enemies (Terminators, Saturnine): 200
 
   scripts:
     damageUnit:
@@ -58,6 +61,7 @@ extended:
 
           set temp to_health;
           if lt temp 1; # if no damage gets through the shield, abort; sanity check.
+            # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav weapon failed to penetrate the target's shields. Aborting.";
             return;
           end;
 
@@ -75,6 +79,7 @@ extended:
           if lt percentage 0; #continue only if we have a %
             return;
           end;
+          # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav final armor percentage:" percentage;
 
           unit.getArmor temp SIDE_FRONT;
           add armor temp;
@@ -87,17 +92,26 @@ extended:
           unit.getArmor temp SIDE_UNDER;
           add armor temp;
           muldiv armor percentage 100;
+          # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav damage bonus post-armor:" armor;
 
-          damaging_item.getRuleItem damagingItem;
+          unit.getRuleArmor rArmor; #handle size damage damage multiplier
+          rArmor.getTag temp Tag.UNIT_SIZE;
+          if eq temp 0; #if we don't have this value, assume standard size
+            set temp 100;
+          end;
+          muldiv armor temp 100;
+          # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav damage bonus post-size tag:" armor;
+
+          damaging_item.getRuleItem damagingItem; #handle large unit damage multiplier
           damagingItem.getDamageType damageType;
-          damageType.isAreaOfEffect temp2;
-          if lt temp2 1;
-            unit.getRuleArmor rArmor;
-            rArmor.getSize temp2; # double our damage if we're not already AoE
-            if gt temp2 1;
+          damageType.isAreaOfEffect temp;
+          if lt temp 1;
+            rArmor.getSize temp; # double our damage if we're not already AoE
+            if gt temp 1;
               mul armor temp;
             end;
           end;
+          # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav damage bonus post-2x2:" armor;
 
           add to_health armor;
 
