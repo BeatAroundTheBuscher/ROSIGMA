@@ -1,9 +1,26 @@
+adhocScripts:
+  - type: launchHrudCatacombAssault
+    missionWeights:
+      0:
+        STR_CATACOMBS_ASSAULT: 10
+    startDelay: 168
+    adhocMissionScriptTags: ["hrudAlliance"]
+
 eventScripts:
   - type: inquisitionWarning
     oneTimeSequentialEvents:
       - STR_INQUISITION_WARNING
     researchTriggers:
       STR_ALIENS_ONLY: true
+
+  - type: hrudAllianceStart
+    oneTimeSequentialEvents:
+      - STR_HRUD_MESSAGE_EVENT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_NURGLE_OPTIONS: true
+      STR_WEAK_ALLY_OBTAINED: false
+    executionOdds: 100
 
 events:
   - name: STR_CHAOS_DEVOTION_WARNING
@@ -15,3 +32,33 @@ events:
   - name: STR_INQUISITION_WARNING
     description: STR_INQUISITION_WARNING_DESC
     background: EcclessiarchyBG.SCR
+
+  - name: STR_HRUD_MESSAGE_EVENT
+    description: STR_HRUD_MESSAGE_EVENT_DESCRIPTION
+    background: ChaosActivityBG.SCR
+    adhocMissionScriptTags: ["hrudAlliance"]
+
+  - name: STR_HRUD_ALLIANCE_SECURED
+    description: STR_HRUD_ALLIANCE_SECURED_DESCRIPTION
+    background: ChaosActivityBG.SCR
+    everyMultiSoldierList:
+      STR_HRUD_PLAYER: 6
+      STR_STORMVERMIN_PLAYER: 1
+      STR_VERMIN_MONK_PLAYER: 1
+    everyMultiItemList:
+      STR_AUTOGUN_CHAOS_NURGLE: 8
+      STR_AUTOGUN_CLIP: 20
+      STR_NURGLE_NEEDLER_RIFLE: 1
+      STR_BLIGHT_GRENADE: 8
+
+  - name: STR_MONTHLY_HRUD_SUPPORT
+    description: STR_MONTHLY_HRUD_SUPPORT_DESCRIPTION
+    background: ChaosActivityBG.SCR
+    everyMultiSoldierList:
+      STR_HRUD_PLAYER: 6
+      STR_STORMVERMIN_PLAYER: 1
+      STR_VERMIN_MONK_PLAYER: 1
+    everyMultiItemList:
+      STR_AUTOGUN_CHAOS_NURGLE: 8
+      STR_AUTOGUN_CLIP: 20
+      STR_BLIGHT_GRENADE: 8
