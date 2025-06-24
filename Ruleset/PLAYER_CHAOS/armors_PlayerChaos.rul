@@ -340,6 +340,7 @@ armors:
       INFECTION_RESIST: 100
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_MECHANICAL: 1
+      UNIT_SIZE: 200
   - type: DREAD_ARMOR_CHAOS_PLAYER
     spriteSheet: CDREAD_ASSAULT.PCK
     spriteInv: CDREAD_ASSUALT.SPK
@@ -2449,6 +2450,159 @@ armors:
         end;
         return;
 
+  - type: STR_HRUD_ARMOR_PLAYER
+    # Based on the armored hrud armor
+    visibilityAtDay: 30
+    visibilityAtDark: 30
+    camouflageAtDay: 20
+    camouflageAtDark: 8
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 5
+    spriteSheet: ARMOREDSKAVEN_BS.PCK  # HRUD_ARMORED_WARRIOR
+    spriteInv: HRUD_ARMORED_INV.SPK  # FOES INV
+    customArmorPreviewIndex: 1076
+    forcedTorso: 1
+    allowsKneeling: false
+    corpseBattle:
+      - STR_HRUD_CORPSE_PLAYER
+    units:
+      - STR_HRUD_PLAYER
+    frontArmor: 40
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 20
+    zombiImmune: true  # can't be corrupted further
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    tags:
+      INFECTION_RESIST: 50  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_XENO: 1
+
+  - type: STR_STORMVERMIN_ARMOR_PLAYER
+    visibilityAtDay: 30  # weak eyes at day
+    visibilityAtDark: 30  # perfect night vision
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 5
+    spriteSheet: STORMVERMIN_BS.PCK  # HRUD STORMVERMIN
+    spriteInv: STORMVERMIN_INV.SPK  # FOES INV
+    forcedTorso: 1
+    customArmorPreviewIndex: 1077
+    allowsKneeling: false
+    corpseBattle:
+      - STR_STORMVERMIN_CORPSE_PLAYER
+    units:
+      - STR_STORMVERMIN_PLAYER
+    frontArmor: 65
+    sideArmor: 55
+    rearArmor: 30
+    underArmor: 30
+    zombiImmune: true  # can't be corrupted further
+    tags:
+      INFECTION_RESIST: 50  # infection resistant
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_XENO: 1
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+
+  - type: STR_VERMIN_MONK_ARMOR_PLAYER  # NURGLE CULTIST ARMOR
+    visibilityAtDay: 30  # weak eyes at day
+    visibilityAtDark: 30  # perfect night vision
+    camouflageAtDay: 20
+    camouflageAtDark: 8
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 7
+    spriteSheet: VERMIN_MONK_BS.PCK  # Vermin-ified Nurgle follower
+    spriteInv: VERMIN_MONK_INV.SPK
+    customArmorPreviewIndex: 1078
+    corpseBattle:
+      - STR_VERMIN_MONK_CORPSE_PLAYER
+    units:
+      - STR_VERMIN_MONK_PLAYER
+    frontArmor: 10
+    sideArmor: 5
+    rearArmor: 5
+    underArmor: 5
+    drawingRoutine: 1
+    allowsKneeling: false
+    specialWeapon: STR_PLAGUE_SPRAY  # Replace with some sort of poison globe attack
+    zombiImmune: true  # can't be corrupted further
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_XENO: 1
+    painImmune: true  # don't care about pain
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.5  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 2;
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
+
   - type: STR_GREATER_PLAGUE_TOAD_ARMOR_PLAYER
     visibilityAtDay: 40
     visibilityAtDark: 40  # sees in the dark
@@ -2866,7 +3020,6 @@ armors:
       - STR_BLACKGUARD
     loftempsSet: [92, 89, 90, 91]
     moveSound: {mod: 40k, index: 14}
-
     visibilityAtDay: 40
     visibilityAtDark: 9
     antiCamouflageAtDay: 10
