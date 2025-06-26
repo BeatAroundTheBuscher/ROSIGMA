@@ -6,6 +6,13 @@ adhocScripts:
     startDelay: 168
     adhocMissionScriptTags: ["hrudAlliance"]
 
+  - type: launchIronGuardDefense
+    missionWeights:
+      0:
+        STR_IRON_GUARD_WAR_DEFENSE: 100
+    startDelay: 168
+    adhocMissionScriptTags: ["ironAlliance"]
+
 eventScripts:
   - type: inquisitionWarning
     oneTimeSequentialEvents:
@@ -21,6 +28,27 @@ eventScripts:
       STR_NURGLE_OPTIONS: true
       STR_WEAK_ALLY_OBTAINED: false
     executionOdds: 10
+
+  - type: ironGuardRequestHelpGuardArbites
+    oneTimeSequentialEvents:
+      - STR_IRON_MESSAGE_EVENT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_WEAK_ALLY_OBTAINED: false
+      STR_NOT_MARINES: true
+      STR_NOT_ADEPTAS: true
+      STR_NOT_CHAMBER: true
+    executionOdds: 10
+
+  - type: ironGuardRequestHelpOther
+    oneTimeSequentialEvents:
+      - STR_IRON_MESSAGE_EVENT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_WEAK_ALLY_OBTAINED: false
+      STR_NOT_GUARD: true
+      STR_NOT_ARBITES: true
+    executionOdds: 3
 
 events:
   - name: STR_CHAOS_DEVOTION_WARNING
@@ -62,3 +90,23 @@ events:
       STR_AUTOGUN_CHAOS_NURGLE: 8
       STR_AUTOGUN_CLIP: 20
       STR_BLIGHT_GRENADE: 8
+
+  - name: STR_IRON_MESSAGE_EVENT
+    description: STR_IRON_MESSAGE_EVENT_DESCRIPTION
+    background: ChaosActivityBG.SCR
+    adhocMissionScriptTags: ["ironAlliance"]
+
+  - name: STR_IRON_ALLIANCE_SECURED
+    description: STR_IRON_ALLIANCE_SECURED_DESCRIPTION
+    background: ChaosActivityBG.SCR
+    everyMultiSoldierList:
+      STR_IRON_GUARDSMAN: 4
+      STR_BLACKGUARD: 1
+      STR_IRON_GUARD_SERVITOR: 2
+      STR_ADEPTAS_IRON_MAIDEN: 1
+    everyMultiItemList:
+      STR_IW_AUTOCANNON: 1
+      STR_AUTOCANNON_CLIP: 4
+      STR_LIGHT_BOLTER_CHAOS: 5
+      STR_LIGHT_BOLTER_AMMO: 10
+      STR_REQUISITION_BOUNTY_250K: 1
