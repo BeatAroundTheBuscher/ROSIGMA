@@ -1332,13 +1332,20 @@ research:
       - STR_TAU_FIREWARRIORCAPTAINAI
 
 ### Eldar Alliance
-  - name: STR_ELDAR_ALLIANCE  # Xeno Proposal
+  - name: STR_ELDAR_ONLY  # Eldar Weapons Training
+    refNode: *STR_LOCKED
+
+  - name: STR_ELDAR_ALLIANCE  # Eldar Proposal
     cost: 1000
     points: -500
     dependencies:
-      - STR_GUARD_AND_ARBITES
-      - STR_ELDAR_SEER
+      - STR_ELDAR_LEADER_INTERROGATED
+      - STR_NOT_MARINES
+      - STR_NOT_ADEPTAS
+      - STR_NOT_CHAMBER
       - STR_CHAPTER_PURITY
+    unlocks:
+      - STR_ELDAR_ONLY
 
   - name: STR_ELDAR_PATH  # Eldar Alliance
     cost: 1000
@@ -1346,8 +1353,6 @@ research:
     dependencies:
       - STR_GUARD_AND_ARBITES
       - STR_ELDAR_ALLIANCE
-      - STR_ELDAR_GUARDIAN
-      - STR_ELDAR_BANSHEE
       - STR_CHAPTER_PURITY
     disables:
       - STR_CHAOS_PATH
@@ -1432,6 +1437,22 @@ research:
     refNode: *STR_LOCKED
     unlocks:
       - STR_WEAK_ALLY_OBTAINED
+
+### Ork Alliance?
+  - name: STR_ORK_ONLY  # Dakka
+    refNode: *STR_LOCKED
+
+  - name: STR_ORK_DEAL  # Ork Arms Deal
+    cost: 1000
+    points: -500
+    dependencies:
+      - STR_ORK_LEADER_INTERROGATED
+      - STR_NOT_MARINES
+      - STR_NOT_ADEPTAS
+      - STR_NOT_CHAMBER
+      - STR_NOT_STEEL_LEGION
+    unlocks:
+      - STR_ORK_ONLY
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -2433,13 +2454,19 @@ research:
     dependencies:
       - STR_CONVINCE_CHAOS_RESEARCH
 
+  - name: STR_XENO_LEADER_INTERROGATED  # Xeno Leader Interrogation
+    refNode: *STR_LOCKED
+
   - name: STR_XENO_ONLY  # Xeno Embrace
     # grant access to Xeno Weapons (not chaos)
     cost: 250
     points: -200
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_ELDAR_SEER  # live interrogation
+      - STR_XENO_LEADER_INTERROGATED  # live interrogation
+    unlocks:
+      - STR_ORK_ONLY
+      - STR_ELDAR_ONLY
 
   - name: STR_TAU_XENOTECH  # Tau Xenotech
     # grant access to Tau Weapons
@@ -8299,24 +8326,30 @@ research:
       - STR_ELDAR_PLAT
     unlocks:
       - STR_INTERROGATION_COMPLETED
-      - STR_XENO_ONLY  # added, unlocks XENO_ONLY (Xeno embrace) for research, which allows for recruiting captured Farseer.
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
+    spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
   - name: STR_ELDAR_GUARDIAN  # Eldar Guardian
     cost: 192
     points: 50
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
-      - STR_XENO_ONLY  # added, unlocks XENO_ONLY (Xeno embrace) for research, which allows for recruiting captured Farseer.
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
+    spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
   - name: STR_ELDAR_BANSHEE  # Eldar Banshee
     cost: 192
     points: 50
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
-      - STR_XENO_ONLY  # added, unlocks XENO_ONLY (Xeno embrace) for research, which allows for recruiting captured Farseer.
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
+    spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
 
 ### Necron #CAPTIVES.FOE.XENO.NECRON#
   - name: STR_NECRON_WARRIOR  # Necron Warrior
@@ -8470,16 +8503,22 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ORK_LEADER_INTERROGATED
       - STR_THREAT_ONE
     destroyItem: true
+    spawnedEvent: STR_ORK_LEADER_INTERROGATION
   - name: STR_ORK_WARBOSS  # Ork Warboss
     cost: 192
     points: 150  # commander
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ORK_LEADER_INTERROGATED
       - STR_THREAT_ONE
     destroyItem: true
+    spawnedEvent: STR_ORK_LEADER_INTERROGATION
   - name: STR_ORK_DEFFKOPTER  # Ork Deffkopter
     cost: 192
     points: 50
@@ -8496,7 +8535,10 @@ research:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
       - STR_PSI_LAB
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ORK_LEADER_INTERROGATED
     destroyItem: true
+    spawnedEvent: STR_ORK_LEADER_INTERROGATION
   - name: STR_DEATHSKULL_ORK_BOY  # Deathskulls Boy
     cost: 192
     points: 50
@@ -8569,8 +8611,11 @@ research:
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ORK_LEADER_INTERROGATED
     getOneFree:
       - STR_DEATHSKULL_ORK_ARDNOB
+    spawnedEvent: STR_ORK_LEADER_INTERROGATION
     destroyItem: true
   - name: STR_ORK_FLASHGITZ  # Flashgitz
     cost: 192
@@ -8601,8 +8646,11 @@ research:
       - STR_THREAT_ONE
       - STR_FUSION_MISSILE
       - STR_HFLAMERR
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ORK_LEADER_INTERROGATED
     getOneFree:
       - STR_DEATHSKULL_ORK_MEGANOB
+    spawnedEvent: STR_ORK_LEADER_INTERROGATION
     destroyItem: true
   - name: STR_ORK_KILLA  # Ork Killa Kan
     cost: 192
