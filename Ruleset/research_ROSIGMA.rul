@@ -1338,6 +1338,7 @@ research:
     dependencies:
       - STR_GUARD_AND_ARBITES
       - STR_ELDAR_SEER
+      - STR_CHAPTER_PURITY
 
   - name: STR_ELDAR_PATH  # Eldar Alliance
     cost: 1000
@@ -1347,6 +1348,12 @@ research:
       - STR_ELDAR_ALLIANCE
       - STR_ELDAR_GUARDIAN
       - STR_ELDAR_BANSHEE
+      - STR_CHAPTER_PURITY
+    disables:
+      - STR_CHAOS_PATH
+      - STR_ADEPTAS_CHAOS_PATH
+      - STR_CHAMBER_CHAOS_PATH
+      - STR_MARINE_CHAOS_PATH
     getOneFree:
       - STR_PLAT_CORPSE
     lookup: STR_CHOSEN_ELDAR
@@ -1381,6 +1388,44 @@ research:
       - STR_ELDAR_WAVESERPENT_UFO_DATA
       - STR_ELDAR_COBRA_UFO_DATA
       - STR_ELDAR_HORNET_UFO_DATA
+
+### Iron Guard Alliance
+  - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH  # Encounter with the Iron Warriors
+    # Not technically a chaos research, but required for advancement down Iron Guard path if the player is already has CHAOS_PATH
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CONTACT_IRON_GUARD  # Contact the Iron Guard
+    cost: 250
+    points: -150
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_NOT_CHAOSCULT
+      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+    spawnedEvent: STR_IRON_MESSAGE_EVENT
+
+  - name: STR_IRON_GUARD_REQUISITIONS  # Iron Guard Requisitions
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS  # Iron Guard Mid-Tier Requisitions
+    requires:
+      - STR_IRON_GUARD_REQUISITIONS
+      - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_CARAPACE_ARMOR_IG
+      - STR_CREATE_IRON_MAIDEN_RESEARCH
+      - STR_AUTOCANNON_TECH
+
+  - name: STR_IRON_SERVITOR_TECHNOLOGY  # Iron Warrior Servitor Technology
+    requires:
+      - STR_IRON_GUARD_MIDTIER_REQUISITIONS
+      - STR_COMBAT_SERVITOR_PROGRAM
+
+  - name: STR_CREATE_IRON_MAIDEN_RESEARCH  # Create Iron Maiden
+    requires:
+      - STR_IRON_SERVITOR_TECHNOLOGY
+      - STR_CONTACT_CHAOS_SISTERS
 
 ### Hrud Alliance
   - name: STR_HRUD_ALLIANCE
@@ -1482,52 +1527,6 @@ research:
       - STR_CONVERT_TO_CHAOS_RESEARCH
       - STR_CONTACT_CHAOS_MARINES  # Ceramite Tier
       - STR_HIGHTIER_PREREQ
-
-  - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH  # Encounter with the Iron Warriors
-    # Not technically a chaos research, but required for advancement down Iron Guard path if the player is already has CHAOS_PATH
-    cost: 100
-    points: 100
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_CONTACT_IRON_GUARD  # Contact the Iron Guard
-    cost: 250
-    points: -150
-    dependencies:
-      - STR_CHAOS_PATH
-      - STR_NOT_CHAOSCULT
-      - STR_DISCOVER_IRON_WARRIORS_RESEARCH
-    # spawnedEvent: STR_IRON_GUARD_CONTACT_EVENT  # todo: create a mission event that then allows the player to progress the iron guard path
-
-  - name: STR_IRON_GUARD_LOWTIER_REQUISITIONS  # Iron Guard Requisitions
-    cost: 200
-    points: 0
-    dependencies:
-      - STR_CONTACT_IRON_GUARD
-
-  - name: STR_IRON_GUARD_MIDTIER_REQUISITIONS  # Iron Guard Mid-Tier Requisitions
-    cost: 200  # Increase later when there's a real amount of content in this
-    points: 0
-    dependencies:
-      - STR_CONTACT_IRON_GUARD
-      - STR_MIDTIER_PREREQ
-    unlocks:
-      - STR_CARAPACE_ARMOR_IG
-      - STR_CREATE_IRON_MAIDEN_RESEARCH
-      - STR_IRON_SERVITOR_TECHNOLOGY
-      - STR_AUTOCANNON_TECH
-    getOneFree:
-      - STR_IRON_GUARD_LOWTIER_REQUISITIONS
-
-  - name: STR_IRON_SERVITOR_TECHNOLOGY  # Iron Warrior Servitor Technology
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_CREATE_IRON_MAIDEN_RESEARCH  # Create Iron Maiden
-    cost: 200
-    points: 0
-    dependencies:
-      - STR_IRON_SERVITOR_TECHNOLOGY
 
   - name: STR_CONVINCE_CHAOS_RESEARCH  # Convince Captives of True Path
     cost: 500
