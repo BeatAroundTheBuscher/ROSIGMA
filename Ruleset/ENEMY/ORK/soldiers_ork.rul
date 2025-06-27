@@ -2,9 +2,9 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 soldiers:
-  - type: STR_GUARD_ORK_BOY #Blood Axe Cap Boy
+  - type: STR_GUARD_ORK_BOY  # Blood Axe Ork Boy
     requires:
-      - STR_ORK_DEAL #Insert Some Ork alliance recruitment research
+      - STR_ORK_MERCENARIES
     costBuy: 15000 #Make them cheaper? Less armor upgrades.
     costSalary: 5000 #Make them cheaper? Less armor upgrades.
     minStats:
@@ -64,9 +64,103 @@ soldiers:
     femaleFrequency: 100 #to use the gender 2 Cap torso sprite
     avatarOffsetX: 67
     avatarOffsetY: 42
+    allowPromotion: false
+    rankStrings:
+      - STR_AUXILIARY_RANK
     soldierNames:
       - delete
       - Names/Orks.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 5 #very low score hit to losses
+
+  - type: STR_GUARD_ORK_VET  # Blood Axe 'ardboy
+    requires:
+      - STR_ORK_RESPECT
+    costSalary: 8000
+    # Stat comments relative to Blood Axe Ork Boy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 55  # +10
+      stamina: 55  # +5
+      health: 40  # +10
+      bravery: 30  # +20
+      reactions: 35  # +5
+      firing: 35  # +5
+      throwing: 45
+      strength: 40  # +15
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  # +10
+    maxStats:
+      tu: 80  # +10
+      stamina: 85  # +5
+      health: 85  # +15
+      bravery: 80  # +10
+      reactions: 75  # +5
+      firing: 65  # +5
+      throwing: 75
+      strength: 70  # +10
+      psiStrength: 100
+      psiSkill: 6
+      melee: 80  # +10
+    statCaps:
+      tu: 110  # +10
+      stamina: 120  # +10
+      health: 130  # +40
+      bravery: 110  # +10
+      reactions: 85  # +5
+      firing: 95  # +5
+      throwing: 80
+      strength: 100  # +20
+      psiStrength: 100
+      psiSkill: 50
+      melee: 110  # +10
+    trainingStatCaps:
+      tu: 70  # +10
+      stamina: 75  # +10
+      health: 45  # +15
+      firing: 75  # +5
+      throwing: 65
+      strength: 45  # +15
+      psiStrength: 100
+      psiSkill: 50
+      melee: 60  # +10
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_BLOODAXE_VET_KARAPACE_PLAYER_ARMOR
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 100 #to use the gender 2 Cap torso sprite
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: false
+    rankStrings:
+      - STR_AUXILIARY_RANK
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 10  # +5
+
+soldierTransformation:
+  - name: STR_BLOODAXE_VETERAN_PROMOTION
+    requiredMinStats:
+      tu: 1
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requires:
+      - STR_ORK_MERCENARIES
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+    producedSoldierType: STR_GUARD_ORK_VET
+    producedSoldierArmor: STR_BLOODAXE_VET_KARAPACE_PLAYER_ARMOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_BOY

@@ -1464,16 +1464,26 @@ research:
 
   - name: STR_ORK_DEAL  # Ork Arms Deal
     cost: 1000
-    points: -200
+    points: -500
     dependencies:
       - STR_ORK_LEADER_INTERROGATED
-      - STR_LOSE_200
+      - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
       - STR_NOT_CHAMBER
       - STR_NOT_STEEL_LEGION_STRATEGY
     unlocks:
       - STR_ORK_ONLY
+  
+  - name: STR_ORK_MERCENARIES  # Ork Mercenaries
+    requires:
+      - STR_ORK_DEAL
+      - STR_ORK_BASE_LEVEL3_DEFEATED
+
+  - name: STR_ORK_RESPECT  # Respect of the Orks
+    requires:
+      - STR_ORK_DEAL
+      - STR_ORK_BASE_LEVEL5_DEFEATED
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -3612,10 +3622,27 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE
 
-  - name: STR_ORK_BASE_LEVEL5_DEFEATED  # Ork Base Levels Defeated
+  - name: STR_ORK_BASE_LEVEL1_DEFEATED  # Ork Outpost Defeated
+    # Gained by beating STR_ORKBASE1 or STR_ORKBASE2
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+  - name: STR_ORK_BASE_LEVEL3_DEFEATED  # Ork Base Defeated
+    # Gained by beating STR_ORKBASE3 or STR_ORKBASE4
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+      - STR_ORK_BASE_LEVEL1_DEFEATED
+  - name: STR_ORK_BASE_LEVEL5_DEFEATED  # Ork Fortress Defeated
     # Gained by beating STR_ORKBASE5
     dependencies:
       - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+      - STR_ORK_BASE_LEVEL1_DEFEATED
+      - STR_ORK_BASE_LEVEL3_DEFEATED
 
   - name: STR_YARRICK_JOINED  # Commissar Yarrick Joined
     dependencies:
@@ -4563,8 +4590,7 @@ research:
     getOneFree:
       - STR_WAGGON_CONVOY_UFO
   - name: STR_ORK_MIG_UFO  # Ork Fighta
-    points: 50
-    needItem: true
+    refNode: *STR_LOCKED
   - name: STR_ORK_MIG_UFO_DATA  # Ork Fighta Scan Data
     needItem: true
     cost: 50

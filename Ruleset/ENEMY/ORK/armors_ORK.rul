@@ -1199,9 +1199,10 @@ armors:
     antiCamouflageAtDay: 3
     antiCamouflageAtDark: 3
     spriteSheet: ORK_BLOODAXE_BOY_BS.PCK
+    forcedTorso: 2
     spriteInv: O1BLOODAXES.SPK
     storeItem: STR_NONE
-    customArmorPreviewIndex: 842 #needs custom Ork ones
+    customArmorPreviewIndex: 1110
     corpseBattle:
       - STR_GUARD_ORK_BOY_CORPSE
     movementType: 0 #Walking
@@ -1228,8 +1229,73 @@ armors:
     loftempsSet: [3]
     units:
       - STR_GUARD_ORK_BOY
-    specialWeapon: STR_KRIEG_SHOVEL #change to some Ork Choppa
+    specialWeapon: STR_CHOPPA
     tags:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+
+  - &ORK_KARAPACE
+    type: STR_BLOODAXE_KARAPACE_PLAYER_ARMOR
+    visibilityAtDay: 35  # abhuman beast malus
+    visibilityAtDark: 20  # abhuman beast bonus
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
+    spriteSheet: ORK_BLOODAXE_BOY_BS2.PCK
+    forcedTorso: 1
+    spriteInv: O2BLOODAXES.SPK
+    storeItem: STR_KARAPACE_ARMOR
+    customArmorPreviewIndex: 1111
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    movementType: 0 #Walking
+    drawingRoutine: 0 #human soldier
+    # More front armor than human carapace, but less elsewhere
+    frontArmor: 80
+    sideArmor: 50
+    rearArmor: 35  # crud
+    underArmor: 50
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN 10% Ork bonus
+      - 1.0  # MELEE 10% Ork bonus
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    stats:
+      tu: -5
+      stamina: -10
+      bravery: 10
+    loftempsSet: [3]
+    units:
+      - STR_GUARD_ORK_BOY
+    specialWeapon: STR_CHOPPA
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+
+  - type: STR_BLOODAXE_VET_KARAPACE_PLAYER_ARMOR
+    refNode: *ORK_KARAPACE
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: ORK_BLOODAXE_VETERAN_BS.PCK
+    forcedTorso: 1
+    spriteInv: O3BLOODAXES.SPK
+    storeItem: STR_KARAPACE_ARMOR
+    customArmorPreviewIndex: 1112
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    frontArmor: 90
+    sideArmor: 55
+    rearArmor: 45
+    underArmor: 55
+    units:
+      - STR_GUARD_ORK_VET
+    specialWeapon: STR_CHOPPA
