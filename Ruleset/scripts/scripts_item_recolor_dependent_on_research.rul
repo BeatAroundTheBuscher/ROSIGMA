@@ -3,9 +3,9 @@ extended:
     RuleItem:
       ITEM_GUARD_COLOR: int
       ITEM_MARINE_COLOR: int
-      ITEM_NEW_COLOR: int
-      ITEM_CHAOS_COLOR: int
-      ITEM_CHAOS_PATH_COLOR: int
+      ITEM_NEW_ARBITES_COLOR: int
+      ITEM_NEW_CHAOS_CULT_COLOR: int
+      ITEM_NEW_CHAOS_PATH_COLOR: int
 
 items:
   - &STR_ITEM_CHANGE_COLOR
@@ -13,9 +13,9 @@ items:
     tags:
       ITEM_GUARD_COLOR: 4
       ITEM_MARINE_COLOR: 7
-      ITEM_NEW_COLOR: 15
-      ITEM_CHAOS_COLOR: 10
-      ITEM_CHAOS_PATH_COLOR: 2
+      ITEM_NEW_ARBITES_COLOR: 15
+      ITEM_NEW_CHAOS_CULT_COLOR: 10
+      ITEM_NEW_CHAOS_PATH_COLOR: 2
     scripts:
       recolorItemSprite: |
         var ptr RuleItem weaponRuleset;
@@ -45,16 +45,16 @@ items:
 
             item.getRuleItem weaponRuleset;
             if eq isArbites 1;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_COLOR;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_ARBITES_COLOR;
             else;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_CHAOS_COLOR;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_CHAOS_CULT_COLOR;
             end;
             if neq newWeaponColor 0;
               weaponRuleset.getTag oldGuardColor Tag.ITEM_GUARD_COLOR;
               weaponRuleset.getTag oldMarineColor Tag.ITEM_MARINE_COLOR;
               get_color color new_pixel;
             if and eq isChaos 0 eq isGeneralChaos 1;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_CHAOS_PATH_COLOR;
+              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_CHAOS_PATH_COLOR;
             end;
 
               if or eq color oldGuardColor eq color oldMarineColor eq color 1;
@@ -157,4 +157,7 @@ items:
     refNode: *STR_ITEM_CHANGE_COLOR
 
   - type: STR_ROCKET_LAUNCHER
+    refNode: *STR_ITEM_CHANGE_COLOR
+
+  - type: STR_MOUNTED_LASCANNON
     refNode: *STR_ITEM_CHANGE_COLOR
