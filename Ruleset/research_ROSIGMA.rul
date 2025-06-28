@@ -140,6 +140,14 @@ research:
   - name: STR_MONTH24  # Month 24
     refNode: *MONTHS
 
+## Negative Score Indicators
+  - name: STR_LOSE_100
+  - name: STR_LOSE_200
+  - name: STR_LOSE_250
+  - name: STR_LOSE_500
+  - name: STR_LOSE_750
+  - name: STR_LOSE_1000
+
 ## Blockers and Unlockers
   - name: STR_GAME_START  # (Started the Game)
     unlockFinalMission: true
@@ -736,6 +744,7 @@ research:
     points: -200 #was -1000, move that negative scores to later topics/events for more player control
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_200
     getOneFree:  # new
       - STR_CORVUS_RESEARCH
     unlocks:
@@ -753,6 +762,7 @@ research:
       - STR_ALIEN_ORIGINS
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_500
     reenables:
       - STR_CHAOS_PATH
     disables:
@@ -1330,6 +1340,7 @@ research:
       - STR_TAU_PULSE_RIFLE_EXPORT
     dependencies:
       - STR_TAU_FIREWARRIORCAPTAINAI
+      - STR_LOSE_250
 
 ### Eldar Alliance
   - name: STR_ELDAR_ONLY  # Eldar Weapons Training
@@ -1343,6 +1354,7 @@ research:
     points: -500
     dependencies:
       - STR_ELDAR_LEADER_INTERROGATED
+      - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
       - STR_NOT_CHAMBER
@@ -1357,6 +1369,7 @@ research:
       - STR_GUARD_AND_ARBITES
       - STR_ELDAR_ALLIANCE
       - STR_CHAPTER_PURITY
+      - STR_LOSE_500
     disables:
       - STR_CHAOS_PATH
       - STR_ADEPTAS_CHAOS_PATH
@@ -1405,11 +1418,12 @@ research:
 
   - name: STR_CONTACT_IRON_GUARD  # Contact the Iron Guard
     cost: 250
-    points: -150
+    points: -200
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
       - STR_DISCOVER_IRON_WARRIORS_RESEARCH
+      - STR_LOSE_200
     spawnedEvent: STR_IRON_MESSAGE_EVENT
 
   - name: STR_IRON_GUARD_REQUISITIONS  # Iron Guard Requisitions
@@ -1453,12 +1467,23 @@ research:
     points: -500
     dependencies:
       - STR_ORK_LEADER_INTERROGATED
+      - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
       - STR_NOT_CHAMBER
       - STR_NOT_STEEL_LEGION_STRATEGY
     unlocks:
       - STR_ORK_ONLY
+
+  - name: STR_ORK_MERCENARIES  # Ork Mercenaries
+    requires:
+      - STR_ORK_DEAL
+      - STR_ORK_BASE_LEVEL3_DEFEATED
+
+  - name: STR_ORK_RESPECT  # Respect of the Orks
+    requires:
+      - STR_ORK_DEAL
+      - STR_ORK_BASE_LEVEL5_DEFEATED
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -1469,6 +1494,7 @@ research:
     dependencies:
       - STR_GUARD_AND_ARBITES  # This doesnt lock other factions out, they get their own entry points that gives this along with other bonuses
       - STR_ALIEN_ORIGINS
+      - STR_LOSE_500
     unlocks:
       - STR_ALIENS_ONLY
     disables:
@@ -1519,6 +1545,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_LOSE_250
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
     reenables:
@@ -1543,6 +1570,7 @@ research:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
       - STR_MIDTIER_PREREQ
+      - STR_LOSE_500
     reenables:
       - STR_HB_DEP1
     spawnedEvent: STR_CHAOS_MARINE_ADVISOR
@@ -1560,6 +1588,7 @@ research:
     points: -100 #small negative to reputation, moved from radical road entry research
     dependencies:
       - STR_CHAOS_PATH
+      - STR_LOSE_100
     unlocks:
       - STR_REEDUCATION_RESEARCH
 
@@ -2105,6 +2134,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_ENFORCERS_INQ
 
   - name: STR_REQUEST_JUDGES_RESEARCH  # Requisition Judges
@@ -2113,6 +2143,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_LOSE_250
     unlocks:
       - STR_HWP_CANNON_SHELLS
     spawnedEvent: STR_REINFORCEMENTS_ARBITES_INQ
@@ -2122,6 +2153,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_PILOT_GUARD_INQ
 
   - name: STR_REQUEST_ADEPTAS_PILOTS_RESEARCH  # Requisition Adeptas Pilots
@@ -2130,6 +2162,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_PILOTS_INQ
 
   - name: STR_REQUEST_KRIEG_KILLTEAM_RESEARCH  # Requisition Krieg Kill Team
@@ -2137,6 +2170,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_KRIEG_INQ
 
   - name: STR_REQUEST_KRIEG_GRENADIER_KILLTEAM_RESEARCH  # Requisition Krieg Grenadier Kill Team
@@ -2145,6 +2179,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_KRIEG_GRENADIER_INQ
 
   - name: STR_REQUEST_KRIEG_PANZERGRENADIER_KILLTEAM_RESEARCH  # Requisition Krieg Panzergrenadier Kill Team
@@ -2153,6 +2188,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_UFO_CONSTRUCTION  # ceramite tier
+      - STR_LOSE_500
     spawnedEvent: STR_REINFORCEMENTS_KRIEG_PANZERGRENADIER_INQ
 
   - name: STR_REQUEST_ADEPTAS_AID_RESEARCH  # Requisition Adeptas Sororitas
@@ -2160,6 +2196,7 @@ research:
     points: -250
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ
 
   - name: STR_REQUEST_ADEPTAS_AID_RESEARCH_2  # Requisition Further Adeptas Sororitas
@@ -2168,6 +2205,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_LOSE_500
     spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ_2
 
   - name: STR_REQUEST_OGRYN_AID_RESEARCH  # Request Ogryn Bodyguards
@@ -2175,6 +2213,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_OGRYN_INQ
   - name: STR_REQUEST_OGRYN_AID_RESEARCH_2  # Request More Ogryn Bodyguards
     cost: 750
@@ -2182,6 +2221,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MT_GK
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_OGRYN_INQ_2
 
   - name: STR_REQUEST_GUARD_AID_RESEARCH  # Requisition Guard Veterans
@@ -2189,6 +2229,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_VETERAN_GUARD_INQ
 
   - name: STR_REQUEST_POWER_GUARD_AID_RESEARCH  # Requisition Heavy Guard
@@ -2197,6 +2238,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MT_GK
+      - STR_LOSE_500
     spawnedEvent: STR_REINFORCEMENTS_VETERAN_GUARD_INQ_POWERED
 
   - name: STR_CONTACT_THE_ABHUMANS_RESEARCH  # Contact the Abhuman Community
@@ -2204,6 +2246,7 @@ research:
     points: -250
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_BEASTMEN_INQ
 
   - name: STR_RECRUIT_OGRYN_RESEARCH  # Recruit Local Ogryn
@@ -2212,6 +2255,7 @@ research:
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CONTACT_THE_ABHUMANS_RESEARCH
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_UNARMORED_OGRYN_INQ
   - name: STR_A_DEAL_WITH_THE_SQUATS_RESEARCH  # A Deal With The Squats
     cost: 500
@@ -2219,6 +2263,7 @@ research:
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CONTACT_THE_ABHUMANS_RESEARCH
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_SQUATS_INQ
 
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH  # Order Imperial Assassins
@@ -2226,6 +2271,7 @@ research:
     points: -100
     dependencies:
       - STR_CHAMBERMILITANT
+      - STR_LOSE_100
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ  # Order Imperial Assassins
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_2
     cost: 1000
@@ -2233,6 +2279,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_2
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_3  # Order Imperial Assassins
     cost: 1000
@@ -2240,6 +2287,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_2
+      - STR_LOSE_500
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_3
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_4  # Order Imperial Assassins
     cost: 1000
@@ -2247,6 +2295,7 @@ research:
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_3
+      - STR_LOSE_750
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_4
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_5  # Order Imperial Assassins
     cost: 1000
@@ -2255,6 +2304,7 @@ research:
       - STR_CHAMBERMILITANT
       - STR_MT_GK
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_4
+      - STR_LOSE_1000
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_5
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_6  # Order Imperial Assassins
     cost: 1000
@@ -2263,6 +2313,7 @@ research:
       - STR_CHAMBERMILITANT
       - STR_MT_GK
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_5
+      - STR_LOSE_1000
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_6
   - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_7  # Order Imperial Assassins
     cost: 1000
@@ -2271,6 +2322,7 @@ research:
       - STR_CHAMBERMILITANT
       - STR_MT_GK
       - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_6
+      - STR_LOSE_1000
     spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_7
 
 ### Deathwatch #PROGRESSION.CM.DW#
@@ -2296,6 +2348,7 @@ research:
       - STR_SYNAPTIC_DISINTEGRATOR
       - STR_GAUSS_FLAYER
       - STR_GAUSS_REAPER
+      - STR_LOSE_250
 
   - name: STR_MT_DW  # Deathwatch Mid-tier Requisitions  # mid tier  # cutcscene c2 DEATHWATCH
     cost: 200
@@ -2459,6 +2512,7 @@ research:
     points: -200 #negative score moved from earlier entry research radical road for this path
     dependencies:
       - STR_CONVINCE_CHAOS_RESEARCH
+      - STR_LOSE_200
 
   - name: STR_XENO_LEADER_INTERROGATED  # Xeno Leader Interrogation
     refNode: *STR_LOCKED
@@ -2470,6 +2524,7 @@ research:
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_XENO_LEADER_INTERROGATED  # live interrogation
+      - STR_LOSE_200
     unlocks:
       - STR_ORK_ONLY
       - STR_ELDAR_ONLY
@@ -2493,12 +2548,14 @@ research:
       - STR_TAU_EMP_GRENADE
       - STR_TAU_DRONEAI
       - STR_TAU_FIREWARRIORCAPTAINAI
+      - STR_LOSE_250
 
   - name: STR_SUMMON_DAEMONS_RESEARCH  # The Summoning of Daemons
     cost: 1000
     points: -500
     dependencies:
       - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_500
 
   - name: STR_FALSIFY_INQUISITION_REPORT  # Falsify Inquisition Statement
     cost: 1500
@@ -2538,6 +2595,7 @@ research:
     points: -250
     dependencies:
       - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_DCA
 
   - name: STR_CONTACT_DEFECTOR_SISTERS_RESEARCH  # Contact Heretical Sisters
@@ -2545,6 +2603,7 @@ research:
     points: -250
     dependencies:
       - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_250
     spawnedEvent: STR_REINFORCEMENTS_CHAOS_SISTERS_INQ
 
   - name: STR_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Sisters Contacted
@@ -2552,6 +2611,7 @@ research:
     points: -500
     dependencies:
       - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_500
     spawnedEvent: STR_REINFORCEMENTS_CHAOS_MARINES_INQ
 
   - name: STR_MT_RAD  # Inquisition Mid-tier Requisitions
@@ -3562,10 +3622,27 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE
 
-  - name: STR_ORK_BASE_LEVEL5_DEFEATED  # Ork Base Levels Defeated
+  - name: STR_ORK_BASE_LEVEL1_DEFEATED  # Ork Outpost Defeated
+    # Gained by beating STR_ORKBASE1 or STR_ORKBASE2
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+  - name: STR_ORK_BASE_LEVEL3_DEFEATED  # Ork Base Defeated
+    # Gained by beating STR_ORKBASE3 or STR_ORKBASE4
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+      - STR_ORK_BASE_LEVEL1_DEFEATED
+  - name: STR_ORK_BASE_LEVEL5_DEFEATED  # Ork Fortress Defeated
     # Gained by beating STR_ORKBASE5
     dependencies:
       - STR_GENERALLOCK
+    unlocks:
+      - STR_ORK_MIG_UFO
+      - STR_ORK_BASE_LEVEL1_DEFEATED
+      - STR_ORK_BASE_LEVEL3_DEFEATED
 
   - name: STR_YARRICK_JOINED  # Commissar Yarrick Joined
     dependencies:
@@ -3577,6 +3654,7 @@ research:
     points: -100
     dependencies:
       - STR_GENERALLOCK
+      - STR_LOSE_100
 
   - name: STR_FELINID_ASSASSIN_DEP1  # Assassin Interrogated
     dependencies:
@@ -4512,8 +4590,7 @@ research:
     getOneFree:
       - STR_WAGGON_CONVOY_UFO
   - name: STR_ORK_MIG_UFO  # Ork Fighta
-    points: 50
-    needItem: true
+    refNode: *STR_LOCKED
   - name: STR_ORK_MIG_UFO_DATA  # Ork Fighta Scan Data
     needItem: true
     cost: 50
