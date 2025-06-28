@@ -3060,7 +3060,7 @@ armors:
   - type: STR_IRON_GUARD_ARMOR_MOUNTED_AUTOCANNON
     refNode: *STR_IRON_GUARD_ARMOR_MOUNTED
     spriteInv: IRON_GUARD_MOUNTED_AUTOCANNON_INV.SPK
-    customArmorPreviewIndex: [1105, 1106]
+    customArmorPreviewIndex: [1107, 1108]
     storeItem: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON
     builtInWeapons:
       - INV_NULL_2X1_RL
@@ -3096,6 +3096,54 @@ armors:
         var int unitDirection;
 
         add sprite_index 1;
+
+        set sprite_offset 0;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+  - type: STR_IRON_GUARD_ARMOR_MOUNTED_LASCANNON
+    refNode: *STR_IRON_GUARD_ARMOR_MOUNTED
+    spriteInv: IRON_GUARD_MOUNTED_LASCANNON_INV.SPK
+    customArmorPreviewIndex: [1105, 1106]
+    storeItem: STR_GUARD_ARMORS_MOUNTED_LASCANNON
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_LASCANNON
+    scripts:
+      hitUnit:
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+      # 0 las, 1 auto, 2 heavy bolter
+      selectUnitSprite:
+        var int unitDirection;
+
+        add sprite_index 0;
 
         set sprite_offset 0;
 
