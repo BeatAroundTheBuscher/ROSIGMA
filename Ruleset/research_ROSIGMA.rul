@@ -859,15 +859,12 @@ research:
       - STR_HEAVY_WEAPONS_IG
       - STR_LIGHT_BOLTERS_LOWTIER
       - STR_GUARD_BARRACKS
-  #      - STR_REGIMENT_OFFICERS
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-  #      - STR_VALKYRIE_GRAV_DROP_IG
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
       - STR_PILOT_GUARDSMEN
       - STR_NOT_ELITE_STRATEGY
       - STR_NOT_ABHUMAN_STRATEGY
-  #      - STR_NOT_STEEL_LEGION_STRATEGY
-  # the reenable is required for now to get to high tier but may be changed once final mission is made
+      - STR_NOT_STEEL_LEGION_STRATEGY
     reenables:
       - STR_CYDONIA_OR_BUST
 
@@ -2787,6 +2784,26 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - name: STR_IMPERIALBASEDEAD
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CHAOSLORD_PRELOCK
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_SACRIFICE_TO_CHAOS  # Sacrifice to Chaos
+    cost: 100
+    points: 30
+    dependencies:
+      - STR_CHAOS_PATH  # so it can be done by chaos cult and player chaos
+      - STR_IMPERIALBASEDEAD
+    unlocks:
+      - STR_CHAOSLORD_PRELOCK
+    needItem: true
+    neededItem: STR_GREAT_SACRIFICE
+    destroyItem: true
+
   - name: STR_SECRET_OF_CULT  # Secrets of the Cult
     spawnedEvent: STR_RECRUITS_CHAOS_SLIMEHELP
     cost: 70
@@ -2817,6 +2834,15 @@ research:
     dependencies:
       - STR_CHAOS_STRATEGY
       - STR_CULTIST_ENHANCER_BLOCK
+
+  - name: STR_SANCTIFY_CHAOS  # Call the Chaos Priests
+    cost: 350  # rather good research that help progress a bit faster so will take more time
+    points: 10
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CALL_CHAOSPRIEST
+    getOneFree:
+      - STR_CHAOS_PATH
 
   - name: STR_UNHOLY_WARTOOLS  # The Holy Wartools
     cost: 90

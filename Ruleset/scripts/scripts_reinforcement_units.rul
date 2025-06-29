@@ -1,0 +1,144 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    RuleArmor:
+      UNIT_IS_REINFORCEMENT_GENERATOR: int # 0-100; percentile; value defines the % probability of reinforcements each turn
+      REINFORCEMENTS_PER_TURN: int # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENT_GENERATOR_ID: int # the ID number of the reinforcement generator
+
+
+    RuleItem:
+      ITEM_IS_REINFORCEMENT_SPAWNER: int #0-1; binary; value defines whether these reinforcement scripts prime these items if they're on a reinforcement unit
+
+  scripts:
+    newTurnUnit:
+      - new: ROSIGMA_nTU_reinforcement_units
+        offset: 10
+        code: |
+          var int temp;
+          var int temp2;
+          var int reinforcementLimit;
+          var int unitID;
+          var int numInventoryItems;
+          var ptr RuleUnit rUnit;
+          var ptr RuleItem rItem;
+          var ptr RuleArmor rArmor;
+          var ptre BattleItem someItem;
+
+          unit.getHealth temp;
+          if le temp 0; # dead unit
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Unit not alive: " unit;
+            return;
+          end;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Not subject unit's turn: " unit;
+            return;
+          end;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_IS_REINFORCEMENT_GENERATOR;
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Unit not Reinforcement Generator. unit:" unit;
+            return;
+          end;
+          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_IS_REINFORCEMENT_GENERATOR. temp:" temp;
+
+          battle_game.randomRange temp2 1 100; #randomizer
+          if lt temp temp2;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Random roll is higher than UNIT_IS_REINFORCEMENT_GENERATOR value. temp2:" temp2;
+            return;
+          end;
+
+          unit.getInventoryItem.size numInventoryItems;
+          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | numInventoryItems" numInventoryItems;
+          if lt numInventoryItems 1;
+            debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Reinforcement unit has no spawner items remaining; respawning. numInventoryItems:" numInventoryItems;
+
+            rArmor.getTag unitID Tag.REINFORCEMENT_GENERATOR_ID;
+            if eq unitID 1;
+              rules.getRuleUnit rUnit "STR_NECRON_PORTAL";
+            end;
+            unit.setSpawnUnit rUnit;
+            unit.setSpawnUnitFaction FACTION_HOSTILE;
+            unit.setSpawnUnitInstantRespawn 1;
+            return;
+          end;
+
+          rArmor.getTag reinforcementLimit Tag.REINFORCEMENTS_PER_TURN;
+
+          loop var i numInventoryItems;
+            unit.getInventoryItem someItem i;
+            if lt i 2; #only set this on the first pass
+              someItem.getTag temp Tag.ITEM_IS_REINFORCEMENT_SPAWNER; # get the bomb timer
+            end;
+            someItem.isFuseEnabled temp2; # don't bother if the fuse is already active
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Priming Loop Number:" i;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Current item in inventory:" someItem;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Is fuse enabled?:" temp2;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Reinforcement Limit Counter:" reinforcementLimit;
+            if and ge temp 1 lt temp2 1 gt reinforcementLimit 0;
+              #someItem.setFuseEnabled 1;
+              sub reinforcementLimit 1;
+              someItem.setFuseTimer 0;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Successful. Reinforcment Item Triggered. Bomb Item:" someItem;
+            end;
+          end;
+
+
+          return;
+
+items:
+  - &REINFORCEMENT_SPAWNER_TEMPLATE
+    type: STR_REINFORCEMENT_TEMPLATE
+    spawnUnitFaction: 1
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+    recover: false
+    hiddenOnMinimap: true
+    tags:
+      ITEM_IS_REINFORCEMENT_SPAWNER: 1
+
+  - &REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    type: STR_NECRON_PORTAL_WARRIOR_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE
+    spawnUnit: STR_NECRON_WARRIOR
+    hitSound: 2123  # sizzlebamf
+    explosionHitSound: {mod: 40k, index: 790}  # vortexpull
+    hitAnimation: 1080
+    power: 60
+    damageType: 9  # generates a smoke screen; Necrons like this now that they actually have thermal vision
+    damageAlter:
+      RandomType: 6
+      ToTime: 0.5
+      ToEnergy: 0.5
+      ToStun: 0.5
+      ToHealth: 0.0
+      ToWound: 0.0
+      FixRadius: 3
+    powerForAnimation: 5
+    isExplodingInHands: true
+
+  - type: STR_NECRON_PORTAL_SCARAB_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_SCARAB1
+
+  - type: STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_FLAYED_ONE
+
+  - type: STR_NECRON_PORTAL_IMMORTAL_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_IMORTAL
+
+  - type: STR_NECRON_PORTAL_DEATHMARK_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_DEATHMARK
+
+  - type: STR_NECRON_PORTAL_LYCHGUARD_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_LYCHGUARD
