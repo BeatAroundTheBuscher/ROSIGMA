@@ -745,15 +745,31 @@ items:
       ArmorEffectiveness: 0.75
       ToArmorPre: 0.2  # was ToArmor, i.e doesn't damage high armor it can't pen, making certain units invincible.
 
+  - &ELDAR_WEAPON_USE
+    type: STR_CATAPULT  #                      16100
+    requires:
+      - STR_ELDAR_ONLY
+    requiresBuy: []  # Already requires the eldar base service
+  - type: STR_CATAPULT_PISTOL  #              16000
+    refNode: *ELDAR_WEAPON_USE
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      REACTION_MULTIPLIER: 200
+  - type: STR_SHURIKEN_CLIP  #                 16200
+    refNode: *ELDAR_WEAPON_USE
+  - type: STR_EPOWER_SWORD  #                  16300           DA POWER
+    refNode: *ELDAR_WEAPON_USE
+  - type: STR_ELDAR_MGRENADE  # melta grenade         16310
+    refNode: *ELDAR_WEAPON_USE
+  - type: STR_ELDAR_GRENADE  # Eldar Granade          16320
+    refNode: *ELDAR_WEAPON_USE
+
 crafts:
   - type: STR_WAVESERPENT
     requiresBuyBaseFunc: [ELDAROUT]
     requires:
-      - STR_ELDAR_WAVESERPENT_UFO_DATA
       - STR_ELDAR_PATH
-    # FIXME: requiresBuyBaseFunc:
-    #   - STR_ELDAR_WAVESERPENT_UFO_DATA
-    #   - STR_ELDAR_PATH
     fuelMax: 1800
     damageMax: 400
     speedMax: 600
@@ -1219,7 +1235,7 @@ soldierTransformation:  ############## NOT DONE
     # FIXME: requiresBuyBaseFunc: [ASPECT]
     requires:
       - STR_ELDAR_PATH
-      - STR_ELDAR_SCORPION
+      - STR_ELDAR_ASPECT_RESEARCH
     cost: 20000
     minRank: 1
     producedSoldierType: STR_ELDAR_SCORPION_M
@@ -1249,7 +1265,7 @@ soldierTransformation:  ############## NOT DONE
     # FIXME: requiresBuyBaseFunc: [ASPECT]
     requires:
       - STR_ELDAR_PATH
-      - STR_ELDAR_BANSHEE
+      - STR_ELDAR_ASPECT_RESEARCH
     cost: 20000
     minRank: 1
     producedSoldierType: STR_ELDAR_BANSHEE_F
@@ -1279,7 +1295,7 @@ soldierTransformation:  ############## NOT DONE
     # FIXME: requiresBuyBaseFunc: [ASPECT]
     requires:
       - STR_ELDAR_PATH
-      - STR_ELDAR_REAPER
+      - STR_ELDAR_ASPECT_RESEARCH
     cost: 50000
     minRank: 1
     producedSoldierType: STR_ELDAR_REAPER_M
@@ -1310,7 +1326,7 @@ soldierTransformation:  ############## NOT DONE
     # FIXME: requiresBuyBaseFunc: [ASPECT]
     requires:
       - STR_ELDAR_PATH
-      - STR_ELDAR_DAVENGER
+      - STR_ELDAR_ASPECT_RESEARCH
     cost: 50000
     minRank: 1
     producedSoldierType: STR_ELDAR_AVANGER_MF
@@ -1341,7 +1357,7 @@ soldierTransformation:  ############## NOT DONE
     # FIXME: requiresBuyBaseFunc: [ASPECT]
     requires:
       - STR_ELDAR_PATH
-      - STR_ELDAR_SEER
+      - STR_ELDAR_ASPECT_RESEARCH
     cost: 50000
     minRank: 2
     producedSoldierType: STR_ELDAR_SEER_F
