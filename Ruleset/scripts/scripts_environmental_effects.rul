@@ -1,0 +1,172 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    RuleItem:
+      ITEM_IS_ENVIRONMENTAL_TOKEN: int #are we an environmental token? If not, skip checking for environmental parameters
+      ITEM_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT: int #deals this % of a daemon's max HP as damage each turn
+      ITEM_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT: int #deals this much flat damage to daemons each turn
+
+    BattleGame:
+      GAME_ENVIRONMENTAL_EFFECT_ACTIVE: int #is an environmental effect active?
+      GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT: int #deals this % of a daemon's max HP as damage each turn
+      GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT: int #deals this much flat damage to daemons each turn
+
+  scripts:
+    createItem:
+      - new: ROSIGMA_cI_environmental_effects
+        offset: 2
+        code: |
+          var int temp;
+          var ptr RuleItem rItem;
+
+          if gt turn 0; # we don't care about Turn 0 and less; abort.
+            # debug_log "ROSIGMA_cI_environmental_effects | offset: 2 | Turn 1+. Aborting. turn:" turn;
+            return;
+          end;
+
+          item.getRuleItem rItem;
+          rItem.getTag temp Tag.ITEM_IS_ENVIRONMENTAL_TOKEN;
+          if lt temp 1;
+            # debug_log "ROSIGMA_cI_environmental_effects | offset: 2 | Item not Environmental Token. Aborting. item:" item;
+            return;
+          end;
+
+          #check for and apply environmental parameters to the game state.
+          rItem.getTag temp Tag.ITEM_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_ACTIVE 1;
+            battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT temp;
+            # debug_log "ROSIGMA_cI_environmental_effects | offset: 2 | ITEM_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT set:" temp;
+          end;
+
+          rItem.getTag temp Tag.ITEM_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_ACTIVE 1;
+            battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT temp;
+            # debug_log "ROSIGMA_cI_environmental_effects | offset: 2 | GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT set:" temp;
+          end;
+
+          return;
+
+    newTurnItem:
+      - new: ROSIGMA_nTI_environmental_effects
+        offset: 1
+        code: |
+          var int temp;
+          var ptr RuleItem rItem;
+
+          if gt turn 0; # we don't care about Turn 0 and less; abort.
+            # debug_log "ROSIGMA_nTI_environmental_effects | offset: 1 | Turn 1+. Aborting. turn:" turn;
+            return;
+          end;
+
+          #clear environmental vars
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_ACTIVE 0;
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT 0;
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT 0;
+          # debug_log "ROSIGMA_nTI_environmental_effects | offset: 1 | Clearing Environmental Vars.";
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_environmental_effects_damage
+        offset: 98
+        code: |
+          var int temp;
+          var int temp2;
+          var int unitHealth;
+          var int unitDamage;
+          var int unitFire;
+          var int unitIsPlayer;
+          var int randomNumber;
+          var ptr RuleArmor rArmor;
+
+          if lt turn 1; # we don't care about Turn 0; abort.
+            # debug_log "ROSIGMA_nTU_environmental_effects_damage | offset: 98 | Turn 0. Aborting.";
+            return;
+          end;
+
+          battle_game.getTag temp Tag.GAME_ENVIRONMENTAL_EFFECT_ACTIVE;
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_environmental_effects_damage | offset: 98 | No environmental effect active. Aborting. GAME_ENVIRONMENTAL_EFFECT_ACTIVE: " temp;
+            return;
+          end;
+
+          unit.getHealth unitHealth;
+          if lt unitHealth 1;
+            # debug_log "ROSIGMA_nTU_environmental_effects_damage | offset: 98 | Aborting. Target unit is dead: " unit;
+            return;
+          end;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2;
+            # debug_log "ROSIGMA_nTU_environmental_effects_damage | offset: 98 | Aborting. Not subject unit's turn: " unit;
+            return;
+          end;
+
+          if eq temp FACTION_PLAYER; #see if unit belongs to player for the purposes of triggering flashing messages
+            set unitIsPlayer 1;
+          end;
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_DAEMONIC; #Environmental damage effects for daemons
+          if gt temp 0;
+            rArmor.getTag temp Tag.UNIT_TYPE_CONSECRATED; #We don't target daemons of the Emperor
+            if lt temp 1;
+
+              battle_game.getTag temp Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT;
+              if gt temp 0;
+                unit.getHealthMax temp2;
+                muldiv temp temp2 100;
+                battle_game.randomRange randomNumber 0 temp; #gaussian randomizer
+                set temp2 temp;
+                battle_game.randomRange randomNumber 0 temp;
+                add temp2 temp;
+                add unitDamage temp2;
+                set unitFire 1;
+              end;
+
+              battle_game.getTag temp Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT;
+              if gt temp 0;
+                battle_game.randomRange randomNumber 0 temp; #gaussian randomizer
+                set temp2 temp;
+                battle_game.randomRange randomNumber 0 temp;
+                add temp2 temp;
+                add unitDamage temp2;
+                set unitFire 1;
+              end;
+            end;
+
+          end;
+
+          if gt unitFire 0;
+            unit.setFire 1;
+            if gt unitIsPlayer 0;
+              battle_game.flashMessage "STR_SCRIPT_ENVIRONMENTAL_UNIT_IGNITED" temp;
+            end;
+          end;
+
+          if gt unitDamage 0;
+            sub unitHealth unitDamage;
+            unit.setHealthWithOverkill unitHealth;
+            if gt unitIsPlayer 0;
+              battle_game.flashMessage "STR_SCRIPT_ENVIRONMENTAL_UNIT_TAKEN_DAMAGE" temp;
+            end;
+          end;
+
+          return;
+
+    returnFromMissionUnit:
+      - new: ROSIGMA_rFMU_environmental_effects
+        offset: 1
+        code: |
+          var int temp;
+
+          #clear environmental vars
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_ACTIVE 0;
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_PERCENT 0;
+          battle_game.setTag Tag.GAME_ENVIRONMENTAL_EFFECT_DAEMON_PURGE_FLAT 0;
+          # debug_log "ROSIGMA_rFMU_environmental_effects | offset: 2 | Clearing Environmental Vars.";
+
+          return;
