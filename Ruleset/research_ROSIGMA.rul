@@ -1375,17 +1375,13 @@ research:
       - STR_ADEPTAS_CHAOS_PATH
       - STR_CHAMBER_CHAOS_PATH
       - STR_MARINE_CHAOS_PATH
+    unlocks:
+      - STR_ELDAR_ARMORY_EXAM
     getOneFree:
-      - STR_PLAT_CORPSE
+      - STR_ELDAR_WAVESERPENT_UFO_DATA
     lookup: STR_CHOSEN_ELDAR
     spawnedItemList:
       - STR_ELDAR_PLAT
-      - STR_PLAT_CORPSE
-      - STR_ELDAR_DAVENGER
-      - STR_DAVENGER_CORPSE
-      - STR_ELDAR_SCORPION
-      - STR_SCORPION_CORPSE
-      - STR_GUARDIAN_CORPSE
       - STR_ELDAR_HEMLOCK_UFO_DATA
       - STR_ELDAR_WAVESERPENT_UFO_DATA
       - STR_ELDAR_COBRA_UFO_DATA
@@ -1401,14 +1397,16 @@ research:
     spawnedItemCount: 1
 
   - name: STR_SCORPION_R  # Scorpion Requesition
+    # The craft, not the unit
     cost: 1000
     points: 500
     dependencies:
       - STR_ELDAR_PATH
-      - STR_ELDAR_HEMLOCK_UFO_DATA
-      - STR_ELDAR_WAVESERPENT_UFO_DATA
-      - STR_ELDAR_COBRA_UFO_DATA
-      - STR_ELDAR_HORNET_UFO_DATA
+
+  - name: STR_ELDAR_ASPECT_RESEARCH  # Aspect Warrior Promotions
+    cost: 1000
+    dependencies:
+      - STR_ELDAR_PATH
 
 ### Iron Guard Alliance
   - name: STR_DISCOVER_IRON_WARRIORS_RESEARCH  # Encounter with the Iron Warriors
@@ -1470,7 +1468,6 @@ research:
       - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
-      - STR_NOT_CHAMBER
       - STR_NOT_STEEL_LEGION_STRATEGY
     unlocks:
       - STR_ORK_ONLY
@@ -6252,30 +6249,26 @@ research:
 ### Deserters and Instigators #WEAPONS.FOE.RENE.DESE#
 ## Xenos #WEAPONS.FOE.XENO#
 ### Eldar #WEAPONS.FOE.XENO.ELD#
-  - name: STR_CATAPULT_PISTOL  # Shuriken Pistol
+  - name: STR_ELDAR_ARMORY_EXAM
+    refnode: *STR_LOCKED
+
+  - &ELDAR_WEAPON_EXAM
+    name: STR_CATAPULT_PISTOL  # Shuriken Pistol
     cost: 100
     points: 25
     needItem: true
+    unlocks:
+      - STR_ELDAR_ARMORY_EXAM
   - name: STR_CATAPULT  # Shuriken Catapult
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ELDAR_WEAPON_EXAM
   - name: STR_EPOWER_SWORD  # Eldar Mirrorsword
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ELDAR_WEAPON_EXAM
   - name: STR_ELDAR_CHAINSWORD  # Scorpion Chainsword
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ELDAR_WEAPON_EXAM
   - name: STR_ELDAR_GRENADE  # Eldar Plasma Grenade
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ELDAR_WEAPON_EXAM
   - name: STR_ELDAR_MGRENADE  # Eldar Melta Bomb
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ELDAR_WEAPON_EXAM
 
 ### Necron #WEAPONS.FOE.XENO.NECRO#
   - name: STR_GAUSS_BLASTER  # Gauss Blaster
