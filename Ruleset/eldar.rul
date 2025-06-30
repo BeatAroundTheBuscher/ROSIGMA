@@ -21,7 +21,8 @@ units:
 #                 #                                        #                      #
 #                 #                                        #                      #
 armors:
-  - type: STR_WRAITHGUARD_ARMOR_P           # CENT
+  - &WRAITHGUARD_ARMOR
+    type: STR_WRAITHGUARD_ARMOR_P
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
     visibilityAtDay: 40
@@ -49,45 +50,22 @@ armors:
       - 0.9  # MELTA
     loftempsSet: [92, 89, 90, 91]
     drawingRoutine: 5
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: false  # Mechanical
     tags:
       INFECTION_RESIST: 100
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
       UNIT_TYPE_MECHANICAL: 1
-
-  - type: STR_WRAITHGUARD_ARMOR_P_SHIELD    # CENT
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 5
-    antiCamouflageAtDark: 5
+  - type: STR_WRAITHGUARD_ARMOR_P_SHIELD
+    refNode: *WRAITHGUARD_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     frontArmor: 125
     sideArmor: 110
     rearArmor: 100
     underArmor: 120
-    size: 2
     units:
       - STR_ELDAR_FALLEN
-    damageModifier:  # CENT ARMOR
-      - 1.0  # none
-      - 0.8  # AP
-      - 0.4  # FLAMES
-      - 0.9  # HE
-      - 0.9  # LASCANON
-      - 0.8  # PLASMA  # -10%
-      - 0.9  # STUN
-      - 0.9  # MELEE
-      - 0.9  # ACID
-      - 0.0  # SMOKE
-      - 0.2  # IMPACT
-      - 0.9  # MELTA
-    loftempsSet: [92, 89, 90, 91]
-    drawingRoutine: 5
-    allowsRunning: false  # NPC limits for BAI
     tags:
-      # ARMOR_ENERGY_SHIELD_CAPACITY: 100
-      # ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      # ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 10
       INFECTION_RESIST: 100
@@ -95,7 +73,8 @@ armors:
       UNIT_TYPE_ELDAR: 1
       UNIT_TYPE_MECHANICAL: 1
 
-  - type: STR_ELDAR_ARMOR_M               # GUARDIAN
+  - &GUARDIAN_ARMOR
+    type: STR_ELDAR_ARMOR_M               # GUARDIAN
     storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 15
@@ -122,148 +101,51 @@ armors:
       - STR_ELDAR_M
     builtInWeapons:
       - INV_NULL_3X3
-    allowsRunning: false  # NPC limits for BAI
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
-
-
   - type: STR_ELDAR_ARMOR_M_SHIELD        # GUARDIAN
-    visibilityAtDay: 40
-    visibilityAtDark: 20
-    frontArmor: 35
-    sideArmor: 30
-    rearArmor: 16
-    underArmor: 15
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_M
-    allowsRunning: false  # NPC limits for BAI
+    refNode: *GUARDIAN_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     tags:
-      # ARMOR_ENERGY_SHIELD_CAPACITY: 100
-      # ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      # ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 10
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
 
   - type: STR_ELDAR_ARMOR_F               # GUARDIAN
-    storeItem: STR_NONE
-    visibilityAtDay: 40
-    visibilityAtDark: 15
-    frontArmor: 30
-    sideArmor: 25
-    rearArmor: 16
-    underArmor: 15
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
+    refNode: *GUARDIAN_ARMOR
     units:
       - STR_ELDAR_F
-    allowsRunning: false  # NPC limits for BAI
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
-
-  - type: STR_ELDAR_ARMOR_F_SHIELD        # GUARDIAN
-    visibilityAtDay: 40
-    visibilityAtDark: 20
-    frontArmor: 35
-    sideArmor: 25
-    rearArmor: 16
-    underArmor: 15
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_F
-    builtInWeapons:
-      - INV_NULL_3X3
-      - AUX_ELDAR_SHIELD
-    allowsRunning: false  # NPC limits for BAI
-    tags:
-      # ARMOR_ENERGY_SHIELD_CAPACITY: 100
-      # ARMOR_ENERGY_SHIELD_PER_TURN: 10
-      # ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
-      ARMOR_ENERGY_SHIELD_DECAY: 10
-      UNIT_TYPE_XENO: 1
-      UNIT_TYPE_ELDAR: 1
-
   - type: STR_ELDAR_ARMOR_FH        # GUARDIAN
-    storeItem: STR_NONE
-    visibilityAtDay: 40
-    visibilityAtDark: 20
-    frontArmor: 35
-    sideArmor: 25
-    rearArmor: 16
-    underArmor: 15
-    drawingRoutine: 0
-    forcedTorso: 2  # USE FEMALE
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
+    refNode: *GUARDIAN_ARMOR
     units:
       - STR_ELDAR_F
     builtInWeapons:
       - INV_NULL_3X3
       - AUX_ELDAR_KIT
-    allowsRunning: false  # NPC limits for BAI
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
+  - type: STR_ELDAR_ARMOR_F_SHIELD        # GUARDIAN
+    refNode: *GUARDIAN_ARMOR
+    storeItem: STR_ELDAR_SHIELD
+    units:
+      - STR_ELDAR_F
+    builtInWeapons:
+      - INV_NULL_3X3
+      - AUX_ELDAR_SHIELD
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ELDAR: 1
 
-  - type: STR_ELDAR_ARMOR2_P       # BANSHEE PLAYER
+  - &BANSHEE_ARMOR
+    type: STR_ELDAR_ARMOR2_P       # BANSHEE PLAYER
     storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -298,33 +180,8 @@ armors:
       UNIT_TYPE_ELDAR: 1
 
   - type: STR_ELDAR_ARMOR2_P_SHIELD       # BANSHEE PLAYER
-    storeItem: STR_NONE
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 5
-    antiCamouflageAtDark: 5
-    frontArmor: 60
-    sideArmor: 50
-    rearArmor: 40
-    underArmor: 45
-    drawingRoutine: 0
-    forcedTorso: 1  # USE MALE
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_BANSHEE_F
+    refNode: *BANSHEE_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     builtInWeapons:
       - INV_NULL_3X3
       - AUX_ELDAR_SHIELD
@@ -334,47 +191,13 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
 
-  - type: STR_ELDAR_ARMOR3_P        # SEER  PLAYER
+  - &SEER_ARMOR
+    type: STR_ELDAR_ARMOR3_P        # SEER  PLAYER
     storeItem: STR_NONE
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 10  # Farseer bonus
     visibilityAtDay: 40
     visibilityAtDark: 25
-    frontArmor: 60
-    sideArmor: 50
-    rearArmor: 40
-    underArmor: 45
-    drawingRoutine: 1
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_SEER_F
-    builtInWeapons:
-      - INV_NULL_3X3
-    tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
-      ARMOR_ENERGY_SHIELD_DECAY: 10
-      UNIT_TYPE_XENO: 1
-      UNIT_TYPE_ELDAR: 1
-      UNIT_TYPE_PSYKER: 1
-
-  - type: STR_ELDAR_ARMOR3_P_SHIELD        # SEER  PLAYER
-    antiCamouflageAtDay: 7
-    antiCamouflageAtDark: 10  # Farseer bonus
-    visibilityAtDay: 40
-    visibilityAtDark: 30
     frontArmor: 60
     sideArmor: 50
     rearArmor: 40
@@ -399,6 +222,17 @@ armors:
       - STR_ELDAR_SEER_F
     builtInWeapons:
       - INV_NULL_3X3
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ELDAR: 1
+      UNIT_TYPE_PSYKER: 1
+  - type: STR_ELDAR_ARMOR3_P_SHIELD        # SEER  PLAYER
+    refNode: *SEER_ARMOR
+    storeItem: STR_ELDAR_SHIELD
+    builtInWeapons:
+      - INV_NULL_3X3
       - AUX_ELDAR_SHIELD
     tags:
       # ARMOR_ENERGY_SHIELD_CAPACITY: 100
@@ -410,7 +244,8 @@ armors:
       UNIT_TYPE_ELDAR: 1
       UNIT_TYPE_PSYKER: 1
 
-  - type: STR_ELDAR_ARMOR5_P       # SCORPION PLAYER
+  - &SCORPION_ARMOR
+    type: STR_ELDAR_ARMOR5_P       # SCORPION PLAYER
     storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -444,35 +279,9 @@ armors:
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
-
   - type: STR_ELDAR_ARMOR5_P_SHIELD       # SCORPION PLAYER
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    camouflageAtDay: -15  # you need to be 10 tiles closer than max vision range to see this unit in the light
-    camouflageAtDark: -10  # you need to be 5 tiles closer than max vision range (at night!) to see this unit in the dark
-    antiCamouflageAtDay: 5
-    antiCamouflageAtDark: 8
-    frontArmor: 60
-    sideArmor: 50
-    rearArmor: 40
-    underArmor: 45
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 1.0  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_SCORPION_M
+    refNode: *SCORPION_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     builtInWeapons:
       - INV_NULL_3X3
       - AUX_ELDAR_SHIELD
@@ -482,7 +291,8 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
 
-  - type: STR_ELDAR_ARMOR4_P       # DIRE AVANGER
+  - &AVENGER_ARMOR
+    type: STR_ELDAR_ARMOR4_P       # DIRE AVANGER
     storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -514,33 +324,9 @@ armors:
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
-
   - type: STR_ELDAR_ARMOR4_P_SHIELD        # DIRE AVANGER
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 3
-    antiCamouflageAtDark: 3
-    frontArmor: 60
-    sideArmor: 50
-    rearArmor: 40
-    underArmor: 45
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 0.9  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_AVANGER_MF
+    refNode: *AVENGER_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     builtInWeapons:
       - INV_NULL_3X3
       - AUX_ELDAR_SHIELD
@@ -550,12 +336,46 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
 
-  - type: STR_ELDAR_ARMOR6_P       # REAPER
+  - &REAPER_ARMOR
+    type: STR_ELDAR_ARMOR6_P       # REAPER
     storeItem: STR_NONE
     visibilityAtDay: 40
     visibilityAtDark: 25
     antiCamouflageAtDay: 5
     antiCamouflageAtDark: 5
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 144, 144, 245, 245, 144, 144, 160, 160] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5
+    spriteSheet: ELDARDR6.PCK
+    layersDefaultPrefix: "70"
+    layersSpecificPrefix:
+      70: ELDAR
+    layersDefinition:
+      M0: ["0", "ELDARR", "M0_FACE", "MASK"]
+      M1: ["0", "ELDARR", "M1_FACE", "MASK"]
+      M2: ["0", "ELDARR", "M2_FACE", "MASK"]
+      M3: ["0", "ELDARR", "M3_FACE", "MASK"]
+      M4: ["0", "ELDARR", "M4_FACE", "MASK"]
+      M5: ["0", "ELDARR", "M5_FACE", "MASK"]
+      F0: ["0", "ELDARR", "M0_FACE", "MASK"]
+      F1: ["0", "ELDARR", "M1_FACE", "MASK"]
+      F2: ["0", "ELDARR", "M2_FACE", "MASK"]
+      F3: ["0", "ELDARR", "M3_FACE", "MASK"]
+      F4: ["0", "ELDARR", "M4_FACE", "MASK"]
+      F5: ["0", "ELDARR", "M5_FACE", "MASK"]
+    ufopediaType: STR_ELDAR_ARMOR6
+    customArmorPreviewIndex: 264
+    corpseBattle:
+      - STR_ELDAR_REAPER_CORPSE_P
+    selectUnitMale:       [{mod: 40k, index: 1413}, {mod: 40k, index: 1414}, {mod: 40k, index: 1415}, {mod: 40k, index: 1416}, {mod: 40k, index: 1417}]  # yamllint disable-line rule:colons
+    selectUnitFemale:     [{mod: 40k, index: 1413}, {mod: 40k, index: 1414}, {mod: 40k, index: 1415}, {mod: 40k, index: 1416}, {mod: 40k, index: 1417}]  # yamllint disable-line rule:colons
+    startMovingMale:      [{mod: 40k, index: 1408}, {mod: 40k, index: 1409}, {mod: 40k, index: 1410}, {mod: 40k, index: 1411}, {mod: 40k, index: 1412}]  # yamllint disable-line rule:colons
+    startMovingFemale:    [{mod: 40k, index: 1408}, {mod: 40k, index: 1409}, {mod: 40k, index: 1410}, {mod: 40k, index: 1411}, {mod: 40k, index: 1412}]  # yamllint disable-line rule:colons
+    selectWeaponMale:     [{mod: 40k, index: 1403}, {mod: 40k, index: 1404}, {mod: 40k, index: 1405}, {mod: 40k, index: 1406}, {mod: 40k, index: 1407}]  # yamllint disable-line rule:colons
+    selectWeaponFemale:   [{mod: 40k, index: 1403}, {mod: 40k, index: 1404}, {mod: 40k, index: 1405}, {mod: 40k, index: 1406}, {mod: 40k, index: 1407}]  # yamllint disable-line rule:colons
+    annoyedMale:          [{mod: 40k, index: 1418}, {mod: 40k, index: 1419}, {mod: 40k, index: 1420}, {mod: 40k, index: 1421}, {mod: 40k, index: 1422}]  # yamllint disable-line rule:colons
+    annoyedFemale:        [{mod: 40k, index: 1418}, {mod: 40k, index: 1419}, {mod: 40k, index: 1420}, {mod: 40k, index: 1421}, {mod: 40k, index: 1422}]  # yamllint disable-line rule:colons
+    deathMale:            [{mod: 40k, index: 1423}, {mod: 40k, index: 1424}, {mod: 40k, index: 1425}, {mod: 40k, index: 1426}]  # yamllint disable-line rule:colons
+    deathFemale:          [{mod: 40k, index: 1423}, {mod: 40k, index: 1424}, {mod: 40k, index: 1425}, {mod: 40k, index: 1426}]  # yamllint disable-line rule:colons
     frontArmor: 110
     sideArmor: 90
     rearArmor: 80
@@ -578,38 +398,23 @@ armors:
     units:
       - STR_ELDAR_REAPER_M
     builtInWeapons:
-      - STR_ELDAR_LAUNCHER
       - INV_NULL_3X3
     tags:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ELDAR: 1
-
-  - type: STR_ELDAR_ARMOR6_P_SHIELD    # REAPER
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    antiCamouflageAtDay: 5
-    antiCamouflageAtDark: 5
-    frontArmor: 110
-    sideArmor: 90
-    rearArmor: 80
-    underArmor: 70
-    drawingRoutine: 0
-    damageModifier:  # ELDAR ARMOR
-      - 1.0  # none
-      - 0.8  # AP
-      - 0.5  # FLAMES
-      - 1.0  # HE
-      - 0.7  # LASCANON
-      - 0.7  # PLASMA
-      - 1.0  # STUN
-      - 1.0  # MELEE
-      - 0.5  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
-    units:
-      - STR_ELDAR_REAPER_M
+  - type: STR_ELDAR_ARMOR6_P_LAUNCHER
+    refNode: *REAPER_ARMOR
+    builtInWeapons:
+      - STR_ELDAR_LAUNCHER_FIXED
+      - INV_NULL_3X3
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ELDAR: 1
+  - type: STR_ELDAR_ARMOR6_P_SHIELD
+    refNode: *REAPER_ARMOR
+    storeItem: STR_ELDAR_SHIELD
     builtInWeapons:
       - AUX_ELDAR_SHIELD
       - INV_NULL_3X3
@@ -670,7 +475,7 @@ armors:
       - 0.2  # IMPACT
       - 1.2  # MELTA
     loftempsSet: [92, 89, 90, 91]
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: false
     tags:
       INFECTION_RESIST: 100  # infection immune
       INTIMIDATION_RESISTANCE: 50  # intimidate immune
@@ -712,7 +517,7 @@ armors:
     drawingRoutine: 3
     allowsKneeling: false
     allowsMoving: false
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: false
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 12
@@ -725,6 +530,8 @@ armors:
 
 #                 #                                        #                      #
 items:
+  - type: STR_ELDAR_SHIELD
+    costBuy: 300000
 
   - type: AUX_ELDAR_KIT
     medikitTargetImmune: true
@@ -745,13 +552,47 @@ items:
       ArmorEffectiveness: 0.75
       ToArmorPre: 0.2  # was ToArmor, i.e doesn't damage high armor it can't pen, making certain units invincible.
 
+  - type: STR_ELDAR_LAUNCHER_FIXED  # Fixed weapon version for use on player armor.
+    ufopediaType: STR_ELDAR_LAUNCHER
+    categories: [STR_CAT_ELDAR, STR_CAT_DEVASTATOR]
+    requiresBuyBaseFunc: [ELDAROUT]
+    requires:
+      - STR_ELDAR_PATH
+    size: 0.4
+    dropoff: 5
+    weight: 30
+    bigSprite: {mod: 40k, index: 405}
+    floorSprite: {mod: 40k, index: 419}
+    handSprite: {mod: 40k, index: 1336}
+    bulletSprite: 0
+    fireSound: {mod: 40k, index: 52}
+    clipSize: -1
+    power: 100
+    damageType: 3
+    accuracySnap: 70
+    accuracyAimed: 115
+    accuracyAuto: 55
+    tuSnap: 55
+    tuAimed: 85
+    tuAuto: 55
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    fixedWeapon: true
+    recover: false
+
   - &ELDAR_WEAPON_USE
     type: STR_CATAPULT  #                      16100
     requires:
       - STR_ELDAR_ONLY
     requiresBuy: []  # Already requires the eldar base service
+  - type: STR_CATAPULT
+    weight: 15
   - type: STR_CATAPULT_PISTOL  #              16000
     refNode: *ELDAR_WEAPON_USE
+    weight: 10
     inventoryMoveCost: #quickdraw
       basePercent: 50
     tags:
@@ -1085,15 +926,16 @@ soldiers:
     soldierNames:
       - delete
       - Names/eldar_scorpion.nam
-  - type: STR_ELDAR_M
+  - &ELDAR_GUARDIAN
+    type: STR_ELDAR_M
     costBuy: 30000
     costSalary: 15000
     minStats:
-      tu: 40
+      tu: 45
       stamina: 30
-      health: 35
+      health: 25
       bravery: 50
-      reactions: 35  # +5
+      reactions: 40
       firing: 55  # +5
       throwing: 30
       strength: 20
@@ -1101,12 +943,12 @@ soldiers:
       psiSkill: 20
       melee: 40
     maxStats:
-      tu: 55
+      tu: 65
       stamina: 65
-      health: 50  # +10
+      health: 40
       bravery: 80
-      reactions: 50
-      firing: 65
+      reactions: 70
+      firing: 75
       throwing: 60
       strength: 30  # +5
       psiStrength: 100
@@ -1138,54 +980,7 @@ soldiers:
       - delete
       - Names/eldar_guardian_male.nam
   - type: STR_ELDAR_F
-    costBuy: 30000
-    costSalary: 15000
-    minStats:
-      tu: 40
-      stamina: 30
-      health: 35
-      bravery: 50
-      reactions: 35  # +5
-      firing: 55  # +5
-      throwing: 30
-      strength: 20
-      psiStrength: 50
-      psiSkill: 20
-      melee: 40
-    maxStats:
-      tu: 55
-      stamina: 65
-      health: 50  # +10
-      bravery: 80
-      reactions: 50
-      firing: 65
-      throwing: 60
-      strength: 30  # +5
-      psiStrength: 100
-      psiSkill: 10
-      melee: 50
-    statCaps:
-      tu: 80
-      stamina: 100
-      health: 70  # +10
-      bravery: 100
-      reactions: 80
-      firing: 110
-      throwing: 70
-      strength: 60
-      psiStrength: 100
-      psiSkill: 100
-      melee: 100
-    trainingStatCaps:
-      tu: 60
-      stamina: 80
-      health: 60
-      firing: 70
-      throwing: 65
-      strength: 30
-      psiStrength: 100
-      psiSkill: 100
-      melee: 80
+    refNode: *ELDAR_GUARDIAN
     soldierNames:
       - delete
       - Names/eldar_guardian_female.nam
@@ -1246,9 +1041,8 @@ soldierTransformation:  ############## NOT DONE
     allowedSoldierTypes:
       - STR_ELDAR_M
     requiredMinStats:
-      bravery: 60
-      strength: 20
-      melee: 40
+      bravery: 70
+      melee: 50
     percentOverallStatChange:
       tu: 10
       stamina: 20
@@ -1277,8 +1071,7 @@ soldierTransformation:  ############## NOT DONE
       - STR_ELDAR_F
     requiredMinStats:
       bravery: 60
-      strength: 20
-      melee: 40
+      melee: 50
     percentOverallStatChange:
       tu: 10
       stamina: 20
@@ -1307,9 +1100,7 @@ soldierTransformation:  ############## NOT DONE
       - STR_ELDAR_M
       - STR_ELDAR_SCORPION_M
     requiredMinStats:
-      bravery: 50
-      strength: 20
-      firing: 40
+      firing: 65
     percentOverallStatChange:
       tu: 10
       stamina: 10
