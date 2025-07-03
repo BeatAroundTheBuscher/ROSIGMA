@@ -65,8 +65,10 @@ soldiers:
     avatarOffsetX: 67
     avatarOffsetY: 42
     allowPromotion: false
+    rankSprite: 1131
+    rankBattleSprite: 1131
     rankStrings:
-      - STR_AUXILIARY_RANK
+      - STR_ORK_BOY_RANK
     soldierNames:
       - delete
       - Names/Orks.nam
@@ -112,14 +114,14 @@ soldiers:
       reactions: 85  # +5
       firing: 95  # +5
       throwing: 80
-      strength: 100  # +20
+      strength: 105  # +25
       psiStrength: 100
       psiSkill: 50
       melee: 110  # +10
     trainingStatCaps:
       tu: 70  # +10
       stamina: 75  # +10
-      health: 45  # +15
+      health: 50  # +20
       firing: 75  # +5
       throwing: 65
       strength: 45  # +15
@@ -137,15 +139,96 @@ soldiers:
     femaleFrequency: 100 #to use the gender 2 Cap torso sprite
     avatarOffsetX: 67
     avatarOffsetY: 42
-    allowPromotion: false
+    allowPromotion: true
+    rankSprite: 1131
+    rankBattleSprite: 1131
     rankStrings:
-      - STR_AUXILIARY_RANK
+      - STR_ARDBOY_RANK_0
+      - STR_ARDBOY_RANK_1
+      - STR_ARDBOY_RANK_2
     soldierNames:
       - delete
       - Names/Orks.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 10  # +5
+
+  - type: STR_GUARD_ORK_NOB  # Blood Axe Nob
+    requires:
+      - STR_ORK_RESPECT
+    costSalary: 8000
+    # Stat comments relative to Blood Axe 'ardboy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 65  # +10
+      stamina: 65  # +10
+      health: 65  # +25
+      bravery: 55  # +25
+      reactions: 45  # +10
+      firing: 50  # +15
+      throwing: 55  # +10
+      strength: 70  # +30, minimum for 'ardboy
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  #
+    maxStats:
+      tu: 85  # +5
+      stamina: 90  # +5
+      health: 100  # +20
+      bravery: 90  # +10
+      reactions: 80  # +5
+      firing: 70  # +5
+      throwing: 80  # +5
+      strength: 85  # +15
+      psiStrength: 100
+      psiSkill: 6
+      melee: 80  #
+    statCaps:
+      tu: 130  # +20
+      stamina: 140  # + 20
+      health: 170  # +40
+      bravery: 110
+      reactions: 95  # + 10
+      firing: 100  # +5
+      throwing: 100  # +20
+      strength: 140  # +40
+      psiStrength: 100
+      psiSkill: 50
+      melee: 125  # +15
+    trainingStatCaps:
+      # Not much better except Strength/Health. Orks don't take well to regimented training.
+      tu: 75  # +5
+      stamina: 80  # +5
+      health: 75  # +30
+      firing: 80  # +5
+      throwing: 65
+      strength: 80  # +35
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70  # +10
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_BLOODAXE_NOB_ARMOR_PLAYER
+    standHeight: 22
+    kneelHeight: 14
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: false
+    rankSprite: 1131
+    rankBattleSprite: 1131
+    rankStrings:
+      - STR_NOB_RANK_0
+      - STR_NOB_RANK_1
+      - STR_NOB_RANK_2
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 20
 
 soldierTransformation:
   - name: STR_BLOODAXE_ARDBOY_PROMOTION
@@ -155,6 +238,7 @@ soldierTransformation:
       STR_BATTLE_TESTED: 0
     requires:
       - STR_ORK_MERCENARIES
+    cost: 20000
     requiredItems:
       STR_KILLPOINT_TOKEN: 50
     producedSoldierType: STR_GUARD_ORK_ARDBOY
@@ -164,3 +248,22 @@ soldierTransformation:
     allowsWoundedSoldiers: true
     allowedSoldierTypes:
       - STR_GUARD_ORK_BOY
+
+  - name: STR_BLOODAXE_NOB_PROMOTION
+    requiredMinStats:
+      strength: 100
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requires:
+      - STR_ORK_MERCENARIES
+    cost: 30000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 200
+    producedSoldierType: STR_GUARD_ORK_ARDBOY
+    producedSoldierArmor: STR_BLOODAXE_NOB_ARMOR_PLAYER
+    resetRank: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_ARDBOY
