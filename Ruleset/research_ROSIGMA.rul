@@ -1493,6 +1493,10 @@ research:
       - STR_NOT_GK
     unlocks:
       - STR_ORK_ONLY
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_KOMBI_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
 
   - name: STR_ORK_MERCENARIES  # Ork Mercenaries
     dependencies:
@@ -6301,7 +6305,7 @@ research:
 ## Xenos #WEAPONS.FOE.XENO#
 ### Eldar #WEAPONS.FOE.XENO.ELD#
   - name: STR_ELDAR_ARMORY_EXAM
-    refnode: *STR_LOCKED
+    refNode: *STR_LOCKED
 
   - &ELDAR_WEAPON_EXAM
     name: STR_CATAPULT_PISTOL  # Shuriken Pistol
@@ -6344,119 +6348,112 @@ research:
     needItem: true
 
 ### Ork #WEAPONS.FOE.XENO.ORK#
-  - name: STR_GRETCHIN_BLASTA  # Small Blasta
+  - name: STR_ORK_WEAPONS_EXAM
+    refNode: *STR_LOCKED
+  - name: STR_ORK_SHOOTA_EXAM
+    refNode: *STR_LOCKED
+  - name: STR_ORK_KOMBI_EXAM
+    refNode: *STR_LOCKED
+  - name: STR_ORK_BIG_DAKKA_EXAM
+    refNode: *STR_LOCKED
+
+  - delete: STR_AMMO_BIT10  # Small Ammo Bit
+  - delete: STR_AMMO_BIT20  # Ammo Bit
+  - delete: STR_AMMO_BIT50  # Ammo Belt
+
+  - &ORK_WEAPONS_EXAM
+    name: STR_CHOPPA  # Choppa
+    cost: 50
+    points: 15
+    needItem: true
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+  - name: STR_BIGCHOPPA  # Big Choppa
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_TANKHAMMER  # Tank Busta Hammer
+    cost: 50
+    points: 25
+    needItem: true
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_ORK_GRENADE  # Stikkbombs
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_WYRDBOY_STIKK  # Ork Wyrd Stikk
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_ORK_CHAINSWORD  # Orky Chainchoppa
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_ORK_KRAKSTIKKBOMB  # Krak Stikkbomb
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_TANKBUSTA_BOMB  # Tankbusta bomb
+    refNode: *ORK_WEAPONS_EXAM
+  - name: STR_ORK_STINKBOMB  # Stinkbomb
+    refNode: *ORK_WEAPONS_EXAM
+
+  - &ORK_SHOOTA_EXAM
+    name: STR_GRETCHIN_BLASTA  # Small Blasta
     cost: 50
     points: 50
     needItem: true
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
   - name: STR_GRETCHIN_AMMO_BIT  # Small Blasta Ammo Bit
+    refNode: *ORK_SHOOTA_EXAM
+  - name: STR_SLUGGA  # Slugga
+    refNode: *ORK_SHOOTA_EXAM
+  - name: STR_SNEAKY_SLUGGA  # Sneaky Slugga
+    refNode: *ORK_SHOOTA_EXAM
+  - name: STR_SHOOTA  # Shoota
+    refNode: *ORK_SHOOTA_EXAM
+  - name: STR_SNAZZY_SHOOTA  # Snazzy Shoota
+    refNode: *ORK_SHOOTA_EXAM
+
+  - &ORK_KOMBI_EXAM
+    name: STR_SNAZZY_SHOOTA_KOMBI_ROKKIT  # Snazzy Kombi-Shoota
     cost: 50
     points: 50
     needItem: true
-  - name: STR_SLUGGA  # Slugga
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_AMMO_BIT10  # Small Ammo Bit
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_SNEAKY_SLUGGA  # Sneaky Slugga
-    cost: 100
-    points: 25
-    needItem: true
-  - name: STR_AMMO_BIT10SNEAKY  # Sneaky Ammo
-    cost: 50
-    points: 25
-    needItem: true
-  - name: STR_SHOOTA  # Shoota
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_SNAZZY_SHOOTA  # Snazzy Shoota
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_SNAZZY_SHOOTA_KOMBI_ROKKIT  # Snazzy Kombi-Shoota
-    cost: 50
-    points: 15
-    needItem: true
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_KOMBI_EXAM
   - name: STR_SNAZZY_SHOOTA_KOMBI_BLASTA  # Snazzy Kustom-Shoota
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_AMMO_BIT20  # Ammo Bit
-    cost: 50
-    points: 15
-    needItem: true
+    refNode: *ORK_KOMBI_EXAM
+
   - name: STR_SNAZZ_GUN  # Flashy Snazzgun
-    cost: 200
-    points: 25
+    refNode: *ORK_SHOOTA_EXAM
+
+  - &ORK_BIG_DAKKA_EXAM
+    name: STR_ORK_RL  # Rokkit Launcha
+    cost: 50
+    points: 15
     needItem: true
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
   - name: STR_BIG_SHOOTA  # Big Shoota
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_AMMO_BIT50  # Ammo Belt
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_ORK_SNIPER_RIFLE  # Ork Sniper Gun
-    cost: 400
-    points: 25
-    getOneFree:
-      - STR_CASS_R
-    needItem: true
-  - name: STR_ORK_AUTOCANNON_CLIP  # Ork Sniper Gun Mag.
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *ORK_BIG_DAKKA_EXAM
+
   - name: STR_SNAZZY_MEGA_BLASTA  # Snazzy Mega-Blasta
     cost: 1200
     points: 25
     needItem: true
     dependencies:
       - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
     getOneFree:
       - STR_HEAVY_PLASMA_DEP1
-  - name: STR_ORK_RL  # Rokkit Launcha
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_CHOPPA  # Choppa
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_BIGCHOPPA  # Big Choppa
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_TANKHAMMER  # Tank Busta Hammer
-    cost: 50
+
+  - name: STR_ORK_SNIPER_RIFLE  # Ork Sniper Gun
+    cost: 400
     points: 25
-    needItem: true
-  - name: STR_ORK_GRENADE  # Stikkbombs
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_WYRDBOY_STIKK  # Ork Wyrd Stikk
-    cost: 50
-    points: 15
-    needItem: true
-  - name: STR_ORK_CHAINSWORD  # Orky Chainchoppa
-    cost: 50
-    points: 5
-    needItem: true
-  - name: STR_ORK_KRAKSTIKKBOMB  # Krak Stikkbomb
-    cost: 50
-    points: 25
-    needItem: true
-  - name: STR_TANKBUSTA_BOMB  # Tankbusta bomb
-    cost: 150
-    points: 25
-    needItem: true
-  - name: STR_ORK_STINKBOMB  # Stinkbomb
-    cost: 150
-    points: 25
+    getOneFree:
+      - STR_CASS_R
+    unlocks:
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
     needItem: true
 
 ### Tyranids #WEAPONS.FOE.XENO.TYR#
