@@ -1,0 +1,170 @@
+missionScripts:
+  - &starterInquisitionOutpostsCCULT
+    type: firstInquisitionOutpost
+    missionWeights:
+      0:
+        STR_INQUISITION_OUTPOST_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 2  # Runs once after Chaos Corruption
+    varName: starterInquisitionOutpostsCCULT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: secondInquisitionOutpostCCULT  # So that two get made immediately
+    refNode: *starterInquisitionOutpostsCCULT
+
+  - &SPAWN_HQCCULT
+    type: firstInquisitionHQNorthAmericaCCULT
+    missionWeights:
+      0:
+        STR_INQUISITION_HQ_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 1  # Runs once after Chaos Corruption
+    varName: starterInquisitionHQCCULT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_HARDER_MISSIONS: true
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQNorthAmericaCCULT
+    label: 2000
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_NORTH_AMERICA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQEuropeCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2001
+    conditionals: [-2000]
+    regionWeights:
+      0:
+        STR_EUROPE: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_EUROPE: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQSouthAmericaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2002
+    conditionals: [-2000, -2002]
+    regionWeights:
+      0:
+        STR_SOUTH_AMERICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTH_AMERICA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQNorthAfricaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2003
+    conditionals: [-2000, -2001, -2002]
+    regionWeights:
+      0:
+        STR_NORTH_AFRICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_NORTH_AFRICA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQSouthernAfricaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2004
+    conditionals: [-2000, -2001, -2002, -2003]
+    regionWeights:
+      0:
+        STR_SOUTHERN_AFRICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTHERN_AFRICA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQCentralAsiaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2005
+    conditionals: [-2000, -2001, -2002, -2003, -2004]
+    regionWeights:
+      0:
+        STR_CENTRAL_ASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_CENTRAL_ASIA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQSouthEastAsiaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2006
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005]
+    regionWeights:
+      0:
+        STR_SOUTH_EAST_ASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_SOUTH_EAST_ASIA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQAustralasiaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2007
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006]
+    regionWeights:
+      0:
+        STR_AUSTRALASIA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_AUSTRALASIA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQArcticCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2008
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007]
+    regionWeights:
+      0:
+        STR_ARCTIC: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_ARCTIC: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQAntarcticaCCULT
+    refNode: *SPAWN_HQCCULT
+    label: 2009
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007, -2008]
+    regionWeights:
+      0:
+        STR_ANTARCTICA: 100
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_BASE_IN_ANTARCTICA: false
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
+  - type: firstInquisitionHQAnywhereCCULT
+    # Fallback, for if the player somehow had a base in every region at some point
+    conditionals: [-2000, -2001, -2002, -2003, -2004, -2005, -2006, -2007, -2008, -2009]
+    missionWeights:
+      0:
+        STR_INQUISITION_HQ_BUILD_INITIAL: 100
+    firstMonth: 1
+    startDelay: 120
+    randomDelay: 1440 # Up to 1 weeks random delay
+    executionOdds: 100
+    maxRuns: 1
+    varName: starterInquisitionHQCCULT
+    researchTriggers:
+      STR_ALIENS_ONLY: true
+      STR_HARDER_MISSIONS: true
+      STR_CULTIST_LEGION_SORC: true
+      STR_NOT_CHAOSCULT: false
