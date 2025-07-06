@@ -7,6 +7,7 @@ extended:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
+      ITEM_HEAT_AMMO_SNAP_MULTIPLIER: int #for weapons that fire more than one shot per snap
       ITEM_OVERHEAT_DAMAGE: int  # how much damage we apply on average direct to the target's HP.
     BattleItem:
       ITEM_HEAT_CURRENT_LEVEL: int
@@ -20,9 +21,10 @@ extended:
         offset: 20
         code: |
           var int temp;
+          var int temp2;
           var int currentHeat;
           var int maxHeat;
-
+          var int critHeat;
           var int previousAmmoCount;
           var int currentAmmoCount;
           var ptr BattleItem ammoItem;
@@ -39,6 +41,11 @@ extended:
             return reaction_chance;
           end;
 
+          reaction_weapon.getTag critHeat Tag.ITEM_HEAT_CRITICAL; #sanity check; no firing while we're critical
+          if gt critHeat 0;
+            return 0;
+          end;
+
           reaction_weapon.getTag currentHeat Tag.ITEM_HEAT_CURRENT_LEVEL;
           reaction_weapon.getTag previousAmmoCount Tag.ITEM_HEAT_PREVIOUS_AMMO_COUNT;
           reaction_weapon.getAmmoItem ammoItem;
@@ -48,14 +55,24 @@ extended:
             sub previousAmmoCount currentAmmoCount; # delta ammo count
           end;
 
+          # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | currentHeat:" currentHeat;
+          # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | previousAmmoCount  (ammoCount delta):" previousAmmoCount;
+          # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | reaction_count:" reaction_count;
 
+          reaction_weapon.getTag temp2 Tag.ITEM_HEAT_AMMO_SNAP_MULTIPLIER; #for weapons that fire more than one shot per snap
+          # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | ITEM_HEAT_AMMO_SNAP_MULTIPLIER:" temp2;
+          limit_lower temp 1;
+          mul temp2 reaction_count;
+          add previousAmmoCount temp2;
           reaction_weapon.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
-          add previousAmmoCount reaction_count; # assumes that snap will always use one ammo per shot
           div previousAmmoCount temp;
+          # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | final previousAmmoCount:" previousAmmoCount;
 
           add currentHeat previousAmmoCount;
 
           if gt currentHeat maxHeat;
+            # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | Aborting. Reaction Fire heat would exceed maxHeat. currentHeat:" currentHeat;
+            # debug_log "ROSIGMA_rUR_plasma_heat | offset: 20 | Aborting. Reaction Fire heat would exceed maxHeat. maxHeat:" maxHeat;
             return 0;
           end;
 
@@ -392,6 +409,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_HEAT_AMMO_SNAP_MULTIPLIER: 2
       ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
 
   - type: STR_PLASMA_GUN_TWINCORE_DEKKER  # Dekker Twincore Plasma
@@ -401,6 +419,7 @@ items:
       ITEM_HEAT_MAX_LEVEL: 7
       ITEM_HEAT_DISSIPATION_PER_TURN: 2  # improved dissipation
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_HEAT_AMMO_SNAP_MULTIPLIER: 2
       ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
 
