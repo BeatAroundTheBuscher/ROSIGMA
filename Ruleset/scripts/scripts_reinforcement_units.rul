@@ -6,6 +6,7 @@ extended:
       UNIT_IS_REINFORCEMENT_GENERATOR: int # 0-100; percentile; value defines the % probability of reinforcements each turn
       REINFORCEMENTS_PER_TURN: int # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
       REINFORCEMENT_GENERATOR_ID: int # the ID number of the reinforcement generator
+      REINFORCEMENT_TURN_DELAY: int # 0+; how many full turns this reinforcement generator remains dormant for
 
 
     RuleItem:
@@ -46,6 +47,14 @@ extended:
             return;
           end;
           # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_IS_REINFORCEMENT_GENERATOR. temp:" temp;
+
+          rArmor.getTag temp Tag.REINFORCEMENT_TURN_DELAY;
+          battle_game.getTurn temp2;
+          if lt temp2 temp;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Current turn is lower than REINFORCEMENT_TURN_DELAY. turn:" temp2;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Current turn is lower than REINFORCEMENT_TURN_DELAY. REINFORCEMENT_TURN_DELAY:" temp;
+            return;
+          end;
 
           battle_game.randomRange temp2 1 100; #randomizer
           if lt temp temp2;
