@@ -1,73 +1,166 @@
 extended:
   tags:
     RuleItem:
-      ITEM_GUARD_COLOR: int
-      ITEM_MARINE_COLOR: int
-      ITEM_NEW_ARBITES_COLOR: int
-      ITEM_NEW_CHAOS_CULT_COLOR: int
-      ITEM_NEW_CHAOS_PATH_COLOR: int
+      # Set to 1 if you want the item recolored with faction research.
+      # Currently works with Arbites/Cult/General Chaos.
+      ITEM_GETS_FACTION_RECOLOR: int
+
+      # Set to 1 if you want to palette swap sprites for new items.
+      # ITEM_GETS_FACTION_RECOLOR takes precedence over this.
+      ITEM_IS_PALETTE_SWAP: int
+
+      ITEM_BASE_COLOR: int
+      # The base color of the item by row of the palette
+      # Generic Black: 0
+      # Guard Green: 4
+      # Marine Blue: 7
+
+      # Need to have Arbites/Cult/Chaos colors defined for each item with ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_ARBITES_BASE_COLOR: int
+      # Arbites Grey: 15
+      ITEM_CULT_BASE_COLOR: int
+      # Chaos Cult Brown: 10
+      ITEM_CHAOS_BASE_COLOR: int
+      # General Chaos Red: 2
+      ITEM_SWAP_BASE_COLOR: int
+      # Used only if ITEM_IS_PALETTE_SWAP: 1
+      # Cannot be used in conjunction with research based swaps, takes precedence
+
+      # Functions the same way as recoloring base colors. Not necessary. Only happens if you're also recoloring a base color.
+      ITEM_GETS_ACCENT_RECOLOR: int
+      ITEM_ACCENT_COLOR: int
+      # Aquilla Gold: 1
+      ITEM_ARBITES_ACCENT_COLOR: int
+      ITEM_CULT_ACCENT_COLOR: int
+      ITEM_CHAOS_ACCENT_COLOR: int
+      ITEM_SWAP_ACCENT_COLOR: int
+      # Used only if ITEM_IS_PALETTE_SWAP is 1
+      # Cannot be used in conjunction with research based swaps, takes precedence
+
+  scripts:
+    recolorItemSprite:
+      - new: recolorItemWithResearch
+        offset: 99
+        code: |
+          var ptr RuleItem weaponRuleset;
+          var ptr GeoscapeGame geoScape;
+          var ptr RuleResearch researchTopic;
+          var int isArbites;
+          var int isCult;
+          var int isChaos;
+          var int isPlayerRecolorFaction;
+          var int getsRecolor;
+          var int getsAccentRecolor;
+          var int color;
+          var int baseColor;
+          var int accentColor;
+          var int newBaseColor;
+          var int newAccentColor;
+
+          item.getRuleItem weaponRuleset;
+          weaponRuleset.getTag getsRecolor Tag.ITEM_GETS_FACTION_RECOLOR;
+          weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
+
+          if eq getsRecolor 1;
+            battle_game.getGeoscapeGame geoScape;
+            rules.getRuleResearch researchTopic "STR_ARBITES";
+            geoScape.isResearched isArbites researchTopic;
+
+            rules.getRuleResearch researchTopic "STR_CHAOS_STRATEGY_ARBITES";
+            geoScape.isResearched isCult researchTopic;
+
+            rules.getRuleResearch researchTopic "STR_CHAOS_PATH";
+            geoScape.isResearched isChaos researchTopic;
+
+            if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
+              item.getRuleItem weaponRuleset;
+              if eq isArbites 1;
+                set isPlayerRecolorFaction 1;
+                weaponRuleset.getTag newBaseColor Tag.ITEM_ARBITES_BASE_COLOR;
+                weaponRuleset.getTag newAccentColor Tag.ITEM_ARBITES_ACCENT_COLOR;
+              end;
+              if eq isChaos 1;
+                set isPlayerRecolorFaction 1;
+                weaponRuleset.getTag newBaseColor Tag.ITEM_CHAOS_BASE_COLOR;
+                weaponRuleset.getTag newAccentColor Tag.ITEM_CHAOS_ACCENT_COLOR;
+              end;
+              if eq isCult 1;
+                set isPlayerRecolorFaction 1;
+                weaponRuleset.getTag newBaseColor Tag.ITEM_CULT_BASE_COLOR;
+                weaponRuleset.getTag newAccentColor Tag.ITEM_CULT_ACCENT_COLOR;
+              end;
+              if eq isPlayerRecolorFaction 1;
+                weaponRuleset.getTag baseColor Tag.ITEM_BASE_COLOR;
+                get_color color new_pixel;
+                if eq color baseColor;
+                  set_color new_pixel newBaseColor;
+                end;
+
+                weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
+                weaponRuleset.getTag accentColor Tag.ITEM_ACCENT_COLOR;
+                if and eq getsAccentRecolor 1 eq color accentColor;
+                  set_color new_pixel newAccentColor;
+                end;
+              end;
+            end;
+          end;
+          add_shade new_pixel shade;
+          return new_pixel;
+
+      - new: recolorItemPaletteSwap
+        offset: 99.1
+        code: |
+          var ptr RuleItem weaponRuleset;
+          var int isSwap;
+          var int getsAccentRecolor;
+          var int color;
+          var int baseColor;
+          var int accentColor;
+          var int newBaseColor;
+          var int newAccentColor;
+
+          item.getRuleItem weaponRuleset;
+          weaponRuleset.getTag isSwap Tag.ITEM_IS_PALETTE_SWAP;
+          weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
+
+          if eq isSwap 1;
+            if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
+              item.getRuleItem weaponRuleset;
+              weaponRuleset.getTag newBaseColor Tag.ITEM_SWAP_BASE_COLOR;
+              weaponRuleset.getTag newAccentColor Tag.ITEM_SWAP_ACCENT_COLOR;
+
+              weaponRuleset.getTag baseColor Tag.ITEM_BASE_COLOR;
+              get_color color new_pixel;
+              if eq color baseColor;
+                set_color new_pixel newBaseColor;
+              end;
+
+              weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
+              weaponRuleset.getTag accentColor Tag.ITEM_ACCENT_COLOR;
+              if and eq getsAccentRecolor 1 eq color accentColor;
+                set_color new_pixel newAccentColor;
+              end;
+            end;
+          end;
+          add_shade new_pixel shade;
+          return new_pixel;
+
 
 items:
   - &STR_ITEM_CHANGE_COLOR
     type: STR_AUTOGUN
     tags:
-      ITEM_GUARD_COLOR: 4
-      ITEM_MARINE_COLOR: 7
-      ITEM_NEW_ARBITES_COLOR: 15
-      ITEM_NEW_CHAOS_CULT_COLOR: 10
-      ITEM_NEW_CHAOS_PATH_COLOR: 2
-    scripts:
-      recolorItemSprite: |
-        var ptr RuleItem weaponRuleset;
-        var int newWeaponColor;
-        var int oldGuardColor;
-        var int oldMarineColor;
-        var int color;
-        var int isArbites;
-        var int isChaos;
-        var int isGeneralChaos;
-        var ptr GeoscapeGame geoScape;
-        var ptr RuleResearch researchTopic;
+      ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_BASE_COLOR: 4
+      ITEM_ARBITES_BASE_COLOR: 15
+      ITEM_CULT_BASE_COLOR: 10
+      ITEM_CHAOS_BASE_COLOR: 2
 
-        if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
-
-          battle_game.getGeoscapeGame geoScape;
-          rules.getRuleResearch researchTopic "STR_ARBITES";
-          geoScape.isResearched isArbites researchTopic;
-
-          rules.getRuleResearch researchTopic "STR_CHAOS_STRATEGY_ARBITES";
-          geoScape.isResearched isChaos researchTopic;
-
-          rules.getRuleResearch researchTopic "STR_CHAOS_PATH";
-          geoScape.isResearched isGeneralChaos researchTopic;
-
-          if or eq isArbites 1 eq isChaos 1 eq isGeneralChaos 1;
-
-            item.getRuleItem weaponRuleset;
-            if eq isArbites 1;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_ARBITES_COLOR;
-            else;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_CHAOS_CULT_COLOR;
-            end;
-            if neq newWeaponColor 0;
-              weaponRuleset.getTag oldGuardColor Tag.ITEM_GUARD_COLOR;
-              weaponRuleset.getTag oldMarineColor Tag.ITEM_MARINE_COLOR;
-              get_color color new_pixel;
-            if and eq isChaos 0 eq isGeneralChaos 1;
-              weaponRuleset.getTag newWeaponColor Tag.ITEM_NEW_CHAOS_PATH_COLOR;
-            end;
-
-              if or eq color oldGuardColor eq color oldMarineColor eq color 1;
-                set_color new_pixel newWeaponColor;
-              end;
-            end;
-          end;
-
-        end;
-
-        add_shade new_pixel shade;
-        return new_pixel;
-
+      ITEM_GETS_ACCENT_RECOLOR: 1
+      ITEM_ACCENT_COLOR: 1
+      ITEM_ARBITES_ACCENT_COLOR: 15
+      ITEM_CULT_ACCENT_COLOR: 10
+      ITEM_CHAOS_ACCENT_COLOR: 2
 
   - type: STR_AUTOPISTOL
     refNode: *STR_ITEM_CHANGE_COLOR
@@ -149,15 +242,25 @@ items:
 
   - type: AUX_HOVERTANK_LASER
     refNode: *STR_ITEM_CHANGE_COLOR
+    tags:
+      ITEM_BASE_COLOR: 7
 
   - type: AUX_HOVERTANK_LAUNCHER
     refNode: *STR_ITEM_CHANGE_COLOR
+    tags:
+      ITEM_BASE_COLOR: 7
 
   - type: STR_POWERFIST
     refNode: *STR_ITEM_CHANGE_COLOR
+    tags:
+      ITEM_BASE_COLOR: 7
 
   - type: STR_ROCKET_LAUNCHER
     refNode: *STR_ITEM_CHANGE_COLOR
+    tags:
+      ITEM_BASE_COLOR: 7
 
   - type: STR_MOUNTED_LASCANNON
     refNode: *STR_ITEM_CHANGE_COLOR
+    tags:
+      ITEM_BASE_COLOR: 7
