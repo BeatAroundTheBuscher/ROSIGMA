@@ -690,7 +690,8 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
 
-  - type: STR_ORK_ARMORMEGA  # Meganobz Mega Armour
+  - &MEGANOB_ARMOR
+    type: STR_ORK_ARMORMEGA  # Meganobz Mega Armour
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20  # tech
@@ -1229,7 +1230,7 @@ armors:
     loftempsSet: [3]
     units:
       - STR_GUARD_ORK_BOY
-    specialWeapon: STR_CHOPPA
+    specialWeapon: AUX_CHOPPA
     tags:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
@@ -1298,7 +1299,7 @@ armors:
     loftempsSet: [3]
     units:
       - STR_GUARD_ORK_BOY
-    specialWeapon: STR_CHOPPA
+    specialWeapon: AUX_CHOPPA
     tags:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
@@ -1344,7 +1345,7 @@ armors:
     underArmor: 55
     units:
       - STR_GUARD_ORK_ARDBOY
-    specialWeapon: STR_CHOPPA
+    specialWeapon: AUX_CHOPPA
 
   - type: STR_BLOODAXE_NOB_ARMOR_PLAYER
     refNode: *ORK_KARAPACE
@@ -1403,6 +1404,49 @@ armors:
       - STR_GUARD_ORK_NOB
     tags:
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+    scripts:
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 1 2;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        return;
+
+  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+    refNode: *MEGANOB_ARMOR
+    spriteSheet: ORK_BLOODAXE_MEGANOB_BS.PCK
+    spriteInv: O5BLOODAXEMEGANOBINV.SPK
+    forcedTorso: 1
+    drawingRoutine: 0
+    customArmorPreviewIndex: 1265
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE  # needs unique
+    allowsRunning: true
+    storeItem: STR_MEGANOB_ARMOR
+    units:
+      - STR_GUARD_ORK_NOB
+    specialWeapon: AUX_CHOPPA
+    tags:
+      UNIT_SIZE: 200 # LARGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
