@@ -24,7 +24,6 @@ extended:
       # General Chaos Red: 2
       ITEM_SWAP_BASE_COLOR: int
       # Used only if ITEM_IS_PALETTE_SWAP: 1
-      # Cannot be used in conjunction with research based swaps, takes precedence
 
       # Functions the same way as recoloring base colors. Not necessary. Only happens if you're also recoloring a base color.
       ITEM_GETS_ACCENT_RECOLOR: int
@@ -35,7 +34,6 @@ extended:
       ITEM_CHAOS_ACCENT_COLOR: int
       ITEM_SWAP_ACCENT_COLOR: int
       # Used only if ITEM_IS_PALETTE_SWAP is 1
-      # Cannot be used in conjunction with research based swaps, takes precedence
 
   scripts:
     recolorItemSprite:
@@ -61,7 +59,9 @@ extended:
           weaponRuleset.getTag getsRecolor Tag.ITEM_GETS_FACTION_RECOLOR;
           weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
 
-          if eq getsRecolor 1;
+          if eq getsRecolor 0;
+            return new_pixel;
+          else;
             battle_game.getGeoscapeGame geoScape;
             rules.getRuleResearch researchTopic "STR_ARBITES";
             geoScape.isResearched isArbites researchTopic;
@@ -123,7 +123,9 @@ extended:
           weaponRuleset.getTag isSwap Tag.ITEM_IS_PALETTE_SWAP;
           weaponRuleset.getTag getsAccentRecolor Tag.ITEM_GETS_ACCENT_RECOLOR;
 
-          if eq isSwap 1;
+          if eq isSwap 0;
+            return new_pixel;
+          else;
             if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
               item.getRuleItem weaponRuleset;
               weaponRuleset.getTag newBaseColor Tag.ITEM_SWAP_BASE_COLOR;
