@@ -89,6 +89,28 @@ skills:
     requiredBonuses:
       - STR_SORCERY_TRAINING
 
+  - type: STR_SKILL_SPIT_SORCERY
+    targetMode: 8
+    costUse:
+      time: 30
+    flatUse: false
+    compatibleWeapons:
+      - SPIT_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+
+  - type: STR_BETTER_SPIT_SORCERY
+    targetMode: 8
+    costUse:
+      time: 30
+    flatUse: false
+    compatibleWeapons:
+      - BETTER_SPIT_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+
 items:
   - &SKILL_TOKEN
     type: STR_PSI_AMP_TOKEN
@@ -262,3 +284,69 @@ items:
       ITEM_PSYCHIC_POWER_MODIFIER: 2
       INFECTION_DAMAGE_PERCENT: 20  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 3  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - &SPIT_TEMPLATE
+    type: SPIT_TOKEN  # NURGLE SPIT less AOE for Nurglings
+    refNode: *SKILL_TOKEN
+    dropoff: 7
+    bulletSprite: {mod: 40k, index: 8}
+    fireSound: {mod: 40k, index: 51}
+    hitSound: {mod: 40k, index: 19}
+    explosionHitSound: {mod: 40k, index: 832}  # blight rocket SFX
+    hitAnimation: 1030  # 128 green from X1.pck
+    vaporColorSurface: 2  # toxic green
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 50
+    power: 60
+    damageAlter:  # DA SPIT
+      RandomType: 6  # TFTD [50% - 150%]
+      ToArmorPre: 0.5  # corrodes on the way in
+      ToArmor: 0.0
+      ToHealth: 0.1
+      ToMana: 0.2
+      ToTime: 0.2
+      ArmorEffectiveness: 0.7
+      FixRadius: 1
+    damageType: 8
+    accuracySnap: 50
+    tuSnap: 25
+    battleType: 1
+    fixedWeapon: true
+    snapRange: 10
+    maxRange: 15
+    clipSize: -1
+    recover: false
+    arcingShot: true
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 2
+      INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
+      INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
+
+  - type: BETTER_SPIT_TOKEN  # STR_LESSER_PLAGUE_TOAD
+    bigSprite: 2648
+    dropoff: 5
+    refNode: *SPIT_TEMPLATE
+    accuracySnap: 70
+    accuracyAuto: 70
+    tuAuto: 55
+    snapRange: 12
+    maxRange: 18
+    power: 60
+    vaporColorSurface: 2  # toxic green
+    vaporDensitySurface: 1
+    vaporProbabilitySurface: 10
+    damageAlter:  # DA SPIT
+      ToMana: 0.1  # less corruption, more debuff
+      ToHealth: 0.5
+      ArmorEffectiveness: 0.7 #tone down health damage, increase armor pen to encourage AI use
+      ToArmorPre: 0.1 #more sticky than corrosive
+      ToArmor: 0.0
+      ToTime: 1.0  # sticky spit
+      ToMorale: 1.0
+      ToEnergy: 0.5
+      RadiusReduction: 20  # larger AoE but more aggressive reduction; 50/30
+      FixRadius: 2
+    autoShots: 3
+    minRange: 5
