@@ -191,6 +191,42 @@ items:
     tags:
       REACTION_MULTIPLIER: 200
 
+  - type: STR_KUSTOM_SLUGGA
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORK_RESPECT
+    requiresBuyBaseFunc: [TRADE]
+    handSprite: 2270
+    bigSprite: 2156
+    floorSprite: 2338
+    costBuy: 50000
+    size: 0.2
+    dropoff: 7
+    costSell: 5000
+    weight: 20
+    compatibleAmmo:
+      - STR_AMMO_BIT10
+      - STR_AMMO_BIT20
+    accuracySnap: 75
+    tuSnap: 21
+    snapRange: 6
+    confSnap:
+      shots: 2
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 2
+    armor: 30
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 17000
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      REACTION_MULTIPLIER: 200
+
   - type: STR_SNEAKY_SLUGGA  # ORK KOMMANDOZ PISTOL       17000
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
     requires:
@@ -862,6 +898,7 @@ items:
       - STR_ORK_ONLY
     requiresBuy:
       - STR_ORK_RESPECT
+    requiresBuyBaseFunc: [TRADE]
     size: 0.1
     costBuy: 1200
     costSell: 400
@@ -1286,11 +1323,11 @@ items:
     recover: false
     hiddenOnMinimap: true
     fixedWeapon: false  # used to be true, because thats making them act not as ammo so they arent loading in
-  - type: STR_CHOPPA  #                17080
+  - &CHOPPA
+    type: STR_CHOPPA  #                17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
     requires:
       - STR_ORK_ONLY
-    specialIconSprite: 304
     size: 0.2
     costBuy: 120
     requiresBuy:
@@ -1325,6 +1362,12 @@ items:
     strengthApplied: false
     attraction: 7
     listOrder: 17080
+
+  - type: AUX_CHOPPA
+    refNode: *CHOPPA
+    specialIconSprite: 304
+    weight: 0
+    fixedWeapon: true
 
   - type: STR_THROATSLITTA  #                17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
