@@ -1,41 +1,70 @@
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
   tags:
     RuleArmor:
       ARMOR_TENACIOUS_HP_MOD: int
       ARMOR_TENACIOUS_STUN_RECOVERY: int
-    # infection script tags
-      INFECTION_RESIST: int  # reduces infection damage by this as a %
-      INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
-    # intimidation script tags
-      INTIMIDATION_RESISTANCE: int  # Reduces the effectiveness of Intimidate attacks by this percentage
-    # dodge script tags
-      DODGE_CHANCE: int
-      FLIGHT_DODGE_CHANCE: int
-      ARMOR_MAX_SUCCESSFUL_DODGES: int
-    # bomberman script tags
-      ARMOR_IS_EXPLODE_ON_DEATH: int  # do we check this unit on death for bombs to activate?
-      ARMOR_IS_KAMIKAZI: int  # do we kamikazi when we hit regardless of the weapon used?
-    # reinforcement TU scripts
-      ARMOR_REINFORCEMENT_TU_PERCENT: int  # this is the % of TUs the unit spawns with; if unspecified, defaults to 25% of max.
-    # unit typing tags
-      UNIT_TYPE_MECHANICAL: int
-      UNIT_TYPE_DAEMONIC: int
-      UNIT_TYPE_CONSECRATED: int
-      UNIT_TYPE_CHAOS: int
-      UNIT_TYPE_PSYKER: int
-      UNIT_TYPE_NULL: int
-      UNIT_TYPE_TYRANID: int
-      UNIT_TYPE_LIVING: int
-      UNIT_TYPE_TZEENTCH: int
-      UNIT_TYPE_KHORNE: int
-      UNIT_TYPE_SLAANESH: int
-      UNIT_TYPE_NURGLE: int
-      UNIT_TYPE_XENO: int
-      UNIT_TYPE_ELDAR: int
-      UNIT_TYPE_IMPERIUM: int
-      UNIT_TYPE_ORK: int
-      UNIT_TYPE_NECRON: int
-      UNIT_TYPE_TAU: int
+      ARMOR_NECRON_RESURRECTION_ORB_POWER: int
+    BattleGame:
+      NECRON_RESURRECTION_POWER: int #how much total HP do we restore
+
+  scripts:
+    newTurnUnit:
+      - new: ROSIGMA_nTU_necron_resurrection_orb
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+          var ptr RuleArmor armorRule;
+
+          if eq turn 0; # we don't care about Turn 0 and less; abort.
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb | offset: 1 | Turn 1+. Clearing Necron Resurrection Power and aborting. Turn:" turn;
+            battle_game.setTag Tag.NECRON_RESURRECTION_POWER 0; #reset resurrection power
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_NECRON_RESURRECTION_ORB_POWER;
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Aborting. Target has no resurrection orb power.";
+            return;
+          end;
+
+          unit.getHealth temp;
+          if le temp 0; # dead unit
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb | offset: 1 | Aborting. Unit not alive: " unit;
+            return;
+          end;
+
+          unit.getFaction temp;
+          if neq side temp; # don't reset on others' turns
+            battle_game.setTag Tag.NECRON_RESURRECTION_POWER 0; #reset resurrection power
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Not the unit's turn. Aborting. side:" side;
+            return;
+          end;
+
+          # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Unit resurrection orb power. Temp:" temp;
+          # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Unit resurrection orb power. unit:" unit;
+          battle_game.getTag temp2 Tag.NECRON_RESURRECTION_POWER;
+          # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Current Necron resurrection power. Temp2:" temp2;
+          add temp2 temp;
+          battle_game.setTag Tag.NECRON_RESURRECTION_POWER temp2; #set resurrection power
+          # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: New Necron resurrection power. Temp2:" temp2;
+
+          return;
+
+    returnFromMissionUnit:
+      - new: ROSIGMA_rFMU_necron_resurrection_orb
+        offset: 2
+        code: |
+
+          #clear vars
+          battle_game.setTag Tag.NECRON_RESURRECTION_POWER 0;
+          # debug_log "ROSIGMA_rFMU_necron_resurrection_orb | offset: 2 | Clearing Necron Resurrection Power Vars.";
+
+          return;
+
 
 armors:
   - &TENACIOUS_NECRON_ARMOR
@@ -94,6 +123,9 @@ armors:
         var int currentStun;
         var int stunRecovery;
         var int currentHealth;
+        var int maxHealth;
+        var int resurrectionPower;
+        var int resurrectionHP;
         var ptr RuleArmor targetArmor;
 
         if neq side FACTION_HOSTILE;
@@ -110,6 +142,25 @@ armors:
           sub currentStun stunRecovery;
         else;
           set currentStun 0;
+        end;
+
+        unit.getHealthMax maxHealth; #if we're damaged draw from Necron resurrection power to regain HP.
+        if lt currentHealth maxHealth;
+          set resurrectionHP maxHealth;
+          sub resurrectionHP currentHealth;
+          limit_upper resurrectionHP 20;
+          battle_game.getTag resurrectionPower Tag.NECRON_RESURRECTION_POWER;
+          # debug_log "ROSIGMA_ARMOR_NECRON_TENACIOUS_SCRIPTS: Initial pre-healing Necron Resurrection power:" resurrectionPower;
+          limit_lower resurrectionPower 0; #sanity
+          if lt resurrectionPower resurrectionHP;
+            set resurrectionHP resurrectionPower;
+          end;
+          # debug_log "ROSIGMA_ARMOR_NECRON_TENACIOUS_SCRIPTS: Unit healing from Resurrection power:" resurrectionHP;
+          sub resurrectionPower resurrectionHP;
+          battle_game.setTag Tag.NECRON_RESURRECTION_POWER resurrectionPower; #set resurrection power
+          # debug_log "ROSIGMA_ARMOR_NECRON_TENACIOUS_SCRIPTS: New post-healing Necron Resurrection power:" resurrectionPower;
+          add currentHealth resurrectionHP;
+          unit.setHealth currentHealth;
         end;
 
         if lt currentStun currentHealth; # wakes up
@@ -171,13 +222,28 @@ armors:
       # ARMOR_ENERGY_SHIELD_CAPACITY: 80
       # ARMOR_ENERGY_SHIELD_PER_TURN: 10
       # ARMOR_ENERGY_SHIELD_FLASH_COLOR: 9
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
-      ARMOR_ENERGY_SHIELD_DECAY: 12
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
+      ARMOR_ENERGY_SHIELD_DECAY: 10
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       ARMOR_TENACIOUS_HP_MOD: 3
-      ARMOR_TENACIOUS_STUN_RECOVERY: 25
+      ARMOR_TENACIOUS_STUN_RECOVERY: 30
       INFECTION_RESIST: 100  # infection immune
       INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      ARMOR_NECRON_RESURRECTION_ORB_POWER: 1000
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
+
+  - type: STR_NECRON_LORD_ARMOR
+    refNode: *TENACIOUS_NECRON_ARMOR
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_TENACIOUS_HP_MOD: 3
+      ARMOR_TENACIOUS_STUN_RECOVERY: 30
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      ARMOR_NECRON_RESURRECTION_ORB_POWER: 200
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
