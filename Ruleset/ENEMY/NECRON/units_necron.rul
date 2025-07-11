@@ -29,11 +29,18 @@ weaponSets:  # these can be re-used for any unit
   - type: NECRON_PORTAL_IMMORTAL_REINFORCEMENTS
     weapons: [STR_NECRON_PORTAL_IMMORTAL_SPAWNER, STR_NECRON_PORTAL_IMMORTAL_SPAWNER, STR_NECRON_PORTAL_IMMORTAL_SPAWNER]
   - type: NECRON_PORTAL_DEATHMARK_REINFORCEMENTS
-    weapons: [STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER]
+    weapons: [STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER]
   - type: NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS
-    weapons: [STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER]
+    weapons: [STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER]
   - type: NECRON_PORTAL_LYCHGUARD_REINFORCEMENTS
-    weapons: [STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER]
+    weapons: [STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER]
+  - type: NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW
+    weapons: [STR_NECRON_PORTAL_WARRIOR_SPAWNER, STR_NECRON_PORTAL_SCARAB_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER]
+  - type: NECRON_PORTAL_MIXED_REINFORCEMENTS_MID
+    weapons: [STR_NECRON_PORTAL_IMMORTAL_SPAWNER, STR_NECRON_PORTAL_FLAYED_ONE_SPAWNER, STR_NECRON_PORTAL_DEATHMARK_SPAWNER]
+  - type: NECRON_PORTAL_MIXED_REINFORCEMENTS_HIGH
+    weapons: [STR_NECRON_PORTAL_DEATHMARK_SPAWNER, STR_NECRON_PORTAL_LYCHGUARD_SPAWNER, STR_NECRON_PORTAL_IMMORTAL_SPAWNER]
+
 
 units:
   - type: STR_NECRON_WARRIOR
@@ -427,7 +434,7 @@ units:
     armor: STR_NECRON_ARCHITECT_ARMOR
     standHeight: 20
     kneelHeight: 15
-    value: 40
+    value: 50
     deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
     intelligence: 9
     aggression: 8
@@ -437,15 +444,74 @@ units:
     # spawnUnit: STR_NECRON_IMORTAL
     builtInWeaponSets:
       - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
       - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
       - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+
+  - &NECRON_LORD_UNIT_TEMPLATE
+    type: STR_NECRON_LORD
+    race: STR_NECRON
+    rank: STR_LIVE_COMMANDER
+    stats:
+      tu: 150
+      stamina: 150
+      health: 200
+      bravery: 100
+      reactions: 90
+      firing: 120
+      throwing: 80
+      strength: 60
+      psiStrength: 200
+      psiSkill: 0
+      melee: 120
+    armor: STR_NECRON_LORD_ARMOR
+    standHeight: 20
+    kneelHeight: 15
+    value: 50
+    deathSound: [{mod: 40k, index: 289}, {mod: 40k, index: 290}, {mod: 40k, index: 291}]
+    intelligence: 9
+    aggression: 8
+    spotter: 4
+    sniper: 100
+    energyRecovery: 200
+    # spawnUnit: STR_NECRON_IMORTAL
+    builtInWeaponSets:
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+
+  - type: STR_NECRON_LORD_REVIVES
+    refNode: *NECRON_LORD_UNIT_TEMPLATE
+    armor: STR_NECRON_LORD_ARMOR_REVIVES
+    spawnUnit: STR_NECRON_LORD
+    builtInWeaponSets:
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
+        - STR_NECRON_SCARAB_SPAWNER_GRENADE
+      - - STR_STAFF_OF_LIGHT
+        - STR_NECRON_RESURRECTION_ORB
         - STR_NECRON_SCARAB_SPAWNER_GRENADE
 
   - &NECRON_TURRET_TEMPLATE
@@ -520,7 +586,7 @@ units:
     stats:
       tu: 10
       stamina: 200
-      health: 400
+      health: 300
       bravery: 120
       reactions: 0
       firing: 0
@@ -545,26 +611,35 @@ units:
     specab: 1
     weightedBuiltInWeaponSets:
       -  # Tier 1
-        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 60
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW: 30
+        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 20
         NECRON_PORTAL_SCARAB_REINFORCEMENTS: 20
         NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 9
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_MID: 9
         NECRON_PORTAL_IMMORTAL_REINFORCEMENTS: 5
         NECRON_PORTAL_DEATHMARK_REINFORCEMENTS: 5
         NECRON_PORTAL_LYCHGUARD_REINFORCEMENTS: 1
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_HIGH: 1
       -  # Tier 2
-        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 40
-        NECRON_PORTAL_SCARAB_REINFORCEMENTS: 20
-        NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 15
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_MID: 20
+        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 20
         NECRON_PORTAL_IMMORTAL_REINFORCEMENTS: 15
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW: 10
+        NECRON_PORTAL_SCARAB_REINFORCEMENTS: 10
+        NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 10
         NECRON_PORTAL_DEATHMARK_REINFORCEMENTS: 9
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_HIGH: 5
         NECRON_PORTAL_LYCHGUARD_REINFORCEMENTS: 1
       -  # Tier 3
-        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 25
-        NECRON_PORTAL_SCARAB_REINFORCEMENTS: 20
-        NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 20
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_HIGH: 20
         NECRON_PORTAL_IMMORTAL_REINFORCEMENTS: 20
+        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 19
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_MID: 10
         NECRON_PORTAL_DEATHMARK_REINFORCEMENTS: 10
+        NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 10
+        NECRON_PORTAL_SCARAB_REINFORCEMENTS: 5
         NECRON_PORTAL_LYCHGUARD_REINFORCEMENTS: 5
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW: 1
 
 armors:
   - type: STR_NECRON_WARRIOR_ARMOR     # NECRON WARRIOR
@@ -1122,12 +1197,13 @@ armors:
       - STR_SCARAB_R_WEAPON
       - STR_SCARAB_L_WEAPON
 
-  - type: STR_NECRON_ARCHITECT_ARMOR       # NECRON WARRIOR
+  - type: STR_NECRON_ARCHITECT_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 40
-    heatVision: 50
-    antiCamouflageAtDark: 10
-    antiCamouflageAtDay: 5
+    heatVision: 60
+    antiCamouflageAtDark: 15 # superior sensors
+    antiCamouflageAtDay: 15
+    psiVision: 5 # superior sensors
     bleedImmune: true
     fearImmune: true
     painImmune: true
@@ -1141,6 +1217,54 @@ armors:
     sideArmor: 160
     rearArmor: 100
     underArmor: 170
+    drawingRoutine: 0
+    recovery:  # Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.6
+    damageModifier:  # NECRON ARMOR; Superior Necrodermis
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.3  # FLAMES
+      - 0.9  # HE
+      - 1.0  # LASCANON
+      - 0.9  # PLASMA
+      - 1.0  # STUN
+      - 0.9  # MELEE
+      - 0.4  # ACID
+      - 0.0  # SMOKE
+      - 0.9  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    builtInWeapons:
+      - INV_NULL_3X3
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
+
+  - &NECRON_LORD_ARMOR_TEMPLATE
+    type: STR_NECRON_LORD_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    heatVision: 50 # superior sensors
+    antiCamouflageAtDark: 10 # superior sensors
+    antiCamouflageAtDay: 10
+    psiVision: 5 # superior sensors
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    zombiImmune: true
+    allowsRunning: false  # NPC limits for BAI
+    spriteSheet: STR_NECRON_LORD_BS.PCK
+    spriteInv: STR_NECRON_LORD_INV.SPK
+    corpseBattle:
+      - STR_NECRON_LORD_CORPSE
+    frontArmor: 150
+    sideArmor: 140
+    rearArmor: 100
+    underArmor: 150
     drawingRoutine: 0
     recovery:  # Living metal rapidly regenerates health
       health:
@@ -1161,6 +1285,23 @@ armors:
     loftempsSet: [3]
     builtInWeapons:
       - INV_NULL_3X3
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
+
+  - type: STR_NECRON_LORD_ARMOR_REVIVES
+    refNode: *NECRON_LORD_ARMOR_TEMPLATE
+    spriteSheet: STR_NECRON_LORD_REVIVE_BS.PCK
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_NECRON: 1
+
 
   - &NECRON_TURRET_ARMOR_TEMPLATE
     type: STR_MONO_N_ARMOR
@@ -1222,8 +1363,8 @@ armors:
     visibilityAtDark: 40
     antiCamouflageAtDark: 15
     antiCamouflageAtDay: 15
-    camouflageAtDay: 8  # active camo level stealth
-    camouflageAtDark: 5
+    camouflageAtDay: 5  # active camo level stealth
+    camouflageAtDark: 2
     heatVision: 40
     psiVision: 10  # bloodhunt/sense the living
     frontArmor: 110
@@ -1283,44 +1424,25 @@ armors:
     heatVision: 50
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 5
-    psiVision: 5
+    psiVision: 10 #sensor array
     bleedImmune: true
     fearImmune: true
     painImmune: true
     zombiImmune: true
     allowsRunning: false  # NPC limits for BAI
     allowsMoving: false #staitic
-    spriteSheet: DAEMONICPORTAL.PCK
-    # spriteInv: # TBD
+    spriteSheet: NECRON_PORTAL_BS.PCK
+    spriteInv: NECRON_PORTAL_INV.SPK
     corpseBattle:
       - STR_NECRON_PORTAL_CORPSE
     frontArmor: 150
     sideArmor: 150
     rearArmor: 150
     underArmor: 150
-    drawingRoutine: 0
+    drawingRoutine: 8
     recovery:  # Living metal rapidly regenerates health
       health:
         healthCurrent: 0.5
-    scripts:
-      selectUnitSprite: |
-        # this script will always run move animation of unit.
-        var int temp;
-        var int walking;
-        unit.isWalking walking;
-        if eq walking 0;
-          unit.getId temp;
-          offsetmod temp 11 0 8; # desync animation of different units
-          add temp anim_frame;
-          wavegen_saw temp 8 8 7;
-          mul sprite_offset 8;
-          add sprite_offset 8;
-          add sprite_offset temp;
-          set sprite_index sprite_offset;
-        else;
-          add sprite_index sprite_offset;
-        end;
-        return sprite_index;
     allowInv: false
     damageModifier:  # VEHICLE ARMOR LARGE; takes reduced explosive, incendiary and AP damage in exchange for greater lascannon and melta damage vs baseline necrons
       - 1.0  # none
@@ -1337,11 +1459,13 @@ armors:
       - 1.2  # MELTA
     loftempsSet: [3]
     tags:
-      UNIT_IS_REINFORCEMENT_GENERATOR: 50 # 0-100; percentile; value defines the % probability of reinforcements each turn
+      UNIT_IS_REINFORCEMENT_GENERATOR: 33 # 0-100; percentile; value defines the % probability of reinforcements each turn
+      REINFORCEMENTS_SPAWN_COOLDOWN: 4 # Defines the number of turns before it spawns again; overrides percentile
       REINFORCEMENTS_PER_TURN: 1 # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
       REINFORCEMENT_GENERATOR_ID: 1 # the ID number of the reinforcement generator
       INFECTION_RESIST: 100  # infection immune
       INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      UNIT_SIZE: 200 # HUGE
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_NECRON: 1
@@ -1366,27 +1490,3 @@ items:
       RandomWound: false
       ToTile: 0.25  # it's shrapnel; deals relatively little damage to the terrain.
 
-  - type: STR_NECRON_PORTAL_CORPSE
-    size: 0.2
-    costSell: 100 #it's a decoy
-    weight: 5
-    bigSprite: 2973
-    floorSprite: 2973
-    invWidth: 2
-    invHeight: 3
-    armor: 40
-    power: 100
-    damageType: 3
-    damageAlter:  # high explosive
-      ToArmorPre: 0.1
-      RandomType: 6
-      ArmorEffectiveness: 0.9  # concussive
-      ToStun: 0.6  # concussive
-      ToEnergy: 0.4  # concussive
-      ToTime: 0.3  # concussive
-      ToTile: 0.75  # high explosive
-      ToItem: 0.75  # high explosive
-      FixRadius: 7
-      SmokeThreshold: 0
-    recover: false
-    battleType: 11

@@ -5,9 +5,12 @@ extended:
     RuleArmor:
       UNIT_IS_REINFORCEMENT_GENERATOR: int # 0-100; percentile; value defines the % probability of reinforcements each turn
       REINFORCEMENTS_PER_TURN: int # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENTS_SPAWN_COOLDOWN: int # Defines the number of turns before it spawns again; overrides percentile chance
       REINFORCEMENT_GENERATOR_ID: int # the ID number of the reinforcement generator
       REINFORCEMENT_TURN_DELAY: int # 0+; how many full turns this reinforcement generator remains dormant for
-
+      REINFORCEMENT_TURN_DURATION: int # 0+; after this turn the reinforcement spawner will no longer regenerate
+    BattleUnit:
+      UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING: int # Unit's current cooldown count.
 
     RuleItem:
       ITEM_IS_REINFORCEMENT_SPAWNER: int #0-1; binary; value defines whether these reinforcement scripts prime these items if they're on a reinforcement unit
@@ -19,7 +22,10 @@ extended:
         code: |
           var int temp;
           var int temp2;
+          var int turnCount;
+          var int reinforcementProb;
           var int reinforcementLimit;
+          var int reinforcementCooldown;
           var int unitID;
           var int numInventoryItems;
           var ptr RuleUnit rUnit;
@@ -41,39 +47,61 @@ extended:
           end;
 
           unit.getRuleArmor rArmor;
-          rArmor.getTag temp Tag.UNIT_IS_REINFORCEMENT_GENERATOR;
-          if lt temp 1;
+          rArmor.getTag reinforcementProb Tag.UNIT_IS_REINFORCEMENT_GENERATOR;
+          if lt reinforcementProb 1;
             # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Unit not Reinforcement Generator. unit:" unit;
             return;
           end;
-          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_IS_REINFORCEMENT_GENERATOR. temp:" temp;
+          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_IS_REINFORCEMENT_GENERATOR. unit:" unit;
+          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_IS_REINFORCEMENT_GENERATOR. reinforcementProb:" reinforcementProb;
 
           rArmor.getTag temp Tag.REINFORCEMENT_TURN_DELAY;
-          battle_game.getTurn temp2;
+          battle_game.getTurn turnCount;
           if lt temp2 temp;
             # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Current turn is lower than REINFORCEMENT_TURN_DELAY. turn:" temp2;
             # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Current turn is lower than REINFORCEMENT_TURN_DELAY. REINFORCEMENT_TURN_DELAY:" temp;
             return;
           end;
 
-          battle_game.randomRange temp2 1 100; #randomizer
-          if lt temp temp2;
-            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Random roll is higher than UNIT_IS_REINFORCEMENT_GENERATOR value. temp2:" temp2;
-            return;
+          rArmor.getTag reinforcementCooldown Tag.REINFORCEMENTS_SPAWN_COOLDOWN;
+          # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | REINFORCEMENTS_SPAWN_COOLDOWN value. reinforcementCooldown:" reinforcementCooldown;
+          if lt reinforcementCooldown 1; # if we don't use fixed cooldowns, roll to determine spawn instead.
+            battle_game.randomRange temp2 1 100; #randomizer
+            if lt reinforcementProb temp2;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Random roll is higher than UNIT_IS_REINFORCEMENT_GENERATOR value. temp2:" temp2;
+              return;
+            end;
+          else;
+            unit.getTag temp Tag.UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING;
+            if gt temp 1;
+              sub temp 1;
+              unit.setTag Tag.UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING temp;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Reinforcement unit on cooldown. Cooldown remaining:" temp;
+              return;
+            else;
+              unit.setTag Tag.UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING reinforcementCooldown;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING set to:" reinforcementCooldown;
+            end;
           end;
 
           unit.getInventoryItem.size numInventoryItems;
           # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | numInventoryItems" numInventoryItems;
           if lt numInventoryItems 1;
-            debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Reinforcement unit has no spawner items remaining; respawning. numInventoryItems:" numInventoryItems;
+            rArmor.getTag temp Tag.REINFORCEMENT_TURN_DURATION;
+            if or lt turnCount temp le temp 0;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Reinforcement unit has no spawner items remaining; respawning. numInventoryItems:" numInventoryItems;
 
-            rArmor.getTag unitID Tag.REINFORCEMENT_GENERATOR_ID;
-            if eq unitID 1;
-              rules.getRuleUnit rUnit "STR_NECRON_PORTAL";
+              rArmor.getTag unitID Tag.REINFORCEMENT_GENERATOR_ID;
+              if eq unitID 1;
+                rules.getRuleUnit rUnit "STR_NECRON_PORTAL";
+              end;
+              unit.setSpawnUnit rUnit;
+              unit.setSpawnUnitFaction FACTION_HOSTILE;
+              unit.setSpawnUnitInstantRespawn 1;
+              return;
             end;
-            unit.setSpawnUnit rUnit;
-            unit.setSpawnUnitFaction FACTION_HOSTILE;
-            unit.setSpawnUnitInstantRespawn 1;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Reinforcement duration exceeded by turnCount. Turn Duration:" temp;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Reinforcement duration exceeded by turnCount. Turn Count:" turnCount;
             return;
           end;
 

@@ -209,6 +209,7 @@ extended:
           var int currentZ;
           var int isKneeling;
           var int temp;
+          var int temp2;
 
           unit.getTag HasBonus Tag.DugInBonus;
           if neq HasBonus 1; # don't bother if we don't have the dug-in bonus
@@ -245,6 +246,15 @@ extended:
           # Dig In ignores melee, panic and mind control.
           if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
             # debug_log "Dig In Scripts; hitUnit, offset 1: Aborting. Battle action bypasses Dig In." side;
+            return power part side;
+          end;
+
+          unit.getTag temp Tag.IS_MARKERLIT;
+          attacker.getFaction temp2;
+
+          sub temp 1;
+          if eq temp temp2;
+            # debug_log "Dig In Scripts; hitUnit, offset 1: Unit is Markerlit and cannot benefit from Dig In. Aborting:";
             return power part side;
           end;
 
