@@ -2,37 +2,41 @@ items:
   - &STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     type: STR_STUN_BOMB
     tags:
-      GravPercentage: 4
+      GravPercentage: 5
 
   - type: STR_GRAVGUN_MC
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 5
+      GravPercentage: 6
 
   - type: AUX_CENTURION_GRAVGUN
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 6
+      GravPercentage: 7
 
   - type: STR_GRAVGUN_AOE_AMMO
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 4
+      GravPercentage: 5
 
   - type: STR_GRAVGUN_AOE_AMMO_SHOTGUN
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 4
+      GravPercentage: 5
 
   - type: STR_GRAVPISTOL_AMMO
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 4
+      GravPercentage: 5
 
   - type: STR_GRAVCANNON_AMMO
     refNode: *STR_GRAV_AMMO_BONUS_DAMAGE_TEMPLATE
     tags:
-      GravPercentage: 6
+      GravPercentage: 7
+
+  - type: STR_BLIGHT_HAULER_GRAVCANNON
+    tags:
+      GravPercentage: 7
 
 
 extended:
@@ -51,6 +55,7 @@ extended:
           var int temp;
           var int temp2;
           var int armor;
+          var int multiplier;
           var int percentage;
           var int weaponpercentage;
           var int ammopercentage;
@@ -99,19 +104,28 @@ extended:
           if eq temp 0; #if we don't have this value, assume standard size
             set temp 100;
           end;
-          muldiv armor temp 100;
           # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav damage bonus post-size tag:" armor;
+          add multiplier temp;
 
           damaging_item.getRuleItem damagingItem; #handle large unit damage multiplier
           damagingItem.getDamageType damageType;
           damageType.isAreaOfEffect temp;
           if lt temp 1;
-            rArmor.getSize temp; # double our damage if we're not already AoE
+            rArmor.getSize temp; # increase multiplier by 150 vs 2x2 if we're not AoE
             if gt temp 1;
-              mul armor temp;
+              add multiplier 150;
+            end;
+          else;
+            rArmor.getSize temp; # apply an offsetting coefficient if the damage is AoE and we're a 2x2 unit
+            if gt temp 1;
+              muldiv to_health 80 100;
             end;
           end;
           # debug_log "ROSIGMA_dU_grav_damage_bonus; offset 1: Grav damage bonus post-2x2:" armor;
+
+          limit_upper multiplier 300;
+
+          muldiv armor multiplier 100;
 
           add to_health armor;
 

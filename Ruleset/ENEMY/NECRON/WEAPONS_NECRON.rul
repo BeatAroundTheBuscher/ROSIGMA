@@ -407,14 +407,14 @@ items:
     refNode: *STR_SCARAB_WEAPON
 
   - type: AUX_DISPERSIONSHIELD        # AUX T Shield
-    weight: 5
+    weight: 1
     meleeSound: {mod: 40k, index: 710}  # 710 powerfist miss
     meleeHitSound: {mod: 40k, index: 775}  # 772 powerfist hit
     meleeAnimation: {mod: 40k, index: 28}  # 28 bolt anitmation
     power: 80
     battleType: 1
     maxRange: 2
-    powerRangeThreshold: 3
+    powerRangeThreshold: 2
     powerRangeReduction: 99
     clipSize: -1
     tuSnap: 20
@@ -432,10 +432,28 @@ items:
       ToWound: 0.05  # disintegrates rather than causing ugly wounds.
       RandomWound: false
       IgnoreSelfDestruct: false
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
     tags:
       DAMAGETYPE_OVERRIDE: 30  # gauss disintegration nation
+      REACTION_MULTIPLIER: 200
 
-  - type: STR_STAFF_OF_LIGHT
+  - type: STR_NECRON_RESURRECTION_ORB # Cosmetic atm
+    invHeight: 3
+    invWidth: 2
+    weight: 1
+    bigSprite: 3232
+    floorSprite: 3233
+    handSprite: 3828
+    battleType: 6
+    medikitTargetMatrix: 0
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+
+  - &STAFF_OF_LIGHT_TEMPLATE
+    type: STR_STAFF_OF_LIGHT
     categories: [STR_CAT_NECRON, STR_CAT_TACTICAL]
     size: 0.4
     vaporColorSurface: {mod: 40k, index: 3}
@@ -509,6 +527,15 @@ items:
     battleType: 1
     requires:
       - STR_NECRONTECH_RESEARCH
+    tags:
+      REACTION_MULTIPLIER: 150
+
+  - type: STR_STAFF_OF_LIGHT_FIXED
+    refNode: *STAFF_OF_LIGHT_TEMPLATE
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    defaultInventorySlot: STR_RIGHT_HAND
     tags:
       REACTION_MULTIPLIER: 150
 
