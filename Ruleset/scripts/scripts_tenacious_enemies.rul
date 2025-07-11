@@ -24,17 +24,23 @@ extended:
             return;
           end;
 
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.ARMOR_NECRON_RESURRECTION_ORB_POWER;
+          if lt temp 1;
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Aborting. Target has no resurrection orb power.";
+            return;
+          end;
+
+          unit.getHealth temp;
+          if le temp 0; # dead unit
+            # debug_log "ROSIGMA_nTU_necron_resurrection_orb | offset: 1 | Aborting. Unit not alive: " unit;
+            return;
+          end;
+
           unit.getFaction temp;
           if neq side temp; # don't reset on others' turns
             battle_game.setTag Tag.NECRON_RESURRECTION_POWER 0; #reset resurrection power
             # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Not the unit's turn. Aborting. side:" side;
-            return;
-          end;
-
-          unit.getRuleArmor armorRule;
-          armorRule.getTag temp Tag.ARMOR_NECRON_RESURRECTION_ORB_POWER; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
-          if lt temp 1;
-            # debug_log "ROSIGMA_nTU_necron_resurrection_orb, offset 1: Aborting. Target has no resurrection orb power.";
             return;
           end;
 
