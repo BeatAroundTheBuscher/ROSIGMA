@@ -21,6 +21,15 @@ weaponSets:  # these can be re-used for any unit
     weapons: [STR_SYNAPTIC_DISINTEGRATOR, STR_KILLPOINT_TOKEN_7]
   - type: SYNAPTIC_DISINTEGRATOR_WITH_SCARAB
     weapons: [STR_SYNAPTIC_DISINTEGRATOR, STR_NECRON_SCARAB_SPAWNER_GRENADE, STR_KILLPOINT_TOKEN_7]
+  # Necron Lychguard
+  - type: LYCHGUARD_SWORD_AND_SHIELD_FIXED
+    weapons: [STR_HYPERPHASESWORD_FIXED, AUX_DISPERSIONSHIELD, STR_KILLPOINT_TOKEN_5]
+  - type: LYCHGUARD_WARSCYTHE_FIXED
+    weapons: [STR_NECRON_WARSCYTHE_FIXED, STR_NECRON_WARSCYTHE_MELEE_ONLY, STR_KILLPOINT_TOKEN_5]
+  - type: LYCHGUARD_SWORD_AND_SHIELD
+    weapons: [STR_HYPERPHASESWORD, AUX_DISPERSIONSHIELD, STR_KILLPOINT_TOKEN_15]
+  - type: LYCHGUARD_WARSCYTHE
+    weapons: [STR_NECRON_WARSCYTHE, STR_NECRON_WARSCYTHE_MELEE_ONLY, STR_KILLPOINT_TOKEN_15]
   # Necron Portal
   - type: NECRON_PORTAL_WARRIOR_REINFORCEMENTS
     weapons: [STR_NECRON_PORTAL_WARRIOR_SPAWNER, STR_NECRON_PORTAL_WARRIOR_SPAWNER, STR_NECRON_PORTAL_WARRIOR_SPAWNER]
@@ -299,10 +308,17 @@ units:
     isLeeroyJenkins: true
     spotter: 1
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_HYPERPHASESWORD
-      - - STR_HYPERPHASESWORD
-      - - STR_HYPERPHASESWORD
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        LYCHGUARD_SWORD_AND_SHIELD: 50
+        LYCHGUARD_WARSCYTHE: 50
+      -  # Tier 2
+        LYCHGUARD_SWORD_AND_SHIELD: 50
+        LYCHGUARD_WARSCYTHE: 50
+      -  # Tier 3
+        LYCHGUARD_SWORD_AND_SHIELD: 50
+        LYCHGUARD_WARSCYTHE: 50
 
   - type: STR_NECRON_LYCHGUARD
     stats:
@@ -324,16 +340,20 @@ units:
     spotter: 1
     value: 25
     energyRecovery: 200
-    builtInWeaponSets:
-      - - STR_HYPERPHASESWORD_FIXED
-        - STR_KILLPOINT_TOKEN_15
-      - - STR_HYPERPHASESWORD_FIXED
-        - STR_KILLPOINT_TOKEN_15
-      - - STR_HYPERPHASESWORD_FIXED
-        - STR_KILLPOINT_TOKEN_15
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        LYCHGUARD_SWORD_AND_SHIELD_FIXED: 50
+        LYCHGUARD_WARSCYTHE_FIXED: 50
+      -  # Tier 2
+        LYCHGUARD_SWORD_AND_SHIELD_FIXED: 50
+        LYCHGUARD_WARSCYTHE_FIXED: 50
+      -  # Tier 3
+        LYCHGUARD_SWORD_AND_SHIELD_FIXED: 50
+        LYCHGUARD_WARSCYTHE_FIXED: 50
 
   - type: STR_NECRON_DESTROYER
-    sniper: 50
+    sniper: 75
     intelligence: 2
     aggression: 8
     avoidsFire: false
@@ -341,8 +361,52 @@ units:
     value: 30
     energyRecovery: 200
     stats:
+      tu: 120 #fast
+      stamina: 200
       health: 75  # effective HP 500  # tried 200 but was too much  # was 100
       bravery: 110
+      strength: 120
+
+  - &NECRON_DESTROYER_LORD_UNIT_TEMPLATE
+    type: STR_NECRON_DESTROYER_LORD
+    race: STR_NECRON
+    rank: STR_LIVE_COMMANDER
+    armor: STR_NECRON_DESTROYER_LORD_ARMOR
+    standHeight: 23
+    kneelHeight: 16
+    deathSound: {mod: 40k, index: 289, 290, 291}
+    intelligence: 8
+    aggression: 8
+    spotter: 2
+    sniper: 100
+    moveSound: {mod: 40k, index: 845}
+    livingWeapon: true
+    avoidsFire: false
+    value: 50
+    energyRecovery: 200
+    stats:
+      tu: 150
+      stamina: 200
+      health: 125
+      bravery: 120
+      reactions: 85
+      firing: 110
+      throwing: 0
+      strength: 160
+      psiStrength: 200
+      psiSkill: 0
+      melee: 110
+    liveAlien: STR_NECRON_DESTROYER_LORD_CORPSE
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE
+    refNode: *NECRON_DESTROYER_LORD_UNIT_TEMPLATE
+    armor: STR_NECRON_DESTROYER_LORD_SCYTHE_ARMOR
+    isLeeroyJenkins: true
+    stats:
+      tu: 160
+      reactions: 95
+      firing: 90
+      melee: 130
 
   - type: STR_NECRON_SCARAB5  # STR_NECRON_WARRIOR_ARMOR                        RANK 5 weapons done
     race: STR_NECRON
@@ -605,7 +669,7 @@ units:
     canBeMindControlled: false
     avoidsFire: false
     spotter: 1
-    value: 10
+    value: 0 # points derive from the things it spawns; also prevents points from it constantly killing and regenerating itself
     energyRecovery: 200
     builtInWeaponSets: []
     specab: 1
@@ -633,13 +697,13 @@ units:
       -  # Tier 3
         NECRON_PORTAL_MIXED_REINFORCEMENTS_HIGH: 20
         NECRON_PORTAL_IMMORTAL_REINFORCEMENTS: 20
-        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 19
+        NECRON_PORTAL_WARRIOR_REINFORCEMENTS: 15
         NECRON_PORTAL_MIXED_REINFORCEMENTS_MID: 10
         NECRON_PORTAL_DEATHMARK_REINFORCEMENTS: 10
         NECRON_PORTAL_FLAYED_ONE_REINFORCEMENTS: 10
         NECRON_PORTAL_SCARAB_REINFORCEMENTS: 5
         NECRON_PORTAL_LYCHGUARD_REINFORCEMENTS: 5
-        NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW: 1
+        NECRON_PORTAL_MIXED_REINFORCEMENTS_LOW: 5
 
 armors:
   - type: STR_NECRON_WARRIOR_ARMOR     # NECRON WARRIOR
@@ -717,7 +781,6 @@ armors:
         healthCurrent: 0.5
     builtInWeapons:
       - INV_NULL_3X3
-      - AUX_DISPERSIONSHIELD
 
   - type: STR_NECRON_LYCHGUARD_ARMOR_REVIVES        # NECRON WARRIOR
     tags:
@@ -771,7 +834,6 @@ armors:
     loftempsSet: [3]
     builtInWeapons:
       - INV_NULL_3X3
-      - AUX_DISPERSIONSHIELD
 
   - type: STR_NECRON_IMORTAL_ARMOR
     visibilityAtDay: 35
@@ -952,10 +1014,10 @@ armors:
       - 100_NECRON3
       - 100_NECRON4
     corpseGeo: STR_DESTROYER_CORPSE
-    frontArmor: 100
-    sideArmor: 90
-    rearArmor: 70
-    underArmor: 100
+    frontArmor: 120 #power armor equivalent
+    sideArmor: 110
+    rearArmor: 80
+    underArmor: 120
     drawingRoutine: 20
     constantAnimation: false
     movementType: 1
@@ -979,6 +1041,109 @@ armors:
     loftempsSet: [92, 89, 90, 91]
     builtInWeapons:
       - STR_GAUSS_CANNON
+
+  - &NECRON_DESTROYER_LORD_ARMOR_TEMPLATE
+    type: STR_NECRON_DESTROYER_LORD_ARMOR  # STR_NECRON_DESTROYER_LORD
+    heatVision: 50
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 10
+    psiVision: 5
+    fearImmune: true
+    bleedImmune: true
+    painImmune: true
+    zombiImmune: true
+    allowsRunning: false  # NPC limits for BAI
+    spriteSheet: STR_NECRON_DESTROYER_LORD_BS.PCK
+    spriteInv: STR_NECRON_DESTROYER_LORD_INV.SPK
+    corpseBattle:
+      - STR_NECRON_DESTROYER_LORD_CORPSE_1
+      - STR_NECRON_DESTROYER_LORD_CORPSE_2
+      - STR_NECRON_DESTROYER_LORD_CORPSE_3
+      - STR_NECRON_DESTROYER_LORD_CORPSE_4
+    frontArmor: 140 #artificer power armor equivalent
+    sideArmor: 130
+    rearArmor: 100
+    underArmor: 140
+    allowInv: false
+    movementType: 1
+    size: 2
+    recovery:  # Living metal rapidly regenerates health
+      health:
+        healthCurrent: 0.5
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    drawingRoutine: 20
+    constantAnimation: false
+    damageModifier:  # takes reduced explosive, incendiary and AP damage in exchange for greater lascannon and melta damage vs baseline necrons; resists 10% better across the board due to artificer quality
+      - 1.0  # none
+      - 0.7  # AP
+      - 0.2  # FLAMES
+      - 0.7  # HE
+      - 1.3  # LASCANON
+      - 0.9  # PLASMA
+      - 0.8  # STUN
+      - 0.7  # MELEE
+      - 0.4  # ACID
+      - 0.0  # SMOKE
+      - 0.1  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    builtInWeapons:
+      - STR_STAFF_OF_LIGHT_FIXED
+      - STR_NECRON_RESURRECTION_ORB
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE_ARMOR  # STR_NECRON_DESTROYER_LORD_SCYTHE
+    refNode: *NECRON_DESTROYER_LORD_ARMOR_TEMPLATE
+    spriteSheet: STR_NECRON_DESTROYER_LORD_SCYTHE_BS.PCK
+    spriteInv: STR_NECRON_DESTROYER_LORD_SCYTHE_INV.SPK
+    scripts:
+      selectUnitSprite: |
+        var int temp;
+        var int walking;
+        var int floating;
+        unit.isWalking walking;
+        unit.isFloating floating;
+        if and eq walking 0 eq floating 1;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 4 4 4;
+          add sprite_offset 1;
+          add sprite_offset temp;
+          add sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    corpseBattle:
+      - STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_1
+      - STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_2
+      - STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_3
+      - STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_4
+    frontArmor: 150 #artificer power armor equivalent; reinforced for melee
+    sideArmor: 140
+    rearArmor: 110
+    underArmor: 150
+    builtInWeapons:
+      - STR_NECRON_WARSCYTHE
+      - STR_NECRON_WARSCYTHE_MELEE_ONLY
 
   - type: STR_NECRON_SCARAB_ARMOR3         # NECRON WARRIOR
     visibilityAtDay: 40  # effective scouters/spotters for Necrons
@@ -1465,6 +1630,7 @@ armors:
       REINFORCEMENT_GENERATOR_ID: 1 # the ID number of the reinforcement generator
       INFECTION_RESIST: 100  # infection immune
       INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      REINFORCEMENT_LIMIT_CAPACITY: 20
       UNIT_SIZE: 200 # HUGE
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_MECHANICAL: 1
@@ -1490,3 +1656,68 @@ items:
       RandomWound: false
       ToTile: 0.25  # it's shrapnel; deals relatively little damage to the terrain.
 
+  - type: STR_NECRON_DESTROYER_LORD_CORPSE
+    size: 2.0
+    armor: 100
+    recoverCorpse: true
+    invWidth: 0
+    invHeight: 0
+    recover: true
+    recoveryPoints: 50
+    battleType: 11
+
+  - type: STR_NECRON_DESTROYER_LORD_CORPSE_1 # STR_NECRON_DESTROYER_LORD
+    armor: 100
+    floorSprite: {mod: 40k, index: 708}
+    invWidth: 0
+    invHeight: 0
+    battleType: 11
+    recoveryTransformations:
+      STR_NECRON_DESTROYER_LORD_CORPSE: [1]
+    recover: true
+
+  - type: STR_NECRON_DESTROYER_LORD_CORPSE_2
+    floorSprite: {mod: 40k, index: 709}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_NECRON_DESTROYER_LORD_CORPSE_3
+    floorSprite: 3243
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_NECRON_DESTROYER_LORD_CORPSE_4
+    floorSprite: {mod: 40k, index: 711}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_1 # STR_NECRON_DESTROYER_LORD_SCYTHE
+    armor: 100
+    floorSprite: {mod: 40k, index: 708}
+    invWidth: 0
+    invHeight: 0
+    battleType: 11
+    recoveryTransformations:
+      STR_NECRON_DESTROYER_LORD_CORPSE: [1]
+    recover: true
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_2
+    floorSprite: {mod: 40k, index: 709}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_3
+    floorSprite: 3244
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_NECRON_DESTROYER_LORD_SCYTHE_CORPSE_4
+    floorSprite: {mod: 40k, index: 711}
+    invWidth: 0
+    invHeight: 0
+    recover: false
