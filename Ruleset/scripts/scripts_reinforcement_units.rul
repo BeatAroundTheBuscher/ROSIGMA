@@ -9,13 +9,44 @@ extended:
       REINFORCEMENT_GENERATOR_ID: int # the ID number of the reinforcement generator
       REINFORCEMENT_TURN_DELAY: int # 0+; how many full turns this reinforcement generator remains dormant for
       REINFORCEMENT_TURN_DURATION: int # 0+; after this turn the reinforcement spawner will no longer regenerate
+      REINFORCEMENT_LIMIT_CAPACITY: int # 0+; determines how many spawns this unit adds to the total reinforcement limit, and whether it is subject to the reinforcement limit
     BattleUnit:
       UNIT_REINFORCEMENTS_SPAWN_COOLDOWN_REMAINING: int # Unit's current cooldown count.
 
     RuleItem:
       ITEM_IS_REINFORCEMENT_SPAWNER: int #0-1; binary; value defines whether these reinforcement scripts prime these items if they're on a reinforcement unit
 
+    BattleGame:
+      REINFORCEMENT_LIMIT_POOL: int #0+; for those reinforcement units with a defined REINFORCEMENT_LIMIT_CAPACITY, determines the total number of reinforcements that can be spawned by them between all such units.
+
   scripts:
+    createUnit:
+      - new: ROSIGMA_nTU_reinforcement_set_initial_limit_pool
+        offset: 2
+        code: |
+          var ptr RuleArmor rArmor;
+          var int temp;
+          var int reinforcementCapacity;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag reinforcementCapacity Tag.UNIT_IS_REINFORCEMENT_GENERATOR;
+
+          if eq turn 0; # we don't care about Turn 0 and less; abort.
+            unit.getRuleArmor rArmor;
+            rArmor.getTag reinforcementCapacity Tag.REINFORCEMENT_LIMIT_CAPACITY;
+            if gt reinforcementCapacity 0;
+              # debug_log "ROSIGMA_nTU_reinforcement_set_initial_limit_pool | offset: 2 | Unit spawn. Pre-addition Reinforcement Capacity. reinforcementCapacity:" reinforcementCapacity;
+              battle_game.getTag temp Tag.REINFORCEMENT_LIMIT_POOL;
+              # debug_log "ROSIGMA_nTU_reinforcement_set_initial_limit_pool | offset: 2 | Unit spawn. Unit Reinforcement Capacity to be added. temp:" temp;
+              add temp reinforcementCapacity;
+              battle_game.setTag Tag.REINFORCEMENT_LIMIT_POOL temp; #reset resurrection power
+              # debug_log "ROSIGMA_nTU_reinforcement_set_initial_limit_pool | offset: 2 | Unit spawn. Setting initial reinforcement limit then aborting. REINFORCEMENT_LIMIT_POOL:" temp;
+              return;
+            end;
+          end;
+
+          return;
+
     newTurnUnit:
       - new: ROSIGMA_nTU_reinforcement_units
         offset: 10
@@ -26,6 +57,7 @@ extended:
           var int reinforcementProb;
           var int reinforcementLimit;
           var int reinforcementCooldown;
+          var int reinforcementCapacity;
           var int unitID;
           var int numInventoryItems;
           var ptr RuleUnit rUnit;
@@ -37,6 +69,20 @@ extended:
           if le temp 0; # dead unit
             # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Unit not alive: " unit;
             return;
+          end;
+
+          if eq turn 0; # set initial reinforcement limit pool on T0
+            unit.getRuleArmor rArmor;
+            rArmor.getTag reinforcementCapacity Tag.REINFORCEMENT_LIMIT_CAPACITY;
+            if gt reinforcementCapacity 0;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Turn 0. Pre-addition Reinforcement Capacity. reinforcementCapacity:" reinforcementCapacity;
+              battle_game.getTag temp Tag.REINFORCEMENT_LIMIT_POOL;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Turn 0. Unit Reinforcement Capacity to be added. temp:" temp;
+              add temp reinforcementCapacity;
+              battle_game.setTag Tag.REINFORCEMENT_LIMIT_POOL temp; #reset resurrection power
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Turn 0. Setting initial reinforcement limit then aborting. REINFORCEMENT_LIMIT_POOL:" temp;
+              return;
+            end;
           end;
 
           unit.getFaction temp;
@@ -84,6 +130,13 @@ extended:
             end;
           end;
 
+          rArmor.getTag reinforcementCapacity Tag.REINFORCEMENT_LIMIT_CAPACITY;
+          battle_game.getTag temp Tag.REINFORCEMENT_LIMIT_POOL;
+          if and gt reinforcementCapacity 0 lt temp 1;
+            # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Aborting. Unit has REINFORCEMENT_LIMIT_CAPACITY and REINFORCEMENT_LIMIT_POOL is depleted. temp:" temp;
+            return;
+          end;
+
           unit.getInventoryItem.size numInventoryItems;
           # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | numInventoryItems" numInventoryItems;
           if lt numInventoryItems 1;
@@ -121,6 +174,10 @@ extended:
               #someItem.setFuseEnabled 1;
               sub reinforcementLimit 1;
               someItem.setFuseTimer 0;
+              battle_game.getTag temp Tag.REINFORCEMENT_LIMIT_POOL;
+              sub temp 1;
+              battle_game.setTag Tag.REINFORCEMENT_LIMIT_POOL temp;
+              # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | New Reinforcement Limit:" temp;
               # debug_log "ROSIGMA_nTU_reinforcement_units | offset: 10 | Successful. Reinforcment Item Triggered. Bomb Item:" someItem;
             end;
           end;
