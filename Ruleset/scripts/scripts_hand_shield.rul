@@ -75,7 +75,7 @@ extended:
           ruleItemTemp.getTag leftShieldBlockingStrength Tag.ITEM_SHIELD_BLOCKING_STRENGTH;
           if gt leftShieldBlockingStrength 0;
             battleItemShield.getAmmoQuantity leftShieldHP;
-            debug_log "leftShieldHP" leftShieldHP;
+            # debug_log "leftShieldHP" leftShieldHP;
           end;
 
           ruleItemTemp.isTwoHanded temp; # two handed weapons hide the shield
@@ -104,17 +104,17 @@ extended:
 
             # new part
 
-            debug_log "damaging_item:" damaging_item;
+            # debug_log "damaging_item:" damaging_item;
             damaging_item.getRuleItem ruleItemTemp;
             ruleItemTemp.getDamageType ruleDamageTypeWeapon;
             ruleDamageTypeWeapon.getArmorEffectiveness temp;
-            debug_log "armor effectiviness" temp;
+            # debug_log "armor effectiviness" temp;
 
             muldiv rightShieldBlockingStrength temp 100;
             muldiv leftShieldBlockingStrength temp 100;
 
-            debug_log "rightShieldBlockingStrength" rightShieldBlockingStrength;
-            debug_log "leftShieldBlockingStrength" leftShieldBlockingStrength;
+            # debug_log "rightShieldBlockingStrength" rightShieldBlockingStrength;
+            # debug_log "leftShieldBlockingStrength" leftShieldBlockingStrength;
 
 
             # determine if blockingStrength is greater than power
@@ -128,16 +128,19 @@ extended:
             end;
 
             if lt temp rightShieldHP; # shield can still handle the attack
-              debug_log "Current shield HP" rightShieldHP;
-              debug_log "Rolled power" power;
+              # debug_log "Current shield HP" rightShieldHP;
+              # debug_log "Rolled power" power;
               sub power temp; # reduce power
               sub rightShieldHP temp; # reduce HP
 
               unit.getRightHandWeapon battleItemShield;
               battleItemShield.setAmmoQuantity rightShieldHP;
-              battle_game.flashMessage "STR_SCRIPT_REMAINING_SHIELD_POINTS" rightShieldHP;
-              debug_log "Shield: Remaining Shield Points" rightShieldHP;
-              debug_log "Shield: Remaining Weapon Power" power;
+              unit.getFaction temp;
+              if eq temp FACTION_PLAYER;
+                battle_game.flashMessage "STR_SCRIPT_REMAINING_SHIELD_POINTS" rightShieldHP;
+              end;
+              # debug_log "Shield: Remaining Shield Points" rightShieldHP;
+              # debug_log "Shield: Remaining Weapon Power" power;
               return power part side;
             end;
 
@@ -154,8 +157,11 @@ extended:
 
               unit.getLeftHandWeapon battleItemShield;
               battleItemShield.setAmmoQuantity leftShieldHP;
-              battle_game.flashMessage "STR_SCRIPT_REMAINING_SHIELD_POINTS" leftShieldHP;
-              debug_log "Shield: Remaining Weapon Power" power;
+              unit.getFaction temp;
+              if eq temp FACTION_PLAYER;
+                battle_game.flashMessage "STR_SCRIPT_REMAINING_SHIELD_POINTS" leftShieldHP;
+              end;
+              # debug_log "Shield: Remaining Weapon Power" power;
               return power part side;
             end;
           end;
