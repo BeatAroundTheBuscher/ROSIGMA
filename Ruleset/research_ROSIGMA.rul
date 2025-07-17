@@ -537,6 +537,7 @@ research:
       - STR_CRATED_DROPPODS
       - STR_CRATED_LANDSPEEDER
       - STR_HAND_FLAMETHROWER_REQUISITION
+      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_ASSAULT
       - STR_PRIMARIS
@@ -585,6 +586,7 @@ research:
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_SMOKE
       - STR_APOTHECARY
+      - STR_BOLTER_AMMO_PREREQ
       - STR_PRIMARIS_AND_DEATHWATCH
       - STR_PRIMARIS_AND_ADEPTAS
     disables:
@@ -641,7 +643,6 @@ research:
       - STR_SMOKE
       - STR_CRATED_DROPPODS
       - STR_CRATED_RHINO
-      - STR_NOT_PRIMARIS
     disables:
       - STR_NOT_TACTICAL
       - STR_PRIMARIS
@@ -669,7 +670,6 @@ research:
       - STR_REQUEST_GUARD_AID_RESEARCH
       - STR_LASER_WEAPONS  # for the Inquisition Strategy
       - STR_LIGHT_BOLTERS  # for the Inquisition Strategy
-      - STR_LIGHT_BOLTERS_LOWTIER  # for the Inquisition Strategy
       - STR_LIGHT_BOLTERS_MIDTIER  # for the Inquisition Strategy
       - STR_ADEPTAS_AND_INQUISITION
       - STR_MARINES_AND_INQUISITION
@@ -3010,6 +3010,8 @@ research:
     dependencies:
       - STR_CHAOS_STRATEGY
       - STR_CHAOS_HIGHTIER
+    unlocks:
+      - STR_MARINE_BOLTERS_CHAOS
 
   - name: STR_CULTIST_LEGION_SCOUT  # Chaos Legion Aspirants
     cost: 150
@@ -3325,6 +3327,7 @@ research:
       - STR_ELITE_STRATEGY_ADEPTAS
     unlocks:
       - STR_HAND_FLAMETHROWER_REQUISITION
+      - STR_BOLTER_AMMO_PREREQ
 
   - name: STR_ADEPTAS_SENTINEL_MELTALANCE_REQ  # Meltalance Sentinel Requisition
     cost: 200
@@ -5369,7 +5372,37 @@ research:
       - STR_MIDTIER_PREREQ  # available to all factions
 
   # Bolter
-  - name: STR_LIGHT_BOLTERS  # (Human-sized Bolters)
+  - name: STR_LIGHT_BOLTERS_LOWTIER  # Solo Bolters
+    cost: 100
+    points: 20
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_LIGHT_BOLTERS  # Human-sized Bolters
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_MARINE_BOLTERS  # Astartes Bolters
+    # Chamber and non-primaris Marines unlock it immediately
+    dependencies:
+      - STR_NOT_ADEPTUS_TERRA
+      - STR_NOT_ADEPTAS
+      - STR_NOT_GUARD
+      - STR_NOT_PRIMARIS
+    unlocks:
+      - STR_BOLTER_AMMO_PREREQ
+
+  - name: STR_MARINE_BOLTERS_CHAOS  # Chaos Astartes Bolters
+    dependencies:
+      - STR_LIGHT_BOLTERS
+      - STR_UFO_CONSTRUCTION
+      - STR_ALIENS_ONLY
+      - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_MARINE_BOLTERS
+
+  - name: STR_BOLTER_AMMO_PREREQ  # Astartes Bolter Ammo
+    # Required because primaris uses the ammo, but does not get the normal bolters.
     dependencies:
       - STR_GENERALLOCK
 
@@ -5809,14 +5842,8 @@ research:
       - STR_STORMTROOPER_REQUISITION
       - STR_GENERALLOCK
 
-  - name: STR_LIGHT_BOLTERS_LOWTIER  # Light Bolters (Low-tier)
-    cost: 100
-    points: 20
-    dependencies:
-      - STR_IMPERIAL_GUARD_OPERATIONS
-      - STR_GENERALLOCK
-
-  - name: STR_LIGHT_BOLTERS_MIDTIER  # Light Bolters (Mid-tier)
+  - name: STR_LIGHT_BOLTERS_MIDTIER  # Militarum Light Bolters
+    # Also accessible to Chamber Militant
     cost: 200
     points: 50
     dependencies:
@@ -5825,6 +5852,8 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
     unlocks:
       - STR_LIGHT_BOLTERS
+    getOneFree:
+      - STR_LIGHT_BOLTERS_LOWTIER
 
   - delete: STR_AUTOCANNON_GUARD
     # Research depreciated in favor of general autocannon research
