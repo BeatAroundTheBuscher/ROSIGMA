@@ -1537,7 +1537,8 @@ soldiers:
 
   # Chaos Guard and Cultists
   ## Khorne
-  - type: STR_KHORNE_CULTIST_PLAYER
+  - &KHORNE_CULTIST
+    type: STR_KHORNE_CULTIST_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
     costBuy: 7000
     costSalary: 5000
@@ -1615,6 +1616,36 @@ soldiers:
       - Names/cultists.nam
     value: 2
     moraleLossWhenKilled: 75  # people don't care about the grunts so much
+    tags:
+      SOLDIER_COMMAND_POINTS: 2
+
+  - type: STR_KHORNE_OFFICER_PLAYER
+    refNode: *KHORNE_CULTIST
+    requires:
+      - STR_GENERALLOCK
+    costSalary: 30000
+    skillIconSprite: 203
+    skills:
+      - STR_HUNKER_DOWN
+      - STR_BLITZKRIEG
+      - STR_FIX_BAYONETS
+      - STR_CHECK_COMMAND
+    armor: STR_KHORNE_CARA_OFF_PLAYER
+    minStats:
+      tu: 75  # +10
+      firing: 40  # +10
+      strength: 50  # +5
+      melee: 40  # +5
+    rankStrings:
+      - STR_OFFICER_RANK_0
+      - STR_OFFICER_RANK_1
+      - STR_OFFICER_RANK_2
+      - STR_OFFICER_RANK_3
+      - STR_OFFICER_RANK_4
+      - STR_OFFICER_RANK_5
+    tags:
+      SOLDIER_COMMAND_POINTS: 40
+      SOLDIER_IS_OFFICER: 1
 
   - type: STR_KHORNGOR_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -1692,7 +1723,8 @@ soldiers:
       SOLDIER_WOUND_TIME_MULTIPLIER: 50
 
   ## Nurgle
-  - type: STR_NURGLE_CULTIST_PLAYER
+  - &NURGLE_CULTIST
+    type: STR_NURGLE_CULTIST_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
     skills:
       - STR_SKILL_SPIT_SORCERY
@@ -1773,6 +1805,37 @@ soldiers:
       - Names/cultists.nam
     value: 2
     moraleLossWhenKilled: 75  # people don't care about the grunts so much
+    tags:
+      SOLDIER_COMMAND_POINTS: 2
+
+  - type: STR_NURGLE_OFFICER_PLAYER
+    refNode: *NURGLE_CULTIST
+    requires:
+      - STR_GENERALLOCK
+    costSalary: 30000
+    skillIconSprite: 203
+    skills:
+      - STR_HUNKER_DOWN
+      - STR_BLITZKRIEG
+      - STR_FIX_BAYONETS
+      - STR_CHECK_COMMAND
+      - STR_SKILL_SPIT_SORCERY
+    armor: STR_NURGLE_CARA_OFF_PLAYER
+    minStats:
+      tu: 55  # +10
+      firing: 50  # +10
+      strength: 30  # +5
+      melee: 20  # +5
+    rankStrings:
+      - STR_OFFICER_RANK_0
+      - STR_OFFICER_RANK_1
+      - STR_OFFICER_RANK_2
+      - STR_OFFICER_RANK_3
+      - STR_OFFICER_RANK_4
+      - STR_OFFICER_RANK_5
+    tags:
+      SOLDIER_COMMAND_POINTS: 40
+      SOLDIER_IS_OFFICER: 1
 
   - type: STR_PESTIGOR_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -1926,6 +1989,8 @@ soldiers:
     value: 25
     tags:
       SOLDIER_WOUND_TIME_MULTIPLIER: 25
+      SOLDIER_COMMAND_POINTS: 1
+      SOLDIER_BONEHEAD_OGRYN_CAN_BE_ORDERED: 1
 
   - type: STR_HRUD_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -2073,6 +2138,8 @@ soldiers:
     soldierNames:
       - delete
       - Names/hrud.nam
+    tags:
+      SOLDIER_COMMAND_POINTS: 2
 
   # - type: STR_FESTERKIN_PLAYER
 
@@ -2148,7 +2215,8 @@ soldiers:
       - Names/hrud.nam
 
   ## Slaanesh
-  - type: STR_SLAANESH_CULTIST_PLAYER
+  - &SLAANESH_CULTIST
+    type: STR_SLAANESH_CULTIST_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
     skills:
       - STR_SKILL_SEDUCE_SORCERY
@@ -2229,6 +2297,123 @@ soldiers:
       - Names/cultists.nam
     value: 2
     moraleLossWhenKilled: 75  # people don't care about the grunts so much
+    tags:
+      SOLDIER_COMMAND_POINTS: 2
+
+  - type: STR_SLAANESH_OFFICER_PLAYER
+    refNode: *SLAANESH_CULTIST
+    requires:
+      - STR_GENERALLOCK
+    costSalary: 30000
+    skillIconSprite: 203
+    skills:
+      - STR_HUNKER_DOWN
+      - STR_BLITZKRIEG
+      - STR_FIX_BAYONETS
+      - STR_CHECK_COMMAND
+      - STR_SKILL_SEDUCE_SORCERY
+    armor: STR_SLAANESH_CARA_OFF_PLAYER
+    minStats:
+      tu: 75  # +10
+      firing: 45  # +10
+      strength: 15  # +5
+      melee: 30  # +5
+    rankStrings:
+      - STR_OFFICER_RANK_0
+      - STR_OFFICER_RANK_1
+      - STR_OFFICER_RANK_2
+      - STR_OFFICER_RANK_3
+      - STR_OFFICER_RANK_4
+      - STR_OFFICER_RANK_5
+    tags:
+      SOLDIER_COMMAND_POINTS: 40
+      SOLDIER_IS_OFFICER: 1
+
+  - type: STR_SLAANESH_COMMISSAR_PLAYER
+    requires:
+      - STR_GENERALLOCK
+    skills:
+      - STR_GUARD_PRIMER_SKILL
+      - STR_GUARD_PRIMER_MELEE_SKILL
+      - STR_SKILL_SEDUCE_SORCERY
+    skillIconSprite: {mod: 40k, index: 101}
+    costSalary: 30000
+    minStats:
+      tu: 50
+      stamina: 40
+      health: 35
+      bravery: 60
+      reactions: 40
+      firing: 50
+      throwing: 40
+      strength: 25
+      psiStrength: 50
+      psiSkill: 0
+      melee: 50
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 45
+      bravery: 90
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 100
+      psiSkill: 16
+      melee: 80
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 60
+      bravery: 110
+      reactions: 80
+      firing: 90
+      throwing: 70
+      strength: 60
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 40
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 80
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    allowPromotion: false
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 99
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    armor: STR_SLAANESH_COMMISSAR_ARMOR_PLAYER
+    value: 30
+    rankStrings:
+      - STR_COMMISSAR
+      - STR_COMMISSAR
+      - STR_COMMISSAR
+      - STR_COMMISSAR
+      - STR_COMMISSAR
+    rankSprite: 1124
+    rankBattleSprite: 1124
+    rankTinySprite: 1124
+    soldierNames:
+      - delete
+      - Names/commissar.nam
+    deathMale: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
+    deathFemale: [2014, 2015, 2016, 2017, 2018]
+    tags:
+      SOLDIER_IS_OFFICER: 1
+      SOLDIER_COMMAND_POINTS: 80
 
   - type: STR_SLAANGOR_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -2309,7 +2494,8 @@ soldiers:
       SOLDIER_WOUND_TIME_MULTIPLIER: 50
 
   ## Tzeentch
-  - type: STR_TZEENTCH_CULTIST_PLAYER
+  - &TZEENTCH_CULTIST
+    type: STR_TZEENTCH_CULTIST_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
     costBuy: 7000
     costSalary: 5000
@@ -2390,6 +2576,37 @@ soldiers:
       - Names/cultists.nam
     value: 2
     moraleLossWhenKilled: 75  # people don't care about the grunts so much
+    tags:
+      SOLDIER_COMMAND_POINTS: 2
+
+  - type: STR_TZEENTCH_OFFICER_PLAYER
+    refNode: *TZEENTCH_CULTIST
+    requires:
+      - STR_GENERALLOCK
+    costSalary: 30000
+    skillIconSprite: 203
+    skills:
+      - STR_HUNKER_DOWN
+      - STR_BLITZKRIEG
+      - STR_FIX_BAYONETS
+      - STR_CHECK_COMMAND
+      - STR_SKILL_LESSER_WARPFIRE_SORCERY
+    armor: STR_TZEENTCH_OFF_FATIGUES_PLAYER
+    minStats:
+      tu: 50  # +10
+      firing: 60  # +10
+      strength: 15  # +5
+      melee: 25  # +5
+    rankStrings:
+      - STR_OFFICER_RANK_0
+      - STR_OFFICER_RANK_1
+      - STR_OFFICER_RANK_2
+      - STR_OFFICER_RANK_3
+      - STR_OFFICER_RANK_4
+      - STR_OFFICER_RANK_5
+    tags:
+      SOLDIER_COMMAND_POINTS: 40
+      SOLDIER_IS_OFFICER: 1
 
   - type: STR_TZAANGOR_PLAYER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -2541,6 +2758,85 @@ soldiers:
     rankBattleSprite: {mod: 40k, index: 251}  # needs new
     rankTinySprite: {mod: 40k, index: 163}  # needs new
 
+  ## Blackstone
+  - type: STR_BLACKSTONE_PLAYER
+    requiresBuyBaseFunc: [IMPERIUM]
+    costSalary: 30000
+    minStats:
+      tu: 50
+      stamina: 60
+      health: 35
+      bravery: 50
+      reactions: 45
+      firing: 60
+      throwing: 50
+      strength: 20
+      psiStrength: 0
+      psiSkill: 8
+      melee: 50
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 40
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 0
+      psiSkill: 6
+      melee: 60
+    statCaps:
+      tu: 115
+      stamina: 135
+      health: 95
+      bravery: 125
+      reactions: 100
+      firing: 130
+      throwing: 80
+      strength: 80
+      psiStrength: 60
+      psiSkill: 60
+      melee: 145
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 40
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 30
+      psiSkill: 100
+      melee: 60
+    armor: STR_BLACKSTONE_ARMOR_PLAYER
+    standHeight: 21
+    kneelHeight: 16
+    deathMale: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
+    deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
+    allowPiloting: false
+    allowPromotion: true
+    rankStrings:
+      - STR_CHAOSCULT_RANK_0
+      - STR_CHAOSCULT_RANK_1
+      - STR_CHAOSCULT_RANK_2
+      - STR_CHAOSCULT_RANK_3
+      - STR_CHAOSCULT_RANK_4
+    rankSprite: {mod: 40k, index: 80}
+    rankBattleSprite: {mod: 40k, index: 194}
+    rankTinySprite: {mod: 40k, index: 127}
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    soldierNames:
+      - delete
+      - Names/cultistguards .nam
+    value: 25
+    moraleLossWhenKilled: 120
+    tags:
+      SOLDIER_COMMAND_POINTS: 5
+
   ## Iron Guard
   - type: STR_IRON_GUARDSMAN
     flagOffset: 42
@@ -2618,6 +2914,8 @@ soldiers:
     rankTinySprite: {mod: 40k, index: 163}  # needs new
     moraleLossWhenKilled: 0
     value: 1
+    tags:
+      SOLDIER_COMMAND_POINTS: 3
 
   - type: STR_BLACKGUARD
     flagOffset: 42
@@ -2685,6 +2983,8 @@ soldiers:
     rankTinySprite: {mod: 40k, index: 163}  # needs new
     moraleLossWhenKilled: 50  # Iron Guard don't care for each other, but seeing a black guard killed represents a battle going poorly.
     value: 20  # Considered an asset
+    tags:
+      SOLDIER_COMMAND_POINTS: 6
 
   - type: STR_IRON_GUARD_SERVITOR
     flagOffset: 42

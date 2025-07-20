@@ -828,6 +828,7 @@ research:
       - STR_PILOT_GUARDSMEN
       - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_CHAPTER_PURITY
+      - STR_AWARD_PERSONAL_SHIELD
     disables:
       - STR_CHAOS_STRATEGY_ARBITES
       - STR_NOT_ARBITES
@@ -1079,6 +1080,7 @@ research:
       - STR_RADICAL_RECRUITMENT_IG
       - STR_GUARD_AND_ARBITES
       # - STR_GUARD_SUPORT
+      - STR_AWARD_PERSONAL_SHIELD
       - STR_IMPERIUM_RESEARCH
     disables:
       - STR_NOT_GUARD
@@ -1456,6 +1458,7 @@ research:
       - STR_CARAPACE_ARMOR_IG
       - STR_CREATE_IRON_MAIDEN_RESEARCH
       - STR_AUTOCANNON_TECH
+      - STR_CHAOS_STORMTROOPER_REQUISITION
 
   - name: STR_IRON_SERVITOR_TECHNOLOGY  # Iron Warrior Servitor Technology
     requires:
@@ -1466,18 +1469,6 @@ research:
     requires:
       - STR_IRON_SERVITOR_TECHNOLOGY
       - STR_CONTACT_CHAOS_SISTERS
-
-  - name: STR_CHAOS_STORMTROOPER_REQUISITION  # Chaos Stormtrooper Requisitions
-    cost: 300
-    points: 75
-    dependencies:
-      - STR_IRON_GUARD_MIDTIER_REQUISITIONS
-      - STR_UFO_CONSTRUCTION
-    unlocks:
-      - STR_HELLGUN
-      # - STR_HOTSHOT_VOLLEY_GUN
-    getOneFree:
-      - STR_STORMTROOPER_REQUISITION
 
 ### Hrud Alliance
   - name: STR_HRUD_ALLIANCE
@@ -1838,7 +1829,9 @@ research:
       - STR_NOT_CHAOSCULT
       - STR_MIDTIER_PREREQ
     unlocks:
+      - STR_REGIMENT_OFFICERS
       - STR_CARAPACE_ARMOR_IG
+      - STR_AWARD_PERSONAL_SHIELD
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
 
   - name: STR_KHORNE_MILITIA  # Khorne Militia
@@ -1858,7 +1851,31 @@ research:
       - STR_CHAOS_MILITIA
       - STR_TZEENTCH_DEVOTION
 
+  - name: STR_CHAOS_STORMTROOPER_REQUISITION  # Chaos Stormtrooper Requisitions
+    cost: 300
+    points: 75
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_CHAOS_MILITIA
+      - STR_UFO_CONSTRUCTION
+    unlocks:
+      - STR_HELLGUN
+      - STR_HOTSHOT_VOLLEY_GUN
+    getOneFree:
+      - STR_STORMTROOPER_REQUISITION
+
+  - name: STR_CHAOS_JUMPTROOPER_REQUISITION
+    cost: 500
+    points: 75
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_CHAOS_MILITIA
+      - STR_STORMTROOPER_REQUISITION
+    unlocks:
+      - STR_JUMP_CARAPACE_DEP1
+
   - name: STR_UNLOCK_CHIMVALK_ALT  # CHAOS CHIMERA VALKYRIE
+    lookup: STR_VALKYRIE_CHAOS
     cost: 100
     points: 20
     dependencies:
@@ -3571,6 +3588,13 @@ research:
     points: 0  # review
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GENERALLOCK
+
+  - name: STR_AWARD_PERSONAL_SHIELD  # Award Personal Shield
+    # Added so the ability to award personal shields could be handed out easier
+    cost: 0
+    points: 0
+    dependencies:
       - STR_GENERALLOCK
 
   - name: STR_OGRYN_REQUISITION  # Ogryn Requisitions
