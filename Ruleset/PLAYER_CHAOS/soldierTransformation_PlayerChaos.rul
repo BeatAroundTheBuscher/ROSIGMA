@@ -704,12 +704,94 @@ soldierTransformation:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_KHORNE_CULTIST_PLAYER
       - STR_NURGLE_CULTIST_PLAYER
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_TZEENTCH_CULTIST_PLAYER
     producedSoldierType: STR_CHAOS_MARINE
     producedSoldierArmor: STR_CHAOS_MARINE_ARMOR
     lowerBoundAtMinStats: true
     allowsLiveSoldiers: true
 
   # Chaos Guard
+  - &OFFICER_PROMOTION_CHAOS
+    name: STR_PROMOTE_KHORNE_OFFICER
+    cost: 100000
+    requires:
+      - STR_REGIMENT_OFFICERS
+      - STR_KHORNE_MILITIA
+    producedSoldierType: STR_KHORNE_OFFICER_PLAYER
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARDSM
+      - STR_GUARD_VETERAN
+      - STR_GUARDSL
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSM_KRIEG
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_TZEENTCH_CULTIST_PLAYER
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 150
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+    requiredMinStats:
+      bravery: 60
+      psiStrength: 60
+      tu: 1
+  - name: STR_PROMOTE_NURGLE_OFFICER
+    refNode: *OFFICER_PROMOTION_CHAOS
+    requires:
+      - STR_REGIMENT_OFFICERS
+      - STR_NURGLE_MILITIA
+    producedSoldierType: STR_NURGLE_OFFICER_PLAYER
+  - name: STR_PROMOTE_SLAANESH_OFFICER
+    refNode: *OFFICER_PROMOTION_CHAOS
+    requires:
+      - STR_REGIMENT_OFFICERS
+      - STR_SLAANESH_MILITIA
+    producedSoldierType: STR_SLAANESH_OFFICER_PLAYER
+  - name: STR_PROMOTE_TZEENTCH_OFFICER
+    refNode: *OFFICER_PROMOTION_CHAOS
+    requires:
+      - STR_REGIMENT_OFFICERS
+      - STR_TZEENTCH_MILITIA
+    producedSoldierType: STR_TZEENTCH_OFFICER_PLAYER
+
+  - name: STR_CHAOS_STORMTROOPER_PROMOTION
+    cost: 50000
+    requires:
+      - STR_CHAOS_STORMTROOPER_REQUISITION
+    producedSoldierType: STR_BLACKSTONE_PLAYER
+    keepSoldierArmor: false
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARDSM
+      - STR_GUARD_VETERAN
+      - STR_GUARDSL
+      - STR_GUARDSL_VETERAN
+      - STR_GUARDSM_KRIEG
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_TZEENTCH_CULTIST_PLAYER
+    requiredMinStats:
+      tu: 1
+      stamina: 1
+      health: 1
+      bravery: 1
+      reactions: 1
+      firing: 1
+      melee: 1
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 100
+
   - name: STR_CONVERT_TO_PLAGUE_OGRYN
     cost: 40000
     requires:
@@ -891,17 +973,20 @@ soldierTransformation:
       - STR_CHAOS_SORCERY
     allowedSoldierTypes:
       - STR_NURGLE_CULTIST_PLAYER
+      - STR_NURGLE_OFFICER_PLAYER
       - STR_PESTIGOR_PLAYER
       - STR_ADEPTAS_NURGLE
       - STR_CHAOS_MARINE_NURGLE
       - STR_CHAOS_CHOSEN_NURGLE
       - STR_SLAANESH_CULTIST_PLAYER
+      - STR_SLAANESH_OFFICER_PLAYER
       - STR_SLAANGOR_PLAYER
       - STR_ADEPTAS_SLAANNOVICE
       - STR_ADEPTAS_SLAANESH
       - STR_CHAOS_MARINE_SLAANESH
       - STR_CHAOS_CHOSEN_SLAANESH
       - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_TZEENTCH_OFFICER_PLAYER
       - STR_TZAANGOR_PLAYER
       - STR_ADEPTAS_TZEENTCH
       - STR_CHAOS_SORCERER_TZEENTCH
