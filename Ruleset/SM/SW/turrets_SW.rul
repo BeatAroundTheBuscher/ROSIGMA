@@ -1,0 +1,135 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+units:
+  - type: STR_SWRAZORBACK_WITH_SMOKE
+    moraleLossWhenKilled: 25
+    canBeMindControlled: false
+    energyRecovery: 10
+    standHeight: 16
+    kneelHeight: 16
+    deathSound: 23
+    liveAlien: ""
+    stats:
+      health: 50
+      tu: 20
+      stamina: 10
+      reactions: 20
+      bravery: 110
+      firing: 100
+      throwing: 0
+      strength: 100
+      psiStrength: 250
+      psiSkill: 0
+      melee: 0
+      mana: 100
+    armor: SWRAZORBACK_ARMOR
+    builtInWeaponSets:
+      - - AUX_BOLTER
+        - STR_GRENADE_LAUNCHER_RHINO_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+      - - AUX_BOLTER
+        - STR_GRENADE_LAUNCHER_RHINO_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+      - - AUX_BOLTER
+        - STR_GRENADE_LAUNCHER_RHINO_SMOKE
+        - STR_SMOKE_GRENADE_BELT_TAUROS
+        - STR_PHOTON_GRENADE_BELT_TAUROS
+
+armors:
+
+  - type: SWRAZORBACK_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    heatVision: 30
+    spriteSheet: SWRAZORB.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    allowsMoving: false
+    spriteInv: RAZOR
+    corpseGeo: STR_DREAD_CORPSE
+    corpseBattle:
+      - O_CORPSE
+      - O_CORPSE
+      - O_CORPSE
+      - O_CORPSE
+    frontArmor: 160
+    sideArmor: 130
+    rearArmor: 100
+    underArmor: 160
+    size: 2
+    specialWeapon: STR_TURRET_RELOAD
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.4  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 3
+    scripts:
+      selectUnitSprite:
+        var int temp;
+
+        unit.isCollapsing temp;
+
+        if eq temp 0;
+
+          unit.isAiming temp;
+
+          if or eq blit_part blit_large_torso_0 eq blit_part blit_large_torso_1 eq blit_part blit_large_torso_2 eq blit_part blit_large_torso_3;
+
+            if neq 0 temp;
+
+              add sprite_offset 32;
+
+            end;
+
+          else or eq blit_part blit_large_propulsion_0 eq blit_part blit_large_propulsion_1 eq blit_part blit_large_propulsion_2 eq blit_part blit_large_propulsion_3;
+
+            set sprite_index 32;
+            set sprite_offset 0;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+
+        return sprite_index;
+    selectUnitMale: [{mod: 40k, index: 575}, {mod: 40k, index: 576}]
+    selectUnitFemale: [{mod: 40k, index: 575}, {mod: 40k, index: 576}]
+    selectWeaponMale: [{mod: 40k, index: 571}, {mod: 40k, index: 572}, {mod: 40k, index: 573}, {mod: 40k, index: 574}]
+    selectWeaponFemale: [{mod: 40k, index: 571}, {mod: 40k, index: 572}, {mod: 40k, index: 573}, {mod: 40k, index: 574}]
+    annoyedMale: [{mod: 40k, index: 577}]
+    annoyedFemale: [{mod: 40k, index: 577}]
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_SIZE: 200 # HUGE
+
+extraSprites:
+
+  - type: SWRAZORB.PCK  # space wolves razorback turret
+    subX: 32
+    subY: 40
+    width: 256
+    height: 320
+    files:
+      0: Resources/UnitSprites/SWRAZB.png
