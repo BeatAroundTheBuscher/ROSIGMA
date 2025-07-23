@@ -601,10 +601,11 @@ soldierTransformation:
     lowerBoundAtMinStats: true
 
   # These transform lower tier units into Heretic Sisters/Chaos Marines.
-  - name: STR_INDUCT_HERETIC_SISTER
+  - &INDUCT_HERETIC_SISTER
+    name: STR_INDUCT_HERETIC_SISTER
     requires:
       - STR_CONVERT_TO_CHAOS_RESEARCH
-      - STR_MIDTIER_PREREQ
+      - STR_CONTACT_CHAOS_SISTERS
     requiresBaseFunc: [CHAOS, MANU]  # Requires Chaos Shrine and Manufacturing
     cost: 35000
     requiredItems:
@@ -612,7 +613,7 @@ soldierTransformation:
     requiredCommendations:
       STR_LONG_SERVICE_TIME: 0
       STR_BATTLE_TESTED: 0
-    transferTime: 168  # 1 Week
+    transferTime: 96  # 4 Days
     allowedSoldierTypes:
       - STR_ARBITES
       - STR_COMMISSAR
@@ -643,23 +644,52 @@ soldierTransformation:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_KHORNE_CULTIST_PLAYER
       - STR_NURGLE_CULTIST_PLAYER
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_KHORNE_OFFICER_PLAYER
+      - STR_NURGLE_OFFICER_PLAYER
+      - STR_SLAANESH_OFFICER_PLAYER
+      - STR_TZEENTCH_OFFICER_PLAYER
+      - STR_SLAANESH_COMMISSAR_PLAYER
     producedSoldierType: STR_ADEPTAS_CHAOS
     producedSoldierArmor: STR_CHAOS_ADEPTAS_UNDIVIDED_ARMOR
     lowerBoundAtMinStats: true
     allowsLiveSoldiers: true
+  - name: STR_INDUCT_KHORNE_SISTER  # Induct Sister of Rage
+    refNode: *INDUCT_HERETIC_SISTER
+    requires: !add
+      - STR_KHORNE_DEVOTION
+    producedSoldierType: STR_ADEPTAS_KHORNE
+  - name: STR_INDUCT_NURGLE_SISTER  # Induct Plague Sister
+    refNode: *INDUCT_HERETIC_SISTER
+    requires: !add
+      - STR_NURGLE_DEVOTION
+    producedSoldierType: STR_ADEPTAS_NURGLE
+  - name: STR_INDUCT_SLAANESH_SISTER  # Induct Slaanesh Sister
+    refNode: *INDUCT_HERETIC_SISTER
+    requires: !add
+      - STR_SLAANESH_DEVOTION
+    producedSoldierType: STR_ADEPTAS_SLAANESH
+  - name: STR_INDUCT_TZEENTCH_SISTER  # Induct Twisted Sister
+    refNode: *INDUCT_HERETIC_SISTER
+    requires: !add
+      - STR_TZEENTCH_DEVOTION
+    producedSoldierType: STR_ADEPTAS_TZEENTCH
 
-  - name: STR_INDUCT_CHAOS_MARINE
+  - &INDUCT_CHAOS_MARINE
+    name: STR_INDUCT_CHAOS_MARINE
     requires:
       - STR_CONVERT_TO_CHAOS_RESEARCH
-      - STR_HIGHTIER_PREREQ
-    requiresBaseFunc: [CHAOS, MANU]  # Requires Chaos Shrine and Manufacturing
+      - STR_CONTACT_CHAOS_MARINES
+      - STR_PERSONAL_ARMOR
+    requiresBaseFunc: [CHAOS]  # Requires Chaos Shrine
     cost: 50000
     requiredItems:
-      STR_ALIEN_ALLOYS: 25
+      STR_CHAOS_MARINE_ARMOR: 1
     requiredCommendations:
       STR_LONG_SERVICE_TIME: 0
       STR_VETERAN_COMMENDATION: 0
-    transferTime: 504  # 3 Weeks
+    transferTime: 96  # 4 days
     allowedSoldierTypes:
       - STR_ADEPTAS_ASSASSIN
       - STR_ADEPTAS_CHAOS
@@ -711,10 +741,26 @@ soldierTransformation:
       - STR_SLAANESH_OFFICER_PLAYER
       - STR_TZEENTCH_OFFICER_PLAYER
       - STR_SLAANESH_COMMISSAR_PLAYER
+      - STR_BLACKSTONE_PLAYER
     producedSoldierType: STR_CHAOS_MARINE
     producedSoldierArmor: STR_CHAOS_MARINE_ARMOR
     lowerBoundAtMinStats: true
     allowsLiveSoldiers: true
+  - name: STR_INDUCT_KHORNE_MARINE  # Induct Khorne Berserker
+    refNode: *INDUCT_CHAOS_MARINE
+    requires: !add
+      - STR_KHORNE_DEVOTION
+    producedSoldierType: STR_CHAOS_MARINE_KHORNE
+  - name: STR_INDUCT_NURGLE_MARINE  # Induct Plague Marine
+    refNode: *INDUCT_CHAOS_MARINE
+    requires: !add
+      - STR_NURGLE_DEVOTION
+    producedSoldierType: STR_CHAOS_MARINE_NURGLE
+  - name: STR_INDUCT_SLAANESH_MARINE  # Induct Noise Marine
+    refNode: *INDUCT_CHAOS_MARINE
+    requires: !add
+      - STR_SLAANESH_DEVOTION
+    producedSoldierType: STR_CHAOS_MARINE_SLAANESH
 
   # Chaos Guard
   - &OFFICER_PROMOTION_CHAOS
