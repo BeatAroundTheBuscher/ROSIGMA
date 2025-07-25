@@ -2602,6 +2602,327 @@ armors:
       - STR_GUARDSL_OFFICER_VETERAN
     storeItem: STR_NONE
 
+  - &CHAOS_MOUNTED_LASCANNON
+    type: STR_KHORNE_MOUNTED_LASCANNON_PLAYER
+    ufopediaType: STR_GUARD_ARMORS_MOUNTED_LASCANNON_UC
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 5
+    spriteSheet: CGUARD_MOUNTED_BS.PCK
+    corpseBattle:
+      - STR_CGUARD_MOUNT_CORPSE_1
+      - STR_CGUARD_MOUNT_CORPSE_2
+      - STR_CGUARD_MOUNT_CORPSE_3
+      - STR_CGUARD_MOUNT_CORPSE_4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_LASCANNON
+    frontArmor: 150
+    sideArmor: 120
+    rearArmor: 30
+    underArmor: 30
+    size: 2
+    weight: -110
+    drawingRoutine: 20
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.8  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 1.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    stats:
+      tu: -15
+      health: 20
+      firing: 20
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    allowsKneeling: false
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_LASCANNON
+    loftempsSet: [92, 89, 90, 91]
+    moveSound: {mod: 40k, index: 14}
+    tags:
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      HAS_EXTENDED_FRONT_SHIELD: 1
+    #*** Drawing routine - first add to sprite_index picks mount type: ***
+    #***     0 = Lascannon
+    #***     1 = Autocannon
+    scripts:
+      selectUnitSprite:
+        var int unitDirection;
+
+        add sprite_index 0;
+        set sprite_offset 0;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+      hitUnit: &armorForcesHitsToFront
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+  - type: STR_KHORNE_MOUNTED_LASCANNON_PLAYER
+    spriteInv: KHORNE_GUARD_MOUNTED_LASCANNON_INV.SPK
+    customArmorPreviewIndex: [1077, 1196]
+    requires: STR_KHORNE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+
+  - &CHAOS_MOUNTED_AUTOCANNON
+    type: STR_KHORNE_MOUNTED_AUTOCANNON_PLAYER
+    ufopediaType: STR_GUARD_ARMORS_MOUNTED_AUTOCANNON_UC
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 5
+    spriteSheet: CGUARD_MOUNTED_BS.PCK
+    corpseBattle:
+      - STR_CGUARD_MOUNT_CORPSE_1
+      - STR_CGUARD_MOUNT_CORPSE_2
+      - STR_CGUARD_MOUNT_CORPSE_3
+      - STR_CGUARD_MOUNT_CORPSE_4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_LASCANNON
+    frontArmor: 150
+    sideArmor: 120
+    rearArmor: 30
+    underArmor: 30
+    size: 2
+    weight: -110
+    drawingRoutine: 20
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.8  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 1.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    stats:
+      tu: -15
+      health: 20
+      firing: 20
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    allowsKneeling: false
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_AUTOCANNON_GUARD
+    loftempsSet: [92, 89, 90, 91]
+    moveSound: {mod: 40k, index: 14}
+    tags:
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      HAS_EXTENDED_FRONT_SHIELD: 1
+    #*** Drawing routine - first add to sprite_index picks mount type: ***
+    #***     0 = Lascannon
+    #***     1 = Autocannon
+    scripts:
+      selectUnitSprite:
+        var int unitDirection;
+
+        add sprite_index 1;
+        set sprite_offset 0;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+      hitUnit: &armorForcesHitsToFront
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+  - type: STR_KHORNE_MOUNTED_AUTOCANNON_PLAYER
+    spriteInv: KHORNE_GUARD_MOUNTED_AUTOCANNON_INV.SPK
+    customArmorPreviewIndex: [1078, 1198]
+    requires: STR_KHORNE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+
+  - &CHAOS_MOUNTED_BOLTER
+    type: STR_KHORNE_MOUNTED_BOLTER_PLAYER
+    ufopediaType: STR_GUARD_ARMORS_MOUNTED_HEAVY_BOLTER_UC
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 5
+    spriteSheet: CGUARD_MOUNTED_BS.PCK
+    corpseBattle:
+      - STR_CGUARD_MOUNT_CORPSE_1
+      - STR_CGUARD_MOUNT_CORPSE_2
+      - STR_CGUARD_MOUNT_CORPSE_3
+      - STR_CGUARD_MOUNT_CORPSE_4
+    storeItem: STR_GUARD_ARMORS_MOUNTED_HEAVY_BOLTER
+    frontArmor: 150
+    sideArmor: 120
+    rearArmor: 30
+    underArmor: 30
+    size: 2
+    weight: -110
+    drawingRoutine: 20
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.8  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 1.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    stats:
+      tu: -15
+      health: 20
+      firing: 20
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+    allowsKneeling: false
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_MOUNT_WHEEL
+      - STR_MOUNTED_HEAVY_BOLTER
+    loftempsSet: [92, 89, 90, 91]
+    moveSound: {mod: 40k, index: 14}
+    tags:
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      HAS_EXTENDED_FRONT_SHIELD: 1
+    #*** Drawing routine - first add to sprite_index picks mount type: ***
+    #***     0 = Lascannon
+    #***     1 = Autocannon
+    scripts:
+      selectUnitSprite:
+        var int unitDirection;
+
+        add sprite_index 2;
+        set sprite_offset 0;
+
+        unit.getDirection unitDirection;
+        mul unitDirection 20;
+        add sprite_offset unitDirection;
+        add sprite_index sprite_offset;
+        return sprite_index;
+
+      hitUnit: &armorForcesHitsToFront
+        var int unitDirection;
+        var int attackerDirection;
+
+        if or eq attacker null eq side SIDE_UNDER;
+
+          return power part side;
+
+        end;
+
+        unit.getDirection unitDirection;
+        attacker.getDirection attackerDirection;
+        add attackerDirection 4;
+        mod attackerDirection 8;
+        sub unitDirection attackerDirection;
+        abs unitDirection;
+
+        if lt unitDirection 2;
+
+          set side SIDE_FRONT;
+
+        end;
+
+        return power part side;
+  - type: STR_KHORNE_MOUNTED_BOLTER_PLAYER
+    spriteInv: KHORNE_GUARD_MOUNTED_BOLTER_INV.SPK
+    customArmorPreviewIndex: [1077, 1198]
+    requires: STR_KHORNE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+
   - type: STR_KHORNGOR_ARMOR_PLAYER
     visibilityAtDay: 30
     visibilityAtDark: 25
@@ -2831,6 +3152,87 @@ armors:
       - STR_GUARDSL_OFFICER
       - STR_GUARDSL_OFFICER_VETERAN
     storeItem: STR_NONE
+
+  - type: STR_NURGLE_MOUNTED_LASCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_LASCANNON
+    spriteInv: NURGLE_GUARD_MOUNTED_LASCANNON_INV.SPK
+    customArmorPreviewIndex: [1107, 1196]
+    requires: STR_NURGLE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_1
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_2
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_3
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 3;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_NURGLE_MOUNTED_AUTOCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_AUTOCANNON
+    spriteInv: NURGLE_GUARD_MOUNTED_AUTOCANNON_INV.SPK
+    customArmorPreviewIndex: [1108, 1198]
+    requires: STR_NURGLE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_1
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_2
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_3
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 3;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_NURGLE_MOUNTED_BOLTER_PLAYER
+    refNode: *CHAOS_MOUNTED_BOLTER
+    spriteInv: NURGLE_GUARD_MOUNTED_BOLTER_INV.SPK
+    customArmorPreviewIndex: [1107, 1196]
+    requires: STR_NURGLE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_1
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_2
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_3
+      - STR_CGUARD_GREEN_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 3;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
 
   - type: STR_PESTIGOR_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -3308,6 +3710,87 @@ armors:
       INTIMIDATION_RESISTANCE: 33  # Resistant to intimidation
       NO_BENEFIT_FROM_INSPIRE: 1
 
+  - type: STR_SLAANESH_MOUNTED_LASCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_LASCANNON
+    spriteInv: SLAANESH_GUARD_MOUNTED_LASCANNON_INV.SPK
+    customArmorPreviewIndex: [1137, 1196]
+    requires: STR_SLAANESH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_PINK_MOUNT_CORPSE_1
+      - STR_CGUARD_PINK_MOUNT_CORPSE_2
+      - STR_CGUARD_PINK_MOUNT_CORPSE_3
+      - STR_CGUARD_PINK_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 11;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_SLAANESH_MOUNTED_AUTOCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_AUTOCANNON
+    spriteInv: SLAANESH_GUARD_MOUNTED_AUTOCANNON_INV.SPK
+    customArmorPreviewIndex: [1138, 1198]
+    requires: STR_SLAANESH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_PINK_MOUNT_CORPSE_1
+      - STR_CGUARD_PINK_MOUNT_CORPSE_2
+      - STR_CGUARD_PINK_MOUNT_CORPSE_3
+      - STR_CGUARD_PINK_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 11;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_SLAANESH_MOUNTED_BOLTER_PLAYER
+    refNode: *CHAOS_MOUNTED_BOLTER
+    spriteInv: SLAANESH_GUARD_MOUNTED_BOLTER_INV.SPK
+    customArmorPreviewIndex: [1137, 1196]
+    requires: STR_SLAANESH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_PINK_MOUNT_CORPSE_1
+      - STR_CGUARD_PINK_MOUNT_CORPSE_2
+      - STR_CGUARD_PINK_MOUNT_CORPSE_3
+      - STR_CGUARD_PINK_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 11;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
   - type: STR_SLAANGOR_ARMOR_PLAYER
     visibilityAtDay: 40
     visibilityAtDark: 25
@@ -3445,6 +3928,87 @@ armors:
     tags:
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
       ARMOR_ENERGY_SHIELD_DECAY: 12
+
+  - type: STR_TZEENTCH_MOUNTED_LASCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_LASCANNON
+    spriteInv: TZEENTCH_GUARD_MOUNTED_LASCANNON_INV.SPK
+    customArmorPreviewIndex: [1167, 1196]
+    requires: STR_TZEENTCH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_1
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_2
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_3
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 8;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_TZEENTCH_MOUNTED_AUTOCANNON_PLAYER
+    refNode: *CHAOS_MOUNTED_AUTOCANNON
+    spriteInv: TZEENTCH_GUARD_MOUNTED_AUTOCANNON_INV.SPK
+    customArmorPreviewIndex: [1168, 1198]
+    requires: STR_TZEENTCH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_1
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_2
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_3
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 8;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_TZEENTCH_MOUNTED_BOLTER_PLAYER
+    refNode: *CHAOS_MOUNTED_BOLTER
+    spriteInv: TZEENTCH_GUARD_MOUNTED_BOLTER_INV.SPK
+    customArmorPreviewIndex: [1167, 1196]
+    requires: STR_TZEENTCH_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+    corpseBattle:
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_1
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_2
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_3
+      - STR_CGUARD_BLUE_MOUNT_CORPSE_4
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 8;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
 
   - type: STR_TZAANGOR_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -4049,6 +4613,7 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
+      HAS_EXTENDED_FRONT_SHIELD: 1
 
   - type: STR_IRON_GUARD_ARMOR_MOUNTED_AUTOCANNON
     refNode: *STR_IRON_GUARD_ARMOR_MOUNTED
