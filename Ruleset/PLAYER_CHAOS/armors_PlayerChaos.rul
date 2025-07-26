@@ -2044,7 +2044,142 @@ armors:
   # 3 Tiers, Basic, Marked, Chosen/Exalted. At least for normal power armors.
   # Undivided (Heretic), Khorne, Slaanesh, Nurgle and Tzeentch. + Night Lords, Iron Warriors and Alpha types.
 
+  ## Repentia Equivalent
+  - type: STR_CHAOS_FANATIC_ARMOR
+    ufopediaType: STR_FEM_CULTIST_ARMOR
+    units:
+      - STR_CHAOS_FANATIC_PLAYER
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 15
+    spriteSheet: FEMCULTIST.PCK
+    spriteInv: ARepentiaLightK.SPK
+    forcedTorso: 1
+    customArmorPreviewIndex: 1037
+    corpseBattle:
+      - STR_CHAOS_FANATIC_CORPSE
+    frontArmor: 25
+    sideArmor: 15
+    rearArmor: 5
+    underArmor: 5
+    drawingRoutine: 0
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 1.5  # FLAMES
+      - 1.2  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 1.0  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+
+  ## Novice Equivalent
+  - type: STR_DARK_DISCIPLE_ARMOR_PLAYER
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_NOVICE
+    storeItem: STR_NONE
+    requires: STR_CONTACT_CHAOS_SISTERS
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    camouflageAtDay: -5
+    camouflageAtDark: -5
+    spriteSheet: DARKDISCIPLE_BS.PCK
+    spriteInv: DARKDISCIPLE_INV
+    forcedTorso: 1
+    customArmorPreviewIndex: 1067
+    corpseBattle:
+      - STR_DARKDISCIPLE_CORPSE_PLAYER
+    frontArmor: 55
+    sideArmor: 45
+    rearArmor: 30
+    underArmor: 5
+    drawingRoutine: 0
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.1  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 1.0  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    builtInWeapons:
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+
+  - type: STR_ADEPTAS_HERETIC_MEDICAE_ARMOR_PLAYER
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_CHAOS
+      - STR_ADEPTAS_NOVICE
+      - STR_ADEPTAS
+      - STR_ADEPTAS_VETERAN
+      - STR_ADEPTAS_PILOT
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 20
+    spriteSheet: XCOM_41.PCK  # hospitaller
+    spriteInv: HERETIC_HOSPITALLER_INV.SPK
+    customArmorPreviewIndex: 1097
+    corpseBattle:
+      - STR_CHAOS_MEDICAE_CORPSE
+    stats:
+      tu: 0
+      stamina: 10
+      health: 10
+      bravery: 0  # always multiples of 10
+      reactions: -30
+      firing: -20
+      throwing: 0
+      strength: 5
+      psiStrength: 0
+      psiSkill: 5
+      melee: -5
+    storeItem: STR_ADEPTAS_MEDICAE_ARMORSTORE
+    frontArmor: 100
+    sideArmor: 80
+    rearArmor: 60
+    underArmor: 70
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.7  # FLAMES
+      - 0.8  # HE
+      - 0.9  # LASCANON
+      - 0.9  # PLASMA
+      - 0.8  # STUN
+      - 1.2  # MELEE
+      - 0.7  # ACID
+      - 0.2  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    builtInWeapons:
+      - INV_NULL_3X3
+      - AUX_MEDICAE_MEDI_KIT
+    loftempsSet: [3]
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+
+  ## Power Armors
   - type: STR_CHAOS_ADEPTAS_UNDIVIDED_ARMOR  # HERETIC ARMOR
+    requires: STR_CHAOS_PATH
     visibilityAtDay: 40
     visibilityAtDark: 25
     antiCamouflageAtDay: 4
@@ -2088,6 +2223,7 @@ armors:
       - 1.0  # MELTA
     units:
       - STR_ADEPTAS_CHAOS
+      - STR_ADEPTAS
     loftempsSet: [3]
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
@@ -4710,37 +4846,6 @@ armors:
         add sprite_offset unitDirection;
         add sprite_index sprite_offset;
         return sprite_index;
-
-  # Chaos 'Civilian' Armors
-  - type: STR_CHAOS_FANATIC_ARMOR
-    ufopediaType: STR_FEM_CULTIST_ARMOR
-    visibilityAtDay: 40
-    visibilityAtDark: 15
-    spriteSheet: FEMCULTIST.PCK
-    spriteInv: ARepentiaLightK.SPK
-    forcedTorso: 1
-    customArmorPreviewIndex: 1067
-    corpseBattle:
-      - STR_CHAOS_FANATIC_CORPSE
-    frontArmor: 25
-    sideArmor: 15
-    rearArmor: 5
-    underArmor: 5
-    drawingRoutine: 0
-    damageModifier:  # CULTIST ARMOR
-      - 1.0  # none
-      - 0.8  # AP
-      - 1.5  # FLAMES
-      - 1.2  # HE
-      - 1.0  # LASCANON
-      - 1.1  # PLASMA
-      - 1.0  # STUN
-      - 1.2  # MELEE
-      - 1.0  # ACID
-      - 0.0  # SMOKE
-      - 1.0  # IMPACT
-      - 1.0  # MELTA
-    loftempsSet: [3]
 
   # chaos thunderhawk turret armors
 
