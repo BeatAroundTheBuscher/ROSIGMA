@@ -2547,7 +2547,7 @@ armors:
     antiCamouflageAtDark: 4
     psiVision: 5
     spriteSheet: ADEPTASTZEENTCHBASIC.PCK  # Twisted Sister
-    spriteInv: TSISTER_INV.SPK
+    spriteInv: ATwistedSisT.SPK
     zombiImmune: true
     customArmorPreviewIndex: 1158
     # spriteFaceGroup: 6
@@ -2599,6 +2599,281 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TZEENTCH: 1
       UNIT_TYPE_PSYKER: 1  # counts as psyker due to psivision
+
+  ## Superior
+  - type: STR_HERETIC_SUPERIOR_ARMOR_PLAYER
+    units:
+      - STR_CHAOS_SUPERIOR
+      - STR_ADEPTAS_SUPERIOR
+    requires: STR_ALIENS_ONLY
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 30
+    spriteSheet: XCOM_46.PCK
+    spriteInv: ACanonessH.SPK  # This is actually the heretic canoness, needs superior inv and bs
+    customArmorPreviewIndex: 1039
+    corpseBattle:
+      - STR_HERETIC_CANONESS_CORPSE_PLAYER
+    stats:
+      tu: 10
+      stamina: 30
+      health: 10
+      bravery: 10  # always multiples of 10
+      reactions: 15
+      firing: 15
+      throwing: 15
+      strength: 25
+      psiStrength: 20
+      psiSkill: 25
+      melee: 10
+    frontArmor: 120
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.3  # FLAMES
+      - 0.5  # HE
+      - 0.7  # LASCANON
+      - 0.7  # PLASMA
+      - 1.0  # STUN
+      - 0.9  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+    scripts:
+      recolorUnitSprite:
+        var int color;
+        get_color color new_pixel;
+        if eq color 2;
+          set_color new_pixel 10;
+        end;
+        add_shade new_pixel shade;
+        return new_pixel;
+
+  - type: STR_KHORNE_RETRIBUTOR_SUPERIOR_ARMOR_PLAYER
+    units:
+      - STR_KHORNE_SUPERIOR
+    requires: STR_ALIENS_ONLY
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 30
+    spriteSheet: KhorneRetributorSuperior.PCK
+    spriteInv: ARetributorSuperiorK.SPK
+    customArmorPreviewIndex: 1069
+    corpseBattle:
+      - STR_KHORNE_RETRIBUTORSUPERIOR_CORPSE_PLAYER
+    stats:
+      tu: 15
+      stamina: 30
+      firing: 15
+      health: 10
+      bravery: 20  # always multiples of 10
+      reactions: 15
+      throwing: 15
+      strength: 30
+      psiStrength: 20
+      psiSkill: 0
+      melee: 15
+    frontArmor: 125
+    sideArmor: 105
+    rearArmor: 65
+    underArmor: 105
+    damageModifier:  # CHAOS ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.7  # FLAMES
+      - 1.0  # HE
+      - 0.9  # LASCANON
+      - 1.0  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    specialWeapon: AUX_PENITENT_FLAMER
+    loftempsSet: [3]
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
+      ARMOR_ENERGY_SHIELD_DECAY: 66
+      INTIMIDATION_RESISTANCE: 100
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 6
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+
+  - type: STR_NURGLE_SUPERIOR_ARMOR_PLAYER
+    units:
+      - STR_NURGLE_SUPERIOR
+    requires: STR_ALIENS_ONLY
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: XCOM_56.PCK
+    spriteInv: AMERCYN.SPK
+    customArmorPreviewIndex: 1099
+    corpseBattle:
+      - STR_NURGLE_HOSPITALLER_CORPSE_PLAYER
+    stats:
+      tu: 10
+      stamina: 10
+      health: 30
+      bravery: 0  # always multiples of 10
+      reactions: -10
+      firing: -10
+      throwing: 20
+      strength: 20
+      psiStrength: 20
+      psiSkill: 0
+      melee: 0
+    frontArmor: 110
+    sideArmor: 90
+    rearArmor: 70
+    underArmor: 70
+    bleedImmune: true  # Plague Blessed don't bleed
+    zombiImmune: true  # Plague Blessed can't be corrupted further
+    painImmune: true  # Plague Blessed don't care about pain
+    instantWoundRecovery: true
+    recovery:  # Gets true regen
+      health:
+        healthCurrent: 0.10
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.6  # FLAMES; light power armor
+      - 0.7  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.9  # STUN
+      - 1.2  # MELEE
+      - 0.1  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 0.9  # MELTA
+    specialWeapon: STR_INQ_MEDI_KIT
+    builtInWeapons:
+      - BETTER_SPIT_TOKEN
+    loftempsSet: [3]
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 12
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+
+  - type: STR_SLAANESH_SUPERIOR_ARMOR_PLAYER
+    units:
+      - STR_SLAANESH_SUPERIOR
+    requires: STR_ALIENS_ONLY
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 20
+    spriteSheet: XCOM_61.PCK
+    spriteInv: ADomS.SPK
+    customArmorPreviewIndex: 1129
+    corpseBattle:
+      - STR_SLAANESH_DOMINION_CORPSE_PLAYER
+    stats:
+      tu: 20
+      stamina: 20
+      firing: 5
+      health: 0
+      bravery: 20  # always multiples of 10
+      reactions: 5
+      throwing: 0
+      strength: 0
+      psiStrength: 10
+      psiSkill: 0
+      melee: 15
+    frontArmor: 120
+    sideArmor: 110
+    rearArmor: 80
+    underArmor: 110
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.7  # FLAMES
+      - 0.8  # HE
+      - 0.9  # LASCANON
+      - 0.8  # PLASMA
+      - 1.1  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [3]
+    builtInWeapons:
+      - STR_SEDUCE_TOKEN
+      - STR_PSI_AMP_TOKEN
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
+      ARMOR_ENERGY_SHIELD_DECAY: 66
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_SLAANESH: 1
+
+  - type: STR_TZEENTCH_SUPERIOR_ARMOR_PLAYER
+    units:
+      - STR_TZEENTCH_SUPERIOR
+    requires: STR_ALIENS_ONLY
+    storeItem: STR_NONE
+    visibilityAtDay: 40
+    visibilityAtDark: 30  # sorcerer + artificer armor
+    antiCamouflageAtDay: 12  # sorcerer + artificer armor
+    antiCamouflageAtDark: 12  # sorcerer + artificer armor
+    heatVision: 40  # sorcerer + artificer armor
+    psiVision: 5  # sorcerer + artificer armor
+    spriteSheet: ADEPTAT.PCK
+    spriteInv: AChampT.SPK
+    customArmorPreviewIndex: 1159
+    corpseBattle:
+      - STR_TZEENTCH_BRIDE_CORPSE_PLAYER
+    frontArmor: 140
+    sideArmor: 130
+    rearArmor: 80
+    underArmor: 140
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 0.5  # AP
+      - 0.3  # FLAMES
+      - 0.6  # HE
+      - 0.7  # LASCANON
+      - 0.6  # PLASMA
+      - 1.1  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    builtInWeapons:
+      - STR_WARPFIRE_FLAMER_TOKEN
+      - STR_PSI_AMP_TOKEN
+    loftempsSet: [3]
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
+      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
 
   # General Khorne
   - &PLAYER_CHAOS_CULTIST_ARMOR
