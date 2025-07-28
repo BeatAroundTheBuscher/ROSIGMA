@@ -37,7 +37,7 @@ armors:
 
   - type: STR_CHAOS_MARINE_ARMOR
     customArmorPreviewIndex: 1020
-    stats:
+    stats: &UNDIVIDED_MARINE_STATS
       tu: 10
       stamina: 20
       health: 5
@@ -698,7 +698,7 @@ armors:
     spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5
     corpseBattle:
       - STR_KHORNECHAMP_CORPSE_PLAYER  # Needs Unique eventually
-    stats:
+    stats: &KHORNE_MARINE_STATS
       tu: 20  # +10
       stamina: 30  # +10
       health: 10  # +5
@@ -720,6 +720,7 @@ armors:
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INTIMIDATION_RESISTANCE: 100  # intimidation immune
       INFECTION_RESIST: 25
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 5
@@ -828,6 +829,7 @@ armors:
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 75
       INTIMIDATION_RESISTANCE: 100  # intimidation immune
       INFECTION_RESIST: 33
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 8
@@ -866,6 +868,7 @@ armors:
     specialWeapon: STR_MFIST
     storeItem: STR_CHAOS_TERMINATOR_ARMOR
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INFECTION_RESIST: 50
       INTIMIDATION_RESISTANCE: 100
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 8
@@ -923,6 +926,7 @@ armors:
       - 1.1  # MELTA; Cataphract increases by 0.1
     specialWeapon: STR_MFIST
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 75
       INFECTION_RESIST: 50
       INTIMIDATION_RESISTANCE: 100
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 8
@@ -983,7 +987,7 @@ armors:
       - STR_CHAOS_MARINE_NURGLE
     corpseBattle:
       - STR_NURGLES_CORPSE_PLAYER
-    stats:
+    stats: &NURGLE_MARINE_STATS
       tu: 0  # -10
       stamina: 40  # +20
       health: 20  # +15
@@ -1499,7 +1503,7 @@ armors:
       - STR_CHAOS_MARINE_SLAANESH
     corpseBattle:
       - STR_SLAANESHS_CORPSE_PLAYER
-    stats:
+    stats: &SLAANESH_MARINE_STATS
       tu: 25  # +15
       stamina: 20
       health: 5
@@ -1752,7 +1756,7 @@ armors:
       - 0.0  # SMOKE
       - 0.2  # IMPACT
       - 1.0  # MELTA
-    stats:
+    stats: &RUBRIC_MARINE_STATS
       tu: -10  # -20 TZ
       stamina: 40  # +20
       health: -20  # -20 TZ
@@ -2079,7 +2083,8 @@ armors:
     loftempsSet: [3]
 
   ## Novice Equivalent
-  - type: STR_DARK_DISCIPLE_ARMOR_PLAYER
+  - &DISCIPLE_ARMOR
+    type: STR_DARK_DISCIPLE_ARMOR_PLAYER
     units:
       - STR_DARK_DISCIPLE_PLAYER
       - STR_ADEPTAS_NOVICE
@@ -2092,13 +2097,13 @@ armors:
     spriteSheet: DARKDISCIPLE_BS.PCK
     spriteInv: DARKDISCIPLE_INV
     forcedTorso: 1
-    customArmorPreviewIndex: 1067
+    customArmorPreviewIndex: 1038
     corpseBattle:
       - STR_DARKDISCIPLE_CORPSE_PLAYER
     frontArmor: 55
     sideArmor: 45
     rearArmor: 30
-    underArmor: 5
+    underArmor: 25
     drawingRoutine: 0
     damageModifier:  # CULTIST ARMOR
       - 1.0  # none
@@ -2122,6 +2127,162 @@ armors:
       UNIT_TYPE_LIVING: 1
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
 
+  - type: STR_KHORNE_NOVICE_ARMOR_PLAYER
+    refNode: *DISCIPLE_ARMOR
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_NOVICE
+    storeItem: STR_NONE
+    requires: STR_KHORNE_DEVOTION
+    spriteSheet: XCOM_67NoviceC.PCK
+    spriteInv: ANoviceS.SPK
+    customArmorPreviewIndex: 1068
+    corpseBattle:
+      - STR_KHORNE_NOVICE_CORPSE_PLAYER
+    frontArmor: 65
+    sideArmor: 35
+    rearArmor: 25
+    underArmor: 25
+    stats:
+      tu: 15
+      stamina: 5
+      bravery: 5
+      strength: 5
+      melee: 10
+      firing: -5
+    tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_KHORNE: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+
+  - type: STR_NURGLE_NOVICE_ARMOR_PLAYER
+    refNode: *DISCIPLE_ARMOR
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_NOVICE
+    storeItem: STR_NONE
+    requires: STR_NURGLE_DEVOTION
+    spriteSheet: ADEPTAN.PCK
+    spriteInv: CHA.SPK
+    customArmorPreviewIndex: 1098
+    corpseBattle:
+      - STR_SLAANESH_NOVICE_CORPSE_PLAYER
+    frontArmor: 55
+    sideArmor: 45
+    rearArmor: 25
+    underArmor: 25
+    stats:
+      health: 15
+      tu: -5
+      stamina: 5
+      strength: 5
+      melee: -5
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_NURGLE: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
+
+  - type: STR_SLAANESH_NOVICE_ARMOR_PLAYER
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_NOVICE
+    requires: STR_SLAANESH_DEVOTION
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: XCOM_67NoviceC.PCK
+    spriteInv: ANoviceS.SPK
+    customArmorPreviewIndex: 1128
+    corpseBattle:
+      - STR_SLAANESH_NOVICE_CORPSE_PLAYER
+    stats:
+      tu: 10
+      stamina: 5
+      reactions: 5
+      throwing: 5
+      strength: 5
+    frontArmor: 60
+    sideArmor: 50
+    rearArmor: 30
+    underArmor: 50
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.0  # FLAMES
+      - 0.8  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.2  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    storeItem: STR_NONE
+    builtInWeapons:
+      - INV_NULL_3X3
+    loftempsSet: [3]
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_SLAANESH: 1
+
+  - type: STR_TZEENTCH_NOVICE_ARMOR_PLAYER
+    refNode: *DISCIPLE_ARMOR
+    psiVision: 3
+    units:
+      - STR_DARK_DISCIPLE_PLAYER
+      - STR_ADEPTAS_NOVICE
+    storeItem: STR_NONE
+    requires: STR_TZEENTCH_DEVOTION
+    spriteSheet: TZEENTCH_ACOLYTE_BS.PCK
+    spriteInv: ACOLYTE_INV.SPK
+    customArmorPreviewIndex: 1158
+    corpseBattle:
+      - STR_TZEENTCH_NOVICE_CORPSE_PLAYER
+    frontArmor: 45
+    sideArmor: 40
+    rearArmor: 35
+    underArmor: 40
+    stats:
+      tu: -5
+      reactions: 10
+      firing: 10
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TZEENTCH: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+
   - type: STR_ADEPTAS_HERETIC_MEDICAE_ARMOR_PLAYER
     units:
       - STR_DARK_DISCIPLE_PLAYER
@@ -2130,6 +2291,7 @@ armors:
       - STR_ADEPTAS
       - STR_ADEPTAS_VETERAN
       - STR_ADEPTAS_PILOT
+    requires: STR_ALIENS_ONLY
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 20
@@ -2187,7 +2349,7 @@ armors:
     antiCamouflageAtDark: 4
     spriteSheet: ADEPTASHERETIC.PCK
     spriteInv: USISTERHERETIC_INV.SPK
-    customArmorPreviewIndex: 1038
+    customArmorPreviewIndex: 1039
     # spriteFaceGroup: 6
     # spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
     corpseBattle:
@@ -2242,7 +2404,7 @@ armors:
     # camouflageAtDark: 5  # Worse than NL CSM
     spriteSheet: NIGHTLORDS_SISTER_BS.PCK
     spriteInv: NIGHTLORDS_SISTER_INV.SPK
-    customArmorPreviewIndex: 1218
+    customArmorPreviewIndex: 1219
     # spriteFaceGroup: 6
     # spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
     corpseBattle:
@@ -2294,7 +2456,7 @@ armors:
     antiCamouflageAtDark: 6
     spriteSheet: IRONMAIDEN_BS.PCK
     spriteInv: IWSISTER_INV.SPK
-    customArmorPreviewIndex: 1188
+    customArmorPreviewIndex: 1189
     bleedImmune: true
     fearImmune: true
     zombiImmune: true
@@ -2344,14 +2506,14 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_CHAOS: 1
 
-  - type: STR_CHAOS_ADEPTAS_KHORNE_ARMOR  # ADEPTAS ELOHIM TIER
+  - type: STR_CHAOS_ADEPTAS_KHORNE_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
-    spriteSheet: XCOM_62.PCK  # helmeted khorne sister
-    spriteInv: KSISTER_INV.SPK
-    customArmorPreviewIndex: 1068
+    spriteSheet: XCOM_65KhorneNovice.PCK
+    spriteInv: ARookieK.SPK
+    customArmorPreviewIndex: 1069
     # spriteFaceGroup: 6
     # spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
     corpseBattle:
@@ -2393,6 +2555,7 @@ armors:
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       INTIMIDATION_RESISTANCE: 50  # intimidate resistance
       INFECTION_RESIST: 50
@@ -2406,8 +2569,8 @@ armors:
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
     spriteSheet: ADEPTASZNurgle.PCK  # Sister of Filth
-    spriteInv: NSISTER_INV.SPK
-    customArmorPreviewIndex: 1098
+    spriteInv: AFILTH.SPK
+    customArmorPreviewIndex: 1099
     bleedImmune: true
     zombiImmune: true
     # spriteFaceGroup: 6
@@ -2491,8 +2654,8 @@ armors:
     antiCamouflageAtDay: 4
     antiCamouflageAtDark: 4
     spriteSheet: XCOM_53.PCK
-    spriteInv: SLAANESHSISTER_INV.SPK
-    customArmorPreviewIndex: 1128
+    spriteInv: APurpleS.SPK
+    customArmorPreviewIndex: 1129
     # spriteFaceGroup: 6
     # spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
     corpseBattle:
@@ -2549,7 +2712,7 @@ armors:
     spriteSheet: ADEPTASTZEENTCHBASIC.PCK  # Twisted Sister
     spriteInv: ATwistedSisT.SPK
     zombiImmune: true
-    customArmorPreviewIndex: 1158
+    customArmorPreviewIndex: 1159
     # spriteFaceGroup: 6
     # spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
     corpseBattle:
@@ -2612,7 +2775,7 @@ armors:
     heatVision: 30
     spriteSheet: XCOM_46.PCK
     spriteInv: ACanonessH.SPK  # This is actually the heretic canoness, needs superior inv and bs
-    customArmorPreviewIndex: 1039
+    customArmorPreviewIndex: 1040
     corpseBattle:
       - STR_HERETIC_CANONESS_CORPSE_PLAYER
     stats:
@@ -2660,7 +2823,7 @@ armors:
         add_shade new_pixel shade;
         return new_pixel;
 
-  - type: STR_KHORNE_RETRIBUTOR_SUPERIOR_ARMOR_PLAYER
+  - type: STR_KHORNE_SUPERIOR_ARMOR_PLAYER
     units:
       - STR_KHORNE_SUPERIOR
     requires: STR_ALIENS_ONLY
@@ -2668,11 +2831,11 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 25
     heatVision: 30
-    spriteSheet: KhorneRetributorSuperior.PCK
-    spriteInv: ARetributorSuperiorK.SPK
-    customArmorPreviewIndex: 1069
+    spriteSheet: XCOM_62BLESSED.PCK
+    spriteInv: ARegularK.SPK
+    customArmorPreviewIndex: 1070
     corpseBattle:
-      - STR_KHORNE_RETRIBUTORSUPERIOR_CORPSE_PLAYER
+      - STR_CHAOS_ADEPTAS_KHORNE_CORPSE
     stats:
       tu: 15
       stamina: 30
@@ -2702,12 +2865,13 @@ armors:
       - 0.0  # SMOKE
       - 1.0  # IMPACT
       - 1.2  # MELTA
-    specialWeapon: AUX_PENITENT_FLAMER
+    specialWeapon: STR_MFIST
     loftempsSet: [3]
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 75
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 66
-      ARMOR_ENERGY_SHIELD_DECAY: 66
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 25
+      ARMOR_ENERGY_SHIELD_DECAY: 25
       INTIMIDATION_RESISTANCE: 100
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 6
       YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 6
@@ -2724,7 +2888,7 @@ armors:
     visibilityAtDark: 20
     spriteSheet: XCOM_56.PCK
     spriteInv: AMERCYN.SPK
-    customArmorPreviewIndex: 1099
+    customArmorPreviewIndex: 1100
     corpseBattle:
       - STR_NURGLE_HOSPITALLER_CORPSE_PLAYER
     stats:
@@ -2786,7 +2950,7 @@ armors:
     heatVision: 20
     spriteSheet: XCOM_61.PCK
     spriteInv: ADomS.SPK
-    customArmorPreviewIndex: 1129
+    customArmorPreviewIndex: 1130
     corpseBattle:
       - STR_SLAANESH_DOMINION_CORPSE_PLAYER
     stats:
@@ -2843,7 +3007,7 @@ armors:
     psiVision: 5  # sorcerer + artificer armor
     spriteSheet: ADEPTAT.PCK
     spriteInv: AChampT.SPK
-    customArmorPreviewIndex: 1159
+    customArmorPreviewIndex: 1160
     corpseBattle:
       - STR_TZEENTCH_BRIDE_CORPSE_PLAYER
     frontArmor: 140
@@ -2863,13 +3027,19 @@ armors:
       - 0.0  # SMOKE
       - 1.0  # IMPACT
       - 1.2  # MELTA
+    stats:
+      firing: 20
+      bravery: 20  # always multiples of 10
+      reactions: 15
+      psiStrength: 10
+      psiSkill: 20
     builtInWeapons:
       - STR_WARPFIRE_FLAMER_TOKEN
       - STR_PSI_AMP_TOKEN
     loftempsSet: [3]
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10
-      ARMOR_ENERGY_SHIELD_DECAY: 10
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 15
+      ARMOR_ENERGY_SHIELD_DECAY: 15
       ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
@@ -2917,6 +3087,7 @@ armors:
     frontArmor: 25
     sideArmor: 20
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INFECTION_RESIST: 25
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
@@ -2936,7 +3107,7 @@ armors:
     sideArmor: 20
     rearArmor: 15
     underArmor: 20
-    stats:
+    stats: &KHORNE_GUARD_STATS
       tu: 5
       stamina: 5
       bravery: 5
@@ -2973,7 +3144,7 @@ armors:
       melee: 5
       firing: 5
     specialWeapon: STR_BAYONET
-    requires: STR_KHORNE_MILITIA
+    requires: STR_KHORNE_GUARD_ARMOR
     units:
       - STR_KHORNE_CULTIST_PLAYER
       - STR_CHAOSCULT_SOLDIER_LV2
@@ -3368,6 +3539,7 @@ armors:
     loftempsSet: [4]
     allowsKneeling: false
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INFECTION_RESIST: 33  # infection resistant
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
@@ -3423,6 +3595,7 @@ armors:
       strength: 15
       melee: 10
     tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INFECTION_RESIST: 33  # infection resistant
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
@@ -3506,7 +3679,7 @@ armors:
     sideArmor: 20
     rearArmor: 15
     underArmor: 20
-    stats:
+    stats: &NURGLE_GUARD_STATS
       health: 10
       stamina: 5
       bravery: 5
@@ -3514,7 +3687,7 @@ armors:
       melee: 5
       firing: 5
     specialWeapon: STR_BAYONET
-    requires: STR_NURGLE_MILITIA
+    requires: STR_NURGLE_GUARD_ARMOR
     units:
       - STR_NURGLE_CULTIST_PLAYER
       - STR_CHAOSCULT_SOLDIER_LV2
@@ -4022,7 +4195,7 @@ armors:
       - STR_SLAANESH_FLAK_CORPSE_PLAYER
     antiCamouflageAtDay: 3
     antiCamouflageAtDark: 3
-    stats:
+    stats: &SLAANESH_GUARD_STATS
       tu: 5
       reactions: 5
       stamina: 5
@@ -4030,7 +4203,7 @@ armors:
       melee: 5
       firing: 5
     specialWeapon: STR_BAYONET
-    requires: STR_SLAANESH_MILITIA
+    requires: STR_SLAANESH_GUARD_ARMOR
     units:
       - STR_SLAANESH_CULTIST_PLAYER
       - STR_CHAOSCULT_SOLDIER_LV2
@@ -4278,18 +4451,19 @@ armors:
     sideArmor: 20
     rearArmor: 15
     underArmor: 20
-    stats:
+    stats: &TZEENTCH_GUARD_STATS
       tu: 5
       stamina: 5
       bravery: 5
       firing: 10
     specialWeapon: STR_BAYONET
-    requires: STR_TZEENTCH_MILITIA
+    requires: STR_TZEENTCH_GUARD_ARMOR
     units:
       - STR_TZEENTCH_CULTIST_PLAYER
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_GUARDSM
-  - type: STR_TZEENTCH_CARA_PLAYER
+  - &TZEENTCH_CARA_ARMOR
+    type: STR_TZEENTCH_CARA_PLAYER
     refNode: *TZEENTCH_CULTIST_ARMOR
     spriteSheet: tzeentchfemguard3CarapaceBS.PCK
     spriteInv: TZFCARAGUARD_INV.SPK
@@ -4316,7 +4490,7 @@ armors:
       - STR_GUARDSM
     storeItem: STR_GUARD_ARMORH
   - type: STR_TZEENTCH_OFF_FATIGUES_PLAYER
-    refNode: *KHORNE_CARA_ARMOR
+    refNode: *TZEENTCH_CARA_ARMOR
     spriteSheet: tzeentchfemguardcommandoBS.PCK
     spriteInv: TZCOMMANDO_INV.SPK
     forcedTorso: 1
