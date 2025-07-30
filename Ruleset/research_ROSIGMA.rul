@@ -32,6 +32,7 @@
 # #SM.PRIM#           Primaris Strategy
 # #SM.SCOUT#          Scout Strategy
 # #SM.TAC#            Tactical Strategy
+# #SM.WOLF#           Space Wolf Strategy
 # #CM#              Chamber Militant
 # #CM.DW#             Deathwatch
 # #CM.GK#             Grey Knights
@@ -678,6 +679,9 @@ research:
       - STR_DEVASTATOR
       - STR_SCOUT
       - STR_TATICAL
+      - STR_PERSONAL_ARMOR
+      - STR_DEV_ARMOR
+      - STR_ASS_ARMOR
 #    spawnedEvent: STR_SPACEWOLVES_CARE_PACKAGE #Create this
 
 ## Chamber Militant #STRATEGY.CM#
@@ -5083,8 +5087,6 @@ research:
     disables:
       - STR_CENT_ARMORR_CHAOS
 
-
-
 ### Assault Strategy #ARMORS.SM.ASS#
   - name: STR_HONOR_ARMOR_RESEARCH  # Vanguard Armor Requisition
     cost: 180
@@ -5162,6 +5164,46 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_TATICAL
       - STR_SARGENT_ARMOR
+
+### Space Wolf Strategy #ARMORS.SM.WOLF#
+  - name: STR_SPACEWOLVES_GREYHUNTER_ARMOR  # Grey Hunter Armor
+    # Space Wolves Tactical Vet
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_THREAT_ONE
+      - STR_MARINES_STRATEGY
+      - STR_CHAPTER_PURITY
+      - STR_SPACEWOLVES_STRATEGY
+    reenables:
+      - STR_PERSONAL_ARMOR
+    getOneFree:
+      - STR_PERSONAL_ARMOR
+
+  - name: STR_SPACEWOLVES_LONGFANG_ARMOR  # Long Fang Armor
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS  # necessary because Tactical Strategy unlocks STR_PERSONAL_ARMOR
+      - STR_PERSONAL_ARMOR
+      - STR_CHAPTER_PURITY
+    reenables:
+      - STR_DEV_ARMOR
+    getOneFree:
+      - STR_DEV_ARMOR
+
+  - name: STR_SPACEWOLVES_SKYCLAW_ARMOR  # Skyclaw Armor
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_PERSONAL_ARMOR
+      - STR_ASS_ARMOR_DEP1
+      - STR_CHAPTER_PURITY
+    reenables:
+      - STR_ASS_ARMOR
+    getOneFree:
+      - STR_ASS_ARMOR
 
 ## Chamber Militant #ARMORS.CM#
 ### Deathwatch #ARMORS.CM.DW#
