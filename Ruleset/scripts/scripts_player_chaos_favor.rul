@@ -1,0 +1,178 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    createUnit:
+      - new: ROSIGMA_import_favor
+        offset: 1
+        code: |
+          var ptr GeoscapeSoldier mySoldier;
+          var int favor;
+
+          unit.getGeoscapeSoldier mySoldier;
+          if eq mySoldier null; # return if no geoscape mySoldier
+            return;
+          end;
+          mySoldier.getTag favor Tag.GEOSOLDIER_FAVOR;
+          unit.setTag Tag.UNIT_FAVOR favor;
+          #debug_log "Imported soldier favor" favor;
+          return;
+
+    damageUnit:
+      - new: ROSIGMA_favor_from_kills
+        offset: 24 # Runs before the death spawning mechanic
+        code: |
+          # Tracks kills by player chaos units, awards them to the unit as favor.
+
+          var int temp;
+          var ptr RuleArmor attackerArmor;
+          var int isChaos;
+
+          attacker.getFaction temp;
+          attacker.getRuleArmor attackerArmor;
+          attackerArmor.getTag isChaos Tag.UNIT_TYPE_CHAOS;
+
+          if neq temp FACTION_PLAYER;
+            return; # return if the attacker wasn't a player unit
+          else eq isChaos 0;
+            return; # return if the attacking unit isn't a chaos type unit
+          end;
+
+          unit.getHealth temp;
+          if lt to_health temp;
+            return; # abort if less than lethal damage
+          end;
+
+          attacker.getTag temp Tag.UNIT_FAVOR;
+          add temp 1;
+          attacker.setTag Tag.UNIT_FAVOR temp;
+          return;
+
+      - new: ROSIGMA_heretic_sister_death_spawns
+        offset: 24.1 # Runs after the infection spawning mechanic, so that this takes precedence
+        code: |
+          # When a heretic sister dies, there's a chance she spawns a player controlled daemon
+
+          var ptr GeoscapeSoldier mySoldier;
+          var ptr RuleArmor unitArmor;
+          var ptr RuleUnit spawningUnit;
+          var int temp;
+          var int isHSIS;
+          var int whichGod;
+          # Undivided: 0
+          # Khorne: 1
+          # Nurgle: 2
+          # Slaanesh: 3
+          # Tzeentch: 4
+          var int unitRank;
+          var int favor;
+          var int roll;
+
+          unit.getGeoscapeSoldier mySoldier;
+          if eq mySoldier null; # return if no geoscape mySoldier
+            return;
+          end;
+
+          unit.getHealth temp;
+          mySoldier.getTag isHSIS Tag.SOLDIER_IS_HSIS;
+
+          if lt to_health temp; # abort if less than lethal
+            return;
+          else eq isHSIS 0; # abort if not a heretic sister soldier
+            return;
+          else;
+            unit.getRank unitRank;
+            mul unitRank 5; # base 5% chance to transform per rank
+            unit.getTag favor Tag.UNIT_FAVOR;
+            add favor unitRank;
+            battle_game.randomRange roll 1 100;
+            # battle_game.flashLongMessage "STR_FAVOR_DEBUG" unitRank favor roll;
+            unit.getRuleArmor unitArmor;
+            if le roll favor; # if we rolled under the units favor
+              unitArmor.getTag temp Tag.UNIT_TYPE_KHORNE;
+              if eq temp 1;
+                set whichGod 1;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_NURGLE;
+              if eq temp 1;
+                set whichGod 2;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_SLAANESH;
+              if eq temp 1;
+                set whichGod 3;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+              if eq temp 1;
+                set whichGod 4;
+              end;
+
+              sub favor roll; # see how much we rolled under our favor by
+
+              if eq whichGod 0;
+                if gt roll 15;
+                  rules.getRuleUnit spawningUnit "STR_NEVERBORN_TERRORIST";
+                else;
+                  battle_game.randomRange temp 1 4;
+                  if eq temp 1;
+                    rules.getRuleUnit spawningUnit "STR_SILACOID_TERRORIST";
+                  else eq temp 2;
+                    rules.getRuleUnit spawningUnit "STR_CELATID_TERRORIST";
+                  else eq temp 3;
+                    rules.getRuleUnit spawningUnit "STR_CHRYSSALID_TERRORIST";
+                  else;
+                    rules.getRuleUnit spawningUnit "STR_FLAMER_TERRORIST";
+                  end;
+                end;
+              else eq whichGod 1;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_BLOODREAPER";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_SILACOID_TERRORIST";
+                end;
+              else eq whichGod 2;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_NURGLE_DAEMONETTE";
+                else ge roll 2;
+                  rules.getRuleUnit spawningUnit "STR_CELATID_TERRORIST";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_NURGLINGS";
+                end;
+              else eq whichGod 3;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_DIRE_DAEMONETTE";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_CHRYSSALID_TERRORIST";
+                end;
+              else eq whichGod 4;
+                if ge roll 25;
+                  rules.getRuleUnit spawningUnit "STR_EXALTED_FLAMER_TERRORIST";
+                else ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_PINK_HORROR_TERRORIST";
+                else ge roll 10;
+                  rules.getRuleUnit spawningUnit "STR_FLAMER_TERRORIST";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_BLUE_HORROR_TERRORIST";
+                end;
+              end;
+
+              unit.setSpawnUnit spawningUnit;
+              unit.setSpawnUnitFaction FACTION_PLAYER;
+              unit.setSpawnUnitInstantRespawn 1;
+            end;
+          end;
+          return;
+
+    returnFromMissionUnit:
+      - new: ROSIGMA_export_favor
+        offset: 1
+        code: |
+          var int favor;
+
+          unit.getTag favor Tag.UNIT_FAVOR;
+          soldier.setTag Tag.GEOSOLDIER_FAVOR favor;
+          #debug_log "New Soldier Favor" favor;
+
+          return;
