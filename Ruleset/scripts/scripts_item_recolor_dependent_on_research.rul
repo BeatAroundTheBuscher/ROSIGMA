@@ -48,6 +48,8 @@ extended:
           var int accentColor;
           var int newBaseColor;
           var int newAccentColor;
+          var ptr BattleUnit owner;
+          var int ownerFaction;
 
           item.getRuleItem weaponRuleset;
           weaponRuleset.getTag getsRecolor Tag.ITEM_GETS_FACTION_RECOLOR;
@@ -56,6 +58,12 @@ extended:
           if eq getsRecolor 0;
             return new_pixel;
           else;
+            item.getOwner owner;
+            owner.getFaction ownerFaction;
+            if neq ownerFaction FACTION_PLAYER; # Return if the owner isn't the player.
+              return new_pixel;
+            end;
+
             battle_game.getGeoscapeGame geoScape;
             rules.getRuleResearch researchTopic "STR_ARBITES";
             geoScape.isResearched isArbites researchTopic;
