@@ -167,6 +167,132 @@ extended:
           end;
           return;
 
+    newTurnUnit:
+      - new: ROSIGMA_heretic_sister_die_from_bleed_spawns
+        offset: 21  # happens before infection damage
+        code: |
+
+          var ptr GeoscapeSoldier mySoldier;
+          var ptr RuleArmor unitArmor;
+          var ptr RuleUnit spawningUnit;
+          var int temp;
+          var int health;
+          var int wounds;
+          var int infection;
+          var int isHSIS;
+          var int whichGod;
+          # Undivided: 0
+          # Khorne: 1
+          # Nurgle: 2
+          # Slaanesh: 3
+          # Tzeentch: 4
+          var int unitRank;
+          var int favor;
+          var int roll;
+
+          unit.getGeoscapeSoldier mySoldier;
+          if eq mySoldier null; # return if no geoscape mySoldier
+            return;
+          end;
+
+          mySoldier.getTag isHSIS Tag.SOLDIER_IS_HSIS;
+          unit.getHealth health;
+          unit.getFatalwoundsTotal wounds;
+          unit.getTag infection Tag.CURRENT_INFECTION_DAMAGE; # not handling infection
+          add wounds infection; # Get how much damage it was going to take over the end of turn
+          if eq isHSIS 0;
+            return;
+          else gt health wounds;
+            return;
+          else;
+            unit.getRank unitRank;
+            mul unitRank 5; # base 5% chance to transform per rank
+            unit.getTag favor Tag.UNIT_FAVOR;
+            add favor unitRank;
+            battle_game.randomRange roll 1 100;
+            # battle_game.flashLongMessage "STR_FAVOR_DEBUG" unitRank favor roll;
+            unit.getRuleArmor unitArmor;
+            if le roll favor; # if we rolled under the units favor
+              unitArmor.getTag temp Tag.UNIT_TYPE_KHORNE;
+              if eq temp 1;
+                set whichGod 1;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_NURGLE;
+              if eq temp 1;
+                set whichGod 2;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_SLAANESH;
+              if eq temp 1;
+                set whichGod 3;
+              end;
+
+              unitArmor.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+              if eq temp 1;
+                set whichGod 4;
+              end;
+
+              sub favor roll; # see how much we rolled under our favor by
+
+              if eq whichGod 0;
+                if gt roll 15;
+                  rules.getRuleUnit spawningUnit "STR_NEVERBORN_TERRORIST_RECOVERABLE";
+                else;
+                  battle_game.randomRange temp 1 4;
+                  if eq temp 1;
+                    rules.getRuleUnit spawningUnit "STR_SILACOID_TERRORIST_RECOVERABLE";
+                  else eq temp 2;
+                    rules.getRuleUnit spawningUnit "STR_CELATID_TERRORIST_RECOVERABLE";
+                  else eq temp 3;
+                    rules.getRuleUnit spawningUnit "STR_CHRYSSALID_TERRORIST_RECOVERABLE";
+                  else;
+                    rules.getRuleUnit spawningUnit "STR_FLAMER_TERRORIST_RECOVERABLE";
+                  end;
+                end;
+              else eq whichGod 1;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_BLOODREAPER_RECOVERABLE";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_SILACOID_TERRORIST_RECOVERABLE";
+                end;
+              else eq whichGod 2;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_NURGLE_DAEMONETTE_RECOVERABLE";
+                else ge roll 2;
+                  rules.getRuleUnit spawningUnit "STR_CELATID_TERRORIST_RECOVERABLE";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_NURGLINGS_RECOVERABLE";
+                end;
+              else eq whichGod 3;
+                if ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_SLAANESH_SISTER_RECOVERABLE";
+                else ge roll 10;
+                  rules.getRuleUnit spawningUnit "STR_DIRE_DAEMONETTE_RECOVERABLE";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_CHRYSSALID_TERRORIST_RECOVERABLE";
+                end;
+              else eq whichGod 4;
+                if ge roll 25;
+                  rules.getRuleUnit spawningUnit "STR_EXALTED_FLAMER_TERRORIST_RECOVERABLE";
+                else ge roll 20;
+                  rules.getRuleUnit spawningUnit "STR_PINK_HORROR_TERRORIST_RECOVERABLE";
+                else ge roll 10;
+                  rules.getRuleUnit spawningUnit "STR_FLAMER_TERRORIST_RECOVERABLE";
+                else;
+                  rules.getRuleUnit spawningUnit "STR_BLUE_HORROR_TERRORIST";
+                end;
+              end;
+
+              unit.setSpawnUnit spawningUnit;
+              unit.setSpawnUnitFaction FACTION_PLAYER;
+              unit.setSpawnUnitInstantRespawn 1;
+              unit.setHealth 0;  # Kill the unit if it was going to bleed out now, before infection triggers
+            end;
+          end;
+
+          return;
+
     returnFromMissionUnit:
       - new: ROSIGMA_export_favor
         offset: 1
