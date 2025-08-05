@@ -666,12 +666,11 @@ research:
       - STR_LASER_WEAPONS
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_THUNDERHAWKTYPE1 #SW alternative reskin?
-      - STR_STORMHAWKR #SW alternative reskin?
-#      - STR_SPACEWOLVES_BLOODCLAW_ARMOR #power armor for SW rookies
-      - STR_MELTABOMB
+      - STR_SWSTORMWOLF
+      - STR_SPACEWOLVES_BLOODCLAW_ARMOR #power armor for SW rookies, they get it by default but maybe research topic needed for codex gating
       - STR_SMOKE
-#      - STR_CRATED_DROPPODS_SW #SW reskin version
-#      - STR_CRATED_RHINO_SW #SW reskin version
+      - STR_SWDROPPODS
+      - STR_SWRHINOS
     disables:
       - STR_NOT_SPACEWOLVES
       - STR_PRIMARIS
@@ -680,6 +679,15 @@ research:
       - STR_SCOUT
       - STR_TATICAL
 #    spawnedEvent: STR_SPACEWOLVES_CARE_PACKAGE #Create this
+
+  - name: STR_SWDROPPODS # SW Drop Pods
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK #Unlocks via SW Strategy pick
+  - name: STR_SWRHINOS # SW Rhino convoy
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK #Unlocks via SW Strategy pick
 
 ## Chamber Militant #STRATEGY.CM#
   - name: STR_CHAMBERMILITANT  # Chamber Militant
@@ -1956,6 +1964,17 @@ research:
     getOneFree:
       - STR_UNLOCK_CHAOSLEMAN
 
+  - name: STR_ASSAULT_TRANSPORT_UNLOCKER_CHAOS  # (Chaos Assault Transport Unlock)
+    # Necessary for factions that don't normally get STR_NEW_FIGHTER_TRANSPORTER so they can get the Chaos Thunderhawk
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_NOT_CHAOSCULT
+      - STR_HIGHTIER_PREREQ
+    unlocks:
+      - STR_NEW_FIGHTER_TRANSPORTER
+
 ### Missions
   - name: STR_SIDEOPERATIONS  # CHAPTER SIDEOPERATIONS # MISSION 1
     cost: 200
@@ -2246,12 +2265,36 @@ research:
 #      - STR_MIDTIER_PREREQ
 #      - STR_CASS_R
 #      - STR_HB_DEP1
+#      - STR_MGRENADE
 #      - STR_SPACEWOLVES_VETERANSCOUT_ARMOR #STR_PERSONAL_ARMOR, SW Veterans come with their special Scout Armor
 #      - STR_SPACEWOLVES_GREYHUNTER_ARMOR #Tactical Marine armor SW, veterans can use this too.
 #      - STR_SPACEWOLVES_SKYCLAW_ARMOR #Assault marine armor SW
 #      - STR_SPACEWOLVES_LONGFANG_ARMOR #Maybe not right away at midtier, these should be delayed and rarer to keep SW feel.
 #      - STR_SPACEWOLVES_SERGEANT_ARMOR #Midtier officer armor
 #      - STR_SIDEOPERATIONS
+
+  - name: STR_SWSTORMWOLF #starting air transport
+    dependencies:
+      - STR_GENERALLOCK #unlocks through SW STrategy selection
+
+#  - name: STR_SWTHUNDERHAWK #TIER 3 THUNDERHAWK SW EDITION NOT GRANTED DIRECTLY BY TIER RESEARCH
+#    cost: 200
+#    points: 200
+#    dependencies:
+#      - STR_SPACEWOLVES_MIDTIER_RESEARCH
+#      - STR_UFO_CONSTRUCTION #ceramite
+#      - STR_UFO_POWER_SOURCE #Power Source
+#      - STR_ELERIUM_115 #PROMETHIUM
+#      - STR_FUSION_BALL_LAUNCHER #Craft Multimelta
+#      - STR_MELTABOMB #MELTA BOMB+MULTIMELTA
+
+#  - name: STR_SWTHUNDERHAWKGRAV #TIER 3 THUNDERHAWK SW GRAVDROP EDITION
+#    cost: 200
+#    points: 200
+#    dependencies:
+#      - STR_SWTHUNDERHAWK #Includes its dependencies
+#      - STR_GRAVITON_TECH #HIGHTIER GATED
+
 
 ### Tactical Strategy #PROGRESSION.SM.TAC#
 ## Chamber Militant #PROGRESSION.CM#
@@ -5053,6 +5096,7 @@ research:
     dependencies:
       - STR_HIGHTIER_PREREQ
       - STR_SARGENT_ARMOR
+      - STR_CHAPTER_PURITY
 
   - name: STR_TSARGENT  # Terminator Sergeant Armor
     cost: 205
@@ -5061,6 +5105,7 @@ research:
       - STR_HIGHTIER_PREREQ
       - STR_POWER_SUIT
       - STR_SARGENT_ARMOR
+      - STR_CHAPTER_PURITY
 
   - name: STR_CENT_ARMORR  # Centurion Warsuit Requisition
     cost: 330
@@ -5153,6 +5198,13 @@ research:
       - STR_SARGENT_ARMOR
 
 ### Space Wolf Strategy #ARMORS.SM.WOLF#
+  - name: STR_SPACEWOLVES_BLOODCLAW_ARMOR #Bloodclaw starting PA
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
+
   - name: STR_SPACEWOLVES_GREYHUNTER_ARMOR  # Grey Hunter Armor
     # Space Wolves Tactical Vet
     cost: 180
