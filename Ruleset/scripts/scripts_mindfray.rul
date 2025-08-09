@@ -1,0 +1,155 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    newTurnUnit:
+    - new: ROSIGMA_nTU_mindfray
+      # Ticks down mindfray cooldown and duration, resets firing penalty if duration hits 0
+      offset: 1
+      code: |
+        var int temp;
+
+        unit.getTag temp Tag.MINDFRAY_COOLDOWN;
+        if gt temp 0;
+          sub temp 1;
+        end;
+        unit.setTag Tag.MINDFRAY_COOLDOWN temp;
+
+        unit.getTag temp Tag.MINDFRAY_DURATION;
+        if gt temp 0;
+         sub temp 1;
+         unit.setTag Tag.MINDFRAY_DURATION temp;
+          if eq temp 0;
+            unit.Stats.getFiring temp;
+            add temp 25;
+            unit.Stats.setFiring temp;
+            unit.Stats.getMelee temp;
+            add temp 25;
+            unit.Stats.setMelee temp;
+          end;
+        end;
+        return;
+
+    hitUnit:
+    - new: ROSIGMA_hU_mindfray
+      offset: 1
+      code: |
+        var int temp;
+        var int attackerTU;
+        var int isNull;
+        var int isAlive;
+        var ptr RuleArmor unitArmor;
+        var int unitDevotion;
+        var int unitPsy;
+        var int defense;
+        var int attackerDevotion;
+        var int attackerPsy;
+        var int attack;
+        var int attackRoll;
+        var int damage;
+        var int frayTN;
+        var int frayDuration;
+
+        damaging_item.getTag temp Tag.ITEM_IS_MINDFRAY;
+        if eq temp 0; # Return if not a mindfray item
+          return power part side;
+        end;
+
+        set power 0; # null out the power of the attack, damage is handled by script.
+
+        attacker.getTag temp Tag.MINDFRAY_COOLDOWN;
+        if gt temp 0;
+          battle_game.flashMessage "Mindfray on cooldown.";
+          attacker.getTimeUnitsMax temp;
+          div temp 3; # Cost of using mind fray, 1/3rd TUs
+          sub temp 2; # safety to prevent rounding giving back TUs
+          attacker.getTimeUnits attackerTU;
+          add attackerTU temp;
+          attacker.setTimeUnits attackerTU;
+          return power part side;
+        end;
+        attacker.setTag Tag.MINDFRAY_COOLDOWN 3;
+
+        unit.getRuleArmor unitArmor;
+        unitArmor.getTag isNull Tag.UNIT_TYPE_NULL;
+        unitArmor.getTag isAlive Tag.UNIT_TYPE_LIVING;
+
+        if eq isNull 1;
+          battle_game.flashMessage "Target is immune!";
+          return power part side;
+        else eq isAlive 0;
+          battle_game.flashMessage "Target is not alive!";
+          return power part side;
+        end;
+
+        attacker.Stats.getPsiSkill attackerDevotion;
+        attacker.Stats.getPsiStrength attackerPsy;
+        unit.Stats.getPsiSkill unitDevotion;
+        unit.Stats.getPsiStrength unitPsy;
+
+        mul unitDevotion 2; # Devotion counts for double on defense
+        add defense unitDevotion;
+        add defense unitPsy;
+        div defense 3;
+        add defense 25;# 25% bonus to defend, slightly less than average of attack roll range
+        debug_log "defense" defense;
+
+        mul attackerPsy 2; # Psychic ability counts for double on attack
+        add attack attackerPsy;
+        add attack attackerDevotion;
+        div attack 3;
+        debug_log "attack" attack;
+
+        battle_game.randomRange attackRoll 0 55;
+        add attackRoll attack;
+        debug_log "roll" attackRoll;
+
+        if lt attackRoll defense;
+          battle_game.flashMessage "Target shakes off your mental assault!";
+        else;
+          set damage attackRoll;
+          sub damage defense;
+          div damage 3;
+          unit.getHealth temp;
+          sub temp damage;
+          unit.setHealth temp;
+          unit.getMorale temp;
+          sub temp damage;
+          unit.setMorale temp;
+          set frayTN defense;
+          add frayTN 20;
+          if gt attackRoll frayTN;
+            battle_game.flashMessage "Target is mindfrayed!";
+            unit.getTag frayDuration Tag.MINDFRAY_DURATION;
+            if eq frayDuration 0;
+              unit.Stats.getFiring temp;
+              sub temp 25;
+              unit.Stats.setFiring temp;
+              unit.Stats.getMelee temp;
+              sub temp 25;
+              unit.Stats.setMelee temp;
+            end;
+            unit.setTag Tag.MINDFRAY_DURATION 9;# Refreshes, doesn't stack
+          else;
+            battle_game.flashMessage "Target is hurt!";
+          end;
+        end;
+        return power part side;
+    
+    returnFromMissionUnit:
+    - new: ROSIGMA_rFMU_mindfray
+      # Resets firing penalty from mindfray as unit returns to avoid stat loss on soldiers.
+      offset: 1
+      code: |
+        var int temp;
+
+        unit.getTag temp Tag.MINDFRAY_DURATION;
+        if gt temp 0;
+          unit.Stats.getFiring temp;
+          add temp 25;
+          unit.Stats.setFiring temp;
+          unit.Stats.getMelee temp;
+          add temp 25;
+          unit.Stats.setMelee temp;
+        end;
+        return;

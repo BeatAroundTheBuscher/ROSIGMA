@@ -74,6 +74,17 @@ skills:
     checkHandsOnly: false
 
   # Chaos Sorcery Skills
+  - type: STR_SKILL_MINDFRAY_SORCERY
+    # The mindfray script assumes that the cost will not change
+    targetMode: 8
+    costUse:
+      time: 33
+    compatibleWeapons:
+      - STR_MINDFRAY_TOKEN
+    checkHandsOnly: false
+    requiredBonuses:
+      - STR_SORCERY_TRAINING
+
   - type: STR_SKILL_SEDUCE_SORCERY
     targetMode: 10
     costUse:
@@ -118,7 +129,7 @@ skills:
       time: 30
     flatUse: false
     compatibleWeapons:
-      - SPIT_TOKEN
+      - STR_SPIT_TOKEN
     checkHandsOnly: false
     requiredBonuses:
       - STR_SORCERY_TRAINING
@@ -129,7 +140,7 @@ skills:
       time: 30
     flatUse: false
     compatibleWeapons:
-      - BETTER_SPIT_TOKEN
+      - STR_BETTER_SPIT_TOKEN
     checkHandsOnly: false
     requiredBonuses:
       - STR_SORCERY_TRAINING
@@ -309,7 +320,7 @@ items:
       INFECTION_TYPE: 3  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
   - &SPIT_TEMPLATE
-    type: SPIT_TOKEN  # NURGLE SPIT less AOE for Nurglings
+    type: STR_SPIT_TOKEN  # NURGLE SPIT less AOE for Nurglings
     refNode: *SKILL_TOKEN
     dropoff: 7
     bulletSprite: {mod: 40k, index: 8}
@@ -347,7 +358,7 @@ items:
       INFECTION_DAMAGE_PERCENT: 100  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
-  - type: BETTER_SPIT_TOKEN  # STR_LESSER_PLAGUE_TOAD
+  - type: STR_BETTER_SPIT_TOKEN
     refNode: *SPIT_TEMPLATE
     dropoff: 5
     accuracySnap: 70
@@ -372,3 +383,23 @@ items:
       FixRadius: 2
     autoShots: 3
     minRange: 5
+
+  - type: STR_MINDFRAY_TOKEN
+    # The mindfray script assumes that the snap cost will not change
+    refNode: *SKILL_TOKEN
+    battleType: 1
+    experienceTrainingMode: 30
+    psiAttackName: STR_MINDFRAY
+    power: 1
+    clipSize: -1
+    hitAnimation: -1
+    accuracySnap: 200
+    dropoff: 0
+    maxRange: 200
+    tuSnap: 33
+    tuAuto: 0
+    tuAimed: 0
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 4
+      ITEM_IS_MINDFRAY: 1
