@@ -110,13 +110,7 @@ extended:
           set damage attackRoll;
           sub damage defense;
           div damage 3;
-          unit.getHealth temp;
-          sub temp damage;
-          unit.setHealth temp;
-          unit.getMorale temp;
-          sub temp damage;
-          unit.setMorale temp;
-          set frayTN defense;
+          set power damage;
           add frayTN 20;
           if gt attackRoll frayTN;
             battle_game.flashMessage "Target is mindfrayed!";
@@ -134,6 +128,7 @@ extended:
             battle_game.flashMessage "Target is hurt!";
           end;
         end;
+        set part BODYPART_HEAD;
         return power part side;
     
     returnFromMissionUnit:
