@@ -229,54 +229,6 @@ items:
     recover: false
     flatRate: false
 
-  - &STR_SCYTHING_TALONS
-    type: STR_HORMAGAUNT_WEAPON  # Hormagaunt Scything Blades
-    weight: 3
-    bigSprite: 2726
-    meleeSound: {mod: 40k, index: 101}  # stabhit
-    meleeAnimation: {mod: 40k, index: 4}  # melee white
-    clipSize: -1  # unlimited ammo
-    strengthApplied: true
-    meleePower: 60  # 120 for carnifex claws
-    damageType: 7
-    damageAlter:
-      RandomType: 1
-      IgnoreSelfDestruct: false
-      ArmorEffectiveness: 0.5  # 50% armor pierce
-      ToArmorPre: 0.3  # Rending, 30% or 18 armor points of damage per hit
-      ToWound: 0.1  # Slashing Barbed Talons + Toxin wounds
-      RandomWound: false
-      ToHealth: 0.5  # 50% HP damage reduction, so 30 points, attack has high armor pierce and rending instead
-    accuracyMelee: 100
-    tuMelee: 15
-    flatRate: true
-    battleType: 3
-    fixedWeapon: true
-    invWidth: 2
-    invHeight: 3
-    recover: false
-
-  - type: STR_RIPPERSWARM_ATTACK  # bite attacks
-    weight: 3
-    bigSprite: 3036
-    meleeSound: {mod: 40k, index: 101}  # stabhit
-    meleeAnimation: 86
-    strengthApplied: true
-    meleePower: 0
-    damageType: 7
-    damageAlter:
-      RandomType: 1
-      IgnoreSelfDestruct: false
-    accuracyMelee: 100
-    tuMelee: 15
-    flatRate: true
-    battleType: 3
-    fixedWeapon: true
-    invWidth: 2
-    invHeight: 3
-    clipSize: -1
-    recover: false
-
   - type: STR_FLESHBORER_WEAPON
     categories: [STR_CAT_SNIPER]
     size: 0.2
@@ -287,20 +239,20 @@ items:
     fireSound: 3991
     hitSound: 3992
     hitAnimation: 2240
-    power: 40
+    power: 50
     accuracyAimed: 65
     tuAimed: 45
     accuracySnap: 50
-    tuSnap: 25
+    tuSnap: 18
     snapRange: 12
     damageType: 0
     damageAlter:
       ToArmor: 0.1
-      ToHealth: 0.5
+      ToHealth: 1.2
       ToStun: 0.0
       ToWound: 0.3  # devasting wounds
       RandomWound: false
-      ToMoral: 0.2 # living ammunition
+      ToMorale: 0.2 # living ammunition
       RandomType: 6
     battleType: 1
     twoHanded: true
@@ -319,31 +271,34 @@ items:
     size: 0.2
     dropoff: 5
     weight: 10
-    bigSprite: 3033  # unique Devourer bigob just for warriors
+    bigSprite: 3026
     handSprite: 3420
-    bulletSprite: 28  # fires a hail of worms, effect should look like shotgun pellets
+    bulletSprite: {mod: 40k, index: 2}
     fireSound: 3993
-    hitSounds: 3994
+    hitSound: 3994
     hitAnimation: 2250
-    power: 50
+    power: 60
     accuracySnap: 40
     tuSnap: 26
     snapRange: 8
     maxRange: 14
-    shotgunPellets: 2
+    shotgunPellets: 3
+    shotgunBehavior: 0
+    shotgunSpread: 50
     damageType: 0
-    damageAlter: #Can cause large numbers of wounds against lightly armoured enemies
+    damageAlter:
+      ArmorEffectiveness: 0.5
       ToArmor: 0.0
-      ToHealth: 0.2
-      ToStun: 0.15 # attacks the nerve system
-      RandomStun: false
-      ToWound: 0.15  # devastating wounds
-      RandomWound: false
-      ToTime: 0.15  # attacks the nerve system
-      RandomTime: false
-      ToMoral: 0.2 # living ammunition
-      Totile: 0.0
-      RandomType: 1
+      ToHealth: 0.1
+      ToStun: 0.1 # attacks the nerve system
+      RandomStun: true
+      ToWound: 0.1
+      RandomWound: true
+      ToTime: 0.1  # attacks the nerve system
+      RandomTime: true
+      ToMorale: 0.3 # living ammunition
+      ToTile: 0.0
+      RandomType: 8
     battleType: 1
     twoHanded: true
     oneHandedPenalty: 100
@@ -358,46 +313,10 @@ items:
 
   - type: STR_WARRIOR_DEVOURER
     refNode: *STR_DEVOURER
-    categories: [STR_CAT_SNIPER]
-    size: 0.2
-    dropoff: 5
-    weight: 10
     bigSprite: 3033  # unique Devourer bigob just for warriors
-    handSprite: 3420
-    bulletSprite: 28  # fires a hail of worms, effect should look like shotgun pellets
-    fireSound: 3993
-    hitSounds: 3994
-    hitAnimation: 2250
-    power: 50
-    accuracySnap: 40
+    power: 70
     tuSnap: 34
-    snapRange: 8
-    maxRange: 14
     shotgunPellets: 5
-    damageType: 0
-    damageAlter: #Can cause large numbers of wounds against lightly armoured enemies
-      ToArmor: 0.0
-      ToHealth: 0.2
-      ToStun: 0.15 # attacks the nerve system
-      RandomStun: false
-      ToWound: 0.15  # devastating wounds
-      RandomWound: false
-      ToTime: 0.15  # attacks the nerve system
-      RandomTime: false
-      ToMoral: 0.2 # living ammunition
-      Totile: 0.0
-      RandomType: 1
-    battleType: 1
-    twoHanded: true
-    oneHandedPenalty: 100
-    fixedWeapon: true
-    fixedWeaponShow: true
-    invWidth: 2
-    invHeight: 3
-    clipSize: -1
-    minRange: 1
-    bulletSpeed: -6
-    listOrder: 6940
 
   - type: STR_DEATHSPITTER_WEAPON
     categories: [STR_CAT_SNIPER]
@@ -418,7 +337,7 @@ items:
     tuSnap: 35
     snapRange: 16
     damageType: 8  # acid
-    power: 70
+    power: 90
     damageAlter:
       RandomType: 2
       ToArmorPre: 0.7 #highly caustic acid
@@ -426,7 +345,7 @@ items:
       ToArmor: 0.0 #dissolves armor on the way in
       ToHealth: 0.6
       ToWound: 0.07
-      RandomWound: true
+      RandomWound: false
       ToMorale: 3.0
       FixRadius: 1  # splashes acid in a small explosion eg a 3x3 grid
     battleType: 1
@@ -452,8 +371,8 @@ items:
     fireSound: 1455
     explosionHitSound: 1452
     hitAnimation: 1180
-    accuracySnap: 40
-    tuSnap: 45
+    accuracySnap: 30
+    tuSnap: 55
     snapRange: 20
     confSnap:
       shots: 2
@@ -500,8 +419,8 @@ items:
     accuracyAimed: 110
     tuAimed: 60
     aimRange: 24
-    accuracySnap: 70
-    tuSnap: 35
+    accuracySnap: 60
+    tuSnap: 40
     snapRange: 20
     power: 100
     powerForAnimation: 10
@@ -514,8 +433,8 @@ items:
       ToArmor: 0.0
       ArmorEffectiveness: 0.5 # armor piercing
       ToHealth: 1.0
-      ToWound: 0.05 # poison venom # max 8 wounds
-      RandomWound: true
+      ToWound: 0.06 # poison venom # max 8 wounds
+      RandomWound: false
       ToMorale: 0.1
       ToEnergy: 0.1 # venom
       RandomEnergy: true
@@ -536,33 +455,88 @@ items:
     bulletSpeed: 3
     listOrder: 6940
 
-  - type: STR_WARRIOR_TALONS  # Warrior scything talons
-    refNode: *STR_SCYTHING_TALONS
+  - type: STR_RIPPERSWARM_ATTACK  # bite attacks
     weight: 3
-    bigSprite: 3043 #temporary
-    # melee profile
-    meleeSound: 48
-    meleeAnimation: 16
-    clipSize: -1
+    bigSprite: 3036
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: 86
     strengthApplied: true
-    power: 40  # temporary rebalance
+    meleePower: 0
     damageType: 7
     damageAlter:
       RandomType: 1
       IgnoreSelfDestruct: false
-      ArmorEffectiveness: 0.7  # 30% armor pierce
-      ToArmor: 0.2
-      ToWound: 0.1  # Slashing Barbed Talons + Toxin wounds
-      RandomWound: false
-      ToHealth: 0.5
     accuracyMelee: 100
     tuMelee: 15
     flatRate: true
-    fixedWeapon: true
     battleType: 3
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+
+  - &STR_SCYTHING_TALONS
+    type: STR_HORMAGAUNT_WEAPON  # Basic Hormagaunt Scything Blades
+    weight: 3
+    bigSprite: 2726
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: {mod: 40k, index: 4}  # melee white
+    clipSize: -1  # unlimited ammo
+    strengthApplied: true
+    meleePower: 0 #as Strength
+    damageType: 7
+    damageAlter:
+      RandomType: 1
+      IgnoreSelfDestruct: false
+      ToArmorPre: 0.05
+      ToArmor: 0.4
+      ToWound: 0.1
+      RandomWound: true
+    accuracyMelee: 100
+    tuMelee: 8
+    flatRate: true
+    battleType: 3
+    fixedWeapon: true
     invWidth: 2
     invHeight: 3
     recover: false
+
+  - type: STR_BARBED_TALONS  # Previous Hormagaunt Scything Blades, to be changed
+    weight: 3
+    bigSprite: 2726
+    meleeSound: {mod: 40k, index: 101}  # stabhit
+    meleeAnimation: {mod: 40k, index: 4}  # melee white
+    clipSize: -1  # unlimited ammo
+    strengthApplied: true
+    meleePower: 60  # 120 for carnifex claws
+    damageType: 7
+    damageAlter:
+      RandomType: 1
+      IgnoreSelfDestruct: false
+      ArmorEffectiveness: 0.5  # 50% armor pierce
+      ToArmorPre: 0.3  # Rending, 30% or 18 armor points of damage per hit
+      ToWound: 0.1  # Slashing Barbed Talons + Toxin wounds
+      RandomWound: false
+      ToHealth: 0.5  # 50% HP damage reduction, so 30 points, attack has high armor pierce and rending instead
+    accuracyMelee: 100
+    tuMelee: 15
+    flatRate: true
+    battleType: 3
+    fixedWeapon: true
+    invWidth: 2
+    invHeight: 3
+    recover: false
+
+  - type: STR_WARRIOR_TALONS  # Warrior scything talons
+    refNode: *STR_SCYTHING_TALONS
+    weight: 5
+    bigSprite: 2726 #temporary
+    # melee profile
+    meleeSound: 48
+    meleeAnimation: 16
+    power: 30
+    tuMelee: 10
 
   - &STR_RENDING_CLAWS
     type: STR_WARRIOR_CLAWS  # Warrior Rending Claws
@@ -594,6 +568,16 @@ items:
       flatHundred: 0.0
     recover: false
     fixedWeapon: true
+
+  - type: STR_WARRIOR_CLAWS_ALT #Replaces Warrior Scything Talons as 'default' fixed weapon
+    refNode: *STR_RENDING_CLAWS
+    bigSprite: 2799
+
+  #- &STR_BONESWORD_TEMPLATE #GSC #single weapon
+
+  - type: STR_WARRIOR_BONESWORD #Dual Swords #Replaces Warrior Scything Talons as 'default' fixed weapon
+    refNode: *STR_RENDING_CLAWS #temporary
+    bigSprite: 2799
 
   - type: STR_CARNI_WEAPON
     weight: 3
@@ -1407,7 +1391,7 @@ items:
       basePercent: 9999
     throwRange: 1  # not meant to be thrown
     armor: 50
-    isExplodingInHands: true
+    explodeInventory: 2
     hiddenOnMinimap: false
     fuseTriggerEvents:
       proximityExplode: true
@@ -1430,23 +1414,23 @@ items:
     handSprite: 3460
     floorSprite: 3029
     power: 140
-    radiusReduction: 5.0
     damageType: 9 #smoke for now
-    ignorePainImmune: false
-    ignoreSelfDestruct: false
-    ignoreOverKill: false
     damageAlter:  # poisonous gas cloud
       ToArmorPre: 0
       ToArmor: 0
       RandomType: 7 #50-200%
       ArmorEffectiveness: 0.1 #armor helps little
       ToHealth: 0.1 #little direct damage
-      ToMoral: 0.5
+      ToMorale: 0.5
       ToStun: 0.25
       ToEnergy: 0.5
       ToTime: 0.5
       ToWound: 1 #1-3 fatal wounds
       FixRadius: 4
+      RadiusReduction: 5.0
+      IgnorePainImmunity: false
+      IgnoreSelfDestruct: false
+      IgnoreOverKill: false
 
   - type: STR_SPOREMINE_ACID_CHARGE  # STR_ACID_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
@@ -1459,7 +1443,6 @@ items:
     floorSprite: 3027
     power: 140
     damageType: 8
-    ignoreOverKill: false
     damageAlter: #deadly acid
       ToArmorPre: 0.6
       RandomType: 6
@@ -1471,6 +1454,7 @@ items:
       ToItem: 0.5
       SmokeThreshold: 150
       FixRadius: 3
+      IgnoreOverKill: false
 
   - type: STR_SPOREMINE_BIOPLASMA_CHARGE  # STR_BIOPLASMA_SPOREMINE   #Higher tier sporemine
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
