@@ -1,26 +1,7 @@
-  # Warriors
-weaponSets:
-  - type: WARRIOR_RENDING_CLAWS
-    weapons: [STR_WARRIOR_CLAWS, STR_WARRIOR_TALONS]
-  - type: WARRIOR_DEVOURER
-    weapons: [STR_WARRIOR_DEVOURER, STR_WARRIOR_TALONS]
-  - type: WARRIOR_DEATHSPITTER
-    weapons: [STR_DEATHSPITTER_WEAPON, STR_WARRIOR_TALONS]
-  - type: WARRIOR_BARBEDSTRANGLER
-    weapons: [STR_BARBEDSTRANGLER, STR_WARRIOR_TALONS]
-  - type: WARRIOR_VENOMCANNON
-    weapons: [STR_VENOMCANNON, STR_WARRIOR_TALONS]
-  # Spore mines
-  - type: SPOREMINE_FRAG_CHARGE
-    weapons: [STR_SPOREMINE_TRIGGER_RANGED_FRAG, STR_SPOREMINE_TRIGGER_MELEE_FRAG, STR_SPOREMINE_FRAG_CHARGE]
-  - type: SPOREMINE_EXPLOSIVE_CHARGE
-    weapons: [STR_SPOREMINE_TRIGGER_RANGED_POISON, STR_SPOREMINE_TRIGGER_MELEE_POISON, STR_SPOREMINE_EXPLOSIVE_CHARGE]
-  - type: SPOREMINE_ACID_CHARGE
-    weapons: [STR_SPOREMINE_TRIGGER_RANGED_ACID, STR_SPOREMINE_TRIGGER_MELEE_ACID, STR_SPOREMINE_ACID_CHARGE]
-  - type: SPOREMINE_BIOPLASMA_CHARGE
-    weapons: [STR_SPOREMINE_TRIGGER_RANGED_ACID, STR_SPOREMINE_TRIGGER_MELEE_ACID, STR_SPOREMINE_BIOPLASMA_CHARGE]
 
-  # various sets
+#GSC
+
+weaponSets:
   - type: GENERIC_HEAVYSTUBBER_SET
     weapons: [STR_GENERIC_HEAVY_STUBBER, STR_HEAVY_STUBBER_CLIP, STR_HEAVY_STUBBER_CLIP, STR_MAKESHIFT_PIPEBOMB]
   - type: GENERIC_LASCUTTER_SET
@@ -28,8 +9,9 @@ weaponSets:
   - type: GENERIC_GRAVGUN_AND_KRAK_GRENADE_SET
     weapons: [STR_SMALL_LAUNCHER, STR_STUN_BOMB, STR_STUN_BOMB, STR_STUN_BOMB, STR_KRAK_GRENADE]
 
+
 units:
-#    Tyranid
+
   - type: STR_GSC_ZOMBIE  # GSC Generic Turned Zombie
     race: STR_GENE_CULT
     rank: STR_LIVE_TERRORIST
@@ -59,7 +41,8 @@ units:
     energyRecovery: 50
     livingWeapon: true
 
-  - type: STR_GENE_CULTIST                                       # RANK 4 weapons done
+  - &STR_NEOPHYTE_TEMPLATE
+    type: STR_GENE_CULTIST     #Brood Brother # Neophyte Hybrids  #GSC Planetary defense forces                    # RANK 4 weapons done
     race: STR_GENE_CULT
     rank: STR_LIVE_SOLDIER
     stats:
@@ -90,7 +73,7 @@ units:
         - STR_LIGHT_MELTA_AMMO
         - STR_MAKESHIFT_PIPEBOMB
 
-  - type: STR_GENE_CULTIST_B    # heavy gunner                                   # RANK 4 weapons done
+  - type: STR_GENE_CULTIST_B   #brood brother # Neophyte Hybrids #GSC planetary defense forces heavy gunner                      # RANK 4 weapons done
     race: STR_GENE_CULT
     rank: STR_LIVE_SOLDIER
     stats:
@@ -108,8 +91,8 @@ units:
     armor: STR_GC2_ARMOR
     value: 10
     moraleLossWhenKilled: 15  # No GSC cares
-    builtinweaponsets: {}
-    #      - - STR_AUTOGUN_CHAOS
+    builtInWeaponSets: []
+    #  - - STR_AUTOGUN_CHAOS
     #    - STR_AUTOGUN_CLIP
     #    - STR_KRAK_GRENADE
     #  - - STR_LASER_RIFLEC
@@ -124,7 +107,7 @@ units:
         GENERIC_LASCUTTER_SET: 30
         GENERIC_GRAVGUN_AND_KRAK_GRENADE_SET: 10
 
-  - type: STR_GENE_CULTIST_S          # Brood Sister (Not Adeptas)
+  - type: STR_GENE_CULTIST_S    # Neophyte Hybrids #Planetary defense forces Brood Sister (Not Adeptas)
     race: STR_GENE_CULT
     rank: STR_LIVE_NAVIGATOR
     stats:
@@ -276,8 +259,8 @@ units:
         - STR_RIPPER_GUN_CLIP
         - STR_KRAK_GRENADE
 
- # GSC Hybrid Acolytes
-  - type: STR_GENE_HYBRID_ACOLYTE_A   # Rank and file                                # RANK 4 weapons done
+  - &STR_ACOLYTE_HYBRID
+    type: STR_GENE_HYBRID_ACOLYTE_A   # Rank and file                                # RANK 4 weapons done
     race: STR_GENE_CULT
     rank: STR_LIVE_SOLDIER
     stats:
@@ -317,7 +300,7 @@ units:
         - STR_KRAK_GRENADE
 
   - type: STR_GENE_HYBRID_ACOLYTE_B   # Special Weapons                               # RANK 4 weapons done
-    race: STR_GENE_CULT
+    refNode: *STR_ACOLYTE_HYBRID
     rank: STR_LIVE_NAVIGATOR
     stats:
       tu: 70  # GSC gene boost
@@ -2439,7 +2422,8 @@ units:
     intelligence: 3
     aggression: 8
     energyRecovery: 80
-  - type: STR_XENO_TERRORIST
+
+  - type: STR_XENO_TERRORIST #genestealer
     race: STR_GENE
     rank: STR_LIVE_TERRORIST
     stats:
@@ -2461,262 +2445,7 @@ units:
     energyRecovery: 60
     livingWeapon: false
 
-  - type: STR_HORMAGAUNT
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    avoidsFire: false
-    isLeeroyJenkins: true
-    stats:
-      tu: 90  # fast
-      stamina: 100
-      health: 50
-      bravery: 100
-      reactions: 60
-      firing: 0
-      throwing: 10
-      strength: 60
-      psiStrength: 25
-      psiSkill: 0
-      melee: 75
-    armor: STR_HORMAGAUNT_ARMOR
-    intelligence: 0  # pretty mindless
-    aggression: 8
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
-    standHeight: 12
-    kneelHeight: 12
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: {mod: 40k, index: -1}
-    livingWeapon: true
-    value: 5
-    builtInWeaponSets:
-      - - STR_HORMAGAUNT_WEAPON
-      - - STR_HORMAGAUNT_WEAPON
-      - - STR_HORMAGAUNT_WEAPON
-
-  - &STR_GAUNT_TEMPLATE
-    type: STR_TERMAGANT
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    avoidsFire: false
-    stats:
-      tu: 90  # fast
-      stamina: 100
-      health: 50
-      bravery: 100
-      reactions: 50
-      firing: 50
-      throwing: 10
-      strength: 40
-      psiStrength: 25
-      psiSkill: 0
-      melee: 40
-    armor: STR_TERMAGANT_ARMOR
-    intelligence: 1  # pretty mindless
-    aggression: 3  # should fight from range more
-    spotter: 1
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
-    standHeight: 12
-    kneelHeight: 12
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: {mod: 40k, index: -1}
-    livingWeapon: true
-
-  - type: STR_DEVOURER_TERMAGANT
-    refNode: *STR_GAUNT_TEMPLATE
-    stats:
-      reactions: 60
-    armor: STR_DEVOURER_TERMAGANT_ARMOR
-    intelligence: 1  # pretty mindless
-    aggression: 7  # should be aggressive
-
-  - type: STR_TYRANID_WARRIOR
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    avoidsFire: false
-    stats:
-      tu: 70  # slower than gaunts
-      stamina: 100
-      health: 250
-      bravery: 100
-      reactions: 65
-      firing: 65
-      throwing: 10
-      strength: 70
-      psiStrength: 50
-      psiSkill: 0
-      melee: 80
-    armor: STR_TYRANID_WARRIOR_ARMOR
-    intelligence: 3
-    aggression: 3  # mix of aggression and not leaving self exposed
-    spotter: 1
-    sniper: 60
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
-    standHeight: 24
-    kneelHeight: 16
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: {mod: 40k, index: -1}
-    startMovingSound: 3999
-    livingWeapon: false
-    builtInWeaponSets: []
-    weightedBuiltInWeaponSets:
-      -  # Tier 1
-        WARRIOR_RENDING_CLAWS: 40
-        WARRIOR_DEVOURER: 40
-        WARRIOR_DEATHSPITTER: 30
-      -  # Tier 2
-        WARRIOR_RENDING_CLAWS: 25
-        WARRIOR_DEVOURER: 20
-        WARRIOR_DEATHSPITTER: 25
-        WARRIOR_BARBEDSTRANGLER: 15
-        WARRIOR_VENOMCANNON: 15
-      -  # Tier 3
-        WARRIOR_RENDING_CLAWS: 10
-        WARRIOR_DEVOURER: 10
-        WARRIOR_DEATHSPITTER: 20
-        WARRIOR_BARBEDSTRANGLER: 30
-        WARRIOR_VENOMCANNON: 30
-
-  - &STR_RIPPERSWARM_REF
-    type: STR_RIPPERSWARM_2
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    avoidsFire: false
-    isLeeroyJenkins: true
-    stats:
-      tu: 60
-      stamina: 100
-      health: 30
-      bravery: 100
-      reactions: 20
-      firing: 0
-      throwing: 10
-      strength: 30
-      psiStrength: 25
-      psiSkill: 0
-      melee: 20
-    armor: STR_RIPPERSWARM_2_ARMOR
-    intelligence: 0 #mindless
-    aggression: 8
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
-    standHeight: 6
-    kneelHeight: 3
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: 0
-    livingWeapon: true
-    value: 5
-    builtInWeaponSets:
-      - - STR_RIPPERSWARM_ATTACK
-
-  - type: STR_RIPPERSWARM_4
-    refNode: *STR_RIPPERSWARM_REF
-    stats:
-      tu: 60
-      strength: 40 #10 per
-      melee: 40 #10 per
-    armor: STR_RIPPERSWARM_4_ARMOR
-    spawnUnit: STR_RIPPERSWARM_2
-
-  - type: STR_RIPPERSWARM_16
-    refNode: *STR_RIPPERSWARM_REF
-    stats:
-      health: 120
-      strength: 160 #10 per
-      melee: 160 #10 per
-    armor: STR_RIPPERSWARM_16_ARMOR
-    spawnUnit: STR_RIPPERSWARM_4
-
-  - type: STR_SPOREMINE
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 40
-      stamina: 200
-      health: 10
-      bravery: 110
-      reactions: 100
-      firing: 100
-      throwing: 10
-      strength: 20
-      psiStrength: 25
-      psiSkill: 0
-      melee: 100
-    armor: STR_SPOREMINE_ARMOR
-    intelligence: 0 #mindless
-    aggression: 8
-    spotter: 1
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 200
-    standHeight: 6
-    kneelHeight: 3
-    floatHeight: 3
-    moveSound: 0
-    livingWeapon: false
-    avoidsFire: false
-    isLeeroyJenkins: true
-    moraleLossWhenKilled: 0 #no one cares
-    value: 1
-    builtInWeaponSets: []
-    weightedBuiltInWeaponSets:
-      -  # Tier 1
-        SPOREMINE_FRAG_CHARGE: 50
-        SPOREMINE_EXPLOSIVE_CHARGE: 20 #poison
-        SPOREMINE_ACID_CHARGE: 30
-        SPOREMINE_BIOPLASMA_CHARGE: 0 # for now
-      -  # Tier 2
-        SPOREMINE_FRAG_CHARGE: 40
-        SPOREMINE_EXPLOSIVE_CHARGE: 25 #poison
-        SPOREMINE_ACID_CHARGE: 35
-        SPOREMINE_BIOPLASMA_CHARGE: 0 #for now
-      -  # Tier 3
-        SPOREMINE_FRAG_CHARGE: 25
-        SPOREMINE_EXPLOSIVE_CHARGE: 40 #poison
-        SPOREMINE_ACID_CHARGE: 35
-        SPOREMINE_BIOPLASMA_CHARGE: 0 #for now
-
-  - type: STR_BIOVORE
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    avoidsFire: true
-    stats:
-      tu: 50  # quite slow
-      stamina: 100
-      health: 200 # tough
-      bravery: 100
-      reactions: 20
-      firing: 15
-      throwing: 10
-      strength: 80 #on par with an SM or better
-      psiStrength: 50
-      psiSkill: 0
-      melee: 60
-    armor: STR_BIOVORE_ARMOR
-    intelligence: 1
-    aggression: 3  # hides but not very well
-    spotter: 1
-    sniper: 100
-    canPanic: false
-    canBeMindControlled: false  # Synapse too strong
-    energyRecovery: 60
-    standHeight: 24
-    kneelHeight: 16
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    moveSound: {mod: 40k, index: -1}
-    livingWeapon: false
-    builtInWeaponSets:
-      - - STR_SPORECANNON
-        - STR_GENOCLAWS_END
-    specab: 1
-
-  - type: STR_CARNI_TERRORIST
+  - type: STR_CARNI_TERRORIST #to be genestealer carnifex
     race: STR_GENE
     rank: STR_LIVE_TERRORIST
     stats:
@@ -2737,7 +2466,7 @@ units:
     energyRecovery: 60
     livingWeapon: true
 
-  - type: STR_XENOSECTOPOD_TERRORIST  # OLD Dread
+  - type: STR_XENOSECTOPOD_TERRORIST  # OLD Dread # ?
     race: STR_GENE
     rank: STR_LIVE_TERRORIST
     stats:

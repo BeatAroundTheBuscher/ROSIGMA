@@ -38,7 +38,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
 
-  - type: STR_GC_ARMOR  # "Brood Brother"
+  - type: STR_GC_ARMOR  # PDF "Brood Brother"
     visibilityAtDay: 30
     visibilityAtDark: 25
     spriteSheet: GENEDR1.PCK
@@ -72,7 +72,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
 
-  - type: STR_GC2_ARMOR  # heavier armor "Brood Brother"
+  - type: STR_GC2_ARMOR  # PDF heavier armor "Brood Brother"
     visibilityAtDay: 30
     visibilityAtDark: 25
     spriteSheet: GENEDR2.PCK
@@ -106,7 +106,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
 
-  - type: STR_GC3_ARMOR  # Brood Sister (not Adeptas)
+  - type: STR_GC3_ARMOR  # PDF Brood Sister (not Adeptas)
     visibilityAtDay: 30
     visibilityAtDark: 25
     spriteSheet: GENEDR1.PCK
@@ -374,7 +374,7 @@ armors:
     loftempsSet: [2]  # small, slim agile target
     builtInWeapons:
       - STR_HORMAGAUNT_WEAPON
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: true #leaping # exception
     tags:
       INFECTION_RESIST: 100
       INFECTION_RESIST_TYPE: 2  # immune to GSC infection
@@ -434,7 +434,8 @@ armors:
     builtInWeapons:
       - STR_DEVOURER_WEAPON
 
-  - type: STR_TYRANID_WARRIOR_ARMOR  # Tyranid
+  - &STR_TYRANID_WARRIOR_TEMPLATE
+    type: STR_TYRANID_WARRIOR_ARMOR  # Tyranid #Sycthing Talon
     visibilityAtDay: 40
     visibilityAtDark: 30  # Good night vision
     antiCamouflageAtDay: 10
@@ -478,6 +479,84 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
       ARMOR_REGENERATES_WOUNDS: 3 #Tyranid regeneration; heightened
+
+  - type: STR_TYRANID_WARRIOR_CLAWS_ARMOR
+    refNode: *STR_TYRANID_WARRIOR_TEMPLATE
+    drawingRoutine: 10
+    spriteSheet: TYRANID_WARRIOR_CLAWS_BS.PCK  # DR10
+    spriteInv: TYRANID_WARRIOR_CLAWS_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_WARRIOR_CLAWS_CORPSE #change
+
+  - type: STR_TYRANID_WARRIOR_SWORD_ARMOR
+    refNode: *STR_TYRANID_WARRIOR_TEMPLATE
+    drawingRoutine: 10
+    spriteSheet: TYRANID_WARRIOR_SWORD_BS.PCK  # DR10
+    spriteInv: TYRANID_WARRIOR_SWORD_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_WARRIOR_SWORD_CORPSE #change
+
+  - &STR_TYRANID_PRIME_TEMPLATE
+    type: STR_TYRANID_PRIME_ARMOR  #Sycthing Talon
+    visibilityAtDay: 40
+    visibilityAtDark: 33  # Good night vision
+    antiCamouflageAtDay: 11
+    antiCamouflageAtDark: 7
+    heatVision: 17  # Basic bio-heatvision
+    spriteSheet: TYRANID_PRIME_BS.PCK  # DR10
+    spriteInv: TYRANID_PRIME_INV.SPK
+    drawingRoutine: 10
+    corpseBattle:
+      - STR_TYRANID_PRIME_CORPSE
+    frontArmor: 80  # Carapace+ equivalent, 4+ save
+    sideArmor: 65
+    rearArmor: 40
+    underArmor: 65
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true  # Adrenal Glands + Tyranid synapse
+    recovery: #Tyranid regeneration; heightened
+      health:
+        healthCurrent: 0.4
+    damageModifier:  # Tougher Chitin
+      - 1.0  # untyped damage is supposed to be neutral
+      - 1.0  # AP
+      - 0.75  # FLAMES Resistant
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 0.9  # PLASMA
+      - 0.75  # STUN
+      - 0.6  # MELEE Dedicated Melee unit
+      - 0.5  # ACID Tyranid Acid Blood
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [4]  # Large marine sized target
+    allowsRunning: false  # NPC limits for BAI
+    tags:
+      INFECTION_RESIST: 100
+      INFECTION_RESIST_TYPE: 2  # immune to GSC infection
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+      ARMOR_REGENERATES_WOUNDS: 3 #Tyranid regeneration; heightened
+
+  - type: STR_TYRANID_PRIME_CLAWS_ARMOR
+    refNode: *STR_TYRANID_PRIME_TEMPLATE
+    drawingRoutine: 10
+    spriteSheet: TYRANID_PRIME_CLAWS_BS.PCK  # DR10
+    spriteInv: TYRANID_PRIME_CLAWS_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_PRIME_CLAWS_CORPSE
+
+  - type: STR_TYRANID_PRIME_SWORD_ARMOR
+    refNode: *STR_TYRANID_PRIME_TEMPLATE
+    drawingRoutine: 10
+    spriteSheet: TYRANID_PRIME_SWORD_BS.PCK  # DR10
+    spriteInv: TYRANID_PRIME_SWORD_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_PRIME_SWORD_CORPSE
 
   - &STR_RIPPERSWARM_ARMOR_REF
     type: STR_RIPPERSWARM_2_ARMOR  # Tyranid
