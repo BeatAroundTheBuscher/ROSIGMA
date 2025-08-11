@@ -98,7 +98,6 @@ items:
     invHeight: 1
     listOrder: 10210
 
-
   - type: STR_BOLTPISTOL_HELFROST_CLIP_MC # Space Wolves Boltpistol Frosty MC Ammo
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requiresBuyBaseFunc: [IMPERIUM]
@@ -124,6 +123,161 @@ items:
     power: 70 #5 less than MC boltpistol ammo
     damageType: 1
     clipSize: 10
+    battleType: 2
+    armor: 30
+    attraction: 1
+    invWidth: 1
+    invHeight: 1
+    listOrder: 10220
+
+#SW Bolters 
+  - type: STR_BOLTER_FENRIS  # done  # Ultra  # same as Godwyn
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuy:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_IMPERIAL_WEAPONS
+    size: 0.3
+    costBuy: 30000
+    costSell: 3000
+    weight: 30
+    bigSprite: 2564
+    floorSprite: 2564
+    handSprite: 4032
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2137
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+      - STR_BOLTER_HELFROST_CLIP
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 300
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 10310
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+#move this to the ballistics_SM.rul file later
+    dropoff: 5
+    autoRange: 9  # was 8
+    snapRange: 16
+    aimRange: 0
+
+    accuracyAuto: 75  # (86 MC + 66 normal) / 2
+    accuracySnap: 90  # (100 MC + 80 normal) / 2
+    accuracyAimed: 0
+    tuAuto: 33 #-2
+    tuSnap: 22  # was 25
+    tuAimed: 0
+
+  - type: STR_BOLTER_FENRIS_MC  # done  # Ultra  # same as Godwyn
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    size: 0.3
+    costSell: 10000
+    weight: 20 #-10
+    bigSprite: 2565
+    floorSprite: 2565
+    handSprite: 4038
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2137
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+      - STR_BOLTER_HELFROST_CLIP
+      - STR_BOLTER_HELFROST_CLIP_MC
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 300
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 10410
+    tags:
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
+
+#move this to the ballistics_SM.rul file later
+    dropoff: 4
+    autoRange: 11
+    snapRange: 15
+    aimRange: 0
+
+    accuracyAuto: 80 #-6 due to the tuAuto bonus
+    accuracySnap: 100
+    accuracyAimed: 0
+    tuAuto: 33 #-7, SW go DAKKADAKKA
+    tuSnap: 25
+    tuAimed: 0
+
+#SW Boltgun Ammo
+  - type: STR_BOLTER_HELFROST_CLIP # Space Wolves Boltgun Frosty Ammo
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [IMPERIUM]
+    requiresBuy:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_BOLTER_AMMO_PREREQ
+    size: 0.1
+    costBuy: 1500
+    costSell: 500
+    weight: 2
+    bigSprite: 2568
+    floorSprite: {mod: 40k, index: 4} #Needs unique
+    handSprite: {mod: 40k, index: 464} #Needs unique
+    hitSound: 2492
+    hitAnimation: {mod: 40k, index: 140}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.15 #+0.05 armor chip
+      ArmorEffectiveness: 0.6 #10% worse than Kraken at bypassing
+      ToArmor: 0.20 #+0.05 armor chip
+      ToHealth: 0.9 #-20% to Health like Kraken rounds
+      ToStun: 1.0 #2x ToStun
+      ToTime: 0.25 #25% to TU damage, 12 TU per hit sans armor.
+      ToEnergy: 0.6 #2x ToEnergy
+      ToWound: 0.1 #halved ToWound
+      RandomWound: false
+    explosionSpeed: 3
+    power: 65
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    armor: 30
+    attraction: 1
+    invWidth: 1
+    invHeight: 1
+    listOrder: 10210
+
+  - type: STR_BOLTER_HELFROST_CLIP_MC # Space Wolves Boltgun Frosty MC Ammo
+    categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.1
+    costSell: 1500
+    weight: 2
+    bigSprite: 2572
+    floorSprite: {mod: 40k, index: 4} #Needs unique
+    handSprite: {mod: 40k, index: 464} #Needs unique
+    hitSound: 2492
+    hitAnimation: {mod: 40k, index:140}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.25 #+0.10 armor chip
+      ArmorEffectiveness: 0.6 #10% worse than Kraken at bypassing
+      ToArmor: 0.25 #+0.10 armor chip
+      ToHealth: 0.9 #-20% to Health like Kraken rounds
+      ToStun: 1.0 #2x ToStun
+      ToTime: 0.4 #40% to TU damage, 12 TU per hit sans armor.
+      ToEnergy: 0.6 #2x ToEnergy
+      ToWound: 0.1 #halved ToWound
+      RandomWound: false
+    explosionSpeed: 5
+    power: 80 #5 less than MC boltgun ammo
+    damageType: 1
+    clipSize: 20
     battleType: 2
     armor: 30
     attraction: 1
