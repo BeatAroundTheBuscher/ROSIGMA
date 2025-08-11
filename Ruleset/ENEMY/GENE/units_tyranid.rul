@@ -1,0 +1,465 @@
+
+weaponSets:
+
+  # Warrior and Prime
+
+#Scything Talons
+  - type: SCYTHINGTALONS_RENDING_CLAWS
+    weapons: [STR_WARRIOR_CLAWS, STR_WARRIOR_TALONS]
+  - type: SCYTHINGTALONS_DEVOURER
+    weapons: [STR_WARRIOR_DEVOURER, STR_WARRIOR_TALONS]
+  - type: SCYTHINGTALONS_DEATHSPITTER
+    weapons: [STR_DEATHSPITTER_WEAPON, STR_WARRIOR_TALONS]
+  - type: SCYTHINGTALONS_BARBEDSTRANGLER
+    weapons: [STR_BARBEDSTRANGLER, STR_WARRIOR_TALONS]
+  - type: SCYTHINGTALONS_VENOMCANNON
+    weapons: [STR_VENOMCANNON, STR_WARRIOR_TALONS]
+#Rending claws
+  - type: RENDING_CLAWS_DEVOURER
+    weapons: [STR_WARRIOR_DEVOURER, STR_WARRIOR_CLAWS_ALT]
+  - type: RENDING_CLAWS_DEATHSPITTER
+    weapons: [STR_DEATHSPITTER_WEAPON, STR_WARRIOR_CLAWS_ALT]
+  - type: RENDING_CLAWS_BARBEDSTRANGLER
+    weapons: [STR_BARBEDSTRANGLER, STR_WARRIOR_CLAWS_ALT]
+  - type: RENDING_CLAWS_VENOMCANNON
+    weapons: [STR_VENOMCANNON, STR_WARRIOR_CLAWS_ALT]
+#Bonesword
+  - type: BONESWORD_RENDING_CLAWS
+    weapons: [STR_WARRIOR_CLAWS, STR_WARRIOR_BONESWORD]
+  - type: BONESWORD_DEVOURER
+    weapons: [STR_WARRIOR_DEVOURER, STR_WARRIOR_BONESWORD]
+  - type: BONESWORD_DEATHSPITTER
+    weapons: [STR_DEATHSPITTER_WEAPON, STR_WARRIOR_BONESWORD]
+  - type: BONESWORD_BARBEDSTRANGLER
+    weapons: [STR_BARBEDSTRANGLER, STR_WARRIOR_BONESWORD]
+  - type: BONESWORD_VENOMCANNON
+    weapons: [STR_VENOMCANNON, STR_WARRIOR_BONESWORD]
+
+  # Spore mines
+  - type: SPOREMINE_FRAG_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED_FRAG, STR_SPOREMINE_TRIGGER_MELEE_FRAG, STR_SPOREMINE_FRAG_CHARGE]
+  - type: SPOREMINE_EXPLOSIVE_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED_POISON, STR_SPOREMINE_TRIGGER_MELEE_POISON, STR_SPOREMINE_EXPLOSIVE_CHARGE]
+  - type: SPOREMINE_ACID_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED_ACID, STR_SPOREMINE_TRIGGER_MELEE_ACID, STR_SPOREMINE_ACID_CHARGE]
+  - type: SPOREMINE_BIOPLASMA_CHARGE
+    weapons: [STR_SPOREMINE_TRIGGER_RANGED_ACID, STR_SPOREMINE_TRIGGER_MELEE_ACID, STR_SPOREMINE_BIOPLASMA_CHARGE]
+
+
+units:
+
+  - type: STR_HORMAGAUNT
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: false
+    isLeeroyJenkins: true
+    stats:
+      tu: 90  # fast
+      stamina: 100
+      health: 50
+      bravery: 100
+      reactions: 60
+      firing: 0
+      throwing: 10
+      strength: 60
+      psiStrength: 25
+      psiSkill: 0
+      melee: 75
+    armor: STR_HORMAGAUNT_ARMOR
+    intelligence: 1  # pretty mindless
+    aggression: 8
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 12
+    kneelHeight: 12
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: {mod: 40k, index: -1}
+    livingWeapon: false
+    value: 5
+    builtInWeaponSets:
+      - - STR_HORMAGAUNT_WEAPON
+      - - STR_HORMAGAUNT_WEAPON
+      - - STR_BARBED_TALONS
+
+  - &STR_GAUNT_TEMPLATE
+    type: STR_TERMAGANT
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: false
+    stats:
+      tu: 90  # fast
+      stamina: 100
+      health: 50
+      bravery: 100
+      reactions: 50
+      firing: 50
+      throwing: 10
+      strength: 40
+      psiStrength: 25
+      psiSkill: 0
+      melee: 40
+    armor: STR_TERMAGANT_ARMOR
+    intelligence: 1  # pretty mindless
+    aggression: 3  # should fight from range more
+    spotter: 1
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 12
+    kneelHeight: 12
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: {mod: 40k, index: -1}
+    livingWeapon: true
+
+  - type: STR_DEVOURER_TERMAGANT
+    refNode: *STR_GAUNT_TEMPLATE
+    stats:
+      reactions: 60
+    armor: STR_DEVOURER_TERMAGANT_ARMOR
+    intelligence: 1  # pretty mindless
+    aggression: 7  # should be aggressive
+
+  - &STR_TYRANID_WARRIOR_TEMPLATE
+    type: STR_TYRANID_WARRIOR_DUMMY #Not used in-game
+    race: STR_GENE #change?
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: false
+    stats:
+      tu: 70  # slower than gaunts
+      stamina: 100
+      health: 250
+      bravery: 100
+      reactions: 65
+      firing: 65
+      throwing: 10
+      strength: 70
+      psiStrength: 50
+      psiSkill: 0
+      melee: 80
+    armor: STR_TYRANID_WARRIOR_ARMOR
+    intelligence: 3
+    aggression: 3  # mix of aggression and not leaving self exposed
+    spotter: 1
+    sniper: 60
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 23
+    kneelHeight: 16
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: {mod: 40k, index: -1}
+    startMovingSound: 3999
+    livingWeapon: false
+
+  - type: STR_TYRANID_WARRIOR  #Sything Talons
+    refNode: *STR_TYRANID_WARRIOR_TEMPLATE
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        SCYTHINGTALONS_RENDING_CLAWS: 35
+        SCYTHINGTALONS_DEVOURER: 35
+        SCYTHINGTALONS_DEATHSPITTER: 30
+      -  # Tier 1
+        SCYTHINGTALONS_RENDING_CLAWS: 25
+        SCYTHINGTALONS_DEVOURER: 20
+        SCYTHINGTALONS_DEATHSPITTER: 25
+        SCYTHINGTALONS_BARBEDSTRANGLER: 15
+        SCYTHINGTALONS_VENOMCANNON: 15
+      -  # Tier 2
+        SCYTHINGTALONS_RENDING_CLAWS: 10
+        SCYTHINGTALONS_DEVOURER: 10
+        SCYTHINGTALONS_DEATHSPITTER: 20
+        SCYTHINGTALONS_BARBEDSTRANGLER: 30
+        SCYTHINGTALONS_VENOMCANNON: 30
+
+  - type: STR_TYRANID_WARRIOR_CLAWS
+    refNode: *STR_TYRANID_WARRIOR_TEMPLATE
+    armor: STR_TYRANID_WARRIOR_CLAWS_ARMOR
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        RENDING_CLAWS_DEVOURER: 60
+        RENDING_CLAWS_DEATHSPITTER: 40
+      -  # Tier 1
+        RENDING_CLAWS_DEVOURER: 20
+        RENDING_CLAWS_DEATHSPITTER: 40
+        RENDING_CLAWS_BARBEDSTRANGLER: 20
+        RENDING_CLAWS_VENOMCANNON: 20
+      -  # Tier 2
+        RENDING_CLAWS_DEVOURER: 10
+        RENDING_CLAWS_DEATHSPITTER: 30
+        RENDING_CLAWS_BARBEDSTRANGLER: 30
+        RENDING_CLAWS_VENOMCANNON: 30
+
+  - type: STR_TYRANID_WARRIOR_SWORD
+    refNode: *STR_TYRANID_WARRIOR_TEMPLATE
+    armor: STR_TYRANID_WARRIOR_SWORD_ARMOR
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        BONESWORD_RENDING_CLAWS: 35
+        BONESWORD_DEVOURER: 35
+        BONESWORD_DEATHSPITTER: 30
+      -  # Tier 1
+        BONESWORD_RENDING_CLAWS: 25
+        BONESWORD_DEVOURER: 20
+        BONESWORD_DEATHSPITTER: 25
+        BONESWORD_BARBEDSTRANGLER: 15
+        BONESWORD_VENOMCANNON: 15
+      -  # Tier 2
+        BONESWORD_RENDING_CLAWS: 10
+        BONESWORD_DEVOURER: 10
+        BONESWORD_DEATHSPITTER: 20
+        BONESWORD_BARBEDSTRANGLER: 30
+        BONESWORD_VENOMCANNON: 30
+
+  - &STR_TYRANID_PRIME_TEMPLATE
+    type: STR_TYRANID_PRIME_DUMMY #Not used in-game
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: false
+    stats:
+      tu: 80
+      stamina: 100
+      health: 270
+      bravery: 100
+      reactions: 70
+      firing: 75
+      throwing: 10
+      strength: 80
+      psiStrength: 50
+      psiSkill: 0
+      melee: 90
+    armor: STR_TYRANID_PRIME_ARMOR
+    intelligence: 4
+    aggression: 3  # mix of aggression and not leaving self exposed
+    spotter: 1
+    sniper: 60
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 24
+    kneelHeight: 16
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: {mod: 40k, index: -1}
+    startMovingSound: 3999
+    livingWeapon: false
+    builtInWeaponSets: []
+
+  - type: STR_TYRANID_PRIME #Scything Talons
+    refNode: *STR_TYRANID_PRIME_TEMPLATE
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        SCYTHINGTALONS_RENDING_CLAWS: 10
+        SCYTHINGTALONS_DEVOURER: 10
+        SCYTHINGTALONS_DEATHSPITTER: 50
+        SCYTHINGTALONS_BARBEDSTRANGLER: 15
+        SCYTHINGTALONS_VENOMCANNON: 15
+      -  # Tier 1
+        SCYTHINGTALONS_RENDING_CLAWS: 10
+        SCYTHINGTALONS_DEVOURER: 10
+        SCYTHINGTALONS_DEATHSPITTER: 20
+        SCYTHINGTALONS_BARBEDSTRANGLER: 30
+        SCYTHINGTALONS_VENOMCANNON: 30
+      -  # Tier 2
+        SCYTHINGTALONS_RENDING_CLAWS: 5
+        SCYTHINGTALONS_DEVOURER: 5
+        SCYTHINGTALONS_DEATHSPITTER: 10
+        SCYTHINGTALONS_BARBEDSTRANGLER: 40
+        SCYTHINGTALONS_VENOMCANNON: 40
+
+  - type: STR_TYRANID_PRIME_CLAWS
+    refNode: *STR_TYRANID_PRIME_TEMPLATE
+    armor: STR_TYRANID_PRIME_CLAWS_ARMOR
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        RENDING_CLAWS_DEVOURER: 20
+        RENDING_CLAWS_DEATHSPITTER: 40
+        RENDING_CLAWS_BARBEDSTRANGLER: 20
+        RENDING_CLAWS_VENOMCANNON: 20
+      -  # Tier 1
+        RENDING_CLAWS_DEVOURER: 10
+        RENDING_CLAWS_DEATHSPITTER: 20
+        RENDING_CLAWS_BARBEDSTRANGLER: 35
+        RENDING_CLAWS_VENOMCANNON: 35
+      -  # Tier 2
+        RENDING_CLAWS_DEVOURER: 5
+        RENDING_CLAWS_DEATHSPITTER: 15
+        RENDING_CLAWS_BARBEDSTRANGLER: 40
+        RENDING_CLAWS_VENOMCANNON: 40
+
+  - type: STR_TYRANID_PRIME_SWORD
+    refNode: *STR_TYRANID_PRIME_TEMPLATE
+    armor: STR_TYRANID_PRIME_SWORD_ARMOR
+    weightedBuiltInWeaponSets:
+      -  # Tier 0
+        BONESWORD_RENDING_CLAWS: 10
+        BONESWORD_DEVOURER: 10
+        BONESWORD_DEATHSPITTER: 50
+        BONESWORD_BARBEDSTRANGLER: 15
+        BONESWORD_VENOMCANNON: 15
+      -  # Tier 1
+        BONESWORD_RENDING_CLAWS: 10
+        BONESWORD_DEVOURER: 10
+        BONESWORD_DEATHSPITTER: 20
+        BONESWORD_BARBEDSTRANGLER: 30
+        BONESWORD_VENOMCANNON: 30
+      -  # Tier 2
+        BONESWORD_RENDING_CLAWS: 5
+        BONESWORD_DEVOURER: 5
+        BONESWORD_DEATHSPITTER: 10
+        BONESWORD_BARBEDSTRANGLER: 30
+        BONESWORD_VENOMCANNON: 30
+
+  - &STR_RIPPERSWARM_REF
+    type: STR_RIPPERSWARM_2
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: false
+    isLeeroyJenkins: true
+    stats:
+      tu: 60
+      stamina: 100
+      health: 30
+      bravery: 100
+      reactions: 20
+      firing: 0
+      throwing: 10
+      strength: 30
+      psiStrength: 25
+      psiSkill: 0
+      melee: 20
+    armor: STR_RIPPERSWARM_2_ARMOR
+    intelligence: 0 #mindless
+    aggression: 8
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 6
+    kneelHeight: 3
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: 0
+    livingWeapon: true
+    value: 5
+    builtInWeaponSets:
+      - - STR_RIPPERSWARM_ATTACK
+
+  - type: STR_RIPPERSWARM_4
+    refNode: *STR_RIPPERSWARM_REF
+    stats:
+      tu: 60
+      strength: 40 #10 per
+      melee: 40 #10 per
+    armor: STR_RIPPERSWARM_4_ARMOR
+    spawnUnit: STR_RIPPERSWARM_2
+
+  - type: STR_RIPPERSWARM_16
+    refNode: *STR_RIPPERSWARM_REF
+    stats:
+      health: 120
+      strength: 160 #10 per
+      melee: 160 #10 per
+    armor: STR_RIPPERSWARM_16_ARMOR
+    spawnUnit: STR_RIPPERSWARM_4
+
+  - type: STR_SPOREMINE
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 40
+      stamina: 200
+      health: 10
+      bravery: 110
+      reactions: 100
+      firing: 100
+      throwing: 10
+      strength: 20
+      psiStrength: 25
+      psiSkill: 0
+      melee: 100
+    armor: STR_SPOREMINE_ARMOR
+    intelligence: 0 #mindless
+    aggression: 8
+    spotter: 1
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 200
+    standHeight: 6
+    kneelHeight: 3
+    floatHeight: 3
+    moveSound: 0
+    livingWeapon: false
+    avoidsFire: false
+    isLeeroyJenkins: true
+    moraleLossWhenKilled: 0 #no one cares
+    value: 1
+    builtInWeaponSets: []
+    weightedBuiltInWeaponSets:
+      -  # Tier 1
+        SPOREMINE_FRAG_CHARGE: 50
+        SPOREMINE_EXPLOSIVE_CHARGE: 20 #poison
+        SPOREMINE_ACID_CHARGE: 30
+        SPOREMINE_BIOPLASMA_CHARGE: 0 # for now
+      -  # Tier 2
+        SPOREMINE_FRAG_CHARGE: 40
+        SPOREMINE_EXPLOSIVE_CHARGE: 25 #poison
+        SPOREMINE_ACID_CHARGE: 35
+        SPOREMINE_BIOPLASMA_CHARGE: 0 #for now
+      -  # Tier 3
+        SPOREMINE_FRAG_CHARGE: 25
+        SPOREMINE_EXPLOSIVE_CHARGE: 40 #poison
+        SPOREMINE_ACID_CHARGE: 35
+        SPOREMINE_BIOPLASMA_CHARGE: 0 #for now
+
+  - type: STR_BIOVORE
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    avoidsFire: true
+    stats:
+      tu: 50  # quite slow
+      stamina: 100
+      health: 200 # tough
+      bravery: 100
+      reactions: 20
+      firing: 15
+      throwing: 10
+      strength: 80 #on par with an SM or better
+      psiStrength: 50
+      psiSkill: 0
+      melee: 60
+    armor: STR_BIOVORE_ARMOR
+    intelligence: 1
+    aggression: 3  # hides but not very well
+    spotter: 1
+    sniper: 100
+    canPanic: false
+    canBeMindControlled: false  # Synapse too strong
+    energyRecovery: 60
+    standHeight: 24
+    kneelHeight: 16
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    moveSound: {mod: 40k, index: -1}
+    livingWeapon: false
+    builtInWeaponSets:
+      - - STR_SPORECANNON
+        - STR_GENOCLAWS_END
+    specab: 1
+
+  - type: STR_CARNI_TERRORIST #to be new carnifex
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 82
+      stamina: 120
+      health: 600  # 340
+      bravery: 100
+      reactions: 64
+      firing: 80
+      throwing: 80
+      strength: 90
+      psiStrength: 35
+      psiSkill: 0
+      melee: 80
+    armor: CARNI_ARMOR
+    intelligence: 1
+    aggression: 3
+    energyRecovery: 60
+    livingWeapon: true
