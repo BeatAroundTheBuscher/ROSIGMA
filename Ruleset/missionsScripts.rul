@@ -9,6 +9,15 @@ missionScripts:
       STR_STEEL_LEGION_STRATEGY: false
       STR_ALIENS_ONLY: false
       STR_ARBITES: false
+      STR_SPACEWOLVES_STRATEGY: false
+
+  - type: firstMonthTerrorSW
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR_TZEENTCH: 100
+    researchTriggers:
+      STR_SPACEWOLVES_STRATEGY: true
+      STR_ALIENS_ONLY: false
 
   - type: firstMonthOrkTerror  # for Steel Legion
     missionWeights:
@@ -135,6 +144,26 @@ missionScripts:
       STR_CHAMBERMILITANT: false
       STR_ARBITES: false
       STR_STEEL_LEGION_STRATEGY: false
+      STR_SPACEWOLVES_STRATEGY: false
+    useTable: false
+    startDelay: 150
+    randomDelay: 4320  # additional random 0 to 3 days
+
+  - type: recurringTerrorHardSW
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR_HARD: 15
+        STR_NURGLE_TERROR: 4
+        STR_ALIEN_TERROR_TZEENTCH: 33
+        STR_TERROR_MISSION_SLAAN: 4
+        STR_SHRINE_TERROR: 5
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 5
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 5
+    researchTriggers:
+      STR_SPACEWOLVES_STRATEGY: true
+      STR_ALIENS_ONLY: false
     useTable: false
     startDelay: 150
     randomDelay: 4320  # additional random 0 to 3 days
@@ -700,6 +729,36 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: true
 
+  - type: gameStartHard_SW #Tzeentch Weighting
+    refNode: *STR_START_MISSION
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HARD: 15
+        STR_ALIEN_ABDUCTION_HARD: 15
+        STR_ALIEN_HARVEST_HARD: 15
+        STR_NURGLE_RESEARCH_HARD: 8
+        STR_NURGLE_HARVEST_HARD: 10
+        STR_NURGLE_ABDUCTION_HARD: 4
+        STR_SLAANESH_ABDUCTION_HARD: 10
+        STR_SLAANESH_HARVEST_HARD: 4
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 33
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 33
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 33
+      2:
+        STR_ALIEN_RESEARCH_HARD: 15
+        STR_ALIEN_ABDUCTION_HARD: 15
+        STR_ALIEN_HARVEST_HARD: 15
+        STR_NURGLE_RESEARCH_HARD: 8
+        STR_NURGLE_HARVEST_HARD: 10
+        STR_NURGLE_ABDUCTION_HARD: 8
+        STR_SLAANESH_ABDUCTION_HARD: 10
+        STR_SLAANESH_HARVEST_HARD: 4  # rare
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 33
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 33
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 33
+        STR_TAU_ORCAEXPEDITION: 5 #delayed onset
+    researchTriggers:
+      STR_HARDER_MISSIONS_SW: true
 
   - type: Mission1
     researchTriggers:
@@ -711,6 +770,21 @@ missionScripts:
   - delete: Inquisition  # This was the previous 40k mod chaos retaliation
 
   # Final Mission
+
+  - type: finalMissionSW #SpaceWolves
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_MARINES: 100 #change once custom SW version is done
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_SPACEWOLVES_STRATEGY: true
+      STR_CHAPTER_PURITY: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionMarines #change once custom SW version is done
 
   - type: finalMissionGuard
     researchTriggers:
@@ -1438,6 +1512,7 @@ missionScripts:
       STR_HARDER_MISSIONS: true
       STR_CHAPTER_PURITY: false
       STR_NOT_CHAOSCULT: true
+
 
   - type: warpStormBuildingHardCHAOS
     refNode: *STR_HARD_CHAOSMISSION_TABLE
