@@ -566,6 +566,7 @@ research:
       - STR_SMOKE
       - STR_CRATED_DROPPODS
       - STR_CRATED_RHINO
+      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_DEVASTATOR
       - STR_PRIMARIS
@@ -618,6 +619,7 @@ research:
       - STR_SMOKE
       - STR_TRAINFACILITYR
       - STR_CRATED_LANDSPEEDER
+      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_SCOUT
       - STR_PRIMARIS
@@ -645,6 +647,7 @@ research:
       - STR_SMOKE
       - STR_CRATED_DROPPODS
       - STR_CRATED_RHINO
+      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_TACTICAL
       - STR_PRIMARIS
@@ -665,12 +668,14 @@ research:
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
       - STR_HOLOGRAM_GRENADE_REQUISITION
-      - STR_THUNDERHAWKTYPE1 #SW alternative reskin?
-      - STR_SWSTORMWOLF
+      - STR_CRATED_SWRHINOS
+      - STR_CRATED_SWDROPPODS
       - STR_SPACEWOLVES_BLOODCLAW_ARMOR #power armor for SW rookies, they get it by default but maybe research topic needed for codex gating
       - STR_SMOKE
       - STR_SWDROPPODS
       - STR_SWRHINOS
+      - STR_MARINE_BOLTERS
+      - STR_HARDER_MISSIONS_SW
     disables:
       - STR_NOT_SPACEWOLVES
       - STR_PRIMARIS
@@ -678,7 +683,10 @@ research:
       - STR_DEVASTATOR
       - STR_SCOUT
       - STR_TATICAL
-#    spawnedEvent: STR_SPACEWOLVES_CARE_PACKAGE #Create this
+    spawnedEvent: STR_SPACEWOLVES_INITIAL_SITREP
+
+  - name: STR_HARDER_MISSIONS_SW #used by missionScript to customize SW missions
+    refNode: *STR_LOCKED
 
   - name: STR_SWDROPPODS # SW Drop Pods
     dependencies:
@@ -688,6 +696,14 @@ research:
     dependencies:
       - STR_SPACEWOLVES_STRATEGY
       - STR_GENERALLOCK #Unlocks via SW Strategy pick
+  - name: STR_CRATED_SWRHINOS  # Razorback Requisition
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
+  - name: STR_CRATED_SWDROPPODS  # Drop Pods Requisition
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
 
 ## Chamber Militant #STRATEGY.CM#
   - name: STR_CHAMBERMILITANT  # Chamber Militant
@@ -715,6 +731,7 @@ research:
       - STR_HARDER_MISSIONS
       - STR_IMPERIUM_RESEARCH
       - STR_SMOKE
+      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -2250,51 +2267,70 @@ research:
     dependencies:
       - STR_PRIMARIS
 
-### Scout Strategy #PROGRESSION.SM.SCOUT#
-### Space Wolves Strategy #PROGRESSION.SM.WOLF#
-#  - name: STR_SPACEWOLVES_MIDTIER_RESEARCH
-#    cost: 200
-#    points: 200
-#    dependencies:
-#      - STR_SPACEWOLVES_STRATEGY
-#      - STR_MELTAGUN_TECH
-#      - STR_ALIEN_ALLOYS
-#      - STR_MOTION_SCANNER
-#      - STR_MEDI_KIT_PREREQ
-#    unlocks:
-#      - STR_MIDTIER_PREREQ
-#      - STR_CASS_R
-#      - STR_HB_DEP1
-#      - STR_MGRENADE
-#      - STR_SPACEWOLVES_VETERANSCOUT_ARMOR #STR_PERSONAL_ARMOR, SW Veterans come with their special Scout Armor
-#      - STR_SPACEWOLVES_GREYHUNTER_ARMOR #Tactical Marine armor SW, veterans can use this too.
-#      - STR_SPACEWOLVES_SKYCLAW_ARMOR #Assault marine armor SW
-#      - STR_SPACEWOLVES_LONGFANG_ARMOR #Maybe not right away at midtier, these should be delayed and rarer to keep SW feel.
-#      - STR_SPACEWOLVES_SERGEANT_ARMOR #Midtier officer armor
-#      - STR_SIDEOPERATIONS
 
-  - name: STR_SWSTORMWOLF #starting air transport
+### Space Wolves Strategy #PROGRESSION.SM.WOLF#
+  - name: STR_SPACEWOLVES_MIDTIER_RESEARCH
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_MELTAGUN_TECH
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_CASS_R
+      - STR_HB_DEP1
+      - STR_MGRENADE
+      - STR_SWSTORMWOLF
+      - STR_SPACEWOLVES_VETERANSCOUT_ARMOR #STR_PERSONAL_ARMOR, SW Veterans come with their special Scout Armor
+      - STR_SPACEWOLVES_GREYHUNTER_ARMOR #Tactical Marine armor SW, veterans can use this too.
+      - STR_SPACEWOLVES_LONGFANG_ARMOR #Maybe not right away at midtier, these should be delayed and rarer to keep SW feel.
+      - STR_SPACEWOLVES_SERGEANT_ARMOR #Midtier officer armor
+      - STR_SIDEOPERATIONS
+
+  - name: STR_SW_POWERAXE_RESEARCH # SW Power Axes
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_SPACEWOLVES_MIDTIER_RESEARCH
+      - STR_UFO_CONSTRUCTION
+      - STR_NOT_ARBITES
+      - STR_NOT_GUARD
+      - STR_NOT_CHAOSCULT
+
+  - name: STR_SWSTORMWOLF #Mid tier air transport for Space Wolves
     dependencies:
       - STR_GENERALLOCK #unlocks through SW STrategy selection
 
-#  - name: STR_SWTHUNDERHAWK #TIER 3 THUNDERHAWK SW EDITION NOT GRANTED DIRECTLY BY TIER RESEARCH
-#    cost: 200
-#    points: 200
-#    dependencies:
-#      - STR_SPACEWOLVES_MIDTIER_RESEARCH
-#      - STR_UFO_CONSTRUCTION #ceramite
-#      - STR_UFO_POWER_SOURCE #Power Source
-#      - STR_ELERIUM_115 #PROMETHIUM
-#      - STR_FUSION_BALL_LAUNCHER #Craft Multimelta
-#      - STR_MELTABOMB #MELTA BOMB+MULTIMELTA
+  - name: STR_SPACEWOLVES_HIGHTIER_RESEARCH
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_SPACEWOLVES_MIDTIER_RESEARCH
+      - STR_NEW_FIGHTER_TRANSPORTER
+      - STR_CYDONIA_OR_BUST
+    unlocks:
+      - STR_HIGHTIER_PREREQ
 
-#  - name: STR_SWTHUNDERHAWKGRAV #TIER 3 THUNDERHAWK SW GRAVDROP EDITION
-#    cost: 200
-#    points: 200
-#    dependencies:
-#      - STR_SWTHUNDERHAWK #Includes its dependencies
-#      - STR_GRAVITON_TECH #HIGHTIER GATED
+  - name: STR_SWTHUNDERHAWK #TIER 3 THUNDERHAWK SW EDITION NOT GRANTED DIRECTLY BY TIER RESEARCH
+    cost: 600
+    points: 200
+    dependencies:
+      - STR_SPACEWOLVES_MIDTIER_RESEARCH
+      - STR_UFO_CONSTRUCTION #ceramite
+      - STR_UFO_POWER_SOURCE #Power Source
+      - STR_ELERIUM_115 #PROMETHIUM
+      - STR_FUSION_BALL_LAUNCHER #Craft Multimelta
+      - STR_MELTABOMB #MELTA BOMB+MULTIMELTA
 
+  - name: STR_SWTHUNDERHAWKGRAV #TIER 3 THUNDERHAWK SW GRAVDROP EDITION
+    cost: 800
+    points: 200
+    dependencies:
+      - STR_SWTHUNDERHAWK #Includes its dependencies
+      - STR_GRAVITON_TECH #HIGHTIER GATED
 
 ### Tactical Strategy #PROGRESSION.SM.TAC#
 ## Chamber Militant #PROGRESSION.CM#
