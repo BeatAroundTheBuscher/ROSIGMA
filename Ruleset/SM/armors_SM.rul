@@ -1783,7 +1783,7 @@ armors:
       - 0.0  # SMOKE
       - 0.2  # IMPACT
       - 1.0  # MELTA
-    specialWeapon: STR_GUARD_PRIEST_BLESS #Fanaticism
+    specialWeapon: STR_CHAPLAIN_INSPIRE
     builtInWeapons:
       - INV_NULL_3X3
       - STR_SW_CROZIUM_ARCANUM
@@ -2062,6 +2062,8 @@ armors:
       UNIT_SIZE: 150 # LARGE
       INFECTION_RESIST: 25 #SW Warded rune armor
       INTIMIDATION_RESISTANCE: 50 #SW Warded Armor and Honor guard
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 10 #10x100/20=50 points of shield
+      BONUS_ENERGY_SHIELD_DECAY: 20
 
   - type: STR_SPACEWOLVES_TERMINATOR_ARMOR           # TERMINATOR
     refNode: *STR_TERMINATOR_ARMOR
@@ -2145,6 +2147,8 @@ armors:
       UNIT_SIZE: 200 # LARGE
       INFECTION_RESIST: 25 #SW Warded rune armor
       INTIMIDATION_RESISTANCE: 50 #SW Warded Armor and Honor guard
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 12 #12x100/15=80 points of shield
+      BONUS_ENERGY_SHIELD_DECAY: 15
 
   - type: STR_SPACEWOLVES_WOLFLORD_ARMOR          # TERMINATOR
     refNode: *STR_MARINE_OFFICER_ARMOR
@@ -2203,6 +2207,8 @@ armors:
       UNIT_SIZE: 200 # LARGE
       INFECTION_RESIST: 50 #SW Warded artificer Lord rune armor
       INTIMIDATION_RESISTANCE: 75 #SW Warded Lord Armor
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 50 #50x100/50=100 points of shield
+      BONUS_ENERGY_SHIELD_DECAY: 50
 
   - type: STR_SPACEWOLVEScataphract_ARMORPLAYER
     customArmorPreviewIndex: 1012  # placeholder
@@ -2249,8 +2255,8 @@ armors:
     specialWeapon: STR_MFIST
     allowsRunning: false
     tags:
-      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 60  # 50% better than standard terminator shielding
-      ARMOR_ENERGY_SHIELD_DECAY: 20
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 16  # 16X100/10= 160 points which is double a SW Termies shielding.
+      ARMOR_ENERGY_SHIELD_DECAY: 10
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       UNIT_SIZE: 200 # HUGE
@@ -2272,38 +2278,38 @@ armors:
     antiCamouflageAtDay: 10 #psi
     antiCamouflageAtDark: 10 #psi
     stats:
-      tu: 15 # sw bonus
-      stamina: 30
+      tu: 20
+      stamina: 25
       health: 30
-      bravery: 0  # always multiples of 10
-      reactions: 0
-      firing: -10
+      bravery: 20  # always multiples of 10
+      reactions: 10
+      firing: 0
       throwing: 0
-      strength: 0
-      psiStrength: -10
-      psiSkill: -10
-      melee: 20
-    frontArmor: 130
-    sideArmor: 110
-    rearArmor: 80
-    underArmor: 110
-    damageModifier:  #SW MARINE ARMOR
+      strength: 30
+      psiStrength: 20 #Librarian
+      psiSkill: 10 #Librarian
+      melee: 15
+    frontArmor: 140
+    sideArmor: 130
+    rearArmor: 90
+    underArmor: 130
+    damageModifier:  #SW ADV MARINE ARMOR
       - 1.0  # none
-      - 0.9  # AP 10% Midtier Power ARmor
-      - 0.8  # FLAMES
-      - 0.6  # HE 10% SW Bonus to encourage CQC
+      - 0.8  # AP 10% Tier3 Power Armor
+      - 0.6  # FLAMES #10%LibrarianProtection
+      - 0.5  # HE 10% SW Bonus to encourage CQC
       - 0.8  # LASCANON
-      - 1.1  # PLASMA
-      - 1.1  # STUN
-      - 1.0  # MELEE 10% SW Bonus to encourage CQC
-      - 1.0  # ACID
+      - 0.9  # PLASMA Tier3 Power Armor
+      - 0.9  # STUN
+      - 1.0 # MELEE #No SW Bonus here
+      - 0.9  # ACID
       - 0.0  # SMOKE
       - 0.2  # IMPACT
       - 1.0  # MELTA
     loftempsSet: [4]
     units:
       - STR_SPACEWOLVES_VETERAN_SOLDIER
-    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+    specialWeapon: STR_RUNEPRIEST_SPECIAL_WEAPON #chilling grasp
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
     layersDefaultPrefix: "0"
@@ -2336,14 +2342,16 @@ armors:
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_PSYKER: 1
       UNIT_SIZE: 150 # LARGE
-      INTIMIDATION_RESISTANCE: 25 #SW Veteran doesnt scare as easily as Blood Claws
+      INTIMIDATION_RESISTANCE: 75 #SW Warded Librarian
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 12 #12x100/10=120 points of shield
+      BONUS_ENERGY_SHIELD_DECAY: 10
 
-  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_LOCKDOWN
+  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_TEMPEST
     refNode: *STR_RUNEPRIEST_ARMOR
     storeItem: STR_LIB_ARMOR
     builtInWeapons:
       - INV_NULL_3X3
-      - STR_LOCKDOWN_TOME
+      - STR_TEMPEST_SPELL
   - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_MELEE_INSPIRE
     refNode: *STR_RUNEPRIEST_ARMOR
     storeItem: STR_LIB_ARMOR
@@ -2356,15 +2364,15 @@ armors:
     builtInWeapons:
       - INV_NULL_3X3
       - STR_SHIELD_TOME
-  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_SMITE
+  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_LIGHTNING
     refNode: *STR_RUNEPRIEST_ARMOR
     storeItem: STR_LIB_ARMOR
     builtInWeapons:
       - INV_NULL_3X3
-      - STR_SMITE_TOME
-  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_STASIS
+      - STR_LIVING_LIGHTNING_SPELL
+  - type: STR_SPACEWOLVES_RUNEPRIEST_ARMOR_BLIZZARD
     refNode: *STR_RUNEPRIEST_ARMOR
     storeItem: STR_LIB_ARMOR
     builtInWeapons:
       - INV_NULL_3X3
-      - STR_STASIS_TOME
+      - STR_BLIZZARD_SPELL #SW unique Spell
