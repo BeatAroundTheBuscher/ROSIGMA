@@ -11,7 +11,286 @@ items:
     invHeight: 0
     battleType: 4
 
-  # SW Marine Corpses
+  - type: STR_SWLASCANNONLOW_SPAWNER
+    spawnUnit: STR_SWLASCANNONLOW_TURRET
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_SWLASCANNONUP_SPAWNER
+    spawnUnit: STR_SWLASCANNONUP_TURRET
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_SWLASCSPONSON_SPAWNER
+    spawnUnit: STR_BOLTER_SPONSON  # placeholder until we have a lascannon sponson
+    spawnUnitFaction: 0
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  # AUX_HELFROST_TWINLINKED_CANNON is a Razorback Turret
+  # Used for Spacewolves Razorbacks/Chimeras
+  - type: AUX_HELFROST_TWINLINKED_CANNON
+    tags:
+      TURRET_RELOAD_TURNS: 2
+    weight: 0
+    size: 0
+    invWidth: 2
+    invHeight: 3
+    bigSprite: 2578
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2494
+    explosionSpeed: 5
+    bulletSpeed: 40
+    hitAnimation: 140
+    hitSound: 2496
+    costAuto:
+      energy: 5
+      time: 1
+      mana: 10
+    costAimed:
+      time: 1
+      energy: 10
+      mana: 20
+    flatUse:
+      time: true
+      energy: true
+    clipSize: -1
+    dropoff: 6 #high drop off
+    autoRange: 15 #-2 vs bolter range spray mode
+    snapRange: 0
+    aimRange: 25 #lascannon-like focused mode, -5 range vs lascannon aimed
+    accuracyAuto: 40
+    accuracySnap: 0
+    accuracyAimed: 80 #-10 vs Lascannon aimed
+    tuSnap: 0
+    power: 100  #Does mostly utility damage
+    damageAlter:  # DA BOLTER
+      RandomType: 6
+      ToArmorPre: 0.3 #Armor Shattering
+      ArmorEffectiveness: 0.6 #Low Armor Effectiveness
+      ToArmor: 0.15
+      ToHealth: 0.3 #Low To Health Damage
+      ToStun: 0.2
+      ToTime: 0.4 #40% TU damage
+      ToEnergy: 0.3
+      ToWound: 0.1
+      RandomWound: false
+    autoShots: 10
+    battleType: 1
+    fixedWeapon: true
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+
+### Other Items and Spells
+  - type: STR_SW_HEALING_BALMS #Wolf Priest
+    size: 0.1
+    costSell: 50
+    weight: 15 #bit of a downside
+    invWidth: 2
+    invHeight: 2
+    bigSprite: 2575
+    floorSprite: 2575
+    handSprite: 4078
+    battleType: 6 #medikit
+    medikitType: 0 #all types
+    medikitTargetImmune: true
+    medikitTargetSelf: true
+    isConsumable: true #will disappear after battle, but armor will respawn them each battle
+    heal: 20 #they'll get several bags of balms per Wolf Priest
+    stimulant: 15
+    painKiller: 10
+    healthRecovery: 4
+    woundRecovery: 2
+    stunRecovery: 5
+    energyRecovery: 10 #energy recovery from stimulants
+    tuUse: 10
+    flatRate: true
+    recover: false #will disappear after battle, but armor will respawn them each battle
+    experienceTrainingMode: 19 #*** makes the apothecary medikit item train bravery ***
+
+  - type: STR_RUNEPRIEST_SPECIAL_WEAPON #REF STR_LIBRARIAN_SPECIAL_WEAPON
+    weight: 0
+    accuracyUse: 20
+    hitSound: 2496
+    hitAnimation: 2210 #ICEhitsmall.png
+    battleType: 9
+    tuUse: 50 #twice a turn
+    maxRange: 15  # no blasting someone across the map
+    costUse:
+      energy: 25
+      stun: 10
+      morale: 10
+    tuPanic: 0
+    tuMindControl: 0
+    psiAttackName: STR_ICE_SPELL
+    LOSRequired: true
+    flatRate: true
+    fixedWeapon: true
+    power: 100
+    damageType: 0
+    damageAlter:
+      RandomType: 3
+      ArmorEffectiveness: 0.3
+      ToHealth: 0.1 #very low direct health damage
+      ToStun: 0.1
+      ToWound: 0.0
+      ToTime: 0.2 #Slow
+      ToEnergy: 0.4 #Slow
+      ToArmor: 0.4 #good chip damage
+      ToMorale: 0.0
+    recover: false
+    clipSize: -1
+    meleeHitSound: 100
+    meleeAnimation: 0
+    meleePower: 50
+    meleeType: 7
+    accuracyMelee: 90
+    meleeMultiplier:
+      melee: 1.0
+    tuMelee: 12
+    specialIconSprite: 11
+    specialUseEmptyHand: true
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+  - type: STR_LIVING_LIGHTNING_SPELL #Single target unless we can make chain lightning script happen
+    armor: 300
+    weight: 10
+    accuracyUse: 20
+    hitSound: {mod: 40k, index: 864}
+    hitAnimation: 2160 #Warpfireburn Alt name for Living lightning is Witchfire
+    bigSprite: {mod: 40k, index: 33}
+    invWidth: 2
+    invHeight: 2
+    battleType: 9
+    tuUse: 55 #once per turn unless TU upgraded late game to 110+
+    costUse:
+      energy: 20
+      stun: 15
+      morale: 10
+    tuPanic: 0
+    tuMindControl: 0
+    psiAttackName: STR_LIVING_LIGHTNING_SPELL #Living Lightning
+    LOSRequired: true
+    flatRate: true
+    fixedWeapon: true
+    maxRange: 20  # no blasting someone across the map
+    power: 40
+    damageBonus:
+      psi: 0.002
+    damageType: 5 #plasma
+    damageAlter:
+      RandomType: 2
+      ArmorEffectiveness: 0.1 #small resistance from heavier armor values
+      ToStun: 0.5 #20 points of stun damage
+      ToEnergy: 0.5 #20 points of energy damage
+      ToTime: 0.5 #20 points TU damage from SHOCK
+      ToArmor: 0.0
+    recover: false
+    clipSize: -1
+    specialUseEmptyHand: true
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+  - type: STR_BLIZZARD_SPELL #Murderous Hurricane
+    weight: 10
+    armor: 300
+    explosionHitSound: 2491
+    hitAnimation: 1230 #X1.PCK ICEICE
+    bigSprite: {mod: 40k, index: 33}
+    invWidth: 2
+    invHeight: 2
+    battleType: 9 #psiAmp
+    maxRange: 25
+    blastRadius: 4
+    tuUse: 70 #big cost
+    costUse:
+      energy: 35
+      stun: 25
+      morale: 15
+    tuPanic: 0
+    tuMindControl: 0
+    targetMatrix: 7 #works on all factions incl friendlies
+    psiAttackName: STR_BLIZZARD_SPELL #Murderous Hurricane
+    LOSRequired: true
+    flatRate: true
+    fixedWeapon: true
+    power: 100
+    damageType: 0
+    damageAlter:
+      RandomType: 2 #50-150% not affected by explosiveDamageRange
+      ArmorEffectiveness: 0.2 #minimal armor protection
+      ToHealth: 0.1 #small
+      ToStun: 0.2 #20 Stun damage
+      ToWound: 0.0
+      ToArmor: 0.1 #Chip damage
+      ToTime: 1.0 #100% TU damage
+      ToMorale: 0.1
+      FixRadius: 4
+    recover: false
+    clipSize: -1
+    specialUseEmptyHand: true
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+  - type: STR_TEMPEST_SPELL #Tempest's Wrath
+    weight: 10
+    armor: 300
+    explosionHitSound: 2494
+    hitAnimation: 1240 #X1.PCK TEMPEST_EXPLOSION
+    bigSprite: {mod: 40k, index: 33}
+    invWidth: 2
+    invHeight: 2
+    battleType: 9 #psiAmp
+    maxRange: 25
+    blastRadius: 6
+    tuUse: 60 #big cost
+    costUse:
+      energy: 35
+      stun: 25
+      morale: 15
+    tuPanic: 0
+    tuMindControl: 0
+    targetMatrix: 7 #works on all factions incl friendlies
+    psiAttackName: STR_TEMPEST_SPELL #Tempest's Wrath
+    LOSRequired: true
+    flatRate: true
+    fixedWeapon: true
+    power: 100
+    damageType: 0
+    damageAlter:
+      RandomType: 2 #50-150% not affected by explosiveDamageRange
+      ArmorEffectiveness: 0.4 #some armor protection
+      ToHealth: 0.1 #small
+      ToStun: 0.2 #20 Stun damage
+      ToWound: 0.0
+      ToArmor: 0.0
+      ToTime: 0.7 #70% TU damage
+      ToMorale: 0.05
+      FixRadius: 6
+    recover: false
+    clipSize: -1
+    specialUseEmptyHand: true
+    tags:
+      ITEM_IS_PSYCHIC_POWER: 1
+      ITEM_PSYCHIC_POWER_MODIFIER: 10
+
+### SW Marine Corpses
   - type: STR_SPACEWOLVES_BLOODCLAW_CORPSE #basic tactical power armor
     size: 0.4
     costSell: 0
@@ -40,8 +319,8 @@ items:
     size: 0.4
     costSell: 0
     weight: 40
-    bigSprite: 3118
-    floorSprite: 3119
+    bigSprite: 3119
+    floorSprite: 3120
     invWidth: 2
     invHeight: 3
     recover: false
