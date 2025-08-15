@@ -40,6 +40,7 @@ extended:
           var int isArbites;
           var int isCult;
           var int isChaos;
+          var int isWolf;
           var int isPlayerRecolorFaction;
           var int getsRecolor;
           var int getsAccentRecolor;
@@ -74,22 +75,27 @@ extended:
             rules.getRuleResearch researchTopic "STR_CHAOS_PATH";
             geoScape.isResearched isChaos researchTopic;
 
+            rules.getRuleResearch researchTopic "STR_SPACEWOLVES_STRATEGY";
+            geoScape.isResearched isWolf researchTopic;
+
             if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
               item.getRuleItem weaponRuleset;
-              if eq isArbites 1;
+              if eq isWolf 1;
                 set isPlayerRecolorFaction 1;
                 set newBaseColor 15;
-                set newAccentColor 15;
-              end;
-              if eq isChaos 1;
-                set isPlayerRecolorFaction 1;
-                set newBaseColor 2;
-                set newAccentColor 2;
-              end;
-              if eq isCult 1;
+                set newAccentColor 1;
+              else eq isCult 1;
                 set isPlayerRecolorFaction 1;
                 set newBaseColor 10;
                 set newAccentColor 10;
+              else eq isChaos 1;
+                set isPlayerRecolorFaction 1;
+                set newBaseColor 2;
+                set newAccentColor 2;
+              else eq isArbites 1;
+                set isPlayerRecolorFaction 1;
+                set newBaseColor 15;
+                set newAccentColor 15;
               end;
               if eq isPlayerRecolorFaction 1;
                 weaponRuleset.getTag baseColor Tag.ITEM_BASE_COLOR;
@@ -149,140 +155,14 @@ extended:
           add_shade new_pixel shade;
           return new_pixel;
 
-
-items:
-  - &STR_ITEM_CHANGE_COLOR
-    type: STR_AUTOGUN
-    tags:
-      ITEM_GETS_FACTION_RECOLOR: 1
-      ITEM_BASE_COLOR: 4
-
-      ITEM_GETS_ACCENT_RECOLOR: 1
-      ITEM_ACCENT_COLOR: 1
-
-  - type: STR_AUTOPISTOL
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_LASER_RIFLEG
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_LASER_PISTOLG
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_GRENADE_LAUNCHER
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_GRENADE_LAUNCHER_STEEL_LEGION
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_FRAG_GRENADE_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_KRAK_GRENADE_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_INCENDIARY_GRENADE_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_SMOKE_GRENADE_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_PHOTON_GRENADE_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_HEAVY_BOLTER_GUARD
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_HEAVY_WEAPON_TOOLS
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_DISPOSABLE_LAUNCHER_KRAK
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_SENTINEL_MISSILE_LAUNCHER
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_CHAINSWORD_GUARD
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_AUTOPISTOL_HIGHGRADE
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_AUTOGUN_HIGHGRADE
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_AUTOGUN_HIGHGRADE_UNDERSLUNG
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_STUBCANNON_GUARD
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_AUTOGUN_CLIP_DRUM
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_AUTOGUN_CLIP_DRUM_KRAKEN
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_GRENADE_LAUNCHER
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_LMG
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_HEAVY_STUBBER
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_ROTORATOR
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_LASCANONATOR
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: AUX_HOVERTANK_LASER
-    refNode: *STR_ITEM_CHANGE_COLOR
-    tags:
-      ITEM_BASE_COLOR: 7
-
-  - type: AUX_HOVERTANK_LAUNCHER
-    refNode: *STR_ITEM_CHANGE_COLOR
-    tags:
-      ITEM_BASE_COLOR: 7
-
-  - type: STR_POWERFIST
-    refNode: *STR_ITEM_CHANGE_COLOR
-    tags:
-      ITEM_BASE_COLOR: 7
-
-  - type: STR_ROCKET_LAUNCHER
-    refNode: *STR_ITEM_CHANGE_COLOR
-    tags:
-      ITEM_BASE_COLOR: 7
-
-  - type: STR_MOUNTED_LASCANNON
-    refNode: *STR_ITEM_CHANGE_COLOR
-    tags:
-      ITEM_BASE_COLOR: 7
-
-  - type: STR_RIPPER_GUN
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_SOLO_DMR
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_SOLO_SHORT
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_SOLO_COMBIMELTA
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_SOLO
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_LONG_RIFLE_GUARD
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_HEAVY_STUBBER_HYBRID
-    refNode: *STR_ITEM_CHANGE_COLOR
-
-  - type: STR_BOLTER_LIGHT_SOLO
-    refNode: *STR_ITEM_CHANGE_COLOR
+#
+# Example: Adding these tags to the autogun causes the guard green base color
+#  and the golden aquilla accents to get recolored to new faction colors.
+#
+#  - type: STR_AUTOGUN
+#    tags:
+#      ITEM_GETS_FACTION_RECOLOR: 1
+#      ITEM_BASE_COLOR: 4
+#      ITEM_GETS_ACCENT_RECOLOR: 1
+#      ITEM_ACCENT_COLOR: 1
+#
