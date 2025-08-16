@@ -79,7 +79,7 @@ armors:
     spriteInv: GENE3.SPK
     corpseBattle:
       - STR_BW2_CORPSE
-    frontArmor: 40
+    frontArmor: 40 #Heavy Flak
     sideArmor: 30
     rearArmor: 20
     underArmor: 20
@@ -559,14 +559,14 @@ armors:
       - STR_TYRANID_PRIME_SWORD_CORPSE
 
   - &STR_RIPPERSWARM_ARMOR_REF
-    type: STR_RIPPERSWARM_2_ARMOR  # Tyranid
+    type: STR_RIPPERSWARM_ARMOR # Tyranid #Template; unused
     visibilityAtDay: 40
     visibilityAtDark: 30  # Good night vision
     antiCamouflageAtDay: 10
     antiCamouflageAtDark: 6
     heatVision: 15  # Basic bio-heatvision
     spriteSheet: RIPPERSWARM_2_BS.PCK  # DR4
-    spriteInv: RIPPERWARM_INV.SPK
+    spriteInv: RIPPERSWARM_2_INV.SPK
     drawingRoutine: 4
     corpseBattle:
       - STR_RIPPERSWARM_CORPSE
@@ -594,6 +594,7 @@ armors:
       - 1.0  # IMPACT
       - 1.3  # MELTA
     loftempsSet: [1]  # very small targets
+    meleeOriginVoxelVerticalOffset: 6 #leaping #probably needed to be able to reach melee targets
     allowsRunning: false  # NPC limits for BAI
     tags:
       INFECTION_RESIST: 100
@@ -604,21 +605,52 @@ armors:
       UNIT_TYPE_TYRANID: 1
       ARMOR_REGENERATES_WOUNDS: 2 #Tyranid regeneration
 
-  - type: STR_RIPPERSWARM_4_ARMOR  # Tyranid
+  - type: STR_RIPPERSWARM_1_ARMOR  # Tyranid
     refNode: *STR_RIPPERSWARM_ARMOR_REF
-    spriteSheet: RIPPERSWARM_4_BS.PCK  # DR4
-    spriteInv: RIPPERWARM_INV.SPK #change
+    spriteSheet: RIPPERSWARM_2_BS.PCK  # change
+    spriteInv: RIPPERSWARM_2_INV.SPK  #change
+    corpseBattle:
+      - STR_RIPPERSWARM_CORPSE #change
+    loftempsSet: [1]  # tiny target
+    tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      ARMOR_REINFORCEMENT_TU_PERCENT: 60
+
+  - type: STR_RIPPERSWARM_2_ARMOR  # Tyranid
+    refNode: *STR_RIPPERSWARM_ARMOR_REF
+    spriteSheet: RIPPERSWARM_2_BS.PCK  # DR4
+    spriteInv: RIPPERSWARM_2_INV.SPK
     corpseBattle:
       - STR_RIPPERSWARM_CORPSE #change
     loftempsSet: [2]  # very small targets
+    tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      ARMOR_REINFORCEMENT_TU_PERCENT: 50
 
-    #   - type: STR_RIPPERSWARM_8_ARMOR  # TO BE IMPLEMENTED
+  - type: STR_RIPPERSWARM_4_ARMOR  # Tyranid
+    refNode: *STR_RIPPERSWARM_ARMOR_REF
+    spriteSheet: RIPPERSWARM_4_BS.PCK  # DR4
+    spriteInv: RIPPERSWARM_4_INV.SPK
+    corpseBattle:
+      - STR_RIPPERSWARM_CORPSE #change
+    loftempsSet: [2]  # very small targets
+    tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      ARMOR_REINFORCEMENT_TU_PERCENT: 30
+
+    #   - type: STR_RIPPERSWARM_8_ARMOR  # Maybe
     #   - type: STR_RIPPERSWARM_12_ARMOR  # MAYBE
 
   - type: STR_RIPPERSWARM_16_ARMOR  # Tyranid
     refNode: *STR_RIPPERSWARM_ARMOR_REF
     spriteSheet: RIPPERSWARM_16_BS.PCK  # DR5
-    spriteInv: RIPPERWARM_INV.SPK #change
+    spriteInv: RIPPERSWARM_16_INV.SPK
     drawingRoutine: 5
     corpseBattle:
       - STR_RIP_CORPSE_16_1
@@ -626,7 +658,12 @@ armors:
       - STR_RIP_CORPSE_16_3
       - STR_RIP_CORPSE_16_4
     size: 2
-    loftempsSet: [2, 2, 2, 2]  # many small targets
+    loftempsSet: [92, 89, 90, 91]  # apparently engine bug 2x2 units can only use these values
+    tags:
+      ARMOR_DISABLE_OVERKILL_SELF_DESTRUCT: 1
+      ARMOR_IS_EXPLODE_ON_DEATH: 1
+      ARMOR_IS_KAMIKAZI: 1
+      ARMOR_REINFORCEMENT_TU_PERCENT: 10
 
   - &STR_SPOREMINE_ARMOR_TEMPLATE #POSSIBLE FUTURE USE
     type: STR_SPOREMINE_ARMOR  # Tyranid #ACID SPORE

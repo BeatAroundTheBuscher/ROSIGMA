@@ -259,6 +259,7 @@ items:
     oneHandedPenalty: 100
     fixedWeapon: true
     fixedWeaponShow: true
+    recover: false
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -304,6 +305,7 @@ items:
     oneHandedPenalty: 100
     fixedWeapon: true
     fixedWeaponShow: true
+    recover: false
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -353,6 +355,7 @@ items:
     oneHandedPenalty: 100
     fixedWeapon: true
     fixedWeaponShow: true
+    recover: false
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -398,6 +401,7 @@ items:
     oneHandedPenalty: 100
     fixedWeapon: true
     fixedWeaponShow: true
+    recover: false
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -448,6 +452,7 @@ items:
     oneHandedPenalty: 100
     fixedWeapon: true
     fixedWeaponShow: true
+    recover: false
     invWidth: 2
     invHeight: 3
     clipSize: -1
@@ -461,7 +466,7 @@ items:
     meleeSound: {mod: 40k, index: 101}  # stabhit
     meleeAnimation: 86
     strengthApplied: true
-    meleePower: 0
+    meleePower: 10
     damageType: 7
     damageAlter:
       RandomType: 1
@@ -475,6 +480,57 @@ items:
     invHeight: 3
     clipSize: -1
     recover: false
+
+  - &STR_RIPPERSWARM_SPAWNER_REF #Template; not used
+    type: STR_RIPPERSWARM_SPAWNER_4   #Spawns unit of 4 rippers
+    categories: [STR_CAT_GRENADES]
+    invHeight: 0
+    invWidth: 0
+    hitAnimation: 2130 #needs unique
+    power: 0
+    damageType: 2
+    damageAlter:
+      RandomType: 1
+      IgnoreOverKill: false
+      FireBlastCalc: false
+      FixRadius: 0
+      ToHealth: 0.0
+      ToTime: 0.0
+      ToWound: 0.0
+      RandomWound: false
+      ToMana: 0.0
+      ToEnergy: 0.0
+      ToMorale: 0.0
+      ArmorEffectiveness: 0.0
+      ToItem: 0.0
+      ToTile: 0.0
+    battleType: 4  # grenade
+    recover: false
+    tuThrow: 999  # only to be thrown via scripts
+    tuPrime: 999  # only to be thrown via scripts
+    throwRange: 1  # not meant to be thrown
+    armor: 999
+    fixedWeapon: false  # has to be false so kamikazi tag and scripts work properly
+    explodeInventory: 2
+    hiddenOnMinimap: false
+    powerForAnimation: 1
+    spawnUnit: STR_RIPPERSWARM_4
+    spawnUnitFaction: -1
+    spawnUnitChance: 50
+    tags:
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
+      ITEM_IS_KAMIKAZI_BOMB: 1
+
+  - type: STR_RIPPERSWARM_SPAWNER_2  #Spawns unit of 2 rippers
+    refNode: *STR_RIPPERSWARM_SPAWNER_REF
+    spawnUnit: STR_RIPPERSWARM_2
+    spawnUnitChance: 50
+
+  - type: STR_RIPPERSWARM_SPAWNER_1  #Spawns unit of a single ripper
+    refNode: *STR_RIPPERSWARM_SPAWNER_REF
+    spawnUnit: STR_RIPPERSWARM_1
+    spawnUnitChance: 50
 
   - &STR_SCYTHING_TALONS
     type: STR_HORMAGAUNT_WEAPON  # Basic Hormagaunt Scything Blades
