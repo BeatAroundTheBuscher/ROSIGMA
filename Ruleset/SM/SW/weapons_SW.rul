@@ -320,7 +320,7 @@ items:
     bulletSprite: {mod: 40k, index: 12}
     fireSound: 2450
     hitSound: {mod: 40k, index: 19}
-    hitAnimation: {mod: 40k, index: 100}
+    hitAnimation: 140
     reloadSound: 2451
     costSell: 5000
     explosionSpeed: 10
@@ -368,6 +368,66 @@ items:
     tags:
       ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 30  # Aimed Focus Beam bonus
 
+  - type: STR_HELFROST_CANNON #Heavy Plasma/melta/lascannon equivalent
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL]
+    size: 0.4
+    requires:
+      - STR_SPACEWOLVES_STRATEGY
+    weight: 50 #hefty weight
+    bigSprite: 2580
+    floorSprite: 2579
+    handSprite: 4110
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: 2260 #ICEhitsmall.png
+    reloadSound: 2451
+    costSell: 5000
+    explosionSpeed: 10
+    bulletSpeed: 40
+    accuracyAuto: 50
+    accuracySnap: 75
+    tuAimed: 75 #time consuming to charge and focus beam, slightly faster than blaster version
+    tuAuto: 45 #-5 vs pistol version
+    tuSnap: 45 #+10 vs Blaster version
+    aimRange: 24 #Long Range focused beam
+    snapRange: 15 #+1 vs pistol
+    autoRange: 12 #+3 vs pistol
+    dropoff: 6 #high drop off, -1 from pistol version
+    autoShots: 4 #+1 autoShots
+    power: 115 #+40% damage bonus for aimed mode
+    damageType: 5
+    damageAlter:  # DA HELFROST BEAM
+      RandomType: 6
+      ToArmorPre: 0.35 # CHILL
+      ToHealth: 0.6 #a lot of other utility
+      ToTime: 0.45
+      ToStun: 0.5
+      ToEnergy: 0.4
+      ToWound: 0.1
+      ArmorEffectiveness: 0.9  # some armor penetration
+      RandomWound: false
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    clipSize: -1
+    recover: true
+    fixedWeapon: false
+    listOrder: 10270
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+    tags:
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 40  # Aimed Focus Beam bonus, slightly worse than heavy plasma
+
   - type: STR_BOLTPISTOL_HELFROST_CLIP # Space Wolves Boltpistol Frosty Ammo
     categories: [STR_CAT_BOLTER, STR_CAT_TACTICAL]
     requiresBuyBaseFunc: [IMPERIUM]
@@ -382,7 +442,7 @@ items:
     floorSprite: {mod: 40k, index: 4} #Needs unique
     handSprite: {mod: 40k, index: 464} #Needs unique
     hitSound: 2492
-    hitAnimation: {mod: 40k, index: 140}
+    hitAnimation: 140
     damageAlter: #DA BOLTER
       ToArmorPre: 0.15 #+0.05 armor chip
       ArmorEffectiveness: 0.6 #10% worse than Kraken at bypassing
@@ -413,7 +473,7 @@ items:
     floorSprite: {mod: 40k, index: 4} #Needs unique
     handSprite: {mod: 40k, index: 464} #Needs unique
     hitSound: 2492
-    hitAnimation: {mod: 40k, index: 140}
+    hitAnimation: 140
     damageAlter: #DA BOLTER
       ToArmorPre: 0.15 #+0.05 armor chip
       ArmorEffectiveness: 0.6 #10% worse than Kraken at bypassing
