@@ -27,7 +27,7 @@ extended:
   scripts:
     damageUnit:
       - new: GOG_dU_next_hit_gibs
-        offset: 1
+        offset: 99  # run after spirit of the marytr
         code: |
           var int health;
           var int maxHealth;
@@ -67,9 +67,13 @@ extended:
         offset: 1
         code: |
           var int gibMode;
+          var ptr RuleItem myItem;
+          var int myBattleType;
 
           battle_game.getTag gibMode Tag.NEXT_HIT_GIBS;
-          if gt gibMode 0;
+          item.getRuleItem myItem;
+          myItem.getBattleType myBattleType;  # 11 = corpse
+          if and gt gibMode 0 eq myBattleType 11;
             item.setTag Tag.ITEM_IS_GIBBED gibMode;
           end;
 
