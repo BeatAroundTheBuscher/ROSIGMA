@@ -1,4 +1,3 @@
-
 #GSC
 
 weaponSets:
@@ -12,7 +11,7 @@ weaponSets:
 
 units:
 
-  - type: STR_GSC_ZOMBIE  # GSC Generic Turned Zombie
+  - type: STR_GSC_ZOMBIE  # GSC Generic Turned Zombie #doesnt appear in racelists
     race: STR_GENE_CULT
     rank: STR_LIVE_TERRORIST
     stats:
@@ -41,8 +40,8 @@ units:
     energyRecovery: 50
     livingWeapon: true
 
-  - &STR_NEOPHYTE_TEMPLATE
-    type: STR_GENE_CULTIST     #Brood Brother # Neophyte Hybrids  #GSC Planetary defense forces                    # RANK 4 weapons done
+  - &GSC_NEOPHYTE_TEMPLATE
+    type: STR_GENE_CULTIST     #Brood Brother # Neophyte Hybrids  #Guard type flak armor                    # RANK 4 weapons done
     race: STR_GENE_CULT
     rank: STR_LIVE_SOLDIER
     stats:
@@ -58,6 +57,26 @@ units:
       psiSkill: 0
       melee: 60
     armor: STR_GC_ARMOR
+    standHeight: 21
+    kneelHeight: 16
+    moraleLossWhenKilled: 15  # No GSC cares
+    value: 10
+    builtInWeaponSets:
+      - - STR_PUMP_SHOTGUN
+        - STR_STUN_SHELLS
+        - STR_SHOTGUN_SHELLS
+        - STR_MAKESHIFT_GRENADE
+      - - STR_SMG_STUB_GUN
+        - STR_STUB_GUN_AMMO_LONG
+        - STR_PHOTON_GRENADE
+      - - STR_LIGHT_MELTAGUN_MYNERVA
+        - STR_LIGHT_MELTA_AMMO
+        - STR_LIGHT_MELTA_AMMO
+        - STR_MAKESHIFT_PIPEBOMB
+
+  - type: STR_GSC_MINER
+    refNode: *GSC_NEOPHYTE_TEMPLATE
+    armor: STR_GSC_MINER_ARMOR
     moraleLossWhenKilled: 15  # No GSC cares
     value: 10
     builtInWeaponSets:
@@ -84,7 +103,7 @@ units:
       reactions: 55
       firing: 60
       throwing: 55
-      strength: 50  # GSC gene boost
+      strength: 55  # GSC gene boost
       psiStrength: 50
       psiSkill: 0
       melee: 60
@@ -220,22 +239,22 @@ units:
         - STR_AUTOSTUB_AMMO_VOLONIUM
         - STR_AUTOSTUB_AMMO_VOLONIUM
 
-  - type: STR_GSC_ABERRANT #just orange ogryn for now
+  - type: STR_GSC_ABERRANT
     race: STR_GENE_CULT
     rank: STR_LIVE_SOLDIER
     stats:
-      tu: 65
+      tu: 70
       stamina: 100
-      health: 180  # GSC healthy, low armor
+      health: 200
       bravery: 90
-      reactions: 45
-      firing: 45
-      throwing: 65
-      strength: 80
-      psiStrength: 40
+      reactions: 55
+      firing: 40
+      throwing: 50
+      strength: 90
+      psiStrength: 25
       psiSkill: 0
-      melee: 80
-    armor: STR_ABERRANT_ARMOR
+      melee: 90
+    armor: STR_GSC_ABERRANT_ARMOR
     standHeight: 21
     kneelHeight: 14
     aggression: 7
@@ -247,16 +266,82 @@ units:
     livingWeapon: true
     deathSound: [{mod: 40k, index: 281}, {mod: 40k, index: 282}, {mod: 40k, index: 283}, {mod: 40k, index: 284}, {mod: 40k, index: 285}]
     builtInWeaponSets:
-      - - STR_GENERIC_HEAVY_STUBBER
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_HEAVY_STUBBER_CLIP
-      - - STR_GENERIC_HEAVY_STUBBER
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_HEAVY_STUBBER_CLIP
-        - STR_GRENADE
-      - - STR_CHAOS_RIPPERGUN
-        - STR_RIPPER_GUN_CLIP
-        - STR_RIPPER_GUN_CLIP
+      - - STR_POWER_PICK
+      - - STR_POWER_HAMMER
+      - - STR_POWER_HAMMER
+
+  - type: STR_LOCUS_CLOAKED
+    race: STR_GENE_CULT
+    # rank:
+    stats:
+      tu: 70  # GSC gene boost
+      stamina: 95
+      health: 90  # GSC healthy, hybrid gen 2
+      bravery: 100  # +30 bravery, nearly fearless due to genestealer control
+      reactions: 60
+      firing: 60
+      throwing: 60
+      strength: 70  # GSC gene boost
+      psiStrength: 70
+      psiSkill: 0
+      melee: 80  # 3 arms, claws etc.
+    armor: STR_LOCUS_CLOAKED
+    standHeight: 21
+    kneelHeight: 15
+    value: 15
+    deathSound: [2232, 2233, 2234, 2235]  # change?
+    intelligence: 1
+    aggression: 3
+    berserkChance: 80
+    energyRecovery: 50
+    livingWeapon: true
+    moraleLossWhenKilled: 33  # No GSC cares
+    spawnUnit: STR_LOCUS_FRENZIED
+    builtInWeaponSets:
+      - - STR_GENOCLAWS
+        - TOXIC_STING_WEAPON
+      - - STR_GENOCLAWS
+        - TOXIC_STING_WEAPON
+      - - STR_GENOCLAWS
+        - TOXIC_STING_WEAPON
+
+  - type: STR_LOCUS_FRENZIED
+    race: STR_GENE_CULT
+    # rank:
+    stats:
+      tu: 70  # GSC gene boost
+      stamina: 95
+      health: 90  # GSC healthy, hybrid gen 2
+      bravery: 100  # +30 bravery, nearly fearless due to genestealer control
+      reactions: 60
+      firing: 60
+      throwing: 60
+      strength: 70  # GSC gene boost
+      psiStrength: 70
+      psiSkill: 0
+      melee: 80  # 3 arms, claws etc.
+    armor: STR_LOCUS_FRENZIED
+    standHeight: 21
+    kneelHeight: 15
+    value: 15
+    deathSound: [2232, 2233, 2234, 2235]  # change?
+    intelligence: 1
+    aggression: 3
+    berserkChance: 80
+    energyRecovery: 50
+    livingWeapon: true
+    moraleLossWhenKilled: 33  # No GSC cares
+    builtInWeaponSets:
+      - - STR_STUB_GUN
+        - STR_STUB_GUN_AMMO_AP
+        - STR_STUB_GUN_AMMO_AP
+        - STR_KNIF
+      - - STR_SMG_STUB_GUN
+        - STR_STUB_GUN_AMMO_AP
+        - STR_STUB_GUN_AMMO_AP
+        - STR_MAKESHIFT_PIPEBOMB
+      - - STR_LASCUTTER
+        - STR_LASCUTTER_BIG_AMMO
         - STR_KRAK_GRENADE
 
   - &STR_ACOLYTE_HYBRID
@@ -416,78 +501,428 @@ units:
         - STR_MGRENADE
         - STR_POWERKNUCKLE  # replace with new Tyranid Bone Sword
 
+  - type: STR_XENO_SOLDIER  # str_genestealer
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 70
+      stamina: 100
+      health: 120
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 80
+      psiSkill: 0
+      melee: 76
+    avoidsFire: false
+    armor: GENE_ARMOR2
+    intelligence: 1
+    value: 10  # 5 lower
+    aggression: 8
+    energyRecovery: 60
+
+  - type: STR_XENO_LEADER  # str_genestealer
+    race: STR_GENE
+    rank: STR_LIVE_LEADER
+    stats:
+      tu: 70
+      stamina: 120
+      health: 140
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 70
+      psiSkill: 0
+      melee: 76
+    avoidsFire: false
+    armor: GENE_ARMOR2
+    intelligence: 5
+    aggression: 8
+    energyRecovery: 80
+
+  - type: STR_XENO_COMMANDER  # str_genestealer
+    race: STR_GENE
+    rank: STR_LIVE_COMMANDER
+    stats:
+      tu: 70
+      stamina: 150
+      health: 180
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 70
+      psiSkill: 0
+      melee: 76
+    armor: GENE_ARMOR2
+    avoidsFire: false
+    intelligence: 3
+    aggression: 8
+    energyRecovery: 80
+
+  - type: STR_XENO_TERRORIST #str_genestealer
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 120 #mistake?
+      stamina: 100
+      health: 80
+      bravery: 100
+      reactions: 70
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 70
+      psiSkill: 0
+      melee: 80
+    armor: GENE_ARMOR3
+    intelligence: 2
+    aggression: 8
+    avoidsFire: false
+    energyRecovery: 60
+    livingWeapon: false
+
+  - type: STR_CARNI_TERRORIST #to be genestealer carnifex
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 82
+      stamina: 120
+      health: 600  # 340
+      bravery: 100
+      reactions: 64
+      firing: 80
+      throwing: 80
+      strength: 90
+      psiStrength: 35
+      psiSkill: 0
+      melee: 80
+    armor: CARNI_ARMOR
+    standHeight: 25
+    kneelHeight: 18
+    intelligence: 1
+    aggression: 3
+    energyRecovery: 60
+    livingWeapon: true
+
+  - type: STR_XENOSECTOPOD_TERRORIST  # OLD Dread # Unused
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 62
+      stamina: 90
+      health: 150
+      bravery: 110
+      reactions: 64
+      firing: 60
+      throwing: 0
+      strength: 90
+      psiStrength: 100
+      psiSkill: 0
+      melee: 80
+    armor: SECTOPOD_ARMOR
+    standHeight: 23
+    kneelHeight: 16
+    canPanic: false
+    canBeMindControlled: false
+    value: 30
+    intelligence: 1
+    aggression: 2
+    energyRecovery: 50
+    livingWeapon: false
+
+# dungeon specific start
+  - type: STR_HULKERCARNI_TERRORIST
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 90
+      stamina: 120
+      health: 600  # 340
+      bravery: 100  # 90
+      reactions: 70
+      firing: 80
+      throwing: 80
+      strength: 90
+      psiStrength: 35
+      psiSkill: 0
+      melee: 80
+    armor: STR_HULKERCARNI_ARMOR
+    standHeight: 25
+    kneelHeight: 16
+    value: 25
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    intelligence: 5
+    aggression: 8
+    energyRecovery: 60
+    livingWeapon: true
+    liveAlien: ""
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+
+  - type: STR_HULKERXENO2_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 90
+      stamina: 100
+      health: 120
+      bravery: 100
+      reactions: 80
+      firing: 54
+      throwing: 62
+      strength: 70
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR2
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 8
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - STR_GENOCLAWS
+        - CTHULHU_GENE_WEAK
+    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
+    canPanic: false
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_HULKERXENO2a_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 110
+      stamina: 100
+      health: 120
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 70
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR2a
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 9
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - STR_GENOCLAWS
+    isLeeroyJenkins: true
+    canPanic: false
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_HULKERXENO4_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 80
+      stamina: 100
+      health: 120
+      bravery: 100
+      reactions: 80
+      firing: 54
+      throwing: 62
+      strength: 70
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR4
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 8
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - STR_GENOCLAWS
+        - CTHULHU_GENE_WEAK
+    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
+    canPanic: false
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_HULKERXENO4a_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 100
+      stamina: 100
+      health: 120
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 70
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR4a
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 9
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - STR_GENOCLAWS
+    isLeeroyJenkins: true
+    canPanic: false
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_HULKERXENO6_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 85
+      stamina: 100
+      health: 130
+      bravery: 100
+      reactions: 80
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR6
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 8
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - CTHULHU_GENE
+        - STR_GENOCLAWS_END
+    canPanic: false
+    # isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_HULKERXENO6a_SOLDIER
+    race: STR_GENE
+    rank: STR_LIVE_SOLDIER
+    stats:
+      tu: 115
+      stamina: 100
+      health: 130
+      bravery: 100
+      reactions: 60
+      firing: 54
+      throwing: 62
+      strength: 90
+      psiStrength: 25
+      psiSkill: 0
+      melee: 85
+    avoidsFire: false
+    armor: STR_HULKERGENE_ARMOR6a
+    standHeight: 19
+    kneelHeight: 14
+    intelligence: 2
+    value: 10
+    aggression: 8
+    energyRecovery: 60
+    builtInWeaponSets:
+      - - STR_GENOCLAWS_END
+    canPanic: false
+    isLeeroyJenkins: true
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    livingWeapon: true
+
+  - type: STR_PATRIARCH_TERRORIST
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 120
+      stamina: 120
+      health: 300
+      bravery: 120
+      reactions: 90
+      firing: 90
+      throwing: 50
+      strength: 150
+      psiStrength: 100
+      psiSkill: 100
+      melee: 100
+    armor: STR_PATRIARCH_ARMOR
+    standHeight: 23
+    kneelHeight: 16
+    value: 25
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    intelligence: 5
+    aggression: 8
+    energyRecovery: 60
+    livingWeapon: true
+    liveAlien: ""
+    spotter: 2  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
+
+  - type: STR_BROODLORD_TERRORIST
+    race: STR_GENE
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 140
+      stamina: 140
+      health: 400
+      bravery: 120
+      reactions: 100
+      firing: 90
+      throwing: 50
+      strength: 100
+      psiStrength: 60
+      psiSkill: 0  # shouldnt try mind control but go claw killing instead
+      melee: 80
+    armor: STR_BROODLORD_ARMOR
+    standHeight: 23
+    kneelHeight: 16
+    value: 25
+    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
+    intelligence: 5
+    aggression: 8
+    energyRecovery: 60
+    livingWeapon: true
+    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
+    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
+    isLeeroyJenkins: true  # temporary go berserk until there is better script
+
+# dungeon specific end
+
+
 # *** Infected + new GSC Civilians ***
-  - type: STR_CLOAKED_WOMAN  # Imperial Citizen Tan
-    race: STR_CIVILIAN
-    stats:
-      tu: 40
-      stamina: 50
-      health: 30
-      bravery: 50
-      reactions: 20
-      firing: 25
-      throwing: 25
-      strength: 15
-      psiStrength: 0
-      psiSkill: 0
-      melee: 25
-    armor: CLOAKED_WOMAN_ARMOR
-    standHeight: 19
-    kneelHeight: 14
-    value: 10
-    intelligence: 0
-    aggression: 0
-    energyRecovery: 40
-    deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
-    livingWeapon: true
+# check if unit is in racelists or exists only for zombification
 
-  - type: STR_CLOAKED_WOMAN2  # Imperial Citizen Red
-    race: STR_CIVILIAN
-    stats:
-      tu: 40
-      stamina: 50
-      health: 30
-      bravery: 50
-      reactions: 20
-      firing: 25
-      throwing: 25
-      strength: 15
-      psiStrength: 0
-      psiSkill: 0
-      melee: 25
-    armor: CLOAKED_WOMAN2_ARMOR
-    standHeight: 19
-    kneelHeight: 14
-    value: 10
-    intelligence: 0
-    aggression: 0
-    energyRecovery: 40
-    deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
-    livingWeapon: true
-
-  - type: STR_CLOAKED_WOMAN_ORANGE  # Imperial Citizen Orange
-    race: STR_CIVILIAN
-    stats:
-      tu: 40
-      stamina: 50
-      health: 30
-      bravery: 50
-      reactions: 20
-      firing: 25
-      throwing: 25
-      strength: 15
-      psiStrength: 0
-      psiSkill: 0
-      melee: 25
-    armor: CLOAKED_WOMAN_ORANGE_ARMOR
-    standHeight: 19
-    kneelHeight: 14
-    value: 10
-    intelligence: 0
-    aggression: 0
-    energyRecovery: 40
-    deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
-    livingWeapon: true
 
   - type: STR_GSC_CLOAKED_WOMAN  # GSC Civilian Woman Tan
     race: STR_CIVILIAN
@@ -554,6 +989,7 @@ units:
         - STR_MAKESHIFT_GRENADE
       - - STR_KNIF
         - STR_MAKESHIFT_PIPEBOMB
+
   - type: STR_GSC_CLOAKED_WOMAN_ORANGE  # GSC Civilian Woman Orange
     race: STR_CIVILIAN
     stats:
@@ -724,6 +1160,9 @@ units:
         - STR_STUB_GUN_AMMO_LONG
         - STR_MAKESHIFT_PIPEBOMB
 
+     # GSC SPACERS
+
+
   - type: STR_GSC_SPACER_FEMALE  # Void Hazard Suit
     race: STR_GSC_CREW_DISGUISED
     stats:
@@ -758,6 +1197,7 @@ units:
       - - STR_TZEENTCH_LASGUN
         - STR_LASGUN_CLIP
         - STR_PHOTON_GRENADE
+
   - type: STR_GSC_SPACER_MALE  # Void Hazard Suit
     race: STR_GSC_CREW_DISGUISED
     stats:
@@ -792,7 +1232,10 @@ units:
       - - STR_FLAMETHROWER_CHAOS
         - STR_FLAMETHROWER_CLIP
 
-  - type: STR_GSC_PENETANTE_FEMALE  # Non explosive
+     # GSC INFECTED ARBITES
+
+
+  - type: STR_GSC_PENETANTE_FEMALE #in racelists # Non explosive
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -829,7 +1272,8 @@ units:
         - STR_STUB_GUN_AMMO_LONG
         - STR_MAKESHIFT_PIPEBOMB
         - STR_GSC_AUTOINJECTOR_WEAPON
-  - type: STR_GSC_PENETANTE_LEEROY  # male, GSC wont be blowing up women if they can help it.
+
+  - type: STR_GSC_PENETANTE_LEEROY  #in racelists # male, GSC wont be blowing up women if they can help it.
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -868,7 +1312,7 @@ units:
         - STR_MAKESHIFT_PIPEBOMB
         - STR_EXPLOSIVE_COLLAR_CHAOS
 
-  - type: STR_GSC_ENFORCER_SHIELD  # male
+  - type: STR_GSC_ENFORCER_SHIELD  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_SOLDIER
     stats:
@@ -906,7 +1350,7 @@ units:
         - STR_STUN_GAS_SHELLS
         - STR_PHOTON_GRENADE
 
-  - type: STR_GSC_ENFORCER_HEAVY  # female
+  - type: STR_GSC_ENFORCER_HEAVY  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_SOLDIER
     stats:
@@ -945,7 +1389,7 @@ units:
         - STR_HEAVY_WEBBER_AMMO
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_ENFORCER_MEDIC  # infector
+  - type: STR_GSC_ENFORCER_MEDIC  # inot n racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_MEDIC
     stats:
@@ -980,7 +1424,7 @@ units:
       - - STR_GSC_NEEDLER_RIFLE
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_JUDGE_BIKE
+  - type: STR_GSC_JUDGE_BIKE #in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_TERRORIST
     stats:
@@ -1008,7 +1452,7 @@ units:
     livingWeapon: true
     moveSound: -1
 
-  - type: STR_GSC_JUDGEF  # Female
+  - type: STR_GSC_JUDGEF  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_NAVIGATOR
     stats:
@@ -1048,7 +1492,7 @@ units:
         - STR_GSC_AUTOINJECTOR_WEAPON
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_JUDGEM  # Male
+  - type: STR_GSC_JUDGEM  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_ENGINEER
     stats:
@@ -1088,7 +1532,7 @@ units:
         - STR_HEAVY_WEBBER_AMMO
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_ARBITOR  # female
+  - type: STR_GSC_ARBITOR  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_LEADER
     stats:
@@ -1126,7 +1570,7 @@ units:
       - - STR_GSC_NEEDLER_RIFLE
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_PRISON_WARDEN  # male
+  - type: STR_GSC_PRISON_WARDEN  # in racelists
     race: STR_GSC_ARBITES_FACTION
     rank: STR_LIVE_COMMANDER  # Not actually commander for research purposes though
     stats:
@@ -1164,32 +1608,9 @@ units:
         - STR_PISTOL_WEBBER_AMMO
         - STR_PHOTON_GRENADE  # replace with gas grenade
 
-  - type: STR_GSC_SENTINEL                                         # RANK 7
-    race: STR_GSC_ARBITES_FACTION
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 85
-      stamina: 100
-      health: 75
-      bravery: 80
-      reactions: 50
-      firing: 58
-      throwing: 0
-      strength: 100
-      psiStrength: 50
-      psiSkill: 0
-      melee: 0
-    armor: STR_GSC_SENTINELPD_ARMOR
-    deathSound: {mod: 40k, index: 23}
-    standHeight: 23
-    kneelHeight: 14
-    intelligence: 2
-    aggression: 2
-    spotter: 2
-    energyRecovery: 80
-    moveSound: {mod: 40k, index: 700}
+        #GSC infected Adeptas
 
-  - type: STR_GSC_MEDICAE  # Female
+  - type: STR_GSC_MEDICAE  # in racelists
     race: STR_GSC_MEDICAE_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -1222,7 +1643,7 @@ units:
       - - STR_GSC_AUTOINJECTOR_WEAPON
       - - STR_GSC_AUTOINJECTOR_WEAPON
 
-  - type: STR_GSC_INFECTED_REPENTIA
+  - type: STR_GSC_INFECTED_REPENTIA #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 90  # GSC gene boost, to run up and poke people
@@ -1247,7 +1668,7 @@ units:
     energyRecovery: 60
     deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
 
-  - type: STR_GSC_INFECTED_ADEPTAS
+  - type: STR_GSC_INFECTED_ADEPTAS #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 60  # GSC gene boost
@@ -1271,7 +1692,34 @@ units:
     energyRecovery: 40
     deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
 
-  - type: STR_GSC_HB_GUNNER
+        # GSC infected PDF
+
+  - type: STR_GSC_SENTINEL   #in racelists
+    race: STR_GSC_ARBITES_FACTION
+    rank: STR_LIVE_TERRORIST
+    stats:
+      tu: 85
+      stamina: 100
+      health: 75
+      bravery: 80
+      reactions: 50
+      firing: 58
+      throwing: 0
+      strength: 100
+      psiStrength: 50
+      psiSkill: 0
+      melee: 0
+    armor: STR_GSC_SENTINELPD_ARMOR
+    deathSound: {mod: 40k, index: 23}
+    standHeight: 23
+    kneelHeight: 14
+    intelligence: 2
+    aggression: 2
+    spotter: 2
+    energyRecovery: 80
+    moveSound: {mod: 40k, index: 700}
+
+  - type: STR_GSC_HB_GUNNER #in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_TERRORIST
     stats:
@@ -1304,7 +1752,8 @@ units:
         - STR_AC_AP_AMMO
       - - STR_MOUNTED_HEAVY_BOLTER
         - STR_AC_HE_AMMO
-  - type: STR_GSC_AUTOCANNON_GUNNER
+
+  - type: STR_GSC_AUTOCANNON_GUNNER #in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_TERRORIST
     stats:
@@ -1337,7 +1786,8 @@ units:
         - STR_AUTOCANNON_CLIP
       - - STR_AUTOCANNON_GUARD
         - STR_AUTOCANNON_CLIP
-  - type: STR_GSC_PDF_SOLDIER  # Female
+
+  - type: STR_GSC_PDF_SOLDIER  # in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -1376,7 +1826,7 @@ units:
         - STR_AUTOGUN_CLIP
         - STR_PHOTON_GRENADE
 
-  - type: STR_GSC_PDF_GUNNER  # Male
+  - type: STR_GSC_PDF_GUNNER  # in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -1415,7 +1865,7 @@ units:
         - STR_HEAVY_STUBBER_CLIP
         - STR_PHOTON_GRENADE
 
-  - type: STR_GSC_PDF_MEDIC  # Female infector
+  - type: STR_GSC_PDF_MEDIC  #in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -1448,7 +1898,7 @@ units:
       - - STR_GSC_AUTOINJECTOR_WEAPON
       - - STR_GSC_AUTOINJECTOR_WEAPON
 
-  - type: STR_GSC_ARMORED_CAR
+  - type: STR_GSC_ARMORED_CAR #in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_TERRORIST
     stats:
@@ -1474,8 +1924,9 @@ units:
     energyRecovery: 60
     livingWeapon: true
 
+      # GSC infected Guard
 
-  - type: STR_GSC_KRIEG_MALE
+  - type: STR_GSC_KRIEG_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 60
@@ -1502,7 +1953,7 @@ units:
     moveSound: -1
     value: 10
 
-  - type: STR_GSC_KRIEG_FEMALE
+  - type: STR_GSC_KRIEG_FEMALE #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 60
@@ -1529,7 +1980,7 @@ units:
     moveSound: -1
     value: 10
 
-  - type: STR_GSC_GUARD_FLAK_MALE
+  - type: STR_GSC_GUARD_FLAK_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 60
@@ -1556,7 +2007,7 @@ units:
     moveSound: -1
     value: 10
 
-  - type: STR_GSC_GUARD_FLAK_FEMALE
+  - type: STR_GSC_GUARD_FLAK_FEMALE #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 60
@@ -1583,7 +2034,7 @@ units:
     moveSound: -1
     value: 10
 
-  - type: STR_GSC_GUARD_MEDIC_MALE
+  - type: STR_GSC_GUARD_MEDIC_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 80  # GSC gene boost, to run up and poke people
@@ -1612,7 +2063,7 @@ units:
     moveSound: -1
     value: 15
 
-  - type: STR_GSC_GUARD_MEDIC_FEMALE
+  - type: STR_GSC_GUARD_MEDIC_FEMALE #in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 80  # GSC gene boost, to run up and poke people
@@ -1641,7 +2092,7 @@ units:
     moveSound: -1
     value: 15
 
-  - type: STR_GSC_GUARD_CARAPACE_MALE
+  - type: STR_GSC_GUARD_CARAPACE_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 70
@@ -1668,7 +2119,7 @@ units:
     moveSound: -1
     value: 15
 
-  - type: STR_GSC_GUARD_CARAPACE_FEMALE
+  - type: STR_GSC_GUARD_CARAPACE_FEMALE #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 70
@@ -1695,7 +2146,7 @@ units:
     moveSound: -1
     value: 15
 
-  - type: STR_GSC_GUARD_CARAPACE_MEDIC_MALE
+  - type: STR_GSC_GUARD_CARAPACE_MEDIC_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 70
@@ -1724,7 +2175,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_GUARD_CARAPACE_MEDIC_FEMALE
+  - type: STR_GSC_GUARD_CARAPACE_MEDIC_FEMALE #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 70
@@ -1753,7 +2204,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_GUARD_SCION_MALE
+  - type: STR_GSC_GUARD_SCION_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 80
@@ -1780,7 +2231,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_GUARD_SCION_FEMALE
+  - type: STR_GSC_GUARD_SCION_FEMALE #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 80
@@ -1807,7 +2258,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_GUARD_FLAK_OFFICER_MALE  # used for zombify
+  - type: STR_GSC_GUARD_FLAK_OFFICER_MALE  # used for zombify #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 65
@@ -1877,7 +2328,7 @@ units:
         - STR_CHAINSWORD_GUARD
         - STR_KRAK_GRENADE
 
-  - type: STR_GSC_GUARD_FLAK_OFFICER_FEMALE
+  - type: STR_GSC_GUARD_FLAK_OFFICER_FEMALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 65
@@ -1904,7 +2355,7 @@ units:
     moveSound: -1
     value: 25
 
-  - type: STR_GSC_GUARD_CARAPACE_OFFICER_MALE
+  - type: STR_GSC_GUARD_CARAPACE_OFFICER_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 75
@@ -1972,7 +2423,7 @@ units:
         - STR_CHAINSWORD_GUARD  # replace officer's sword because this is too big a benefit to hand out to certain factions like Marines
         - STR_KRAK_GRENADE
 
-  - type: STR_GSC_GUARD_CARAPACE_OFFICER_FEMALE
+  - type: STR_GSC_GUARD_CARAPACE_OFFICER_FEMALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 75
@@ -1999,7 +2450,7 @@ units:
     moveSound: -1
     value: 25
 
-  - type: STR_GSC_COMMISSAR_MALE
+  - type: STR_GSC_COMMISSAR_MALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 65
@@ -2093,7 +2544,7 @@ units:
         - STR_CHAINSWORD_GUARD  # replace officer's sword because this is too big a benefit to hand out to certain factions like Marines
         - STR_PHOTON_GRENADE
 
-  - type: STR_GSC_COMMISSAR_CARAPACE_MALE
+  - type: STR_GSC_COMMISSAR_CARAPACE_MALE # not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 70
@@ -2120,7 +2571,7 @@ units:
     moveSound: -1
     value: 35
 
-  - type: STR_GSC_COMMISSAR_CARAPACE_FEMALE
+  - type: STR_GSC_COMMISSAR_CARAPACE_FEMALE #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 70
@@ -2187,7 +2638,7 @@ units:
         - STR_CHAINSWORD_GUARD  # replace officer's sword because this is too big a benefit to hand out to certain factions like Marines
         - STR_PHOTON_GRENADE
 
-  - type: STR_GSC_PSYKER_MALE
+  - type: STR_GSC_PSYKER_MALE #Infected #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 50
@@ -2214,7 +2665,7 @@ units:
     moveSound: -1
     value: 50
 
-  - type: STR_GSC_PSYKER_FEMALE
+  - type: STR_GSC_PSYKER_FEMALE #Infected #in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 50
@@ -2241,7 +2692,7 @@ units:
     moveSound: -1
     value: 50
 
-  - type: STR_GSC_TANITH_MALE
+  - type: STR_GSC_TANITH_MALE #Infected #not in racelists
     race: STR_ZOMBIEM
     stats:
       tu: 70
@@ -2268,7 +2719,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_TANITH_FEMALE
+  - type: STR_GSC_TANITH_FEMALE #Infected #not in racelists
     race: STR_ZOMBIEF
     stats:
       tu: 70
@@ -2295,7 +2746,7 @@ units:
     moveSound: -1
     value: 20
 
-  - type: STR_GSC_OGRYN  # Infected
+  - type: STR_GSC_OGRYN  # Infected #Not in racelists
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -2322,7 +2773,7 @@ units:
     livingWeapon: true
     deathSound: [{mod: 40k, index: 281}, {mod: 40k, index: 282}, {mod: 40k, index: 283}, {mod: 40k, index: 284}, {mod: 40k, index: 285}]
 
-  - type: STR_GSC_OGRYN_ORANGE  # Stronger version.
+  - type: STR_GSC_OGRYN_ORANGE  # In racelists # Stronger version.
     race: STR_GSC_CULT_DISGUISED_RACE
     rank: STR_LIVE_SOLDIER
     stats:
@@ -2337,7 +2788,7 @@ units:
       psiStrength: 40
       psiSkill: 0
       melee: 80
-    armor: STR_GSC_OGRYN_ORANGE_ARMOR
+    armor: STR_GSC_OGRYN_ORANGE_ARMOR #change
     standHeight: 21
     kneelHeight: 14
     aggression: 7
@@ -2360,417 +2811,3 @@ units:
         - STR_RIPPER_GUN_CLIP
         - STR_RIPPER_GUN_CLIP
         - STR_KRAK_GRENADE
-
-  - type: STR_XENO_SOLDIER  # GENESTELLER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 70
-      stamina: 100
-      health: 120
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 80
-      psiSkill: 0
-      melee: 76
-    avoidsFire: false
-    armor: GENE_ARMOR2
-    intelligence: 1
-    value: 10  # 5 lower
-    aggression: 8
-    energyRecovery: 60
-  - type: STR_XENO_LEADER  # GENESTELLER
-    race: STR_GENE
-    rank: STR_LIVE_LEADER
-    stats:
-      tu: 70
-      stamina: 120
-      health: 140
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 70
-      psiSkill: 0
-      melee: 76
-    avoidsFire: false
-    armor: GENE_ARMOR2
-    intelligence: 5
-    aggression: 8
-    energyRecovery: 80
-  - type: STR_XENO_COMMANDER  # GENESTELLER
-    race: STR_GENE
-    rank: STR_LIVE_COMMANDER
-    stats:
-      tu: 70
-      stamina: 150
-      health: 180
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 70
-      psiSkill: 0
-      melee: 76
-    armor: GENE_ARMOR2
-    avoidsFire: false
-    intelligence: 3
-    aggression: 8
-    energyRecovery: 80
-
-  - type: STR_XENO_TERRORIST #genestealer
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 120
-      stamina: 100
-      health: 80
-      bravery: 100
-      reactions: 70
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 70
-      psiSkill: 0
-      melee: 80
-    armor: GENE_ARMOR3
-    intelligence: 2
-    aggression: 8
-    avoidsFire: false
-    energyRecovery: 60
-    livingWeapon: false
-
-  - type: STR_CARNI_TERRORIST #to be genestealer carnifex
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 82
-      stamina: 120
-      health: 600  # 340
-      bravery: 100
-      reactions: 64
-      firing: 80
-      throwing: 80
-      strength: 90
-      psiStrength: 35
-      psiSkill: 0
-      melee: 80
-    armor: CARNI_ARMOR
-    intelligence: 1
-    aggression: 3
-    energyRecovery: 60
-    livingWeapon: true
-
-  - type: STR_XENOSECTOPOD_TERRORIST  # OLD Dread # ?
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 62
-      stamina: 90
-      health: 150
-      bravery: 110
-      reactions: 64
-      firing: 60
-      throwing: 0
-      strength: 90
-      psiStrength: 100
-      psiSkill: 0
-      melee: 80
-    armor: SECTOPOD_ARMOR
-    standHeight: 23
-    kneelHeight: 16
-    canPanic: false
-    canBeMindControlled: false
-    value: 30
-    intelligence: 1
-    aggression: 2
-    energyRecovery: 50
-    livingWeapon: false
-
-# dungeon specific start
-  - type: STR_HULKERCARNI_TERRORIST
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 90
-      stamina: 120
-      health: 600  # 340
-      bravery: 100  # 90
-      reactions: 70
-      firing: 80
-      throwing: 80
-      strength: 90
-      psiStrength: 35
-      psiSkill: 0
-      melee: 80
-    armor: STR_HULKERCARNI_ARMOR
-    standHeight: 23
-    kneelHeight: 16
-    value: 25
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    intelligence: 5
-    aggression: 8
-    energyRecovery: 60
-    livingWeapon: true
-    liveAlien: ""
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-
-  - type: STR_HULKERXENO2_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 90
-      stamina: 100
-      health: 120
-      bravery: 100
-      reactions: 80
-      firing: 54
-      throwing: 62
-      strength: 70
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR2
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 8
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - STR_GENOCLAWS
-        - CTHULHU_GENE_WEAK
-    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
-    canPanic: false
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_HULKERXENO2a_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 110
-      stamina: 100
-      health: 120
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 70
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR2a
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 9
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - STR_GENOCLAWS
-    isLeeroyJenkins: true
-    canPanic: false
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_HULKERXENO4_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 80
-      stamina: 100
-      health: 120
-      bravery: 100
-      reactions: 80
-      firing: 54
-      throwing: 62
-      strength: 70
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR4
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 8
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - STR_GENOCLAWS
-        - CTHULHU_GENE_WEAK
-    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
-    canPanic: false
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_HULKERXENO4a_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 100
-      stamina: 100
-      health: 120
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 70
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR4a
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 9
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - STR_GENOCLAWS
-    isLeeroyJenkins: true
-    canPanic: false
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_HULKERXENO6_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 85
-      stamina: 100
-      health: 130
-      bravery: 100
-      reactions: 80
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR6
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 8
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - CTHULHU_GENE
-        - STR_GENOCLAWS_END
-    canPanic: false
-    # isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_HULKERXENO6a_SOLDIER
-    race: STR_GENE
-    rank: STR_LIVE_SOLDIER
-    stats:
-      tu: 115
-      stamina: 100
-      health: 130
-      bravery: 100
-      reactions: 60
-      firing: 54
-      throwing: 62
-      strength: 90
-      psiStrength: 25
-      psiSkill: 0
-      melee: 85
-    avoidsFire: false
-    armor: STR_HULKERGENE_ARMOR6a
-    standHeight: 21
-    kneelHeight: 16
-    intelligence: 2
-    value: 10
-    aggression: 8
-    energyRecovery: 60
-    builtInWeaponSets:
-      - - STR_GENOCLAWS_END
-    canPanic: false
-    isLeeroyJenkins: true
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    livingWeapon: true
-
-  - type: STR_PATRIARCH_TERRORIST
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 120
-      stamina: 120
-      health: 300
-      bravery: 120
-      reactions: 90
-      firing: 90
-      throwing: 50
-      strength: 150
-      psiStrength: 100
-      psiSkill: 100
-      melee: 100
-    armor: STR_PATRIARCH_ARMOR
-    standHeight: 23
-    kneelHeight: 16
-    value: 25
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    intelligence: 5
-    aggression: 8
-    energyRecovery: 60
-    livingWeapon: true
-    liveAlien: ""
-    spotter: 2  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    isLeeroyJenkins: false  # true would only allow their ranged attack in reaction fire
-
-  - type: STR_BROODLORD_TERRORIST
-    race: STR_GENE
-    rank: STR_LIVE_TERRORIST
-    stats:
-      tu: 140
-      stamina: 140
-      health: 400
-      bravery: 120
-      reactions: 100
-      firing: 90
-      throwing: 50
-      strength: 100
-      psiStrength: 60
-      psiSkill: 0  # shouldnt try mind control but go claw killing instead
-      melee: 80
-    armor: STR_BROODLORD_ARMOR
-    standHeight: 23
-    kneelHeight: 16
-    value: 25
-    deathSound: [{mod: 40k, index: 756}, {mod: 40k, index: 757}]
-    intelligence: 5
-    aggression: 8
-    energyRecovery: 60
-    livingWeapon: true
-    spotter: 1  # this so they communicate to each other their enemy position lasting amount of turns = Intelligence
-    sniper: 100  # this so they decide to always attack 100 percent of the time once they know position
-    isLeeroyJenkins: true  # temporary go berserk until there is better script
-
-# dungeon specific end
