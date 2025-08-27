@@ -50,6 +50,7 @@
 # #IG.SCION#          Scion Strategy
 # #IG.ABHUMAN#        Abhuman Strategy
 # #IG.STEEL#          Steel Legion Strategy
+# #IG.KRIEG#          Krieg Strategy
 #
 # Foe Factions:
 # (Entries within chaos subsections should be presented in the order of affiliation: Undivided, Khorne, Nurgle, Slaanesh, Tzeentch)
@@ -306,6 +307,8 @@ research:
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_STEELLEGION  # Steel Legion Selected
     refNode: *STR_LOCKED
+  - name: STR_CHOSEN_KRIEG  # Krieg Selected
+    refNode: *STR_LOCKED
   - name: STR_CHOSEN_ELDAR  # Eldar Path
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_GREYKNIGHTS  # Grey Knights Selected
@@ -345,6 +348,7 @@ research:
   - name: STR_NOT_ELITE_STRATEGY  # (Not Elite Strategy)
   - name: STR_NOT_ABHUMAN_STRATEGY  # (Not Abhuman Strategy)
   - name: STR_NOT_STEEL_LEGION_STRATEGY  # (Not Steel Legion)
+  - name: STR_NOT_KRIEG_STRATEGY  # (Not Death Korps of Krieg)
 
 ## World Progression Events
   - name: STR_SPACEHULK_TYRANID  # Spacehulk
@@ -1304,6 +1308,42 @@ research:
       - STR_ELITE_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
       - STR_NORMAL_STRATEGY_IG
+
+### Krieg Strategy #STRATEGY.IG.KRIEG#
+  - name: STR_KRIEG_STRATEGY  # Krieg Strategy
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    # lookup: STR_CHOSEN_KRIEG  # Commented out until there is a 'pedia page, will crash otherwise
+    spawnedEvent: STR_KRIEG_OFFICERS_EVENT #CREATE THIS EVENT
+    unlocks:
+      - STR_KRIEG_GUARDSMEN #Already Exists
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+      # STR_KRIEG_WEAPONS #Needs to be created + Midtier version?
+      - STR_GUARD_BARRACKS
+      - STR_REGIMENT_OFFICERS
+      - STR_PENITENT_GUARD
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_CHIMERASL #REPLACE WITH KRIEG BASIC TRANSPORT, TRUCKS? TRENCH?
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      # - STR_BASIC_SENTINEL Krieg dont get sentinels, but maybe their little tracked vehicle?
+      #- STR_BASIC_SENTINEL_MISSILE  # so they can buy missiles
+      - STR_PILOT_GUARDSMEN #Replace these later with Krieg version?
+      - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_NORMAL_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
+    disables:
+      - STR_NOT_KRIEG_STRATEGY
+      - STR_ELITE_STRATEGY_IG
+      - STR_ABHUMAN_STRATEGY_IG
+      - STR_NORMAL_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
 
 ####################################
 #PROGRESSION# Progression Research Section
@@ -4283,6 +4323,42 @@ research:
       - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_GUARD_IMPERIAL_ASSASSIN_REQUISITION
+
+### Krieg Strategy #PROGRESSION.IG.KRIEG#
+  - name: STR_KRIEG_MIDTIER  # Krieg Mid-tier Requisitions
+    cost: 200
+    points: 200
+    cutscene: c2
+    dependencies:
+      - STR_MELTAGUN_TECH
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_KRIEG_STRATEGY
+     #Insert Krieg Mid-tier Craft Research Topic Here
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_CARAPACE_ARMOR_IG
+      - STR_TAUROX_IG  # Placeholder?
+      - STR_GUARDSMEN_VETERAN
+      - STR_GUARD_PRIEST_REQUISITION
+      - STR_AIRSTRIKE_REQUISITION
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      - STR_VULTURE_IG_REQUISITION  # Placeholder?
+      - STR_HARDER_MISSIONS
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE
+      - STR_AUTOCANNON_TECH
+
+  - name: STR_KRIEG_HIGHTIER  # Krieg High-tier Requisitions
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_KRIEG_MIDTIER
+      - STR_CYDONIA_OR_BUST
+      - STR_REGIMENT_OFFICERS
+      - STR_MARAUDER_REQUISITION #?
+      #Insert Krieg End Game Craft Research Topic Here
+    unlocks:
+      - STR_HIGHTIER_PREREQ
 
 ####################################
 #FLAVOR# Flavor Topics
