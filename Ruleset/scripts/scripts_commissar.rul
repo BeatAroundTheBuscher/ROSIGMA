@@ -47,6 +47,7 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var int temp2;
           var int targetX;
           var int targetY;
           var int targetZ;
@@ -54,10 +55,19 @@ extended:
           var int commissarY;
           var int commissarZ;
 
-          # we can only apply orders on the player's turn
+          # we can only execute on our turn; no reaction fire executions
           battle_game.getTurnSide temp;
-          if neq temp FACTION_PLAYER;
+          unit.getFaction temp2;
+          if neq temp temp2;
             # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Cannot execute during non-player turn. Aborting. temp:" temp;
+            return power part side;
+          end;
+
+          # we can only friendly units; no instakilling enemy dreadnoughts/cataphracts
+          unit.getFaction temp;
+          attacker.getFaction temp2;
+          if and neq temp temp2 neq temp FACTION_NEUTRAL;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Aborting; target is hostile. temp:" temp;
             return power part side;
           end;
 
