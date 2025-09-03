@@ -1,0 +1,167 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    BattleGame:
+      GUARD_UNIT_EXECUTED: int #has a unit been executed since last turn?
+
+  scripts:
+  # this is for setting the order currently active on the Bonehead
+    skillUseUnit:
+      - new: ROSIGMA_sUU_commissar_execution_mode
+        offset: 1
+        code: |
+          var int temp1;
+          var int executionMode;
+          var ptr RuleSoldier rSoldier;
+
+          # Check to see if we're using the Bonehead order skill
+          skill.getTag executionMode Tag.SKILL_COMMISSAR_EXECUTION_MODE_ID;
+          if le executionMode 0;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_sUU_commissar_execution_mode, offset 1: Skill cannot activate execution mode. Aborting, executionMode:" executionMode;
+            return;
+          end;
+
+          # sanity check; if we're not a commissar soldier, cancel out
+          actor.getRuleSoldier rSoldier;
+          rSoldier.getTag temp1 Tag.SOLDIER_IS_COMMISSAR;
+          if le temp1 0;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_sUU_commissar_execution_mode, offset 1: Unit isn't a commissar. Aborting, temp1:" temp1;
+            return;
+          end;
+
+          # toggle execution mode
+          actor.getTag temp1 Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE;
+          if lt temp1 1;
+            battle_game.flashMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_ACTIVE";
+            actor.setTag Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE 1;
+          else;
+            battle_game.flashMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_NOT_ACTIVE";
+            actor.setTag Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE 0;
+          end;
+
+          return;
+
+    hitUnit:
+      - new: ROSIGMA_hU_commissar_execution_mode
+        offset: 1
+        code: |
+          var int temp;
+          var int targetX;
+          var int targetY;
+          var int targetZ;
+          var int commissarX;
+          var int commissarY;
+          var int commissarZ;
+
+          # we can only apply orders on the player's turn
+          battle_game.getTurnSide temp;
+          if neq temp FACTION_PLAYER;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Cannot execute during non-player turn. Aborting. temp:" temp;
+            return power part side;
+          end;
+
+          attacker.getTag temp Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE;
+          if lt temp 1;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Attacker lacks UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE. Aborting, temp:" temp;
+            return power part side;
+          end;
+
+          #check if we're demoralized or infected, and thus are a valid target for execution
+          unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          if lt temp 1;
+            unit.getMorale temp;
+            if gt temp 49;
+              # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Target morale is too high and has no corruption. Aborting, Morale:" temp;
+              return power part side;
+            end;
+          end;
+
+          #calculate position differential
+          unit.getPosition.getX targetX;
+          unit.getPosition.getY targetY;
+          unit.getPosition.getZ targetZ;
+
+          attacker.getPosition.getX commissarX;
+          attacker.getPosition.getY commissarY;
+          attacker.getPosition.getZ commissarZ;
+
+          sub targetX commissarX;
+          sub targetY commissarY;
+          sub targetZ commissarZ;
+
+          #normalize to a positive integer
+          if lt targetX 0;
+            mul targetX -1;
+          end;
+          if lt targetY 0;
+            mul targetY -1;
+          end;
+          if lt targetZ 0;
+            mul targetZ -1;
+          end;
+
+          if or gt targetX 5 gt targetY 5 gt targetZ 5;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Target more than 5 tiles away. Aborting, targetX,targetY,targetZ:" targetX;
+            return power part side;
+          end;
+
+          unit.setTag Tag.UNIT_MARKED_FOR_EXECUTION 1; #so we don't trigger Alpha Legion and other scripts
+          # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Success! Target marked for execution.";
+          return power part side;
+
+
+    damageUnit:
+      - new: ROSIGMA_dU_commissar_execution_mode
+        offset: 2
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_MARKED_FOR_EXECUTION;
+          if lt temp 1;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_dU_commissar_execution_mode, offset 2: Target not marked for execution. Aborting. UNIT_MARKED_FOR_EXECUTION:" temp;
+            return;
+          end;
+
+          #Unit marked for death; do lethal damage.
+          unit.getHealth temp;
+          set to_health temp;
+          battle_game.setTag Tag.GUARD_UNIT_EXECUTED 1; #so we don't trigger Alpha Legion, dodge, diehard and other scripts
+          battle_game.flashLongMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_TARGET_EXECUTED";
+          return;
+
+    #maximize morale
+    newTurnUnit:
+      - new: ROSIGMA_nTU_commissar_execution_mode
+        offset: 90
+        code: |
+          var int temp;
+          var ptr RuleArmor armorRule;
+
+          battle_game.getTag temp Tag.GUARD_UNIT_EXECUTED;
+          if lt temp 1;
+            return;
+          end;
+
+          battle_game.getTurnSide temp;
+          if eq temp FACTION_PLAYER;
+            battle_game.setTag Tag.GUARD_UNIT_EXECUTED 0; #clear
+            return;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if lt temp 1;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_dU_commissar_execution_mode, offset 20: Target not Imperial Guard. Aborting. UNIT_TYPE_IMPERIAL_GUARD:" temp;
+            return;
+          end;
+
+          armorRule.getTag temp Tag.UNIT_TYPE_LIVING;
+          if lt temp 1;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_dU_commissar_execution_mode, offset 20: Target not Living. Aborting. UNIT_IS_LIVING:" temp;
+            return;
+          end;
+
+          unit.setMorale 100; #fully regenerate morale during enemy and neutral turns.
+
+          return;
