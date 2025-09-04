@@ -35,6 +35,12 @@ extended:
           var int dodgeDeclines;
           var int dodgeArmorPercentReduction;
 
+          unit.getTag temp Tag.UNIT_MARKED_FOR_EXECUTION; #we're targeted for Commissar execution
+          if eq temp 1;
+            # debug_log "ROSIGMA_hU_dodge Scripts; damageUnit, offset -1: Aborting. Victim is targeted for commissar execution.";
+            return power part side;
+          end;
+
           # don't dodge on melee and psi
           if or eq battle_action BA_HIT eq battle_action BA_PANIC eq battle_action BA_MINDCONTROL eq battle_action BA_USE;
             # debug_log "hitUnit | dodge scripts | battle_action undodgeable. Aborting:";
