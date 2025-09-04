@@ -37,6 +37,7 @@
 # #CM.DW#             Deathwatch
 # #CM.GK#             Grey Knights
 # #CM.RAD#            The Radical Road
+# #CM.OA#             Officio Assassinorum
 # #AT#              Adeptus Terra
 # #AT.LAW#            The Imperial Law Strategy
 # #AT.CULT#           Chaos Cult
@@ -792,6 +793,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CHAOS_PATH
+      - STR_ASSASSINORUM
     reenables:
       - STR_DREADNOUGHT_MARINE
     spawnedEvent: STR_DEATHWATCH_CARE_PACKAGE
@@ -822,6 +824,7 @@ research:
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CHAOS_PATH
       - STR_DEFENSE_CORRIDORBR
+      - STR_ASSASSINORUM
     reenables:
       - STR_DREADNOUGHT_MARINE
     spawnedEvent: STR_REINFORCEMENTS_GK
@@ -842,6 +845,7 @@ research:
       - STR_NOT_RADICAL
       - STR_GREYKNIGHTS
       - STR_DEATHWATCH
+      - STR_ASSASSINORUM
 
   - name: STR_HERETICAL_INQUISITOR_STRATEGY  # Heretical Means Path
     cost: 100
@@ -865,6 +869,48 @@ research:
       - STR_REINFORCEMENT_7
       - STR_REINFORCEMENT_8
       - STR_REINFORCEMENT_9
+
+### Officio Assassinorum #STRATEGY.CM.OA#
+
+  - name: STR_ASSASSINORUM            # Assassinorum Strat
+    cost: 5
+    points: 0
+    spawnedEvent: STR_ASSASSINORUM_CARE_PACKAGE
+    dependencies:
+      - STR_CHAMBERMILITANT
+    unlocks:
+      - STR_EXITUS_AMMO_PREREQUISITE
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_NORMAL_INQUISITION
+      - STR_GUARD_BARRACKS
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE
+      - STR_LASGUN_HOTSHOT
+      - STR_VINDICARE_CODEX
+      - STR_CALLIDUS_CODEX
+      - STR_IMPERIAL_ASSASSINS
+    disables:
+      - STR_DEATHWATCH
+      - STR_GREYKNIGHTS
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_CHAOS_PATH
+
+  - name: STR_IMPERIAL_ASSASSINS # For recruiting assassins while allowing the adepta's to still get them.
+    dependencies:
+      - STR_ADEPTAS
+      - STR_INQOFF
+      - STR_CHAPTER_PURITY
+    cost: 0
+    points: 0
+
+  - name: STR_LASGUN_HOTSHOT # For buying hotshot las ammo while allowing guard to still get it.
+    dependencies:
+      - STR_LASER_WEAPONS
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    cost: 0
+    points: 0
 
 ## Adeptus Terra #STRATEGY.AT#
   - name: STR_ARBITES  # Arbites
@@ -2975,6 +3021,49 @@ research:
     unlocks:
       - STR_HIGHTIER_PREREQ
 
+### Officio Assassinorum #PROGRESSION.CM.OA#
+  - name: STR_OA_MIDTIER  # Assassinorum Mid-tier Requisitions
+    cost: 500
+    points: 200
+    spawnedEvent: STR_ASSASSINORUM_MIDTIER_REINFORCEMENTS
+    dependencies:
+      - STR_MELTAGUN_TECH
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_CHAMBERMILITANT
+      - STR_ASSASSINORUM
+      - STR_ALIEN_ORIGINS # Confirm threat to increase access
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_CASS_R
+      - STR_SIDEOPERATIONS
+      - STR_INQUISITION_DROPPODS
+      - STR_XENO_ONLY
+      - STR_ELDAR_PATH
+    cutscene: c2
+
+  - name: STR_OA_CERAMITE_TIER  # Assassinorum Ceramite-Tier Requisitions
+    dependencies:
+      - STR_OA_MIDTIER
+      - STR_UFO_CONSTRUCTION
+    unlocks:
+      - STR_TAU_XENOTECH
+
+  - name: STR_OA_HIGHTIER  # Assassinorum High-tier Requisitions
+    cost: 900
+    points: 30
+    spawnedEvent: STR_ASSASSINORUM_HIGHTIER_REINFORCEMENTS
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_ASSASSINORUM
+      - STR_CYDONIA_OR_BUST
+      - STR_CHAMBERMILITANT
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+      - STR_NECRONTECH_RESEARCH
+      - STR_THUNDERHAWK_RAD_REQ # for final mission
+
 ## Adeptus Terra #PROGRESSION.AT#
   - name: STR_ENDGANGERSBASE
     # for Adeptus Terra when ganger base destroyed to stop their base mission generating
@@ -3581,6 +3670,7 @@ research:
     unlocks:
       - STR_HAND_FLAMETHROWER_REQUISITION
       - STR_BOLTER_AMMO_PREREQ
+      - STR_INQUISITION_DROPPODS
 
   - name: STR_ADEPTAS_SENTINEL_MELTALANCE_REQ  # Meltalance Sentinel Requisition
     cost: 200
@@ -3602,6 +3692,8 @@ research:
       - STR_CHAPTER_PURITY
       - STR_UFO_CONSTRUCTION  # Ceramite Plates
       - STR_GENERALLOCK
+    unlocks:
+      - STR_CALLIDUS_CODEX
 
   - name: STR_ADEPTAS_MIDTIER  # Orders' Mid-tier Requisitions
     # cutcscene c2
@@ -4089,6 +4181,7 @@ research:
       - STR_GENERALLOCK
     unlocks:
       - STR_EXITUS_AMMO_PREREQUISITE
+      - STR_VINDICARE_CODEX
 
   - name: STR_EXITUS_AMMO_PREREQUISITE  # Exitus Munitions
     cost: 0
@@ -4609,6 +4702,13 @@ research:
       - STR_ELERIUM_115
       - STR_MIDTIER_PREREQ
       - STR_CHAMBERMILITANT
+
+### Officio Assassinorum #CRAFTS.CM.OA#
+  - name: STR_INQUISITION_DROPPODS # Drop pods at mid-tier
+    dependencies:
+      - STR_GENERALLOCK
+    cost: 0
+    points: 0
 
 ## Adeptus Terra #CRAFTS.AT#
 ### The Imperial Law Strategy #CRAFTS.AT.LAW#
@@ -5430,6 +5530,19 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_GREYKNIGHTS
 ### The Radical Road #ARMORS.CM.RAD#
+### Officio Assassinorum #ARMORS.CM.OA#
+  - name: STR_VINDICARE_CODEX # Access to Vindicare weapons & armor codex # merge with EXITUS_AMMO_PREREQUISITE
+    dependencies:
+      - STR_GENERALLOCK
+    cost: 0
+    points: 0
+
+  - name: STR_CALLIDUS_CODEX # Access to Callidus weapons & armor codex
+    dependencies:
+      - STR_GENERALLOCK
+    cost: 0
+    points: 0
+
 ## Adeptus Terra #ARMORS.AT#
 ### The Imperial Law Strategy #ARMORS.AT.LAW#
   - name: STR_ARBITOR_ARMOR  # Arbitor Armor
@@ -6013,6 +6126,7 @@ research:
     needItem: false
 
 ### The Radical Road #WEAPONS.CM.RAD#
+### Officio Assassinorum #WEAPONS.CM.OA#
 ## Adeptus Terra #WEAPONS.AT#
 ### The Imperial Law Strategy #WEAPONS.AT.LAW#
 ### Chaos Cult #WEAPONS.AT.CULT#
