@@ -1,0 +1,1166 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+items:
+# Vindicare
+
+  - type: STR_DOUBLE_EXITUS_PISTOL
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
+    listOrder: 13102
+    size: 0.1
+    weight: 10
+    bigSprite: 3400
+    floorSprite: 939
+    handSprite: 784
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2419
+    compatibleAmmo:
+      - STR_DOUBLE_EXITUS_PISTOL_AMMO
+      - STR_DOUBLE_EXITUS_PISTOL_AMMO_HELLFIRE
+      - STR_DOUBLE_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
+      - STR_DOUBLE_EXITUS_PISTOL_AMMO_SHELLBREAKER
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    recover: false
+    invWidth: 2
+    invHeight: 2
+    bulletSpeed: 50
+    dropoff: 4
+    noLOSAccuracyPenalty: 90  # Vindicare don't care about not being able to 'see' his target
+    autoRange: 10
+    snapRange: 14
+    aimRange: 18  # Dual wielding isn't quite as good for long range as the single.
+    accuracyAuto: 40
+    accuracySnap: 55
+    accuracyAimed: 85
+    tuAuto: 33
+    tuSnap: 22
+    tuAimed: 40
+    confAuto:  
+      shots: 4  
+    confSnap:  
+      shots: 2  
+    kneelBonus: 110
+    tuLoad: 28 # loading both pistols at once
+    fixedWeapon: true
+    fixedWeaponShow: true
+    accuracyMultiplier:  # sniper rifle scaling; only good in skilled hands
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 30  # Not as good for single shots
+      REACTION_MULTIPLIER: 200
+
+  - &STR_DOUBLE_EXITUS_PISTOL_BULLETS
+    type: STR_DOUBLE_EXITUS_PISTOL_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
+    listOrder: 13102
+    size: 0.1
+    requiresBuy:
+      - STR_ASSASSINORUM
+    costBuy: 16000 # double price of normal
+    costSell: 8000
+    weight: 4
+    bigSprite: 3401
+    floorSprite: 940
+    handSprite: 792
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    power: 50
+    damageBonus:
+      firing: [0.0, 0.002] # gets notably stronger with very experienced Vindicare
+    damageType: 1
+    damageAlter:
+      ToTile: 0.0
+      ToArmorPre: 0.1  # high velocity
+      RandomType: 6
+      ArmorEffectiveness: 0.8
+    clipSize: 20
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
+
+  - type: STR_DOUBLE_EXITUS_PISTOL_AMMO_HELLFIRE  # attacks twice by being HE
+    refNode: *STR_DOUBLE_EXITUS_PISTOL_BULLETS
+    costBuy: 0
+    costSell: 5000
+    bigSprite: 3402
+    hitAnimation: 0
+    damageType: 1
+    damageAlter:
+      ToTile: 0.25
+      ToArmorPre: 0.4  # acid melts armor
+      ArmorEffectiveness: 0.9
+      ResistType: 8
+      RandomType: 6
+      ToArmor: 0.2
+      ToHealth: 0.7
+      ToStun: 0.5  # painful
+      ToWound: 0.5  # acid and armor piercing needles cause lots of mortal wounds
+      ToMorale: 2.0  # painful
+      FixRadius: 1
+
+  - type: STR_DOUBLE_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
+    refNode: *STR_DOUBLE_EXITUS_PISTOL_BULLETS
+    costBuy: 0
+    costSell: 5000
+    bigSprite: 3403
+    damageType: 1
+    damageAlter:
+      ToTile: 1.0  # it'll destroy about anything it hits
+      RandomType: 6
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.4  # armor piercing
+      ToHealth: 0.7  # armor piercing
+      ToArmor: 0.5  # obliterates armor on penetration
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 95
+
+  - type: STR_DOUBLE_EXITUS_PISTOL_AMMO_SHELLBREAKER  # shield piercing
+    refNode: *STR_DOUBLE_EXITUS_PISTOL_BULLETS
+    costBuy: 0
+    costSell: 5000
+    bigSprite: 3404
+    damageType: 1
+    damageAlter:
+      ToTile: 0.0
+      ToArmorPre: 0.1  # high velocity
+      RandomType: 6
+      ArmorEffectiveness: 0.8
+    tags:
+      ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: 100  # breaks shields
+
+  - type: STR_EXITUS_BUILTIN_SPECIAL
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
+    size: 0.3
+    weight: 1 # weapon in hand slot already has weight
+    bigSprite: 3405
+    floorSprite: 942
+    handSprite: 224
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 711}
+    compatibleAmmo:
+      - STR_EXITUS_AMMO_HELLFIRE
+      - STR_EXITUS_AMMO_TURBOPENETRATOR
+      - STR_EXITUS_AMMO_SHELLBREAKER
+    ammo:
+      0:
+        compatibleAmmo:
+          - STR_EXITUS_AMMO_HELLFIRE
+        tuLoad: 40
+      1:
+        compatibleAmmo:
+          - STR_EXITUS_AMMO_TURBOPENETRATOR
+        tuLoad: 40
+      2:
+        compatibleAmmo:
+          - STR_EXITUS_AMMO_SHELLBREAKER
+        tuLoad: 40
+    battleType: 1
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 50
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    dropoff: 2  # proper scoped sniper rifle
+    noLOSAccuracyPenalty: 90  # Vindicare don't care about not being able to 'see' his target
+    autoRange: 40
+    snapRange: 40
+    aimRange: 40  # it's an Exitus rifle; it has the best aimed range of any sniper rifle in the game
+    accuracyAuto: 160
+    accuracySnap: 160
+    accuracyAimed: 160
+    tuAuto: 85  # 
+    tuSnap: 85
+    tuAimed: 85
+    confSnap:  
+      shots: 1  
+      name: STR_HELLFIRE_ROUND
+      ammoSlot: 0
+    confAuto:   
+      ammoSlot: 1
+      shots: 1
+      name: STR_TURBOPENETRATOR_ROUND
+    confAimed:   
+      ammoSlot: 2  
+      shots: 1
+      name: STR_SHELLBREAKER_ROUND
+    kneelBonus: 150
+    tuLoad: 40  # reloading this heavy weapon is a PITA; also puts *some* limits on it
+    defaultInventorySlot: STR_BACK_PACK
+    defaultInvSlotX: 0
+    defaultInvSlotY: 1
+    accuracyMultiplier:  # sniper rifle accuracy
+      firing: [0.5, 0.005]
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 75  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT: 75  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_AUTO_ACCURACY_POWER_BONUS_PERCENT: 75  # Sniper rifle bonus to aimed shots; power of precision
+      REACTION_MULTIPLIER: 0 # Make sure this isn't used for reaction fire
+
+  - type: STR_EXITUS_LANCE
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_LASGUN, STR_CAT_SNIPER]
+    dropoff: 3  # Exitus
+    noLOSAccuracyPenalty: 90
+    weight: 20
+    bigSprite: 3406
+    handSprite: 224
+    bulletSpeed: 100
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    kneelBonus: 150  # sniper weapon gains additional accuracy from kneeling
+    snapRange: 21
+    aimRange: 30
+    accuracySnap: 80
+    accuracyAimed: 160
+    costSnap:
+      time: 45
+      mana: 20
+    flatAimed:
+      time: false
+      mana: true
+    costAimed:
+      time: 85
+      mana: 20
+    flatAimed:
+      time: false
+      mana: true
+    confAimed:  # Called Precision Shot to emphasize the added lethality
+      name: STR_PRECISION_SHOT
+    battleType: 1
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    power: 150
+    damageType: 4
+    damageAlter:  # hellgun properties
+      RandomType: 1  # 10 pellets makes for extremely smooth damage, this helps randomize it a bit.
+      ToArmorPre: 0.03
+      ArmorEffectiveness: 0.75
+      ToHealth: 0.1
+      ToArmor: 0.01  # 40k 0.0
+      ToStun: 0.03  # painful las burns
+      ToWound: 0.005  # cauterizes, but there's still explosive thermal expansion of tissues; melta level wounding
+      RandomWound: false
+      ToTile: 0.60
+    invWidth: 2
+    invHeight: 3
+    clipSize: -1
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    minRange: 7  # medium sniper weapon
+    listOrder: 10764
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 50  # Precision Shot Bonus
+    # lasgun aesthetics
+    hitSound: 3986
+    fireSound: 3984
+    hitAnimation: 2220
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: 13 # Silver/white bright lance
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
+
+
+# Callidus
+
+  - type: STR_POLYMORPHINE
+    categories: [STR_CAT_ASSASSINORUM]
+    medikitTargetImmune: true
+    medikitActionName: STR_ADMINISTER_POLYMORPHINE
+    weight: 4
+    invWidth: 0
+    invHeight: 0
+    battleType: 6
+    painKiller: 0
+    heal: 30
+    stimulant: 0
+    woundRecovery: 3
+    healthRecovery: 2
+    stunRecovery: 0
+    energyRecovery: 0
+    tuUse: 10
+    #medikitType: 1
+    experienceTrainingMode: 19
+    medikitTargetSelf: true
+    flatRate: true
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: {mod: 40k, index: 100}
+
+  - type: STR_POWER_DAGGER_AND_DIGI_MELTA 
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    listOrder: 13104
+    dropoff: 8
+    weight: 7
+    tuSnap: 0
+    tuAuto: 0
+    aimRange: 5
+    accuracyAimed: 90
+    tuAimed: 20
+    maxRange: 8
+    compatibleAmmo:
+      - STR_DIGI_MELTA_AMMO
+    battleType: 1
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    bigSprite: 3460
+    floorSprite: {mod: 40k, index: 113}
+    handSprite: {mod: 40k, index: 304}
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    recover: false
+    ##### Melee
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773}
+    meleeAnimation: {mod: 40k, index: 4}
+    meleeType: 7
+    meleePower: 60
+    meleeBonus:
+      reactions: 0.15
+      melee: 0.15
+    meleeAlter:
+      RandomType: 6
+      ToArmorPre: 0.1
+      ToArmor: 0.1
+      ArmorEffectiveness: 0.5 # power weapon and exceptional at finding weak spots
+      ToHealth: 0.8
+      ToWound: 0.2
+      RandomWound: false
+    accuracyMelee: 100
+    meleeMultiplier:
+      flatHundred: 0.0
+      melee: 0.5
+      reactions: 0.5
+    costMelee:
+      time: 8
+      energy: 2
+    flatMelee:
+      time: true
+    meleeClipSize: -1
+
+  - type: STR_DIGI_MELTA_AMMO
+    categories: [STR_CAT_ASSASSINORUM]
+    listOrder: 13104
+    weight: 3
+    bigSprite: 3461
+    floorSprite: {mod: 40k, index: 35}
+    handSprite: {mod: 40k, index: 472}
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 110}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    power: 12
+    damageType: 11
+    damageAlter:  # DA MELTA Double
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 2.0
+    powerRangeThreshold: 5.0
+    clipSize: 4
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    recover: false
+
+# Eversor
+
+  - type: STR_EXECUTIONER_PISTOL ####
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
+    listOrder: 13110
+    size: 0.2
+    armor: 200
+    weight: 20
+    bigSprite: 3421
+    floorSprite: {mod: 40k, index: 206}
+    handSprite: {mod: 40k, index: 728}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: 2419
+    compatibleAmmo:
+      - STR_EXECUTIONER_BOLT_AMMO
+      - STR_EXECUTIONER_POISON_AMMO
+    ammo:
+      0:
+        compatibleAmmo:
+          - STR_EXECUTIONER_POISON_AMMO
+        tuLoad: 12
+      1:
+        compatibleAmmo:
+          - STR_EXECUTIONER_BOLT_AMMO
+        tuLoad: 12
+    battleType: 1
+    twoHanded: false
+    blockBothHands: false
+    invWidth: 2
+    invHeight: 2
+    bulletSpeed: 50
+    recover: false
+    dropoff: 6
+    autoRange: 8
+    snapRange: 8
+    aimRange: 12
+    accuracyAuto: 60
+    accuracySnap: 60
+    accuracyAimed: 85
+    #tuAuto: 22
+    #tuSnap: 22
+    costAuto:
+      time: 21
+      energy: 0
+      morale: 0
+    flatAuto:
+      time: false
+    costSnap:
+      time: 21
+      energy: 0
+      morale: 0
+    flatSnap:
+      time: false
+    costAimed:  # Special firemode where the eversor focuses on lining up shots
+      time: 7
+      energy: 5  # physically taxing to aim and fire this fast
+      morale: 30  # getting kills can keep the shooting spree going, missing too much can lead to panic/loss of mental stability
+    flatAimed:
+      time: false
+      energy: true
+      morale: true
+    confSnap:  # Bolter
+      shots: 3  #
+      name: STR_BOLT_BURST #
+      ammoSlot: 1
+    confAuto:  # Poison
+      ammoSlot: 0
+      shots: 3
+      name: STR_POISON_BURST #
+    confAimed:  # single poison,
+      ammoSlot: 0  
+      shots: 1
+      name: STR_FOCUSED_SHOT
+    kneelBonus: 110
+    fixedWeapon: true
+    fixedWeaponShow: true
+    defaultInventorySlot: STR_RIGHT_HAND
+
+  - type: STR_EXECUTIONER_POISON_AMMO ###
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
+    listOrder: 13110
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.1
+    requiresBuy:
+      - STR_ASSASSINORUM
+    costBuy: 8000
+    costSell: 4000
+    weight: 2
+    armor: 200
+    bigSprite: 3422
+    floorSprite: {mod: 40k, index: 12}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 712}
+    hitAnimation: {mod: 40k, index: 26}
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    power: 70
+    damageType: 8
+    damageAlter:
+      ToArmorPre: 0.02  # not very effective at actually destroying/shredding armor
+      ToArmor: 0.02  # not very effective at actually destroying/shredding armor
+      ToTile: 0.0
+      ToItem: 0.0
+      RandomType: 6
+      #ResistType: 8  # toxins/acids
+      ArmorEffectiveness: 0.7  # semi-armor piercing
+      ToMorale: 5.0  # demoralizing poison
+      ToHealth: 0.9  # Fast acting
+      ToStun: 0.3
+      ToEnergy: 0.5
+      ToTime: 0.5
+      ToWound: 0.5
+      RandomWound: false
+    clipSize: 15
+
+  - type: STR_EXECUTIONER_BOLT_AMMO ###
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
+    listOrder: 13110
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.1
+    requiresBuy:
+      - STR_ASSASSINORUM
+    costBuy: 8000
+    costSell: 4000
+    weight: 3
+    invWidth: 1
+    invHeight: 1
+    bigSprite: 3423
+    floorSprite: {mod: 40k, index: 4}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.3     # specialized shredding explosive rounds
+      ArmorEffectiveness: 1.0
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      RandomWound: false
+    explosionSpeed: 5
+    power: 70
+    damageType: 1
+    clipSize: 15
+    battleType: 2
+    hitAnimation:
+      mod: 40k
+      index: 120
+    armor: 200
+    explosionSpeed: 3
+    attraction: 1
+
+  - type: STR_EVERSOR_PSWORD  ###
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    listOrder: 13109
+    recover: false
+    weight: 20
+    bigSprite: 3420
+    floorSprite: {mod: 40k, index: 1040}
+    handSprite: {mod: 40k, index: 1320}
+    meleeAnimation: {mod: 40k, index: 4}
+    meleeSound: {mod: 40k, index: 754}
+    meleeHitSound: {mod: 40k, index: 773}
+    power: 100
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      RandomType: 6 
+    damageType: 7
+    accuracyMelee: 100
+    tuMelee: 14
+    costMelee:
+      energy: 4
+    flatMelee: true
+    clipSize: -1
+    battleType: 3
+    invWidth: 1
+    invHeight: 3
+    armor: 200
+    skillApplied: true
+    twoHanded: false
+    strengthApplied: false
+    damageBonus:
+      strength: 0.35 # Heavy sword
+      melee: 0.15
+    meleeMultiplier:
+      melee: 0.9
+      reactions: 0.1
+      flatHundred: 0.0
+    attraction: 8
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      ITEM_STRENGTH_REQUIREMENT: 60
+
+  - type: STR_FRENZON_AND_NEURO_GAUNTLET
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    weight: 10
+    battleType: 6
+    medikitActionName: STR_FRENZON
+    stimulant: 20
+    stunRecovery: 40
+    energyRecovery: 80
+    costUse:
+      time: 1
+      health: 15
+      morale: 50 # mental stability cost
+      mana: 30
+    medikitType: 2
+    medikitTargetSelf: true
+    medikitTargetMatrix: 0
+    flatUse:
+      time: true
+      health: true
+      morale: true
+      mana: true
+    recover: false
+    fixedWeapon: true
+    specialIconSprite: 204
+    #*** Melee bayonet
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: 0
+    meleeType: 8 # acid
+    meleePower: 50
+    confMelee:  
+      name: STR_NEURO_GAUNTLET_STRIKE #
+    meleeBonus:
+      strength: 0.1
+      melee: 0.1
+    meleeAlter:
+      RandomType: 6
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 1.0
+      ToArmor: 0.02
+      ToHealth: 2.0
+      ToMorale: 5.0  # demoralizing poison
+      ToStun: 0.1
+      ToEnergy: 0.1
+      ToTime: 0.1
+      ToWound: 0.3
+      RandomWound: false
+    accuracyMelee: 100
+    meleeMultiplier:
+      flatHundred: 0.0
+      melee: 0.5
+      reactions: 0.5
+    costMelee:
+      time: 7
+      energy: 1
+    flatMelee:
+      time: true
+    clipSize: -1
+
+  - type: STR_EVERSOR_THAMMER
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    size: 0.3
+    battleType: 1
+    experienceTrainingMode: 1
+    weight: 70
+    bigSprite: {mod: 40k, index: 226}
+    floorSprite: {mod: 40k, index: 114}
+    handSprite: {mod: 40k, index: 280}
+    bulletSprite: {mod: 40k, index: 6}
+    explosionHitSound: {mod: 40k, index: 743}
+   # hitSound: {mod: 40k, index: 743}
+    hitAnimation: {mod: 40k, index: 136}
+    maxRange: 1
+    powerRangeThreshold: 3
+    powerRangeReduction: 999
+    bulletSpeed: 50
+    power: 120
+    powerForAnimation: 16
+    damageType: 5
+    damageBonus:
+      strength: 1.0
+      melee: 0.2
+    damageAlter:
+      ArmorEffectiveness: 0.6  # armor breaking
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 6
+      FixRadius: 1
+    accuracyAimed: 90
+    accuracyMultiplier:
+      firing: 0.0
+      melee: 0.6
+      strength: 0.4
+    costAimed:
+      time: 40
+      energy: 50 # very taxing to use.
+    flatRate: true
+    confAimed:
+      name: STR_SLAM_ATTACK
+    #### Melee
+    meleeAnimation: {mod: 40k, index: 28}
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 743}
+    costMelee:
+      time: 22
+      energy: 8  # light melee weapon; light 1 energy, medium 2, heavy 4, very heavy 8
+    flatMelee: true
+    meleeType: 5
+    meleePower: 120
+    meleeBonus:
+      strength: 1.0
+      melee: 0.2
+    meleeAlter:     # DA POWER
+      ArmorEffectiveness: 0.6  # armor breaking
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 6
+    meleeMultiplier:  # very heavy and cumbersome; strength matters a lot for hitting
+      melee: 0.6
+      strength: 0.4
+    accuracyMelee: 90
+    clipSize: -1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    attraction: 6
+    armor: 200
+    skillApplied: true
+    strengthApplied: false
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+
+  - type: STR_EXTERMINATOR_SHOTGUN
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SHOTGUN]
+    listOrder: 13111
+    size: 0.6
+    dropoff: 7 #extremely close range shotgun
+    weight: 50
+    battleType: 1
+    bigSprite: 3424
+    floorSprite: {mod: 40k, index: 118}
+    handSprite: {mod: 40k, index: 328}
+    bulletSprite: {mod: 40k, index: 2}
+    fireSound: {mod: 40k, index: 755}
+    compatibleAmmo:
+      - STR_EXTERMINATOR_FLECHETTE_AMMO
+      - STR_EXTERMINATOR_SLUG_AMMO
+      - STR_MELTA_AMMO
+    ammo:
+      0:
+        compatibleAmmo:
+          -  STR_EXTERMINATOR_FLECHETTE_AMMO
+          -  STR_EXTERMINATOR_SLUG_AMMO
+      1:
+        compatibleAmmo:
+          - STR_MELTA_AMMO
+    costAuto:
+      time: 12
+      energy: 10  # physically taxing to aim and fire this fast
+      morale: 25  # getting kills can keep the shooting spree going, missing too much can lead to panic/loss of mental stability
+    flatAuto:
+      time: false
+      energy: true
+      morale: true
+    costSnap:
+      time: 24
+      energy: 2 # heavy recoil
+      morale: 0
+    flatSnap:
+      time: false
+      energy: true
+    costAimed:  
+      time: 30
+      energy: 0
+      morale: 0
+    flatAimed:
+      time: false
+    confSnap:
+      ammoSlot: 0 
+      shots: 2  
+      name: STR_DOUBLE_SHOT #
+    confAuto:  # Focused shooting
+      ammoSlot: 0
+      shots: 1
+      name: STR_FOCUSED_SHOT #
+    confAimed:  
+      ammoSlot: 1  
+      shots: 1
+      spendPerShot: 2 # Ineffecient ammo use compared to a proper meltagun
+      name: STR_FIRE_MELTA
+    accuracyAuto: 70
+    accuracySnap: 60
+    accuracyAimed: 85
+    autoRange: 9
+    snapRange: 7
+    aimRange: 8
+    twoHanded: true
+    oneHandedPenalty: 50
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+
+  - type: STR_EXTERMINATOR_FLECHETTE_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SHOTGUN]
+    listOrder: 13111
+    requiresBuy:
+      - STR_ASSASSINORUM
+    requiresBuyBaseFunc: [IMPERIUM]
+    shotgunBehavior: 1
+    shotgunSpread: 25
+    size: 0.2
+    costBuy: 15000
+    costSell: 8000
+    weight: 10
+    bigSprite: 3425
+    floorSprite: {mod: 40k, index: 1051}
+    handSprite: {mod: 40k, index: 1408}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 60
+    damageType: 1
+    clipSize: 24
+    battleType: 2
+    shotgunPellets: 6
+    damageAlter:
+      ToArmorPre: 0.02  # AP ammo; small armor ablation
+      ToArmor: 0.02  # AP ammo; small armor damage
+      ArmorEffectiveness: 0.6  # has significant armor penetration
+      ToHealth: 0.7  # AP weapon features reduced health damage
+      ToTime: 0.05  # shotguns have impact shock; the Ripper especially so; reduced due to AP ammo
+      ToEnergy: 0.05  # impact shock; reduced due to AP ammo
+      ToStun: 0.25  # impact shock; reduced due to AP ammo
+    invWidth: 2
+    invHeight: 1
+
+  - type: STR_EXTERMINATOR_SLUG_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SHOTGUN]
+    listOrder: 13111
+    requiresBuy:
+      - STR_ASSASSINORUM
+    requiresBuyBaseFunc: [IMPERIUM]
+    size: 0.2
+    costBuy: 12000
+    costSell: 6000
+    weight: 10
+    bigSprite: 3426
+    floorSprite: {mod: 40k, index: 1051}
+    handSprite: {mod: 40k, index: 1408}
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    clipSize: 24
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    power: 110
+    damageType: 1
+    damageAlter: #DA BOLTER
+      ToArmorPre: 0.10
+      ArmorEffectiveness: 0.85
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToTime: 0.25  # shotguns have impact shock
+      ToEnergy: 0.15
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    armor: 40
+
+# Culexus
+
+  - type: STR_ANIMUS_SPECULUM 
+    categories: [STR_CAT_ASSASSINORUM]
+    weight: 0
+    battleType: 1
+    manaExperience: 200
+    bulletSprite: {mod: 40k, index: 19}
+    fireSound: {mod: 40k, index: 864}
+    hitAnimation: {mod: 40k, index: 96}
+    explosionHitSound: {mod: 40k, index: 801}
+    invWidth: 0
+    invHeight: 0
+    costAuto:
+      time: 0
+      mana: 0
+    flatAuto:
+      time: true
+      mana: true
+    costSnap:
+      time: 0
+    costAimed:
+      time: 35
+      mana: 20
+    flatAimed:
+      time: false
+      mana: true
+    autoRange: 0
+    snapRange: 0
+    aimRange: 14
+    accuracyAuto: 0
+    accuracySnap: 0
+    accuracyAimed: 100
+    confAimed:   
+      name: STR_FIRE_ANIMUS
+    maxRange: 14
+    powerRangeThreshold: 14.0
+    powerRangeReduction: 999.0
+    damageType: 0
+    power: 70
+    damageAlter:
+      RandomType: 2
+     # FireBlastCalc: false
+      IgnoreOverKill: false
+      IgnoreSelfDestruct: true
+      FireThreshold: 106 # should only set vulnerable enemies on fire.
+      ArmorEffectiveness: 0.1
+      ToHealth: 1.0
+      ToTime: 0.5
+      ToEnergy: 0.6
+      ToStun: 0.2
+      ToWound: 0.0
+      ToMorale: 5.0
+      FixRadius: 2
+      IgnoreDirection: false
+      ToItem: 0.0
+      ToTile: 0.0
+      ToArmor: 0.0
+      ToArmorPre: 0.0
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: false
+    specialIconSprite: 3228
+    specialUseEmptyHand: true
+    clipSize: -1
+    bulletSpeed: 25
+    explosionSpeed: 2
+    vaporColorSurface: 9
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 60
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+      DAMAGE_RESIST_PENETRATION_PERCENT: 100 # should mean it doesn't get resisted
+      DAMAGE_BONUS_FLAT_DAEMONIC: 80
+      DAMAGE_BONUS_FLAT_PSYKER: 95
+      DAMAGE_BONUS_FLAT_TZEENTCH: 25 # higher psychic sensitivity
+      DAMAGE_BONUS_FLAT_NURGLE: 40 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_FLAT_ELDAR: 40 # all of em are at least partially psychic. Poor farseers.
+      DAMAGE_BONUS_FLAT_MECHANICAL: -1 # No souls to blast
+      DAMAGE_BONUS_PERCENT_NULL: -1 # No souls to blast
+      DAMAGE_BONUS_PERCENT_NECRON: -1 # No souls to blast
+
+  - type: STR_WITCHKILLER_CLAWS #                              DA POWER
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    listOrder: 13120
+    weight: 10
+    bigSprite: {mod: 40k, index: 835}
+    meleeSound: {mod: 40k, index: 753} 
+    meleeHitSound: {mod: 40k, index: 754} 
+    meleeAnimation: {mod: 40k, index: 12}
+    damageType: 7
+    power: 80
+    damageBonus:
+      strength: 0.2
+      melee: 0.3
+    #  psi: -100
+    damageAlter:     #DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToHealth: 0.9
+      ToMorale: 5.0 # Blank Horror
+    accuracyMelee: 90
+    costMelee:
+      time: 10
+      energy: 4
+    flatRate: true
+    twoHanded: false
+    skillApplied: true
+    strengthApplied: false
+    meleeMultiplier:
+      melee: 0.9
+      reactions: 0.1
+    battleType: 3
+    clipSize: -1
+    invWidth: 2
+    invHeight: 2
+    recover: false
+    supportedInventorySections: # retracting claws to pick up something else
+      - STR_RIGHT_HAND
+      - STR_BELT
+    inventoryMoveCost: # quickdraw
+      basePercent: 25
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 35
+      DAMAGE_BONUS_FLAT_DAEMONIC: 50
+      DAMAGE_BONUS_FLAT_PSYKER: 65
+      DAMAGE_BONUS_FLAT_TZEENTCH: 25 # higher psychic sensitivity
+      DAMAGE_BONUS_FLAT_NURGLE: 35 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_FLAT_ELDAR: 25
+
+  - type: STR_WITCHKILLER_PISTOL 
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
+    listOrder: 13121
+    dropoff: 4
+    weight: 20
+    bigSprite: 3440
+    floorSprite: {mod: 40k, index: 206}
+    handSprite: {mod: 40k, index: 728}
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 707}
+    compatibleAmmo:
+      - STR_WITCHKILLER_PISTOL_CLIP
+      - STR_PISTOL_CLIP_MC
+      - STR_RIFLE_CLIP_MC
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_EX
+      - STR_RIFLE_CLIP_AP
+    accuracyAuto: 55
+    accuracySnap: 75
+    accuracyAimed: 100
+    autoRange: 7
+    snapRange: 11
+    aimRange: 17
+    tuAuto: 33
+    tuSnap: 21
+    tuAimed: 35
+    autoShots: 2
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    bulletSpeed: 30
+    attraction: 1
+    fixedWeapon: true
+    fixedWeaponShow: true
+    defaultInventorySlot: STR_LEFT_HAND
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 25  # Scoped carbine
+      ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT: 10  # Scoped carbine
+
+  - type: STR_WITCHKILLER_PISTOL_CLIP 
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
+    listOrder: 13121
+    requiresBuy:
+      - STR_ASSASSINORUM
+    size: 0.1
+    costBuy: 8000
+    costSell: 4000
+    weight: 3
+    bigSprite: 3441
+    floorSprite: {mod: 40k, index: 2}
+    handSprite: {mod: 40k, index: 464}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 120}
+    power: 70
+    damageType: 1
+    damageAlter:  # DA BOLTER
+      ToArmorPre: 0.1
+      ArmorEffectiveness: 0.8
+      ToArmor: 0.15
+      ToHealth: 1.1
+      ToStun: 0.5
+      ToEnergy: 0.3
+      ToWound: 0.2
+      ToMorale: 2.0 # not as terrifying as the claws or animus
+      RandomWound: false
+    explosionSpeed: 3
+    clipSize: 20
+    battleType: 2
+    armor: 200
+    invWidth: 1
+    invHeight: 2
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 35
+      DAMAGE_BONUS_FLAT_DAEMONIC: 40
+      DAMAGE_BONUS_FLAT_PSYKER: 55
+      DAMAGE_BONUS_FLAT_TZEENTCH: 15 # higher psychic sensitivity
+      DAMAGE_BONUS_FLAT_NURGLE: 25 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_FLAT_ELDAR: 15
+
+
+  - type: STR_PURIFIER_FLAMER
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_FLAMER]
+    listOrder: 13122
+    battleType: 1
+    weight: 10
+    bigSprite: 3442
+    floorSprite: {mod: 40k, index: 102}
+    handSprite: {mod: 40k, index: 200}
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    compatibleAmmo:
+      - STR_PURIFIER_FLAMER_AMMO
+    accuracySnap: 70
+    accuracyAuto: 40
+    tuSnap: 20
+    tuAuto: 30
+    snapRange: 12
+    autoRange: 10
+    aimRange: 0
+    confSnap:  # Double Shot
+      shots: 2
+      arcing: true
+    maxRange: 15
+    dropoff: 5
+    twoHanded: true
+    experienceTrainingMode: 6
+    arcingShot: true
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    maxRange: 9
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    autoShots: 6
+    attraction: 7
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    tags:
+      ITEM_DOESNT_HURT_USER: 1 # Temple Assassins are too skilled to shoot themselves. Staying in flames can be bad though.
+
+
+  - type: STR_PURIFIER_FLAMER_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_FLAMER]
+    listOrder: 13122
+    requiresBuy:
+      - STR_ASSASSINORUM
+    size: 0.2
+    costBuy: 12000 # expensive materials
+    costSell: 5000
+    vaporColorSurface: {mod: 40k, index: 0}
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    weight: 5
+    bigSprite: 3443
+    floorSprite: {mod: 40k, index: 103}
+    handSprite: {mod: 40k, index: 440}
+    hitSound: {mod: 40k, index: 12}
+    hitAnimation: {mod: 40k, index: 88}
+    power: 65 # between normal and heavy flamers
+    powerRangeReduction: 12
+    powerRangeThreshold: 15
+    damageType: 2
+    damageAlter:
+      FireBlastCalc: false
+      IgnoreOverKill: false
+      RandomType: 6  # Gaussian
+     # IgnoreSelfDestruct: false
+      IgnoreDirection: false
+      FixRadius: 3
+      ToHealth: 1.70
+      ToArmor: 0.0  # damages armor on the way in
+      ToMorale: 8.0 # flame and Null terror
+      ToStun: 0.4
+      ToTime: 0.2  # debilitating pain
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.1
+      ToItem: 0.5
+      ToTile: 0.5
+    blastRadius: 2
+    clipSize: 40
+    battleType: 2
+    invWidth: 1
+    invHeight: 2
+    bulletSpeed: 50
+    explosionSpeed: 10
+    armor: 50
+    attraction: 7
+    tags:
+      ITEM_DOESNT_HURT_USER: 1
+      DAMAGE_RESIST_PENETRATION_PERCENT: 35
+      DAMAGE_BONUS_FLAT_DAEMONIC: 40
+      DAMAGE_BONUS_FLAT_PSYKER: 25
+      DAMAGE_BONUS_FLAT_TZEENTCH: 10 # higher psychic sensitivity
+      DAMAGE_BONUS_FLAT_NURGLE: 20 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_FLAT_ELDAR: 10
