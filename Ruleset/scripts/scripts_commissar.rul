@@ -4,6 +4,7 @@ extended:
   tags:
     BattleGame:
       GUARD_UNIT_EXECUTED: int #has a unit been executed since last turn?
+      COMMISSAR_EXECUTION_MODE_ACTIVE: int #is at least one Commissar execution mode active?
 
   scripts:
   # this is for setting the order currently active on the Bonehead
@@ -35,9 +36,15 @@ extended:
           if lt temp1 1;
             battle_game.flashMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_ACTIVE";
             actor.setTag Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE 1;
+            battle_game.getTag temp1 Tag.COMMISSAR_EXECUTION_MODE_ACTIVE;
+            add temp1 1;
+            battle_game.setTag Tag.COMMISSAR_EXECUTION_MODE_ACTIVE temp1;
           else;
             battle_game.flashMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_NOT_ACTIVE";
             actor.setTag Tag.UNIT_COMMISSAR_EXECUTION_MODE_ACTIVE 0;
+            battle_game.getTag temp1 Tag.COMMISSAR_EXECUTION_MODE_ACTIVE;
+            sub temp1 1;
+            battle_game.setTag Tag.COMMISSAR_EXECUTION_MODE_ACTIVE temp1;
           end;
 
           return;
@@ -63,7 +70,7 @@ extended:
             return power part side;
           end;
 
-          # we can only friendly units; no instakilling enemy dreadnoughts/cataphracts
+          # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
           unit.getFaction temp;
           attacker.getFaction temp2;
           if and neq temp temp2 neq temp FACTION_NEUTRAL;
@@ -117,9 +124,20 @@ extended:
             mul targetZ -1;
           end;
 
-          if or gt targetX 5 gt targetY 5 gt targetZ 5;
+          # get longest distance;
+          if lt targetX targetY;
+            set targetX targetY;
+          end;
+          if lt targetX targetZ;
+            set targetX targetZ;
+          end;
+
+          sub targetX 5;
+
+          if gt targetX 0;
             # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Target more than 5 tiles away. Aborting, targetX,targetY,targetZ:" targetX;
-            return power part side;
+            battle_game.flashLongMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_TARGET_TOO_FAR"  targetX;
+            return 0 part side;
           end;
 
           unit.setTag Tag.UNIT_MARKED_FOR_EXECUTION 1; #so we don't trigger Alpha Legion and other scripts
@@ -144,6 +162,9 @@ extended:
           set to_health temp;
           battle_game.setTag Tag.GUARD_UNIT_EXECUTED 1; #so we don't trigger Alpha Legion, dodge, diehard and other scripts
           battle_game.flashLongMessage "STR_SCRIPT_COMMISSAR_EXECUTION_MODE_TARGET_EXECUTED";
+          battle_game.getTag temp Tag.NUMBER_SOLDIERS; #grants just enough Command Points for one additional Order
+          mul temp 4;
+          battle_game.setTag Tag.COMMAND_POINTS temp;
           return;
 
     #maximize morale
@@ -152,6 +173,7 @@ extended:
         offset: 90
         code: |
           var int temp;
+          var int temp2;
           var ptr RuleArmor armorRule;
 
           battle_game.getTag temp Tag.GUARD_UNIT_EXECUTED;
@@ -178,6 +200,90 @@ extended:
             return;
           end;
 
+          unit.getStun temp;
+          unit.getHealth temp2;
+          if ge temp temp2;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_dU_commissar_execution_mode, offset 20: Target not Living. Aborting. Target is unconscious." temp;
+            return;
+          end;
+
           unit.setMorale 100; #fully regenerate morale during enemy and neutral turns.
 
           return;
+
+    recolorUnitSprite:
+      - new: ROSIGMA_rUS_commissar_execution_mode
+        offset: 30  # change unit color to green so player knows who's infected
+        code: |
+          var int temp;
+
+          # if at least one execution mode is active, check units for high-lighting
+          battle_game.getTag temp Tag.COMMISSAR_EXECUTION_MODE_ACTIVE;
+          if lt temp 1;
+            return new_pixel;
+          end;
+
+          # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
+          unit.getFaction temp;
+          if and neq temp FACTION_PLAYER neq temp FACTION_NEUTRAL;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rUS_commissar_execution_mode, offset 20: Aborting; target is hostile. temp:" temp;
+            return new_pixel;
+          end;
+
+          #check if we're demoralized or infected, and thus are a valid target for execution
+          unit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          if lt temp 1;
+            unit.getMorale temp;
+            if gt temp 49;
+              # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rUS_commissar_execution_mode, offset 20: Target morale is too high and has no corruption. Aborting, Morale:" temp;
+              return new_pixel;
+            end;
+          end;
+
+          set_color new_pixel COLOR_X1_RED;
+
+          return new_pixel;
+
+    recolorItemSprite:
+      - new: ROSIGMA_rIS_commissar_execution_mode
+        offset: 30  # change unit color to green so player knows who's infected
+        code: |
+          var int temp;
+          var ptr BattleUnit myUnit;
+
+          # if at least one execution mode is active, check units for high-lighting
+          battle_game.getTag temp Tag.COMMISSAR_EXECUTION_MODE_ACTIVE;
+          if lt temp 1;
+            return new_pixel;
+          end;
+
+          if and neq blit_part blit_item_big neq blit_part blit_item_floor;
+            return new_pixel;
+          end;
+
+          item.getBattleUnit myUnit;
+          if eq myUnit null;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rIS_commissar_execution_mode, offset 30: Aborting; no unit. myUnit:" myUnit;
+            return new_pixel;
+          end;
+
+          # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
+          myUnit.getFaction temp;
+          if and neq temp FACTION_PLAYER neq temp FACTION_NEUTRAL;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rIS_commissar_execution_mode, offset 30: Aborting; target is hostile. temp:" temp;
+            return new_pixel;
+          end;
+
+          #check if we're demoralized or infected, and thus are a valid target for execution
+          myUnit.getTag temp Tag.CURRENT_INFECTION_DAMAGE;
+          if lt temp 1;
+            myUnit.getMorale temp;
+            if gt temp 49;
+              # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rIS_commissar_execution_mode, offset 30: Target morale is too high and has no corruption. Aborting, Morale:" temp;
+              return new_pixel;
+            end;
+          end;
+
+          set_color new_pixel COLOR_X1_RED;
+
+          return new_pixel;
