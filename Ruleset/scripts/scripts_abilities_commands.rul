@@ -6,18 +6,7 @@
 # Rally - Restore Morale if everything goes to shit (applied on next turn)
 
 extended:
-  tags:
-    BattleGame:
-      TURN_ACTIVE_COMMAND: int
-      CHOICE_ACTIVE_COMMAND: int
-      COMMAND_POINTS: int
-      NUMBER_SOLDIERS: int
-      NUMBER_OFFICERS: int
-    RuleSkill:
-      SKILL_COMMAND_ID: int
-    RuleSoldier:
-      SOLDIER_COMMAND_POINTS: int
-
+  tagsFile: Ruleset/tags_ROSIGMA.rul
 
   scripts:
     createUnit:
@@ -90,7 +79,8 @@ extended:
           return;
 
     skillUseUnit:
-      - offset: 1
+      - new: ROSIGMA_sUU_imperial_guard_commands_hunker_down
+        offset: 1
         code: |
           var int temp1;
           var int temp2;
@@ -155,10 +145,10 @@ extended:
             end;
 
             battle_game.setTag Tag.TURN_ACTIVE_COMMAND currentTurn;
-            # debug_log "skill TURN_ACTIVE_COMMAND" currentTurn;
+            # debug_log "ROSIGMA_sUU_imperial_guard_commands_hunker_down; skill TURN_ACTIVE_COMMAND" currentTurn;
 
             battle_game.setTag Tag.CHOICE_ACTIVE_COMMAND newCommand;
-            # debug_log "skill CHOICE_ACTIVE_COMMAND" newCommand;
+            # debug_log "ROSIGMA_sUU_imperial_guard_commands_hunker_down; skill CHOICE_ACTIVE_COMMAND" newCommand;
           else;
               battle_game.flashLongMessage "STR_SCRIPT_IG_COMMAND_ALREADY_ISSUED";
           end;
@@ -166,13 +156,22 @@ extended:
           return;
 
     hitUnit:
-      - offset: 10  # 1 - Fix Bayonets
+      - new: ROSIGMA_hU_imperial_guard_commands
+        offset: 10  # 1 - Fix Bayonets
         code: |
           var int temp;
           var int temp2;
+          var ptr RuleArmor armorRule;
 
           attacker.getFaction temp; # we don't care about enemy units
           if neq temp FACTION_PLAYER;
+            return power part side;
+          end;
+
+          attacker.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if lt temp 1;
+            # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 10: Target not Imperial Guard. Aborting. UNIT_TYPE_IMPERIAL_GUARD:" temp;
             return power part side;
           end;
 
@@ -186,7 +185,7 @@ extended:
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
           # debug_log "CHOICE_ACTIVE_COMMAND" temp;
           if neq temp 2;
-            # debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. Fix Bayonets command not issued; CHOICE_ACTIVE_COMMAND:" temp;
+            # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 10, Fix Bayonets command melee damage bonus. Fix Bayonets command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return power part side;
           end;
 
@@ -194,21 +193,29 @@ extended:
             return power part side;
           end;
 
-          # debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. Before power:" power;
+          # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 10, Fix Bayonets command melee damage bonus. Before power:" power;
           set temp power;
           mul temp 6; # 20 % boost
           div temp 5;
 
-          # debug_log "hitUnit, offset 10, Fix Bayonets command melee damage bonus. After power:" temp;
+          # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 10, Fix Bayonets command melee damage bonus. After power:" temp;
           return temp part side;
 
       - offset: 30  # 3 - Hunker Down
         code: |
           var int temp;
           var int temp2;
+          var ptr RuleArmor armorRule;
 
           unit.getFaction temp; # we don't care about enemy units
           if neq temp FACTION_PLAYER;
+            return power part side;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if lt temp 1;
+            # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 30, Hunker Down: Target not Imperial Guard. Aborting. UNIT_TYPE_IMPERIAL_GUARD:" temp;
             return power part side;
           end;
 
@@ -220,11 +227,11 @@ extended:
 
           battle_game.getTag temp Tag.CHOICE_ACTIVE_COMMAND;
           if neq temp 4;
-            # debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down command not issued; CHOICE_ACTIVE_COMMAND:" temp;
+            # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 30, Hunker Down damage reduction. Hunker Down command not issued; CHOICE_ACTIVE_COMMAND:" temp;
             return power part side;
           end;
 
-          # debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down before power:" power;
+          # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 30, Hunker Down damage reduction. Hunker Down before power:" power;
           set temp power;
 
           unit.isKneeled temp2;
@@ -234,18 +241,27 @@ extended:
             mul temp 4;
             div temp 5;
           end;
-          # debug_log "hitUnit, offset 30, Hunker Down damage reduction. Hunker Down after power:" temp;
+          # debug_log "ROSIGMA_hU_imperial_guard_commands, offset 30, Hunker Down damage reduction. Hunker Down after power:" temp;
 
           return temp part side;
 
     tryMeleeAttackItem:  # meleeMultiplierBonusStats would have been preferable not has no battle_game
-      - offset: 10  # 1 - Fix Bayonets
+      - new: ROSIGMA_tMAI_imperial_guard_commands
+        offset: 10  # 1 - Fix Bayonets
         code: |
           var int temp;
           var int temp2;
+          var ptr RuleArmor armorRule;
 
           attacker.getFaction temp; # we don't care about enemy units
           if neq temp FACTION_PLAYER;
+            return melee_attack_success;
+          end;
+
+          attacker.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if lt temp 1;
+            # debug_log "Imperial Guard tryMeleeAttackItem Scripts Fix Bayonets, offset 10: Attacker not Imperial Guard. Aborting. UNIT_TYPE_IMPERIAL_GUARD:" temp;
             return melee_attack_success;
           end;
 
@@ -274,17 +290,25 @@ extended:
           return temp2;
 
     reactionUnitAction:
-      - offset: 20  # 2 - Blitzkrieg
+      - new: ROSIGMA_nTU_imperial_guard_commands
+        offset: 20  # 2 - Blitzkrieg
         code: |
           var int friendyReactionScore;
           var int enemyReactionScore;
-
+          var ptr RuleArmor armorRule;
           var ptr RuleItem ruleItem;
           var int temp;
           var int temp2;
 
           action_unit.getFaction temp;
           if neq temp FACTION_PLAYER;
+            return reaction_chance;
+          end;
+
+          action_unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if lt temp 1;
+            # debug_log "Imperial Guard reactionUnitAction Scripts Blitzkrieg, offset 10: Attacker not Imperial Guard. Aborting. UNIT_TYPE_IMPERIAL_GUARD:" temp;
             return reaction_chance;
           end;
 
