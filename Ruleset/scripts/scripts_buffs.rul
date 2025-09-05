@@ -3,6 +3,7 @@ extended:
     RuleItem:
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: int
       ITEM_DAMAGE_PERCENT_VS_PILOTED: int
+      ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD: int #if a negative number, null
       ITEM_IS_BUFF_WEAPON: int
       ITEM_IS_OFFICER_ONLY: int  # can only offers use this effectively? Mostly for IG
       ITEM_NON_OFFICER_PENALTY_PERCENT: int  # what percent do we use instead of 100% if the user is not an officer
@@ -99,6 +100,21 @@ extended:
             muldiv power temp 100;
             # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. ITEM_DAMAGE_PERCENT_VS_PILOTED:" temp;
             # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is piloted. Modified power:" power;
+          end;
+
+          unit.getRuleArmor armorRule;
+          armorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD; #if not Imperial Guard, apply modifiers
+          if neq temp 1;
+            weapon_item.getTag temp Tag.ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD;
+            if gt temp 0;
+              muldiv power temp 100;
+              battle_game.flashMessage "STR_SCRIPT_IMPERIAL_GUARD_CHECK_REDUCED_EFFECT" temp;
+            else lt temp 0; #if we're negative, 0 out;
+              set power 0;
+              battle_game.flashMessage "STR_SCRIPT_IMPERIAL_GUARD_CHECK_NULL_EFFECT";
+            end;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD:" temp;
+            # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Target is mechanical. Modified power:" power;
           end;
 
           armorRule.getSize temp;
