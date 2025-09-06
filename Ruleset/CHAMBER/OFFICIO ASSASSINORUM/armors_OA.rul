@@ -97,10 +97,10 @@ armors:
       mana:
         flatHundred: 0.15
     builtInWeapons:
+      - STR_CALLIDUS_DECEPTION_TOKEN
       - INV_NULL_3X1_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
-      - STR_CALLIDUS_DECEPTION_TOKEN
       - STR_POWER_DAGGER_AND_DIGI_MELTA
       - STR_DIGI_MELTA_AMMO
 
@@ -248,8 +248,8 @@ armors:
     tags:
       ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
       ARMOR_RESTEALTH_KILL_REQUIREMENT: 5
-      UNIT_TYPE_LIVING: 1
       UNIT_TYPE_NULL: 1
+      UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
       INFECTION_RESIST_TYPE: 13
@@ -310,9 +310,7 @@ armors:
       - 0.8  # MELTA
     storeItem: STR_NONE
     personalLight: 5
-    recovery:  # Drug cocktail includes meds
-      health:
-        flatHundred: 0.1
+    recovery:
       mana:
         flatHundred: 0.1 # frenzon every three turns
       energy:
@@ -333,6 +331,10 @@ armors:
       UNIT_IS_DIEHARD: 1
       DIEHARD_TEMP_MODIFIER_INCREMENT: -50  # Two chances
       DIEHARD_THRESHOLD: 80  # Big damage still kills
+      ARMOR_REGENERATES_WOUNDS: 1 # autoinjected chems in Eversor include meds and coagulants.
+      ARMOR_REGENERATES_HEALTH: 1
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: 80 # can't heal to full. Any damage (including Frenzon) will incur wound recover time.
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 10 # sturdier Eversor heal more per turn
       DODGE_CHANCE: 60
       ARMOR_MAX_SUCCESSFUL_DODGES: 6
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 5
@@ -387,12 +389,24 @@ armors:
       throwing: -10 # slightly restricted range of motion
       strength: 20
       mana: 30
-    meleeDodge:  # temple assassin
+    meleeDodge:  # temple assassin in power armor
       reactions: 0.25
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK # grenade backpack
       - STR_EVERSOR_THAMMER
     tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      INFECTION_RESIST: 70 # genestealer infection has to fight heavily chemed body, chaos can't easily get to the mind.
+      INTIMIDATION_RESISTANCE: 100 # he is the intimidation
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -50  # Two chances
+      DIEHARD_THRESHOLD: 80  # Big damage still kills
+      ARMOR_REGENERATES_WOUNDS: 1 # autoinjected chems in Eversor include meds and coagulants.
+      ARMOR_REGENERATES_HEALTH: 1
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: 80 # can't heal to full. Any damage (including Frenzon) will incur wound recover time.
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 10 # sturdier Eversor heal more per turn
       DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
