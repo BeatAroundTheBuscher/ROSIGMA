@@ -1,0 +1,353 @@
+manufacture:
+  - name: STR_COMMISSAR_REQUISITION
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+  - name: STR_LIGHTNING_INTERCEPTOR_GUEVESA  # green guard variant
+    category: STR_CRAFT
+    space: 0
+    time: 10
+    cost: 0
+    requires:
+      - STR_TAU_GUEVESA
+    requiredItems:
+      STR_LIGHTNING_TOKEN: 1
+
+
+### Recruit guard prisoners as gue'vesa for now
+  - &STR_WELCOME_GUEVESALA_GV
+    name: STR_WELCOME_GUARD_GV
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_REGIMENTAL_COLLAPSE_GV
+    spawnedPersonType: STR_GUEVESALA_GV
+    space: 0
+    time: 50
+    cost: 10000
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI: 1
+    producedItems:
+      STR_PURITY_SEAL: 1  # Consider doing something with these later
+  - name: STR_WELCOME_GUARD_SCOUT_GV
+    refNode: *STR_WELCOME_GUEVESALA_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_SCOUT: 1
+  - name: STR_WELCOME_CATACHAN_GV
+    refNode: *STR_WELCOME_GUEVESALA_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_CATACHAN: 1
+
+  - &STR_WELCOME_GUEVESAUI_GV
+    name: STR_WELCOME_GUARD_VET_GV
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_REGIMENTAL_COLLAPSE_GV
+    spawnedPersonType: STR_GUEVESAUI_GV
+    space: 0
+    time: 50
+    cost: 10000
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_VETERAN: 1
+    producedItems:
+      STR_PURITY_SEAL: 1  # Consider doing something with these later
+    requiredItems:
+  - name: STR_WELCOME_CATACHAN_VETERAN_GV
+    refNode: *STR_WELCOME_GUEVESAUI_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_CATACHAN_VETERAN: 1
+
+  # - &STR_NEW_EMPLOYMENT_GV
+  #   name: STR_CONSCRIPT_GUARD_GV
+  #   space: 0
+  #   time: 10
+  #   cost: 0
+  #   requires:
+  #     - STR_TAU_EMPIRE
+  #     - STR_REGIMENTAL_COLLAPSE_GV
+  #   spawnedPersonType: STR_MILITIA_GV
+  #   requiredItems:     
+  #     STR_LIVE_CAPTURE_GUARDAI: 1
+  #   producedItems:
+  #     STR_PURITY_SEAL: 1
+  # - name: STR_CONSCRIPT_VETERAN_GV
+  #   refNode: *STR_NEW_EMPLOYMENT_GV
+  #   requiredItems:           
+  #     STR_LIVE_CAPTURE_GUARDAI_VETERAN: 1
+  # - name: STR_CONSCRIPT_SCOUT_GV
+  #   refNode: *STR_NEW_EMPLOYMENT_GV
+  #   requiredItems:           
+  #     STR_LIVE_CAPTURE_GUARDAI_SCOUT: 1
+  #   spawnedPersonType: STR_GUARD_TANITH
+  # - name: STR_CONSCRIPT_CATACHAN_GV
+  #   refNode: *STR_NEW_EMPLOYMENT_GV
+  #   requiredItems:           
+  #     STR_LIVE_CAPTURE_GUARDAI_CATACHAN: 1
+  # - name: STR_CONSCRIPT_CATACHAN_VETERAN_GV
+  #   refNode: *STR_NEW_EMPLOYMENT_GV
+  #   requiredItems:           
+  #     STR_LIVE_CAPTURE_GUARDAI_CATACHAN_VETERAN: 1
+
+
+  - &STR_COLLAR_PENITENT_GV
+    name: STR_COLLAR_TRAITOR_GUARD_GV
+    # category: STR_CAT_RADICAL
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_REGIMENTAL_COLLAPSE_GV
+    space: 0
+    time: 50
+    cost: 5000
+    spawnedPersonType: STR_PENITENT
+    requiredItems:
+      STR_LIVE_CAPTURE_TG: 1
+    producedItems:
+      STR_PURITY_SEAL: 1
+  - name: STR_COLLAR_TRAITOR_VETERAN_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_VETERAN: 1
+  - name: STR_COLLAR_CULTIST_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_CULTIST: 1
+  - name: STR_COLLAR_TRAITOR_SCOUT_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_SCOUT: 1
+  - name: STR_COLLAR_TRAITOR_CATACHAN_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_CATACHAN: 1
+  - name: STR_COLLAR_TRAITOR_CATACHAN_VETERAN_IG
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_CATACHAN_VETERAN: 1
+  - name: STR_COLLAR_BEASTMAN_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_CHAOS_BEASTMAN: 1
+    spawnedPersonType: STR_PENITENT_BEASTGUARD
+  - name: STR_COLLAR_FRATERIS_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_FRATERIS_MILITIA_AI: 1
+  - name: STR_COLLAR_FRATERIS_VETERAN_GV
+    refNode: *STR_COLLAR_PENITENT_GV
+    requiredItems:
+      STR_FRATERIS_MILITIA_VETERAN_AI: 1
+
+
+### Muggles rise up
+  - &STR_PURGE_THE_WITCH_GV
+    name: STR_PURGE_CULTIST_LEADER_GV
+    requires:
+      - STR_REGIMENTAL_COLLAPSE_GV
+      - STR_ALIEN_ORIGINS
+    space: 0
+    time: 10
+    cost: 0
+    requiredItems:
+      STR_LIVE_CAPTURE_CULTIST_LEADER: 1
+    producedItems:
+      STR_KILLPOINT_TOKEN: 10
+      STR_PURITY_SEAL: 1
+  - name: STR_PURGE_WITCH_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_WITCH: 1
+  - name: STR_PURGE_WITCH_LEADER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_WITCH_LEADER: 1
+  - name: STR_PURGE_TG_PSYKER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_PSYKER: 1
+  - name: STR_PURGE_GUARDAI_PSYKER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_PSYKER: 1
+  - name: STR_PURGE_CHAOS_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_CHAOS_SISTER: 1
+  - name: STR_PURGE_KHORNE_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_KHORNE_SISTER: 1
+  - name: STR_PURGE_KHORNE_SUPERIOR_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_KHORNE_SUPERIOR: 1
+  - name: STR_PURGE_NURGLE_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_NURGLE_SISTER: 1
+  - name: STR_PURGE_SLAANESH_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_SLAANESH_SISTER: 1
+  - name: STR_PURGE_SLAANESH_SUPERIOR_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_SLAANESH_SUPERIOR: 1
+  - name: STR_PURGE_TZEENTCH_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TZEENTCH_SISTER: 1
+  - name: STR_PURGE_NIGHT_SISTER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_NIGHT_SISTER: 1
+  - name: STR_PURGE_NIGHT_SISTER_SUPERIOR_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_NIGHT_SISTER_SUPERIOR: 1
+  - name: STR_PURGE_SERAPHIM_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_SERAPHIM: 1
+  - name: STR_PURGE_ASSASSIN_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_CHAOS_ASSASSIN: 1
+  - name: STR_PURGE_RAPTOR_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_RAPTOR: 1
+  - name: STR_PURGE_RAPTOR_LEADER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_RAPTOR_LEADER: 1
+  - name: STR_PURGE_RAPTOR_COMMANDER_GV
+    refNode: *STR_PURGE_THE_WITCH_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_RAPTOR_COMMANDER: 1
+    
+  - &STR_LIQUIDATION_GV
+    name: STR_PURGE_TG_LEADER_GV
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_A_SECRET_PACT_GV
+    space: 0
+    time: 10
+    cost: 0
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_LEADER: 1
+    producedItems:
+      STR_KILLPOINT_TOKEN: 10
+  - name: STR_PURGE_TG_STORMTROOPER_GV
+    refNode: *STR_LIQUIDATION_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_TG_STORMTROOPER: 1
+  - name: STR_PURGE_INQ_STORMTROOPER_GV
+    refNode: *STR_LIQUIDATION_GV
+    requiredItems:
+      STR_INQ_STORMTROOPER_AI: 1
+  - name: STR_PURGE_INQ_STORMTROOPER_ELITE_GV
+    refNode: *STR_LIQUIDATION_GV
+    requiredItems:
+      STR_INQ_STORMTROOPER_AI_ELITE: 1
+  # - name: STR_PURGE_ARBITES_GV
+  #   refNode: *STR_LIQUIDATION_GV
+  #   requiredItems:
+  #     STR_ARBITES: 1
+  # ### jury nullification      
+  # - name: STR_PURGE_JUDGE_GV
+  #   refNode: *STR_LIQUIDATION_GV
+  #   requiredItems:
+  #     STR_JUDGE: 1            
+  #   producedItems:
+  #     STR_KILLPOINT_TOKEN: 30  
+  ### morale bonus to all soldiers on base?
+  - name: STR_PURGE_COMMISSAR_GV
+    refNode: *STR_LIQUIDATION_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_LEADER: 1
+    producedItems:
+      STR_KILLPOINT_TOKEN: 30        
+  - name: STR_PURGE_GUARD_STORMTROOPER_GV
+    refNode: *STR_LIQUIDATION_GV
+    requiredItems:
+      STR_LIVE_CAPTURE_GUARDAI_STORMTROOPER: 1
+
+
+  - &STR_APOSTASY_GV
+    name: STR_RECUSANT_SISTERS_NOVICE_GV
+    space: 0
+    time: 10
+    cost: 0
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_WHITED_SEPULCHRES_SUCCESS_GV
+    spawnedPersonType: STR_GUEVESALA_GV
+    requiredItems:
+      STR_SHRINE_NOVICE_AI: 1
+    producedItems:
+      STR_PURITY_SEAL: 1
+  - name: STR_RECUSANT_SISTERS_MEDICAE_GV
+    refNode: *STR_APOSTASY_GV
+    spawnedPersonType: STR_GUEVESAUI_GV
+    requiredItems:
+      STR_SHRINE_MEDICAE_AI: 1
+  - name: STR_RECUSANT_SISTERS_ADEPTAS_GV
+    refNode: *STR_APOSTASY_GV
+    spawnedPersonType: STR_GUEVESAUI_GV
+    requiredItems:
+      STR_SHRINE_ADEPTAS_AI: 1
+  - name: STR_RECUSANT_SISTERS_ELOHIM_GV
+    refNode: *STR_APOSTASY_GV
+    spawnedPersonType: STR_GUEVESAUI_GV
+    requiredItems:
+      STR_SHRINE_ELOHIM_AI: 1
+
+  - &STR_TAU_SISTERS_GV
+    name: STR_ABSOLVE_ADEPTAS_GV
+    space: 0
+    time: 10
+    cost: 0
+    requires:
+      - STR_SUBORN_ECCLESIARCHY_GV
+      - STR_FIRE_MEET_GASOLINE_GV
+    spawnedPersonType: STR_ADEPTAS
+    requiredItems:     
+      STR_SHRINE_ADEPTAS_AI: 1
+    producedItems:
+      STR_PURITY_SEAL: 1
+  - name: STR_ABSOLVE_MEDICAE_GV
+    refNode: *STR_TAU_SISTERS_GV
+    spawnedPersonType: STR_ADEPTAS
+    requiredItems:           
+      STR_SHRINE_MEDICAE_AI: 1
+  - name: STR_ABSOLVE_ADEPTAS_NOVICE_GV
+    refNode: *STR_TAU_SISTERS_GV
+    spawnedPersonType: STR_ADEPTAS_NOVICE
+    requiredItems:   
+      STR_SHRINE_NOVICE_AI: 1
+  - name: STR_ABSOLVE_ADEPTAS_SUPERIOR_GV
+    refNode: *STR_TAU_SISTERS_GV
+    spawnedPersonType: STR_ADEPTAS_SUPERIOR
+    requiredItems:   
+      STR_SHRINE_ELOHIM_AI: 1
+
+
+  # - name: STR_THUNDERBOLT_INTERCEPTOR_GV
+  #   category: STR_CRAFT
+  #   requires:
+  #     - STR_GUEVESA_STRATEGY_CULT_GV
+  #   requiredItems:
+  #     STR_THUNDERBOLT_INTERCEPTOR_TOKEN_GV: 1
+  #   space: 0
+  #   time: 10
+  #   cost: 0
+  #   spawnedPersonType: STR_PILOT_GUARD
+
+  # - name: STR_LIGHT_CHIMERA_GV
+  #   category: STR_CRAFT
+  #   requires:
+  #     - STR_TAU_EMPIRE
+  #   requiredItems:
+  #     STR_LIGHT_CHIMERA_TOKEN_GV: 1
+  #   space: 0
+  #   time: 10
+  #   cost: 0

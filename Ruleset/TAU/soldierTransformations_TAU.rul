@@ -1,0 +1,182 @@
+soldierTransformation:
+
+
+  - &STR_FIRECASTE_PROMOTION_GV
+    name: STR_PROMOTE_SHASUI_GV
+    requires: 
+      - STR_TAU_EMPIRE
+      - STR_RECRUIT_FIREWARRIORS_GV
+    producedSoldierType: STR_FIREWARRIOR_SHASUI_GV
+    producedSoldierArmor: STR_TAUFIREWARRIORLEADER_ARMOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_FIREWARRIOR_GV
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 60
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+    requiredMinStats:
+      bravery: 60
+      tu: 1
+
+  - name: STR_PROMOTE_SHASVRE_GV
+    refNode: *STR_FIRECASTE_PROMOTION_GV
+    producedSoldierType: STR_FIREWARRIOR_SHASVRE_GV
+    producedSoldierArmor: STR_TAUFIREWARRIORLEADER_ARMOR
+    allowedSoldierTypes:
+      - STR_FIREWARRIOR_SHASUI_GV
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0    
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_SELECT_FIREBLADE_GV
+    refNode: *STR_FIRECASTE_PROMOTION_GV
+    producedSoldierType: STR_FIREWARRIOR_FIREBLADE_GV
+    producedSoldierArmor: STR_TAUFIREWARRIORCAPTAIN_ARMOR
+    allowedSoldierTypes:
+      - STR_FIREWARRIOR_SHASVRE_GV
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0    
+      STR_VETERAN_COMMENDATION: 0
+      STR_HERO_TO_THE_IMPERIUM: 0
+
+  - &STR_GUEVESA_PROMOTION_GV
+    name: STR_WELCOME_GUEVESALA_GV
+    requires:
+      - STR_TAU_EMPIRE
+      - STR_A_SECRET_PACT_GV
+    producedSoldierType: STR_GUEVESALA_GV
+    producedSoldierArmor: STR_TAUGUEVESAFLAK_ARMOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_MERCENARY_GV
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 60
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+    requiredMinStats:
+      bravery: 60
+      tu: 1
+
+  - name: STR_PROMOTE_GUEVESAUI_GV
+    refNode: *STR_GUEVESA_PROMOTION_GV
+    producedSoldierType: STR_GUEVESAUI_GV
+    producedSoldierArmor: STR_TAUGUEVESACARAP_ARMOR
+    allowedSoldierTypes:
+      - STR_GUEVESALA_GV
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 120
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+      STR_VETERAN_COMMENDATION: 0
+
+  - name: STR_PROMOTE_GUEVESAVRE_GV
+    refNode: *STR_GUEVESA_PROMOTION_GV
+    producedSoldierType: STR_GUEVESAVRE_GV
+    producedSoldierArmor: STR_TAUGUEVESACARAP_ARMOR
+    allowedSoldierTypes:
+      - STR_GUEVESAUI_GV
+      - STR_GUARD_OFFICER_VETERAN
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 60
+    requiredCommendations:
+      STR_BATTLE_TESTED: 0
+      STR_VETERAN_COMMENDATION: 0
+
+
+### Sisters sideline, will not be relevant for a long while
+  - name: STR_PROMOTE_SUPERIOR_GV
+    cost: 100000
+    requires:
+      - STR_FIRE_MEET_GASOLINE_GV
+    producedSoldierType: STR_ADEPTAS_SUPERIOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_ADEPTAS
+      - STR_ADEPTAS_VETERAN
+    minRank: 3
+    requiredItems:
+      STR_SISTERSUPERIOR_HONOR: 1
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requiredMinStats:
+      bravery: 50
+      firing: 50
+      melee: 50
+      psiSkill: 50    
+    
+  - name: STR_PROMOTE_TO_CANONESS_GV
+    requires:
+      - STR_FIRE_MEET_GASOLINE_GV
+    cost: 200000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 60
+      # STR_ALIEN_HABITAT: 1
+    requiredCommendations:
+      STR_TERMINATOR_CROSS: 0
+    producedSoldierType: STR_CANONESS
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsWoundedSoldiers: true
+    allowsLiveSoldiers: true
+    allowedSoldierTypes:
+      - STR_ADEPTAS_SUPERIOR
+    minRank: 5
+    requiredMinStats:
+      psiSkill: 60
+
+  - name: STR_INDUCT_CANTUS_GV
+    requires:
+      - STR_FIRE_MEET_GASOLINE_GV
+    producedSoldierType: STR_ADEPTAS
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_ADEPTAS_NOVICE
+    minRank: 2  # CANTUS
+    requiredItems:
+      STR_NOVITIATE_INDUCTION: 1
+    requiredMinStats:
+      tu: 45
+      stamina: 40
+      bravery: 30
+      strength: 25
+      psiSkill: 20
+
+  - name: STR_PROMOTE_CANTUS_GV
+    forbiddenPreviousTransformations:
+      - STR_PROMOTE_CANTUS_GV
+    requires:
+      - STR_FIRE_MEET_GASOLINE_GV
+    producedSoldierArmor: STR_ADEPTAS_CANTUSArmor
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_ADEPTAS_NOVICE
+    minRank: 2
+    # requiredItems:
+    #   STR_CANTUS_PROMOTION: 1
+
+
+### Turn off Arbites transforms
+  - name: STR_INDOCTRINATE_GUARDSMAN
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+  - name: STR_PARDON_PENITENT_ARBITES
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+  - name: STR_PROMOTE_PILOT_ARBITES
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+

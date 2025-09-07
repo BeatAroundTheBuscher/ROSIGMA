@@ -1,0 +1,707 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+items:
+  - type: STR_TAUGUEVESAFLAK_ARMOR_ITEM_GV
+    requiresBuy:
+      - STR_BLACKMARKET_WHITESHIELD_GV
+    costBuy: 15000
+    costSell: 7500
+
+  - type: STR_TAUGUEVESACARAP_ARMOR_ITEM_GV
+    requiresBuy:
+      - STR_EARTHCASTE_SMITHS_GV
+    costBuy: 50000
+    costSell: 7500
+
+  - type: STR_TAUBASIC_ARMOR_ITEM_GV
+    requiresBuy:
+      - STR_EARTHCASTE_SMITHS_GV
+    costBuy: 50000
+    costSell: 10000    
+
+  - type: STR_TAUADV_ARMOR_ITEM_GV
+    requiresBuy:
+      - STR_COMRADES_IN_ARMS_GV
+    costBuy: 50000
+    costSell: 10000    
+
+  - type: STR_TAUHIGHTIER_ARMOR_ITEM_GV
+    requiresBuy:
+      - STR_THE_GREATER_GOOD_GV
+    costBuy: 100000
+    costSell: 10000
+
+armors:
+### DRONE ARMORS
+  - &STR_TAUDRONE_BASE_ARMOR_GV
+    type: STR_TAUDRONE_ARMOR_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10 #scouts
+    antiCamouflageAtDay: 10
+    heatVision: 35
+    psiVision: 5 #advanced sensors
+    size: 1
+    spriteSheet: TAUDRONEbattle.PCK
+    spriteInv: TAUDRONESARMOR.PCK
+    corpseBattle:
+      - STR_TAUDRONE_PCCORPSE
+    movementType: 1
+    zombiImmune: true  # It's a drone; can't zombify this.
+    frontArmor: 60
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 50
+    drawingRoutine: 4
+    scripts:
+      selectUnitSprite: |
+        # this script will always run move animation of unit.
+        var int temp;
+        var int walking;
+        unit.isWalking walking;
+        if eq walking 0;
+          unit.getId temp;
+          offsetmod temp 11 0 8; # desync animation of different units
+          add temp anim_frame;
+          wavegen_saw temp 8 8 7;
+          mul sprite_offset 8;
+          add sprite_offset 8;
+          add sprite_offset temp;
+          set sprite_index sprite_offset;
+        else;
+          add sprite_index sprite_offset;
+        end;
+        return sprite_index;
+    bleedImmune: true
+    fearImmune: true
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.5  # FLAMES
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 1.2  # MELEE
+      - 0.5  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [4]
+    deathFrames: 4
+    allowsKneeling: false
+    allowsRunning: false
+    tags:
+      UNIT_SIZE: 50 # SMALL
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      INTIMIDATION_RESISTANCE: 100
+      INFECTION_RESIST: 100
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+
+  - type: STR_TAUDRONE_GUN_ARMOR_GV
+    refNode: *STR_TAUDRONE_BASE_ARMOR_GV
+    builtInWeapons:
+      - STR_TAU_PULSE_CARBINE_DRONE_TWINLINKED
+
+  - type: STR_TAUDRONE_MARKER_ARMOR_GV
+    refNode: *STR_TAUDRONE_BASE_ARMOR_GV
+    builtInWeapons:
+      - STR_TAU_MARKERLIGHT_BEAM
+    HAS_MARKERLIGHT: 1
+
+
+
+### TAU FIRE WARRIOR ARMORS
+### no storeItem, you should not be able to get this
+### template only 
+  - &STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    type: STR_TAUBASIC_ARMOR_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #advanced NV
+    antiCamouflageAtDark: 5 #superior Tau optics
+    antiCamouflageAtDay: 5
+    heatVision: 25
+    spriteSheet: TAUFIREWARRIORbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIOR_PCCORPSE
+    frontArmor: 80 # +10 vs basic Guard Carapace
+    sideArmor: 70
+    rearArmor: 50
+    underArmor: 70
+    standHeight: 22
+    kneelHeight: 14
+    drawingRoutine: 0
+    allowsKneeling: true
+    damageModifier:  # TAU CARAPACE ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 0.7  # FLAMES; partially environmentally sealed
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE was 1.2 on NPCs
+      - 1.0  # ACID; partially environmentally sealed
+      - 0.0  # SMOKE
+      - 0.8  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    allowsRunning: true
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+
+
+### Strike Armor is specialized for long range fire
+### Leader quality optics and firing accuracy bonus
+  - &STR_TAUSTRIKE_TEMPLATE_GV
+    type: STR_TAUSTRIKE_ARMOR_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+    visibilityAtDark: 35
+    antiCamouflageAtDark: 7
+    antiCamouflageAtDay: 7
+    heatVision: 35
+    stats:
+      firing: 5
+
+### breacher armor is better sealed
+### resistant to flames/HE/stun/melee/impact
+### weak shield (is this busted?)
+  - &STR_TAUBREACHER_TEMPLATE_GV
+    type: STR_TAUBREACHER_ARMOR_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+    damageModifier:  # Leader quality damage resist
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.6  # FLAMES; partially environmentally sealed
+      - 0.8  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.9  # STUN
+      - 1.1  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.7  # IMPACT
+      - 0.9  # MELTA
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10   # half leader shield
+      ARMOR_ENERGY_SHIELD_DECAY: 50      
+
+### pathfinders are pathfinders
+  - &STR_TAUPATHFINDER_TEMPLATE_GV
+    type: STR_TAUPATHFINDER_ARMOR_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 40
+    camouflageAtDark: -10 #minor camo
+    camouflageAtDay: -5
+    spriteSheet: TAUFIREWARRIORPATHFINDERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSPATHFINDERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORPATHFINDER_PCCORPSE
+    frontArmor: 70 # slightly less protective than standard Fire Warrior armor
+    sideArmor: 60
+    rearArmor: 40
+    underArmor: 60
+    stats:
+      tu: 10  # lighter
+      stamina: 10  # lighter
+      reactions: 10  # lighter
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      HAS_MARKERLIGHT: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30   # all Tau armors get this now
+
+### TAU FIRE WARRIOR SHASUI ARMORS
+### shasui armor versions, not as good as shas'vre advanced armor
+### markerlight equip and bravery buffs
+  - type: STR_TAUSTRIKE_LEADER_ARMOR_GV
+    refNode: *STR_TAUSTRIKE_TEMPLATE_GV
+    spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORLEADER_PCCORPSE
+    stats:
+      firing: 5
+      bravery: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      HAS_MARKERLIGHT: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+
+  - type: STR_TAUBREACHER_LEADER_ARMOR_GV
+    refNode: *STR_TAUBREACHER_TEMPLATE_GV
+    spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORLEADER_PCCORPSE
+    stats:
+      bravery: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      HAS_MARKERLIGHT: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10   # half leader shield
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+
+
+  - type: STR_TAUPATHFINDER_LEADER_ARMOR_GV
+    refNode: *STR_TAUPATHFINDER_TEMPLATE_GV
+    spriteSheet: TAUFIREWARRIORPATHFINDERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSPATHFINDERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORPATHFINDER_PCCORPSE
+    stats:
+      tu: 10  # lighter
+      stamina: 10  # lighter
+      reactions: 10  # lighter    
+      bravery: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      HAS_MARKERLIGHT: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 10   # half leader shield
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+
+
+### TAU FIRE WARRIOR ADVANCED ARMORS
+  - &STR_TAUADV_ARMOR_TEMPLATE_GV
+    type: STR_TAUADV_ARMOR_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 35
+    antiCamouflageAtDark: 7
+    antiCamouflageAtDay: 7
+    heatVision: 35
+    spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORLEADER_PCCORPSE
+    standHeight: 22
+    kneelHeight: 14
+    frontArmor: 90 # +20 vs basic Guard Carapace; artificer quality
+    sideArmor: 80
+    rearArmor: 60
+    underArmor: 80
+    drawingRoutine: 0
+    allowsKneeling: true
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.6  # FLAMES; partially environmentally sealed
+      - 0.8  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.9  # STUN
+      - 1.1  # MELEE
+      - 0.9  # ACID
+      - 0.0  # SMOKE
+      - 0.7  # IMPACT
+      - 0.9  # MELTA
+    loftempsSet: [3]
+    allowsRunning: true
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      # ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
+      # ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+      HAS_MARKERLIGHT: 1
+
+### Strike Armor is specialized for long range fire
+### Captain quality optics and firing accuracy bonus
+  - type: STR_TAUADVSTRIKE_ARMOR_GV
+    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 40
+    stats:
+      firing: 10
+      reactions: 5
+      bravery: 10
+  
+### breacher armor is better sealed
+### resistant to flames/HE/stun/melee/impact
+### has shield (is this busted?)
+  - type: STR_TAUADVBREACHER_ARMOR_GV
+    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+    damageModifier:  # Captain quality damage resist
+      - 1.0  # none
+      - 0.7  # AP
+      - 0.5  # FLAMES; partially environmentally sealed
+      - 0.7  # HE
+      - 0.8  # LASCANON
+      - 0.8  # PLASMA
+      - 0.8  # STUN
+      - 1.1  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.6  # IMPACT
+      - 0.8  # MELTA
+    stats:
+      reactions: 5
+      bravery: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+      HAS_MARKERLIGHT: 1
+
+### pathfinders are pathfinders
+  - type: STR_TAUADVPATHFINDER_ARMOR_GV
+    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 15
+    antiCamouflageAtDay: 15
+    heatVision: 50
+    camouflageAtDark: -15 #tanith level camo
+    camouflageAtDay: -8
+    spriteSheet: TAUFIREWARRIORPATHFINDERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSPATHFINDERARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORPATHFINDER_PCCORPSE
+    frontArmor: 80 # Pathfinder is +10 vs basic Guard Carapace 
+    sideArmor: 70
+    rearArmor: 50
+    underArmor: 70
+    stats:
+      tu: 15  # feels like youre wearing nothin at all
+      stamina: 15 
+      reactions: 15
+      bravery: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      HAS_MARKERLIGHT: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30   # all Tau armors get this now
+
+
+### TAU CADRE FIREBLADE ARMORS
+  - type: STR_TAUFIREBLADE_ARMOR_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 40
+    spriteSheet: TAUFIREWARRIORCAPTAINbattle.PCK
+    spriteInv: TAUFIREWARRIORSCAPTAINARMOR.PCK
+    corpseBattle:
+      - STR_TAUFIREWARRIORCAPTAIN_AICORPSE
+    standHeight: 22
+    kneelHeight: 14
+    frontArmor: 100
+    sideArmor: 90
+    rearArmor: 70
+    underArmor: 90
+    drawingRoutine: 0
+    allowsKneeling: true
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 0.7  # AP
+      - 0.5  # FLAMES; partially environmentally sealed
+      - 0.7  # HE
+      - 0.8  # LASCANON
+      - 0.8  # PLASMA
+      - 0.8  # STUN
+      - 1.1  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.6  # IMPACT
+      - 0.8  # MELTA
+    loftempsSet: [3]
+    stats:                    # combine all previous stat boosts
+      tu: 15
+      stamina: 15
+      reactions: 15
+      firing: 10
+      bravery: 10
+    allowsRunning: true
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      UNIT_TYPE_XENO: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50
+      ARMOR_ENERGY_SHIELD_DECAY: 50
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+
+
+### GUEVESA FLAK AND CARAPACE ARMORS
+  - &STR_GUEVESAFLAK_ARMOR_TEMPLATE_GV
+    type: STR_TAUGUEVESAFLAK_ARMOR_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    spriteSheet: TAUGUEVESALV1battle_GOG.PCK
+    spriteInv: TAUGUEVESALV1ARMOR.PCK
+    spriteFaceGroup: 6
+    spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
+    corpseBattle:
+      - STR_TAUGUEVESA_PCCORPSE
+    storeItem: STR_TAUGUEVESAFLAK_ARMOR_ITEM_GV
+    frontArmor: 40
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 30
+    standHeight: 22
+    kneelHeight: 14
+    drawingRoutine: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 0.9  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    allowsKneeling: true
+    allowsRunning: true
+    specialWeapon: STR_BAYONET
+    stats:
+      tu: 5
+      stamina: 10
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+
+  - &STR_GUEVESA_CARAPACE_ARMOR_TEMPLATE_GV
+    type: STR_TAUGUEVESACARAP_ARMOR_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    spriteSheet: TAUGUEVESALV2battle_GOG.PCK
+    spriteInv: TAUGUEVESALV2ARMOR.PCK
+    corpseBattle:
+      - STR_TAUGUEVESA_PCCORPSE
+    storeItem: STR_TAUGUEVESACARAP_ARMOR_ITEM_GV
+    stats:
+      melee: 5        # focus on what they're best at
+      strength: 5
+    specialWeapon: STR_BAYONET
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+
+
+  - type: STR_TAUGUEVESACARAP_LEADER_ARMOR_GV
+    refNode: *STR_GUEVESA_CARAPACE_ARMOR_TEMPLATE_GV
+    stats:
+      bravery: 10
+      melee: 5        # focus on what they're best at
+      strength: 5
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      HAS_MARKERLIGHT: 1
+
+
+  - type: STR_TAUGUEVESACARAP_VETERAN_ARMOR_GV
+    refNode: *STR_GUEVESA_CARAPACE_ARMOR_TEMPLATE_GV
+    stats:
+      bravery: 10
+      melee: 10        # focus on what they're best at
+      strength: 10
+      reactions: 5
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TAU: 1
+      HAS_MARKERLIGHT: 1
+
+### GUEVESA CULTIST ARMORS
+  - type: STR_TAUGUEVESAROBE_ARMOR_GV
+    units:
+      - STR_GUEVESACULTIST_GV
+    visibilityAtDay: 30
+    visibilityAtDark: 25
+    storeItem: STR_NONE    
+    spriteSheet: CLOAKED_WOMAN_ORANGE_BS.PCK  # cloaked_woman_orange_bs.png
+    spriteInv: CLOAKED_WOMAN_ORANGE_INV.SPK  # GCLOAKED_WOMAN_ORANGE_INV.png
+    corpseBattle:
+      - STR_PC_CLOAKED_WOMAN_ORANGE_CORPSE  # floorob_cloaked_orange_woman.png bigob_cloaked_orange_woman.png
+    frontArmor: 5
+    sideArmor: 5
+    rearArmor: 5
+    underArmor: 5
+    damageModifier:
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    drawingRoutine: 4
+    tags:
+      UNIT_TYPE_LIVING: 1
+
+ 
+  - type: STR_TAUGUEVESACULTFANATIC_ARMOR_GV
+    specialWeapon: STR_EXPLOSIVE_COLLAR
+    frontArmor: 15
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 10
+    visibilityAtDay: 40
+    visibilityAtDark: 9
+    spriteSheet: ORANGE.PCK
+    customArmorPreviewIndex: {mod: 40k, index: 52}
+    corpseBattle:
+      - STR_PENAL_CORPSE
+    storeItem: STR_NONE
+    damageModifier: #GUARD ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.2 #FLAMES
+      - 1.0 #HE
+      - 0.8 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.1 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    units:
+      - STR_GUEVESACULTIST_GV
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96, 96, 96, 160, 160, 163, 163] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 96, 164, 96, 96, 144, 144, 164, 164, 245, 245, 166, 166] #M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6 M7 F7 M8 F8 M9 F9
+    layersDefaultPrefix: 20
+    layersSpecificPrefix:
+      20: PENAL
+    layersDefinition:
+      M0: ["0", "PENALM", "M0_FACE"]
+      M1: ["0", "PENALM", "M1_FACE"]
+      M2: ["0", "PENALMC", "M2_FACE"]
+      M3: ["0", "PENALMB", "M3_FACE"]
+      M4: ["0", "PENALM", "M4_FACE"]
+      M5: ["0", "PENALM", "M5_FACE"]
+      M6: ["0", "PENALM", "M6_FACE"]
+      M7: ["0", "PENALM", "M7_FACE"]
+      M8: ["0", "PENALMC", "M8_FACE"]
+      M9: ["0", "PENALMB", "M9_FACE"]
+      F0: ["0", "PENALF", "F0_FACE"]
+      F1: ["0", "PENALF", "F1_FACE"]
+      F2: ["0", "PENALFC", "F2_FACE"]
+      F3: ["0", "PENALFB", "F3_FACE"]
+      F4: ["0", "PENALF", "F4_FACE"]
+      F5: ["0", "PENALF", "F5_FACE"]
+      F6: ["0", "PENALF", "F6_FACE"]
+      F7: ["0", "PENALF", "F7_FACE"]
+      F8: ["0", "PENALFC", "F8_FACE"]
+      F9: ["0", "PENALFB", "F9_FACE"]
+    loftempsSet: [ 3 ]
+    drawingRoutine: 0
+
+
+
+### trying out different size sprites for Crisis armor
+  # - &STR_TAUDEBUGCRISIS_ARMOR_GV
+  #   type: STR_TAUDEBUGCRISIS_SATURNINE_ARMOR_GV
+  #   # customArmorPreviewIndex: 297
+  #   visibilityAtDay: 40  # equivalent to Scion gear
+  #   visibilityAtDark: 40  # advanced sensors
+  #   antiCamouflageAtDay: 5  # advanced sensors
+  #   antiCamouflageAtDark: 5
+  #   heatVision: 20
+  #   loftempsSet: [5]
+  #   storeItem: STR_NONE
+  #   spriteInv: ULTRAsaturninvent.SPK
+  #   spriteSheet: ULTRAsaturn_BS.PCK
+  #   units:
+  #     - STR_GUEVESACULTIST_GV
+  #   drawingRoutine: 0
+  #   movementType: 1
+  #   stats:
+  #     tu: 35
+  #     health: 50
+  #     stamina: 50
+  #     strength: 50
+  #     bravery: 30
+  #     firing: 35
+  #     melee: 25
+  #   frontArmor: 200
+  #   sideArmor: 190
+  #   rearArmor: 160
+  #   underArmor: 200
+  #   allowsKneeling: false
+  #   corpseBattle:
+  #     - STR_ULTRAsaturnine_CORPSE_GEO
+  #   damageModifier:
+  #     - 1.0  # none
+  #     - 0.45  # AP
+  #     - 0.15  # FLAMES
+  #     - 0.4  # HE
+  #     - 1.0  # LASCANON
+  #     - 0.85  # PLASMA
+  #     - 0.5  # STUN
+  #     - 0.7  # MELEE
+  #     - 0.9  # ACID
+  #     - 0.0  # SMOKE
+  #     - 0.2  # IMPACT
+  #     - 0.9  # MELTA
+  #   specialWeapon: DW_SATAUTOCAN
+  #   allowsRunning: true
+  #   tags:
+  #     ARMOR_ENERGY_SHIELD_HP_PER_TURN: 70  # 50% better than standard terminator shielding
+  #     ARMOR_ENERGY_SHIELD_DECAY: 20
+  #     UNIT_TYPE_LIVING: 1
+  #     UNIT_SIZE: 200 # HUGE
+
+  # - type: STR_TAUDEBUGCRISIS_DAEMONPRINCE_ARMOR_GV
+  #   refNode: *STR_TAUDEBUGCRISIS_ARMOR_GV
+  #   spriteSheet: CHAOSCULT_DEMONLORDbattle.PCK
+  #   spriteInv: CHAOSCULT_DEMONLORDinvent.SPK
+    
+
+  # - type: STR_SENTINEL_ARMOR_UC
+  #   units: !add
+  #     - STR_GUEVESACULTIST_GV
+  #   storeItem: STR_NONE
+  #   movementType: 1
+
+  # - type: SWDREAD_ARMOR_UC
+  #   units: !add
+  #     - STR_GUEVESACULTIST_GV
+  #   storeItem: STR_NONE
+  #   movementType: 1
+

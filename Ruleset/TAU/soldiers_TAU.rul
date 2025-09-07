@@ -1,0 +1,356 @@
+soldiers:
+# Fire Warriors. Currently no diff btwn Fire Warriors and Pathfinders beyond armor.
+# stats are placeholders for shas'ui and higher
+# TODO: Remember to do Tau bionics and maybe some kind of medal like Blooded or something
+
+# Fire Warriors are bred and trained for war but are not superhuman
+# Tabletop BS 4+ and Ld 7+ matches Guard stats in these regards
+# So my thoughts are
+# Managed genetics: Reliably usable soldiers in terms of bravery (40-60) and psiStrength (80-100).
+# Overwatch specialists: Excellent reactions
+# Mobile hunters: Good TU, stamina, firing accuracy
+# Weak arms: Poor strength, melee, throwing
+# Never psykers: No psiSkill, ever
+
+# Guevesa cloned off IG ranks
+# No Guevesa > Officer promotion for egalitarian Tau!
+# You must go Gue'vesa'la > Gue'vesa'ui by veterancy
+# Then you can go > Gue'vesa'vre by a promotion (with more veterancy).
+# Guevesa cultists can become higher Gue'vesa by rank once A Secret Pact is researched as they are Old Gue'vesa
+
+# == Soldier Types == 
+# Fire Warriors (need armor stats)
+# Guevesa (need armor stats)
+# 
+# Beastmen gue'vesa (NYI)
+  - type: STR_PENITENT
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+  - &STR_FIREWARRIOR_GV
+    type: STR_FIREWARRIOR_GV
+    requires:
+      - STR_RECRUIT_FIREWARRIORS_GV
+    costBuy: 30000
+    costSalary: 10000
+    minStats:
+      tu: 55  # Guard 50
+      stamina: 45  # Guard 40
+      health: 25 
+      bravery: 40  # Guard 20
+      reactions: 40  # Guard 30
+      firing: 45  # Guard 40
+      throwing: 25  # Guard 30
+      strength: 8  # Guard 10 -- 8 gives pulse rifle + 1 clip
+      psiStrength: 80 # Guard 0 -- Tau less warp sensitive
+      psiSkill: 0  # Tau never produce psykers
+      melee: 10 # Guard 20
+      mana: 0
+    maxStats:
+      tu: 65  # Guard 60
+      stamina: 75  # Guard 70
+      health: 40
+      bravery: 60  # Guard 60
+      reactions: 70  # Guard 60
+      firing: 75    # Guard 70
+      throwing: 60   # Guard 65
+      strength: 20  # Guard 25
+      psiStrength: 100
+      psiSkill: 0  # Tau never produce psykers
+      melee: 50  # Guard 60
+      mana: 0
+    statCaps:
+      tu: 80  # Guard 75
+      stamina: 95  # Guard 90
+      health: 55
+      bravery: 110  # Guard 110
+      reactions: 90  # Guard 80
+      firing: 100   # Guard 100
+      throwing: 65  # Guard 70
+      strength: 55  # Guard 65
+      psiStrength: 100
+      psiSkill: 0 # No psykers
+      melee: 100  # Guard 120
+      mana: 0
+    trainingStatCaps:
+      tu: 65
+      stamina: 75 
+      health: 30
+      firing: 75
+      throwing: 60
+      strength: 18
+      psiStrength: 100
+      psiSkill: 0
+      melee: 45
+      mana: 0
+    armor: STR_TAUFIREWARRIOR_ARMOR
+    allowPiloting: false
+    allowPromotion: false
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_0
+    rankSprite: {mod: 40k, index: 1000}
+    rankBattleSprite: {mod: 40k, index: 1000}
+    rankTinySprite: {mod: 40k, index: 1000}
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25    
+    soldierNames:
+      - delete
+      - Names/tau_firecaste.nam
+    deathMale: [41, 42, 43]
+    deathFemale: [44, 45, 46]
+    value: 10
+
+  - &STR_SHASUIS_GV
+    type: STR_FIREWARRIOR_SHASUI_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAUFIREWARRIORLEADER_ARMOR
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_1
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+  - &STR_SHASVRES_GV
+    type: STR_FIREWARRIOR_SHASVRE_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAUFIREWARRIORLEADER_ARMOR
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_2
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+  - type: STR_FIREWARRIOR_FIREBLADE_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAUFIREWARRIORCAPTAIN_ARMOR
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_3
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+
+  - &STR_GUEVESA_SOLDIERS_GV
+    type: STR_GUEVESALA_GV
+    costBuy: 30000
+    costSalary: 10000    
+    requires:
+      - STR_FIRECASTE_ADVISORS_GV
+    armor: STR_TAUGUEVESAFLAK_ARMOR
+    rank:
+      - STR_GUEVESA_GV_RANK_0
+    soldierNames:
+      - delete
+      - Names/tau_guevesa.nam
+    flagOffset: 42      
+    minStats:
+      tu: 40  # was 50
+      stamina: 40
+      health: 30      # better health care
+      bravery: 30     # fighting for a cause
+      reactions: 30
+      firing: 40
+      throwing: 35
+      strength: 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 45
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 25
+      psiStrength: 100
+      psiSkill: 6
+      melee: 60
+      mana: 0
+    statCaps:
+      tu: 75  # was 65
+      stamina: 90
+      health: 60  # was 45
+      bravery: 110  # was 100
+      reactions: 80  # was 60
+      firing: 100  # was 100
+      throwing: 70
+      strength: 65  # was 60
+      psiStrength: 100
+      psiSkill: 50
+      melee: 90
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 35
+      firing: 70
+      throwing: 65
+      strength: 30
+      psiStrength: 100
+      psiSkill: 50
+      melee: 50
+      mana: 0
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    deathMale: [41, 42, 43]
+    deathFemale: [44, 45, 46]            
+    allowPiloting: true
+    allowPromotion: true
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    value: 10
+
+
+  - type: STR_GUEVESAUI_GV
+    refNode: *STR_GUEVESA_SOLDIERS_GV
+    armor: STR_TAUGUEVESACARAP_ARMOR
+    rank:
+      - STR_GUEVESA_GV_RANK_1     
+    flagOffset: 42      
+    minStats:  # raise as veterans are now created by the game
+      tu: 50
+      stamina: 60  # was 40
+      health: 40  # was 25
+      bravery: 50  # was 20
+      reactions: 50  # was 30
+      firing: 60  # was 40
+      throwing: 50  # was 35
+      strength: 20  # was 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 50  # was 20
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 45
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 30  # was 20
+      psiStrength: 100
+      psiSkill: 6
+      melee: 60
+      mana: 0
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 65
+      bravery: 110
+      reactions: 80
+      firing: 130  # was 90  # Scion was highest
+      throwing: 80
+      strength: 65
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 80  # was 70  # Scion was highest  # doesn't matter
+      health: 45
+      firing: 80  # was 70  # Scion was highest  # doesn't matter
+      throwing: 70  # was 65  # Scion was highest
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
+      mana: 0      
+    tags:
+      SOLDIER_IS_OFFICER: 1
+    value: 20
+
+
+  - type: STR_GUEVESAVRE_GV
+    refNode: *STR_GUEVESA_SOLDIERS_GV
+    armor: STR_TAUGUEVESACARAP_ARMOR      
+    rank:
+      - STR_GUEVESA_GV_RANK_2
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 65
+      bravery: 110
+      reactions: 80
+      firing: 130  # was 90  # Scion was highest
+      throwing: 80
+      strength: 65
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 80  # was 70  # Scion was highest  # doesn't matter
+      health: 45
+      firing: 80  # was 70  # Scion was highest  # doesn't matter
+      throwing: 70  # was 65  # Scion was highest
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
+      mana: 0
+    tags:
+      SOLDIER_IS_OFFICER: 1
+    value: 20
+
+
+# ### Reskinned Guardsmen with the generic flak armor.
+# ### Most are Guard deserters, some are vagrant militia or simple sellswords.
+# ### Flak armor is plentiful and easily looted.
+# ### Few Guardsmen wear their regulation armor these days.
+#   - type: STR_MERCENARY_GV
+#     refNode: *STR_GUEVESA_SOLDIERS_GV
+#     requires:
+#       - STR_TAU_EMPIRE
+#     costBuy: 20000
+#     costSalary: 10000   # more expensive to maintain than Guard
+#     armor: STR_GUARDPD_ARMOR_UC
+#     value: 5
+
+
+### Guevesa cultists
+  - type: STR_GUEVESACULTIST_GV
+    refNode: *STR_GUEVESA_SOLDIERS_GV
+    requires:
+      - STR_TAU_EMPIRE
+    costBuy: 10000
+    costSalary: 5000   # more expensive to maintain than Guard
+    armor: STR_TAUGUEVESAROBE_ARMOR_GV
+    value: 5
+
+
+  # - type: STR_CLOAKED_WOMAN_ORANGE  # Imperial Citizen Orange
+  #   race: STR_CIVILIAN
+  #   stats:
+  #     tu: 40
+  #     stamina: 50
+  #     health: 30
+  #     bravery: 50
+  #     reactions: 20
+  #     firing: 25
+  #     throwing: 25
+  #     strength: 15
+  #     psiStrength: 0
+  #     psiSkill: 0
+  #     melee: 25
+  #   armor: CLOAKED_WOMAN_ORANGE_ARMOR
+  #   standHeight: 19
+  #   kneelHeight: 14
+  #   value: 10
+  #   intelligence: 0
+  #   aggression: 0
+  #   energyRecovery: 40
+  #   deathSound: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
+  #   livingWeapon: true
