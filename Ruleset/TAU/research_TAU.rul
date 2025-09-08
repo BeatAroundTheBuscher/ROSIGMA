@@ -10,6 +10,7 @@ research:
     dependencies:
       - STR_GENERALLOCK      
   - name: STR_NOT_TAU_EMPIRE_GV         # (Not Tau and friends)
+  - name: STR_NOT_TAU_GUEVESA_GV        # (Not xenophile scum)
   - name: STR_NOT_DEBUG_TAU_EMPIRE_GV   # (Not cheating Tau and friends)
 
 ### Replacing STR_CHAPTER_PURITY is not simple
@@ -47,7 +48,8 @@ research:
     cost: 5
     dependencies:
       - STR_GENERALLOCK
-    # lookup: STR_CHOSEN_IGS
+    reenables:
+      - STR_CHAPTER_PURITY    # not all who wander are lost
     unlocks:
       - STR_MOTION_SCANNER
       - STR_SMOKE
@@ -58,7 +60,7 @@ research:
       - STR_IMPERIAL_WEAPONS  # Flamer/Shotgun/Guard Laspistol/Guard Lasgun
       - STR_GUARD_AND_ARBITES # easiest way to activate stub rifles
       - STR_NOT_STEEL_LEGION_STRATEGY # needed to activate normal chimeras (???)
-      # - STR_CHIMERA_LIGHT_IG  # homemade light chimeras are being cranky
+      - STR_CHIMERA_LIGHT_IG  # homemade light chimeras are being cranky
       - STR_CHIMERA_IG        # give the option
       - STR_TAU_EMPIRE
       - STR_TAU_GUEVESA
@@ -69,7 +71,8 @@ research:
       - STR_CHAOS_STRATEGY_ARBITES
       - STR_NOT_ARBITES
       - STR_NOT_TAU_EMPIRE_GV
-      - STR_TAU_TRADING             # alt path for guevesa
+      - STR_NOT_TAU_GUEVESA_GV
+      # - STR_TAU_TRADING             # alt path for guevesa
     spawnedEvent: STR_TAU_PDF_START_EVENT_GV
 
 
@@ -159,7 +162,8 @@ research:
       - STR_BLACKMARKET_WHITESHIELD_GV
       - STR_RECRUIT_FIREWARRIORS_GV
       - STR_FIRECASTE_ADVISORS_GV
-      - STR_EARTHCASTE_SMITHS_GV      
+      - STR_EARTHCASTE_SMITHS_GV     
+      - STR_TAU_GUEVESA_TRADING 
       # - STR_COMRADES_IN_ARMS_GV
       # - STR_XENOPHILIA_GV
       # - STR_WHITED_SEPULCHRES_SUCCESS_GV
@@ -244,6 +248,18 @@ research:
     unlocks:
       - STR_BLACKMARKET_WHITESHIELD_GV
 
+### Tau Trade
+  - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
+    # gives half price access to the Tau Export Pulse Rifles at the Trading Post
+    # and Guevesa Flak armor
+    cost: 0
+    points: 0
+    getOneFree:
+      - STR_TAU_PULSE_RIFLE_EXPORT
+    dependencies:
+      - STR_GENERALLOCK
+
+
   - name: STR_BLACKMARKET_WHITESHIELD_GV
     points: 0
     cost: 0
@@ -254,6 +270,8 @@ research:
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
       - STR_AUTOCANNON_TECH
       - STR_HEAVY_WEAPONS_IG      
+    getOneFree:
+      - STR_TAU_PULSE_RIFLE_EXPORT
 
   - name: STR_REMORA_INTERCEPTORS_GV
     points: 0
