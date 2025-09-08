@@ -2762,7 +2762,7 @@ items:
       time: true
 
   - type: STR_EXITUS_BUILTIN
-    categories: [STR_CAT_SNIPER]
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
     size: 0.3
     # costBuy: 18400
     # costSell: 4800
@@ -2774,9 +2774,6 @@ items:
     fireSound: {mod: 40k, index: 711}
     compatibleAmmo:
       - STR_EXITUS_AMMO
-      - STR_EXITUS_AMMO_HELLFIRE
-      - STR_EXITUS_AMMO_TURBOPENETRATOR
-      - STR_EXITUS_AMMO_SHELLBREAKER
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -2809,9 +2806,12 @@ items:
 
   - &STR_EXITUS_BULLETS
     type: STR_EXITUS_AMMO
-    categories: [STR_CAT_SNIPER]
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
     size: 0.1
-    # costBuy: 3000
+    requiresBuy:
+      - STR_ASSASSINORUM
+    requiresBuyBaseFunc: [IMPERIUM]
+    costBuy: 15000
     costSell: 2250
     weight: 2
     bigSprite: 225
@@ -2823,13 +2823,13 @@ items:
     invWidth: 1
     invHeight: 1
     armor: 200
-    listOrder: 11950
+    listOrder: 13103
     tags:
       ITEM_AMMO_COLOR: 15
 
   - type: STR_EXITUS_AMMO_HELLFIRE  # attacks twice by being HE
     refNode: *STR_EXITUS_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 9000
     bigSprite: 226
     listOrder: 11960
@@ -2839,7 +2839,7 @@ items:
 
   - type: STR_EXITUS_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 9000
     bigSprite: 227
     listOrder: 11970
@@ -2848,7 +2848,7 @@ items:
 
   - type: STR_EXITUS_AMMO_SHELLBREAKER  # shield piercing
     refNode: *STR_EXITUS_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 9000
     bigSprite: 228
     listOrder: 11980
@@ -2858,10 +2858,12 @@ items:
       ITEM_AMMO_COLOR: 8
 
   - type: STR_EXITUS_PISTOL
-    categories: [STR_CAT_SNIPER]
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
     size: 0.1
-    # costBuy: 18400
-    # costSell: 4800
+    requiresBuy:
+      - STR_OA_MIDTIER
+    costBuy: 150000
+    costSell: 40000
     weight: 5
     bigSprite: 1023
     floorSprite: 939
@@ -2878,9 +2880,8 @@ items:
     blockBothHands: false
     invWidth: 1
     invHeight: 2
-    listOrder: 11990
+    listOrder: 13100
     bulletSpeed: 50
-    recover: false
     dropoff: 4
     noLOSAccuracyPenalty: 90  # Vindicare don't care about not being able to 'see' his target
     autoRange: 0
@@ -2893,9 +2894,8 @@ items:
     tuSnap: 24
     tuAimed: 48
     kneelBonus: 110
-    defaultInventorySlot: STR_BELT
-    accuracyMultiplier:  # sniper rifle scaling; only good in skilled hands
-      firing: [0.5, 0.005]
+    accuracyMultiplier:  # sniper rifle scaling; only good in EXTREMELY skilled hands
+      firing: [0.0, 0.007]
     tags:
       ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT: 20
       ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 40  # Not as good as the sniper rifle, but still good; definitely more of a snap shot weapon
@@ -2903,9 +2903,12 @@ items:
 
   - &STR_EXITUS_PISTOL_BULLETS
     type: STR_EXITUS_PISTOL_AMMO
-    categories: [STR_CAT_SNIPER]
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
     size: 0.1
-    # costBuy: 3000
+    requiresBuy:
+      - STR_ASSASSINORUM
+    requiresBuyBaseFunc: [IMPERIUM]
+    costBuy: 8000
     costSell: 2250
     weight: 2
     bigSprite: 1024
@@ -2916,8 +2919,10 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 1
-    listOrder: 12000
-    power: 100  # much less powerful than rifle rounds
+    listOrder: 13101
+    power: 50  # much less powerful than rifle rounds,
+    damageBonus:
+      firing: [0.0, 0.002] # but close in extremely skilled hands
     damageType: 1
     damageAlter:
       ToTile: 0.0
@@ -2930,10 +2935,10 @@ items:
 
   - type: STR_EXITUS_PISTOL_AMMO_HELLFIRE  # attacks twice by being HE
     refNode: *STR_EXITUS_PISTOL_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 5000
     bigSprite: 1025
-    listOrder: 12010
+    listOrder: 13101
     hitAnimation: 0
     damageType: 1
     damageAlter:
@@ -2951,10 +2956,10 @@ items:
 
   - type: STR_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_PISTOL_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 5000
     bigSprite: 1026
-    listOrder: 12020
+    listOrder: 13101
     damageType: 1
     damageAlter:
       ToTile: 1.0  # it'll destroy about anything it hits
@@ -2968,10 +2973,10 @@ items:
 
   - type: STR_EXITUS_PISTOL_AMMO_SHELLBREAKER  # shield piercing
     refNode: *STR_EXITUS_PISTOL_BULLETS
-    # costBuy: 12000
+    costBuy: 0
     costSell: 5000
     bigSprite: 1027
-    listOrder: 12030
+    listOrder: 13101
     damageType: 1
     damageAlter:
       ToTile: 0.0
@@ -4314,6 +4319,7 @@ items:
       ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
+      ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD: 25
 
   # Worked together with Tal'Raziid
   - type: STR_OFFICERS_CHAIN_SWORD
@@ -4405,6 +4411,7 @@ items:
       ITEM_NON_OFFICER_PENALTY_PERCENT: 25
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
+      ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD: 25
 
   # Don't like how that 50% training mechanism works.
   # I'd prefer if experience was halved instead of having a 50% chance to get training points.
@@ -4517,6 +4524,7 @@ items:
       ITEM_IS_BUFF_WEAPON: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 0
       ITEM_DAMAGE_PERCENT_VS_PILOTED: 50
+      ITEM_DAMAGE_PERCENT_VS_NON_IMPERIAL_GUARD: 25
 
   - type: STR_BAYONET
     meleeSound: {mod: 40k, index: 754}
