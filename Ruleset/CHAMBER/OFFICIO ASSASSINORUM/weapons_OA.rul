@@ -1218,6 +1218,135 @@ items:
       DAMAGE_BONUS_FLAT_DAEMONIC: 5
       DAMAGE_BONUS_FLAT_PSYKER: 3
 
+# Vanus
+
+  - type: STR_VANUS_SCANNER # comes with armor repair
+    weight: 0
+    specialIconSprite: 208 # 5
+    battleType: 7
+    twoHanded: false
+    tuUse: 1
+    fixedWeapon: true
+    recover: false
+    specialUseEmptyHand: true
+    # *** Melee
+    confMelee:
+      name: STR_REPAIR
+    meleeSound: {mod: 40k, index: 698}
+    meleeHitSound: {mod: 40k, index: 699}
+    meleeAnimation: {mod: 40k, index: 32}
+    meleeType: 0
+    meleePower: 60
+    accuracyMelee: 100
+    meleeBonus:
+      strength: 0.5
+    meleeAlter:  # REPAIR
+      RandomType: 3
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToArmor: -1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomStun: false
+      ArmorEffectiveness: 0.0
+    meleeMultiplier:
+      melee: 0.9  # Slightly better multiplier than the basic Techmarine suite
+    costMelee:
+      time: 10  # more TU and energy efficient than the basic Techmarine suite
+      energy: 20 # cheaper than techmarines
+    tags:
+      ITEM_REPAIRS_ARMOR: 1
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 100
+
+  - type: STR_VANUS_PULSE_CARBINE
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_PLASMA, STR_CAT_ASSAULT, STR_CAT_TAU]
+    size: 0.3
+    weight: 10
+    bigSprite: 3145
+    floorSprite: 3146
+    handSprite: 3708
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    compatibleAmmo:
+      - STR_VANUS_PULSE_MAG
+    reloadSound: 2451
+    accuracyAuto: 60
+    accuracySnap: 80
+    accuracyAimed: 100
+    costAuto:
+      time: 40
+      mana: 0
+    costSnap:
+      time: 25
+      mana: 0
+    costAimed:
+      time: 15
+      mana: 20
+    flatAimed:
+      mana: true
+    autoShots: 4
+    battleType: 1
+    confSnap: # 2 shot burst
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    confAimed:  # calculated shot
+      name: STR_CALCULATED_SHOT
+    twoHanded: true
+    oneHandedPenalty: 50
+    invWidth: 2
+    invHeight: 3
+    aimRange: 20
+    snapRange: 16
+    autoRange: 12
+    dropoff: 4
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    tags:
+      REACTION_MULTIPLIER: 150
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 60
+
+  - type: STR_VANUS_PULSE_MAG
+    requiresBuy:
+      - STR_ASSASSINORUM
+    size: 0.05
+    costBuy: 12000 # expensive materials
+    costSell: 5000
+    listOrder: 13123
+    weight: 2 # slightly heavier than standard tau ammo
+    invHeight: 1
+    invWidth: 1
+    bigSprite: 3149
+    floorSprite: 3150
+    handSprite: 3703
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    explosionSpeed: 10
+    bulletSpeed: 100
+    battleType: 2
+    power: 70 # weaker than proper tau ammo, but still stable
+    clipSize: 30 # smaller clip size
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.6  # even better at armor damage than standard tau weapons.
+      ArmorEffectiveness: 0.9  # some armor penetration
+      FireThreshold: 50 # sticky plasma ignites enemies
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+
 # Other Weapons
 
   - type: STR_REPRESSOR_SNIPER  # Reprisalia DMR
@@ -1252,9 +1381,9 @@ items:
     autoRange: 12
     snapRange: 18
     aimRange: 30
-    accuracySnap: 60
-    accuracyAimed: 75
-    accuracyAuto: 40
+    accuracySnap: 65
+    accuracyAimed: 80
+    accuracyAuto: 45
     tuAuto: 40
     tuSnap: 32
     tuAimed: 85

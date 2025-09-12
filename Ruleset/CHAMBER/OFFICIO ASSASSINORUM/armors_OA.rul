@@ -70,7 +70,7 @@ armors:
     loftempsSet: [1]
     tags:
       ARMOR_IS_INFILTRATOR: 4  # 4 turns to infiltrate, disguised as enemy
-      ARMOR_RESTEALTH_KILL_REQUIREMENT: 5
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 4 # quicker to restealth than other assassins
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
@@ -429,6 +429,79 @@ armors:
       DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+
+# Vanus
+
+  - &STR_VANUS_ASSASSIN_UNARMED
+    type: STR_VANUS_ASSASSIN_UNARMED  # vanus assassin
+    spriteSheet: IGMA_IMPERIAL_ASSASSIN.PCK
+    spriteInv: VINDICAREINV.SPK
+    customArmorPreviewIndex: 850
+    corpseBattle:
+      - STR_GUARD_IMPERIAL_ASSASSIN_CORPSE
+    loftempsSet: [3]
+    visibilityAtDay: 40
+    visibilityAtDark: 35  # best possible Imperium night vision
+    antiCamouflageAtDay: 15  # Good Imperium anti-camo
+    antiCamouflageAtDark: 15
+    psiVision: 5 # advanced scanner equipment and netflies
+    heatVision: 50  # best possible Imperial thermals
+    psiCamouflage: 1  # can only be detected by psy while adjacent; mainly so infiltrator can work
+    frontArmor: 50  # temple assassin bodyglove
+    sideArmor: 45
+    rearArmor: 40
+    underArmor: 45
+    damageModifier:  # temple assassin armor; light weight, but is slightly resistant to everything
+      - 1.0  # NONE
+      - 0.8  # AP
+      - 0.8  # FLAMES
+      - 0.8  # HE
+      - 0.8  # LASCANNON
+      - 0.8  # PLASMA
+      - 0.8  # STUN
+      - 0.8  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE; smoke filtration
+      - 0.0  # IMPACT
+      - 0.8  # MELTA
+    storeItem: STR_NONE
+    personalLight: 5
+    recovery:
+      mana:
+        mana: 0.5 # half of max recovered per turn
+      energy:
+        stamina: 0.33
+    units:
+      - STR_VANUS_ASSASSIN
+    specialWeapon: STR_VANUS_SCANNER
+    builtInWeapons:
+      - STR_VANUS_DECOY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SKULL_SPAWNER
+      - STR_VANUS_SKULL_SPAWNER2
+      - STR_VANUS_SKULL_SPAWNER3
+    meleeDodge:  # temple assassin
+      reactions: 0.3
+    tags:
+      ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      DODGE_CHANCE: 50
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+
+  - type: STR_VANUS_ASSASSIN_ARMOR
+    refNode: *STR_VANUS_ASSASSIN_UNARMED
+    ufopediaType: STR_VANUS_ASSASSIN_UNARMED
+    builtInWeapons:
+      - STR_VANUS_DECOY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SKULL_SPAWNER
+      - STR_VANUS_SKULL_SPAWNER2
+      - STR_VANUS_SKULL_SPAWNER3
+      - STR_VANUS_PULSE_CARBINE
 
 # Reprisalia
 
