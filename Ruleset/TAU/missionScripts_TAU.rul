@@ -1,7 +1,180 @@
 # TODO: Merge this into main missionScripts it's risky to edit them because they can get
 # blown away and remade in ROSIGMA
+# TODO: Use this as an accounting area
+# First month x STR_REDEMPTIONIST_EARLY
+# Recurring x
+# RecurringHard x
+# RecurringGSC - OK as is
+# DeserterHideout
+# DeserterHideoutHard
+# Spacehulk Ork - OK as is
+# Earthquake Necron - OK as is
+# GSC Precinct - OK as is
+# Monthly Mission
+# alienAirSuperiorityLight
+# warpStorm
+# warpStormBuilding
+# warpStormRaging
+# warpStormHard
+# warpStormBuildingHard
+# warpStormRagingHard
+# gameStartCultist - OK as is - consider reworking
+# gameStartTraitorGuard - OK as is
+# gameStart
+# gameStartHard - why is there a gamestarthard - it's for Space Marines etc
+# Mission1 - what is this
+# finalMission
+# HULKER Warped Vault
+# MARBO - block - eventually replace with SHASEL
+# CATACH_* events - block
+# ARMORY_RAIDERS - Tau version?
+# Sabotage - will not qualify for - these are actually monthly missions for non chaos ARBITES 30% per - skip these
+# Riot - will not qualify for - these are actually monthly missions for non chaos ARBITES 30% per - skip these
+# Ganger bases - self Destructed in mission design by techs
+# Repeating Fallthrough Missions
+# SecondRepeatingFallthroughmissions
+# RepeatingUFOSpawnedMissions
+# SecondRepeatingUFOSpawnedMissions
+
+
+
 missionScripts:
   
+  - type: firstMonthTerrorGV  # for Guevesa
+    missionWeights:
+      0:
+        STR_REDEMPTIONIST_EARLY: 100
+    researchTriggers:
+      STR_GUEVESA_STRATEGY_PDF_GV: true
+    executionOdds: 100
+    lastMonth: 0
+    useTable: false
+    startDelay: 4320  # 3 days
+    randomDelay: 4320  # additional random 0 to 3 days
+
+
+  - type: recurringTerrorGV
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_GV_TERROR_EARLY: 20
+      # 0:
+      #   STR_ALIEN_TERROR: 10
+      #   STR_ALIEN_TERROR_TZEENTCH: 2
+      #   STR_NURGLE_TERROR: 2
+      #   STR_TERROR_MISSION_SLAAN: 2
+      #   STR_CIVILIAN_TERROR: 35
+      #   STR_SHRINE_TERROR: 20
+      #   STR_CIVILIAN_SHRINE_TERROR_NOVICES: 10
+      #   STR_CIVILIAN_TERROR_GSC: 25
+      3:
+        STR_ALIEN_TERROR: 33
+        STR_NURGLE_TERROR: 2
+        STR_ALIEN_TERROR_TZEENTCH: 11
+        STR_TERROR_MISSION_SLAAN: 11
+        STR_CIVILIAN_TERROR: 30
+        STR_SHRINE_TERROR: 10
+        STR_CIVILIAN_SHRINE_TERROR_NOVICES: 10
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 8
+        STR_CIVILIAN_TERROR_GSC: 30
+        STR_IMPERIAL_TERROR: 33
+      6:
+        STR_ALIEN_TERROR: 33
+        STR_NURGLE_TERROR: 2
+        STR_TERROR_MISSION_SLAAN: 11
+        STR_ALIEN_TERROR_TZEENTCH: 11
+        STR_CIVILIAN_TERROR: 30
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 10
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 10
+        STR_CIVILIAN_TERROR_GSC: 25
+        STR_IMPERIAL_TERROR: 50
+    researchTriggers:
+      STR_HARDER_MISSIONS: false
+      STR_GUEVESA_STRATEGY_PDF_GV: true
+
+  - type: recurringTerrorHardGV
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR_HARD: 33
+        STR_NURGLE_TERROR: 2
+        STR_ALIEN_TERROR_TZEENTCH: 11
+        STR_TERROR_MISSION_SLAAN: 22
+        STR_SHRINE_TERROR: 10
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 10
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 10
+        STR_IMPERIAL_TERROR_HARD: 44
+    researchTriggers:
+      STR_HARDER_MISSIONS: true
+      STR_GUEVESA_STRATEGY_PDF_GV: true
+    useTable: false
+    startDelay: 150
+    randomDelay: 4320  # additional random 0 to 3 days
+
+
+  - &STR_DESERTER_HIDEOUT_TAU_MISSIONSCRIPTS_TEMPLATE
+    type: deserterHideoutTau
+    firstMonth: 0
+    lastMonth: 10
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_DESERTER_HIDEOUT_TAU: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    executionOdds: 30
+    startDelay: 4320  # 3 days
+    randomDelay: 4320  # additional random 0 to 3 days
+    researchTriggers:
+      STR_HARDER_MISSIONS: false
+
+  - type: deserterHideoutTauHard
+    refNode: *STR_DESERTER_HIDEOUT_TAU_MISSIONSCRIPTS_TEMPLATE
+    missionWeights:
+      0:
+        STR_TAU_DESERTER_HIDEOUT_HARD: 100
+    researchTriggers:
+      STR_HARDER_MISSIONS: true
+
+  - type: MMTau
+  - &STR_MONTHLY_MISSIONS
+    type: MMArbites
+    missionWeights:
+      0:
+        STR_ELDAR_ARTIFACT: 33
+        STR_CATACOMBS: 33
+        STR_RESCUE_PDF_VALKYRIE: 33  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+      2:
+        STR_ELDAR_ARTIFACT: 33
+        STR_CATACOMBS: 20
+        STR_ALIEN_ARTIFACT: 20  # Space Hulk recurring mission, after initial script
+        STR_RESCUE_PDF_VALKYRIE: 20  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+      5:
+        STR_ALIEN_WAR: 33  # delays the WAR mission until month 5+
+        STR_ELDAR_ARTIFACT: 33
+        STR_CATACOMBS: 20
+        STR_ALIEN_ARTIFACT: 10
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+        # WAR_SITES: 100
+    # varName: hulk
+    useTable: false
+    firstMonth: 1
+    executionOdds: 50
+    startDelay: 15000  # 10k = 7 days
+    researchTriggers:
+      STR_GUEVESA_STRATEGY_PDF_GV: true
+
+
+
+
+
+
 
 ### Actually specifying these here will break them but go fix them over in the big missionScripts
 
@@ -60,7 +233,7 @@ missionScripts:
 
 
   - &STR_NORMAL_MISSION_TABLE_GV
-    type: STR_WARP_STORM_GV
+    type: warpStormGV
     missionWeights:
       0:  # equal distribution for now
         STR_ALIEN_RESEARCH: 33
@@ -82,7 +255,7 @@ missionScripts:
         STR_NURGLE_BASE: 11
         STR_SLAANESH_BASE: 11
         STR_TZEENTCH_BASE: 11
-        STR_IMPERIALGUARD_BASE: 33
+        STR_IMPERIALGUARD_BASE: 60
         # STR_ULTRAMARINE_BASE: 11
         # STR_BLACKTEMPLAR_BASE: 11
 
@@ -106,9 +279,9 @@ missionScripts:
         STR_NURGLE_BASE: 11
         STR_SLAANESH_BASE: 11
         STR_TZEENTCH_BASE: 11
-        STR_IMPERIALGUARD_BASE: 11  # the last remains of the loyal Guard
+        STR_IMPERIALGUARD_BASE: 33  # the last remains of the loyal Guard
         STR_ULTRAMARINE_BASE: 11
-        STR_BLACKTEMPLAR_BASE: 33
+        STR_BLACKTEMPLAR_BASE: 50
         # STR_TAU_ORCAEXPEDITION: 10 #delayed onset  Leonardo diCaprio pointing at the screen
     researchTriggers:
       STR_HARDER_MISSIONS: false
@@ -143,9 +316,9 @@ missionScripts:
         # STR_NURGLE_BASE: 11
         # STR_SLAANESH_BASE: 11
         # STR_TZEENTCH_BASE: 11
-        STR_IMPERIALGUARD_BASE: 66
-        STR_ULTRAMARINE_BASE: 22
-        STR_BLACKTEMPLAR_BASE: 33
+        # STR_IMPERIALGUARD_BASE: 66
+        # STR_ULTRAMARINE_BASE: 22
+        # STR_BLACKTEMPLAR_BASE: 33
         # STR_INQUISITION_BASE: 11
 
       2:  # equal distribution for now

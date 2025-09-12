@@ -3,9 +3,8 @@ adhocScripts:
     missionWeights:
       0:
         STR_SINEWS_OF_WAR_MISSION_GV: 100
-        # STR_BULLGRYN_RIOT: 100
     startDelay: 2000
-    randomDelay: 37440
+    randomDelay: 15000
     adhocMissionScriptTags: ["breadriotsL1"]
   # - type: bloodyroseL1
   #   missionWeights:
@@ -16,31 +15,39 @@ adhocScripts:
   #   adhocMissionScriptTags: ["bloodyroseL1"]
 
 
+# STR_LIGHT_CHIMERA_TOKEN_GV: 1
 events:
-  - &STR_INTRO_EVENTS_GV
-    name: STR_TAU_PDF_START_EVENT_GV
+  - name: STR_TAU_PDF_START_EVENT_GV
     description: STR_TAU_PDF_START_EVENT_DESCRIPTION_GV
     background: GuardBG.SCR
     adhocMissionScriptTags: ["breadriotsL1", "bloodyroseL1"]
-
-  - name: STR_RECRUITS_GUEVESA_STRATEGY_PDF_GV
-    description: STR_RECRUITS_GUEVESA_STRATEGY_PDF_DESCRIPTION_GV
-    background: GuardBG.SCR
-    interruptResearch: STR_NOT_TAU_EMPIRE_GV
-    timer: 1200
     spawnedPersons: 20
     spawnedPersonType: STR_GUARDSM
     everyMultiItemList:
       STR_CHIMERA_TOKEN: 1
-      # STR_LIGHT_CHIMERA_TOKEN_GV: 1
       STR_LIGHTNING_TOKEN: 1
+      STR_AVALANCHE_LAUNCHER: 2
+      STR_AVALANCHE_MISSILES: 16
 
+  ### TODO: add export carbines
+  - name: STR_FROM_THE_BARREL_EVENT_GV
+    description: STR_FROM_THE_BARREL_EVENT_DESCRIPTION_GV
+    background: GuardBG.SCR
+    everyMultiItemList:
+      STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA: 2
+      STR_TAU_PULSE_MAG_EXPORT_GUEVESA: 6
+
+### These scripts are triggered by STR_ARBITES: true so they can be safely interrupted by STR_NOT_TAU_ARBITES_GV
+  - name: STR_RECRUITS_GUEVESA_STRATEGY_PDF_GV
+    description: STR_RECRUITS_GUEVESA_STRATEGY_PDF_DESCRIPTION_GV
+    interruptResearch: STR_NOT_TAU_ARBITES_GV
+    timer: 2000
 
   - name: STR_DEBUG_PRISONERS_GUEVESA_STRATEGY_GV
     description: STR_DEBUG_PRISONERS_GUEVESA_STRATEGY_DESCRIPTION_GV
     background: GuardBG.SCR
-    interruptResearch: STR_NOT_TAU_EMPIRE_GV
-    timer: 2000
+    interruptResearch: STR_NOT_TAU_ARBITES_GV
+    timer: 2100
     everyMultiItemList:
       STR_LIVE_CAPTURE_GUARDAI: 1
       STR_LIVE_CAPTURE_GUARDAI_SCOUT: 1
@@ -88,6 +95,7 @@ events:
       STR_FRATERIS_MILITIA_AI: 2
       STR_FRATERIS_MILITIA_VETERAN_AI: 2
 
+  - name: STR_FROM_THE_BARREL_GV
 
 
 ### intercept lone spawn events 

@@ -1,4 +1,8 @@
+### TODO: Provide local clones of Chimera turrets that AT can use + flamers
+### 
+
 research:
+### core tech tree research -- story event research is in story_research_TAU.rul
   - name: STR_TAU_EMPIRE         # (Tau and friends)
     cost: 0
     points: 0
@@ -9,17 +13,17 @@ research:
     points: 0
     dependencies:
       - STR_GENERALLOCK      
+  # Everyone has these two by default
   - name: STR_NOT_TAU_EMPIRE_GV         # (Not Tau and friends)
-    dependencies:
-      - STR_GENERALLOCK
   - name: STR_NOT_TAU_GUEVESA_GV        # (Not xenophile scum)
+  # this one is specific to Arbites
+  - name: STR_NOT_TAU_ARBITES_GV        # (Not Tau in the Adeptus Terra section)
     dependencies:
     - STR_GENERALLOCK
   - name: STR_NOT_DEBUG_TAU_EMPIRE_GV   # (Not cheating Tau and friends)
-    dependencies:
-    - STR_GENERALLOCK
+    # dependencies:
+    # - STR_GENERALLOCK
 
-### Replacing STR_CHAPTER_PURITY is not simple
 ### The Tau condition is
 ### STR_CHAPTER_PURITY: true
 ### STR_ARBITES: true
@@ -30,21 +34,18 @@ research:
   ### Enter via Adeptus Terra
   - name: STR_ARBITES
     unlocks: !add
-      # - STR_GUEVESA_STRATEGY_CULT_GV
       - STR_GUEVESA_STRATEGY_PDF_GV
 
   - name: STR_THE_IMPERIAL_LAW_STRATEGY
     unlocks: !add
-      - STR_NOT_TAU_EMPIRE_GV
+      - STR_NOT_TAU_ARBITES_GV
     disables: !add
-      # - STR_GUEVESA_STRATEGY_CULT_GV
       - STR_GUEVESA_STRATEGY_PDF_GV
 
   - name: STR_CHAOS_STRATEGY_ARBITES
     unlocks: !add
-      - STR_NOT_TAU_EMPIRE_GV
+      - STR_NOT_TAU_ARBITES_GV
     disables: !add
-      # - STR_GUEVESA_STRATEGY_CULT_GV
       - STR_GUEVESA_STRATEGY_PDF_GV
 
 ### PDF commander strategy
@@ -73,7 +74,7 @@ research:
       - STR_GUARDSMEN
       - STR_CHAPTER_PURITY
       - STR_NOT_CHAOSCULT
-      - STR_NOT_ARBITES       # ???
+      - STR_NOT_ARBITES # We are both STR_ARBITES and STR_NOT_ARBITES. STR_ARBITES means terra and STR_NOT_ARBITES means not the imperial law :P
     disables:
       - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_CHAOS_PATH
@@ -81,8 +82,7 @@ research:
       - STR_CHAOS_STRATEGY
       - STR_NOT_TAU_EMPIRE_GV
       - STR_NOT_TAU_GUEVESA_GV
-      
-      # - STR_TAU_TRADING             # alt path for guevesa
+      - STR_NOT_TAU_ARBITES_GV
     spawnedEvent: STR_TAU_PDF_START_EVENT_GV
 
 
@@ -91,8 +91,6 @@ research:
     points: 0
     dependencies:
       - STR_TAU_GUEVESA
-
-
 
   # Debug strategy that gives all weapons and fire warriors
   # Jumps straight to the good stuff without the questline
@@ -134,6 +132,7 @@ research:
       - STR_FIRECASTE_ADVISORS_GV    # pathfinder KT reinforcements
       - STR_EARTHCASTE_SMITHS_GV   # hybrid guncrafting
       - STR_WATERCASTE_ENVOYS_GV      # being kind and sweet  :)
+      - STR_AIRSTRIKE_REQUISITION
 
 
   - name: STR_TAU_CERAMITE_TIER
@@ -147,7 +146,6 @@ research:
       - STR_WALL_OF_MIRRORS_GV
       - STR_HYBRID_MOMENTS
       - STR_XENOPHILIA_GV
-      - STR_AIRSTRIKE_REQUISITION
     getOneFree:
       - STR_TAU_XENOTECH
 
@@ -193,8 +191,18 @@ research:
       - STR_COMMUNITY_OUTREACH_GV
       - STR_REGIMENTAL_COLLAPSE_GV        
 
+### i have all these cultists and you need all these soldiers 
+### gated on mission/interrogation?
+  - name: STR_CULTURE_CLUB_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_DONT_BE_AFRAID_GV
+    unlocks:
+      - STR_COMMUNITY_OUTREACH_GV
 
-### Community outreach
+### Community outreach to get beastmen soldiers - can upgrade to Marin'vesa
+### gated on mission/interrogation?
   - name: STR_COMMUNITY_OUTREACH_GV
     points: 0
     cost: 200
@@ -202,25 +210,15 @@ research:
       - STR_DONT_BE_AFRAID_GV 
       - STR_ELERIUM_115   # promethium
     unlocks:
+      - STR_CULTURE_CLUB_GV         # guevesa cultists appear
       - STR_BEASTMEN_CULTISTS_GV    # beastmen look to you for protection
+      - STR_SHATTERED_GUARD_GV      # deserter guardsmen come on board
 
   - name: STR_BEASTMEN_CULTISTS_GV
     points: 0
     cost: 0
     dependencies:
       - STR_COMMUNITY_OUTREACH_GV
-
-### Progression strategies to mid-tier
-  # Replaces Regimental Mid-tier Requisitions
-  - name: STR_REGIMENTAL_COLLAPSE_GV
-    points: 0
-    cost: 200
-    dependencies:
-      - STR_DONT_BE_AFRAID_GV
-    unlocks:
-      - STR_THE_COLD_TRADE_GV     # could unlock this earlier with a guevesa interrogation or mission but doing it here for now
-      - STR_GUARDSMEN             # regiments collapse
-      - STR_HARDER_MISSIONS
 
 # Can I make it so recovering any Tau item unlocks this?
 # Or capturing a Guevesa cultist or finish the Guevesa protect mission
@@ -232,11 +230,15 @@ research:
     points: -250
     cost: 250
     dependencies:
-      - STR_TAU_EMPIRE
+      - STR_TAU_GUEVESA
       - STR_DONT_BE_AFRAID_GV
     unlocks:
       - STR_BLACKMARKET_WHITESHIELD_GV
-
+      - STR_TAU_GUEVESA_TRADING
+    getOneFree:
+      - STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA
+    spawnedEvent:
+      - STR_FROM_THE_BARREL_EVENT_GV
 
   - name: STR_BLACKMARKET_WHITESHIELD_GV
     points: 0
@@ -248,8 +250,29 @@ research:
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
       - STR_AUTOCANNON_TECH
       - STR_HEAVY_WEAPONS_IG      
-    getOneFree:
-      - STR_TAU_PULSE_RIFLE_EXPORT
+    
+### Tau Guevesa Trade
+  - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
+    # gives half price access to the Tau Export Pulse Rifles at the Trading Post
+    # and Guevesa Flak armor
+    cost: 0
+    points: 0    
+    dependencies:
+      - STR_GENERALLOCK      
+
+
+### this is the moment when they see who you really are
+### gates Guevesa Mid Tier
+  - name: STR_A_SECRET_PACT_GV
+    points: -500
+    cost: 500
+    dependencies:
+      - STR_BLACKMARKET_WHITESHIELD_GV
+      - STR_ALIEN_ORIGINS
+    unlocks:
+      # master crafting
+      # carapace
+      - STR_TAU_MID_TIER
 
 
 ### Mid tier techs
@@ -284,31 +307,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-### Tau Trade
-  - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
-    # gives half price access to the Tau Export Pulse Rifles at the Trading Post
-    # and Guevesa Flak armor
-    cost: 0
-    points: 0
-    getOneFree:
-      - STR_TAU_PULSE_RIFLE_EXPORT
-    dependencies:
-      - STR_GENERALLOCK      
-      - STR_TAU_GUEVESA
-
-
-### this is the moment when they see who you really are
-### gates Guevesa Ceramite Tier
-  - name: STR_A_SECRET_PACT_GV
-    points: -500
-    cost: 500
-    dependencies:
-      - STR_BLACKMARKET_WHITESHIELD_GV
-      - STR_ALIEN_ORIGINS
-    unlocks:
-      # master crafting
-      # carapace
-      - STR_TAU_MID_TIER
 
   # Ceramite plates
   - name: STR_COMRADES_IN_ARMS_GV
@@ -418,129 +416,6 @@ research:
 
 
 
-  ### Squats >> Demiurg????
-
-  ### Campaign Track 1
-  - name: STR_ARGENT_DAWN_SUCCESS_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_THRESHING_FLOOR_SUCCESS_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-
-
-
-  ### Campaign Track 2
-  # - name: STR_RENDER_UNTO_CAESAR_GV
-  #   cost: 0
-  #   points: 0
-  #   dependencies:
-  #     - STR_GENERALLOCK
-
-  # - name: STR_THE_POOR_IN_SPIRIT_GV
-  #   cost: 0
-  #   points: 0
-  #   dependencies:
-  #     - STR_GENERALLOCK
-
-  # - name: STR_WAGES_OF_SIN_GV
-  #   cost: 0
-  #   points: 0
-  #   dependencies:
-  #     - STR_GENERALLOCK
-
-  # - name: STR_THE_HIRED_HAND_GV
-  #   cost: 0
-  #   points: 0
-  #   dependencies:
-  #     - STR_GENERALLOCK
-
-  - name: STR_WHITED_SEPULCHRES_SUCCESS_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-            
-
-    
-### Track 999: ???
-  ### i'm an alligator from the tau empire.
-  ### uhh. an ambassador. i'm an ambassador. hi!! nn
-  ### chatlogs.
-  - name: STR_IM_AN_ALLIGATOR_GV
-    cost: 5
-    points: 5
-    dependencies:
-      - STR_A_SECRET_PACT_GV
-
-  - name: STR_XENOPHILIA_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_THE_AOTHRE_ARCHIVES_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_CAPRID_RISING_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_ENGAGEMENT_RANGE_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_XENOPHILIA_GV
-      - STR_A_SECRET_PACT_GV
-
-  - name: STR_ARS_AMATORIA_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_THE_AOTHRE_ARCHIVES_GV
-      - STR_ENGAGEMENT_RANGE_GV
-      - STR_CAPRID_RISING_GV
-
-  - name: STR_A_KILLER_IN_THE_SUN
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-      - STR_TAU_HIGH_TIER
-      - STR_ARS_AMATORIA_GV
-
-  - name: STR_FIRE_MEET_GASOLINE_GV
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_SUBORN_ECCLESIARCHY_GV
-      - STR_ARS_AMATORIA_GV
-
-  - name: STR_BY_FLAMER_MELTA_AND_BOLTER
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_FIRE_MEET_GASOLINE_GV
-    unlocks:
-      - STR_GOOD_SISTERS
-
-  - name: STR_GOOD_SISTERS
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_BY_FLAMER_MELTA_AND_BOLTER
-
 
 
 ### Tau weapons visible in ufopaedia
@@ -594,87 +469,3 @@ research:
 
 
 
-
-
-
-
-      # ### Arbites strategy
-# ### Thunderbolt manuf is unlocked over in crafts_GV.rul
-#   - name: STR_GUEVESA_STRATEGY_CULT_GV
-#     points: 0
-#     cost: 5
-#     dependencies:
-#       - STR_GENERALLOCK
-#     unlocks:
-#       - STR_MOTION_SCANNER
-#       - STR_SMOKE
-#       - STR_GUARD_BARRACKS
-#       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-#       - STR_PILOT_GUARDSMEN
-#       - STR_LASER_WEAPONS     # easiest way to activate heavy stubbers (???)
-#       - STR_IMPERIAL_WEAPONS  # Flamer/Shotgun/Guard Laspistol/Guard Lasgun
-#       - STR_GUARD_AND_ARBITES # easiest way to activate stub rifles
-#       - STR_NOT_STEEL_LEGION_STRATEGY # needed to activate normal chimeras (???)
-#       - STR_CHIMERA_LIGHT_IG  # homemade light chimeras are being cranky
-#       - STR_CHIMERA_IG        # give the option
-#       - STR_TAU_EMPIRE
-#       - STR_TAU_GUEVESA
-#       - STR_CHAPTER_PURITY
-#     disables:
-#       - STR_THE_IMPERIAL_LAW_STRATEGY
-#       - STR_CHAOS_STRATEGY_ARBITES
-#       - STR_NOT_ARBITES
-#       - STR_NOT_TAU_EMPIRE_GV
-#       - STR_TAU_TRADING             # alt path for guevesa
-#       - STR_CHAPTER_PURITY          # attempt disabling this
-#     spawnedEvent: STR_TAU_CULT_START_EVENT_GV
-
-
-
-
-    # unlocks:
-    #   - STR_MOTION_SCANNER
-    #   - STR_LASER_WEAPONS           # easiest way to activate heavy stubbers (???)          
-    #   - STR_SMOKE
-    #   - STR_GUARD_AND_ARBITES       # easiest way to activate stub rifles
-    #   # - STR_HEAVY_WEAPONS_IG      # mysterious supply problems
-    #   # - STR_LIGHT_BOLTERS_LOWTIER # mysterious supply problems
-    #   # - STR_OGRYN_REQUISITION     # Ogryn too loyal
-    #   - STR_GUARD_BARRACKS
-    #   # - STR_REGIMENT_OFFICERS     # mysterious supply problems
-    #   # - STR_KRIEG_GUARDSMEN       # Krieg too fanatical
-    #   # - STR_CATACHAN_GUARDSMEN    # mysterious supply problems
-    #   - STR_PENITENT_GUARD
-    #   - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-    #   - STR_GUARDSMEN
-    #   - STR_CHIMERA_IG
-    #   # - STR_VALKYRIE_GRAV_DROP_IG # nope
-    #   # - STR_IMPERIAL_GUARD_BASIC_TRAINING
-    #   # - STR_BASIC_SENTINEL
-    #   - STR_PILOT_GUARDSMEN
-    #   - STR_NOT_STEEL_LEGION_STRATEGY   # needed to activate normal chimeras (???)
-    #   - STR_TAU_EMPIRE
-    # disables:
-    #   - STR_NORMAL_STRATEGY_IG
-    #   - STR_ELITE_STRATEGY_IG
-    #   - STR_ABHUMAN_STRATEGY_IG
-    #   - STR_STEEL_LEGION_STRATEGY
-    #   - STR_NOT_TAU_EMPIRE_GV
-    #   - STR_IMPERIAL_GUARD_MIDTIER  # alt path for guevesa
-    #   - STR_TAU_TRADING             # alt path for guevesa 
-    #   - STR_RADICAL_RECRUITMENT_IG  # alt path for guevesa
-    #   - STR_THE_EMPEROR_PROTECTS_RESEARCH  # nope
-    # spawnedEvent: STR_TAU_PDF_START_EVENT_GV
-
-# ### Tau acculturation events
-#   # implement gue'vesa cult force eventually to intro the player to this one
-#   # Learn of Tau presence
-#   # Granted by completing missions involving friendly Guevesa or interrogating Guevesa prisoners
-#   - name: STR_TAU_PRESENCE_KNOWN_GV
-#     points: 0
-#     cost: 0
-#     dependencies:
-#       - STR_GENERALLOCK
-#       - STR_GUEVESA_DEBUG_STRATEGY_GV
-#     unlocks:
-#       - STR_CONTACT_TAU_AGENTS_GV
