@@ -75,6 +75,7 @@ research:
       - STR_CHAPTER_PURITY
       - STR_NOT_CHAOSCULT
       - STR_NOT_ARBITES # We are both STR_ARBITES and STR_NOT_ARBITES. STR_ARBITES means terra and STR_NOT_ARBITES means not the imperial law :P
+      - STR_ENDGANGERSBASE # Try to stop the onslaught of gang events
     disables:
       - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_CHAOS_PATH
@@ -189,7 +190,7 @@ research:
     unlocks:
       - STR_THE_COLD_TRADE_GV
       - STR_COMMUNITY_OUTREACH_GV
-      - STR_REGIMENTAL_COLLAPSE_GV        
+      # - STR_REGIMENTAL_COLLAPSE_GV        
 
 ### i have all these cultists and you need all these soldiers 
 ### gated on mission/interrogation?
@@ -212,13 +213,18 @@ research:
     unlocks:
       - STR_CULTURE_CLUB_GV         # guevesa cultists appear
       - STR_BEASTMEN_CULTISTS_GV    # beastmen look to you for protection
-      - STR_SHATTERED_GUARD_GV      # deserter guardsmen come on board
 
   - name: STR_BEASTMEN_CULTISTS_GV
     points: 0
     cost: 0
     dependencies:
       - STR_COMMUNITY_OUTREACH_GV
+
+  - name: STR_REGIMENTAL_COLLAPSE_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
 
 # Can I make it so recovering any Tau item unlocks this?
 # Or capturing a Guevesa cultist or finish the Guevesa protect mission
@@ -237,8 +243,10 @@ research:
       - STR_TAU_GUEVESA_TRADING
     getOneFree:
       - STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA
-    spawnedEvent:
-      - STR_FROM_THE_BARREL_EVENT_GV
+    spawnedEvent: STR_FROM_THE_BARREL_EVENT_GV
+
+
+
 
   - name: STR_BLACKMARKET_WHITESHIELD_GV
     points: 0
@@ -420,6 +428,12 @@ research:
 
 ### Tau weapons visible in ufopaedia
   - name: STR_TAU_ARMORY_EXAM
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA
+    points: 0
+    cost: 0
     dependencies:
       - STR_GENERALLOCK
 
