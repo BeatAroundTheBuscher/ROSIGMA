@@ -667,7 +667,8 @@ items:
       ArmorEffectiveness: 0.6  # armor breaking
       ToArmorPre: 0.3
       ToHealth: 0.9
-      RandomType: 6
+      RandomType: 2
+      ToTile: 1.0 # Kool-aid man
       FixRadius: 1
     accuracyAimed: 90
     accuracyMultiplier:
@@ -698,6 +699,7 @@ items:
       ToArmorPre: 0.3
       ToHealth: 0.9
       RandomType: 6
+      ToTile: 1.0
     meleeMultiplier:  # very heavy and cumbersome; strength matters a lot for hitting
       melee: 0.6
       strength: 0.4
@@ -1162,3 +1164,268 @@ items:
       DAMAGE_BONUS_FLAT_TZEENTCH: 10 # higher psychic sensitivity
       DAMAGE_BONUS_FLAT_NURGLE: 20 # durable because of warp magic, take away the magic, you have a dead body
       DAMAGE_BONUS_FLAT_ELDAR: 10
+
+  - type: STR_LIQUIDATOR_MELTA  # Based on Inquisition Multimelta
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELTA, STR_CAT_DEVASTATOR]
+    dropoff: 7
+    weight: 20
+    accuracySnap: 90
+    tuSnap: 45
+    confSnap:  # Double Shot
+      shots: 2
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+    snapRange: 16  # +2 over base
+    accuracyAuto: 60
+    tuAuto: 60
+    autoShots: 4  # gets autofire because Inquisition level tech
+    maxRange: 20
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    bigSprite: 3444
+    floorSprite: {mod: 40k, index: 132}
+    handSprite: 4216
+    bulletSprite: {mod: 40k, index: 16}
+    bulletSpeed: 100
+    fireSound: {mod: 40k, index: 739}
+    vaporColorSurface: {mod: 40k, index: 1}
+    vaporDensitySurface: 2
+    vaporProbabilitySurface: 85
+    power: 12
+    damageType: 11
+    damageAlter:  # DA MELTA Double
+      ToArmorPre: 1.0
+      ToHealth: 1.6
+      ToTile: 6.0
+      ToWound: 0.05
+      RandomWound: false
+      TileDamageMethod: 2
+    shotgunBehavior: 1
+    shotgunPellets: 10
+    shotgunSpread: 0
+    powerRangeReduction: 0.5
+    powerRangeThreshold: 16.0
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    clipSize: -1
+    listOrder: 13123
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 35
+      DAMAGE_BONUS_FLAT_DAEMONIC: 5
+      DAMAGE_BONUS_FLAT_PSYKER: 3
+
+# Vanus
+
+  - type: STR_VANUS_SCANNER # comes with armor repair
+    weight: 0
+    specialIconSprite: 208 # 5
+    battleType: 7
+    twoHanded: false
+    tuUse: 1
+    fixedWeapon: true
+    recover: false
+    specialUseEmptyHand: true
+    # *** Melee
+    confMelee:
+      name: STR_REPAIR
+    meleeSound: {mod: 40k, index: 698}
+    meleeHitSound: {mod: 40k, index: 699}
+    meleeAnimation: {mod: 40k, index: 32}
+    meleeType: 0
+    meleePower: 60
+    accuracyMelee: 100
+    meleeBonus:
+      strength: 0.5
+    meleeAlter:  # REPAIR
+      RandomType: 3
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToArmor: -1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomStun: false
+      ArmorEffectiveness: 0.0
+    meleeMultiplier:
+      melee: 0.9  # Slightly better multiplier than the basic Techmarine suite
+    costMelee:
+      time: 10  # more TU and energy efficient than the basic Techmarine suite
+      energy: 20 # cheaper than techmarines
+    tags:
+      ITEM_REPAIRS_ARMOR: 1
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 100
+
+  - type: STR_VANUS_PULSE_CARBINE
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_PLASMA]
+    size: 0.3
+    weight: 10
+    bigSprite: 3500
+    floorSprite: 3146
+    handSprite: 4224
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    compatibleAmmo:
+      - STR_VANUS_PULSE_MAG
+    reloadSound: 2451
+    accuracyAuto: 60
+    accuracySnap: 80
+    accuracyAimed: 100
+    costAuto:
+      time: 40
+      mana: 0
+    costSnap:
+      time: 25
+      mana: 0
+    costAimed:
+      time: 15
+      mana: 20
+    flatAimed:
+      mana: true
+    autoShots: 4
+    battleType: 1
+    confSnap: # 2 shot burst
+      name: STR_BURST_SNAP_SHOT
+      shots: 2
+    confAimed:  # calculated shot
+      name: STR_CALCULATED_SHOT
+    twoHanded: true
+    oneHandedPenalty: 50
+    invWidth: 2
+    invHeight: 3
+    aimRange: 20
+    snapRange: 16
+    autoRange: 12
+    dropoff: 4
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    tags:
+      REACTION_MULTIPLIER: 150
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 60
+
+  - type: STR_VANUS_PULSE_MAG
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_PLASMA]
+    requiresBuy:
+      - STR_ASSASSINORUM
+    size: 0.05
+    costBuy: 12000 # expensive materials
+    costSell: 5000
+    listOrder: 13123
+    weight: 2 # slightly heavier than standard tau ammo
+    invHeight: 1
+    invWidth: 1
+    bigSprite: 3149
+    floorSprite: 3150
+    handSprite: 3703
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    explosionSpeed: 10
+    bulletSpeed: 100
+    battleType: 2
+    power: 70 # weaker than proper tau ammo, but still stable
+    clipSize: 20 # smaller clip size
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.6  # even better at armor damage than standard tau weapons.
+      ArmorEffectiveness: 0.9  # some armor penetration
+      FireThreshold: 50 # sticky plasma ignites enemies
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+
+# Other Weapons
+
+  - type: STR_REPRESSOR_SNIPER  # Reprisalia DMR
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
+    dropoff: 3  # light sniper weapon
+    weight: 20  # -10 weight vs marine sniper
+    size: 0.4
+    requiresBuy:
+      - STR_REPRISALIA_ACCESS
+    costBuy: 40000
+    costSell: 5000
+    bigSprite: 3481
+    floorSprite: 3401
+    handSprite: 4200
+    bulletSprite: {mod: 40k, index: 2}
+    bulletSpeed: 25
+    fireSound: {mod: 40k, index: 4}
+    compatibleAmmo:
+      - STR_REPRESSOR_AMMO
+      - STR_STUB_GUN_AMMO
+      - STR_STUB_GUN_AMMO_AP
+      - STR_STUB_GUN_AMMO_WOUND
+      - STR_STUB_GUN_AMMO_HP
+      - STR_STUB_GUN_AMMO_INC
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    autoRange: 12
+    snapRange: 18
+    aimRange: 30
+    accuracySnap: 65
+    accuracyAimed: 80
+    accuracyAuto: 45
+    tuAuto: 40
+    tuSnap: 32
+    tuAimed: 85
+    confAuto:
+      shots: 4
+    confSnap:  # Double Shot
+      shots: 2
+    confAimed:  # Called Precision Shot to emphasize the added lethality
+      name: STR_PRECISION_SHOT
+    listOrder: 11897
+    kneelBonus: 140  # light sniper rifle
+    minRange: 7  # light sniper rifle
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tags:
+      REACTION_MULTIPLIER: 70
+      REACTION_PENALTY_KNEELING_BYPASS: 1
+      ITEM_RECOIL: 30
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 75
+      ITEM_HAS_BIPOD: 1
+
+  - type: STR_REPRESSOR_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_SNIPER]
+    size: 0.1
+    requiresBuy:
+      - STR_REPRISALIA_ACCESS
+    costBuy: 2000
+    costSell: 500
+    weight: 6
+    bigSprite: 1002
+    floorSprite: {mod: 40k, index: 1118}
+    handSprite: {mod: 40k, index: 1896}
+    hitSound: {mod: 40k, index: 22}
+    hitAnimation: {mod: 40k, index: 26}
+    explosionSpeed: 5
+    power: 55
+    damageType: 1
+    damageAlter:
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 0.7 # Semi AP
+      ToHealth: 0.9
+    clipSize: 16
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    armor: 200
+    listOrder: 11898

@@ -176,7 +176,7 @@ missionScripts:
     firstMonth: 1
     lastMonth: 4
     startDelay: 16000
-    # maxRuns: 1  # crashy
+    # maxRuns: 1  # crashy # maxruns 1 need a varname
     missionWeights:
       0:
         STR_SPACE_HULK_GSC: 100  # space hulk
@@ -424,6 +424,8 @@ missionScripts:
       STR_CHAOS_STRATEGY: false
       STR_NOT_CHAOSCULT: true
 
+# Officio Assassinorum
+
   - type: MMAssassinorum # should be in addition to standard chamber militant missions. Will make adjustments as I go
     missionWeights:
       0:
@@ -440,6 +442,48 @@ missionScripts:
     randomDelay: 40320
     researchTriggers:
       STR_ASSASSINORUM: true
+      STR_OA_MIDTIER: false # replaced at midtier
+
+  - type: MMAssassinorum_MidTier # replaces early missions
+    missionWeights:
+      0:
+        STR_GUARD_OUTPOST_DEFENSE: 10 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_PDF_ASSAULT: 25 # PDF assaulting chaos base of cult or traitor guard
+        STR_SUPPORT_MARINE_ASSAULT: 65 # Marines assaulting chaos base of traitor marines or raptors
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 60 # reduced chance because imposter bases can also be made.
+    startDelay: 10  # 10k = 7 days
+    randomDelay: 40320
+    researchTriggers:
+      STR_OA_MIDTIER: true
+
+  - type: MMAssassinorum_Imposter # allows alpha legion to create new imposter bases
+    missionWeights:
+      0:
+        STR_IMPOSTER_BASE: 100 # Alpha Legion set up a new imposter base
+    useTable: false
+    firstMonth: 0
+    executionOdds: 20 # not super common, will change as needed
+    startDelay: 10  # 10k = 7 days
+    randomDelay: 40320
+    researchTriggers:
+      STR_OA_MIDTIER: true
+
+  - type: STR_AL_IMPOSTER_BASE_FOUND
+    missionWeights:
+      0:
+        STR_AL_IMPOSTER_BASE_FOUND: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    maxRuns: 1
+    varName: imposterbase # maxruns 1 need a varname to avoid crash
+    researchTriggers:
+      STR_OA_MIDTIER: true
 
   # for chaos cult
 
