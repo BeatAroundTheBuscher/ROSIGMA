@@ -70,7 +70,7 @@ armors:
     loftempsSet: [1]
     tags:
       ARMOR_IS_INFILTRATOR: 4  # 4 turns to infiltrate, disguised as enemy
-      ARMOR_RESTEALTH_KILL_REQUIREMENT: 5
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 4 # quicker to restealth than other assassins
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
@@ -189,7 +189,7 @@ armors:
       mana:
         flatHundred: 0.15 # not quite 1 shot per turn
     builtInWeapons:
-      - INV_NULL_STORM_TROOPER_BACKPACK
+      - INV_NULL_INQUISITION_BACKPACK
       - STR_EXITUS_LANCE
 
 # Culexus
@@ -286,7 +286,7 @@ armors:
     corpseBattle:
       - STR_CULEXUS_ASSASSIN_CORPSE_GEO
     builtInWeapons:
-      - INV_NULL_STORM_TROOPER_BACKPACK
+      - INV_NULL_INQUISITION_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
       - STR_LIQUIDATOR_MELTA
@@ -429,6 +429,85 @@ armors:
       DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+
+# Vanus
+
+  - &STR_VANUS_ASSASSIN_UNARMED
+    type: STR_VANUS_ASSASSIN_UNARMED  # vanus assassin
+    spriteSheet: VANUS_ASSASSIN.PCK
+    spriteInv: MAN_43
+    customArmorPreviewIndex: 65
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_VANUS_ASSASSIN_CORPSE
+    loftempsSet: [3]
+    camouflageAtDay: -18
+    camouflageAtDark: -10
+    visibilityAtDay: 40
+    visibilityAtDark: 35  # best possible Imperium night vision
+    antiCamouflageAtDay: 15  # Good Imperium anti-camo
+    antiCamouflageAtDark: 15
+    psiVision: 5 # advanced scanner equipment and netflies
+    heatVision: 50  # best possible Imperial thermals
+    psiCamouflage: 1  # can only be detected by psy while adjacent; mainly so infiltrator can work
+    frontArmor: 50  # temple assassin bodyglove
+    sideArmor: 45
+    rearArmor: 40
+    underArmor: 45
+    damageModifier:  # temple assassin armor; light weight, but is slightly resistant to everything
+      - 1.0  # NONE
+      - 0.8  # AP
+      - 0.8  # FLAMES
+      - 0.8  # HE
+      - 0.8  # LASCANNON
+      - 0.8  # PLASMA
+      - 0.8  # STUN
+      - 0.8  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE; smoke filtration
+      - 0.0  # IMPACT
+      - 0.8  # MELTA
+    storeItem: STR_NONE
+    personalLight: 5
+    recovery:
+      mana:
+        mana: 0.5 # half of max recovered per turn
+      energy:
+        stamina: 0.33
+    units:
+      - STR_VANUS_ASSASSIN
+    specialWeapon: STR_VANUS_SCANNER
+    builtInWeapons:
+      - STR_VANUS_DECOY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SKULL_SPAWNER
+      - STR_VANUS_SKULL_SPAWNER2
+      - STR_VANUS_SKULL_SPAWNER3
+    meleeDodge:  # temple assassin
+      reactions: 0.3
+    tags:
+      ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      DODGE_CHANCE: 50
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+
+  - type: STR_VANUS_ASSASSIN_ARMOR
+    refNode: *STR_VANUS_ASSASSIN_UNARMED
+    ufopediaType: STR_VANUS_ASSASSIN_UNARMED
+    builtInWeapons:
+      - STR_VANUS_DECOY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SKULL_SPAWNER
+      - STR_VANUS_SKULL_SPAWNER2
+      - STR_VANUS_SKULL_SPAWNER3
+      - STR_VANUS_PULSE_CARBINE
 
 # Reprisalia
 
