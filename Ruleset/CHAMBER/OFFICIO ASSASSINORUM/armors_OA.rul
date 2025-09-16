@@ -192,6 +192,18 @@ armors:
       - INV_NULL_INQUISITION_BACKPACK
       - STR_EXITUS_LANCE
 
+  - type: STR_VINDICARE_DEATHMARK_ARMOR
+    refNode: *STR_VINDICARE_ASSASSIN_UNARMED
+    ufopediaType: STR_VINDICARE_ASSASSIN_UNARMED
+    storeItem: STR_VINDICARE_DEATHMARK_STOREITEM
+    corpseGeo: STR_VINDICARE_DEATHMARK_STOREITEM # recover equipment if it isn't overkilled.
+    corpseBattle:
+      - STR_GUARD_IMPERIAL_ASSASSIN_CORPSE_GEO
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_VINDICARE_SYNAPTIC_DISINTEGRATOR
+    specialWeapon: STR_VINDICARE_TELEPORT
+
 # Culexus
 
   - &STR_CULEXUS_ASSASSIN_UNARMED
@@ -369,11 +381,10 @@ armors:
 
   - type: STR_EVERSOR_BREAKER_ARMOR
     refNode: *STR_EVERSOR_ASSASSIN_UNARMED
-    spriteSheet: KRIEG_POWER_ARMOR_BS.PCK
+    spriteSheet: EVERSOR_POWER.PCK
     spriteInv: EVERSORPOWERINV.SPK
     drawingRoutine: 0
     customArmorPreviewIndex: 877
-    requires: STR_OA_MIDTIER  # Assassinorum Mid-tier Requisitions
     corpseGeo: STR_EVERSOR_THAMMER_STOREITEM # recover hammer if it isn't overkilled.
     corpseBattle:
       - STR_EVERSOR_POWER_ASSASSIN_CORPSE_GEO
@@ -425,6 +436,73 @@ armors:
       DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
       ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+
+  - type: STR_EVERSOR_DESTROYER_ARMOR
+    refNode: *STR_EVERSOR_ASSASSIN_UNARMED
+    spriteSheet: EVERSOR_JUMP.PCK
+    spriteInv: EVERSORPOWERINV.SPK
+    drawingRoutine: 0
+    customArmorPreviewIndex: 877
+    corpseGeo: STR_EVERSOR_WARSCYTHE_STOREITEM # recover warscythe if it isn't overkilled.
+    corpseBattle:
+      - STR_EVERSOR_POWER_ASSASSIN_CORPSE_GEO
+    frontArmor: 125  # Well made human power armor
+    sideArmor: 110
+    rearArmor: 100
+    underArmor: 100
+    damageModifier:  # Assasinorum POWER ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.5  # FLAMES Hazard protected
+      - 0.7  # HE Hazard protected
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.9  # STUN
+      - 0.9  # MELEE
+      - 0.5  # ACID Hazard protected
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    storeItem: STR_EVERSOR_JUMP_ARMOR_STOREITEM
+    loftempsSet: [4]
+    stats:
+      tu: -10 # Bulk of power armor
+      stamina: 10
+      health: 30
+      reactions: -15 # The armor may be good, but it can't match the Eversor's speed.
+      throwing: -10 # slightly restricted range of motion
+      strength: 20
+      mana: 0
+    recovery:
+      mana:
+        flatHundred: 0.0 # No Frenzon
+      energy:
+        stamina: 0.45 # steady stream of stims instead of bursts
+    meleeDodge:  # temple assassin in power armor
+      reactions: 0.25
+    specialWeapon: STR_JUMPPACK_AND_NEURO_GAUNTLET
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_EVERSOR_WARSCYTHE
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      INFECTION_RESIST: 70 # genestealer infection has to fight heavily chemed body, chaos can't easily get to the mind.
+      INTIMIDATION_RESISTANCE: 100 # he is the intimidation
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -50  # Two chances
+      DIEHARD_THRESHOLD: 80  # Big damage still kills
+      ARMOR_REGENERATES_WOUNDS: 1 # autoinjected chems in Eversor include meds and coagulants.
+      ARMOR_REGENERATES_HEALTH: 1
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: 80 # can't heal to full. Any damage (including Frenzon) will incur wound recover time.
+      ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 8 # Somewhat lower regeneration speed from constant stims
+      DODGE_CHANCE: 40 # better dodge than power armor
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 8
+      MaxFlight: 1
+      MaxCoolDown: 1
+
 
 # Vanus
 
