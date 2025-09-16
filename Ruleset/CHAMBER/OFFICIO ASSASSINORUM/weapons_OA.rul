@@ -273,6 +273,58 @@ items:
         set subvoxel_drift 0;
         return;
 
+  - type: STR_VINDICARE_SYNAPTIC_DISINTEGRATOR  #        18011
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_NECRON, STR_CAT_SNIPER, STR_CAT_SCOUT]
+    battleType: 1
+    dropoff: 2  # Vindicare
+    noLOSAccuracyPenalty: 90
+    weight: 25
+    bigSprite: {mod: 40k, index: 702}
+    floorSprite: {mod: 40k, index: 702}
+    handSprite: {mod: 40k, index: 32}
+    bulletSprite: {mod: 40k, index: 23}
+    fireSound: [{mod: 40k, index: 802}, {mod: 40k, index: 803}]
+    hitSound: {mod: 40k, index: 801}
+    hitAnimation: {mod: 40k, index: 26}
+    clipSize: -1
+    explosionSpeed: 5
+    accuracyMultiplier:  # sniper rifle accuracy
+      firing: [0.5, 0.005]
+    accuracyAimed: 120
+    accuracySnap: 60
+    tuSnap: 32  # quick aim in the hands of a Vindicare
+    tuAimed: 65  # so the unit can actually move to/from cover
+    aimRange: 38  # it's a sniper rifle
+    power: 85  # power scales with accuracy
+    damageType: 11
+    damageAlter:  # DA GUASS
+      RandomType: 6  # Gaussian/bell curve damage distribution
+      ToArmor: 0.0  # doesn't really interact with armor
+      ToHealth: 0.2  # not very effective against enemies not wound-susceptible
+      ToWound: 0.5  # shreds the target's brain
+      RandomWound: false
+      ToMorale: 50.0  # it literally scrambles your brain; even if you're Bravery 100
+      ToStun: 1.5  # disorienting/brain frying
+      ToTime: 0.5  # disorienting
+      ArmorEffectiveness: 0.4
+      FixRadius: 0
+    kneelBonus: 130  # light sniper weapon; benefits twice as much from kneeling
+    invWidth: 2
+    invHeight: 3
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    twoHanded: true
+    blockBothHands: true
+    minRange: 7  # less accurate up close
+    bulletSpeed: 10
+    attraction: 9
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 130  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_SNAP_ACCURACY_POWER_BONUS_PERCENT: 50  # Vindicare bonus to snap shots
+    vaporColorSurface: {mod: 40k, index: 3}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 30
 
 # Callidus
 
@@ -857,6 +909,139 @@ items:
     bulletSpeed: 50
     explosionSpeed: 5
     armor: 40
+
+  - type: STR_EVERSOR_WARSCYTHE
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_NECRON, STR_CAT_ASSAULT]
+    size: 0.4
+    weight: 30
+    hitSound: {mod: 40k, index: 754}
+    bigSprite: 3301
+    floorSprite: 3242
+    handSprite: 1342
+    invHeight: 3
+    invWidth: 2
+    bulletSpeed: 5
+    explosionHitSound: 2171
+    hitAnimation: 1050  # AOEMELEE.png
+    hitAnimFrames: 8
+    bulletSprite: 5
+    fireSound: {mod: 40k, index: 753}
+    snapRange: 3
+    confSnap:
+      name: STR_SWEEPING_STRIKE
+    accuracySnap: 80
+    accuracyMultiplier:
+      melee: 0.7
+      strength: 0.3
+    dropoff: 999
+    flatSnap: true
+    costSnap:
+      time: 25
+      energy: 16
+    maxRange: 3
+    powerRangeReduction: 999
+    powerRangeThreshold: 3
+    damageBonus:
+      melee: 0.5
+    power: 100
+    damageType: 7
+    powerForAnimation: 32
+    damageAlter:
+      RandomType: 6  # Gaussian/bell curve damage distribution
+      ToArmor: 0.05  # doesn't really interact with armor
+      ToHealth: 0.5
+      ArmorEffectiveness: 0.2  # basically ignores armor
+      RadiusReduction: 0
+      ToTile: 0.2 #doesn't really interact with matter; passes through it
+      ToItem: 0.2
+      FixRadius: 1
+    # Melee
+    meleeAnimation: 4
+    meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 754}  # 744 Powerswrod hit
+    accuracyMelee: 80
+    meleeMultiplier:
+      melee: 0.7
+      strength: 0.3
+    meleeBonus: #cumbersome to wield
+      melee: 0.5
+    meleePower: 100
+    meleeType: 7
+    meleeAlter:
+      RandomType: 6  # Gaussian/bell curve damage distribution
+      ToArmor: 0.05  # doesn't really interact with armor
+      ToHealth: 0.5
+      ArmorEffectiveness: 0.2  # basically ignores armor
+      ToTile: 0.2 #doesn't really interact with matter; passes through it
+      ToItem: 0.2
+    costMelee:
+      time: 16 # faster attacks
+      energy: 8
+    flatMelee:
+      time: true
+    attraction: 7
+    clipSize: -1
+    battleType: 1
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: true
+    defaultInventorySlot: STR_RIGHT_HAND
+    twoHanded: true
+    oneHandedPenalty: 50 # Heavy weapon, difficult to use one-handed.
+    tags:
+      DAMAGETYPE_OVERRIDE: 30  # gauss disintegration nation
+      REACTION_MULTIPLIER: 200
+      ITEM_ENERGY_SHIELD_PENETRATION_PERCENT: 25 # should be 50% but scripts double count the base value + integrated ammo
+      DAMAGE_RESIST_PENETRATION_PERCENT: 99
+      ITEM_DOESNT_HURT_FRIENDS: 1
+
+  - type: STR_JUMPPACK_AND_NEURO_GAUNTLET
+    medikitTargetMatrix: 0
+    medikitType: 1
+    medikitActionName: STR_ACTIVATE_FLIGHT
+    medikitTargetSelf: true
+    heal: 999
+    battleType: 6  # not used as medikit
+    tuUse: 10
+    flatRate: true
+    fixedWeapon: true
+    specialIconSprite: 205
+    tags:
+      ActivateFlight: 1
+    #*** Melee Gauntlet
+    specialUseEmptyHand: true
+    meleeHitSound: {mod: 40k, index: 101}
+    meleeAnimation: 0
+    meleeType: 8 # acid
+    meleePower: 50
+    confMelee:
+      name: STR_NEURO_GAUNTLET_STRIKE #
+    meleeBonus:
+      strength: 0.1
+      melee: 0.1
+    meleeAlter:
+      RandomType: 6
+      ToArmorPre: 0.02
+      ArmorEffectiveness: 1.0
+      ToArmor: 0.02
+      ToHealth: 2.0
+      ToMorale: 5.0  # demoralizing poison
+      ToStun: 0.1
+      ToEnergy: 0.1
+      ToTime: 0.1
+      ToWound: 0.3
+      RandomWound: false
+    accuracyMelee: 100
+    meleeMultiplier:
+      flatHundred: 0.0
+      melee: 0.5
+      reactions: 0.5
+    costMelee:
+      time: 7
+      energy: 1
+    flatMelee:
+      time: true
+    clipSize: -1
 
 # Culexus
 
