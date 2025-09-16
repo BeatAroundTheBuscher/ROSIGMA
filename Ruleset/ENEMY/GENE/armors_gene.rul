@@ -3191,6 +3191,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
       UNIT_TYPE_PSYKER: 1
+      UNIT_TYPE_SYNAPSE: 1
       ARMOR_OVERWATCH_TU_RESTORED: 100
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 30  # psi shield
       ARMOR_ENERGY_SHIELD_DECAY: 10
@@ -3245,6 +3246,7 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TYRANID: 1
+      UNIT_TYPE_SYNAPSE: 1
       ARMOR_REGENERATES_WOUNDS: 3
       ARMOR_OVERWATCH_TU_RESTORED: 30
       DODGE_CHANCE: 15
@@ -3252,3 +3254,104 @@ armors:
 
 # dungeon specific end
 
+  - &TYRANID_BUGHOLE_REINFORCEMENT_SPAWNER_TEMPLATE
+    type: STR_TYRANID_BUGHOLE_SPAWNER_SMALL_ARMOR
+    visibilityAtDay: 5
+    visibilityAtDark: 5
+    antiCamouflageAtDark: 5
+    antiCamouflageAtDay: 5
+    heatVision: 50
+    psiVision: 5 #tremorsense
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    zombiImmune: true
+    allowsRunning: false  # NPC limits for BAI
+    allowsMoving: false #staitic
+    spriteSheet: TYRANID_BUGHOLE_SPAWNER_SMALL.PCK
+    spriteInv: TYRANID_BUGHOLE_SPAWNER_SMALL_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_BUGHOLE_SPAWNER_SMALL_CORPSE
+    frontArmor: 80
+    sideArmor: 80
+    rearArmor: 80
+    underArmor: 80
+    drawingRoutine: 8
+    recovery:
+      health:
+        healthCurrent: 0.2
+    allowInv: false
+    damageModifier:  # VEHICLE ARMOR LARGE; takes reduced explosive, incendiary and AP damage in exchange for greater lascannon and melta damage vs baseline necrons
+      - 1.0  # none
+      - 0.5  # AP
+      - 1.1  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 0.5  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    tags:
+      UNIT_IS_REINFORCEMENT_GENERATOR: 100 # 0-100; percentile; value defines the % probability of reinforcements each turn
+      REINFORCEMENTS_SPAWN_COOLDOWN: 2 # Defines the number of turns before it spawns again; overrides percentile
+      REINFORCEMENTS_MINIMUM_PER_TURN: 1
+      REINFORCEMENTS_MAXIMUM_PER_TURN: 4
+      REINFORCEMENTS_PER_TURN: 2 # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENT_GENERATOR_ID: 2 # the ID number of the reinforcement generator
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      REINFORCEMENT_LIMIT_CAPACITY: 20
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
+  - type: STR_TYRANID_BUGHOLE_SPAWNER_LARGE_ARMOR
+    refNode: *TYRANID_BUGHOLE_REINFORCEMENT_SPAWNER_TEMPLATE
+    spriteSheet: TYRANID_BUGHOLE_SPAWNER_LARGE.PCK
+    spriteInv: TYRANID_BUGHOLE_SPAWNER_LARGE_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_BUGHOLE_SPAWNER_LARGE_CORPSE
+    tags:
+      UNIT_IS_REINFORCEMENT_GENERATOR: 100 # 0-100; percentile; value defines the % probability of reinforcements each turn
+      REINFORCEMENTS_SPAWN_COOLDOWN: 2 # Defines the number of turns before it spawns again; overrides percentile
+      REINFORCEMENTS_MINIMUM_PER_TURN: 1
+      REINFORCEMENTS_MAXIMUM_PER_TURN: 2
+      REINFORCEMENTS_PER_TURN: 1 # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENT_GENERATOR_ID: 3 # the ID number of the reinforcement generator
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      REINFORCEMENT_LIMIT_CAPACITY: 20
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
+
+  - type: STR_TYRANID_BUGHOLE_SPAWNER_ARMORED_ARMOR
+    refNode: *TYRANID_BUGHOLE_REINFORCEMENT_SPAWNER_TEMPLATE
+    frontArmor: 120
+    sideArmor: 120
+    rearArmor: 120
+    underArmor: 120
+    spriteSheet: TYRANID_BUGHOLE_SPAWNER_ARMORED.PCK
+    spriteInv: TYRANID_BUGHOLE_SPAWNER_ARMORED_INV.SPK
+    corpseBattle:
+      - STR_TYRANID_BUGHOLE_SPAWNER_ARMORED_CORPSE
+    tags:
+      UNIT_IS_REINFORCEMENT_GENERATOR: 100 # 0-100; percentile; value defines the % probability of reinforcements each turn
+      REINFORCEMENTS_SPAWN_COOLDOWN: 2 # Defines the number of turns before it spawns again; overrides percentile
+      REINFORCEMENTS_MINIMUM_PER_TURN: 1
+      REINFORCEMENTS_MAXIMUM_PER_TURN: 3
+      REINFORCEMENTS_PER_TURN: 2 # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENT_GENERATOR_ID: 4 # the ID number of the reinforcement generator
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidate immune
+      REINFORCEMENT_LIMIT_CAPACITY: 20
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_TYRANID: 1
