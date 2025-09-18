@@ -4,7 +4,9 @@ extended:
   tags:
     RuleArmor:
       UNIT_IS_REINFORCEMENT_GENERATOR: int # 0-100; percentile; value defines the % probability of reinforcements each turn
-      REINFORCEMENTS_PER_TURN: int # 0-100; value defines the maximum number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENTS_PER_TURN: int # 0-100; value defines the number of reinforcement spawners this unit will activate each turn.
+      REINFORCEMENTS_MINIMUM_PER_TURN: int # 0-100; value defines the min number of reinforcements this unit will activate
+      REINFORCEMENTS_MAXIMUM_PER_TURN: int # 0-100; value defines the max number of reinforcements this unit will activate
       REINFORCEMENTS_SPAWN_COOLDOWN: int # Defines the number of turns before it spawns again; overrides percentile chance
       REINFORCEMENT_GENERATOR_ID: int # the ID number of the reinforcement generator
       REINFORCEMENT_TURN_DELAY: int # 0+; how many full turns this reinforcement generator remains dormant for
@@ -147,6 +149,12 @@ extended:
               rArmor.getTag unitID Tag.REINFORCEMENT_GENERATOR_ID;
               if eq unitID 1;
                 rules.getRuleUnit rUnit "STR_NECRON_PORTAL";
+              else eq unitID 2;
+                rules.getRuleUnit rUnit "STR_TYRANID_BUGHOLE_SMALL";
+              else eq unitID 3;
+                rules.getRuleUnit rUnit "STR_TYRANID_BUGHOLE_LARGE";
+              else eq unitID 4;
+                rules.getRuleUnit rUnit "STR_TYRANID_BUGHOLE_ARMORED";
               end;
               unit.setSpawnUnit rUnit;
               unit.setSpawnUnitFaction FACTION_HOSTILE;
@@ -159,6 +167,12 @@ extended:
           end;
 
           rArmor.getTag reinforcementLimit Tag.REINFORCEMENTS_PER_TURN;
+
+          rArmor.getTag temp Tag.REINFORCEMENTS_MINIMUM_PER_TURN; #override REINFORCEMENTS_PER_TURN if we have a min AND max
+          rArmor.getTag temp2 Tag.REINFORCEMENTS_MAXIMUM_PER_TURN;
+          if and gt temp 0 gt temp2 0;
+            battle_game.randomRange reinforcementLimit temp temp2;
+          end;
 
           loop var i numInventoryItems;
             unit.getInventoryItem someItem i;
@@ -197,6 +211,60 @@ items:
     tags:
       ITEM_IS_REINFORCEMENT_SPAWNER: 1
 
+  - &REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    type: STR_TYRANID_BUGHOLE_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE
+    spawnUnit: STR_HORMAGAUNT
+    hitSound: 2123  # sizzlebamf
+    hitAnimation: 1210
+    isExplodingInHands: true
+    powerForAnimation: 10
+
+  - type: STR_TYRANID_BUGHOLE_HORMAGAUNT_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_HORMAGAUNT
+
+  - type: STR_TYRANID_BUGHOLE_TERMAGANT_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_TERMAGANT
+
+  - type: STR_TYRANID_BUGHOLE_DEVOURER_TERMAGANT_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_DEVOURER_TERMAGANT
+
+  - type: STR_TYRANID_BUGHOLE_TYRANID_WARRIOR_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_TYRANID_WARRIOR
+
+  - type: STR_TYRANID_BUGHOLE_RIPPERSWARM_1_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_RIPPERSWARM_1
+
+  - type: STR_TYRANID_BUGHOLE_STR_RIPPERSWARM_4_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_RIPPERSWARM_4
+
+  - type: STR_TYRANID_BUGHOLE_STR_BIOVORE_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_BIOVORE
+
+  - type: STR_TYRANID_BUGHOLE_STR_SPOREMINE_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_SPOREMINE
+
+  - type: STR_TYRANID_BUGHOLE_STR_CARNI_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_CARNI_TERRORIST
+
+  - type: STR_TYRANID_BUGHOLE_STR_TYRANID_PRIME_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_TYRANID_PRIME
+
+  - type: STR_TYRANID_BUGHOLE_STR_GENESTEALER_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_TYRANID
+    spawnUnit: STR_GENESTEALER
+
+
   - &REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
     type: STR_NECRON_PORTAL_WARRIOR_SPAWNER
     refNode: *REINFORCEMENT_SPAWNER_TEMPLATE
@@ -204,7 +272,7 @@ items:
     hitSound: 2123  # sizzlebamf
     explosionHitSound: {mod: 40k, index: 790}  # vortexpull
     hitAnimation: 1080
-    power: 60
+    power: 80
     damageType: 9  # generates a smoke screen; Necrons like this now that they actually have thermal vision
     damageAlter:
       RandomType: 6
@@ -232,6 +300,10 @@ items:
   - type: STR_NECRON_PORTAL_DEATHMARK_SPAWNER
     refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
     spawnUnit: STR_NECRON_DEATHMARK
+
+  - type: STR_NECRON_PORTAL_LYCHGUARD_SPAWNER
+    refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
+    spawnUnit: STR_NECRON_LYCHGUARD
 
   - type: STR_NECRON_PORTAL_LYCHGUARD_SPAWNER
     refNode: *REINFORCEMENT_SPAWNER_TEMPLATE_NECRON
