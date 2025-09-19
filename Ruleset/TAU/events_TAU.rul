@@ -19,20 +19,41 @@ adhocScripts:
 events:
   - name: STR_TAU_PDF_START_EVENT_GV
     description: STR_TAU_PDF_START_EVENT_DESCRIPTION_GV
-    background: GuardBG.SCR
+    background: GuardPatrolBG.SCR
     adhocMissionScriptTags: ["breadriotsL1", "bloodyroseL1"]
     spawnedPersons: 20
-    spawnedPersonType: STR_GUARDSM
+    spawnedPersonType: STR_MILITIA_GV
     everyMultiItemList:
       STR_CHIMERA_TOKEN: 1
       STR_LIGHTNING_TOKEN: 1
       STR_AVALANCHE_LAUNCHER: 2
       STR_AVALANCHE_MISSILES: 16
 
+
+  - name: STR_TAU_CADRE_START_EVENT_GV
+    description: STR_TAU_CADRE_START_EVENT_DESCRIPTION_GV
+    background: GuardBG.SCR
+    # adhocMissionScriptTags: ["breadriotsL1", "bloodyroseL1"]
+    # spawnedPersons: 20
+    # spawnedPersonType: STR_GUARDSM
+    # everyMultiItemList:
+    #   STR_CHIMERA_TOKEN: 1
+    #   STR_LIGHTNING_TOKEN: 1
+    #   STR_AVALANCHE_LAUNCHER: 2
+    #   STR_AVALANCHE_MISSILES: 16
+
+  # turn off the GSC arrival events
+  - update: STR_GSC_ARRIVAL_BASE_SPAWN
+    interruptResearch: STR_GUEVESA_STRATEGY_PDF_GV
+
+  - update: STR_GSC_ARBITES_SPAWNED
+    interruptResearch: STR_GUEVESA_STRATEGY_PDF_GV
+
+
   ### TODO: add export carbines
   - name: STR_FROM_THE_BARREL_EVENT_GV
     description: STR_FROM_THE_BARREL_EVENT_DESCRIPTION_GV
-    background: GuardBG.SCR
+    background: InquisitionLedgerBG.SCR
     everyMultiItemList:
       STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA: 2
       STR_TAU_PULSE_MAG_EXPORT_GUEVESA: 6
@@ -40,6 +61,7 @@ events:
 ### These scripts are triggered by STR_ARBITES: true so they can be safely interrupted by STR_NOT_TAU_ARBITES_GV
   - name: STR_RECRUITS_GUEVESA_STRATEGY_PDF_GV
     description: STR_RECRUITS_GUEVESA_STRATEGY_PDF_DESCRIPTION_GV
+    background: InquisitionLedgerBG.SCR
     interruptResearch: STR_NOT_TAU_ARBITES_GV
     timer: 2000
 

@@ -1,60 +1,49 @@
 alienDeployments:
-  - type: STR_SINEWS_OF_WAR_GV
+  - &STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
+    type: STR_SINEWS_OF_WAR_GV
     data:
-    - alienRank: 0
-      lowQty: 1
-      highQty: 1
-      dQty: 0
-      percentageOutsideUfo: 100
-      itemSets: &emptyItemSets
-          -
-            []
-          -
-            []
-          -
-            []
-    - alienRank: 1
-      lowQty: 1
-      highQty: 1
-      dQty: 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 2
-      lowQty: 2
-      highQty: 2  # 3
-      dQty: 2  # 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 3
-      lowQty: 2
-      highQty: 2  # 3
-      dQty: 3  # 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 4
-      lowQty: 3
-      highQty: 3  # 3
-      dQty: 3  # 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 5
-      lowQty: 2
-      highQty: 2  # 3
-      dQty: 10  # 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 6
-      lowQty: 2  # 1
-      highQty: 2  # 3
-      dQty: 10
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
-    - alienRank: 7
-      lowQty: 1  # 1
-      highQty: 1  # 3
-      dQty: 1
-      percentageOutsideUfo: 100
-      itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 2
+        highQty: 2
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: &emptyItemSets [[], [], []]
+      - alienRank: 2
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
+      - alienRank: 3
+        lowQty: 3
+        highQty: 3 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
+      - alienRank: 4
+        lowQty: 3
+        highQty: 3 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
+      - alienRank: 5
+        lowQty: 3
+        highQty: 3 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
+      - alienRank: 6
+        lowQty: 3 #1
+        highQty: 3 #3
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
+      - alienRank: 7
+        lowQty: 3 #1
+        highQty: 3 #3
+        dQty: 2
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
     civiliansByType:
       STR_CIVILIAN_F0: 2
       STR_CLOAKED_WOMAN: 2
@@ -62,13 +51,15 @@ alienDeployments:
       STR_CIVILIAN_F1: 2
       STR_CLOAKED_WOMAN_ORANGE: 4
       STR_CIVILIAN_M1: 2
-    width: 50
-    length: 50
+    width: 60
+    length: 60
     height: 12
     terrains:
       # - CITY
       # - RIG
       - REFINERY
+      - AIRBASE
+      # - MUNDAINDUSTRIALURBANDIOALTERNATE
     script: CITY_RIOT
     duration: [168, 168]
     alert: STR_SINEWS_OF_WAR_GV_ALERT
@@ -78,69 +69,622 @@ alienDeployments:
       showCraft: false
       showTarget: false
 
-    #customUfo: STR_IMP_HEAVY_TRANSPORT_SHIP
 
-  - type: STR_ARGENT_DAWN_GV
+  - type: STR_TENAXBASE_LEVEL_1_GV
+    markerIcon: 51
+    script: TENAXBASE_LEVEL1
+    race: STR_IRON_GUARD_TESTLIST_GV
+    alienBase: true
+    objectiveType: 3 #target type
+    objectivesRequired: 3 #number of tiles to be dest
+    objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 250]
+    objectivePopup: STR_COMMUNICATIONS_EQUIPMENT_DESTROYED
+    #objectiveFailed:
+    #  - STR_TRAITOR_GUARD_BASE_NOT_DESTROYED
+    #  - 0
+    data:
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 2
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 15 #12
+        highQty: 15 #18
+        dQty: 6
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5 
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 4 # add scouts once you change their weapon sets
+        lowQty: 4 #2
+        highQty: 4 #6
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TRAITORGUARDBASE
+      music: gmstory2
+      title: STR_TENAXBASE_LEVEL_1_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_TENAXBASE_LEVEL_1_DESC_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_ALIEN_BASE
+    genMission:
+      STR_CHIMERA_PATROL: 30
+      STR_CHIMERA_MAINTENANCE_PATROL: 35
+      STR_CHIMERA_TRAINING_PATROL: 35
+    genMissionFreq: 7 # average of 2/month
+    alienBaseUpgrades:
+      0:
+        STR_TENAXBASE_LEVEL_1_GV: 100
+      1:
+        STR_TENAXBASE_LEVEL_1_GV: 50
+        STR_TENAXBASE_LEVEL_2_GV: 50
+      2:
+        STR_TENAXBASE_LEVEL_2_GV: 100
+    width: 50
+    length: 50
+    height: 9
+
+  - type: STR_TENAXBASE_LEVEL_2_GV #HANGAR HK
+    markerIcon: 52
+    script: TENAXBASE_LEVEL2
+    alienBase: true
+    objectiveType: 3 #target type
+    objectivesRequired: 5 #number of tiles to be dest
+    objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 500]
+    objectivePopup: STR_COMMUNICATIONS_EQUIPMENT_DESTROYED
+    #objectiveFailed:
+    #  - STR_TRAITOR_GUARD_BASE_NOT_DESTROYED
+    #  - 0
+    data:
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 2 #1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 2
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 15 #12
+        highQty: 15 #18
+        dQty: 6
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5 # guardsmen with alternate weapons - GLs, flamers
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 4 # add scouts once you change their weapon sets
+        lowQty: 6 #4
+        highQty: 6 #8
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TRAITORGUARDBASE
+      music: gmstory2
+      title: STR_TENAXBASE_LEVEL_2_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_TENAXBASE_LEVEL_2_DESC_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_ALIEN_BASE
+    genMission:
+      STR_CHIMERA_PATROL: 45
+      STR_CHIMERA_MAINTENANCE_PATROL: 20
+      STR_CHIMERA_TRAINING_PATROL: 15
+      STR_GUARD_PATROL: 30
+    genMissionFreq: 10
+    baseDetectionRange: 850
+    baseDetectionChance: 50
+    huntMissionMaxFrequency: 300
+    huntMissionWeights:
+      0:
+        STR_GUARD_PATROL: 100
+    alienBaseUpgrades:
+      0:
+        STR_TENAXBASE_LEVEL_2_GV: 100
+      1:
+        STR_TENAXBASE_LEVEL_2_GV: 100
+      2:
+        STR_TENAXBASE_LEVEL_2_GV: 50
+        STR_TENAXBASE_LEVEL_3_GV: 50
+      3:
+        STR_TENAXBASE_LEVEL_2_GV: 50
+        STR_TENAXBASE_LEVEL_3_GV: 50
+      4:
+        STR_TENAXBASE_LEVEL_3_GV: 100
+    width: 50
+    length: 50
+    height: 9
+
+  - type: STR_TENAXBASE_LEVEL_3_GV #HANGAR HK
+    markerIcon: 53
+    script: TENAXBASE_LEVEL3
+    alienBase: true
+    objectiveType: 3 #target type
+    objectivesRequired: 5 #number of tiles to be dest
+    objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 750]
+    objectivePopup: STR_COMMUNICATIONS_EQUIPMENT_DESTROYED
+    #objectiveFailed:
+    #  - STR_TRAITOR_GUARD_BASE_NOT_DESTROYED
+    #  - 0
     data:
       - alienRank: 0
         lowQty: 1
         highQty: 1
         dQty: 0
-        percentageOutsideUfo: 100
-        itemSets: &emptyItemSets
-          -
-            []
-          -
-            []
-          -
-            []
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
       - alienRank: 1
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 10 #8
+        highQty: 10 #12
+        dQty: 4
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 10 #8
+        highQty: 10 #12
+        dQty: 6
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5 # guardsmen with alternate weapons - GLs, flamers
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 4 # add scouts once you change their weapon sets
+        lowQty: 6 #4
+        highQty: 6 #8
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TRAITORGUARDBASE
+      music: gmstory2
+      title: STR_TENAXBASE_LEVEL_3_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_TENAXBASE_LEVEL_3_DESC_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_ALIEN_BASE
+    genMission:
+      STR_CHIMERA_PATROL: 35
+      STR_CHIMERA_MAINTENANCE_PATROL: 10
+      STR_CHIMERA_TRAINING_PATROL: 5
+      STR_GUARD_PATROL: 30
+      STR_TRAITOR_FIREBASE_FROM_EXISTING: 20
+    genMissionFreq: 14
+    baseDetectionRange: 850
+    baseDetectionChance: 50
+    huntMissionMaxFrequency: 300
+    huntMissionWeights:
+      0:
+        STR_GUARD_PATROL: 100
+    alienBaseUpgrades:
+      0:
+        STR_TENAXBASE_LEVEL_3_GV: 100
+      1:
+        STR_TENAXBASE_LEVEL_3_GV: 100
+      2:
+        STR_TENAXBASE_LEVEL_3_GV: 50
+        STR_TENAXBASE_LEVEL_4_GV: 50
+      3:
+        STR_TENAXBASE_LEVEL_3_GV: 50
+        STR_TENAXBASE_LEVEL_4_GV: 50
+      4:
+        STR_TENAXBASE_LEVEL_4_GV: 100
+    width: 60
+    length: 60
+    height: 9
+
+  - type: STR_TENAXBASE_LEVEL_4_GV #HANGAR HK
+    markerIcon: 53
+    script: TENAXBASE_LEVEL4
+    alienBase: true
+    objectiveType: 3 #target type
+    objectivesRequired: 5 #number of tiles to be dest
+    objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 750]
+    objectivePopup: STR_COMMUNICATIONS_EQUIPMENT_DESTROYED
+    #objectiveFailed:
+    #  - STR_TRAITOR_GUARD_BASE_NOT_DESTROYED
+    #  - 0
+    data:
+      - alienRank: 0
         lowQty: 1
         highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 2
+        highQty: 2 #3
+        dQty: 2 #1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 10 #8
+        highQty: 10 #12
+        dQty: 4
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 10 #8
+        highQty: 10 #12
+        dQty: 6
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5 # guardsmen with alternate weapons - GLs, flamers
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 4 # add scouts once you change their weapon sets
+        lowQty: 6 #4
+        highQty: 6 #8
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TRAITORGUARDBASE
+      music: gmstory2
+      title: STR_TENAXBASE_LEVEL_4_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_TENAXBASE_LEVEL_4_BRIEFING_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_ALIEN_BASE
+    genMission:
+      STR_CHIMERA_PATROL: 20
+      STR_TRAITOR_FIREBASE_FROM_EXISTING: 50
+      STR_CHIMERA_MAINTENANCE_PATROL: 5
+      STR_CHIMERA_TRAINING_PATROL: 5
+      STR_GUARD_PATROL: 20
+    genMissionFreq: 14
+    baseDetectionRange: 850
+    baseDetectionChance: 50
+    huntMissionMaxFrequency: 300
+    huntMissionWeights:
+      0:
+        STR_GUARD_PATROL: 100
+    width: 60
+    length: 60
+    height: 9
+
+  - type: STR_TENAXBASE_START_GV
+    markerIcon: 52
+    script: TENAXBASE_LEVEL2
+    alienBase: true
+    objectiveType: 100
+    objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 500]
+    objectivePopup: STR_COMMUNICATIONS_EQUIPMENT_DESTROYED
+    #objectiveFailed:
+    #  - STR_TRAITOR_GUARD_BASE_NOT_DESTROYED
+    #  - 0
+    data:
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1 #2
+        dQty: 2 #1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 2
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 15 #12
+        highQty: 15 #18
+        dQty: 6
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 5 # guardsmen with alternate weapons - GLs, flamers
+        lowQty: 5 #4
+        highQty: 5 #6
+        dQty: 0
+        percentageOutsideUfo: 65
+        itemSets: *emptyItemSets
+      - alienRank: 4 # add scouts once you change their weapon sets
+        lowQty: 6 #4
+        highQty: 6 #8
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: TRAITORGUARDBASE
+      music: gmstory2
+      title: STR_TENAXBASE_START_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_TENAXBASE_START_BRIEFING_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_ALIEN_BASE
+    genMission:
+      #*** Game start base creation ***
+      STR_TRAITOR_GUARD_BASE_FROM_EXISTING: 100
+      #*** Normal tier 2 missions
+      STR_CHIMERA_PATROL: 20
+      STR_CHIMERA_MAINTENANCE_PATROL: 25
+      STR_CHIMERA_TRAINING_PATROL: 25
+      STR_GUARD_PATROL: 30
+    genMissionFreq: 14
+    baseDetectionRange: 850
+    baseDetectionChance: 50
+    huntMissionMaxFrequency: 300
+    huntMissionWeights:
+      0:
+        STR_GUARD_PATROL: 100
+    alienBaseUpgrades:
+      0:
+        STR_TENAXBASE_START_GV: 100
+      1:
+        STR_TENAXBASE_LEVEL_1_GV: 100
+    width: 50
+    length: 50
+    height: 9
+
+
+  - type: STR_WHITEPRINCE_BASE_SINGLEFLOOR_GV                       # RANK0  # RANK1
+    randomRace: [STR_SLAANESH_TRAITOR_GUARD_LATE]
+    markerIcon: 7
+    markerName: STR_ALIEN_BASE
+    data:
+      - alienRank: 6
+        lowQty: 2  # 1
+        highQty: 2  # 3
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2  # 0
+        highQty: 2  # 2
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 5  # soldiers
+        lowQty: 7
+        highQty: 7
+        dQty: 6
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4  # navigators
+        lowQty: 2  # 1
+        highQty: 2  # 2
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3  # medics
+        lowQty: 4
+        highQty: 4
         dQty: 1
-        percentageOutsideUfo: 100
+        percentageOutsideUfo: 0
         itemSets: *emptyItemSets
       - alienRank: 2
         lowQty: 2
         highQty: 2
-        dQty: 5
-        percentageOutsideUfo: 100
+        dQty: 1
+        percentageOutsideUfo: 0
         itemSets: *emptyItemSets
-      - alienRank: 3
+      - alienRank: 1
+        lowQty: 2
+        highQty: 4
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 0
         lowQty: 1
         highQty: 1
-        dQty: 3
-        percentageOutsideUfo: 100
-        itemSets: *emptyItemSets
-      - alienRank: 4
-        lowQty: 1
-        highQty: 1
-        dQty: 3
-        percentageOutsideUfo: 100 
-        itemSets: *emptyItemSets
-      - alienRank: 5
-        lowQty: 1
-        highQty: 1
-        dQty: 3
-        percentageOutsideUfo: 100
-        itemSets: *emptyItemSets
-      - alienRank: 6
-        lowQty: 0
-        highQty: 0
-        dQty: 0             
-        percentageOutsideUfo: 100
+        dQty: 0
+        percentageOutsideUfo: 0
         itemSets: *emptyItemSets
     width: 60
     length: 60
     height: 9
     terrains:
-      - ACULTASNOW      # GOTHIC SNOW      
-    duration: [168, 168]
-    alert: STR_ARGENT_DAWN_GV_ALERT
-    alertDescription: STR_ARGENT_DAWN_DESCRIPTION_GV
-    alertBackground: ShrineAttackedBG.scr
+      - ALART_SLAAN
+    script: WHTIEPRINCE_BASE_SINGLEFLOOR
     briefing:
-      showCraft: false
-      showTarget: false     
-    customUfo: STR_CHAOS_TRUCKS_GV
+      cutscene: CHAOSBASE
+      music: gmstory2
+      title: STR_WHITEPRINCE_BASE_SINGLEFLOOR_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_WHITEPRINCE_BASE_SINGLEFLOOR_BRIEFING_GV
+    objectiveType: 3
+    genMission:
+      STR_SLAAN_SUPPLY: 80
+      STR_SLAAN_PATROL: 20
+      STR_TERROR_MISSION_SLAAN: 20
+      # STR_DEFILER_RETALIATION: 5
+      # STR_SLAANESH_RETALIATION: 10
+      STR_SLAANESH_ABDUCTION: 15  # gotta abduct those slaves
+      STR_ALIEN_INFILTRATION_SLAANESH: 10
+    genMissionFreq: 5  # 6
+    genMissionLimit: 10000  # was 4 in OXCE_40k
+    # genMissionLimit: 4                 # new attribute, allows specifying how many genMissions can be spawned in total by one base, default 1000
+    baseDetectionRange: 600            # base radar range, in nautical miles
+    baseDetectionChance: 50            # base radar chance (once every 10 minutes), in percent
+    huntMissionMaxFrequency: 1440  # 300       # generate hunt mission max every 300 minutes (= 5 hours)
+    huntMissionWeights:                # which hunt mission to generate, based on months passed and weights
+      0:
+        STR_SLAAN_INTERCEPTION: 100
+    objectiveComplete: [STR_ALIEN_BASE_CONTROL_DESTROYED, 500]
+    objectiveFailed: [STR_ALIEN_BASE_CONTROL_FAILED, -250]
+    abortPenalty: 250
+
+
+#### STR_CULTIST_BASE_LEVEL_2 or 3 works fine for the Redeemed.
+
+#### hmmm what to do about WHITE PRINCE.
+#### Just STR_SLAANESH_BASE should work. Because it's freaking awesome
+
+
+  
+  # - &STR_DEPLOYMENT_TEMPLATE_TERROR_GV
+  #   type: STR_ARGENT_DAWN_GV
+  #   data:
+  #     - alienRank: 0
+  #       lowQty: 1
+  #       highQty: 1
+  #       dQty: 0
+  #       percentageOutsideUfo: 100
+  #       itemSets: &emptyItemSets
+  #         -
+  #           []
+  #         -
+  #           []
+  #         -
+  #           []
+  #     - alienRank: 1
+  #       lowQty: 2
+  #       highQty: 2
+  #       dQty: 2
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 2
+  #       lowQty: 2
+  #       highQty: 2 #3
+  #       dQty: 2 #1
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 3
+  #       lowQty: 3
+  #       highQty: 3 #3
+  #       dQty: 2 #1
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 4
+  #       lowQty: 3
+  #       highQty: 3 #3
+  #       dQty: 2 #1
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 5
+  #       lowQty: 3
+  #       highQty: 3 #3
+  #       dQty: 2 #1
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 6
+  #       lowQty: 3 #1
+  #       highQty: 3 #3
+  #       dQty: 2
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #     - alienRank: 7
+  #       lowQty: 3 #1
+  #       highQty: 3 #3
+  #       dQty: 2
+  #       percentageOutsideUfo: 100
+  #       itemSets: [[], [], []]
+  #   width: 60
+  #   length: 60
+  #   height: 9
+  #   terrains:
+  #     - ACULTASNOW      # GOTHIC SNOW      
+  #   duration: [168, 168]
+  #   alert: STR_ARGENT_DAWN_GV_ALERT
+  #   alertDescription: STR_ARGENT_DAWN_DESCRIPTION_GV
+  #   alertBackground: ShrineAttackedBG.scr
+  #   briefing:
+  #     showCraft: false
+  #     showTarget: false     
+  #   customUfo: STR_CHAOS_TRUCKS_GV
     
+
+  # - type: STR_REDEEMED_BASE_L1_GV
+  #   alienBase: true
+  #   data:
+  #     - alienRank: 0
+  #       lowQty: 0
+  #       highQty: 0
+  #       dQty: 0
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets
+  #     - alienRank: 1
+  #       lowQty: 2  # 2
+  #       highQty: 2  # 4
+  #       dQty: 1
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets        
+  #     - alienRank: 2
+  #       lowQty: 3
+  #       highQty: 3  # 2
+  #       dQty: 1  # 0
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets        
+  #     - alienRank: 3
+  #       lowQty: 3
+  #       highQty: 3
+  #       dQty: 1
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets
+  #     - alienRank: 4
+  #       lowQty: 2  # 1
+  #       highQty: 2  # 2
+  #       dQty: 3  # 0
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets
+  #     - alienRank: 5
+  #       lowQty: 8  # 5
+  #       highQty: 8  # 7
+  #       dQty: 7
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets        
+  #     - alienRank: 6
+  #       lowQty: 1  # 1
+  #       highQty: 1  # 3
+  #       dQty: 1
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets
+  #     - alienRank: 7
+  #       lowQty: 1  # 0
+  #       highQty: 1  # 2
+  #       dQty: 1
+  #       percentageOutsideUfo: 0
+  #       itemSets: *emptyItemSets
+  #   shade: 3
+  #   enviroEffects: STR_INSIDE_ENVIRO
+  #   markerIcon: 130
