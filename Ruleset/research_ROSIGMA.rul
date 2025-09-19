@@ -143,7 +143,13 @@ research:
   - name: STR_MONTH24  # Month 24
     refNode: *MONTHS
 
+## Positive Score Indicators
+  - name: STR_GAIN_100
+  - name: STR_GAIN_250
+  - name: STR_GAIN_500
+
 ## Negative Score Indicators
+  - name: STR_LOSE_50
   - name: STR_LOSE_100
   - name: STR_LOSE_200
   - name: STR_LOSE_250
@@ -754,25 +760,25 @@ research:
     dependencies:
       - STR_GENERALLOCK
     unlocks:
-      - STR_GREYKNIGHTS
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
       - STR_MEDI_KIT_PREREQ
       - STR_XIPHON
       - STR_INQ_STORMTROOPER_REQUISITION
-      - STR_SUMMON_IMPERIAL_AGENTS_RESEARCH
-      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-      - STR_REQUEST_ADEPTAS_AID_RESEARCH
-      - STR_REQUEST_GUARD_AID_RESEARCH
-      - STR_LASER_WEAPONS  # for the Inquisition Strategy
-      - STR_LIGHT_BOLTERS  # for the Inquisition Strategy
+      - STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH
+      - STR_INQ_REQUISITION_SORORITAS_RESEARCH
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
+      - STR_INQ_REQUISITION_ARBITES_RESEARCH
       - STR_LIGHT_BOLTERS_MIDTIER  # for the Inquisition Strategy
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_IMPERIUM_RESEARCH
+      - STR_GREYKNIGHTS
+      - STR_MARINE_BOLTERS
+      - STR_LIGHT_BOLTERS  # for the Inquisition Strategy
       - STR_ADEPTAS_AND_INQUISITION
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
-      - STR_IMPERIUM_RESEARCH
-      - STR_MARINE_BOLTERS
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -861,28 +867,6 @@ research:
       - STR_DEATHWATCH
       - STR_ASSASSINORUM
 
-  - name: STR_HERETICAL_INQUISITOR_STRATEGY  # Heretical Means Path
-    cost: 100
-    points: -500 #was 1000, move that negative scores to later topics/events for more player control
-    unlocks:  # Now gives the prerequisites to enter the generic chaos path immediately which meets the needs of the former method
-      - STR_ALIEN_ORIGINS
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_LOSE_500
-    reenables:
-      - STR_CHAOS_PATH
-    disables:
-      - STR_GREYKNIGHTS
-      - STR_REINFORCEMENT
-      - STR_REINFORCEMENT_2
-      - STR_REINFORCEMENT_3
-      - STR_REINFORCEMENT_3
-      - STR_REINFORCEMENT_4
-      - STR_REINFORCEMENT_5
-      - STR_REINFORCEMENT_6
-      - STR_REINFORCEMENT_7
-      - STR_REINFORCEMENT_8
-      - STR_REINFORCEMENT_9
 
 ### Officio Assassinorum #STRATEGY.CM.OA#
 
@@ -1722,11 +1706,13 @@ research:
 
   - name: STR_CHAMBER_CHAOS_PATH  # The Ends Justify the Means
     # Heretical Inquisitior's entry into the generic chaos path.
-    cost: 150
+    cost: 100
     points: 0
+    affectsGameProgress: true
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_INQ_ARCHENEMY_ARMAMENTS_RESEARCH
     getOneFree:
       - STR_CHAOS_PATH
 
@@ -2482,11 +2468,12 @@ research:
       - STR_GRAVITON_TECH #HIGHTIER GATED
 
 ### Tactical Strategy #PROGRESSION.SM.TAC#
+
 ## Chamber Militant #PROGRESSION.CM#
   - name: STR_IMPERIAL_INQUISITOR_REQUISITION  # Requisition Inquisitor
     # To recruit Inquisitors
-    cost: 1000
-    points: 10
+    cost: 600
+    points: 100
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
@@ -2517,212 +2504,317 @@ research:
     dependencies:
       - STR_GENERALLOCK
       - STR_INQ_STORMTROOPER_REQUISITION
-
-  # Inquisitor Path Summon Reinforcement Event Trigger Research
-  # These trigger events that send a batch of soldiers to the player
-  - name: STR_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon local Agents of the Inquisition
-    # also triggers a eventscript that sends monthly random agents
-    cost: 500
-    points: 10
-    dependencies:
-      - STR_CHAMBERMILITANT
-    spawnedEvent: STR_REINFORCEMENTS_FRATERIS_INQ
-
-  - name: STR_REQUEST_ARBITES_RESEARCH  # Requisition Arbites Support
+  
+  - name: STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon Agents of the Inquisition
     cost: 250
-    points: -100
     dependencies:
       - STR_CHAMBERMILITANT
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_ENFORCERS_INQ
-
-  - name: STR_REQUEST_JUDGES_RESEARCH  # Requisition Judges
+    spawnedEvent: STR_INQ_REQUISITION_AGENTS_EVENT
+    
+  - name: STR_INQ_SECURE_SUPPORT_IMPERIAL_AGENTS_RESEARCH # Secure Inquisitorial Agents Network
     cost: 500
+    dependencies:
+      - STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_IMPERIAL_AGENTS_EVENT
+
+  - name: STR_INQ_REQUISITION_ARBITES_RESEARCH  # Requisition Arbites Support
+    cost: 250
+    dependencies:
+      - STR_CHAMBERMILITANT
+    spawnedEvent: STR_INQ_REQUISITION_ARBITES_EVENT
+
+  - name: STR_INQ_SECURE_SUPPORT_ARBITES_RESEARCH  # Requisition Arbites Support
+    cost: 600
+    dependencies:
+      - STR_INQ_REQUISITION_ARBITES_RESEARCH
+    unlocks:
+      - STR_PHOTON_GRENADE_REQUISITION
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_ARBITES_EVENT
+    
+  - name: STR_INQ_REQUISITION_ARBITES_JUDGES_RESEARCH  # Requisition Judges
+    cost: 800
     points: -250
     dependencies:
-      - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_ARBITES_RESEARCH
       - STR_LOSE_250
     unlocks:
       - STR_HWP_CANNON_SHELLS
-    spawnedEvent: STR_REINFORCEMENTS_ARBITES_INQ
-
-  - name: STR_REQUEST_GUARD_PILOTS_RESEARCH  # Requisition Guard Pilots
+    spawnedEvent: STR_INQ_REQUISITION_ARBITES_JUDGES_EVENT
+  
+  - name: STR_INQ_REQUISITION_GUARD_RESEARCH  # Requisition Guard Veterans
     cost: 250
-    points: -100
     dependencies:
       - STR_CHAMBERMILITANT
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_PILOT_GUARD_INQ
+    spawnedEvent: STR_INQ_REQUISITION_GUARD_EVENT
+    
+  - name: STR_INQ_SECURE_SUPPORT_GUARD_RESEARCH  # Requisition Guard Veterans
+    cost: 600
+    dependencies:
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_GUARD_EVENT
 
-  - name: STR_REQUEST_ADEPTAS_PILOTS_RESEARCH  # Requisition Adeptas Pilots
-    cost: 250
+  - name: STR_INQ_REQUISITION_HEAVY_GUARD_RESEARCH  # Requisition Heavy Guard
+    cost: 1000
     points: -250
     dependencies:
-      - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
       - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_PILOTS_INQ
+    spawnedEvent: STR_INQ_REQUISITION_HEAVY_GUARD_EVENT
 
-  - name: STR_REQUEST_KRIEG_KILLTEAM_RESEARCH  # Requisition Krieg Kill Team
-    cost: 500
-    points: -100
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_KRIEG_INQ
-
-  - name: STR_REQUEST_KRIEG_GRENADIER_KILLTEAM_RESEARCH  # Requisition Krieg Grenadier Kill Team
-    cost: 500
+  - name: STR_INQ_REQUISITION_KRIEG_GRENADIERS_RESEARCH  # Requisition Krieg Grenadier Kill Team
+    cost: 700
     points: -250
     dependencies:
-      - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
       - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_KRIEG_GRENADIER_INQ
+    spawnedEvent: STR_INQ_REQUISITION_KRIEG_GRENADIERS_EVENT
 
-  - name: STR_REQUEST_KRIEG_PANZERGRENADIER_KILLTEAM_RESEARCH  # Requisition Krieg Panzergrenadier Kill Team
-    cost: 750
+  - name: STR_INQ_REQUISITION_KRIEG_PANZERGRENADIERS_RESEARCH   # Requisition Krieg Panzergrenadier Kill Team
+    cost: 900
     points: -500
     dependencies:
-      - STR_CHAMBERMILITANT
       - STR_UFO_CONSTRUCTION  # ceramite tier
+      - STR_INQ_REQUISITION_KRIEG_GRENADIERS_RESEARCH
       - STR_LOSE_500
-    spawnedEvent: STR_REINFORCEMENTS_KRIEG_PANZERGRENADIER_INQ
+    spawnedEvent: STR_INQ_REQUISITION_KRIEG_PANZERGRENADIERS_EVENT
 
-  - name: STR_REQUEST_ADEPTAS_AID_RESEARCH  # Requisition Adeptas Sororitas
-    cost: 750
-    points: -250
+  - name: STR_INQ_REQUISITION_SORORITAS_RESEARCH   # Requisition Adeptas Sororitas
+    cost: 400
     dependencies:
       - STR_CHAMBERMILITANT
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ
+    spawnedEvent: STR_INQ_REQUISITION_SORORITAS_EVENT
+    
+  - name: STR_INQ_SECURE_SUPPORT_SORORITAS_RESEARCH
+    cost: 800
+    dependencies:
+      - STR_NOT_RADICAL
+      - STR_INQ_REQUISITION_SORORITAS_RESEARCH
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_SORORITAS_EVENT
 
-  - name: STR_REQUEST_ADEPTAS_AID_RESEARCH_2  # Requisition Further Adeptas Sororitas
-    cost: 1000
+  - name: STR_INQ_REQUISITION_SORORITAS_VETERANS_RESEARCH  # Requisition Further Adeptas Sororitas
+    cost: 900
     points: -500
     dependencies:
-      - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_SORORITAS_RESEARCH
       - STR_LOSE_500
-    spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ_2
+    spawnedEvent: STR_INQ_REQUISITION_SORORITAS_VETERANS_EVENT
 
-  - name: STR_REQUEST_OGRYN_AID_RESEARCH  # Request Ogryn Bodyguards
-    cost: 500
-    points: -100
+  - name: STR_INQ_REQUISITION_OGRYNS_RESEARCH  # Request Ogryn Bodyguards
+    cost: 400
     dependencies:
       - STR_CHAMBERMILITANT
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_OGRYN_INQ
-  - name: STR_REQUEST_OGRYN_AID_RESEARCH_2  # Request More Ogryn Bodyguards
-    cost: 750
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
+    spawnedEvent: STR_INQ_REQUISITION_OGRYNS_EVENT
+    
+  - name: STR_INQ_REQUISITION_OGRYNS_BIGGER_RESEARCH  # Request Bigger Ogryn Bodyguards
+    cost: 800
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_OGRYNS_RESEARCH
+    spawnedEvent: STR_INQ_REQUISITION_OGRYNS_BIGGER_EVENT
+
+  - name: STR_INQ_REQUISITION_ASSASSINS_RESEARCH  # Order Imperial Assassins
+    cost: 400
+    dependencies:
+      - STR_CHAMBERMILITANT
+    spawnedEvent: STR_INQ_REQUISITION_ASSASSINS_EVENT  # Order Imperial Assassins
+    
+  - name: STR_INQ_SECURE_SUPPORT_ASSASSINS_RESEARCH
+    cost: 600
+    dependencies:
+      - STR_INQ_REQUISITION_ASSASSINS_RESEARCH
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_ASSASSINS_EVENT
+
+  - name: STR_INQ_REQUISITION_GUARD_PILOTS_RESEARCH   # Requisition Guard Pilots
+    cost: 250
+    dependencies:
+      - STR_INQ_REQUISITION_GUARD_RESEARCH
+    spawnedEvent: STR_INQ_REQUISITION_GUARD_PILOTS_EVENT
+
+  - name: STR_INQ_REQUISITION_ADEPTAS_PILOTS_RESEARCH  # Requisition Adeptas Pilots
+    cost: 400
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_INQ_REQUISITION_SORORITAS_RESEARCH
+    spawnedEvent: STR_INQ_REQUISITION_ADEPTAS_PILOTS_EVENT
+  
+  - name: STR_INQ_RR_CONTACT_THE_ABHUMANS_RESEARCH  # Contact the Abhuman Community
+    cost: 400
     points: -250
     dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_MT_GK
+      - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_OGRYN_INQ_2
+    spawnedEvent: STR_INQ_RR_CONTACT_THE_ABHUMANS_EVENT
 
-  - name: STR_REQUEST_GUARD_AID_RESEARCH  # Requisition Guard Veterans
-    cost: 500
+  - name: STR_INQ_RR_RECRUIT_OGRYN_RESEARCH  # Recruit Local Ogryn
+    cost: 600
     points: -100
     dependencies:
-      - STR_CHAMBERMILITANT
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_INQ_RR_CONTACT_THE_ABHUMANS_RESEARCH
       - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_VETERAN_GUARD_INQ
+    spawnedEvent: STR_INQ_RR_RECRUIT_OGRYN_EVENT
+    
+  - name: STR_INQ_RR_A_DEAL_WITH_THE_SQUATS_RESEARCH  # A Deal With The Squats
+    cost: 600
+    points: -250
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_INQ_RR_CONTACT_THE_ABHUMANS_RESEARCH
+      - STR_LOSE_250
+    spawnedEvent: STR_INQ_RR_A_DEAL_WITH_THE_SQUATS_EVENT
+    
+  - name: STR_INQ_SECURE_SUPPORT_ABHUMANS_RESEARCH  # Secure Abhuman Community Support
+    cost: 600
+    points: -250
+    dependencies:
+      - STR_INQ_RR_CONTACT_THE_ABHUMANS_RESEARCH 
+      - STR_INQ_RR_A_DEAL_WITH_THE_SQUATS_RESEARCH
+      - STR_INQ_RR_RECRUIT_OGRYN_RESEARCH
+      - STR_LOSE_250
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_ABHUMANS_EVENT
+    
+  - name: STR_ENTANGLE_ADEPTAS_RESEARCH  # Entangle the Adeptas
+    cost: 800
+    disables:
+      - STR_INQ_SECURE_SUPPORT_SORORITAS_RESEARCH
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_INQ_REQUISITION_SORORITAS_RESEARCH
+    spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ_ENTANGLED
 
-  - name: STR_REQUEST_POWER_GUARD_AID_RESEARCH  # Requisition Heavy Guard
-    cost: 1500
+  - name: STR_INQ_RR_ENTICE_BRIBES_RESEARCH  # Deploy Blackmail and Entice Bribes
+    cost: 700
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+    spawnedEvent: STR_INQ_RR_ENTICE_BRIBES_EVENT
+
+
+  - name: STR_INQ_RR_DEATHCULT_RITUAL_1_RESEARCH  # Indulge the Deathcults
+    cost: 800
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+    spawnedEvent: STR_INQ_RR_DEATHCULT_RITUAL_1_EVENT
+  - name: STR_INQ_RR_DEATHCULT_RITUAL_2_RESEARCH  # Partake in Deathcult Rituals
+    cost: 900
+    dependencies:
+      - STR_INQ_RR_DEATHCULT_RITUAL_1_RESEARCH
+      - STR_MIDTIER_PREREQ
+    spawnedEvent: STR_INQ_RR_DEATHCULT_RITUAL_2_EVENT
+  - name: STR_INQ_RR_DEATHCULT_RITUAL_3_RESEARCH  # Embrace the Deathcults
+    cost: 1000
+    dependencies:
+      - STR_INQ_RR_DEATHCULT_RITUAL_3_RESEARCH
+      - STR_HIGHTIER_PREREQ
+    spawnedEvent: STR_INQ_RR_DEATHCULT_RITUAL_3_EVENT
+
+
+  - name: STR_HERETICAL_INQUISITOR_STRATEGY  # Heretical Means Path
+    cost: 100
+    points: -500 #was 1000, move that negative scores to later topics/events for more player control
+    unlocks:  # Now gives the prerequisites to enter the generic chaos path immediately which meets the needs of the former method
+      - STR_ALIEN_ORIGINS
+    getOneFree:
+      - STR_UNSANCTIONED_REQUISITIONS
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_500
+    reenables:
+      - STR_CHAOS_PATH
+    disables:
+      - STR_GREYKNIGHTS
+      - STR_REINFORCEMENT
+      - STR_REINFORCEMENT_2
+      - STR_REINFORCEMENT_3
+      - STR_REINFORCEMENT_3
+      - STR_REINFORCEMENT_4
+      - STR_REINFORCEMENT_5
+      - STR_REINFORCEMENT_6
+      - STR_REINFORCEMENT_7
+      - STR_REINFORCEMENT_8
+      - STR_REINFORCEMENT_9
+
+  - name: STR_FALSIFY_INQUISITION_REPORT  # Falsify Inquisition Statement
+    cost: 800
+    points: 500
+    dependencies:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_GAIN_500
+    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
+  - name: STR_FALSIFY_INQUISITION_REPORT_2  # Falsify Inquisition Report
+    cost: 800
+    points: 500
+    dependencies:
+      - STR_FALSIFY_INQUISITION_REPORT
+      - STR_MIDTIER_PREREQ
+      - STR_GAIN_500
+    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
+  - name: STR_FALSIFY_INQUISITION_REPORT_3  # Falsify Inquisition Records
+    cost: 800
+    points: 500
+    dependencies:
+      - STR_FALSIFY_INQUISITION_REPORT_2
+      - STR_HIGHTIER_PREREQ
+      - STR_GAIN_500
+    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
+
+  - name: STR_INQ_CONTACT_REVISIONISTS_RESEARCH  # Contact Revisionists
+    cost: 400
+    points: -100
+    dependencies:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_100
+    spawnedEvent: STR_INQ_CONTACT_REVISIONISTS_EVENT
+
+  - name: STR_INQ_CONTACT_DEFECTOR_SISTERS_RESEARCH  # Contact Heretical Sisters
+    cost: 800
+    points: -250
+    dependencies:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_250
+    spawnedEvent: STR_INQ_CONTACT_DEFECTOR_SISTERS_EVENT
+
+  - name: STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Sisters Contacted
+    cost: 1100
     points: -500
     dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_MT_GK
+      - STR_HERETICAL_INQUISITOR_STRATEGY
       - STR_LOSE_500
-    spawnedEvent: STR_REINFORCEMENTS_VETERAN_GUARD_INQ_POWERED
-
-  - name: STR_CONTACT_THE_ABHUMANS_RESEARCH  # Contact the Abhuman Community
-    cost: 500
-    points: -250
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_BEASTMEN_INQ
-
-  - name: STR_RECRUIT_OGRYN_RESEARCH  # Recruit Local Ogryn
-    cost: 500
-    points: -100
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_CONTACT_THE_ABHUMANS_RESEARCH
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_UNARMORED_OGRYN_INQ
-  - name: STR_A_DEAL_WITH_THE_SQUATS_RESEARCH  # A Deal With The Squats
-    cost: 500
-    points: -250
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_CONTACT_THE_ABHUMANS_RESEARCH
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_SQUATS_INQ
-
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH  # Order Imperial Assassins
-    cost: 1000
-    points: -100
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_LOSE_100
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ  # Order Imperial Assassins
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_2
-    cost: 1000
-    points: -250
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_2
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_3  # Order Imperial Assassins
-    cost: 1000
-    points: -500
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_2
-      - STR_LOSE_500
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_3
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_4  # Order Imperial Assassins
-    cost: 1000
+    spawnedEvent: STR_INQ_CONTACT_DEFECTOR_MARINES_EVENT
+    
+  - name: STR_INQ_SECURE_SUPPORT_REVISIONISTS_RESEARCH  # Secure Revisionists Support
+    cost: 800
     points: -750
     dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_3
+      - STR_INQ_CONTACT_REVISIONISTS_RESEARCH
+      - STR_INQ_CONTACT_DEFECTOR_SISTERS_RESEARCH
+      - STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH
       - STR_LOSE_750
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_4
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_5  # Order Imperial Assassins
-    cost: 1000
-    points: -1000
+    spawnedEvent: STR_INQ_SECURE_SUPPORT_REVISIONISTS_EVENT
+
+  - name: STR_INQ_BLACK_MARKET_XENOTECH_RESEARCH  # Acquire Black Market Xenotech
+    cost: 300
+    points: -50
     dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_MT_GK
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_4
-      - STR_LOSE_1000
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_5
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_6  # Order Imperial Assassins
-    cost: 1000
-    points: -1000
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_LOSE_50
+    spawnedEvent: STR_INQ_BLACK_MARKET_XENOTECH_EVENT
+    repeatable: true
+    
+  - name: STR_INQ_ARCHENEMY_ARMAMENTS_RESEARCH  # Armaments of the Archenemy
+    cost: 100
+    points: -250
     dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_MT_GK
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_5
-      - STR_LOSE_1000
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_6
-  - name: STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_7  # Order Imperial Assassins
-    cost: 1000
-    points: -1000
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_MT_GK
-      - STR_REQUISITION_IMPERIAL_ASSASSINS_RESEARCH_6
-      - STR_LOSE_1000
-    spawnedEvent: STR_REINFORCEMENTS_IMPERIAL_ASSASSINS_INQ_7
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+      - STR_LOSE_250
+    getOneFree:
+      - STR_CORRUPTED_REQUISITIONS
+  
 
 ### Deathwatch #PROGRESSION.CM.DW#
   - delete: STR_HB_DW
@@ -2873,7 +2965,7 @@ research:
 
   - name: STR_MT_GK  # Inquisition Mid-tier Requisitions
     # cutcscene c2 GREYKNIGHTS
-    cost: 500
+    cost: 200
     points: 200
     dependencies:
       - STR_MELTAGUN_TECH
@@ -2958,66 +3050,9 @@ research:
       - STR_HERETICAL_INQUISITOR_STRATEGY
       - STR_LOSE_500
 
-  - name: STR_FALSIFY_INQUISITION_REPORT  # Falsify Inquisition Statement
-    cost: 1500
-    points: 500
-    dependencies:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
-    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
-  - name: STR_FALSIFY_INQUISITION_REPORT_2  # Falsify Inquisition Report
-    cost: 1000
-    points: 500
-    dependencies:
-      - STR_FALSIFY_INQUISITION_REPORT
-    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
-  - name: STR_FALSIFY_INQUISITION_REPORT_3  # Falsify Inquisition Records
-    cost: 1000
-    points: 400
-    dependencies:
-      - STR_FALSIFY_INQUISITION_REPORT
-    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
-
-  - name: STR_ENTANGLE_ADEPTAS_RESEARCH  # Entangle the Adeptas
-    cost: 1000
-    points: 100
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-    spawnedEvent: STR_REINFORCEMENTS_ADEPTAS_INQ_ENTANGLED
-
-  - name: STR_ENTICE_BRIBES  # Deploy Blackmail and Entice Bribes
-    cost: 1000
-    points: 100
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-    spawnedEvent: STR_REWARD_INQUISITION_STORMTROOPERS
-
-  - name: STR_PARTAKE_IN_A_DEATHCULT_RITUAL  # Partake in Deathcult Rituals
-    cost: 1500
-    points: -250
-    dependencies:
-      - STR_RADICAL_INQUISITOR_STRATEGY
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_DCA
-
-  - name: STR_CONTACT_DEFECTOR_SISTERS_RESEARCH  # Contact Heretical Sisters
-    cost: 1000
-    points: -250
-    dependencies:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
-      - STR_LOSE_250
-    spawnedEvent: STR_REINFORCEMENTS_CHAOS_SISTERS_INQ
-
-  - name: STR_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Sisters Contacted
-    cost: 2000
-    points: -500
-    dependencies:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
-      - STR_LOSE_500
-    spawnedEvent: STR_REINFORCEMENTS_CHAOS_MARINES_INQ
-
   - name: STR_MT_RAD  # Inquisition Mid-tier Requisitions
     # Mid tier Radical Roadists
-    cost: 500
+    cost: 200
     points: 200
     dependencies:
       - STR_MELTAGUN_TECH
@@ -6414,7 +6449,7 @@ research:
     points: 25
     dependencies:
       - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_GUARD_AND_ARBITES
 
   - name: STR_HOLOGRAM_GRENADE_REQUISITION  # Hologram Caster Requisition
     cost: 200
