@@ -887,7 +887,7 @@ items:
     snapRange: 2
     dropoff: 900
     bulletSpeed: 900
-    maxRange: 3
+    maxRange: 0 #dummy this out for now
     powerRangeThreshold: 3
     powerRangeReduction: 100
     damageType: 1
@@ -1009,12 +1009,12 @@ items:
       basePercent: 9999
     throwRange: 1  # not meant to be thrown
     armor: 50
-    explodeInventory: 2
     hiddenOnMinimap: false
     fuseTriggerEvents:
       proximityExplode: true
     fixedWeapon: false
     fixedWeaponShow: false
+    isExplodingInHands: true
     tags:
       ITEM_DOES_KILL_USER: 1
       ITEM_IS_BOMB: 1
@@ -1032,23 +1032,30 @@ items:
     handSprite: 3460
     floorSprite: 3029
     power: 140
-    damageType: 9 #smoke for now
+    damageType: 6 #stun for now
     damageAlter:  # poisonous gas cloud
-      ToArmorPre: 0
+      ToArmorPre: 0 #no effect on armor
       ToArmor: 0
-      RandomType: 7 #50-200%
-      ArmorEffectiveness: 0.1 #armor helps little
-      ToHealth: 0.1 #little direct damage
-      ToMorale: 0.5
-      ToStun: 0.25
-      ToEnergy: 0.5
-      ToTime: 0.5
-      ToWound: 1 #1-3 fatal wounds
+      RandomType: 6
+      ArmorEffectiveness: 0.5 #armor helps little
+      ToHealth: 0.2
+      ToMorale: 1.0
+      ToStun: 1.0
+      ToEnergy: 1.0
+      ToTime: 1.0
+      ToWound: 0.2
+      RandomWound: false
       FixRadius: 4
       RadiusReduction: 5.0
-      IgnorePainImmunity: false
+      SmokeThreshold: 10
+      IgnorePainImmunity: true
       IgnoreSelfDestruct: false
-      IgnoreOverKill: false
+      IgnoreOverKill: true
+    tags:
+      ITEM_DOES_KILL_USER: 1
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
+      ITEM_IS_KAMIKAZI_BOMB: 1
 
   - type: STR_SPOREMINE_ACID_CHARGE  # STR_ACID_SPOREMINE
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
@@ -1073,6 +1080,12 @@ items:
       SmokeThreshold: 150
       FixRadius: 3
       IgnoreOverKill: false
+    tags:
+      ITEM_DOES_KILL_USER: 1
+      ITEM_IS_BOMB: 1
+      ITEM_IS_BOMB_ON_DEATH: 1  # we blow this bomb up on death
+      ITEM_IS_KAMIKAZI_BOMB: 1
+
 
   - type: STR_SPOREMINE_BIOPLASMA_CHARGE  # STR_BIOPLASMA_SPOREMINE   #Higher tier sporemine
     refNode: *STR_SPOREMINE_CHARGE_TEMPLATE
