@@ -198,11 +198,23 @@ research:
       - STR_CHAOS_ARMORY_EXAM_GRAV
       - STR_CHAOS_ARMORY_EXAM_SONIC
       - STR_CHAOS_ARMORY_EXAM_POWER
+      - STR_UNSANCTIONED_REQUISITIONS
+      - STR_CORRUPTED_REQUISITIONS
     disables:
       - STR_CHAPTER_PURITY
       - STR_PSI_LAB
       - STR_LIBRARY
       - STR_IMPERIAL_WEAPONS
+
+  - name: STR_UNSANCTIONED_REQUISITIONS  # Unsanctioned Requisitions
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_CORRUPTED_REQUISITIONS  # Corrupted Requisitions
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_UNSANCTIONED_REQUISITIONS
 
   - name: STR_HARDER_MISSIONS  # (Harder Missions)
     refNode: *STR_LOCKED
@@ -605,8 +617,8 @@ research:
       - STR_ASSAULT
       - STR_DEVASTATOR
       - STR_SCOUT
-      - STR_CASS_R
       - STR_SPACEWOLVES_STRATEGY
+      - STR_CASS_R
     spawnedEvent: STR_PRIMARIS_CARE_PACKAGE
 
 ### Scout #STRATEGY.SM.SCOUT#
@@ -894,12 +906,14 @@ research:
       - STR_VINDICARE_CODEX
       - STR_CALLIDUS_CODEX
       - STR_IMPERIAL_ASSASSINS
+      - STR_REPRISALIA_ACCESS
     disables:
       - STR_DEATHWATCH
       - STR_GREYKNIGHTS
       - STR_RADICAL_INQUISITOR_STRATEGY
       - STR_CHAOS_PATH
       - STR_INQUISITION_VALKYRIE
+      - STR_INQ_STORMTROOPER_REQUISITION
 
   - name: STR_ASSASSINORUM_FAVOR  # Grants an advanced strike team of Grey Knights
     spawnedEvent: STR_ASSASSINORUM_DAEMONHUNTER_REINFORCEMENTS
@@ -1626,14 +1640,14 @@ research:
       - STR_CHAOS_STORMTROOPER_REQUISITION
 
   - name: STR_IRON_SERVITOR_TECHNOLOGY  # Iron Warrior Servitor Technology
-    requires:
+    dependencies:
       - STR_IRON_GUARD_MIDTIER_REQUISITIONS
       - STR_COMBAT_SERVITOR_PROGRAM
 
   - name: STR_CREATE_IRON_MAIDEN_RESEARCH  # Create Iron Maiden
-    requires:
+    cost: 150
+    dependencies:
       - STR_IRON_SERVITOR_TECHNOLOGY
-      - STR_CONTACT_CHAOS_SISTERS
 
 ### Hrud Alliance
   - name: STR_HRUD_ALLIANCE
@@ -3232,17 +3246,31 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_SACRIFICE_TO_CHAOS  # Sacrifice to Chaos
+  - name: STR_SACRIFICE_TO_CHAOS  # Sacrifice to Chaos Chaos Cult version
     cost: 100
     points: 30
     dependencies:
-      - STR_CHAOS_PATH  # so it can be done by chaos cult and player chaos
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
       - STR_IMPERIALBASEDEAD
     unlocks:
       - STR_CHAOSLORD_PRELOCK
     neededItem: STR_GREAT_SACRIFICE
     destroyItem: true
     spawnedEvent: STR_CHAOSBOWL_STARTER
+
+  - name: STR_SACRIFICE_TO_CHAOSPC  # Sacrifice to Chaos  Player Chaos version
+    cost: 100
+    points: 30
+    dependencies:
+      - STR_NOT_CHAOSCULT
+      - STR_CHAOS_PATH
+      - STR_IMPERIALBASEDEAD
+    unlocks:
+      - STR_CHAOSLORD_PRELOCK
+    neededItem: STR_GREAT_SACRIFICE
+    destroyItem: true
+    spawnedEvent: STR_CHAOSBOWL_STARTERPC
 
   - name: STR_SECRET_OF_CULT  # Secrets of the Cult
     spawnedEvent: STR_RECRUITS_CHAOS_SLIMEHELP
@@ -5529,6 +5557,13 @@ research:
     getOneFree:
       - STR_SARGENT_ARMOR
 
+  - name: STR_FLYING_SUIT_WULF  # Wulfen Terminator Assault Armor
+    cost: 330
+    points: 20
+    dependencies:
+      - STR_SPACEWOLVES_MIDTIER_RESEARCH
+      - STR_CHAPTER_PURITY
+
 ## Chamber Militant #ARMORS.CM#
 ### Deathwatch #ARMORS.CM.DW#
   - name: STR_DW_CAP_ARMOR  # MK7 Captain Armor
@@ -5559,6 +5594,12 @@ research:
     points: 0
 
   - name: STR_CALLIDUS_CODEX # Access to Callidus weapons & armor codex
+    dependencies:
+      - STR_GENERALLOCK
+    cost: 0
+    points: 0
+
+  - name: STR_REPRISALIA_ACCESS # Access to hiring Reprisalia and their weapons & armor codex
     dependencies:
       - STR_GENERALLOCK
     cost: 0
@@ -7939,6 +7980,15 @@ research:
       - STR_PSI_LAB
     destroyItem: true
 
+  - name: STR_SLAANESH_CORRUPTION_RESEARCH  # Commander corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [PSI, APOC]
+    dependencies:
+      - STR_APOTHECARY_CORRUPTION_RESEARCH
+      - STR_CHAPEL_CORRUPTION_RESEARCH
+      - STR_SLAANESH_CHOSEN
+
   # Tzeentch
   - name: STR_LIVE_CAPTURE_TZEENTCH_SISTER  # Rubric Sister
     cost: 75
@@ -7973,9 +8023,19 @@ research:
       - STR_PSI_LAB
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+      - STR_TZEENTCHS_SISTERCHAMP
     getOneFree:
       - STR_LIVE_CAPTURE_CHAOS_ASSASSIN
     destroyItem: true
+
+  - name: STR_TZEENTCH_CORRUPTION_RESEARCH  # Commander corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [PSI, APOC]
+    dependencies:
+      - STR_APOTHECARY_CORRUPTION_RESEARCH
+      - STR_CHAPEL_CORRUPTION_RESEARCH
+      - STR_TZEENTCH_LEADER
 
   # Iron Warriors
   - name: STR_IRON_MAIDEN_SISTER  # Iron Maiden
@@ -8406,6 +8466,15 @@ research:
     getOneFree:
       - STR_LIVE_CAPTURE_NURGLE_MARINE
     destroyItem: true
+
+  - name: STR_NURGLE_CORRUPTION_RESEARCH  # Commander corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [PSI, APOC]
+    dependencies:
+      - STR_APOTHECARY_CORRUPTION_RESEARCH
+      - STR_CHAPEL_CORRUPTION_RESEARCH
+      - STR_NURGLE_CHAMP
 
   # Slaanesh
   - name: STR_LIVE_CAPTURE_SLAANESH_MARINE  # Noise Marine
@@ -10625,6 +10694,29 @@ research:
     points: 15
     dependencies:
       - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_APOTHECARY_CORRUPTION_RESEARCH
+
+  - name: STR_APOTHECARY_CORRUPTION_RESEARCH  # Apothecary corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [APOC]
+    dependencies:
+      - STR_APOC_BAY
+
+  - name: STR_PSI_LAB  # Chapel
+    cost: 100
+    points: 15
+    unlocks:
+      - STR_CHAPEL_CORRUPTION_RESEARCH
+
+  - name: STR_CHAPEL_CORRUPTION_RESEARCH  # Chapel corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [PSI]
+    dependencies:
+      - STR_PSI_LAB
+
   - name: STR_TRAINFACILITYR  # Soldier Improvement
     cost: 100
     points: 15

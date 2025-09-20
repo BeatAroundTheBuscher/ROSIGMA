@@ -1,0 +1,24 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    newTurnItem:
+      - new: ROSIGMA_nTU_item_regens_ammo
+        offset: 1
+        code: |
+          var int temp;
+          var int ammo;
+          var int turnSide;
+          var ptr RuleItem myItem;
+
+          battle_game.getTurnSide turnSide;
+          if neq turnSide FACTION_PLAYER; # Always regen on players turn
+            return;
+          end;
+
+          item.getRuleItem myItem;
+          myItem.getTag temp Tag.ITEM_REGENS_AMMO_PER_TURN;
+          item.getAmmoQuantity ammo;
+          add ammo temp;
+          item.setAmmoQuantity ammo;
+          return;

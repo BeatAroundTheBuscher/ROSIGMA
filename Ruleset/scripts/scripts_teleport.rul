@@ -205,3 +205,76 @@ extended:
           end;
 
           return;
+
+# Skill version of the teleporter; used primarily by Grey Knights
+    skillUseUnit:
+      - new: ROSIGMA_sUU_start_teleport
+        offset: 11
+        code: |
+          var int temp;
+          var int lastActivatedTeleporterTurn;
+          var int currentTurn;
+
+          skill.getTag temp Tag.SKILL_IS_TELEPORTER;
+          if lt temp 1;
+            debug_log "skillUseUnit | ROSIGMA_sUU_start_teleport | offset: 11 | Unit lacks SKILL_IS_TELEPORTER. Aborting.";
+            return;
+          end;
+
+          if lt have_tu 1;
+            debug_log "skillUseUnit | ROSIGMA_sUU_start_teleport | offset: 11 | Unit lacks adequate TU. Aborting.";
+            return;
+          end;
+
+          skill.getTag temp Tag.SKILL_TU_COST;
+          mul temp -1;
+          actor.addTimeUnits temp;
+
+          actor.getTag temp Tag.UNIT_IS_TELEPORTING;
+          if ge temp 1;
+            actor.setTag Tag.UNIT_IS_TELEPORTING 0;
+            actor.MoveCost.setBaseTimePercent 100;
+            actor.MoveCost.setBaseClimbEnergyPercent 100;
+            actor.MoveCost.setBaseNormalEnergyPercent 100;
+            actor.MoveCost.setBaseFlyEnergyPercent 100;
+            actor.getOriginalMovementType temp;
+            actor.setMovementType temp;
+            actor.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
+            actor.setEnergy temp;
+
+            battle_game.flashMessage "STR_SCRIPT_TELEPORTER_SHUTTING_DOWN";
+          else;
+            actor.getTag lastActivatedTeleporterTurn Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN;
+            battle_game.getTurn currentTurn;
+            # UNIT_LAST_ACTIVATED_TELEPORTER_TURN + ITEM_TELEPORTER_COOLDOWN <= currentTurn
+            # debug_log "lastActivatedTeleporterTurn" lastActivatedTeleporterTurn;
+            if gt lastActivatedTeleporterTurn 0; # first use
+              skill.getTag temp Tag.SKILL_TELEPORTER_COOLDOWN;
+              add temp lastActivatedTeleporterTurn;
+            else;
+              set temp 0;
+            end;
+
+            if gt currentTurn temp;
+              actor.setTag Tag.UNIT_IS_TELEPORTING 1;
+              actor.setTag Tag.UNIT_LAST_ACTIVATED_TELEPORTER_TURN currentTurn;
+              actor.getEnergy temp;
+              actor.setTag Tag.UNIT_ENERGY_BEFORE_TELEPORT temp;
+              skill.getTag temp Tag.SKILL_TELEPORTER_ENERGY;
+              actor.setEnergy temp;
+              actor.MoveCost.setBaseTimePercent 0;
+              actor.MoveCost.setBaseClimbEnergyPercent 100; # normal is 0, so this will never do anything, woo
+              actor.MoveCost.setBaseNormalEnergyPercent 50; # normal energy cost is 2 per tile
+              actor.MoveCost.setBaseFlyEnergyPercent 50; # normal energy cost is 2 per tile
+              actor.setMovementType movement_type_fly;
+              battle_game.flashMessage "STR_SCRIPT_TELEPORTER_STARTING_UP";
+            else;
+              # debug_log "currentTurn" currentTurn;
+              # debug_log "temp" temp;
+              sub temp currentTurn;
+              add temp 1;
+              battle_game.flashMessage "STR_SCRIPT_TELEPORTER_COOLDOWN" temp;
+            end;
+          end;
+
+          return;

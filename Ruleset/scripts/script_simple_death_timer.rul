@@ -1,0 +1,35 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    createUnit:
+      - new: ROSIGMA_cU_simple_death_timer
+        offset: 1
+        code: |
+          var int temp;
+          var ptr RuleArmor myArmor;
+
+          unit.getRuleArmor myArmor;
+          myArmor.getTag temp Tag.UNIT_TURNS_UNTIL_DEATH;
+          unit.setTag Tag.BATTLEUNIT_TURNS_UNTIL_DEATH temp;
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_simple_death_timer
+        offset: 1
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.BATTLEUNIT_TURNS_UNTIL_DEATH;
+          if eq temp 0;
+            return;
+          else eq temp 1;
+            unit.setHealth 0;
+            unit.setTag Tag.BATTLEUNIT_TURNS_UNTIL_DEATH 0;
+          else gt temp 1;
+            sub temp 1;
+            unit.setTag Tag.BATTLEUNIT_TURNS_UNTIL_DEATH temp;
+          end;
+
+          return;
