@@ -1,6 +1,7 @@
 alienDeployments:
+### TODO: alienRaceEvolution on deploys
   - &STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
-    type: STR_SINEWS_OF_WAR_GV
+    type: STR_EPIOUSION_GV
     data:
       - alienRank: 1
         lowQty: 2
@@ -57,13 +58,13 @@ alienDeployments:
     terrains:
       # - CITY
       # - RIG
-      - REFINERY
+      # - REFINERY
       - AIRBASE
       # - MUNDAINDUSTRIALURBANDIOALTERNATE
     script: CITY_RIOT
     duration: [168, 168]
-    alert: STR_SINEWS_OF_WAR_GV_ALERT
-    alertDescription: STR_SINEWS_OF_WAR_GV_ALERT_DESCRIPTION
+    alert: STR_EPIOUSION_GV_ALERT
+    alertDescription: STR_EPIOUSION_GV_ALERT_DESCRIPTION
     alertBackground: GovernorBG.SCR
     briefing:
       showCraft: false
@@ -129,6 +130,7 @@ alienDeployments:
       STR_CHIMERA_MAINTENANCE_PATROL: 35
       STR_CHIMERA_TRAINING_PATROL: 35
     genMissionFreq: 7 # average of 2/month
+    genMissionLimit: 10000  # was 4 in OXCE_40k
     alienBaseUpgrades:
       0:
         STR_TENAXBASE_LEVEL_1_GV: 100
@@ -199,7 +201,9 @@ alienDeployments:
       STR_CHIMERA_MAINTENANCE_PATROL: 20
       STR_CHIMERA_TRAINING_PATROL: 15
       STR_GUARD_PATROL: 30
+      STR_TENAXBASE_START_MISSION_GV: 5
     genMissionFreq: 10
+    genMissionLimit: 10000  # was 4 in OXCE_40k
     baseDetectionRange: 850
     baseDetectionChance: 50
     huntMissionMaxFrequency: 300
@@ -288,7 +292,9 @@ alienDeployments:
       STR_CHIMERA_TRAINING_PATROL: 5
       STR_GUARD_PATROL: 30
       STR_TRAITOR_FIREBASE_FROM_EXISTING: 20
-    genMissionFreq: 14
+      STR_TENAXBASE_START_MISSION_GV: 5
+    genMissionFreq: 12
+    genMissionLimit: 10000  # was 4 in OXCE_40k
     baseDetectionRange: 850
     baseDetectionChance: 50
     huntMissionMaxFrequency: 300
@@ -377,7 +383,9 @@ alienDeployments:
       STR_CHIMERA_MAINTENANCE_PATROL: 5
       STR_CHIMERA_TRAINING_PATROL: 5
       STR_GUARD_PATROL: 20
+      STR_TENAXBASE_START_MISSION_GV: 20
     genMissionFreq: 14
+    genMissionLimit: 10000  # was 4 in OXCE_40k
     baseDetectionRange: 850
     baseDetectionChance: 50
     huntMissionMaxFrequency: 300
@@ -442,7 +450,7 @@ alienDeployments:
     markerName: STR_ALIEN_BASE
     genMission:
       #*** Game start base creation ***
-      STR_TRAITOR_GUARD_BASE_FROM_EXISTING: 100
+      # STR_TENAXBASE_START_MISSION_GV: 50
       #*** Normal tier 2 missions
       STR_CHIMERA_PATROL: 20
       STR_CHIMERA_MAINTENANCE_PATROL: 25
@@ -465,10 +473,10 @@ alienDeployments:
     height: 9
 
 
-  - type: STR_WHITEPRINCE_BASE_SINGLEFLOOR_GV                       # RANK0  # RANK1
+  - type: STR_WHITEPRINCEBASE_SINGLEFLOOR_GV                       # RANK0  # RANK1
     randomRace: [STR_SLAANESH_TRAITOR_GUARD_LATE]
     markerIcon: 7
-    markerName: STR_ALIEN_BASE
+    markerName: STR_SLAANESH_BASE
     data:
       - alienRank: 6
         lowQty: 2  # 1
@@ -527,18 +535,19 @@ alienDeployments:
     briefing:
       cutscene: CHAOSBASE
       music: gmstory2
-      title: STR_WHITEPRINCE_BASE_SINGLEFLOOR_TITLE_GV
+      title: STR_WHITEPRINCEBASE_SINGLEFLOOR_TITLE_GV
       textOffset: -16
       background: BACK01.SCR
       showTarget: false
-      desc: STR_WHITEPRINCE_BASE_SINGLEFLOOR_BRIEFING_GV
+      desc: STR_WHITEPRINCEBASE_SINGLEFLOOR_BRIEFING_GV
     objectiveType: 3
     genMission:
       STR_SLAAN_SUPPLY: 80
       STR_SLAAN_PATROL: 20
       STR_TERROR_MISSION_SLAAN: 20
-      # STR_DEFILER_RETALIATION: 5
-      # STR_SLAANESH_RETALIATION: 10
+      STR_DEFILER_RETALIATION: 5
+      STR_SLAANESH_RETALIATION: 2
+      STR_WHITEPRINCEBASE_SINGLEFLOOR_MISSION_GV: 10  # tweaked down to make bases expand at a reasonable rate 
       STR_SLAANESH_ABDUCTION: 15  # gotta abduct those slaves
       STR_ALIEN_INFILTRATION_SLAANESH: 10
     genMissionFreq: 5  # 6
@@ -555,10 +564,363 @@ alienDeployments:
     abortPenalty: 250
 
 
-#### STR_CULTIST_BASE_LEVEL_2 or 3 works fine for the Redeemed.
 
-#### hmmm what to do about WHITE PRINCE.
-#### Just STR_SLAANESH_BASE should work. Because it's freaking awesome
+  - type: STR_DESERTER_HIDEOUT_TAU_DEPLOYMENT_GV
+    width: 60
+    length: 60
+    height: 9
+    terrains:
+      - PLAINSMUDD
+      - MOUNTMUDD
+    script: DESERTER_HIDEOUT_SCRIPT
+    briefing:
+      desc: STR_DESERTER_HIDEOUT_TAU_DESCRIPTION_GV
+      music: gmstory2
+      background: BACK03.SCR
+      title: STR_DESERTER_HIDEOUT_TAU_TITLE_GV
+    alert: STR_DESERTER_HIDEOUT_TAU_DETECTED_GV
+    alertBackground: BACK03.SCR
+    markerName: STR_DESERTER_HIDEOUT_SITE
+    duration: [120, 240]
+    despawnPenalty: 100
+    data:
+      - alienRank: 7
+        lowQty: 2
+        highQty: 2
+        dQty: 0
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 5  # 4
+        highQty: 5  # 6
+        dQty: 1
+        percentageOutsideUfo: 30
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1  # 2
+        dQty: 1  # 0
+        percentageOutsideUfo: 25
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 25
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1  # 2
+        dQty: 1  # 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+
+  - type: STR_REDEEMEDBASE_LEVEL_1_GV
+    markerIcon: 54
+    terrains:
+      - INDUSTRIALURBANDIO
+      #- CULTIST_TEMPLE
+    script: CULTIST_BASE_LEVEL_1
+    alienBase: true
+    objectiveType: 100
+    objectiveComplete: [STR_REDEEMEDBASE_DESTROYED, 200]
+    objectiveFailed: [STR_REDEEMEDBASE_NOT_DESTROYED, -100]
+    objectivePopup: STR_CULTIST_LEADERS_KILLED
+    randomRace: [STR_REDEEMED_EARLY_GV]
+    data: &cultistBaseLevel1
+      - alienRank: 2
+        lowQty: 3  # 2
+        highQty: 3  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 3  # 2
+        highQty: 3  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 4  # 3
+        highQty: 4  # 5
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 9  # 6
+        highQty: 9  # 12
+        dQty: 4
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    genMissionFreq: 2  # 4
+    width: 50
+    length: 50
+    height: 9
+    points: 1
+    alienBaseUpgrades:
+      0:
+        STR_REDEEMEDBASE_LEVEL_1: 100
+      1:
+        STR_REDEEMEDBASE_LEVEL_1: 100
+      2:
+        STR_REDEEMEDBASE_LEVEL_1: 80
+        STR_REDEEMEDBASE_LEVEL_2: 20
+      3:
+        STR_REDEEMEDBASE_LEVEL_1: 50
+        STR_REDEEMEDBASE_LEVEL_2: 50
+      4:
+        STR_REDEEMEDBASE_LEVEL_1: 50
+        STR_REDEEMEDBASE_LEVEL_2: 50
+
+      5:
+        STR_REDEEMEDBASE_LEVEL_1: 20
+        STR_REDEEMEDBASE_LEVEL_2: 80
+      6:
+        STR_REDEEMEDBASE_LEVEL_2: 100
+    briefing:
+      cutscene: CULTBASE
+      music: gmstory2
+      title: STR_REDEEMEDBASE_ASSAULT_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_REDEEMEDBASE_ASSAULT_BRIEFING_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_REDEEMEDBASE_MARKER_GV
+    genMission:
+      STR_CULTIST_SACRIFICES_LEVEL_1: 75
+      STR_CULTIST_SUMMONING_LEVEL_1: 25
+    abortPenalty: 100
+    missionBountyItem: STR_CHAOS_ARTIFACTS  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    missionBountyItemCount: 1  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    unlockedResearch: STR_CHAOS_ARTIFACTS_RESEARCH
+
+  - type: STR_REDEEMEDBASE_LEVEL_2_GV
+    randomRace: [STR_REDEEMED_MID_GV]
+    markerIcon: 55
+    terrains:
+      - INDUSTRIALURBANDIO
+      #- CULTIST_TEMPLE
+    script: CULTIST_BASE_LEVEL_2
+    alienBase: true
+    objectiveType: 100
+    data: &cultBaseLevel2
+      - alienRank: 1  # move to mapscript assassin tower?
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 3  # 2
+        highQty: 3  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 3  # 2
+        highQty: 3  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 4  # 3
+        highQty: 4  # 5
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 9  # 6
+        highQty: 9  # 12
+        dQty: 4
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6  # move daemons to summoning circle in mapscript when it's ready
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    briefing:
+      cutscene: CULTBASE
+      music: gmstory2
+      title: STR_REDEEMEDBASE_ASSAULT_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_REDEEMEDBASE_ASSAULT_BRIEFING_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_REDEEMEDBASE_MARKER_GV
+    genMission:
+      STR_CULTIST_SACRIFICES_LEVEL_1: 60
+      STR_CULTIST_SUMMONING_LEVEL_1: 40
+      STR_REDEEMEDBASE_FROM_EXISTING: 25  # added
+    genMissionFreq: 3  # 6
+    alienBaseUpgrades:
+      0:
+        STR_REDEEMEDBASE_LEVEL_2: 100
+      3:
+        STR_REDEEMEDBASE_LEVEL_2: 80
+        STR_REDEEMEDBASE_LEVEL_3: 20
+      4:
+        STR_REDEEMEDBASE_LEVEL_2: 50
+        STR_REDEEMEDBASE_LEVEL_3: 50
+      5:
+        STR_REDEEMEDBASE_LEVEL_2: 20
+        STR_REDEEMEDBASE_LEVEL_3: 80
+      6:
+        STR_REDEEMEDBASE_LEVEL_3: 100
+    objectiveComplete: [STR_REDEEMEDBASE_DESTROYED, 300]
+    objectiveFailed: [STR_REDEEMEDBASE_NOT_DESTROYED, -150]
+    abortPenalty: 150
+    missionBountyItem: STR_CHAOS_ARTIFACTS  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    missionBountyItemCount: 2  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    unlockedResearch: STR_CHAOS_ARTIFACTS_RESEARCH
+    width: 50
+    length: 50
+    height: 10
+    points: 1
+
+  - type: STR_REDEEMEDBASE_LEVEL_3
+    markerIcon: 56
+    terrains:
+      - INDUSTRIALURBANDIO
+      #- CULTIST_TEMPLE
+    script: CULTIST_BASE_LEVEL_3
+    alienBase: true
+    objectiveType: 100  
+    randomRace: [STR_REDEEMED_LATE_GV]
+    data: &cultBaseLevel3
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1  # move to mapscript assassin tower?
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 4  # 2
+        highQty: 4  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 4  # 2
+        highQty: 4  # 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 4  # 3
+        highQty: 4  # 5
+        dQty: 3
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 9  # 6
+        highQty: 9  # 12
+        dQty: 4
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6  # move daemons to summoning circle in mapscript when it's ready
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 7  # move daemons to summoning circle in mapscript when it's ready
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    genMissionFreq: 5  # 10
+    objectiveComplete: [STR_REDEEMEDBASE_DESTROYED, 500]
+    objectiveFailed: [STR_REDEEMEDBASE_NOT_DESTROYED, -250]
+    abortPenalty: 250
+    missionBountyItem: STR_CHAOS_ARTIFACTS  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    missionBountyItemCount: 3  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    unlockedResearch: STR_CHAOS_ARTIFACTS_RESEARCH
+    briefing:
+      cutscene: CULTBASE
+      music: gmstory2
+      title: STR_REDEEMEDBASE_ASSAULT_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_REDEEMEDBASE_ASSAULT_BRIEFING_GV
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 60
+    markerName: STR_REDEEMEDBASE_MARKER_GV
+    genMission:
+      STR_CULTIST_SACRIFICES_LEVEL_1: 50
+      STR_CULTIST_SUMMONING_LEVEL_1: 50
+      STR_REDEEMEDBASE: 30
+    width: 60
+    length: 60
+    height: 10
+    points: 1
+
+
+  - type: STR_REDEEMEDBASE_START
+    markerIcon: 55
+    terrains:
+      - INDUSTRIALURBANDIO
+    script: CULTIST_BASE_LEVEL_2
+    alienBase: true
+    objectiveType: 100
+    randomRace: [STR_REDEEMED_MID_GV]
+    alienBase: true
+    objectiveType: 100  
+    data: *cultBaseLevel2
+    alienBaseUpgrades:
+      0:
+        STR_REDEEMEDBASE_START: 100
+      1:
+        STR_REDEEMEDBASE_LEVEL_1: 100
+      # 2:
+      #   STR_REDEEMEDBASE_START: 100
+      # 3:
+      #   STR_REDEEMEDBASE_LEVEL_3: 100
+    objectiveComplete: [STR_REDEEMEDBASE_DESTROYED, 300]
+    objectiveFailed: [STR_REDEEMEDBASE_NOT_DESTROYED, -150]
+    abortPenalty: 150
+    missionBountyItem: STR_CHAOS_ARTIFACTS  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    missionBountyItemCount: 1  # note bounty is overwritten in the ruleset - other - alienDeployments_killpoints file
+    unlockedResearch: STR_CHAOS_ARTIFACTS_RESEARCH
+    markerName: STR_REDEEMEDBASE_MARKER_GV
+    genMissionFreq: 4  # 9
+    genMission:
+      STR_CULTIST_SACRIFICES_LEVEL_1: 60
+      STR_CULTIST_SUMMONING_LEVEL_1: 40
+      STR_CULTIST_BASE_FROM_EXISTING: 30
+    briefing:
+      cutscene: CULTBASE
+      music: gmstory2
+      title: STR_REDEEMEDBASE_ASSAULT_TITLE_GV
+      textOffset: -16
+      background: BACK01.SCR
+      showTarget: false
+      desc: STR_REDEEMEDBASE_ASSAULT_BRIEFING_GV      
+    width: 50
+    length: 50
+    height: 10
+    points: 1
+
+
 
 
   
