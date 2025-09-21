@@ -1,0 +1,71 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    RuleSkill:
+      SKILL_IS_TELEPORTER: int
+      SKILL_TELEPORTER_COOLDOWN: int
+      SKILL_TELEPORTER_ENERGY: int
+      SKILL_TU_COST: int
+
+skills:
+# Skill versions of some things that were special weapons previously
+  - &STR_TELEPORT_GK_SKILL_TEMPLATE
+    type: STR_TELEPORT_GK_SKILL_LV2
+    flatUse: true
+    costUse:
+      time: 10
+    tags:
+      SKILL_TU_COST: 10
+      SKILL_IS_TELEPORTER: 1
+      SKILL_TELEPORTER_COOLDOWN: 1
+      SKILL_TELEPORTER_ENERGY: 10
+
+#L3 has 5 TU cost
+  - type: STR_TELEPORT_GK_SKILL_LV3
+    refNode: *STR_TELEPORT_GK_SKILL_TEMPLATE
+    costUse:
+      time: 5
+    tags:
+      SKILL_TU_COST: 5
+
+#L4 has 50% more teleport movement and 5 TU cost
+  - type: STR_TELEPORT_GK_SKILL_LV4
+    refNode: *STR_TELEPORT_GK_SKILL_TEMPLATE
+    costUse:
+      time: 5
+    tags:
+      SKILL_TU_COST: 5
+      SKILL_TELEPORTER_ENERGY: 15
+
+#L5 has 100% more teleport movement and 0 TU cost
+  - type: STR_TELEPORT_GK_SKILL_LV5
+    costUse:
+      time: 1
+    tags:
+      SKILL_TU_COST: 1
+      SKILL_IS_TELEPORTER: 1
+      SKILL_TELEPORTER_COOLDOWN: 1
+      SKILL_TELEPORTER_ENERGY: 21
+
+soldiers:
+  - &STR_GK_SKILLS
+    type: STR_GK_LV2
+    skillIconSprite: {mod: 40k, index: 220}
+    skills:
+      - STR_TELEPORT_GK_SKILL_LV2
+
+  - type: STR_GK_LV3
+    refNode: *STR_GK_SKILLS
+    skills:
+      - STR_TELEPORT_GK_SKILL_LV3
+
+  - type: STR_GK_LV4
+    refNode: *STR_GK_SKILLS
+    skills:
+      - STR_TELEPORT_GK_SKILL_LV4
+
+  - type: STR_GK_LV5
+    refNode: *STR_GK_SKILLS
+    skills:
+      - STR_TELEPORT_GK_SKILL_LV5

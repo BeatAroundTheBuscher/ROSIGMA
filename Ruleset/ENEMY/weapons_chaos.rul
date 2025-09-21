@@ -116,6 +116,9 @@ items:
     flatMelee:
       time: true
       energy: true
+    tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
   - type: STR_LIGHT_BOLTER_CHAOS  # Chaos Phobos Light Bolter
     categories: [STR_CAT_BOLTER]
@@ -151,6 +154,9 @@ items:
     bulletSpeed: 30
     attraction: 1
     listOrder: 10290
+    tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
 
   - type: STR_LASER_RIFLEC  # LASGUN CHAOS               10920
     categories: [STR_CAT_LASGUN, STR_CAT_TACTICAL]
@@ -221,8 +227,6 @@ items:
 
   - type: STR_CHAOS_RIPPERGUN
     categories: [STR_CAT_SHOTGUN, STR_CAT_ASSAULT]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.6
     dropoff: 5
     costSell: 1000
@@ -1174,12 +1178,14 @@ items:
     snapRange: 12
     twoHanded: false
     invWidth: 2
-    invHeight: 3
+    invHeight: 2
     armor: 30
     bulletSpeed: 30
     attraction: 5
     listOrder: 10141
     tags:
+      ITEM_RECOIL: 15
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
       REACTION_MULTIPLIER: 200  # multiplies base reaction score by this amount divided by 100
@@ -1250,6 +1256,8 @@ items:
     attraction: 1
     listOrder: 10350
     tags:
+      ITEM_RECOIL: 25
+      ITEM_COLOR_CHANGES_WITH_AMMO: 15
       INFECTION_DAMAGE_PERCENT: 10  # inflicts % of damage dealt as infection damage
       INFECTION_TYPE: 1  # the type of infection. Thus far: 1: Nurgle, 2: GSC, 3: Slaanesh 4: Tzeentch
 
@@ -1736,8 +1744,6 @@ items:
 
   - type: STR_CPOWER_SWORD  #         3009           DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.2
     costSell: 15000
     weight: 20
@@ -1811,8 +1817,6 @@ items:
     listOrder: 15200
   - type: STR_CPOWER_DAGGER  #         3010          DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.1
     costSell: 5000
     weight: 10
@@ -1975,6 +1979,7 @@ items:
       YTAG_DAMAGE_RETURNED_AS_STUN: 8
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0  # untyped damage so no modifications
       DAMAGE_RESIST_PENETRATION_PERCENT: 25
+      ITEM_STRENGTH_REQUIREMENT: 40
 
   - type: STR_KHORNE_BERSERKER_AXE  # Khorne Berserker Axe
     refNode: *STR_KHORNE_AXE_TEMPLATE
@@ -2007,6 +2012,7 @@ items:
     listOrder: 15001
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 50
+      ITEM_STRENGTH_REQUIREMENT: 60
 
   - type: STR_KHORNE_BERSERKER_GREAT_AXE  # Khorne Berserker Axe
     refNode: *STR_KHORNE_GREAT_AXE_TEMPLATE
@@ -2781,6 +2787,8 @@ items:
     bulletSpeed: 50
     attraction: 8
     listOrder: 10521
+    tags:
+      ITEM_RECOIL: 55
 
   - type: STR_SNIPER_CHAOS  # SNIPER                    11905                         AIMED
     categories: [STR_CAT_SNIPER, STR_CAT_CHAOS]
@@ -2986,8 +2994,6 @@ items:
 
   - type: STR_CHAOS_MELTAGUN  # MELTAGUN                 2019
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.3
     dropoff: 7
     costSell: 10000
@@ -3007,9 +3013,6 @@ items:
 
   - type: STR_BLASTER_LAUNCHER  # MULTIMELTA            2021
     categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_FUSION_MISSILE
     size: 0.3
     dropoff: 5
     costSell: 20000
@@ -3029,9 +3032,6 @@ items:
 
   - type: STR_SMALL_LAUNCHER  # CHAOS GRAVGUN                          11810
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-      - STR_SMALL_LAUNCHER
     size: 0.2
     dropoff: 5
     costSell: 12000
@@ -4964,8 +4964,6 @@ items:
   - type: STR_CHAOS_GRAVPISTOL
     dropoff: 6
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.1
     costSell: 2500
     weight: 5
@@ -4995,8 +4993,6 @@ items:
   - type: STR_CHAOS_MC_GRAVPISTOL                               #Mastercrafted
     dropoff: 5
     categories: [STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
     size: 0.1
     costSell: 6000
     weight: 4
@@ -5072,7 +5068,7 @@ items:
     meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 709} #709 chainhit
     meleeAnimation: {mod: 40k, index: 48}
-    power: 90
+    power: 60
     damageAlter: #DA CHAIN
       ToArmorPre: 0.3
       ToHealth: 0.9
@@ -5095,5 +5091,10 @@ items:
     meleeMultiplier:
       melee: 1.0
       flatHundred: 0.0
+    damageBonus:
+      melee: 0.1
+      strength: 0.3
     attraction: 7
     listOrder: 15000
+    tags:
+      ITEM_STRENGTH_REQUIREMENT: 35
