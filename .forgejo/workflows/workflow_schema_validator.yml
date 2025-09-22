@@ -4,7 +4,7 @@ on:  # yamllint disable-line rule:truthy
   pull_request:  # yamllint disable-line rule:empty-values
 
 jobs:
-  lint:
+  yaml_validator:
     runs-on: codeberg-tiny
 
     steps:
@@ -28,26 +28,24 @@ jobs:
       # Step 4
       - name: Prepare files for check_jsonschema  # probably should be cached?
         run: |
-          cd ..
           git clone https://github.com/OpenXcom/vscode-ruleset
-          cd -
-          cp ./helpers/workflow_yaml_schema_validator/merger.js ../vscode-ruleset/schemas/oxce-merge
-          cd ../vscode-ruleset/schemas/oxce-merge
+          cp ./helpers/workflow_yaml_schema_validator/merger.js ./vscode-ruleset/schemas/oxce-merge
+          cd ./vscode-ruleset/schemas/oxce-merge
           node merger.js
           cd -
-          cp ../vscode-ruleset/schemas/oxce-merge/* ../vscode-ruleset/schemas/oxc
+          cp ./vscode-ruleset/schemas/oxce-merge/* ./vscode-ruleset/schemas/oxc
 
 
       # Step 5
       - name: Prepare ROSIGMA dir
         run: |
-          # remove !add, !remove, !seq constructors as check_jsonschema can't handle them
+          echo 'Removing !add, !remove, !seq constructors as check_jsonschema cannot handle them'
           find . -name "*.rul" | xargs -I {} sed -i 's/\!\(add\|remove\|seq\)//g' {}
 
       # Step 6
       - name: Run check_jsonschema
         run: |
-          cd ../vscode-ruleset/schemas/oxc
+          cd ./vscode-ruleset/schemas/oxc
           SCHEMA_PATH=$(pwd)
           cd -
           echo "Schema Path is:"
