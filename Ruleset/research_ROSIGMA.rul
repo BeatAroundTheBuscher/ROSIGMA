@@ -1535,23 +1535,25 @@ research:
     refNode: *STR_LOCKED
 
   - name: STR_ELDAR_ALLIANCE  # Eldar Proposal
-    cost: 1000
+    cost: 800
     points: -500
     dependencies:
       - STR_ELDAR_LEADER_INTERROGATED
       - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
-      - STR_NOT_CHAMBER
+      - STR_NOT_DEATHWATCH
+      - STR_NOT_GK
       - STR_CHAPTER_PURITY
     unlocks:
       - STR_ELDAR_ONLY
+    disables:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
 
   - name: STR_ELDAR_PATH  # Eldar Alliance
-    cost: 1000
+    cost: 800
     points: -500
     dependencies:
-      - STR_GUARD_AND_ARBITES
       - STR_ELDAR_ALLIANCE
       - STR_CHAPTER_PURITY
       - STR_LOSE_500
@@ -2712,6 +2714,79 @@ research:
       - STR_HIGHTIER_PREREQ
     spawnedEvent: STR_INQ_RR_DEATHCULT_RITUAL_3_EVENT
 
+  - name: STR_INQ_BLACK_MARKET_XENOTECH_RESEARCH  # Acquire Black Market Xenotech
+    cost: 250
+    points: -50
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_XENO_ONLY
+      - STR_LOSE_50
+    spawnedEvent: STR_INQ_BLACK_MARKET_XENOTECH_EVENT
+    repeatable: true
+
+  - name: STR_INQ_CONSORT_AELDARI_RESEARCH  # Consort with the Aledari
+    cost: 400
+    points: -100
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_XENO_ONLY
+      - STR_LOSE_100
+    disables:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+    unlocks:
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ELDAR_LEADER_INTERROGATED
+
+  - name: STR_INQ_CONSORT_TAU_RESEARCH  # Consort with the Tau
+    cost: 400
+    points: -100
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_XENO_ONLY
+      - STR_LOSE_100
+    disables:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
+    unlocks:
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_TAU_FIREWARRIORCAPTAINAI
+
+
+  # Acquires a new Xeno tech topic. Should include all requirements for STR_NECRONTECH_RESEARCH and STR_TAU_XENOTECH
+  # Orks/Eldar excluded because their item topics don't contribute to their path/weapon usage (their path starts only with a Leader Interrogation)
+  # If new Xenos things in future, add to list.
+  - name: STR_INQ_XENOTECH_ANALYSIS_RESEARCH  # Xenotech Sythetic Analysis
+    cost: 400
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_XENO_ONLY
+    spawnedEvent: STR_INQ_XENOTECH_ANALYSIS_EVENT
+    repeatable: true
+    getOneFree:
+      # Tau
+      - STR_TAU_PULSE_MAG
+      - STR_TAU_RAIL_MAG
+      - STR_TAU_PULSE_RIFLE
+      - STR_TAU_PULSE_CARBINE
+      - STR_TAU_PULSE_BLASTER
+      - STR_TAU_PULSE_PISTOL
+      - STR_TAU_RAIL_RIFLE
+      - STR_TAU_PHOTON_GRENADE
+      - STR_TAU_FUSION_GRENADE
+      - STR_TAU_EMP_GRENADE
+      - STR_TAU_DRONEAI
+      # Necrons
+      - STR_GAUSS_BLASTER
+      - STR_HYPERPHASESWORD
+      - STR_SYNAPTIC_DISINTEGRATOR
+      - STR_GAUSS_FLAYER
+      - STR_GAUSS_REAPER
+      - STR_NECRON_WARSCYTHE
+      - STR_STAFF_OF_LIGHT
+
 
   - name: STR_HERETICAL_INQUISITOR_STRATEGY  # Heretical Means Path
     cost: 100
@@ -2726,6 +2801,10 @@ research:
     reenables:
       - STR_CHAOS_PATH
     disables:
+      - STR_ELDAR_ALLIANCE
+      - STR_XENO_ONLY
+      - STR_INQ_CONSORT_AELDARI_RESEARCH
+      - STR_INQ_CONSORT_TAU_RESEARCH
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT
       - STR_REINFORCEMENT_2
@@ -2778,7 +2857,7 @@ research:
       - STR_LOSE_250
     spawnedEvent: STR_INQ_CONTACT_DEFECTOR_SISTERS_EVENT
 
-  - name: STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Sisters Contacted
+  - name: STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Marines Contacted
     cost: 1100
     points: -500
     dependencies:
@@ -2788,23 +2867,13 @@ research:
 
   - name: STR_INQ_SECURE_SUPPORT_REVISIONISTS_RESEARCH  # Secure Revisionists Support
     cost: 800
-    points: -750
+    points: -500
     dependencies:
       - STR_INQ_CONTACT_REVISIONISTS_RESEARCH
       - STR_INQ_CONTACT_DEFECTOR_SISTERS_RESEARCH
       - STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH
       - STR_LOSE_750
     spawnedEvent: STR_INQ_SECURE_SUPPORT_REVISIONISTS_EVENT
-
-  - name: STR_INQ_BLACK_MARKET_XENOTECH_RESEARCH  # Acquire Black Market Xenotech
-    cost: 300
-    points: -50
-    dependencies:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
-      - STR_MIDTIER_PREREQ
-      - STR_LOSE_50
-    spawnedEvent: STR_INQ_BLACK_MARKET_XENOTECH_EVENT
-    repeatable: true
 
   - name: STR_INQ_ARCHENEMY_ARMAMENTS_RESEARCH  # Armaments of the Archenemy
     cost: 100
@@ -3021,6 +3090,8 @@ research:
     unlocks:
       - STR_ORK_ONLY
       - STR_ELDAR_ONLY
+    disables:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
 
   - name: STR_TAU_XENOTECH  # Tau Xenotech
     # grant access to Tau Weapons
@@ -10059,6 +10130,7 @@ research:
       - STR_TAU_DRONEAI
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_XENO_LEADER_INTERROGATED
       - STR_TAU_FIREWARRIORCAPTAINAI_ARMOR
     destroyItem: true
 
