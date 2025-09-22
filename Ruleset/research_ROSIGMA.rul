@@ -328,6 +328,8 @@ research:
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_ASSASSINORUM  # Officio Assassinorum Selected
     refNode: *STR_LOCKED
+  - name: STR_CHOSEN_ORKZ  # Emprah's Greenest Selected
+    refNode: *STR_LOCKED
 
   - name: STR_NOT_MARINES  # (Not Space Marines)
   - name: STR_NOT_ASSAULT  # (Not Assault Strategy)
@@ -1042,6 +1044,35 @@ research:
     reenables:
       - STR_CYDONIA_OR_BUST
 
+### Da Emprah's Greenest Ork Strategy
+  - name: STR_GREENEST_ORKZ  # Ork Strategy
+    spawnedEvent: STR_GREENEST_CARE_PACKAGE
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_ARBITES
+    lookup: STR_CHOSEN_ORKZ
+    unlocks:
+      - STR_MOTION_SCANNER
+      - STR_GUARD_BARRACKS
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      - STR_ORK_MERCENARIES
+      - STR_LASER_WEAPONS
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+    disables:
+      - STR_MARINES_STRATEGY
+      - STR_CHAMBERMILITANT
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ARBITES
+      - STR_ADEPTAS
+      - STR_CHAOS_STRATEGY_ARBITES
+    getOneFree:
+      - STR_ORK_DEAL
+    reenables:
+      - STR_CYDONIA_OR_BUST
+
 ## Adeptas #STRATEGY.SOB#
   - name: STR_ADEPTAS  # Sister of Battle
     cost: 0
@@ -1664,10 +1695,10 @@ research:
 
   - name: STR_ORK_DEAL  # Ork Arms Deal
     cost: 1000
-    points: -500
+#    points: -500 # removed for ork strat
     dependencies:
       - STR_ORK_LEADER_INTERROGATED
-      - STR_LOSE_500
+#      - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
       - STR_NOT_STEEL_LEGION_STRATEGY
@@ -3137,6 +3168,32 @@ research:
       - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
+
+### Emprah's Greenest #PROGRESSION.AT.ORKZ#
+  - name: STR_ORKZ_MIDTIER  # Greenest Mid-tier Requisitions
+    # cutcscene c2
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_ORK_BASE_LEVEL3_DEFEATED
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_GREENEST_ORKZ
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_HARDER_MISSIONS
+      - STR_ORK_RESPECT
+    cutscene: c2
+
+  - name: STR_ORKZ_HIGHTIER  # Greenest High-tier Requisitions
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_GREENEST_ORKZ
+      - STR_CYDONIA_OR_BUST
+    unlocks:
+      - STR_HIGHTIER_PREREQ
 
 ### Chaos Cult #PROGRESSION.AT.CULT#
   - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
