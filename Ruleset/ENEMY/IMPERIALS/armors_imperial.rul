@@ -1490,3 +1490,90 @@ armors:
       - 1.0 #MELTA
     loftempsSet: [92, 89, 90, 91]
     drawingRoutine: 12
+
+  # legion of the damned
+
+  - type: STR_LEGIONDAMNED_MARINE_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30 #artificer armor
+    heatVision: 30 #artificer armor
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    psiVision: 5
+    spriteSheet: LEGIONDAMNED_MARINEbattle.PCK
+    spriteInv: LEGIONDAMNED_MARINEinv.PCK
+    corpseBattle:
+      - STR_LEGIONDAMNED_MARINE_AICORPSE
+    frontArmor: 150
+    sideArmor: 130
+    rearArmor: 100
+    underArmor: 150
+    damageModifier:
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.3  # FLAMES
+      - 0.7  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.8  # STUN
+      - 1.0  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 0.9  # MELTA
+    allowsRunning: false
+    allowsKneeling: false
+    loftempsSet: [4]
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+      INFECTION_RESIST: 100
+      INTIMIDATION_RESISTANCE: 100
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 25  # Basic energy field (25 * 100 / 25) = 100. Regenerates from 25 (at 0) to 0 (at 100) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic, 4322.msg75634.html# msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int floating;
+        var int isFemale;
+
+        var int numOfFrames;
+
+        unit.isWalking walking;
+        unit.isFloating floating;
+        unit.getGender isFemale;
+
+        set numOfFrames 6;
+
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if eq floating 0;
+
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+              if neq 0 isFemale;
+                # using isFemale differently for now;
+                set isFemale 8;
+                mul isFemale numOfFrames;
+                add sprite_index isFemale;
+              end;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;
