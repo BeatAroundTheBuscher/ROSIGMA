@@ -28,10 +28,15 @@ jobs:
       # Step 4
       - name: Prepare files for check_jsonschema  # probably should be cached?
         run: |
+          cd ..
           git clone https://github.com/OpenXcom/vscode-ruleset
-          cp ./helpers/workflow_yaml_schema_validator/merger.js ./vscode-ruleset/schemas/oxce-merge
-          cd ./vscode-ruleset/schemas/oxce-merge
+          cd -
+          cp ./helpers/workflow_yaml_schema_validator/merger.js ../vscode-ruleset/schemas/oxce-merge
+          cd ../vscode-ruleset/schemas/oxce-merge
           node merger.js
+          cd -
+          cp ../vscode-ruleset/schemas/oxce-merge/* ../vscode-ruleset/schemas/oxc
+
 
       # Step 5
       - name: Prepare ROSIGMA dir
@@ -42,7 +47,7 @@ jobs:
       # Step 6
       - name: Run check_jsonschema
         run: |
-          cd ./vscode-ruleset/schemas/oxce-merge
+          cd ../vscode-ruleset/schemas/oxc
           SCHEMA_PATH=$(pwd)
           cd -
           echo "Schema Path is:"
