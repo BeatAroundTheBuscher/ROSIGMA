@@ -1,7 +1,7 @@
 alienDeployments:
 ### TODO: alienRaceEvolution on deploys
   - &STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
-    type: STR_FIRESTARTER_GV
+    type: STR_SHRINEWARRENS_TEMPLATE
     data:
       - alienRank: 1
         lowQty: 2
@@ -45,19 +45,14 @@ alienDeployments:
         dQty: 2
         percentageOutsideUfo: 100
         itemSets: [[], [], []]
-    civiliansByType:
-      STR_CIVILIAN_F0: 2
-      STR_CLOAKED_WOMAN: 2
-      STR_CIVILIAN_M0: 2
-      STR_CIVILIAN_F1: 2
-      STR_CLOAKED_WOMAN_ORANGE: 4
-      STR_CIVILIAN_M1: 2
     width: 60
     length: 60
     height: 9
-    maxShade: 8  # dark
+    # maxShade:   # dark
     terrains:
       - ACULTASNOW
+      - ACULTA_SHRINE_ASSAULT
+      - ACULTA_TANK
       # - CITY
       # - HIVE
       # - RIG
@@ -80,6 +75,24 @@ alienDeployments:
     briefing:
       showCraft: false
       showTarget: false
+
+  - type: STR_FIRESTARTER_GV
+    civiliansByType:
+      STR_CIVILIAN_F0: 2
+      STR_CLOAKED_WOMAN: 2
+      STR_CIVILIAN_M0: 2
+      STR_CIVILIAN_F1: 2
+      STR_CLOAKED_WOMAN_ORANGE: 4
+      STR_CIVILIAN_M1: 2
+
+  - type: STR_MAKE_LEMONADE_GV
+    refNode: *STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
+    customUfo: STR_GUARD_LEMAN_RUSS_FRIENDLY_GV
+    civiliansByType:
+      STR_GUARDS_M_LV1_AI: 4
+      # STR_LEMONRUSS: 1
+    
+
 
 
   - type: STR_TENAXBASE_LEVEL_1_GV
@@ -410,6 +423,8 @@ alienDeployments:
   - type: STR_TENAXBASE_START_GV
     markerIcon: 52
     script: TENAXBASE_LEVEL2
+    alert: STR_TENAXBASE_START_SPAWNED_GV
+    alertDescription: STR_TENAXBASE_START_SPAWNED_GV
     alienBase: true
     objectiveType: 100
     objectiveComplete: [STR_TRAITOR_GUARD_BASE_DESTROYED, 500]
