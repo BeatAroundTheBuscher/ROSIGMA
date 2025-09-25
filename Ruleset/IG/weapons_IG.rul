@@ -1742,9 +1742,18 @@ items:
     # floorSprite: {mod: 40k, index: 19}
     # handSprite: {mod: 40k, index: 336}
     power: 75  # collar
-    damageType: 3
     battleType: 1
-    blastRadius: 5
+    damageType: 3
+    damageAlter:  # high explosive
+      ToArmorPre: 0.1
+      RandomType: 6
+      ArmorEffectiveness: 0.9  # concussive
+      ToStun: 0.6  # concussive
+      ToEnergy: 0.4  # concussive
+      ToTime: 0.3  # concussive
+      ToTile: 0.75  # high explosive
+      ToItem: 0.75  # high explosive
+      FixRadius: 5  # 1 for hand grenade version
     listOrder: 13600
     maxRange: 1
     fixedWeapon: true
@@ -6898,3 +6907,362 @@ items:
     strengthApplied: false
     attraction: 7
     listOrder: 12900
+
+  - &REF_TECH_PRIMARY                       # Techmarine Primary Equipment (Type 9 - Aimed Shots)
+    type: STR_SERVO_FLAMER
+    battleType: 1
+    floorSprite: {mod: 40k, index: 169}
+    size: 0.2
+    armor: 600
+    costSell: 20000
+    supportedInventorySections:
+      - STR_BACK_PACK
+      - STR_GROUND
+    inventoryMoveCost:
+      basePercent: 1000 # 10x movement cost, only move during loadout
+    invWidth: 2
+    invHeight: 3
+    tuAimed: 0
+    tuSnap: 0
+    tuAuto: 0
+    tuLoad: 20 # slow
+    weight: 15 # normalized, carried by servo arm
+    kneelBonus: 100 # servo arm
+
+  - type: STR_SERVO_FLAMER             # Techmarine Flamer
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_FLAMER]
+    bigSprite: 3601
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    compatibleAmmo:
+      - STR_FLAMETHROWER_CLIP
+      - STR_FLAMETHROWER_PROMETHIUM_CLIP
+    dropoff: 5
+    aimRange: 8
+    maxRange: 9
+    accuracyAimed: 50
+    noLOSAccuracyPenalty: 75
+    experienceTrainingMode: 5
+    confAimed:
+      arcing: true
+      shots: 6
+    listOrder: 12101
+
+  - type: STR_SERVO_BOLTER             # Techmarine Bolter
+    refNode: *REF_TECH_PRIMARY
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_BOLTER]
+    bigSprite: 3602
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k_ROSIGMA_edits, index: 2137}
+    compatibleAmmo:
+      - STR_RIFLE_CLIP
+      - STR_RIFLE_CLIP_AP
+      - STR_RIFLE_CLIP_EX
+      - STR_RIFLE_CLIP_MC
+    dropoff: 5
+    aimRange: 12
+    accuracyAimed: 60
+    confAimed:
+      name: STR_BURST_SNAP_SHOT
+      shots: 4
+    listOrder: 12101
+
+  - type: STR_SERVO_MELTA              # Techmarine Meltagun
+    refNode: *REF_TECH_PRIMARY
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_MELTA]
+    bigSprite: 3603
+    bulletSprite: {mod: 40k, index: 16}
+    fireSound: {mod: 40k, index: 739}
+    compatibleAmmo:
+      - STR_MELTA_AMMO
+    dropoff: 6
+    aimRange: 11 # slightly less range than standard melta gun
+    accuracyAimed: 75 # slightly less accurate than standard melta gun
+    listOrder: 12101
+
+  - type: STR_SERVO_GRAV               # Techmarine Gravgun
+    refNode: *REF_TECH_PRIMARY
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_GRAVGUN]
+    bigSprite: 3604
+    bulletSprite: {mod: 40k, index: 14}
+    fireSound: {mod: 40k, index: 829}
+    compatibleAmmo:
+      - STR_STUN_BOMB
+    dropoff: 5
+    aimRange: 14 # slightly less range than standard grav gun
+    accuracyAimed: 60 # slightly less accurate than standard grav gun
+    listOrder: 12101
+
+  - type: STR_SERVO_PLASMA             # Techmarine Plasmagun
+    refNode: *REF_TECH_PRIMARY
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_PLASMA]
+    bigSprite: 3605
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 18}
+    compatibleAmmo:
+      - STR_PLASMA_RIFLE_CLIP
+    dropoff: 5
+    aimRange: 13 # slightly less range than standard plasma rifle
+    accuracyAimed: 70
+    listOrder: 12101
+
+  - &REF_TECH_SUPPORT                       # Techmarine Utility Tools (Type 11 - Use)
+    type: STR_TECHPRIEST_MEDKIT
+    categories: [ STR_CAT_TECHPRIEST, STR_CAT_EQUIPMENT]
+    weight: 8
+    size: 0.05
+    armor: 600
+    floorSprite: {mod: 40k, index: 168}
+    costSell: 20000
+    supportedInventorySections:
+      - STR_BACK_PACK
+      - STR_GROUND
+    inventoryMoveCost:
+      basePercent: 1000 # 10x movement cost, only move during loadout
+
+  - type: STR_TECHPRIEST_MEDKIT                   # Techpriest Medkit; inaccessible for now
+    weight: 8
+    bigSprite: 3613
+    invHeight: 2
+    invWidth: 1
+    battleType: 6
+    painKiller: 0
+    heal: 30
+    stimulant: 0
+    woundRecovery: 1
+    healthRecovery: 3
+    tuUse: 10
+    experienceTrainingMode: 19
+    medikitTargetSelf: false
+    medikitTargetMatrix: 31
+
+  - type: STR_TECHPRIEST_TOOL_SERVITOR            # Techpriest Sanctus Canister; inaccessible for now
+    refNode: *REF_TECH_SUPPORT
+    battleType: 9
+    bigSprite: 317
+    invHeight: 2
+    invWidth: 1
+    hitSound: {mod: 40k, index: 37} ###CHANGEME
+    hitAnimation: {mod: 40k, index: 170} ###CHANGEME
+    hitAnimFrames: 10
+    targetMatrix: 1
+    power: 50
+    LOSRequired: false
+    maxRange: 2
+    damageType: 0
+    damageAlter:
+      RandomType: 3 # 100%
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ArmorEffectiveness: 0.0
+      ToTime: -1.0
+    flatRate: false
+    tuUse: 25
+    accuracyUse: 400
+    accuracyMultiplier:
+      flatHundred: 1.0
+    psiAttackName: STR_SIGNUM_ENEMY
+
+  - type: STR_TECHPRIEST_TOOL_SHIELD              # Techpriest Shield; inaccessible for now
+    refNode: *REF_TECH_SUPPORT
+    bigSprite: 316
+    invHeight: 2
+    invWidth: 1
+    battleType: 6
+    medikitType: 3
+    painKiller: 999
+    heal: 0
+    stimulant: 0
+    woundRecovery: 0
+    healthRecovery: 0
+    tuUse: 25
+    flatRate: false
+    medikitTargetSelf: true
+    tags:
+      ITEM_ADDS_ENERGY_SHIELD_FROM_POWER: 400
+      ITEM_SETS_ENERGY_SHIELD_DECAY: 50
+
+  - type: STR_TECHPRIEST_TOOL_SCANNER             # Techpriest Omnispex; inaccessible for now
+    refNode: *REF_TECH_SUPPORT
+    battleType: 8
+    hitSound: {mod: 40k, index: 37}
+    hitAnimation: 110
+    hitAnimFrames: 10
+    targetMatrix: 6
+    bigSprite: 315
+    invHeight: 2
+    invWidth: 1
+    power: 1
+    LOSRequired: true
+    damageType: 0
+    damageAlter:
+      RandomType: 3 # 100%
+      ToHealth: 0.0
+      ToArmor: 0.0
+      ArmorEffectiveness: 0.0
+    flatRate: false
+    tuUse: 25
+    accuracyUse: 400
+    accuracyMultiplier:
+      flatHundred: 1.0
+    psiAttackName: STR_SIGNUM_ENEMY
+
+  - &REF_SKILL_TOKEN                        # Token item for Skills
+    type: INV_BLESS_TOKEN
+    bigSprite: -1
+    weight: 0
+    invWidth: 0
+    invHeight: 0
+    clipSize: -1
+    fixedWeapon: true
+    recover: false
+    defaultInventorySlot: STR_BACK_PACK
+    supportedInventorySections:
+      - STR_BACK_PACK
+    experienceTrainingMode: 32 # Don't give XP for use by default
+
+  - type: STR_TECHPRIEST_REPAIRTOOL               # Techpriest Repair Tool
+    refNode: *REF_SKILL_TOKEN
+    # psiAttackName: STR_ANALYZE  # string id of psi-amp attack name in the pop-up menu. Required to enable special attack.
+    weight: 0
+    hitSound: 37
+    battleType: 8
+    LOSRequired: true
+    tuUse: 5  # more TU efficient than the basic Techmarine suite
+    flatRate: true
+    recover: false
+    fixedWeapon: true
+    # *** Melee
+    confMelee:
+      name: STR_REPAIR
+    meleeSound: {mod: 40k, index: 698}
+    meleeHitSound: {mod: 40k, index: 699}
+    meleeAnimation: {mod: 40k, index: 32}
+    meleeType: 0
+    meleePower: 80
+    accuracyMelee: 200
+    meleeAlter:  # REPAIR
+      RandomType: 3
+      ToHealth: 0.0
+      ToStun: 0.0
+      ToArmor: -1.0
+      ToWound: 0.0
+      RandomWound: false
+      RandomStun: false
+      ArmorEffectiveness: 0.0
+    costMelee:
+      time: 40
+      energy: 20
+    flatMelee:
+      time: false
+      energy: true
+    tags:
+      ITEM_REPAIRS_ARMOR: 1
+      ITEM_IS_BUFF_WEAPON: 1
+      ITEM_MENDS_WOUNDS: 1
+      ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 100
+      ITEM_DAMAGE_PERCENT_VS_PILOTED: 100
+      ITEM_MEND_MUST_HAVE_FULL_ARMOR: 1
+      ITEM_MEND_MECHANICAL_ONLY: 1
+      ITEM_MEND_HEAL_CAP_PERCENT: 50
+      ITEM_MEND_HARMS_ENEMIES: 0
+      ITEM_MEND_ENERGY_PERCENT: 50
+      ITEM_MEND_TIME_PERCENT: 50
+
+  - type: STR_TECHPRIEST_SCANNER
+    refNode: *REF_SKILL_TOKEN
+    psiAttackName: STR_ANALYZE
+    hitSound: 37
+    battleType: 8
+    LOSRequired: true
+    tuUse: 5
+    flatRate: true
+    accuracyUse: 400
+    accuracyMultiplier:
+      flatHundred: 1.0
+
+  - type: STR_TECHPRIEST_POWERAXE
+    categories: [STR_CAT_MELEE, STR_CAT_TECHPRIEST]
+    size: 0.2
+    weight: 20
+    bigSprite: 3619
+    floorSprite: 3601
+    handSprite: 4304
+    meleeAnimation: {mod: 40k, index: 4}
+    meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 754}  # 744 Powerswrod hit
+    power: 100  # melee
+    damageBonus:
+      strength: 0.3
+      melee: 0.2
+    damageAlter:     # DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.5  # axe you a question
+      ToHealth: 0.9
+      RandomType: 6
+      IgnoreSelfDestruct: false
+    damageType: 5
+    accuracyMelee: 110
+    costMelee:
+      time: 15
+      energy: 4  # heavy melee weapon
+    flatMelee:
+      time: true
+      energy: true
+    clipSize: -1
+    battleType: 3
+    invWidth: 2
+    invHeight: 3
+    flatRate: true
+    twoHanded: false
+    blockBothHands: false
+    armor: 300
+    skillApplied: true
+    meleeMultiplier:
+      melee: 0.9
+      strength: 0.1
+    strengthApplied: false
+    attraction: 8
+    listOrder: 15201
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    defaultInventorySlot: STR_LEFT_HAND
+
+  - type: STR_TECHPRIEST_LASPISTOL
+    categories: [STR_CAT_LASGUN, STR_CAT_TECHPRIEST]
+    dropoff: 5
+    size: 0.1
+    weight: 4
+    bigSprite: 3618  # {mod: 40k, index: 570}
+    floorSprite: 3600
+    handSprite: 4312  # {mod: 40k, index: 552}  # {mod: 40k, index: 950}
+    bulletSpeed: 50
+    battleType: 1
+    invWidth: 1
+    invHeight: 2
+    listOrder: 15202
+    compatibleAmmo:
+      - STR_LASPISTOL_CLIP
+      - STR_LASPISTOL_CLIP_HOTSHOT
+    accuracySnap: 85
+    tuSnap: 20
+    snapRange: 14
+    confSnap:
+      shots: 1
+      spendPerShot: 10
+    recover: false
+    tuLoad: 5 #quick reload
+    tuUnload: 5
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      REACTION_MULTIPLIER: 200
+      ITEM_SNAP_FLAT_POWER_BONUS: 40  # masterwork capacitors
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50 # proxy for devastating wounds
+    defaultInventorySlot: STR_BELT
+    supportedInventorySections:
+      - STR_BACK_PACK
+      - STR_BELT
+      - STR_LEFT_HAND
+      - STR_RIGHT_HAND
