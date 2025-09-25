@@ -29,9 +29,11 @@ extended:
 
       ITEM_MELEE_POWER_BONUS: int
 
-      ITEM_SNEAKY_BONUS: int #bonus damage as a % if this unit has gone at least 1 turn without being spotted.
-      ITEM_SIDE_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the side
-      ITEM_REAR_DAMAGE_BONUS: int #bonus damage as a % if this unit hits the target from the rear
+      ITEM_SNEAKY_BONUS: int # bonus damage as a % if this unit has gone at least 1 turn without being spotted.
+      ITEM_SIDE_DAMAGE_BONUS: int # bonus damage as a % if this unit hits the target from the side
+      ITEM_REAR_DAMAGE_BONUS: int # bonus damage as a % if this unit hits the target from the rear
+    BattleUnit:
+      SNEAK_ATTACKS_THIS_TURN: int # how many sneak attacks this unit has made this turn; causes diminishing returns from sneak attack bonus damage
 
   scripts:
     hitUnit:  # increase power if bonus exists for fire mode
@@ -165,6 +167,13 @@ extended:
             return power part side;
           end;
 
+          sub sneakyBonus 100;
+          unit.getTag temp Tag.SNEAK_ATTACKS_THIS_TURN; #divide the damage multiplier by the number of sneak attacks already made this turn
+          add temp 1;
+          unit.setTag Tag.SNEAK_ATTACKS_THIS_TURN temp; #divide the damage multiplier by the number of sneak attacks already made this turn
+          div sneakyBonus temp;
+          add sneakyBonus 100;
+
           muldiv power sneakyBonus 100; # we deal powerBonus % more damage relative to the base power;
           # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. Unit not visible. Temp:" temp;
           # debug_log "ROSIGMA_hU_sneaky_shot, offset 21: Success. New power:" power;
@@ -217,3 +226,14 @@ extended:
           # debug_log "ROSIGMA_hU_facing_bonus_damage, offset 22: Success. New power:" power;
 
           return power part side;
+
+    newTurnUnit:  # reset number of sneak attacks
+      - new: ROSIGMA_nTU_sneak_attack_reset
+        offset: 2
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.SNEAK_ATTACKS_THIS_TURN;
+          set temp 0;
+          unit.setTag Tag.SNEAK_ATTACKS_THIS_TURN temp;
+          return;
