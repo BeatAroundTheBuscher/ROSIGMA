@@ -7,6 +7,7 @@ extended:
       ITEM_HEAT_MAX_LEVEL: int
       ITEM_HEAT_DISSIPATION_PER_TURN: int
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: int
+      ITEM_HEAT_SINK_COLOR: int # sprite color index for heatsink parts that glow, if not set defaults to 2 (red)
       ITEM_HEAT_AMMO_SNAP_MULTIPLIER: int #for weapons that fire more than one shot per snap
       ITEM_OVERHEAT_DAMAGE: int  # how much damage we apply on average direct to the target's HP.
     BattleItem:
@@ -90,7 +91,7 @@ items:
       ITEM_OVERHEAT_DAMAGE: 100  # average damage dealt directly to the wielder's HP modified by plasma resistance if the weapon overheats
 
     tuUnload: 999  # DO NOT UNLOAD WEAPONS, THEY ARE LIKELY TO BE HOT
-    explodeInventory: 2  # won't explode though as it's not a grenade
+    isExplodingInHands: true  # won't explode though as it's not a grenade
     isConsumable: true
 
     scripts:
@@ -148,6 +149,7 @@ items:
       # https://openxcom.org/forum/index.php/topic, 6758.msg107896.html# msg107896
       recolorItemSprite: |
         var int color;
+        var int sinkColor;
         var int temp;
 
         var int currentHeat;
@@ -176,20 +178,32 @@ items:
 
           item.getTag temp Tag.ITEM_HEAT_AMMO_SPENT_FOR_INCREASE;
           div previousAmmoCount temp;
-
           add currentHeat previousAmmoCount;
+
+          item.getTag sinkColor Tag.ITEM_HEAT_SINK_COLOR;
+          if eq sinkColor 0;
+            set sinkColor 2; # default to red if not set
+          end;
 
           get_color color new_pixel;
           item.isFuseEnabled temp;
-          if or gt temp 0 gt currentHeat maxHeat; # todo refactor to max heat + 1 or fuse enabled
-            if eq color 2; # red
-              set temp anim_frame;
-              wavegen_tri temp 16 16 15;
-              mul temp -1;
-              add temp 8;
-              add_shade new_pixel temp;
+
+          if eq color sinkColor; # heatsink parts only
+            set sinkColor anim_frame;
+            set_color new_pixel 2; # change to red
+            if or gt temp 0 gt currentHeat maxHeat; # faster glow if overheating
+              wavegen_tri sinkColor 8 8 7;
+              mul sinkColor -1;
+              add sinkColor 4;
+            else;
+              wavegen_tri sinkColor 32 16 15;
+              mul sinkColor -1;
+              add sinkColor 8;
             end;
+            limit_lower sinkColor 0;
+            add_shade new_pixel sinkColor;
           end;
+
         end;
 
         add_shade new_pixel shade;
@@ -490,6 +504,18 @@ items:
       ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
       ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
       ITEM_OVERHEAT_DAMAGE: 150  # average damage dealt directly to the wielder's HP if the weapon overheats
+
+  - type: STR_SERVO_PLASMA
+    refNode: *STR_OVERHEATING_PLASMA
+    bigSprite: 3605
+    tags:
+      ITEM_HEAT_MAX_LEVEL: 7
+      ITEM_HEAT_DISSIPATION_PER_TURN: 1
+      ITEM_HEAT_AMMO_SPENT_FOR_INCREASE: 1
+      ITEM_AIMED_FLAT_POWER_BONUS_PERCENT: 50  # Maximal Shot Bonus
+      ITEM_OVERHEAT_DAMAGE: 50
+      ITEM_HEAT_SINK_COLOR: 15
+
 
 # items:
 #  - type: STR_RIFLE
