@@ -24,7 +24,8 @@ crafts:
     score: 250
     repairRate: 4
     soldiers: 22
-    vehicles: 2
+    maxLargeUnits: 3
+    vehicles: 999
     battlescapeTerrainData:
       name: ORK_CONVOY_GIB
       mapDataSets:
@@ -49,20 +50,20 @@ crafts:
       - [2, 4, 1, 0]
       - [1, 5, 1, 0]
       - [2, 5, 1, 0]
+      - [7, 2, 1, 0] # 2nd 2x2 at the exit of the second trukk
+      - [8, 2, 1, 0]
+      - [7, 3, 1, 0]
+      - [8, 3, 1, 0]
+      - [5, 13, 1, 0] # 3rd 2x2 at the exit of the half tack
+      - [6, 13, 1, 0]
+      - [5, 14, 1, 0]
+      - [6, 14, 1, 0]
       - [1, 6, 1, 0]
       - [2, 6, 1, 0]
       - [1, 7, 1, 0]
       - [2, 7, 1, 0]
-      - [5, 13, 1, 0]
-      - [6, 13, 1, 0]
-      - [5, 14, 1, 0]
-      - [6, 14, 1, 0]
       - [5, 15, 1, 0]
       - [6, 15, 1, 0]
-      - [7, 2, 1, 0]
-      - [8, 2, 1, 0]
-      - [7, 3, 1, 0]
-      - [8, 3, 1, 0]
       - [7, 4, 1, 0]
       - [8, 4, 1, 0]
       - [7, 5, 1, 0]
@@ -79,6 +80,7 @@ crafts:
     fuelMax: 1000
     damageMax: 150
     speedMax: 2400
+    repairRate: 3
     accel: 5
     weapons: 3
     weaponTypes: # three weapons, no auxiliary. Later craft can have auxiliary.
@@ -100,3 +102,184 @@ crafts:
     pilots: 1
     allowLanding: false
     listOrder: 230
+
+  - type: STR_VALKYRIE_ORK_DROP              #TIER II
+    takeoffSound: {mod: 40k, index: 56} #TURBINE SOUND
+    selectSound: [{mod: 40k, index: 62}, {mod: 40k, index: 63}, {mod: 40k, index: 64}] #REGULAR SOUND
+    marker: 36
+    requiresBuyBaseFunc: [HANGAR]
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_PDF_DEPOT_RAIDED
+    sprite: 1922
+    fuelMax: 1800
+    damageMax: 400
+    repairRate: 5
+    speedMax: 600
+    accel: 2
+    weapons: 2
+    weaponTypes:
+      - 0
+      - 0
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+    soldiers: 20
+    vehicles: 999
+    maxLargeUnits: 1
+    costBuy: 1200000
+    costRent: 800000 #TIER II
+    refuelRate: 200
+    transferTime: 96
+    mapVisible: false
+    score: 300
+    keepCraftAfterFailedMission: true
+    battlescapeTerrainData:
+      name: GUARD_GRAV_DROP_HWP
+      mapDataSets:
+        - BLANKS
+        - GUARD_GRAV_DROP
+        - VH_SINGLETURN
+        - 02SHIPFLOOR
+        - 02SHIPWALL
+        - 02SHIPDOOR
+      mapBlocks:
+        - name: GUARD_GRAV_DROP_HWP
+          revealedFloors: [5, 6]
+          width: 10
+          length: 20
+          height: 8
+          items:
+            STR_CAS_AIRSTRIKE_DESIGNATOR_2:
+              - [1, 1, 0]
+            STR_ORKDROP_DEPLOY_CHARGE:
+              - [1, 1, 6]
+              - [5, 2, 6]
+              - [8, 3, 6]
+              - [3, 4, 6]
+              - [6, 5, 6]
+              - [4, 6, 6]
+              - [2, 7, 6]
+              - [7, 8, 6]
+              - [1, 9, 6]
+              - [4, 9, 6]
+              - [8, 10, 6]
+              - [2, 12, 6]
+              - [6, 12, 6]
+              - [4, 13, 6]
+              - [1, 14, 6]
+              - [7, 14, 6]
+              - [4, 15, 6]
+              - [8, 16, 6]
+              - [3, 17, 6]
+              - [6, 17, 6]
+              - [4, 11, 6] # this is for the CAS Strike Unit
+            STR_CAS_MISSILE_POD_SPAWNER:
+              - [1, 10, 4]
+              - [7, 10, 4]
+            STR_CAS_CANNON_SPAWNER:
+              - [4, 14, 4]
+            STR_CAS_DROP_VALKYRIE_STRIKE_SPAWNER: # CAS Strike Unit
+              - [4, 11, 6]
+            STR_CAS_LEAVE_CHARGE:
+              - [4, 7, 4]
+          fuseTimers:
+            STR_CAS_LEAVE_CHARGE: [1, 1]
+            STR_ORKDROP_DEPLOY_CHARGE: [1, 1]
+            STR_CAS_MISSILE_POD_SPAWNER: [0, 0]
+            STR_CAS_CANNON_SPAWNER: [0, 0]
+    deployment:
+      - [1, 1, 6, 0]
+      # - [2, 1, 3, 0]  # added in HWP.map
+      # - [1, 2, 3, 0]  # added in HWP.map
+      # - [2, 2, 3, 0]  # added in HWP.map
+      - [5, 2, 6, 0]
+      - [8, 3, 6, 0]
+      - [3, 4, 6, 0]
+      - [6, 5, 6, 0]
+      - [4, 6, 6, 0]
+      - [2, 7, 6, 0]
+      - [7, 8, 6, 0]
+      - [1, 9, 6, 0]
+      - [4, 9, 6, 0]
+      - [8, 10, 6, 0]
+      - [2, 12, 6, 0]
+      - [6, 12, 6, 0]
+      - [4, 13, 6, 0]
+      - [1, 14, 6, 0]
+      - [7, 14, 6, 0]
+      - [4, 15, 6, 0]
+      - [8, 16, 6, 0]
+      - [3, 17, 6, 0]
+      - [6, 17, 6, 0]
+    listOrder: 220
+    spacecraft: true
+
+  - type: STR_ORK_FIGHTA_BOMMA
+    requiresBuyBaseFunc: [HANGAR]
+    marker: 41
+    sprite: 2065
+    fuelMax: 2000
+    damageMax: 850
+    armor: 4 # ded ard.
+    speedMax: 1800
+    accel: 4
+    avoidBonus: -10
+    repairRate: 5
+    weapons: 4
+    weaponTypes:
+      - 0
+      - 0
+      - 0
+      - 3
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+      - STR_CRAFT_DEFFGUNS
+    fixedWeapons: ["", "", "", "STR_CRAFT_DEFFGUNS_UC"]
+#    costBuy: 1050000
+    costRent: 800000
+    costSell: 800000
+    soldiers: 4
+    vehicles: 0
+    refuelRate: 200
+    transferTime: 96
+    score: 400
+    pilots: 4
+    allowLanding: false
+    listOrder: 240
+
+  - type: STR_ORK_SPECHUL_FIGHTA
+    marker: 39
+    sprite: 2064
+    fuelMax: 1000
+    damageMax: 250 # tougher materials
+    speedMax: 2700 # red stripes
+    avoidBonus: 5
+    hitBonus: 5
+    repairRate: 5
+    accel: 5
+    weapons: 4
+    weaponTypes: # three weapons, one auxiliary.
+      - 0
+      - 0
+      - 0
+      - [4, 5, 13]
+    weaponStrings:
+      - STR_WEAPON_ONE
+      - STR_WEAPON_TWO
+      - STR_WEAPON_THREE
+      - STR_AUX_ONE
+#    costBuy: 500000
+    costRent: 350000
+    costSell: 42500
+    soldiers: 1
+    vehicles: 0
+    refuelRate: 200
+    transferTime: 96
+    score: 250
+    pilots: 1
+    allowLanding: false
+    listOrder: 230
+

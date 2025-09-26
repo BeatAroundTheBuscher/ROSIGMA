@@ -1036,7 +1036,6 @@ research:
     points: 0
     cost: 5
     dependencies:
-      - STR_GENERALLOCK
       - STR_ARBITES
     lookup: STR_CHOSEN_ORKZ
     unlocks:
@@ -1044,10 +1043,16 @@ research:
       - STR_GUARD_BARRACKS
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
-      - STR_ORK_MERCENARIES
       - STR_LASER_WEAPONS
       - STR_HEAVY_WEAPONS_IG
       - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_ORK_ONLY
+      - STR_ORK_BASIC_WEAPONS
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_KOMBI_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
     disables:
       - STR_MARINES_STRATEGY
       - STR_CHAMBERMILITANT
@@ -1055,8 +1060,9 @@ research:
       - STR_ARBITES
       - STR_ADEPTAS
       - STR_CHAOS_STRATEGY_ARBITES
-    getOneFree:
       - STR_ORK_DEAL
+      - STR_ORK_MERCENARIES
+      - STR_ORK_RESPECT
     reenables:
       - STR_CYDONIA_OR_BUST
 
@@ -1682,6 +1688,12 @@ research:
   - name: STR_ORK_LEADER_INTERROGATED  # Ork Boss Interrogation
     refNode: *STR_LOCKED
 
+  - name: STR_ORK_BOY_RECRUITMENT  # Unlocks recruitment of Orks
+    refNode: *STR_LOCKED
+
+  - name: STR_ORK_BASIC_WEAPONS  # Unlocks basic Ork Weapons
+    refNode: *STR_LOCKED
+
   - name: STR_ORK_DEAL  # Ork Arms Deal
     cost: 1000
 #    points: -500 # removed for ork strat
@@ -1699,16 +1711,24 @@ research:
       - STR_ORK_SHOOTA_EXAM
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+      - STR_ORK_BASIC_WEAPONS
 
   - name: STR_ORK_MERCENARIES  # Ork Mercenaries
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL3_DEFEATED
+    unlocks:
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_SPOOKUM_KAMP_RECRUITED
 
   - name: STR_ORK_RESPECT  # Respect of the Orks
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL5_DEFEATED
+    unlocks:
+      - STR_MEK_KLAN_RECRUITED # unlocks special weapons
+      - STR_SPEED_KULT_RECRUITED
+      - STR_DAKKA_GITZ_RECRUITED
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -3284,14 +3304,13 @@ research:
     cost: 200
     points: 200
     dependencies:
-      - STR_ORK_BASE_LEVEL3_DEFEATED
+      - STR_LOCAL_ORKZ_RECRUITED # need to beat at least one local ork base
       - STR_ALIEN_ALLOYS
       - STR_MOTION_SCANNER
       - STR_GREENEST_ORKZ
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_HARDER_MISSIONS
-      - STR_ORK_RESPECT
     cutscene: c2
 
   - name: STR_ORKZ_HIGHTIER  # Greenest High-tier Requisitions
@@ -3301,8 +3320,44 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_GREENEST_ORKZ
       - STR_CYDONIA_OR_BUST
+      - STR_MEK_KLAN_RECRUITED # need all 4 special Ork camps for high tier
+      - STR_SPEED_KULT_RECRUITED
+      - STR_SPOOKUM_KAMP_RECRUITED
+      - STR_DAKKA_GITZ_RECRUITED
     unlocks:
       - STR_HIGHTIER_PREREQ
+
+  - name: STR_MEK_KLAN_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_SPEED_KULT_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_SPOOKUM_KAMP_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_DAKKA_GITZ_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_PDF_DEPOT_RAIDED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+
+  - name: STR_LOCAL_ORKZ_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK
 
 ### Chaos Cult #PROGRESSION.AT.CULT#
   - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
@@ -11126,3 +11181,31 @@ research:
     points: 50
     needItem: true
     destroyItem: true
+
+# Techpriest
+
+  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
+    cost: 400
+    points: 20
+    unlocks:
+      - STR_ENGINSEER_REQUISITION
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+    listOrder: 20
+
+  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    listOrder: 20
+
+  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_ENGINSEER_REQUISITION
+    listOrder: 21

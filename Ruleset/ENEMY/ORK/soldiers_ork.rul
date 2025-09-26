@@ -4,8 +4,8 @@ extended:
 soldiers:
   - type: STR_GUARD_ORK_BOY  # Blood Axe Ork Boy
     requires:
-      - STR_ORK_MERCENARIES
-    costBuy: 15000 #Make them cheaper? Less armor upgrades.
+      - STR_ORK_BOY_RECRUITMENT
+    costBuy: 25000 #Make them cheaper? Less armor upgrades.
     costSalary: 5000 #Make them cheaper? Less armor upgrades.
     minStats:
       tu: 45 #+5 TU vs humans, -5 vs Beastmen
@@ -61,7 +61,7 @@ soldiers:
     armor: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR #Upgrade option is the O2 heavy flak or carapace pre veteran
     standHeight: 22
     kneelHeight: 14
-    femaleFrequency: 100 #to use the gender 2 Cap torso sprite
+    femaleFrequency: 0 # gender 2 Cap torso sprite is already forced by the armor
     avatarOffsetX: 67
     avatarOffsetY: 42
     allowPromotion: false
@@ -138,7 +138,7 @@ soldiers:
     armor: STR_BLOODAXE_ARDBOY_KARAPACE_PLAYER_ARMOR
     standHeight: 22
     kneelHeight: 14
-    femaleFrequency: 100 #to use the gender 2 Cap torso sprite
+    femaleFrequency: 0 # gender 2 Cap torso sprite is already forced by the armor
     avatarOffsetX: 67
     avatarOffsetY: 42
     allowPromotion: true
@@ -218,6 +218,7 @@ soldiers:
     armor: STR_BLOODAXE_NOB_ARMOR_PLAYER
     standHeight: 22
     kneelHeight: 14
+    femaleFrequency: 0
     avatarOffsetX: 67
     avatarOffsetY: 42
     allowPromotion: false
@@ -236,39 +237,244 @@ soldiers:
     tags:
       SOLDIER_WOUND_TIME_MULTIPLIER: 33
 
-soldierTransformation:
-  - name: STR_BLOODAXE_ARDBOY_PROMOTION
-    requiredMinStats:
-      strength: 70
+  - type: STR_GUARD_ORK_KAN_BOY  # Revived Killa Kan pilot
     requires:
-      - STR_ORK_MERCENARIES
-    cost: 20000
-    requiredItems:
-      STR_KILLPOINT_TOKEN: 50
-    producedSoldierType: STR_GUARD_ORK_ARDBOY
-    producedSoldierArmor: STR_BLOODAXE_ARDBOY_KARAPACE_PLAYER_ARMOR
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    allowedSoldierTypes:
-      - STR_GUARD_ORK_BOY
+      - STR_ORK_BOY_RECRUITMENT
+    costSalary: 10000
+    # Stat comments relative to Blood Axe 'ardboy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 65  # +10
+      stamina: 65  # +10
+      health: 65  # +25
+      bravery: 55  # +25
+      reactions: 45  # +10
+      firing: 50  # +15
+      throwing: 55  # +10
+      strength: 70  # +30, minimum for 'ardboy
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  #
+    maxStats:
+      tu: 75  # +5
+      stamina: 90  # +5
+      health: 100  # +20
+      bravery: 90  # +10
+      reactions: 80  # +5
+      firing: 70  # +5
+      throwing: 80  # +5
+      strength: 85  # +15
+      psiStrength: 100
+      psiSkill: 6
+      melee: 80  #
+    statCaps:
+      tu: 110  # +20
+      stamina: 140  # + 20
+      health: 170  # +40
+      bravery: 110
+      reactions: 95  # + 10
+      firing: 100  # +5
+      throwing: 100  # +20
+      strength: 140  # +40
+      psiStrength: 100
+      psiSkill: 50
+      melee: 125  # +15
+    trainingStatCaps:
+      # Not much better except Strength/Health. Orks don't take well to regimented training.
+      tu: 70  # +5
+      stamina: 80  # +5
+      health: 75  # +30
+      firing: 80  # +5
+      throwing: 65
+      strength: 80  # +35
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70  # +10
+#    dogfightExperience:
+#      bravery: 10
+#      reactions: 30
+#      firing: 25
+    allowPiloting: false
+    armor: STR_PLAYER_ORK_KILLA_ARMOR
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 0
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: false
+    rankSprite: 1130
+    rankBattleSprite: 1130
+    rankStrings:
+      - STR_KILLA_RANK_0
+      - STR_KILLA_RANK_1
+      - STR_KILLA_RANK_2
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 20
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 33
 
-  - name: STR_BLOODAXE_NOB_PROMOTION
-    requiredMinStats:
-      strength: 100
-    requiredCommendations:
-      STR_VETERAN_COMMENDATION: 0
+  - type: STR_GUARD_ORK_WARBOSS  # Player Warboss
     requires:
-      - STR_ORK_MERCENARIES
-      - STR_ORK_BASE_LEVEL5_DEFEATED
-    cost: 30000
-    requiredItems:
-      STR_KILLPOINT_TOKEN: 200
-    producedSoldierType: STR_GUARD_ORK_NOB
-    producedSoldierArmor: STR_BLOODAXE_NOB_ARMOR_PLAYER
-    resetRank: true
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    allowedSoldierTypes:
-      - STR_GUARD_ORK_ARDBOY
+      - STR_ORK_BOY_RECRUITMENT
+    costSalary: 80000
+    # Stat comments relative to Blood Axe 'ardboy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 65  # +10
+      stamina: 65  # +10
+      health: 65  # +25
+      bravery: 55  # +25
+      reactions: 45  # +10
+      firing: 50  # +15
+      throwing: 55  # +10
+      strength: 70  # +30, minimum for 'ardboy
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  #
+    maxStats:
+      tu: 75  # +5
+      stamina: 90  # +5
+      health: 100  # +20
+      bravery: 90  # +10
+      reactions: 80  # +5
+      firing: 70  # +5
+      throwing: 80  # +5
+      strength: 85  # +15
+      psiStrength: 100
+      psiSkill: 6
+      melee: 80  #
+    statCaps:
+      tu: 120  # +30
+      stamina: 150  # + 30
+      health: 250  # +120 ded ard
+      bravery: 110
+      reactions: 105  # + 20
+      firing: 110  # +15
+      throwing: 110  # +30
+      strength: 200  # +100 strongest
+      psiStrength: 100
+      psiSkill: 100 # greenest
+      melee: 140  # +30 meanest
+    trainingStatCaps:
+      # Not much better except Strength/Health. Orks don't take well to regimented training.
+      tu: 70  # +5
+      stamina: 80  # +5
+      health: 75  # +30
+      firing: 80  # +5
+      throwing: 65
+      strength: 80  # +35
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70  # +10
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR
+    standHeight: 22
+    kneelHeight: 14
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: false
+    rankSprite: 1130
+    rankBattleSprite: 1130
+    rankStrings:
+      - STR_WARBOSS_RANK_0
+      - STR_WARBOSS_RANK_1
+      - STR_WARBOSS_RANK_2
+      - STR_WARBOSS_RANK_3
+      - STR_WARBOSS_RANK_4
+      - STR_WARBOSS_RANK_5
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 20
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 20
+
+  - type: STR_GUARD_ORK_WEIRDBOY  # Player Weirdboy
+    requires:
+      - STR_ORK_BOY_RECRUITMENT
+    costSalary: 16000
+    # Stat comments relative to Blood Axe 'ardboy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 65  # +10
+      stamina: 65  # +10
+      health: 65  # +25
+      bravery: 55  # +25
+      reactions: 45  # +10
+      firing: 50  # +15
+      throwing: 55  # +10
+      strength: 70  # +30, minimum for 'ardboy
+      psiStrength: 75
+      psiSkill: 30
+      melee: 55  #
+    maxStats:
+      tu: 75  # +5
+      stamina: 90  # +5
+      health: 100  # +20
+      bravery: 90  # +10
+      reactions: 80  # +5
+      firing: 70  # +5
+      throwing: 80  # +5
+      strength: 85  # +15
+      psiStrength: 100
+      psiSkill: 60
+      melee: 80  #
+    statCaps:
+      tu: 110  # +20
+      stamina: 140  # + 20
+      health: 170  # +40
+      bravery: 110
+      reactions: 95  # + 10
+      firing: 100  # +5
+      throwing: 100  # +20
+      strength: 140  # +40
+      psiStrength: 100
+      psiSkill: 100
+      melee: 125  # +15
+    trainingStatCaps:
+      # Not much better except Strength/Health. Orks don't take well to regimented training.
+      tu: 70  # +5
+      stamina: 80  # +5
+      health: 75  # +30
+      firing: 80  # +5
+      throwing: 65
+      strength: 80  # +35
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70  # +10
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_PLAYER_WEIRDORK_ARMOR
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 0
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: false
+    rankSprite: 1130
+    rankBattleSprite: 1130
+    rankStrings:
+      - STR_WEIRDBOY_RANK_0
+      - STR_WEIRDBOY_RANK_1
+      - STR_WEIRDBOY_RANK_2
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 20
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 40
