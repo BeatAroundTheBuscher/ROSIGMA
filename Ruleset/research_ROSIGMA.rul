@@ -1036,7 +1036,6 @@ research:
     points: 0
     cost: 5
     dependencies:
-#      - STR_GENERALLOCK
       - STR_ARBITES
     lookup: STR_CHOSEN_ORKZ
     unlocks:
@@ -1044,10 +1043,16 @@ research:
       - STR_GUARD_BARRACKS
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
-      - STR_ORK_MERCENARIES
       - STR_LASER_WEAPONS
       - STR_HEAVY_WEAPONS_IG
       - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_ORK_ONLY
+      - STR_ORK_BASIC_WEAPONS
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_KOMBI_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
     disables:
       - STR_MARINES_STRATEGY
       - STR_CHAMBERMILITANT
@@ -1055,8 +1060,9 @@ research:
       - STR_ARBITES
       - STR_ADEPTAS
       - STR_CHAOS_STRATEGY_ARBITES
-    getOneFree:
       - STR_ORK_DEAL
+      - STR_ORK_MERCENARIES
+      - STR_ORK_RESPECT
     reenables:
       - STR_CYDONIA_OR_BUST
 
@@ -1682,6 +1688,12 @@ research:
   - name: STR_ORK_LEADER_INTERROGATED  # Ork Boss Interrogation
     refNode: *STR_LOCKED
 
+  - name: STR_ORK_BOY_RECRUITMENT  # Unlocks recruitment of Orks
+    refNode: *STR_LOCKED
+
+  - name: STR_ORK_BASIC_WEAPONS  # Unlocks basic Ork Weapons
+    refNode: *STR_LOCKED
+
   - name: STR_ORK_DEAL  # Ork Arms Deal
     cost: 1000
 #    points: -500 # removed for ork strat
@@ -1699,16 +1711,24 @@ research:
       - STR_ORK_SHOOTA_EXAM
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+      - STR_ORK_BASIC_WEAPONS
 
   - name: STR_ORK_MERCENARIES  # Ork Mercenaries
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL3_DEFEATED
+    unlocks:
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_SPOOKUM_KAMP_RECRUITED
 
   - name: STR_ORK_RESPECT  # Respect of the Orks
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL5_DEFEATED
+    unlocks:
+      - STR_MEK_KLAN_RECRUITED # unlocks special weapons
+      - STR_SPEED_KULT_RECRUITED
+      - STR_DAKKA_GITZ_RECRUITED
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -3291,7 +3311,6 @@ research:
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_HARDER_MISSIONS
-      - STR_ORK_RESPECT
     cutscene: c2
 
   - name: STR_ORKZ_HIGHTIER  # Greenest High-tier Requisitions
