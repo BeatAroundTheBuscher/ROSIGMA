@@ -40,8 +40,9 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }};
           do
             echo "Linting $file"
-            yamllint --no-warnings -c ./.yamllint.yml $file
-            if [ $? -ne 0 ]; then  # check if return code fails at least once in the for loop
+            if yamllint --no-warnings -c ./.yamllint.yml $file; then
+              : # nop on success (return code == 0)
+            else
               RETURN_CODE=1
             fi
           done
