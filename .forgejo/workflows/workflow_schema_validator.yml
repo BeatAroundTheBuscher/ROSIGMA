@@ -1,0 +1,75 @@
+name: Validate YAML with check_jsonschema
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:  # yamllint disable-line rule:empty-values
+
+jobs:
+  yaml_validator:
+    runs-on: codeberg-tiny
+
+    steps:
+      # Step 1
+      - name: Check out code
+        # https://github.com/marketplace/actions/checkout
+        uses: actions/checkout@v3
+
+      # Step 2
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Step 3
+      - name: Install check-jsonschema and json-merger
+        run: |
+          pip3 install check-jsonschema
+          npm install json-merger
+
+      # Step 4a
+      # - name: Get changed files in this pull request
+      #  run: |
+      #    git diff --name-only ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }} | \
+      #    grep -E '\.rul$' > .changed_yaml_files.txt || true  # true will always return success to codeberg
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.rul
+
+      # Step 4b
+      - name: Prepare schema files for check_jsonschema  # probably should be cached?
+        run: |
+          git clone https://github.com/OpenXcom/vscode-ruleset
+          cd vscode-ruleset
+          node build/index.js
+
+      # Step 5
+      - name: Prepare ROSIGMA dir
+        run: |
+          echo 'Removing !add, !remove, !seq constructors as check_jsonschema cannot handle them'
+          find . -name "*.rul" | xargs -I {} sed -i 's/\!\(add\|remove\|seq\)//g' {}
+
+      # Step 6
+      - name: Run check_jsonschema
+        run: |
+          cd ./vscode-ruleset/schemas/oxce
+          SCHEMA_PATH=$(pwd)
+          RETURN_CODE=0
+          cd -
+          # for file in $(cat .changed_yaml_files.txt);
+          for file in ${{ steps.changed-files.outputs.all_changed_files }};
+          do
+            echo "Validating $file"
+            check-jsonschema --verbose --schemafile $SCHEMA_PATH/ruleset.json --default-filetype yaml --base-uri "file://$SCHEMA_PATH/" $file
+            if [ $? -ne 0 ]; then  # check if return code fails at least once in the for loop
+              RETURN_CODE=1
+            fi
+          done
+          if [ $RETURN_CODE -ne 0 ]; then
+            echo "Validation failed"
+            false  # fail workflow step
+          else
+            echo "Validation done"
+            true
+          fi
