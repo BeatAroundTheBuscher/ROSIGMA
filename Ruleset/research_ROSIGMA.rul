@@ -781,6 +781,7 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
+      - STR_INQ_STORMTROOPER_CODEX_UNLOCKER
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -2527,6 +2528,10 @@ research:
 ### Tactical Strategy #PROGRESSION.SM.TAC#
 
 ## Chamber Militant #PROGRESSION.CM#
+
+  - name: STR_INQ_STORMTROOPER_CODEX_UNLOCKER  # Unlocks Ufopedia entries for Inquis Stormtroopers (various triggers)
+    refNode: *STR_LOCKED
+
   - name: STR_IMPERIAL_INQUISITOR_REQUISITION  # Requisition Inquisitor
     # To recruit Inquisitors
     cost: 600
@@ -2546,7 +2551,7 @@ research:
       - STR_IMPERIAL_INQUISITOR_REQUISITION
 
   - name: STR_INQ_STORMTROOPER_REQUISITION  # Requisition Inquisition Storm Troopers
-    cost: 500
+    cost: 400
     points: 10
     dependencies:
       - STR_CHAMBERMILITANT
@@ -2556,11 +2561,32 @@ research:
   - name: STR_INQ_STORMTROOPER  # Inquisition Storm Trooper
     # Same as soldier name entry, used as the requirement for recruitment.
     # Probably redundant if requirements were moved to STR_INQ_STORMTROOPER_REQUISITION as this is not directly researched.
-    cost: 500
-    points: 10
     dependencies:
       - STR_GENERALLOCK
       - STR_INQ_STORMTROOPER_REQUISITION
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+    cost: 500
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_ALIEN_ALLOYS  # Adamantium
+      - STR_MEDI_KIT_PREREQ
+      
+  - name: STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+    cost: 1000
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+      
+  - name: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
+    cost: 1000
+    points: 30
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+      - STR_HIGHTIER_PREREQ
 
   - name: STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon Agents of the Inquisition
     cost: 250
