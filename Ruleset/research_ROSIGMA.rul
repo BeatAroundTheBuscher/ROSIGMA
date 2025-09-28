@@ -781,6 +781,7 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
+      - STR_INQ_STORMTROOPER_CODEX_UNLOCKER
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -1589,8 +1590,6 @@ research:
       - STR_CHAPTER_PURITY
     unlocks:
       - STR_ELDAR_ONLY
-    disables:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
 
   - name: STR_ELDAR_PATH  # Eldar Alliance
     cost: 800
@@ -1604,6 +1603,7 @@ research:
       - STR_ADEPTAS_CHAOS_PATH
       - STR_CHAMBER_CHAOS_PATH
       - STR_MARINE_CHAOS_PATH
+      - STR_HERETICAL_INQUISITOR_STRATEGY
     unlocks:
       - STR_ELDAR_ARMORY_EXAM
     getOneFree:
@@ -2528,6 +2528,10 @@ research:
 ### Tactical Strategy #PROGRESSION.SM.TAC#
 
 ## Chamber Militant #PROGRESSION.CM#
+
+  - name: STR_INQ_STORMTROOPER_CODEX_UNLOCKER  # Unlocks Ufopedia entries for Inquis Stormtroopers (various triggers)
+    refNode: *STR_LOCKED
+
   - name: STR_IMPERIAL_INQUISITOR_REQUISITION  # Requisition Inquisitor
     # To recruit Inquisitors
     cost: 600
@@ -2547,7 +2551,7 @@ research:
       - STR_IMPERIAL_INQUISITOR_REQUISITION
 
   - name: STR_INQ_STORMTROOPER_REQUISITION  # Requisition Inquisition Storm Troopers
-    cost: 500
+    cost: 400
     points: 10
     dependencies:
       - STR_CHAMBERMILITANT
@@ -2557,11 +2561,33 @@ research:
   - name: STR_INQ_STORMTROOPER  # Inquisition Storm Trooper
     # Same as soldier name entry, used as the requirement for recruitment.
     # Probably redundant if requirements were moved to STR_INQ_STORMTROOPER_REQUISITION as this is not directly researched.
-    cost: 500
-    points: 10
     dependencies:
       - STR_GENERALLOCK
       - STR_INQ_STORMTROOPER_REQUISITION
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+    cost: 500
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_ALIEN_ALLOYS  # Adamantium
+    unlocks:
+      - STR_MEDI_KIT_PREREQ
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+    cost: 1000
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
+    cost: 1000
+    points: 30
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+      - STR_HIGHTIER_PREREQ
 
   - name: STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon Agents of the Inquisition
     cost: 250
@@ -2598,6 +2624,7 @@ research:
       - STR_LOSE_250
     unlocks:
       - STR_HWP_CANNON_SHELLS
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE
     spawnedEvent: STR_INQ_REQUISITION_ARBITES_JUDGES_EVENT
 
   - name: STR_INQ_REQUISITION_GUARD_RESEARCH  # Requisition Guard Veterans
@@ -2620,6 +2647,9 @@ research:
       - STR_INQ_REQUISITION_GUARD_RESEARCH
       - STR_LOSE_250
     spawnedEvent: STR_INQ_REQUISITION_HEAVY_GUARD_EVENT
+    unlocks:
+      - STR_ROTOR_CANNON_RESEARCH
+      - STR_AUTOCANNON_TECH
 
   - name: STR_INQ_REQUISITION_KRIEG_GRENADIERS_RESEARCH  # Requisition Krieg Grenadier Kill Team
     cost: 700
@@ -2857,10 +2887,8 @@ research:
     reenables:
       - STR_CHAOS_PATH
     disables:
-      - STR_ELDAR_ALLIANCE
       - STR_XENO_ONLY
-      - STR_INQ_CONSORT_AELDARI_RESEARCH
-      - STR_INQ_CONSORT_TAU_RESEARCH
+      - STR_ELDAR_PATH
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT
       - STR_REINFORCEMENT_2
