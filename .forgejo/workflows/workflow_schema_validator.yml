@@ -13,11 +13,9 @@ jobs:
         # https://github.com/marketplace/actions/checkout
         uses: actions/checkout@v3
 
-      # Step 2
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+      ## Step 2 - ghcr.io/catthehacker/ubuntu:act-latest should have it already
+      #- name: Set up Python
+      #  uses: https://code.forgejo.org/actions/setup-python@v5
 
       # Step 3
       - name: Install check-jsonschema and json-merger
@@ -61,8 +59,9 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }};
           do
             echo "Validating $file"
-            check-jsonschema --verbose --schemafile $SCHEMA_PATH/ruleset.json --default-filetype yaml --base-uri "file://$SCHEMA_PATH/" $file
-            if [ $? -ne 0 ]; then  # check if return code fails at least once in the for loop
+            if check-jsonschema --verbose --schemafile $SCHEMA_PATH/ruleset.json --default-filetype yaml --base-uri "file://$SCHEMA_PATH/" $file; then
+              : # nop on success (return code == 0)
+            else
               RETURN_CODE=1
             fi
           done

@@ -191,7 +191,7 @@ armors:
     spriteSheet: ORK_BLOODAXE_VETERAN_BS.PCK
     forcedTorso: 1
     spriteInv: O3BLOODAXES.SPK
-    storeItem: STR_KARAPACE_ARMOR
+    storeItem: STR_NONE
     customArmorPreviewIndex: 1262
     corpseBattle:
       - STR_GUARD_ORK_BOY_CORPSE
@@ -210,6 +210,7 @@ armors:
     spriteInv: O3BLOODAXES_NOB_PLAYER.SPK
     forcedTorso: 2  # Player Torso
     customArmorPreviewIndex: 1263
+    storeItem: STR_NONE
     corpseBattle:
       - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
     # Not much better than 'ardboy, main benefit of unit is stats
@@ -226,7 +227,8 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
 
-  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+  - &ORK_MEGANOB
+    type: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20  # tech
@@ -301,6 +303,13 @@ armors:
         end;
 
         return;
+
+  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMED
+    refNode: *ORK_MEGANOB
+    ufopediaType: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+    builtInWeapons:
+      - STR_TWIN_SHOOTAS
+      - STR_POWER_KLAW2
 
   - type: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR  # Warboss Mega Armour
     visibilityAtDay: 40
@@ -428,10 +437,12 @@ armors:
     heatVision: 20  # tech
     spriteSheet: ORKDR5.PCK
     customArmorPreviewIndex: 1261 # Placeholder
+    moveSound: {mod: 40k, index: 700}
     bleedImmune: true
     zombiImmune: true
     painImmune: true
     fearImmune: false
+    instantWoundRecovery: true
     recovery:  # Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
@@ -451,6 +462,8 @@ armors:
     rearArmor: 110
     underArmor: 150
     drawingRoutine: 20
+    standHeight: 23
+    kneelHeight: 16
     size: 2
     stats:
       tu: 0
@@ -502,7 +515,7 @@ armors:
     forcedTorso: 1
     customArmorPreviewIndex: 1264
     corpseBattle:
-      - STR_PLAYER_ORK_STORMBOY_CORPSE  # Should get a unique one
+      - STR_PLAYER_ORK_STORMBOY_CORPSE
     frontArmor: 55
     sideArmor: 30
     rearArmor: 20
@@ -582,6 +595,7 @@ armors:
     zombiImmune: true
     painImmune: true
     fearImmune: false
+    instantWoundRecovery: true
     spriteInv: ORKBIKEINV.SPK
     stats:
       tu: 50
@@ -648,6 +662,7 @@ armors:
     spriteSheet: ORKDEFFKOPTER.PCK  # add
     spriteInv: DeffkopterINV.SPK  # add
     customArmorPreviewIndex: 1261 # Placeholder
+    instantWoundRecovery: true
     movementType: 1
     standHeight: 20
     kneelHeight: 15
@@ -754,6 +769,7 @@ armors:
       - 1.0  # MELTA
     loftempsSet: [3]
     allowsRunning: true
+    specialWeapon: AUX_SNEAKYSTABBA # maybe replace with standard choppa
     storeItem: STR_TANKBUSTA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
@@ -788,7 +804,7 @@ armors:
     drawingRoutine: 0
     standHeight: 20
     kneelHeight: 15
-    specialWeapon: STR_THROATSLITTA
+    specialWeapon: AUX_THROATSLITTA
     stats:
       tu: 0
       stamina: 0
@@ -901,6 +917,8 @@ armors:
       - STR_GUARD_ORK_WEIRDBOY
     allowsRunning: true
     tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
+      ARMOR_ENERGY_SHIELD_DECAY: 13
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1

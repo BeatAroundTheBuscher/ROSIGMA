@@ -2,88 +2,7 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 items:
-  - type: STR_ORK_STINKBOMB  # Stun grenade
-    requires:
-      - STR_ORK_BASIC_WEAPONS
-    costBuy: 4000
-    costSell: 1000
-    weight: 4
-    fuseType: -2
-    costThrow:
-      time: 55
-      energy: 10
-    costPrime: # no unpriming ork nades
-      time: 5
-    flatThrow:
-      time: false
-      energy: true
-    flatPrime:
-      time: false
-      energy: true
-    explosionHitSound: 2122
-    hitAnimation: 1030
-    throwRange: 16
-    bigSprite: 2120
-    floorSprite: {mod: 40k, index: 20}  # needs new sprite
-    handSprite: {mod: 40k, index: 512}  # needs new sprite
-    power: 65
-    damageAlter:
-      RandomType: 6
-      ToArmorPre: 0.00
-      ToArmor: 0.00
-      ToWound: 0.00
-      ArmorEffectiveness: 0.5
-      ToTime: 0.5  # disorienting stench
-      ToEnergy: 0.5
-      ToMorale: 2.0  # gross and stinky
-    damageType: 6
-    battleType: 4
-    blastRadius: 5
-    invWidth: 1
-    invHeight: 2
-    # throwExplode: true
-    listOrder: 137002
-
-  - type: STR_GRETCHIN_BLASTA
-    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
-    requires:
-      - STR_ORK_ONLY
-    size: 0.2
-    dropoff: 5
-    costSell: 360
-    weight: 10
-    compatibleAmmo:
-      - STR_GRETCHIN_AMMO_BIT
-    accuracySnap: 50
-    tuSnap: 25
-    battleType: 1
-    twoHanded: false
-    invWidth: 2
-    invHeight: 1
-    armor: 30
-    bulletSpeed: 30
-    attraction: 1
-    listOrder: 17040
-  - type: STR_GRETCHIN_AMMO_BIT
-    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
-    requires:
-      - STR_ORK_ONLY
-    size: 0.1
-    costSell: 200
-    weight: 2
-    damageAlter:
-      ToArmorPre: 0.05
-    explosionSpeed: 5
-    power: 42
-    damageType: 1
-    clipSize: 12
-    battleType: 2
-    invWidth: 1
-    invHeight: 1
-    armor: 30
-    attraction: 1
-    listOrder: 17050
-  - type: STR_VINDICATOR_ORK
+  - type: STR_VINDICATOR_ORK # looted battle cannon
     size: 6
     weight: 1
     accuracySnap: 45
@@ -112,6 +31,7 @@ items:
       ToHealth: 0.9
     fixedWeapon: true
     recover: false
+
   - type: ORKTURRET_WEAPON  # Double weapon ORK
     weight: 3
     power: 70
@@ -145,8 +65,10 @@ items:
     invHeight: 3
     clipSize: -1
     recover: false
+
   - type: STR_ORK_KILLA_WEAPON  # Double weapon ORK
     weight: 3
+    dropoff: 4 # was default 2. 4 because it is a semi-stable firing platform
     power: 60
     accuracySnap: 80
     snapRange: 14
@@ -176,6 +98,49 @@ items:
     clipSize: -1
     bulletSprite: {mod: 40k, index: 6}
     recover: false
+
+# Sluggas/Pistols
+
+  - type: STR_GRETCHIN_BLASTA
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.2
+    dropoff: 5
+    costSell: 360
+    weight: 10
+    compatibleAmmo:
+      - STR_GRETCHIN_AMMO_BIT
+    accuracySnap: 50
+    tuSnap: 25
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 1
+    armor: 30
+    bulletSpeed: 30
+    attraction: 1
+    listOrder: 17040
+
+  - type: STR_GRETCHIN_AMMO_BIT
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.1
+    costSell: 200
+    weight: 2
+    damageAlter:
+      ToArmorPre: 0.05
+    explosionSpeed: 5
+    power: 42
+    damageType: 1
+    clipSize: 12
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    armor: 30
+    attraction: 1
+    listOrder: 17050
 
   - type: STR_SLUGGA  # ORK PISTOL       17000
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
@@ -226,8 +191,10 @@ items:
     costSell: 5000
     weight: 20
     compatibleAmmo:
-      - STR_AMMO_BIT10
       - STR_AMMO_BIT20
+      - STR_BOOMY_AMMO_BIT20
+      - STR_SPARKY_AMMO_BIT20
+      - STR_AMMO_BIT10
     accuracySnap: 75
     tuSnap: 27
     snapRange: 6
@@ -240,7 +207,7 @@ items:
     armor: 30
     bulletSpeed: 30
     attraction: 1
-    listOrder: 17000
+    listOrder: 17001
     inventoryMoveCost: #quickdraw
       basePercent: 50
     tags:
@@ -278,7 +245,7 @@ items:
     armor: 200
     bulletSpeed: 30
     attraction: 2
-    listOrder: 17000
+    listOrder: 17002
     inventoryMoveCost: #quickdraw
       basePercent: 50
     tags:
@@ -346,7 +313,7 @@ items:
     invHeight: 1
     armor: 30
     attraction: 1
-    listOrder: 17010
+    listOrder: 17011
     tags:
       ITEM_SNEAKY_BONUS: 200 # 100% bonus power if we attack without being spotted
       ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
@@ -358,35 +325,8 @@ items:
       ITEM_ACCENT_COLOR: 6
       ITEM_SWAP_ACCENT_COLOR: 12
 
-  - type: STR_AMMO_BIT20  #              17020                    ToStun
-    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_ORK_BASIC_WEAPONS
-##    requiresBuyBaseFunc: [TRADE]
-    costBuy: 1300
-    size: 0.1
-    costSell: 250
-    weight: 2
-    bigSprite: {mod: 40k, index: 499}
-    floorSprite: {mod: 40k, index: 303}
-    handSprite: {mod: 40k, index: 880}
-    damageAlter:  # DA BOLTER
-      ToArmorPre: 0.1
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.2
-    explosionSpeed: 5
-    power: 60
-    damageType: 1
-    clipSize: 20
-    battleType: 2
-    invWidth: 1
-    invHeight: 2
-    armor: 30
-    attraction: 1
-    listOrder: 17020
+# Shoota/rifles/kombi-shootas
+
   - type: STR_SHOOTA  # ORK RIFLE         17030
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
     requires:
@@ -403,8 +343,10 @@ items:
     floorSprite: {mod: 40k, index: 302}
     handSprite: {mod: 40k, index: 872}
     compatibleAmmo:
-      - STR_AMMO_BIT10
       - STR_AMMO_BIT20
+      - STR_BOOMY_AMMO_BIT20
+      - STR_SPARKY_AMMO_BIT20
+      - STR_AMMO_BIT10
     accuracySnap: 75
     accuracyAuto: 50
     tuSnap: 25
@@ -444,9 +386,11 @@ items:
     bulletSprite: {mod: 40k, index: 6}
     fireSound: [{mod: 40k, index: 874}, {mod: 40k, index: 875}]
     compatibleAmmo:
-      - STR_AMMO_BIT10
       - STR_AMMO_BIT20
+      - STR_BOOMY_AMMO_BIT20
+      - STR_SPARKY_AMMO_BIT20
       - STR_AMMO_BIT50  # can use big shoota ammo
+      - STR_AMMO_BIT10 # list last
     accuracySnap: 80  # +5 accuracy, better drop off
     accuracyAuto: 55  # +5 accuracy
     tuSnap: 25
@@ -487,7 +431,7 @@ items:
     fireSound: [{mod: 40k, index: 874}, {mod: 40k, index: 875}]
     ammo:
       0:
-        compatibleAmmo: [STR_AMMO_BIT10, STR_AMMO_BIT20, STR_AMMO_BIT50]
+        compatibleAmmo: [STR_AMMO_BIT20, STR_SPARKY_AMMO_BIT20, STR_BOOMY_AMMO_BIT20, STR_AMMO_BIT50, STR_AMMO_BIT10]
       1:
         compatibleAmmo: [STR_SMALL_ROCKET, STR_LARGE_ROCKET, STR_INCENDIARY_ROCKET]
     confSnap:  # Bolter
@@ -539,7 +483,7 @@ items:
     fireSound: [{mod: 40k, index: 874}, {mod: 40k, index: 875}]
     ammo:
       0:
-        compatibleAmmo: [STR_AMMO_BIT10, STR_AMMO_BIT20, STR_AMMO_BIT50]
+        compatibleAmmo: [STR_AMMO_BIT20, STR_SPARKY_AMMO_BIT20, STR_BOOMY_AMMO_BIT20, STR_AMMO_BIT50, STR_AMMO_BIT10]
       1:
         compatibleAmmo: [STR_PLASMA_PISTOL_CLIP]
     confSnap:  # Bolter
@@ -569,6 +513,596 @@ items:
     bulletSpeed: 30
     attraction: 1
     listOrder: 17037
+
+  - type: STR_AMMO_BIT20  #              17020                    ToStun
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORK_BASIC_WEAPONS
+##    requiresBuyBaseFunc: [TRADE]
+    costBuy: 1300
+    size: 0.1
+    costSell: 250
+    weight: 2
+    bigSprite: {mod: 40k, index: 499}
+    floorSprite: {mod: 40k, index: 303}
+    handSprite: {mod: 40k, index: 880}
+    damageAlter:  # DA BOLTER
+      ToArmorPre: 0.1
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.2
+    explosionSpeed: 5
+    power: 60
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    invWidth: 1
+    invHeight: 2
+    armor: 30
+    attraction: 1
+    listOrder: 17040
+
+  - type: STR_BOOMY_AMMO_BIT20  # special boomy shoota ammo
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.1
+    costSell: 500
+    weight: 2
+    bigSprite: 2159
+    fireSound: 2137
+    floorSprite: {mod: 40k, index: 303}
+    handSprite: {mod: 40k, index: 880}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 120}
+    damageAlter:  # DA BOLTER
+      ArmorEffectiveness: 1.15
+      ToArmorPre: 0.4 # shredding explosive ammo. Might reduce this though
+      ToArmor: 0.0 # damages on the way in
+      ToHealth: 1.5
+      ToStun: 0.2
+      ToWound: 0.3
+      RandomWound: false
+    explosionSpeed: 5
+    power: 75 # ork MC ammo variant
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    invWidth: 1
+    invHeight: 2
+    armor: 30
+    attraction: 1
+    listOrder: 17041
+
+  - type: STR_SPARKY_AMMO_BIT20  # special sparky shoota ammo
+    categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.1
+    costSell: 500
+    weight: 2
+    bigSprite: 2160
+    fireSound: 2137
+    floorSprite: {mod: 40k, index: 303}
+    handSprite: {mod: 40k, index: 880}
+    hitSound: {mod: 40k, index: 864}
+    hitAnimation: 2160
+    damageAlter:  # DA BOLTER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.05
+      ToArmor: 0.05
+      ToHealth: 1.0
+      ToStun: 0.4 # shocking/painful
+      ToEnergy: 0.2
+      ToWound: 0.0 # cauterizes wounds.
+    explosionSpeed: 5
+    power: 75 # ork MC ammo variant
+    damageType: 1
+    clipSize: 20
+    battleType: 2
+    invWidth: 1
+    invHeight: 2
+    armor: 30
+    attraction: 1
+    listOrder: 17041
+
+# Big shootas/machine guns
+
+  - type: STR_BIG_SHOOTA  # HEAVYBOLTER                17050
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORK_BASIC_WEAPONS
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 40000
+    size: 0.2
+    dropoff: 6
+    costSell: 5125
+    weight: 40
+    compatibleAmmo:
+      - STR_AMMO_BIT50
+    accuracySnap: 65
+    accuracyAuto: 55
+    tuSnap: 25
+    tuAuto: 50
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    confSnap:
+      shots: 3 # was 1
+      name: STR_BURST_SNAP_SHOT
+    confAuto:
+      shots: 12
+    sprayWaypoints: 2
+    invWidth: 2
+    invHeight: 3
+    armor: 30
+    autoRange: 13
+    bulletSpeed: 50
+    attraction: 4
+    listOrder: 17050
+
+  - type: STR_SNAZZ_GUN  # Flash Gitz Kustom Shoota
+    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_MIDTIER_PREREQ
+      - STR_DAKKA_GITZ_RECRUITED
+    size: 0.6
+    dropoff: 7
+    costBuy: 200000
+    costSell: 20000
+    weight: 45
+    bigSprite: 2121
+    floorSprite: 2307
+    handSprite: 2240
+    bulletSprite: {mod: 40k, index: 15}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AMMO_TWINBIT50
+      - STR_BOOMY_AMMO_TWINBIT50
+      - STR_SPARKY_AMMO_TWINBIT50
+    accuracySnap: 65
+    accuracyAuto: 55
+    confSnap:
+      shots: 5 # was 3
+      spendPerShot: 1 # was 3. Now a direct upgrade to big shootas. might change it back if needed though
+    tuSnap: 25
+    tuAuto: 33
+    confAuto:
+      spendPerShot: 1 # was 3.
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    autoRange: 10
+    snapRange: 14
+    autoShots: 12 # was 9
+    bulletSpeed: 50
+    attraction: 1
+    recover: true
+    listOrder: 17051
+
+  - type: STR_TWIN_SHOOTAS  # MEGANOB Kustom Shoota
+    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
+    size: 0.6
+    dropoff: 7
+    weight: 40
+    bigSprite: 2111
+    floorSprite: {mod: 40k, index: 302}
+    bulletSprite: {mod: 40k, index: 15}
+    fireSound: {mod: 40k, index: 12}
+    compatibleAmmo:
+      - STR_AMMO_TWINBIT50
+      - STR_BOOMY_AMMO_TWINBIT50
+      - STR_SPARKY_AMMO_TWINBIT50
+    accuracySnap: 75
+    accuracyAuto: 60
+    tuSnap: 25
+    tuAuto: 35
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    autoRange: 8
+    snapRange: 12
+    confSnap:
+      shots: 4 # was 1
+      name: STR_BURST_SNAP_SHOT
+    confAuto:
+      shots: 8
+    bulletSpeed: 50
+    attraction: 1
+    fixedWeapon: true
+    recover: false
+    hiddenOnMinimap: true
+    listOrder: 17052
+
+  - type: STR_DEFFKOPTER_SHOOTAS  # Deffkopter shootas
+    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
+    size: 0.6
+    dropoff: 6
+    costSell: 20000
+    weight: 40
+    bigSprite: 2126
+    floorSprite: {mod: 40k, index: 302}
+    bulletSprite: {mod: 40k, index: 15}
+    fireSound: 12
+    compatibleAmmo:
+      - STR_AMMO_TWINBIT50
+      - STR_BOOMY_AMMO_TWINBIT50
+      - STR_SPARKY_AMMO_TWINBIT50
+    accuracySnap: 65
+    accuracyAuto: 50
+    confSnap:  # Double Shot
+      ammoSlot: 0  # Bolter
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 3  # Double Double shot snap
+    tuSnap: 20
+    tuAuto: 33
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    autoRange: 14
+    snapRange: 16
+    autoShots: 6
+    bulletSpeed: 50
+    attraction: 1
+    recover: false
+    hiddenOnMinimap: true
+    fixedWeapon: true
+    listOrder: 17052
+
+  - type: STR_WARBOSS_TWIN_SHOOTAS  # Warboss Kustom Shoota
+    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
+    size: 0.6
+    dropoff: 5
+    weight: 40
+    bigSprite: 2128
+    bulletSprite: {mod: 40k, index: 15}
+    fireSound: [{mod: 40k, index: 868}, {mod: 40k, index: 869}, {mod: 40k, index: 870}]
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    compatibleAmmo:
+      - STR_AMMO_TWINBIT50
+      - STR_BOOMY_AMMO_TWINBIT50
+      - STR_SPARKY_AMMO_TWINBIT50
+    accuracySnap: 85
+    accuracyAuto: 65
+    confSnap:  # Double Shot
+      ammoSlot: 0  # Bolter
+      name: STR_BURST_SNAP_SHOT
+      arcing: false
+      shots: 4  # Double Double shot snap
+    tuSnap: 20
+    tuAuto: 33
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    autoRange: 14
+    snapRange: 18
+    autoShots: 12
+    bulletSpeed: 50
+    attraction: 1
+    recover: false
+    hiddenOnMinimap: true
+    fixedWeapon: true
+    listOrder: 17053
+
+  - type: STR_AMMO_BIT50  # Heavy Shoota Ammo Belt                17060
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORK_BASIC_WEAPONS
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 2500
+    size: 0.1
+    costSell: 400
+    weight: 20
+    damageAlter:  # DA BOLTER
+      ToArmorPre: 0.1
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.2
+    explosionSpeed: 5
+    power: 60
+    damageType: 1
+    clipSize: 50
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    listOrder: 17060
+
+  - type: STR_AMMO_TWINBIT50  # Big Dakka Gun Ammo                17060
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_LOCAL_ORKZ_RECRUITED
+#    requiresBuyBaseFunc: [TRADE]
+    size: 0.1
+    costBuy: 2400
+    costSell: 400
+    weight: 20
+    bigSprite: {mod: 40k, index: 503}
+    floorSprite: {mod: 40k, index: 305}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 26}
+    damageAlter:  # DA DOUBEL DAKKA BOLTER
+      ArmorEffectiveness: 0.8
+      ToArmorPre: 0.2
+      ToArmor: 0.2
+      ToHealth: 1.0
+      ToStun: 0.3
+    explosionSpeed: 5
+    power: 70
+    damageType: 1
+    clipSize: 60
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    listOrder: 17060
+    tags:
+      ITEM_IS_PALETTE_SWAP: 1
+      ITEM_BASE_COLOR: 1
+      ITEM_SWAP_BASE_COLOR: 9
+
+  - type: STR_BOOMY_AMMO_TWINBIT50  # special boomy big dakka gun ammo
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.1
+    costSell: 800
+    weight: 20
+    bigSprite: 2157
+    floorSprite: {mod: 40k, index: 305}
+    hitSound: {mod: 40k, index: 708}
+    hitAnimation: {mod: 40k, index: 120}
+    damageAlter:  # DA DOUBEL DAKKA BOLTER
+      ArmorEffectiveness: 1.1
+      ToArmorPre: 0.4 # shredding explosive ammo. Might reduce this though
+      ToArmor: 0.0 # damages on the way in
+      ToHealth: 1.5
+      ToStun: 0.2
+      ToWound: 0.3
+      RandomWound: false
+    explosionSpeed: 5
+    power: 85 # ork MC ammo
+    damageType: 1
+    clipSize: 60
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    listOrder: 17061
+
+  - type: STR_SPARKY_AMMO_TWINBIT50  # special sparky big dakka gun ammo
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.1
+    costSell: 800
+    weight: 20
+    bigSprite: 2158
+    floorSprite: {mod: 40k, index: 305}
+    hitSound: {mod: 40k, index: 864}
+    hitAnimation: 2160
+    damageAlter:  # DA DOUBEL DAKKA BOLTER
+      ArmorEffectiveness: 0.6
+      ToArmorPre: 0.05
+      ToArmor: 0.05
+      ToHealth: 1.0
+      ToStun: 0.4 # shocking/painful
+      ToEnergy: 0.2
+      ToWound: 0.0 # cauterizes wounds.
+    explosionSpeed: 5
+    power: 85 # ork MC ammo
+    damageType: 1
+    clipSize: 60
+    battleType: 2
+    armor: 30
+    invWidth: 2
+    invHeight: 3
+    listOrder: 17061
+
+# Special Heavy Weapons
+
+  - type: STR_SNAZZY_MEGA_BLASTA  # Flash Gitz top tier plasma               11610
+    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    requires:
+      - STR_ORK_ONLY
+      - STR_HEAVY_PLASMA_DEP1
+    size: 0.3
+    dropoff: 8
+    costBuy: 500000
+    requiresBuy:
+      - STR_DAKKA_GITZ_RECRUITED
+      - STR_HEAVY_PLASMA_DEP1
+#    requiresBuyBaseFunc: [TRADE]
+    costSell: 50000
+    weight: 45
+    bigSprite: 2122
+    floorSprite: {mod: 40k, index: 29}  # needs new
+    handSprite: {mod: 40k, index: 40}  # needs new
+    fireSound: {mod: 40k, index: 18}
+    compatibleAmmo:
+      - STR_HEAVY_PLASMA_CLIP
+      - STR_BARRAGE_PLASMA_CLIP
+    accuracySnap: 70
+    tuSnap: 33
+    confSnap:
+      shots: 2
+      spendPerShot: 2 # was 3, somewhat improved effeciency
+    snapRange: 16  # *** PLASMA rebalance
+    confAuto:
+      spendPerShot: 2 # was 3, somewhat improved effeciency
+    autoShots: 3
+    autoRange: 9 # doesn't actually have auto accuracy or TUs, so it doesn't have auto. going to leave this for now.
+    battleType: 1
+    twoHanded: true
+    invWidth: 2
+    invHeight: 3
+    recoveryPoints: 5
+    armor: 50
+    listOrder: 11611 # remaining listed with plasma ammos
+
+  - type: STR_ORK_SNIPER_RIFLE
+    categories: [STR_CAT_ORK, STR_CAT_SNIPER, STR_CAT_SCOUT]
+    size: 0.2
+    dropoff: 3
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_SPOOKUM_KAMP_RECRUITED
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 60000
+    costSell: 1500
+    weight: 15
+    bigSprite: 2129
+    floorSprite: 2318
+    handSprite: 2250
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: {mod: 40k, index: 12}
+    accuracySnap: 50
+    accuracyAimed: 125
+    accuracyMultiplier:
+      firing: [0.5, 0.005]
+    tuSnap: 50
+    tuAimed: 75
+    snapRange: 16
+    aimRange: 32
+    compatibleAmmo:
+      - STR_ORK_AUTOCANNON_CLIP
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    listOrder: 17070 # was 6940, moved to the rest of the ork weapons
+    kneelBonus: 150
+    tuLoad: 40
+    minRange: 7
+    tags:
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 25  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_RECOIL: 50  # autocannon recoil; because it's a looted autocannon
+      ITEM_IS_HEAVY_WEAPON: 1  # infantry but not mounted/vehicle heavy weapons
+
+  - type: STR_ORK_AUTOCANNON_CLIP
+    categories: [STR_CAT_ORK, STR_CAT_SNIPER, STR_CAT_SCOUT]
+    size: 0.3
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_SPOOKUM_KAMP_RECRUITED
+#    requiresBuyBaseFunc: [TRADE]
+    costBuy: 3500
+    costSell: 200
+    weight: 5
+    bigSprite: 2130
+    floorSprite: {mod: 40k, index: 303}
+    handSprite: {mod: 40k, index: 880}
+    hitSound: {mod: 40k, index: 13}
+    hitAnimation: {mod: 40k, index: 26}
+    power: 100
+    damageType: 1
+    clipSize: 3
+    battleType: 2
+    invWidth: 1
+    invHeight: 1
+    damageAlter:  # DA BOLTER
+      RandomType: 6  # gaussian distribution for sniper type weapon
+      ToArmorPre: 0.05
+      ArmorEffectiveness: 0.9
+      ToArmor: 0.1
+      ToHealth: 1.0
+      ToStun: 0.5
+    bulletSpeed: 50
+    explosionSpeed: 5
+    armor: 30
+    listOrder: 17071 # was 6941, moved to the rest of the ork weapons
+
+  - type: STR_ORK_TELEPORT_GUN  # copied from STR_SLAANESH_ROCKET_LAUNCHER
+    categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.4
+    dropoff: 7
+    costSell: 3000
+    weight: 0
+    bigSprite: 2146
+    # floorSprite: 2427  # it's a fixedWeapon
+    # handSprite: 2460  # sprite is on the unit
+    bulletSprite: {mod: 40k, index: 11}
+    fireSound: {mod: 40k, index: 861}  # charging + discharge sound
+    compatibleAmmo:
+      - STR_TELEPORT_GUN_GRETCHIN
+    accuracySnap: 45
+    accuracyAuto: 34
+    tuSnap: 34
+    tuAuto: 69
+    autoShots: 3
+    snapRange: 18
+    autoRange: 12
+    maxRange: 28
+    battleType: 1
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    bulletSpeed: 50
+    listOrder: 12151
+    fixedWeapon: true
+    fixedWeaponShow: false
+
+  - type: STR_TELEPORT_GUN_GRETCHIN  # copied from STR_DAEMONETTE_MISSILE_PACK
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    requires:
+      - STR_ALIENS_ONLY
+    size: 0.1
+    costSell: 7500
+    weight: 1
+    bigSprite: 2146  # ToDO: should be invisible?
+    floorSprite: 2429  # ToDO: should be invisible?
+    handSprite: {mod: 40k, index: 448}
+    clipSize: 9
+    specialChance: 90  # 90% chance of summoning a Gretchin per missile
+    power: 9
+    damageType: 7
+    battleType: 2
+    blastRadius: 3
+    damageAlter:  # GRAV GUN
+      RandomType: 2  # TFTD [50% - 150%]
+      ArmorEffectiveness: 0.2
+      ToArmorPre: 5.0  # 1.2
+      ToHealth: 5.0  # 0.6
+      ToStun: 5.0  # 1.0
+    spawnUnit: STR_GRETCHIN
+    spawnUnitFaction: -1
+    invWidth: 0
+    invHeight: 0
+    recover: false
+    hitSound: 2123  # sizzlebamf
+    explosionHitSound: {mod: 40k, index: 790}  # vortexpull
+    hitAnimation: 1110
+    hitAnimFrames: 16
+    listOrder: 12152
+
+# Stikkbombs/grenades
 
   - type: STR_ORK_GRENADE  # ORK Grenade  17100
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_ORK]
@@ -642,7 +1176,7 @@ items:
     invWidth: 1
     invHeight: 3
     blastRadius: 1
-    listOrder: 17100
+    listOrder: 17101
     throwRange: 18 # was 14, longer range for ork nades. But they are heavier still.
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 50
@@ -688,329 +1222,54 @@ items:
     invHeight: 3
     blastRadius: 4
     throwRange: 12 # was 8. heavier weight.
-    listOrder: 17100
+    listOrder: 17102
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
 
-  - type: STR_TANKHAMMER  #  Tankbusta hammer           DA POWER
-    categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
-    size: 0.3
+  - type: STR_ORK_STINKBOMB  # Stun grenade
     requires:
-      - STR_ORK_ONLY
-    costBuy: 80000
-    requiresBuy:
-      - STR_SPOOKUM_KAMP_RECRUITED
-#    requiresBuyBaseFunc: [TRADE]
-    costSell: 5000
-    weight: 30
-    bigSprite: 2017
-    floorSprite: 2109
-    handSprite: 2208
-    meleeAnimation: 20  # Meleeredblast
-    meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
-    meleeHitSound: {mod: 40k, index: 743}  # 743 T hammer Hit
-    power: 90
-    damageType: 3
-    damageBonus:
-      strength: 0.4
-      melee: 0.1
-    damageAlter:     # DA POWER
-      ArmorEffectiveness: 0.7
-      ToArmorPre: 0.5
-      ToArmor: 0.3
-      ToHealth: 0.4
-      ResistType: 1
-    accuracyMelee: 90
-    costMelee:
-      time: 15
-      energy: 2
-    flatMelee: true
-    clipSize: -1
-    battleType: 3
-    twoHanded: false
-    invWidth: 2
-    invHeight: 3
-    attraction: 4
-    armor: 60
-    skillApplied: true
-    listOrder: 13400
-    tags:
-      DAMAGE_RESIST_PENETRATION_PERCENT: 75
+      - STR_ORK_BASIC_WEAPONS
+    costBuy: 4000
+    costSell: 1000
+    weight: 4
+    fuseType: -2
+    costThrow:
+      time: 55
+      energy: 10
+    costPrime: # no unpriming ork nades
+      time: 5
+    flatThrow:
+      time: false
+      energy: true
+    flatPrime:
+      time: false
+      energy: true
+    explosionHitSound: 2122
+    hitAnimation: 1030
+    throwRange: 16
+    bigSprite: 2120
+    floorSprite: {mod: 40k, index: 20}  # needs new sprite
+    handSprite: {mod: 40k, index: 512}  # needs new sprite
+    power: 65
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 0.00
+      ToArmor: 0.00
+      ToWound: 0.00
+      ArmorEffectiveness: 0.5
+      ToTime: 0.5  # disorienting stench
+      ToEnergy: 0.5
+      ToMorale: 2.0  # gross and stinky
+    damageType: 6
+    battleType: 4
+    blastRadius: 5
+    invWidth: 1
+    invHeight: 2
+    # throwExplode: true
+    listOrder: 17103 # 137002 changed to match other ork grenades
 
-  - type: STR_BIG_SHOOTA  # HEAVYBOLTER                17050
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_ORK_BASIC_WEAPONS
-#    requiresBuyBaseFunc: [TRADE]
-    costBuy: 40000
-    size: 0.2
-    dropoff: 6
-    costSell: 5125
-    weight: 40
-    compatibleAmmo:
-      - STR_AMMO_BIT50
-    accuracySnap: 65
-    accuracyAuto: 55
-    tuSnap: 25
-    tuAuto: 50
-    battleType: 1
-    twoHanded: true
-    blockBothHands: true
-    confSnap:
-      shots: 3 # was 1
-      name: STR_BURST_SNAP_SHOT
-    confAuto:
-      shots: 12
-    sprayWaypoints: 2
-    invWidth: 2
-    invHeight: 3
-    armor: 30
-    autoRange: 13
-    bulletSpeed: 50
-    attraction: 4
-    listOrder: 17050
-  - type: STR_SNAZZ_GUN  # Flash Gitz Kustom Shoota
-    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_MIDTIER_PREREQ
-      - STR_DAKKA_GITZ_RECRUITED
-    size: 0.6
-    dropoff: 7
-    costBuy: 200000
-    costSell: 20000
-    weight: 45
-    bigSprite: 2121
-    floorSprite: 2307
-    handSprite: 2240
-    bulletSprite: {mod: 40k, index: 15}
-    fireSound: {mod: 40k, index: 12}
-    compatibleAmmo:
-      - STR_AMMO_TWINBIT50
-    accuracySnap: 65
-    accuracyAuto: 55
-    confSnap:
-      shots: 3
-      spendPerShot: 2 # was 3. Somewhat better ammo efficiency.
-    tuSnap: 25
-    tuAuto: 33
-    confAuto:
-      spendPerShot: 2 # was 3. Somewhat better ammo efficiency.
-    battleType: 1
-    twoHanded: true
-    invWidth: 2
-    invHeight: 3
-    armor: 40
-    autoRange: 10
-    snapRange: 14
-    autoShots: 9
-    bulletSpeed: 50
-    attraction: 1
-    recover: true
-    listOrder: 17051
-  - type: STR_SNAZZY_MEGA_BLASTA  # Flash Gitz top tier plasma               11610
-    categories: [STR_CAT_PLASMA, STR_CAT_DEVASTATOR, STR_CAT_ORK]
-    requires:
-      - STR_ORK_ONLY
-      - STR_HEAVY_PLASMA_DEP1
-    size: 0.3
-    dropoff: 8
-    costBuy: 500000
-    requiresBuy:
-      - STR_DAKKA_GITZ_RECRUITED
-      - STR_HEAVY_PLASMA_DEP1
-#    requiresBuyBaseFunc: [TRADE]
-    costSell: 50000
-    weight: 45
-    bigSprite: 2122
-    floorSprite: {mod: 40k, index: 29}  # needs new
-    handSprite: {mod: 40k, index: 40}  # needs new
-    fireSound: {mod: 40k, index: 18}
-    compatibleAmmo:
-      - STR_HEAVY_PLASMA_CLIP
-      - STR_BARRAGE_PLASMA_CLIP
-    accuracySnap: 70
-    tuSnap: 33
-    confSnap:
-      shots: 2
-      spendPerShot: 3
-    snapRange: 16  # *** PLASMA rebalance
-    confAuto:
-      spendPerShot: 3
-    autoShots: 3
-    autoRange: 9
-    battleType: 1
-    twoHanded: true
-    invWidth: 2
-    invHeight: 3
-    recoveryPoints: 5
-    armor: 50
-    listOrder: 11611
-  - type: STR_TWIN_SHOOTAS  # MEGANOB Kustom Shoota
-    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
-    size: 0.6
-    dropoff: 7
-    weight: 40
-    bigSprite: 2111
-    floorSprite: {mod: 40k, index: 302}
-    bulletSprite: {mod: 40k, index: 15}
-    fireSound: {mod: 40k, index: 12}
-    compatibleAmmo:
-      - STR_AMMO_TWINBIT50
-    accuracySnap: 75
-    accuracyAuto: 60
-    tuSnap: 25
-    tuAuto: 35
-    battleType: 1
-    twoHanded: false
-    invWidth: 2
-    invHeight: 3
-    armor: 40
-    autoRange: 8
-    snapRange: 12
-    confSnap:
-      shots: 4 # was 1
-      name: STR_BURST_SNAP_SHOT
-    confAuto:
-      shots: 8
-    bulletSpeed: 50
-    attraction: 1
-    fixedWeapon: true
-    recover: false
-    hiddenOnMinimap: true
-    listOrder: 17052
-  - type: STR_DEFFKOPTER_SHOOTAS  # Deffkopter shootas
-    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
-    size: 0.6
-    dropoff: 6
-    costSell: 20000
-    weight: 40
-    bigSprite: 2126
-    floorSprite: {mod: 40k, index: 302}
-    bulletSprite: {mod: 40k, index: 15}
-    fireSound: 12
-    compatibleAmmo:
-      - STR_AMMO_TWINBIT50
-    accuracySnap: 65
-    accuracyAuto: 50
-    confSnap:  # Double Shot
-      ammoSlot: 0  # Bolter
-      name: STR_BURST_SNAP_SHOT
-      arcing: false
-      shots: 3  # Double Double shot snap
-    tuSnap: 20
-    tuAuto: 33
-    battleType: 1
-    twoHanded: false
-    invWidth: 2
-    invHeight: 3
-    armor: 40
-    autoRange: 14
-    snapRange: 16
-    autoShots: 6
-    bulletSpeed: 50
-    attraction: 1
-    recover: false
-    hiddenOnMinimap: true
-    fixedWeapon: true
-    listOrder: 17052
-  - type: STR_WARBOSS_TWIN_SHOOTAS  # Warboss Kustom Shoota
-    categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
-    size: 0.6
-    dropoff: 5
-    weight: 40
-    bigSprite: 2128
-    bulletSprite: {mod: 40k, index: 15}
-    fireSound: [{mod: 40k, index: 868}, {mod: 40k, index: 869}, {mod: 40k, index: 870}]
-    hitSound: {mod: 40k, index: 708}
-    hitAnimation: {mod: 40k, index: 26}
-    compatibleAmmo:
-      - STR_AMMO_TWINBIT50
-    accuracySnap: 85
-    accuracyAuto: 65
-    confSnap:  # Double Shot
-      ammoSlot: 0  # Bolter
-      name: STR_BURST_SNAP_SHOT
-      arcing: false
-      shots: 4  # Double Double shot snap
-    tuSnap: 20
-    tuAuto: 33
-    battleType: 1
-    twoHanded: false
-    invWidth: 2
-    invHeight: 3
-    armor: 40
-    autoRange: 14
-    snapRange: 18
-    autoShots: 12
-    bulletSpeed: 50
-    attraction: 1
-    recover: false
-    hiddenOnMinimap: true
-    fixedWeapon: true
-    listOrder: 17053
-  - type: STR_AMMO_BIT50  # HEAVYBOLTER                17060
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_ORK_BASIC_WEAPONS
-#    requiresBuyBaseFunc: [TRADE]
-    costBuy: 2500
-    size: 0.1
-    costSell: 400
-    weight: 20
-    damageAlter:  # DA BOLTER
-      ToArmorPre: 0.1
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.2
-    explosionSpeed: 5
-    power: 60
-    damageType: 1
-    clipSize: 50
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 3
-    listOrder: 17060
-  - type: STR_AMMO_TWINBIT50  # HEAVYBOLTER                17060
-    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_LOCAL_ORKZ_RECRUITED
-#    requiresBuyBaseFunc: [TRADE]
-    size: 0.1
-    costBuy: 2400
-    costSell: 400
-    weight: 20
-    bigSprite: {mod: 40k, index: 503}
-    floorSprite: {mod: 40k, index: 305}
-    hitSound: {mod: 40k, index: 708}
-    hitAnimation: {mod: 40k, index: 26}
-    damageAlter:  # DA DOUBEL DAKKA BOLTER
-      ArmorEffectiveness: 0.8
-      ToArmorPre: 0.2
-      ToArmor: 0.2
-      ToHealth: 1.0
-      ToStun: 0.3
-    explosionSpeed: 5
-    power: 70
-    damageType: 1
-    clipSize: 60
-    battleType: 2
-    armor: 30
-    invWidth: 2
-    invHeight: 3
-    listOrder: 17060
-    tags:
-      ITEM_IS_PALETTE_SWAP: 1
-      ITEM_BASE_COLOR: 1
-      ITEM_SWAP_BASE_COLOR: 9
+# Rokkitz/rockets
+
   - type: STR_ORK_RL  #                       17070                                 AIMED
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_ORK]
     size: 0.4
@@ -1035,7 +1294,8 @@ items:
     oneHandedPenalty: 100
     invWidth: 2
     invHeight: 3
-    listOrder: 17070
+    listOrder: 17104 # was 17070, moved to after ork grenades
+
   - type: STR_ORK_GORKFAUST  # Tank Busta Rokkit                      17070                                 AIMED
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_ORK]
     size: 0.4
@@ -1073,7 +1333,8 @@ items:
     invWidth: 1
     invHeight: 3
     maxRange: 12
-    listOrder: 17070
+    listOrder: 17105 # was 17070, moved to after ork grenades
+
   - type: STR_ORK_COMBI_RL  #                       17070                                 AIMED
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_ORK]
     size: 0.4
@@ -1102,9 +1363,11 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+    specialIconSprite: 202
     hiddenOnMinimap: true
     listOrder: 17070
     fixedWeapon: true  # won't leave inventory
+
   - type: STR_DEFFKOPTER_ROKKITPOD  #                       17070                                 AIMED
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_ORK]
     size: 0.4
@@ -1143,6 +1406,9 @@ items:
     hiddenOnMinimap: true
     listOrder: 17070
     fixedWeapon: true  # won't leave inventory
+
+# Flamer/melta
+
   - type: STR_BURNA  # Kombi Flamethrower/cutting-torch "melta"                          10500
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     size: 0.2
@@ -1189,7 +1455,8 @@ items:
     tuSnap: 40
     snapRange: 3
     maxRange: 8
-    listOrder: 10500
+    listOrder: 17110 # was 10500, moved to other ork weapons
+
   - type: STR_BURNA_MOUNTED  # Kombi Flamethrower/cutting-torch "melta"                          10500
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     size: 0.2
@@ -1227,10 +1494,11 @@ items:
     tuSnap: 40
     snapRange: 5
     maxRange: 10
-    listOrder: 10500
+    listOrder: 17110 # was 10500
     recover: false
     hiddenOnMinimap: true
     fixedWeapon: true  # won't leave inventory
+
   - type: STR_BURNA_KILLA  # Kombi Flamethrower/cutting-torch "melta"                          10500
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     size: 0.2
@@ -1246,7 +1514,6 @@ items:
     compatibleAmmo:
       - STR_SCORCHA_TANK
       - STR_BURNA_TANK
-    clipSize: -1
     ammo:
       0:
         compatibleAmmo: [STR_SCORCHA_TANK_BUILTIN]
@@ -1268,10 +1535,33 @@ items:
     tuSnap: 25
     snapRange: 5
     maxRange: 10
-    listOrder: 10500
+    #### Killa Kan Melee
+    meleeSound: {mod: 40k, index: 753} #753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 709} #709 chainhit
+    meleeAnimation: {mod: 40k, index: 56}
+    meleeType: 7
+    meleePower: 100
+    accuracyMelee: 100
+    tuMelee: 15
+    flatMelee:
+      time: true
+    strengthApplied: false
+    meleeBonus:
+      strength: 0.1
+      melee: 0.1
+    meleeAlter: #DA CHAIN
+      ToArmorPre: 0.3
+      ToHealth: 0.9
+      RandomType: 2 #TFTD [50% - 150%]
+      ToWound: 0.3
+      RandomWound: false
+      ToEnergy: 0.5
+      IgnoreSelfDestruct: false # default true for HE, fire, smoke, stun, mel
+    listOrder: 17110 # was 10500
     recover: false
     hiddenOnMinimap: true
     fixedWeapon: true  # won't leave inventory
+
   - type: STR_SCORCHA_TANK  #                     10520
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     size: 0.2
@@ -1321,7 +1611,8 @@ items:
     explosionSpeed: 10
     armor: 15
     attraction: 7
-    listOrder: 10520
+    listOrder: 17111 # was 10520
+
   - type: STR_SCORCHA_TANK_BUILTIN  #  Infinite Ammo                   10520
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     size: 0.2
@@ -1370,6 +1661,7 @@ items:
     recover: false
     hiddenOnMinimap: true
     fixedWeapon: false  # used to be true, because thats making them act not as ammo so they arent loading in
+
   - type: STR_BURNA_TANK  #                     10520
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
     vaporColorSurface: {mod: 40k, index: 2}
@@ -1411,7 +1703,8 @@ items:
     invWidth: 1
     invHeight: 2
     recoveryPoints: 1
-    listOrder: 10520
+    listOrder: 17111 # was 10520
+
   - type: STR_BURNA_TANK_BUILTIN  #  Infinite Ammo                   10520
     categories: [STR_CAT_MELTA, STR_CAT_TACTICAL]
     vaporColorSurface: {mod: 40k, index: 2}
@@ -1446,10 +1739,13 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 2
-    listOrder: 10520
+    listOrder: 17111 # was 10520
     recover: false
     hiddenOnMinimap: true
     fixedWeapon: false  # used to be true, because thats making them act not as ammo so they arent loading in
+
+# Melee Weapons
+
   - &CHOPPA
     type: STR_CHOPPA  #                17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
@@ -1503,7 +1799,8 @@ items:
     fixedWeapon: true
     specialUseEmptyHand: true
 
-  - type: STR_THROATSLITTA  #                17080
+  - &THROATSLITTA
+    type: STR_THROATSLITTA  #                17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
     size: 0.2
     costSell: 100
@@ -1548,7 +1845,16 @@ items:
       ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
       ITEM_REAR_DAMAGE_BONUS: 200 # 100% bonus power if we attack the rear
 
-  - type: STR_SNEAKYSTABBA  #  AP dagger              17080
+  - type: AUX_THROATSLITTA
+    refNode: *THROATSLITTA
+    ufopediaType: STR_THROATSLITTA
+    specialIconSprite: 2778
+    weight: 0
+    fixedWeapon: true
+    specialUseEmptyHand: true
+
+  - &SNEAKYSTABBA
+    type: STR_SNEAKYSTABBA  #  AP dagger              17080
     categories: [STR_CAT_MELEE, STR_CAT_SCOUT, STR_CAT_ORK]
     size: 0.2
     costSell: 100
@@ -1593,6 +1899,59 @@ items:
       ITEM_SIDE_DAMAGE_BONUS: 125 # 25% bonus power if we attack the side
       ITEM_REAR_DAMAGE_BONUS: 200 # 100% bonus power if we attack the rear
 
+  - type: AUX_SNEAKYSTABBA
+    refNode: *SNEAKYSTABBA
+    ufopediaType: STR_SNEAKYSTABBA
+    specialIconSprite: 2778
+    weight: 0
+    fixedWeapon: true
+    specialUseEmptyHand: true
+
+  - type: STR_TANKHAMMER  #  Tankbusta hammer           DA POWER
+    categories: [STR_CAT_MELEE, STR_CAT_TERMINATOR]
+    size: 0.3
+    requires:
+      - STR_ORK_ONLY
+    costBuy: 80000
+    requiresBuy:
+      - STR_SPOOKUM_KAMP_RECRUITED
+#    requiresBuyBaseFunc: [TRADE]
+    costSell: 5000
+    weight: 30
+    bigSprite: 2017
+    floorSprite: 2109
+    handSprite: 2208
+    meleeAnimation: 20  # Meleeredblast
+    meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
+    meleeHitSound: {mod: 40k, index: 743}  # 743 T hammer Hit
+    power: 90
+    damageType: 3
+    damageBonus:
+      strength: 0.4
+      melee: 0.1
+    damageAlter:     # DA POWER
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.5
+      ToArmor: 0.3
+      ToHealth: 0.4
+      ResistType: 1
+    accuracyMelee: 90
+    costMelee:
+      time: 22 # was 15. It is a hammer
+      energy: 6 # was 2
+    flatMelee: true
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    attraction: 4
+    armor: 60
+    skillApplied: true
+    listOrder: 17080 # was 13400
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 75
+
   - type: STR_BIGCHOPPA  #         17090          DA POWER
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT, STR_CAT_ORK]
     requires:
@@ -1619,7 +1978,7 @@ items:
     damageType: 7
     accuracyMelee: 70
     costMelee: #heavy and unwieldy
-      time: 20
+      time: 18 # was 20
       energy: 4
     flatRate: true
     clipSize: -1
@@ -1634,6 +1993,7 @@ items:
     strengthApplied: false
     attraction: 8
     listOrder: 17090
+
   - type: STR_ORK_CHAINSWORD  #         12400            DA CHAIN
     # Not recovered
     categories: [STR_CAT_MELEE, STR_CAT_ASSAULT]
@@ -1670,6 +2030,7 @@ items:
       flatHundred: 0.0
     listOrder: 12400
     recover: false
+
   - type: STR_POWER_KLAW2  # ORK POWER KLAW                        DA POWER
     weight: 12
     bigSprite: 2115
@@ -1684,11 +2045,11 @@ items:
     damageAlter:     # DA POWER
       ArmorEffectiveness: 0.7
       ToArmorPre: 0.2
-      ToHealth: 0.9
+      ToHealth: 1.2 # was .9. Still less than the 1.5 big choppa.
       IgnoreSelfDestruct: false  # default true for HE, fire, smoke, stun, mel
-    accuracyMelee: 70
+    accuracyMelee: 80 # was 70
     costMelee: #heavy and unwieldy
-      time: 20
+      time: 16 # was 20, now faster than the big choppa
       energy: 4
     flatRate: true
     twoHanded: false
@@ -1703,10 +2064,10 @@ items:
     invWidth: 2
     invHeight: 3
     recover: false
+
   - type: STR_KILLA_MELEE_WEAPON
     damageAlter:
       RandomWound: false
-
 
   # *** Weirdboyz Spells ***
   # Confuse: like panic attack, but sets morale to 0 if it succeeds
@@ -1983,82 +2344,6 @@ items:
     invHeight: 2
     recover: false
 
-  - type: STR_ORK_SNIPER_RIFLE
-    categories: [STR_CAT_ORK, STR_CAT_SNIPER, STR_CAT_SCOUT]
-    size: 0.2
-    dropoff: 3
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_SPOOKUM_KAMP_RECRUITED
-#    requiresBuyBaseFunc: [TRADE]
-    costBuy: 60000
-    costSell: 1500
-    weight: 15
-    bigSprite: 2129
-    floorSprite: 2318
-    handSprite: 2250
-    bulletSprite: {mod: 40k, index: 6}
-    fireSound: {mod: 40k, index: 12}
-    accuracySnap: 50
-    accuracyAimed: 125
-    accuracyMultiplier:
-      firing: [0.5, 0.005]
-    tuSnap: 50
-    tuAimed: 75
-    snapRange: 16
-    aimRange: 32
-    compatibleAmmo:
-      - STR_ORK_AUTOCANNON_CLIP
-    battleType: 1
-    twoHanded: true
-    blockBothHands: true
-    invWidth: 2
-    invHeight: 3
-    bulletSpeed: 50
-    listOrder: 6940
-    kneelBonus: 150
-    tuLoad: 40
-    minRange: 7
-    tags:
-      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 25  # Sniper rifle bonus to aimed shots; power of precision
-      ITEM_RECOIL: 50  # autocannon recoil; because it's a looted autocannon
-      ITEM_IS_HEAVY_WEAPON: 1  # infantry but not mounted/vehicle heavy weapons
-
-  - type: STR_ORK_AUTOCANNON_CLIP
-    categories: [STR_CAT_ORK, STR_CAT_SNIPER, STR_CAT_SCOUT]
-    size: 0.3
-    requires:
-      - STR_ORK_ONLY
-    requiresBuy:
-      - STR_SPOOKUM_KAMP_RECRUITED
-#    requiresBuyBaseFunc: [TRADE]
-    costBuy: 3500
-    costSell: 200
-    weight: 5
-    bigSprite: 2130
-    floorSprite: {mod: 40k, index: 303}
-    handSprite: {mod: 40k, index: 880}
-    hitSound: {mod: 40k, index: 13}
-    hitAnimation: {mod: 40k, index: 26}
-    power: 100
-    damageType: 1
-    clipSize: 3
-    battleType: 2
-    invWidth: 1
-    invHeight: 1
-    damageAlter:  # DA BOLTER
-      RandomType: 6  # gaussian distribution for sniper type weapon
-      ToArmorPre: 0.05
-      ArmorEffectiveness: 0.9
-      ToArmor: 0.1
-      ToHealth: 1.0
-      ToStun: 0.5
-    bulletSpeed: 50
-    explosionSpeed: 5
-    armor: 30
-    listOrder: 6941
-
   - type: FLAMER_WEAPON
     categories: [STR_CAT_FLAMER, STR_CAT_TACTICAL]
     weight: 0
@@ -2121,69 +2406,3 @@ items:
     fixedWeapon: true
     recover: false
     defaultInventorySlot: STR_LEFT_LEG
-
-  - type: STR_ORK_TELEPORT_GUN  # copied from STR_SLAANESH_ROCKET_LAUNCHER
-    categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.4
-    dropoff: 7
-    costSell: 3000
-    weight: 0
-    bigSprite: 2146
-    # floorSprite: 2427  # it's a fixedWeapon
-    # handSprite: 2460  # sprite is on the unit
-    bulletSprite: {mod: 40k, index: 11}
-    fireSound: {mod: 40k, index: 861}  # charging + discharge sound
-    compatibleAmmo:
-      - STR_TELEPORT_GUN_GRETCHIN
-    accuracySnap: 45
-    accuracyAuto: 34
-    tuSnap: 34
-    tuAuto: 69
-    autoShots: 3
-    snapRange: 18
-    autoRange: 12
-    maxRange: 28
-    battleType: 1
-    twoHanded: true
-    blockBothHands: true
-    invWidth: 2
-    invHeight: 3
-    bulletSpeed: 50
-    listOrder: 12151
-    fixedWeapon: true
-    fixedWeaponShow: false
-
-  - type: STR_TELEPORT_GUN_GRETCHIN  # copied from STR_DAEMONETTE_MISSILE_PACK
-    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
-    requires:
-      - STR_ALIENS_ONLY
-    size: 0.1
-    costSell: 7500
-    weight: 1
-    bigSprite: 2146  # ToDO: should be invisible?
-    floorSprite: 2429  # ToDO: should be invisible?
-    handSprite: {mod: 40k, index: 448}
-    clipSize: 9
-    specialChance: 90  # 90% chance of summoning a Gretchin per missile
-    power: 9
-    damageType: 7
-    battleType: 2
-    blastRadius: 3
-    damageAlter:  # GRAV GUN
-      RandomType: 2  # TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2
-      ToArmorPre: 5.0  # 1.2
-      ToHealth: 5.0  # 0.6
-      ToStun: 5.0  # 1.0
-    spawnUnit: STR_GRETCHIN
-    spawnUnitFaction: -1
-    invWidth: 0
-    invHeight: 0
-    recover: false
-    hitSound: 2123  # sizzlebamf
-    explosionHitSound: {mod: 40k, index: 790}  # vortexpull
-    hitAnimation: 1110
-    hitAnimFrames: 16
-    listOrder: 12152
