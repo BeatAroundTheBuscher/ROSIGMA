@@ -334,6 +334,8 @@ research:
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_ASSASSINORUM  # Officio Assassinorum Selected
     refNode: *STR_LOCKED
+  - name: STR_CHOSEN_ORKZ  # Emprah's Greenest Selected
+    refNode: *STR_LOCKED
 
   - name: STR_NOT_MARINES  # (Not Space Marines)
   - name: STR_NOT_ASSAULT  # (Not Assault Strategy)
@@ -779,6 +781,7 @@ research:
       - STR_MARINES_AND_INQUISITION
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
+      - STR_INQ_STORMTROOPER_CODEX_UNLOCKER
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -969,6 +972,7 @@ research:
       - STR_CHAOS_STRATEGY_ARBITES
       - STR_NOT_ARBITES
       - STR_HB_DEP1
+      - STR_GREENEST_ORKZ
 
 ### Chaos Cult #STRATEGY.AT.CULT#
   - name: STR_CHAOS_STRATEGY  # Ruinous Powers
@@ -1009,6 +1013,7 @@ research:
       - STR_LASER_WEAPONS
       - STR_MELTAGUN_TECH
       - STR_NOT_CHAOSCULT
+      - STR_GREENEST_ORKZ
     unlocks:
       - STR_CHAOS_STRATEGY
       - STR_MOTION_SCANNER
@@ -1025,6 +1030,46 @@ research:
       - STR_NOT_STEEL_LEGION_STRATEGY
     reenables:
       - STR_CYDONIA_OR_BUST
+
+### Da Emprah's Greenest Ork Strategy
+  - name: STR_GREENEST_ORKZ  # Ork Strategy
+    spawnedEvent: STR_GREENEST_CARE_PACKAGE
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_ARBITES
+    lookup: STR_CHOSEN_ORKZ
+    unlocks:
+      - STR_MOTION_SCANNER
+      - STR_GUARD_BARRACKS
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING # da greenest knows 'ow ta train da boyz.
+      - STR_LASER_WEAPONS
+      - STR_LIGHT_BOLTERS_LOWTIER
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_ORK_ONLY
+      - STR_ORK_BASIC_WEAPONS
+      - STR_ORK_WEAPONS_EXAM
+      - STR_ORK_SHOOTA_EXAM
+      - STR_ORK_KOMBI_EXAM
+      - STR_ORK_BIG_DAKKA_EXAM
+    disables:
+      - STR_MARINES_STRATEGY
+      - STR_CHAMBERMILITANT
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ARBITES
+      - STR_ADEPTAS
+      - STR_CHAOS_STRATEGY_ARBITES
+      - STR_ORK_DEAL
+      - STR_ORK_MERCENARIES
+      - STR_ORK_RESPECT
+      - STR_MASTER_CRAFTING_AMMO # masta' craftin? wutz dat?
+      - STR_MASTER_CRAFTING
+      - STR_IMPERIAL_GUARD_MISSIONS
+      - STR_ELDAR_ALLIANCE # Da Greenest aint workin' wif no pansies.
+    reenables:
+      - STR_CYDONIA_OR_BUST
+      - STR_CHAPTER_PURITY # for standard missions to spawn.
 
 ## Adeptas #STRATEGY.SOB#
   - name: STR_ADEPTAS  # Sister of Battle
@@ -1535,23 +1580,23 @@ research:
     refNode: *STR_LOCKED
 
   - name: STR_ELDAR_ALLIANCE  # Eldar Proposal
-    cost: 1000
+    cost: 800
     points: -500
     dependencies:
       - STR_ELDAR_LEADER_INTERROGATED
       - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
-      - STR_NOT_CHAMBER
+      - STR_NOT_DEATHWATCH
+      - STR_NOT_GK
       - STR_CHAPTER_PURITY
     unlocks:
       - STR_ELDAR_ONLY
 
   - name: STR_ELDAR_PATH  # Eldar Alliance
-    cost: 1000
+    cost: 800
     points: -500
     dependencies:
-      - STR_GUARD_AND_ARBITES
       - STR_ELDAR_ALLIANCE
       - STR_CHAPTER_PURITY
       - STR_LOSE_500
@@ -1560,6 +1605,7 @@ research:
       - STR_ADEPTAS_CHAOS_PATH
       - STR_CHAMBER_CHAOS_PATH
       - STR_MARINE_CHAOS_PATH
+      - STR_HERETICAL_INQUISITOR_STRATEGY
     unlocks:
       - STR_ELDAR_ARMORY_EXAM
     getOneFree:
@@ -1646,12 +1692,18 @@ research:
   - name: STR_ORK_LEADER_INTERROGATED  # Ork Boss Interrogation
     refNode: *STR_LOCKED
 
+  - name: STR_ORK_BOY_RECRUITMENT  # Unlocks recruitment of Orks
+    refNode: *STR_LOCKED
+
+  - name: STR_ORK_BASIC_WEAPONS  # Unlocks basic Ork Weapons
+    refNode: *STR_LOCKED
+
   - name: STR_ORK_DEAL  # Ork Arms Deal
     cost: 1000
-    points: -500
+#    points: -500 # removed for ork strat
     dependencies:
       - STR_ORK_LEADER_INTERROGATED
-      - STR_LOSE_500
+#      - STR_LOSE_500
       - STR_NOT_MARINES
       - STR_NOT_ADEPTAS
       - STR_NOT_STEEL_LEGION_STRATEGY
@@ -1663,16 +1715,24 @@ research:
       - STR_ORK_SHOOTA_EXAM
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+      - STR_ORK_BASIC_WEAPONS
 
   - name: STR_ORK_MERCENARIES  # Ork Mercenaries
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL3_DEFEATED
+    unlocks:
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_SPOOKUM_KAMP_RECRUITED
 
   - name: STR_ORK_RESPECT  # Respect of the Orks
     dependencies:
       - STR_ORK_DEAL
       - STR_ORK_BASE_LEVEL5_DEFEATED
+    unlocks:
+      - STR_MEK_KLAN_RECRUITED # unlocks special weapons
+      - STR_SPEED_KULT_RECRUITED
+      - STR_DAKKA_GITZ_RECRUITED
 
 ### General Chaos Corruption Path
   - delete: STR_CHAOS_PATH
@@ -1708,7 +1768,6 @@ research:
     # Heretical Inquisitior's entry into the generic chaos path.
     cost: 100
     points: 0
-    affectsGameProgress: true
     dependencies:
       - STR_CHAMBERMILITANT
       - STR_HERETICAL_INQUISITOR_STRATEGY
@@ -2470,6 +2529,10 @@ research:
 ### Tactical Strategy #PROGRESSION.SM.TAC#
 
 ## Chamber Militant #PROGRESSION.CM#
+
+  - name: STR_INQ_STORMTROOPER_CODEX_UNLOCKER  # Unlocks Ufopedia entries for Inquis Stormtroopers (various triggers)
+    refNode: *STR_LOCKED
+
   - name: STR_IMPERIAL_INQUISITOR_REQUISITION  # Requisition Inquisitor
     # To recruit Inquisitors
     cost: 600
@@ -2489,7 +2552,7 @@ research:
       - STR_IMPERIAL_INQUISITOR_REQUISITION
 
   - name: STR_INQ_STORMTROOPER_REQUISITION  # Requisition Inquisition Storm Troopers
-    cost: 500
+    cost: 400
     points: 10
     dependencies:
       - STR_CHAMBERMILITANT
@@ -2499,11 +2562,33 @@ research:
   - name: STR_INQ_STORMTROOPER  # Inquisition Storm Trooper
     # Same as soldier name entry, used as the requirement for recruitment.
     # Probably redundant if requirements were moved to STR_INQ_STORMTROOPER_REQUISITION as this is not directly researched.
-    cost: 500
-    points: 10
     dependencies:
       - STR_GENERALLOCK
       - STR_INQ_STORMTROOPER_REQUISITION
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+    cost: 500
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_ALIEN_ALLOYS  # Adamantium
+    unlocks:
+      - STR_MEDI_KIT_PREREQ
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+    cost: 1000
+    points: 20
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+
+  - name: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
+    cost: 1000
+    points: 30
+    dependencies:
+      - STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+      - STR_HIGHTIER_PREREQ
 
   - name: STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon Agents of the Inquisition
     cost: 250
@@ -2540,6 +2625,7 @@ research:
       - STR_LOSE_250
     unlocks:
       - STR_HWP_CANNON_SHELLS
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE
     spawnedEvent: STR_INQ_REQUISITION_ARBITES_JUDGES_EVENT
 
   - name: STR_INQ_REQUISITION_GUARD_RESEARCH  # Requisition Guard Veterans
@@ -2562,6 +2648,9 @@ research:
       - STR_INQ_REQUISITION_GUARD_RESEARCH
       - STR_LOSE_250
     spawnedEvent: STR_INQ_REQUISITION_HEAVY_GUARD_EVENT
+    unlocks:
+      - STR_ROTOR_CANNON_RESEARCH
+      - STR_AUTOCANNON_TECH
 
   - name: STR_INQ_REQUISITION_KRIEG_GRENADIERS_RESEARCH  # Requisition Krieg Grenadier Kill Team
     cost: 700
@@ -2712,6 +2801,73 @@ research:
       - STR_HIGHTIER_PREREQ
     spawnedEvent: STR_INQ_RR_DEATHCULT_RITUAL_3_EVENT
 
+  - name: STR_INQ_BLACK_MARKET_XENOTECH_RESEARCH  # Acquire Black Market Xenotech
+    cost: 250
+    points: -50
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_XENO_ONLY
+      - STR_LOSE_50
+    spawnedEvent: STR_INQ_BLACK_MARKET_XENOTECH_EVENT
+    repeatable: true
+
+  - name: STR_INQ_CONSORT_AELDARI_RESEARCH  # Consort with the Aledari
+    cost: 400
+    points: -100
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_LOSE_100
+    unlocks:
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_ELDAR_LEADER_INTERROGATED
+
+  - name: STR_INQ_CONSORT_TAU_RESEARCH  # Consort with the Tau
+    cost: 400
+    points: -100
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_LOSE_100
+    unlocks:
+      - STR_XENO_LEADER_INTERROGATED
+      - STR_TAU_FIREWARRIORCAPTAINAI
+
+
+  # Acquires a new Xeno tech topic. Should include all requirements for STR_NECRONTECH_RESEARCH and STR_TAU_XENOTECH
+  # Orks/Eldar excluded because their item topics don't contribute to their path/weapon usage (their path starts only with a Leader Interrogation)
+  # If new Xenos things in future, add to list.
+  - name: STR_INQ_XENOTECH_ANALYSIS_RESEARCH  # Xenotech Sythetic Analysis
+    cost: 400
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_XENO_ONLY
+    spawnedEvent: STR_INQ_XENOTECH_ANALYSIS_EVENT
+    repeatable: true
+    getOneFree:
+      # Tau
+      - STR_TAU_PULSE_MAG
+      - STR_TAU_RAIL_MAG
+      - STR_TAU_PULSE_RIFLE
+      - STR_TAU_PULSE_CARBINE
+      - STR_TAU_PULSE_BLASTER
+      - STR_TAU_PULSE_PISTOL
+      - STR_TAU_RAIL_RIFLE
+      - STR_TAU_PHOTON_GRENADE
+      - STR_TAU_FUSION_GRENADE
+      - STR_TAU_EMP_GRENADE
+      - STR_TAU_DRONEAI
+      # Necrons
+      - STR_GAUSS_BLASTER
+      - STR_HYPERPHASESWORD
+      - STR_SYNAPTIC_DISINTEGRATOR
+      - STR_GAUSS_FLAYER
+      - STR_GAUSS_REAPER
+      - STR_NECRON_WARSCYTHE
+      - STR_STAFF_OF_LIGHT
+
 
   - name: STR_HERETICAL_INQUISITOR_STRATEGY  # Heretical Means Path
     cost: 100
@@ -2726,6 +2882,8 @@ research:
     reenables:
       - STR_CHAOS_PATH
     disables:
+      - STR_XENO_ONLY
+      - STR_ELDAR_PATH
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT
       - STR_REINFORCEMENT_2
@@ -2778,7 +2936,7 @@ research:
       - STR_LOSE_250
     spawnedEvent: STR_INQ_CONTACT_DEFECTOR_SISTERS_EVENT
 
-  - name: STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Sisters Contacted
+  - name: STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH  # Heretical Marines Contacted
     cost: 1100
     points: -500
     dependencies:
@@ -2788,23 +2946,13 @@ research:
 
   - name: STR_INQ_SECURE_SUPPORT_REVISIONISTS_RESEARCH  # Secure Revisionists Support
     cost: 800
-    points: -750
+    points: -500
     dependencies:
       - STR_INQ_CONTACT_REVISIONISTS_RESEARCH
       - STR_INQ_CONTACT_DEFECTOR_SISTERS_RESEARCH
       - STR_INQ_CONTACT_DEFECTOR_MARINES_RESEARCH
       - STR_LOSE_750
     spawnedEvent: STR_INQ_SECURE_SUPPORT_REVISIONISTS_EVENT
-
-  - name: STR_INQ_BLACK_MARKET_XENOTECH_RESEARCH  # Acquire Black Market Xenotech
-    cost: 300
-    points: -50
-    dependencies:
-      - STR_HERETICAL_INQUISITOR_STRATEGY
-      - STR_MIDTIER_PREREQ
-      - STR_LOSE_50
-    spawnedEvent: STR_INQ_BLACK_MARKET_XENOTECH_EVENT
-    repeatable: true
 
   - name: STR_INQ_ARCHENEMY_ARMAMENTS_RESEARCH  # Armaments of the Archenemy
     cost: 100
@@ -3021,6 +3169,8 @@ research:
     unlocks:
       - STR_ORK_ONLY
       - STR_ELDAR_ONLY
+    disables:
+      - STR_HERETICAL_INQUISITOR_STRATEGY
 
   - name: STR_TAU_XENOTECH  # Tau Xenotech
     # grant access to Tau Weapons
@@ -3172,6 +3322,77 @@ research:
       - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
+
+### Emprah's Greenest #PROGRESSION.AT.ORKZ#
+  - name: STR_ORKZ_MIDTIER  # Greenest Mid-tier Requisitions
+    # cutcscene c2
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_LOCAL_ORKZ_RECRUITED # need to beat at least one local ork base
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_GREENEST_ORKZ
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_HARDER_MISSIONS
+      - STR_MARINE_BOLTERS
+    cutscene: c2
+
+  - name: STR_ORKZ_HIGHTIER  # Greenest High-tier Requisitions
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_GREENEST_ORKZ
+      - STR_CYDONIA_OR_BUST
+      - STR_MEK_KLAN_RECRUITED # need all 4 special Ork camps for high tier
+      - STR_SPEED_KULT_RECRUITED
+      - STR_SPOOKUM_KAMP_RECRUITED
+      - STR_DAKKA_GITZ_RECRUITED
+    unlocks:
+      - STR_HIGHTIER_PREREQ
+
+  - name: STR_ORKZ_MASTER_CRAFTING  # Ork Master crafting, for ammo and maybe weapons.
+    cost: 200
+    points: 30
+    dependencies:
+      - STR_ORKZ_MIDTIER
+      - STR_MEK_KLAN_RECRUITED
+
+  - name: STR_MEK_KLAN_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_SPEED_KULT_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_SPOOKUM_KAMP_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_DAKKA_GITZ_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LOCAL_ORKZ_RECRUITED
+
+  - name: STR_PDF_DEPOT_RAIDED
+    dependencies:
+      - STR_GENERALLOCK # unlocked by defeating the appropriate base
+    unlocks:
+      - STR_LIGHT_BOLTERS
+
+  - name: STR_LOCAL_ORKZ_RECRUITED
+    dependencies:
+      - STR_GENERALLOCK
 
 ### Chaos Cult #PROGRESSION.AT.CULT#
   - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
@@ -10059,6 +10280,7 @@ research:
       - STR_TAU_DRONEAI
     unlocks:
       - STR_INTERROGATION_COMPLETED
+      - STR_XENO_LEADER_INTERROGATED
       - STR_TAU_FIREWARRIORCAPTAINAI_ARMOR
     destroyItem: true
 
@@ -10994,3 +11216,31 @@ research:
     points: 50
     needItem: true
     destroyItem: true
+
+# Techpriest
+
+  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
+    cost: 400
+    points: 20
+    unlocks:
+      - STR_ENGINSEER_REQUISITION
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+    listOrder: 20
+
+  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    listOrder: 20
+
+  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_ENGINSEER_REQUISITION
+    listOrder: 21

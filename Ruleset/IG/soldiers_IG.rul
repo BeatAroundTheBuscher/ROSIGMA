@@ -245,7 +245,7 @@ soldiers:
       tu: 45
       stamina: 50
       health: 25
-      bravery: 5
+      bravery: 10
       reactions: 20
       firing: 25
       throwing: 35
@@ -379,11 +379,6 @@ soldiers:
   - type: STR_COMMISSAR
     requires:
       - STR_IMPERIAL_GUARD_OPERATIONS
-    skills:
-      - STR_GUARD_PRIMER_SKILL
-      - STR_GUARD_PRIMER_MELEE_SKILL
-      - STR_SKILL_COMMISSAR_ACTIVATE_EXECUTION_MODE
-    skillIconSprite: {mod: 40k, index: 101}
     value: 30
     rankStrings:
       - STR_COMMISSAR
@@ -846,6 +841,7 @@ soldiers:
   - &STR_OGRYN
     type: STR_OGRYN
     armor: STR_OGRYN_CARAPACE_BASIC
+    costBuy: 60000
     minStats:
       tu: 60
       stamina: 50
@@ -983,11 +979,6 @@ soldiers:
     requires:
       - STR_GENERALLOCK  # noqa
     costSalary: 100000
-    skills:
-      - STR_GUARD_PRIMER_SKILL
-      - STR_GUARD_PRIMER_MELEE_SKILL
-      - STR_SKILL_COMMISSAR_ACTIVATE_EXECUTION_MODE
-    skillIconSprite: {mod: 40k, index: 101}
     minStats:
       tu: 65
       stamina: 110
@@ -1072,7 +1063,9 @@ soldiers:
 
   - type: STR_LORD_COMMISSAR_YARRICK
     refNode: *STR_COMMISSAR_LORD
+    skillIconSprite: 207
     armor: STR_COMMISSAR_YARRICK_UC
+    moraleLossWhenKilled: 500  # Losing a commissar lord is especially demoralizing and bad for discipline
     deathFemale: [41, 42, 43]
     value: 50
 
@@ -1908,68 +1901,6 @@ soldiers:
       - delete
       - Names/officer.nam
 
-  # DIG IN
-  - type: STR_GUARDSM
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_VETERAN
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_SQUAT
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_BEASTMAN
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_FELINID
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_TANITH
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARDSM_KRIEG
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARD_KRIEG_GRENADIER
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_STORMTROOPER
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_INQ_STORMTROOPER
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARDSL
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARDSL_VETERAN
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARDSL_OFFICER
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_GUARDSL_OFFICER_VETERAN
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-  - type: STR_CATACHAN_FIGHTER
-    skillIconSprite: 995
-    skills:
-      - STR_DIG_IN
-
   # catachan
   - type: STR_CATACHAN_FIGHTER
     requiresBuyBaseFunc: [IMPERIUM]
@@ -2301,3 +2232,79 @@ soldiers:
     value: 9999
     tags:
       SOLDIER_IS_LONE_WOLF: 1
+
+  - type: STR_ENGINSEER                 # Techpriest Enginseer
+    costSalary: 75000
+    requires:
+      - STR_GENERALLOCK
+    minStats:
+      tu: 50
+      stamina: 60
+      health: 45
+      bravery: 50
+      reactions: 50
+      firing: 60
+      throwing: 50
+      strength: 30
+      psiStrength: 10 # min human
+      psiSkill: 0
+      melee: 50  # was 20
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 60
+      bravery: 80
+      firing: 70
+      reactions: 60
+      melee: 60
+      throwing: 65
+      strength: 45
+      psiStrength: 40 # regular non-psionic human
+      psiSkill: 25
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 80
+      bravery: 110
+      firing: 120
+      reactions: 80
+      melee: 110
+      throwing: 80
+      strength: 80 # inbuilt bionics
+      psiStrength: 45
+      psiSkill: 100
+    trainingStatCaps:
+      tu: 60
+      stamina: 80
+      health: 60
+      firing: 80
+      throwing: 70
+      strength: 35
+      melee: 70
+      psiStrength: 45
+      psiSkill: 100
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_ENGINSEER_ARMOR_UC
+    standHeight: 22
+    kneelHeight: 14
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    soldierNames:
+      - delete
+      - Names/enginseer.nam
+    deathMale: [{mod: 40k, index: 713}, {mod: 40k, index: 714}, {mod: 40k, index: 715}, {mod: 40k, index: 716}, {mod: 40k, index: 717}, {mod: 40k, index: 718}, {mod: 40k, index: 719}, {mod: 40k, index: 720}, {mod: 40k, index: 721}, {mod: 40k, index: 722}]
+    deathFemale: [{mod: 40k, index: 744}, {mod: 40k, index: 745}, {mod: 40k, index: 746}, {mod: 40k, index: 747}, {mod: 40k, index: 748}, {mod: 40k, index: 749}, {mod: 40k, index: 750}, {mod: 40k, index: 751}, {mod: 40k, index: 752}]
+    value: 30
+    rankStrings:
+      - STR_TECH_ENGINSEER_RANK_0
+      - STR_TECH_ENGINSEER_RANK_0
+    rankSprite: {mod: 40k, index: 1000}
+    rankBattleSprite: {mod: 40k, index: 1000}
+    rankTinySprite: {mod: 40k, index: 1000}
+    flagOffset: 42 # guard kill flags
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 66 # inbuilt bionics
