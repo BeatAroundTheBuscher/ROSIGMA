@@ -4,13 +4,9 @@
 research:
 ### core tech tree research -- story event research is in story_research_TAU.rul
   - name: STR_TAU_EMPIRE_GV         # (Tau and friends)
-    cost: 0
-    points: 0
     dependencies:
       - STR_GENERALLOCK
   - name: STR_TAU_GUEVESA         # (Guevesa faction with Imperial weapons access)≠–
-    cost: 0
-    points: 0
     dependencies:
       - STR_GENERALLOCK      
   # Everyone has these two by default
@@ -95,16 +91,15 @@ research:
       - STR_NOT_TAU_EMPIRE_GV
       - STR_NOT_TAU_GUEVESA_GV
       - STR_NOT_TAU_ARBITES_GV
+      - STR_NAVY_COMUNICATIONS    # the navy doesnt want to talk to you
     spawnedEvent: STR_TAU_PDF_START_EVENT_GV
 
 ### allows the guevesa interceptors
-  - name: STR_TAU_GUEVESA_INTERCEPTORS
+  - name: STR_BASIC_GUEVESA_INTERCEPTORS
     cost: 0
     points: 0
     dependencies:
       - STR_TAU_GUEVESA
-
-
 
 ### Progression strategies to mid-tier
 ### "Remedial Imperial Guard Operations"
@@ -120,14 +115,12 @@ research:
       - STR_MOTION_SCANNER  # working radios
       - STR_GAIN_250
     unlocks:
-      - STR_HEAVY_WEAPONS_IG            # regimental weapons are getting onto the black market
+      - STR_HEAVY_WEAPONS_IG            # cannot make mounted equipment
       - STR_LIGHT_BOLTERS_LOWTIER       # bolters too
+      # - figure out a way to give STR_CHAINSWORD_STEEL_LEGION and STR_POWERFIST_STEEL_LEGION here
     getOneFree:
       - STR_TAU_TRADING                 # unlocks the very expensive rifles
     spawnedEvent: STR_WHITESHIELD_BLACK_MARKET_EVENT_GV
-
-
-### Mid-tier Requisitions Part 1
 
 ### Gives you more affordable export pulse weapons
 ### Opens Inquisition interest
@@ -143,22 +136,12 @@ research:
       - STR_LOSE_250
     unlocks:
       - STR_TAU_GUEVESA_TRADING           # unlocks cheaper rifles and carbines + flak
-      - STR_BALLISTIC_WEAPONS_HIGHGRADE   # Guard mid-tiers
-      - STR_LIGHT_BOLTERS_MIDTIER
-      - STR_AUTOCANNON_TECH
-      - STR_MIDTIER_PREREQ
-      - STR_HARDER_MISSIONS
-      - STR_INQUISITION_ATTENTION_GV      # uh oh!      
     disables:
       - STR_TAU_TRADING
     getOneFree:
       - STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA
     spawnedEvent: STR_THE_COLD_TRADE_EVENT_GV   # talk to the Tau here?
     
-### timed event w/ maxRuns 1 where you talk to the Tau after The Cold Trade is done?
-
-    # STR_FROM_THE_BARREL_EVENT_GV should be a monthly event
-
   - name: STR_INQUISITION_ATTENTION_GV
     points: 0
     cost: 0
@@ -166,9 +149,8 @@ research:
       - STR_THE_COLD_TRADE_GV
 
 ### Community outreach to get beastmen soldiers + cultists - can upgrade to Marin'vesa
-
 ### gated on mission/interrogation?
-  - name: STR_RECEIVE_PILGRIMS_GV
+  - name: STR_SISTER_HOLLY_GV
     points: 0
     cost: 200
     dependencies:
@@ -178,16 +160,23 @@ research:
       - STR_CULTURE_CLUB_GV         # guevesa cultists infiltrate you - militia promote to veterans
       - STR_TANKERS_DELIGHT_GV      # heavy guard equipment as remaining loyalist guardsmen join you
       - STR_BEASTMEN_CULTISTS_GV    # beastmen look to you for protection
-      - STR_PATHFINDER_BEACON_GV    # pathfinders infiltrate
-    spawnedEvent: STR_RECEIVE_PILGRIMS_EVENT_GV
+    spawnedEvent: STR_SISTER_HOLLY_EVENT_GV
 
+### Skilled pilgrims, veterans, etc start arriving
   - name: STR_CULTURE_CLUB_GV
     points: -250
     cost: 10
     dependencies:
       - STR_GENERALLOCK
+    unlocks:
+      - STR_PATHFINDER_BEACON_GV    # pathfinders infiltrate
+      - STR_INQUISITION_ATTENTION_GV      # uh oh!
+      - STR_BALLISTIC_WEAPONS_HIGHGRADE   # Guard mid-tiers
+      - STR_MIDTIER_PREREQ
+      - STR_HARDER_MISSIONS
     spawnedEvent: STR_CULTURE_CLUB_EVENT_GV
 
+### Beastmen arrive, consider gating on mission
   - name: STR_BEASTMEN_CULTISTS_GV
     points: -250
     cost: 10
@@ -196,74 +185,107 @@ research:
     spawnedEvent: STR_BEASTMEN_CULTISTS_EVENT_GV
 
 ### Unlock Leman Russ ops
-### Sentinels too
+### Basic Sentinels too
+### Gate on mission
   - name: STR_TANKERS_DELIGHT_GV
     points: 0
     cost: 10
     dependencies:
       - STR_GENERALLOCK
+    unlocks: 
+      - STR_LIGHT_BOLTERS_MIDTIER
+      - STR_AUTOCANNON_TECH      
+      - STR_BASIC_SENTINEL
+      - STR_BASIC_SENTINEL_MISSILE
+      # - STR_ARMOR_COLUMN -- deal with this craft stuff later
+      # - STR_GUEVESA_CREW_SERVED_WEAPONS_GV -- unlocks the mounted weapons and mortars
     spawnedEvent: STR_TANKERS_DELIGHT_EVENT_GV
 
+### Work out an arrangement with the Navy interceptors
+### Leads eventually to retrofitting the Navy Thunderbolts with Tau tech
+### Leads eventually to Tau craft weapons
+### Manufacturing projects along these lines
+  - name: STR_COOPT_NAVY_INTERCEPTORS_GV
+    points: 0
+    cost: 10
+    dependencies:
+      - STR_CULTURE_CLUB_GV
+    unlocks:
+      - STR_AIRSTRIKE_REQUISITION
+    spawnedEvent: STR_COOPT_NAVY_INTERCEPTORS_EVENT_GV
+
+  - name: STR_TAU_CRAFT_UPGRADES_GV
+    points: 0
+    cost: 10
+    dependencies:
+      - STR_COOPT_NAVY_INTERCEPTORS_GV
+      - STR_TANKERS_DELIGHT_GV
+      - STR_CULTURE_CLUB_GV
+    spawnedEvent: STR_TAU_CRAFT_UPGRADES_EVENT_GV
+
+### Pathfinders patch you into the system bc theyre bros
   - name: STR_PATHFINDER_BEACON_GV
     points: -250
     cost: 10
     dependencies:
-      - STR_GENERALLOCK
-    spawnedEvent: STR_PATHFINDERS_ARRIVE_FIRST_EVENT_GV
+      - STR_CULTURE_CLUB_GV
+    unlocks:
+      - STR_TAU_PATHFINDERS_GV   # unlocks pathfinders arriving
+      - STR_TAU_ARMORY_EXAM
+    spawnedEvent: STR_PATHFINDERS_ARRIVE_FIRST_EVENT_GV # spawns free pathfinders
+    getOneFree:
+      - STR_TAU_XENOTECH
 
-# Full alliance with the Tau
+### Full alliance with the Tau
   - name: STR_A_SECRET_PACT_GV
     points: -250
     cost: 250
     dependencies:
       - STR_THE_COLD_TRADE_GV
-      - STR_CULTURE_CLUB_GV
+      - STR_PATHFINDER_BEACON_GV
     unlocks:
-      - STR_TAU_ARMORY_EXAM
-      - STR_TAU_EMBASSY_GV          # FW recruitment
-      - STR_TAU_FLEET_BEACON_GV     # Tau fleet services after a timer
-      - STR_AIRSTRIKE_REQUISITION
-      - STR_BIONICS_OPERATION       # proper med facilities redo as tau bionics
-    getOneFree:
-      - STR_TAU_XENOTECH
+      - STR_TAU_CONSULATE_GV        # FW recruitment?
+      - STR_BIONICS_OPERATION       # proper med facilities redo as tau bionics    
+      - STR_EARTHCASTE_SMITHS_GV    # Low rate Tau weapons manufacturing
     spawnedEvent: STR_A_SECRET_PACT_EVENT_GV
 
-  - name: STR_TAU_EMBASSY_GV
-    points: 0
-    cost: 0
+  - name: STR_EARTHCASTE_SMITHS_GV
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_TAU_BARRACKS_GV
-    points: 0
-    cost: 0
+  - name: STR_TAU_CONSULATE_GV
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_TAU_FLEET_BEACON_GV
-    points: 0
-    cost: 0
+  # Ceramite plates
+  - name: STR_FOR_THE_GREATER_GOOD_GV
+    cost: 250
+    points: 250
     dependencies:
-      - STR_GENERALLOCK
-    unlocks:
-      - STR_TAU_ORBITAL_STRIKE_GV   # orbital strike
-
-
-  - name: STR_TAU_ORBITAL_STRIKE_GV   # orbital strike
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-### Unlocks Guard tier beastmen
-  - name: STR_MARINVESA_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_BEASTMEN_CULTISTS_GV
+      - STR_UFO_CONSTRUCTION
       - STR_A_SECRET_PACT_GV
     unlocks:
-      - STR_BEASTMEN_GUARDSMEN
+      - STR_TAU_CERAMITE_TIER
+
+
+### infantry type unlocks
+  - name: STR_TAU_PATHFINDERS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TAU_BREACHERS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TAU_STRIKE_TEAMS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK      
 
 ### Unlocks Guard tier beastmen (and Marinvesa colored carapace)
   - name: STR_MARINVESA_GV
@@ -275,13 +297,6 @@ research:
     unlocks:
       - STR_BEASTMEN_GUARDSMEN
 
-  # reconfigure this!!!
-  - name: STR_REGIMENTAL_COLLAPSE_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK    
-
 ### Tau Guevesa Trade
   - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
     # gives half price access to Tau Export Pulse Rifles at the Trading Post
@@ -290,49 +305,6 @@ research:
     points: 0    
     dependencies:
       - STR_GENERALLOCK      
-
-### Mid tier techs
-  - name: STR_DEVILFISH_TRANSPORTS
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-      
-      
-  - name: STR_REMORA_INTERCEPTORS_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_FIRECASTE_ADVISORS_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_EARTHCASTE_SMITHS_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-  - name: STR_WATERCASTE_ENVOYS_GV
-    points: 0
-    cost: 0
-    dependencies:
-      - STR_GENERALLOCK
-
-
-  # Ceramite plates
-  - name: STR_COMRADES_IN_ARMS_GV
-    cost: 250
-    points: 250
-    dependencies:
-      - STR_UFO_CONSTRUCTION
-      - STR_A_SECRET_PACT_GV
-    unlocks:
-      - STR_TAU_CERAMITE_TIER
 
   ### Recruit Fire Warriors directly
   - name: STR_RECRUIT_FIREWARRIORS_GV
@@ -403,7 +375,7 @@ research:
       - STR_WHITED_SEPULCHRES_SUCCESS_GV
 
   ### Aren't you just feeding Astartes to coyotes?
-  - name: STR_YOUR_BROTHERS_KEEPER
+  - name: STR_BROTHERS_KEEPER_GV
     cost: 0
     points: 0
     dependencies:
@@ -540,7 +512,7 @@ research:
       - STR_CONTACT_NICASSAR_GV      
       - STR_EARTHCASTE_PROTOTYPES
       - STR_SUBORN_ECCLESIARCHY_GV
-      - STR_YOUR_BROTHERS_KEEPER
+      - STR_BROTHERS_KEEPER_GV
       - STR_A_KILLER_IN_THE_SUN
       - STR_WHERE_EAGLES_DARE      
 
@@ -558,11 +530,51 @@ research:
     disables:
       - STR_NOT_DEBUG_TAU_EMPIRE_GV
 
+  # destroy the Watch Fortress and send a fake signal
+  - name: STR_END_OF_WATCH_GV
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+### Ambush and capture the Imperial occupation force
   - name: STR_TAU_BUST  # Ending the Warp # cutcscene c3 STR_ARBITES disables STR_CYDONIA_OR_BUST SO MISSION CAN DIFERE
     cost: 600
     cutscene: c3
     points: 60
     dependencies:
       - STR_TAU_EMPIRE_GV
-      - STR_COMMANDER_PLUS
+      - STR_END_OF_WATCH_GV
     unlockFinalMission: false
+
+  # reconfigure this!!!
+  - name: STR_REGIMENTAL_COLLAPSE_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK    
+
+### Mid tier techs
+  - name: STR_DEVILFISH_TRANSPORTS
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_REMORA_INTERCEPTORS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_FIRECASTE_ADVISORS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_WATERCASTE_ENVOYS_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK

@@ -20,23 +20,51 @@ items:
     costBuy: 50000
     costSell: 7500
 
-  - type: STR_TAUBASIC_ARMOR_ITEM_GV
+  - type: STR_TAU_BASIC_ARMOR_ITEM_GV
     requiresBuy:
       - STR_EARTHCASTE_SMITHS_GV
     costBuy: 50000
     costSell: 10000    
 
-  - type: STR_TAUADV_ARMOR_ITEM_GV
+  - type: STR_TAU_ADV_ARMOR_ITEM_GV
     requiresBuy:
-      - STR_COMRADES_IN_ARMS_GV
+      - STR_EARTHCASTE_SMITHS_GV
     costBuy: 50000
     costSell: 10000    
 
-  - type: STR_TAUHIGHTIER_ARMOR_ITEM_GV
+
+  - type: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+    requires:
+      - STR_TAU_PATHFINDERS_GV
     requiresBuy:
-      - STR_THE_GREATER_GOOD_GV
-    costBuy: 100000
+      - STR_EARTHCASTE_SMITHS_GV
+    costBuy: 50000
     costSell: 10000
+
+#  - type: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+#    requires:
+#      - STR_TAU_PATHFINDERS_GV
+#    requiresBuy:
+#      - STR_EARTHCASTE_SMITHS_GV
+#    costBuy: 50000
+#    costSell: 10000
+     
+  - type: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+#    requires:
+#      - STR_TAU_BREACHERS_GV
+    requiresBuy:
+      - STR_EARTHCASTE_SMITHS_GV      
+    costBuy: 50000
+    costSell: 10000    
+
+
+
+
+#  - type: STR_TAU_ADV_ARMOR_ITEM_GV
+#    requiresBuy:
+#      - STR_COMRADES_IN_ARMS_GV
+#    costBuy: 50000
+#    costSell: 10000    
 
 armors:
   - update: STR_GUARDPD_ARMOR_UC
@@ -129,8 +157,9 @@ armors:
 ### TAU FIRE WARRIOR ARMORS
 ### no storeItem, you should not be able to get this
 ### template only 
-  - &STR_TAUBASIC_ARMOR_TEMPLATE_GV
-    type: STR_TAUBASIC_ARMOR_GV
+  - &STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    type: STR_TAU_BASIC_ARMOR_GV
+    requires: STR_GENERALLOCK
     visibilityAtDay: 40
     visibilityAtDark: 30 #advanced NV
     antiCamouflageAtDark: 5 #superior Tau optics
@@ -161,13 +190,10 @@ armors:
       - 0.0  # SMOKE
       - 0.8  # IMPACT
       - 1.0  # MELTA
-    units:
-      - STR_FIREWARRIOR_GV
-      - STR_FIREWARRIOR_SHASUI_GV
-      - STR_FIREWARRIOR_SHASVRE_GV      
-      - STR_FIREWARRIOR_FIREBLADE_GV      
     loftempsSet: [3]
     allowsRunning: true
+    units:
+      - STR_FIREWARRIOR_GV  
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TAU: 1
@@ -177,10 +203,12 @@ armors:
 
 ### Strike Armor is specialized for long range fire
 ### Leader quality optics and firing accuracy bonus
-  - &STR_TAUSTRIKE_TEMPLATE_GV
-    type: STR_TAUSTRIKE_ARMOR_GV
-    refNode: *STR_TAUBASIC_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+  - &STR_TAU_STRIKE_TEMPLATE_GV
+    type: STR_TAU_STRIKE_ARMOR_GV
+    requires: STR_TAU_STRIKE_TEAMS_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    # storeItem: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+    storeItem: STR_NONE
     visibilityAtDark: 35
     antiCamouflageAtDark: 7
     antiCamouflageAtDay: 7
@@ -191,10 +219,12 @@ armors:
 ### breacher armor is better sealed
 ### resistant to flames/HE/stun/melee/impact
 ### weak shield (is this busted?)
-  - &STR_TAUBREACHER_TEMPLATE_GV
-    type: STR_TAUBREACHER_ARMOR_GV
-    refNode: *STR_TAUBASIC_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+  - &STR_TAU_BREACHER_TEMPLATE_GV
+    type: STR_TAU_BREACHER_ARMOR_GV
+    requires: STR_TAU_BREACHERS_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    # storeItem: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+    storeItem: STR_NONE
     damageModifier:  # Leader quality damage resist
       - 1.0  # none
       - 0.8  # AP
@@ -218,8 +248,10 @@ armors:
 ### pathfinders are pathfinders
   - &STR_TAUPATHFINDER_TEMPLATE_GV
     type: STR_TAUPATHFINDER_ARMOR_GV
-    refNode: *STR_TAUBASIC_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUBASIC_ARMOR_ITEM_GV
+    requires: STR_TAU_PATHFINDERS_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    # storeItem: STR_TAU_FIREWARRIOR_ARMOR_BASIC_ITEM_GV
+    storeItem: STR_NONE
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 10
@@ -234,6 +266,7 @@ armors:
     sideArmor: 60
     rearArmor: 40
     underArmor: 60
+    forcedTorso: 1
     stats:
       tu: 10  # lighter
       stamina: 10  # lighter
@@ -248,10 +281,11 @@ armors:
 ### TAU FIRE WARRIOR SHASUI ARMORS
 ### shasui armor versions, not as good as shas'vre advanced armor
 ### markerlight equip and bravery buffs
-  - type: STR_TAUSTRIKE_LEADER_ARMOR_GV
-    refNode: *STR_TAUSTRIKE_TEMPLATE_GV
+  - type: STR_TAU_STRIKE_LEADER_ARMOR_GV
+    refNode: *STR_TAU_STRIKE_TEMPLATE_GV
     spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
     spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
+    storeItem: STR_NONE
     corpseBattle:
       - STR_TAUFIREWARRIORLEADER_PCCORPSE
     stats:
@@ -268,14 +302,19 @@ armors:
       HAS_MARKERLIGHT: 1
       ARMOR_OVERWATCH_TU_RESTORED: 30
 
-  - type: STR_TAUBREACHER_LEADER_ARMOR_GV
-    refNode: *STR_TAUBREACHER_TEMPLATE_GV
+  - type: STR_TAU_BREACHER_LEADER_ARMOR_GV
+    refNode: *STR_TAU_BREACHER_TEMPLATE_GV
     spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
     spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     corpseBattle:
       - STR_TAUFIREWARRIORLEADER_PCCORPSE
+    storeItem: STR_NONE
     stats:
       bravery: 10
+    units:
+      - STR_FIREWARRIOR_SHASUI_GV
+      - STR_FIREWARRIOR_SHASVRE_GV      
+      - STR_FIREWARRIOR_FIREBLADE_GV      
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TAU: 1
@@ -283,19 +322,22 @@ armors:
       HAS_MARKERLIGHT: 1
       ARMOR_OVERWATCH_TU_RESTORED: 30
 
-
-
   - type: STR_TAUPATHFINDER_LEADER_ARMOR_GV
     refNode: *STR_TAUPATHFINDER_TEMPLATE_GV
-    spriteSheet: TAUFIREWARRIORPATHFINDERbattle_GOG.PCK
-    spriteInv: TAUFIREWARRIORSPATHFINDERARMOR.PCK
+    spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     corpseBattle:
-      - STR_TAUFIREWARRIORPATHFINDER_PCCORPSE
+      - STR_TAUFIREWARRIORLEADER_PCCORPSE
+    storeItem: STR_NONE
     stats:
       tu: 10  # lighter
       stamina: 10  # lighter
       reactions: 10  # lighter    
       bravery: 10
+    units:
+      - STR_FIREWARRIOR_SHASUI_GV
+      - STR_FIREWARRIOR_SHASVRE_GV      
+      - STR_FIREWARRIOR_FIREBLADE_GV      
     tags:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_TAU: 1
@@ -307,8 +349,9 @@ armors:
 
 
 ### TAU FIRE WARRIOR ADVANCED ARMORS
-  - &STR_TAUADV_ARMOR_TEMPLATE_GV
-    type: STR_TAUADV_ARMOR_GV
+  - &STR_TAU_ADV_ARMOR_TEMPLATE_GV
+    type: STR_TAU_ADV_ARMOR_GV
+    requires: STR_GENERALLOCK
     visibilityAtDay: 40
     visibilityAtDark: 35
     antiCamouflageAtDark: 7
@@ -343,6 +386,8 @@ armors:
       - STR_FIREWARRIOR_SHASUI_GV
       - STR_FIREWARRIOR_SHASVRE_GV      
       - STR_FIREWARRIOR_FIREBLADE_GV
+      - STR_EVENT_PATHFINDER_GV 
+      - STR_EVENT_PATHFINDER_SHASUI_GV
     loftempsSet: [3]
     allowsRunning: true
     tags:
@@ -356,9 +401,9 @@ armors:
 
 ### Strike Armor is specialized for long range fire
 ### Captain quality optics and firing accuracy bonus
-  - type: STR_TAUADVSTRIKE_ARMOR_GV
-    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+  - type: STR_TAU_ADVSTRIKE_ARMOR_GV
+    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAU_ADV_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 10
@@ -371,9 +416,9 @@ armors:
 ### breacher armor is better sealed
 ### resistant to flames/HE/stun/melee/impact
 ### has shield (is this busted?)
-  - type: STR_TAUADVBREACHER_ARMOR_GV
-    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+  - type: STR_TAU_ADVBREACHER_ARMOR_GV
+    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAU_ADV_ARMOR_ITEM_GV
     damageModifier:  # Captain quality damage resist
       - 1.0  # none
       - 0.7  # AP
@@ -400,9 +445,9 @@ armors:
       HAS_MARKERLIGHT: 1
 
 ### pathfinders are pathfinders
-  - type: STR_TAUADVPATHFINDER_ARMOR_GV
-    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
-    storeItem: STR_TAUADV_ARMOR_ITEM_GV
+  - type: STR_TAU_ADVPATHFINDER_ARMOR_GV
+    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+    storeItem: STR_TAU_ADV_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 15
     antiCamouflageAtDay: 15
@@ -484,6 +529,7 @@ armors:
 ### GUEVESA FLAK AND CARAPACE ARMORS
   - &STR_GUEVESAFLAK_ARMOR_TEMPLATE_GV
     type: STR_TAUGUEVESAFLAK_PC_ARMOR_GV
+    requires: STR_WHITESHIELD_BLACK_MARKET_GV
     visibilityAtDay: 40
     visibilityAtDark: 9
     spriteSheet: TAUGUEVESALV1battle_GOG.PCK
@@ -515,6 +561,8 @@ armors:
       - 1.0  # MELTA
     units:
       - STR_GUARDSM
+      - STR_MILITIA_GV
+      - STR_MILITIA_OFFICER_GV
       - STR_GUEVESACULTIST_GV
       - STR_GUEVESALA_GV
       - STR_GUEVESAUI_GV
@@ -532,7 +580,7 @@ armors:
 
   - &STR_GUEVESA_CARAPACE_ARMOR_TEMPLATE_GV
     type: STR_TAUGUEVESACARAP_ARMOR_GV
-    refNode: *STR_TAUBASIC_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
     spriteSheet: TAUGUEVESALV2battle_GOG.PCK
     spriteInv: TAUGUEVESALV2ARMOR.PCK
     corpseBattle:
@@ -575,7 +623,7 @@ armors:
 
 
   - type: STR_TAUGUEVESACARAP_VETERAN_ARMOR_GV
-    refNode: *STR_TAUADV_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
     spriteSheet: TAUGUEVESALV2battle_GOG.PCK
     spriteInv: TAUGUEVESALV2ARMOR.PCK
     corpseBattle:

@@ -8,8 +8,8 @@ soldiers:
 # So my thoughts are
 # Managed genetics: Reliably usable soldiers in terms of bravery (40-60) and psiStrength (80-100).
 # Overwatch specialists: Excellent reactions
-# Mobile hunters: Good TU, stamina, firing accuracy
-# Weak arms: Poor strength, melee, throwing
+# Mobile hunters: Good TU + stamina, better min firing accuracy
+# Weak arms: Terrible melee, poor throwing, low strength cap
 # Never psykers: No psiSkill, ever
 
 # Guevesa cloned off IG ranks
@@ -23,28 +23,31 @@ soldiers:
 # Guevesa (done)
 # Need officer orders - Breach and Clear, Keep Firing!, Recon Sweep
 # Beastmen gue'vesa (Morin'vesa - NYI)
+
+### Tau don't use penitents in combat
   - type: STR_PENITENT
     requires: !add
       - STR_NOT_TAU_EMPIRE_GV
 
+### Fire warrior base
   - &STR_FIREWARRIOR_GV
     type: STR_FIREWARRIOR_GV
-    requires:
-      - STR_RECRUIT_FIREWARRIORS_GV
+    requiresBuyBaseFunc: [TAU]
     costBuy: 30000
+    monthlyBuyLimit: 10
     costSalary: 10000
     minStats:
-      tu: 55  # Guard 50
-      stamina: 45  # Guard 40
+      tu: 55  # Guard 50 -- better runners with better rations
+      stamina: 45  # Guard 40 -- better runners with better rations
       health: 25 
-      bravery: 40  # Guard 20
-      reactions: 40  # Guard 30
-      firing: 45  # Guard 40
-      throwing: 25  # Guard 30
-      strength: 8  # Guard 10 -- 8 gives pulse rifle + 1 clip
-      psiStrength: 80 # Guard 0 -- Tau less warp sensitive
+      bravery: 30  # Guard 20 -- I sack all my 20 bravery guard
+      reactions: 40  # Guard 30 -- the overwatchers
+      firing: 55  # Guard 40 -- Tau need to shoot to be useful in combat
+      throwing: 25  # Guard 30 -- weaker arms
+      strength: 10  # Guard 10 -- <10 strengths lead to problems with basic firearms
+      psiStrength: 80 # Guard 0 -- Tau not warp sensitive
       psiSkill: 0  # Tau never produce psykers
-      melee: 10 # Guard 20
+      melee: 0 # Guard 20
       mana: 0
     maxStats:
       tu: 65  # Guard 60
@@ -52,12 +55,12 @@ soldiers:
       health: 40
       bravery: 60  # Guard 60
       reactions: 70  # Guard 60
-      firing: 75    # Guard 70
+      firing: 70     # Guard 70
       throwing: 60   # Guard 65
-      strength: 20  # Guard 25
-      psiStrength: 100
+      strength: 25  # Guard 25 -- Need high STR to use rail rifle well
+      psiStrength: 100 # -- Tau not warp sensitive
       psiSkill: 0  # Tau never produce psykers
-      melee: 50  # Guard 60
+      melee: 40  # Guard 60
       mana: 0
     statCaps:
       tu: 80  # Guard 75
@@ -83,9 +86,9 @@ soldiers:
       psiSkill: 0
       melee: 45
       mana: 0
-    armor: STR_TAUFIREWARRIOR_ARMOR
+    armor: STR_TAUPATHFINDER_ARMOR_GV
     allowPiloting: false
-    allowPromotion: false
+    allowPromotion: true
     rankStrings:
       - STR_FIREWARRIOR_GV_RANK_0
     rankSprite: {mod: 40k, index: 1000}
@@ -105,6 +108,10 @@ soldiers:
     deathFemale: [44, 45, 46]
     value: 10
 
+  - type: STR_EVENT_PATHFINDER_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAUPATHFINDER_ARMOR_GV
+
   - &STR_SHASUIS_GV
     type: STR_FIREWARRIOR_SHASUI_GV
     refNode: *STR_FIREWARRIOR_GV
@@ -113,6 +120,10 @@ soldiers:
       - STR_FIREWARRIOR_GV_RANK_1
     tags:
       SOLDIER_IS_OFFICER: 1
+
+  - type: STR_EVENT_PATHFINDER_SHASUI_GV
+    refNode: *STR_SHASUIS_GV
+    armor: STR_TAUPATHFINDER_LEADER_ARMOR_GV
 
   - &STR_SHASVRES_GV
     type: STR_FIREWARRIOR_SHASVRE_GV
@@ -324,7 +335,7 @@ soldiers:
   - type: STR_GUEVESACULTIST_GV
     refNode: *STR_GUEVESA_SOLDIERS_GV
     requires:
-      - STR_RECEIVE_PILGRIMS_GV
+      - STR_SISTER_HOLLY_GV
     costBuy: 10000
     costSalary: 5000   # more expensive to maintain than Guard
     armor: STR_TAUGUEVESAROBE_ARMOR_GV
