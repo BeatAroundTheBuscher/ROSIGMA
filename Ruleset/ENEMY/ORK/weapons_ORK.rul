@@ -928,11 +928,6 @@ items:
       - STR_HEAVY_PLASMA_DEP1
     size: 0.3
     dropoff: 8
-    costBuy: 500000
-    requiresBuy:
-      - STR_DAKKA_GITZ_RECRUITED
-      - STR_HEAVY_PLASMA_DEP1
-#    requiresBuyBaseFunc: [TRADE]
     costSell: 50000
     weight: 45
     bigSprite: 2122
@@ -959,6 +954,66 @@ items:
     recoveryPoints: 5
     armor: 50
     listOrder: 11611 # remaining listed with plasma ammos
+
+  - type: STR_ZZAP_GUN  # Zzap Gun                        2017  amied
+    categories: [STR_CAT_LASGUN, STR_CAT_ORK]
+    size: 0.4
+    costSell: 30000
+    battleType: 1
+    dropoff: 6
+    weight: 65
+    bigSprite: 2161
+    floorSprite: 2057 # using malthus lascannon
+    handSprite: 2076 # using malthus lascannon
+    accuracySnap: 45
+    tuSnap: 40 # somewhat faster rate of fire compared to lascannons
+    snapRange: 25 # technically long range, but poor accuracy multiplier ensures it never has a high hit chance
+    compatibleAmmo:
+      - STR_ZZAP_GUN_CHARGE
+    twoHanded: true
+    blockBothHands: true
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    listOrder: 17070
+    bulletSpeed: 100
+
+  - type: STR_ZZAP_GUN_CHARGE
+    categories: [STR_CAT_LASGUN, STR_CAT_ORK]
+    size: 0.1
+    costSell: 1000
+    weight: 5
+    bigSprite: {mod: 40k, index: 1038} # small lascannon clip sprites
+    floorSprite: {mod: 40k, index: 1038}
+    handSprite: {mod: 40k, index: 1304}
+    power: 200 # slightly weaker than lascannons
+    damageType: 4
+    damageAlter:
+      RandomType: 1 # wild damage range, unlike more reliable lascannons
+      ToArmorPre: 0.4
+      ToHealth: 1.0
+      ToArmor: 0.1
+      ToStun: 0.3
+    clipSize: 3
+    battleType: 2
+    invWidth: 2
+    invHeight: 1
+    armor: 70
+    listOrder: 17071
+    # lasgun aesthetics
+    hitSound: {mod: 40k, index: 864} # lightning
+    fireSound: 3984
+    hitAnimation: 2160
+    bulletSprite: {mod: 40k, index: 22}
+    vaporColorSurface: {mod: 40k, index: 2} # blue laser
+    vaporDensitySurface: 4
+    vaporProbabilitySurface: 100
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 1;
+        set subvoxel_drift 0;
+        return;
 
   - type: STR_ORK_SNIPER_RIFLE
     categories: [STR_CAT_ORK, STR_CAT_SNIPER, STR_CAT_SCOUT]
@@ -993,7 +1048,7 @@ items:
     invWidth: 2
     invHeight: 3
     bulletSpeed: 50
-    listOrder: 17070 # was 6940, moved to the rest of the ork weapons
+    listOrder: 17072 # was 6940, moved to the rest of the ork weapons
     kneelBonus: 150
     tuLoad: 40
     minRange: 7
@@ -1034,7 +1089,7 @@ items:
     bulletSpeed: 50
     explosionSpeed: 5
     armor: 30
-    listOrder: 17071 # was 6941, moved to the rest of the ork weapons
+    listOrder: 17073 # was 6941, moved to the rest of the ork weapons
 
   - type: STR_ORK_TELEPORT_GUN  # copied from STR_SLAANESH_ROCKET_LAUNCHER
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
