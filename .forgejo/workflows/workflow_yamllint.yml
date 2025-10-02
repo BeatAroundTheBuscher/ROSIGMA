@@ -13,19 +13,41 @@ jobs:
         # https://github.com/marketplace/actions/checkout
         uses: actions/checkout@v3
 
-      # Step 2: Set up Python and install yamllint
-      - name: Set up Python and Install Yamllint
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+      ## Step 2 - ghcr.io/catthehacker/ubuntu:act-latest should have it already
+      #- name: Set up Python
+      #  uses: https://code.forgejo.org/actions/setup-python@v5
 
       - name: Install Yamllint
         run: |
           pip3 install yamllint
 
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.rul
+            **/*.yml
+            **/*.yaml
+
       # Step 3: Run yamllint on all YAML files
       - name: Lint YAML files
         run: |
           echo "Start Linting"
-          yamllint --no-warnings -c ./.yamllint.yml .
-          echo "Completed Linting"
+          RETURN_CODE=0
+          for file in ${{ steps.changed-files.outputs.all_changed_files }};
+          do
+            echo "Linting $file"
+            if yamllint --no-warnings -c ./.yamllint.yml $file; then
+              : # nop on success (return code == 0)
+            else
+              RETURN_CODE=1
+            fi
+          done
+          if [ $RETURN_CODE -ne 0 ]; then
+            echo "Linting failed"
+            false  # fail workflow step
+          else
+            echo "Linting done"
+            true
+          fi

@@ -1,0 +1,158 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+soldierTransformation:
+  - name: STR_BLOODAXE_ARDBOY_PROMOTION
+    requiredMinStats:
+      strength: 70
+    requires:
+      - STR_ORK_BOY_RECRUITMENT
+    cost: 20000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+    producedSoldierType: STR_GUARD_ORK_ARDBOY
+    producedSoldierArmor: STR_BLOODAXE_ARDBOY_KARAPACE_PLAYER_ARMOR
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_BOY
+
+  - name: STR_BLOODAXE_NOB_PROMOTION
+    requiredMinStats:
+      strength: 100
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requires:
+      - STR_ORK_BOY_RECRUITMENT
+      - STR_MIDTIER_PREREQ
+    cost: 30000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 200
+    producedSoldierType: STR_GUARD_ORK_NOB
+    producedSoldierArmor: STR_BLOODAXE_NOB_ARMOR_PLAYER
+    resetRank: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_ARDBOY
+
+  - name: STR_RESURRECT_ORK
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_MEK_KLAN_RECRUITED
+    cost: 450000
+    requiredItems:
+      STR_ALIEN_ALLOYS: 30
+      STR_ELERIUM_115: 30
+      STR_UFO_CONSTRUCTION: 5
+      STR_KILLPOINT_TOKEN: 200
+    producedSoldierType: STR_GUARD_ORK_KAN_BOY
+    producedSoldierArmor: STR_PLAYER_ORK_KILLA_ARMOR
+    resetRank: true
+    allowsDeadSoldiers: true
+    allowsLiveSoldiers: false
+    needsCorpseRecovered: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    transferTime: 24
+    recoveryTime: 0
+
+  - name: STR_PLAYER_WARBOSS_PROMOTION
+    requiredMinStats:
+      strength: 120
+    requiredCommendations:
+      STR_VETERAN_COMMENDATION: 0
+    requires:
+      - STR_ORK_BASE_LEVEL5_DEFEATED
+      - STR_ORKZ_HIGHTIER
+    cost: 30000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 400
+      STR_WARBOSS_TOKEN: 1
+    producedSoldierType: STR_GUARD_ORK_WARBOSS
+    producedSoldierArmor: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR
+    resetRank: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_NOB
+
+  - name: STR_REPLACE_WARBOSS
+    producedItem: STR_WARBOSS_TOKEN
+    requires:
+      - STR_ORKZ_HIGHTIER
+      - STR_ORK_BASE_LEVEL5_DEFEATED
+    cost: 0
+    keepSoldierArmor: false
+    allowsDeadSoldiers: true
+    allowsLiveSoldiers: false
+    transferTime: 0
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_WARBOSS
+
+  - name: STR_SPARKY_POWER_FIELD
+    forbiddenPreviousTransformations:
+      - STR_SPARKY_POWER_FIELD
+    cost: 100000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 100
+      STR_ALIEN_ALLOYS: 50
+      STR_ELERIUM_115: 20
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    transferTime: 0
+    requires:
+      - STR_ORKZ_HIGHTIER
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_NOB
+      - STR_GUARD_ORK_WARBOSS
+    soldierBonusType: STR_BONUS_SPARKY_POWER_FIELD
+    requiredCommendations:
+      STR_TERMINATOR_CROSS: 0
+
+  - name: STR_CYBORK_OPERATION
+    forbiddenPreviousTransformations:
+      - STR_CYBORK_OPERATION
+    cost: 100000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 60
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    transferTime: 480 # 10 days faster than imperial bionics.
+    requires:
+      - STR_ORKZ_HIGHTIER
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+      - STR_GUARD_ORK_WARBOSS
+      - STR_GUARD_ORK_WEIRDBOY
+    soldierBonusType: STR_BONUS_BIONICS
+
+soldierBonuses:
+  - name: STR_BONUS_SPARKY_POWER_FIELD
+    tags:
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 66
+      BONUS_ENERGY_SHIELD_DECAY: 66
+
+  - name: STR_BONUS_CYBORK
+    stats:
+      tu: 10
+      stamina: 10
+      health: 10
+      reactions: 5
+      melee: 10
+      strength: 10
+      firing: 5
+      throwing: 5
+    recovery:
+      energy:
+        flatOne: 10

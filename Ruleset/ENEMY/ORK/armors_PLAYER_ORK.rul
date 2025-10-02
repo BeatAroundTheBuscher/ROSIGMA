@@ -1,0 +1,1052 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+armors:
+  - type: STR_PLAYER_SHOOTA_TURRET_ARMOR # wagon turret
+    spriteSheet: ORKTURRET2_GIB.PCK
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    recovery:  # Manned turrets recover morale rapidly
+      morale:
+        flatHundred: 0.5
+    corpseGeo: STR_ORKTURRET2_CORPSE
+    corpseBattle:
+      - OT2_CORPSE1
+      - OT2_CORPSE2
+      - OT2_CORPSE3
+      - OT2_CORPSE4
+    frontArmor: 120
+    sideArmor: 110
+    rearArmor: 110
+    underArmor: 130
+    size: 2
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.4  # FLAMES
+      - 1.0  # HE
+      - 1.4  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 3
+    allowsMoving: false
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 50  # intimidate resistance
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+#Player Standard Ork Armors
+  - type: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR
+    visibilityAtDay: 35  # abhuman beast malus
+    visibilityAtDark: 20  # abhuman beast bonus
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
+    spriteSheet: ORK_BLOODAXE_BOY_BS.PCK
+    forcedTorso: 2
+    spriteInv: O1BLOODAXES.SPK
+    storeItem: STR_NONE
+    customArmorPreviewIndex: 1260
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    movementType: 0 #Walking
+    drawingRoutine: 0 #human soldier
+    frontArmor: 40  # Assault Flak +10
+    sideArmor: 30  # +10
+    rearArmor: 5  # real crud
+    underArmor: 10
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN 10% Ork bonus
+      - 1.0  # MELEE 10% Ork bonus
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    stats:
+      stamina: 10
+    loftempsSet: [3]
+    units:
+      - STR_GUARD_ORK_BOY
+    specialWeapon: AUX_CHOPPA
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+    scripts:
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 1 2;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        return;
+
+  - &ORK_KARAPACE
+    type: STR_BLOODAXE_KARAPACE_PLAYER_ARMOR
+    visibilityAtDay: 35  # abhuman beast malus
+    visibilityAtDark: 20  # abhuman beast bonus
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
+    spriteSheet: ORK_BLOODAXE_BOY_BS2.PCK
+    forcedTorso: 1
+    spriteInv: O2BLOODAXES.SPK
+    storeItem: STR_KARAPACE_ARMOR
+    customArmorPreviewIndex: 1261
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    movementType: 0 #Walking
+    drawingRoutine: 0 #human soldier
+    # More front armor than human carapace, but less elsewhere
+    frontArmor: 80
+    sideArmor: 50
+    rearArmor: 35  # crud
+    underArmor: 50
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN 10% Ork bonus
+      - 1.0  # MELEE 10% Ork bonus
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    stats:
+      tu: -5
+      stamina: -10
+      bravery: 10
+    loftempsSet: [3]
+    units:
+      - STR_GUARD_ORK_BOY
+    specialWeapon: AUX_CHOPPA
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+    scripts:
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 1 2;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        return;
+
+  - type: STR_BLOODAXE_ARDBOY_KARAPACE_PLAYER_ARMOR
+    refNode: *ORK_KARAPACE
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    spriteSheet: ORK_BLOODAXE_VETERAN_BS.PCK
+    forcedTorso: 1
+    spriteInv: O3BLOODAXES.SPK
+    storeItem: STR_NONE
+    customArmorPreviewIndex: 1262
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    frontArmor: 90
+    sideArmor: 55
+    rearArmor: 45
+    underArmor: 55
+    units:
+      - STR_GUARD_ORK_ARDBOY
+    specialWeapon: AUX_CHOPPA
+
+  - type: STR_BLOODAXE_NOB_ARMOR_PLAYER
+    refNode: *ORK_KARAPACE
+    # Ork Bad Moons Nobz O3 Armor
+    spriteSheet: ORK_BLOODAXE_NOB_BS.PCK
+    spriteInv: O3BLOODAXES_NOB_PLAYER.SPK
+    forcedTorso: 2  # Player Torso
+    customArmorPreviewIndex: 1263
+    storeItem: STR_NONE
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
+    # Not much better than 'ardboy, main benefit of unit is stats
+    frontArmor: 95
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 60
+    loftempsSet: [4]
+    units:
+      - STR_GUARD_ORK_NOB
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - &ORK_MEGANOB
+    type: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 20  # tech
+    spriteSheet: ORK_BLOODAXE_MEGANOB_BS.PCK
+    spriteInv: O5BLOODAXEMEGANOBINV.SPK
+    moveSound: {mod: 40k, index: 700}
+    forcedTorso: 1
+    drawingRoutine: 0
+    customArmorPreviewIndex: 1265
+    corpseBattle:
+      - STR_PLAYER_MEGANOB_CORPSE
+    allowsRunning: true
+    storeItem: STR_MEGANOB_ARMOR
+    units:
+      - STR_GUARD_ORK_NOB
+    specialWeapon: AUX_CHOPPA
+    stats:
+      tu: 10
+      stamina: 30
+      health: 10
+      bravery: 20  # always multiples of 10
+      reactions: 10
+      firing: 15
+      throwing: 10
+      strength: 30
+      psiStrength: 0
+      psiSkill: 0
+      melee: 10
+    frontArmor: 140
+    sideArmor: 110
+    rearArmor: 90
+    underArmor: 110
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.4  # FLAMES
+      - 0.8  # HE
+      - 0.9  # LASCANON
+      - 1.1  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [5]
+    tags:
+      UNIT_SIZE: 200 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+    scripts:
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 1 2;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        return;
+
+  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMED
+    refNode: *ORK_MEGANOB
+    ufopediaType: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+    spriteSheet: BLOODAXE_ARMED_MEGANOB_BS.PCK
+    spriteInv: O6BLOODAXEARMEDMEGANOBINV.SPK
+    drawingRoutine: 4
+    allowsKneeling: false
+    builtInWeapons:
+      - STR_TWIN_SHOOTAS
+      - STR_POWER_KLAW2
+
+  - type: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR  # Warboss Mega Armour
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 30  # antismoke vision, tech based
+    spriteSheet: ORKWARBOSS.PCK
+    spriteInv: WarbossINV.SPK
+    customArmorPreviewIndex: 1261 # Placeholder
+    moveSound: {mod: 40k, index: 700}
+    storeItem: STR_NONE
+    units:
+      - STR_GUARD_ORK_WARBOSS
+    stats:
+      tu: 20
+      stamina: 35
+      health: 20
+      bravery: 20  # always multiples of 10
+      reactions: 10
+      firing: 15
+      throwing: 10
+      strength: 40
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20
+    corpseBattle:
+      - PLAYER_ORKWARBOSS_CORPSE1
+      - PLAYER_ORKWARBOSS_CORPSE2
+      - PLAYER_ORKWARBOSS_CORPSE3
+      - PLAYER_ORKWARBOSS_CORPSE4
+    frontArmor: 170
+    sideArmor: 150
+    rearArmor: 120
+    underArmor: 120
+    drawingRoutine: 5
+    standHeight: 20
+    kneelHeight: 15
+    size: 2
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.4  # FLAMES
+      - 0.8  # HE
+      - 0.9  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    builtInWeapons:
+      - STR_WARBOSS_TWIN_SHOOTAS
+      - STR_POWER_KLAW2
+    allowsRunning: true # sprintin Warboss
+    allowsKneeling: false
+    tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      INTIMIDATION_RESISTANCE: 50
+      INFECTION_RESIST: 75  # offsets being 4x hit
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+### Mek Klan
+
+  - type: STR_PLAYER_ORK_MEKBOY_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 20
+    spriteSheet: ORKMekboyz.PCK  # placeholder
+    spriteInv: MEKBOYINV.SPK  # placeholder
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    storeItem: STR_MEKBOY_ARMOR
+    units:
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    corpseBattle:
+      - STR_PLAYER_ORKMEKBOY_CORPSE
+    frontArmor: 75
+    sideArmor: 60
+    rearArmor: 40
+    underArmor: 60
+    drawingRoutine: 0
+    standHeight: 20
+    kneelHeight: 15
+    stats:
+      tu: 0
+      stamina: 0
+      firing: 10 # targeting gubbins
+      health: 0
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.1  # AP
+      - 0.5  # FLAMES
+      - 0.8  # HE
+      - 0.8  # LASCANON
+      - 0.8  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 0.7  # MELTA
+    loftempsSet: [3]
+    specialWeapon: AUX_PROBE
+    allowsRunning: true
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - type: STR_PLAYER_ORK_KILLA_ARMOR  # KILLA KAN
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 20  # tech
+    spriteSheet: ORKDR5.PCK
+    customArmorPreviewIndex: 1261 # Placeholder
+    moveSound: {mod: 40k, index: 700}
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    fearImmune: false
+    instantWoundRecovery: true
+    recovery:  # Manned turrets recover morale rapidly
+      morale:
+        flatHundred: 0.5
+    allowInv: false
+    spriteInv: ORK10.SPK
+    storeItem: STR_NONE
+    units:
+      - STR_GUARD_ORK_KAN_BOY
+    corpseBattle:
+      - 9_ORK1
+      - 9_ORK2
+      - 9_ORK3
+      - 9_ORK4
+    corpseGeo: STR_KILLA_CORPSE
+    frontArmor: 160
+    sideArmor: 140
+    rearArmor: 110
+    underArmor: 150
+    drawingRoutine: 20
+    standHeight: 23
+    kneelHeight: 16
+    size: 2
+    stats:
+      tu: 0
+      stamina: 40
+      firing: 10
+      health: 70
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 30
+      psiStrength: 0
+      psiSkill: 0
+      melee: 10
+    damageModifier:  # DREADNOUGHT ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.2  # FLAMES
+      - 1.0  # HE
+      - 1.2  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    specialWeapon: STR_ORK_COMBI_RL
+    builtInWeapons:
+      - STR_ORK_KILLA_WEAPON
+      - STR_BURNA_KILLA
+      - STR_SCORCHA_TANK_BUILTIN
+      - STR_BURNA_TANK_BUILTIN
+    allowsRunning: false  # Kanz kan't run
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+### Speed Kult
+
+  - type: STR_BLOODAXE_STORM_PLAYER_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: ORK_BLOODAXE_STORMBOY_BS.PCK
+    spriteInv: O5BLOODAXESSTORMBOYZINV.SPK
+    forcedTorso: 1
+    customArmorPreviewIndex: 1264
+    corpseBattle:
+      - STR_PLAYER_ORK_STORMBOY_CORPSE
+    frontArmor: 55
+    sideArmor: 30
+    rearArmor: 20
+    underArmor: 25
+    drawingRoutine: 0
+    movementType: 0 # given jump pack
+    stats:
+      tu: 10
+      stamina: 20
+      firing: -10
+      health: 0
+      bravery: 0  # always multiples of 10
+      reactions: 10
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 10
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 1.1  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    storeItem: STR_STORMBOY_ARMOR
+    units:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      DODGE_CHANCE: 0
+      FLIGHT_DODGE_CHANCE: 25
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+    scripts:
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 1 2;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        return;
+
+  - type: STR_PLAYER_ORK_BIKE_ARMOR            # ORK WARBIKE
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: ORKBIKE.PCK
+    customArmorPreviewIndex: 1261 # Placeholder
+    allowInv: true  # false?
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    fearImmune: false
+    instantWoundRecovery: true
+    spriteInv: ORKBIKEINV.SPK
+    stats:
+      tu: 50
+      stamina: 50
+      firing: -10
+      health: 30
+      bravery: 0  # always multiples of 10
+      reactions: 10
+      throwing: 0
+      strength: 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 10
+    corpseBattle:
+      - PLAYER_ORKBIKE_CORPSE1
+      - PLAYER_ORKBIKE_CORPSE2
+      - PLAYER_ORKBIKE_CORPSE3
+      - PLAYER_ORKBIKE_CORPSE4
+    frontArmor: 100
+    sideArmor: 70
+    rearArmor: 70
+    underArmor: 70
+    size: 2
+    moveSound: {mod: 40k, index: 14}
+    damageModifier:  # VEHICLE ARMOR LARGE
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.6  # FLAMES
+      - 1.0  # HE
+      - 1.2  # LASCANON
+      - 1.0  # PLASMA
+      - 0.0  # STUN
+      - 0.8  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 5
+    storeItem: STR_ORK_WARBIKE_ARMOR
+    units:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    builtInWeapons:
+      - STR_ORK_KILLA_WEAPON  # Deffgunz
+      - AUX_RAM
+      - INV_NULL_3X3
+      - INV_NULL_4X2
+      - INV_NULL_2X1_ORK_BIKE_RL
+      - INV_NULL_2X1_ORK_BIKE_LL
+    allowsRunning: true # vroom vroom
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 75  # offsets being 4x hit
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - type: STR_PLAYER_ORK_DEFFKOPTER_ARMOR  # Deffkopter Armour
+    visibilityAtDay: 40  # good visibility from air
+    visibilityAtDark: 25
+    heatVision: 30  # antismoke vision, ork scou vision
+    spriteSheet: ORKDEFFKOPTER.PCK  # add
+    spriteInv: DeffkopterINV.SPK  # add
+    customArmorPreviewIndex: 1261 # Placeholder
+    instantWoundRecovery: true
+    movementType: 1
+    standHeight: 20
+    kneelHeight: 15
+    moveSound: 2139
+    stats:
+      tu: 60
+      stamina: 60
+      health: 30
+      bravery: 0
+      reactions: 10
+      firing: 0
+      throwing: 0
+      strength: 20
+      psiStrength: 0
+      psiSkill: 0
+      melee: -50
+    corpseBattle:
+      - PLAYER_ORKDEFFKOPTER_CORPSE1
+      - PLAYER_ORKDEFFKOPTER_CORPSE2
+      - PLAYER_ORKDEFFKOPTER_CORPSE3
+      - PLAYER_ORKDEFFKOPTER_CORPSE4
+    frontArmor: 60
+    sideArmor: 50
+    rearArmor: 30
+    underArmor: 50
+    drawingRoutine: 21
+    size: 2
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.8  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    storeItem: STR_DEFFKOPTER_ARMOR
+    builtInWeapons:
+      - STR_DEFFKOPTER_SHOOTAS
+      - STR_DEFFKOPTER_ROKKITPOD
+    units:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    allowsRunning: false  # NPC limits for BAI
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 100
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+### Spookum Kamp
+
+  - type: STR_PLAYER_ORK_TANKBUSTA_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    camouflageAtDay: -18  # you need to be 12 tiles closer than max vision range to see this unit in the light
+    camouflageAtDark: -12  # you need to be 8 tiles closer than max vision range (at night!) to see this unit in the dark
+    heatVision: 20  # tech
+    spriteSheet: ORKtankhuntazbattlesprite.PCK
+    spriteInv: ORKTankhuntaz.SPK
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_PLAYER_ORK_TANKBUSTAZ_CORPSE
+    frontArmor: 45
+    sideArmor: 35
+    rearArmor: 15
+    underArmor: 35
+    drawingRoutine: 0
+    movementType: 0
+    standHeight: 20
+    kneelHeight: 15
+    stats:
+      tu: 0
+      stamina: 0
+      firing: 0
+      health: 0
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 20 # bomb throwers
+      strength: 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.1  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    allowsRunning: true
+    specialWeapon: AUX_SNEAKYSTABBA # maybe replace with standard choppa
+    storeItem: STR_TANKBUSTA_ARMOR
+    units:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_PLAYER_ORK_KOMMANDO_ARMOR  # ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    camouflageAtDay: 15  # Visible at 15 tiles out without anticamo
+    camouflageAtDark: 12  # Visible at 12 tiles out without anticamo
+    antiCamouflageAtDay: 15
+    antiCamouflageAtDark: 10
+    heatVision: 30  # tech
+    spriteSheet: ORKKOMMANDO_SNIPER.PCK  # Sniper Version
+    spriteInv: KOMMANDOZ_SNIPER_INV.SPK
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_PLAYER_ORKKOMMANDO_CORPSE
+    frontArmor: 20
+    sideArmor: 15
+    rearArmor: 10
+    underArmor: 10
+    drawingRoutine: 0
+    standHeight: 20
+    kneelHeight: 15
+    specialWeapon: AUX_THROATSLITTA
+    stats:
+      tu: 0
+      stamina: 0
+      firing: 30 # sniper armor, will be expensive
+      health: 0
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    storeItem: STR_KOMMANDO_ARMOR
+    units:
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    meleeDodge:
+      reactions: 0.2
+    allowsRunning: true
+    tags:
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      DODGE_CHANCE: 20
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+  - type: STR_PLAYER_WEIRDORK_ARMOR
+    movementType: 0
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic, 4322.msg75634.html# msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int numOfFrames;
+
+        unit.isWalking walking;
+
+        set numOfFrames 8;
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if eq walking 0;
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;
+    visibilityAtDay: 45
+    visibilityAtDark: 20
+    heatVision: 30  # antismoke vision, psyker based
+    spriteSheet: ORKWYRDBOY.PCK
+    spriteInv: ORKWYRDBOYINV.SPK
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_PLAYER_ORKWEIRDBOY_CORPSE
+    frontArmor: 30
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 20
+    drawingRoutine: 0
+    standHeight: 20
+    kneelHeight: 15
+    specialWeapon: STR_WYRDBOY_SPECIAL_WEAPON
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
+    storeItem: STR_NONE
+    recovery:
+      mana:
+        mana: 0.4 # 40% of max recovered per turn
+    builtInWeapons:
+      - STR_PLAYER_WYRDBOY_STIKK
+      - STR_WYRDBOY_STIKK_ZZAP_CHARGE
+      - STR_WYRDBOY_STIKK_EADBANGER_CHARGE
+      - STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE
+    units:
+      - STR_GUARD_ORK_WEIRDBOY
+    allowsRunning: true
+    tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
+      ARMOR_ENERGY_SHIELD_DECAY: 13
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      UNIT_TYPE_PSYKER: 1
+      DODGE_CHANCE: 25
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+
+### Dakka Gitz
+
+  - type: STR_PLAYER_ORK_FLASHGITZ_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 20  # tech
+    spriteSheet: ORKFlashgitz.PCK
+    spriteInv: FlashgitzINV.SPK
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_PLAYER_FLASHGITZ_CORPSE
+    frontArmor: 85
+    sideArmor: 70
+    rearArmor: 45
+    underArmor: 70
+    movementType: 0
+    drawingRoutine: 0
+    standHeight: 20
+    kneelHeight: 15
+    stats:
+      tu: -10
+      stamina: 0
+      firing: 20 # shooty armor
+      health: 0
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 20 # hold big dakka
+      psiStrength: 0
+      psiSkill: 0
+      melee: -20 # sooner shoot at point blank than swing a choppa
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 0.9  # AP
+      - 1.0  # FLAMES
+      - 0.8  # HE
+      - 1.0  # LASCANON
+      - 1.1  # PLASMA
+      - 1.0  # STUN
+      - 1.1  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [3]
+    storeItem: STR_FLASHGIT_ARMOR
+    units:
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    allowsRunning: true
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - type: STR_PLAYER_ORK_ARMOR_BURNA
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    heatVision: 10  # tech
+    spriteSheet: Burnaboyz.PCK
+    spriteInv: ORKBURNABOYZINV
+    customArmorPreviewIndex: 1261 # Placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_PLAYER_ORKBURNABOY_CORPSE
+    frontArmor: 60
+    sideArmor: 35
+    rearArmor: 10
+    underArmor: 20
+    drawingRoutine: 0
+    standHeight: 20
+    kneelHeight: 15
+    stats:
+      tu: 10 # faster to get burnin
+      stamina: 10
+      firing: 0
+      health: 20 # burned a few times, grew back tougher
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      throwing: 0
+      strength: 0
+      psiStrength: 0
+      psiSkill: 0
+      melee: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.2  # AP
+      - 0.1  # FLAMES Very resistant to fire
+      - 1.0  # HE
+      - 0.8  # LASCANON
+      - 0.8  # PLASMA
+      - 1.0  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 0.6  # MELTA
+    loftempsSet: [3]
+    allowsRunning: true
+    storeItem: STR_BURNA_ARMOR
+    units:
+      - STR_GUARD_ORK_BOY
+      - STR_GUARD_ORK_ARDBOY
+      - STR_GUARD_ORK_NOB
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1

@@ -5,13 +5,6 @@
 extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
-  RuleArmor:
-    # *** Infection/Corruption Scripts ***
-    INFECTION_RESIST: int  # reduces infection damage by this as a %
-    INFECTION_REDUCTION: int  # reduces infection damage by this as a flat amount
-    INFECTION_RESIST_TYPE: int  # bitmask; type of infection the unit resists. 0 = All, 1 = Nurgle, 2 = GSC, 4 = Slaanesh; 3 = Nurgle + GSC, 5 = Nurgle + Slaanesh, 6 = GSC + Slaanesh
-
-
   scripts:
     returnFromMissionUnit:
       - new: ROSIGMA_rFMU_infections
@@ -851,16 +844,34 @@ extended:
             set researchLevel 5;
             battle_game.getGeoscapeGame geoScape;
 
-            rules.getRuleResearch researchTopic "STR_APOC_BAY"; # apothecary bay research
+            rules.getRuleResearch researchTopic "STR_APOTHECARY_CORRUPTION_RESEARCH";
             geoScape.isResearched temp researchTopic;
             if neq temp 0;
-              mul researchLevel 2;
+              add researchLevel 5;
             end;
 
-            rules.getRuleResearch researchTopic "STR_PSI_LAB"; # chapel research
+            rules.getRuleResearch researchTopic "STR_CHAPEL_CORRUPTION_RESEARCH";
             geoScape.isResearched temp researchTopic;
             if neq temp 0;
-              mul researchLevel 2;
+              add researchLevel 5;
+            end;
+
+            rules.getRuleResearch researchTopic "STR_SLAANESH_CORRUPTION_RESEARCH";
+            geoScape.isResearched temp researchTopic;
+            if neq temp 0;
+              add researchLevel 5;
+            end;
+
+            rules.getRuleResearch researchTopic "STR_NURGLE_CORRUPTION_RESEARCH";
+            geoScape.isResearched temp researchTopic;
+            if neq temp 0;
+              add researchLevel 5;
+            end;
+
+            rules.getRuleResearch researchTopic "STR_TZEENTCH_CORRUPTION_RESEARCH";
+            geoScape.isResearched temp researchTopic;
+            if neq temp 0;
+              add researchLevel 5;
             end;
             # set research level
             battle_game.setTag Tag.RESEARCH_LEVEL_CURE researchLevel;

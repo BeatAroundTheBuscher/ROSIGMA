@@ -72,6 +72,9 @@ extended:
       ITEM_MEND_STUN_PERCENT: int  # percent of rolled power removed from target stun
       ITEM_MEND_ENERGY_PERCENT: int  # percent of rolled power removed from target energy
       ITEM_MEND_TIME_PERCENT: int  # percent of rolled power removed from target TU
+      ITEM_MEND_MECHANICAL_ONLY: int # only heals mechanical units
+      ITEM_MEND_LIVING_ONLY: int # only heals living units
+      ITEM_MEND_MUST_HAVE_FULL_ARMOR: int # only heals if the unit has full armor
     RuleArmor:
       ARMOR_REGENERATES_WOUNDS: int  # do we regenerate wounds? If so, how many?
       ARMOR_REGENERATES_HEALTH: int  # does this armor regenerate health? Yes/no
@@ -368,17 +371,47 @@ extended:
             return;
           end;
 
-          unit.getRuleArmor armorRule;
-          armorRule.getTag temp Tag.UNIT_TYPE_LIVING; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
-          if eq temp 0;
-            # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target isn't living.";
-            return;
+          ruleItem.getTag temp Tag.ITEM_MEND_LIVING_ONLY;
+          if gt temp 0;
+            unit.getRuleArmor armorRule;
+            armorRule.getTag temp Tag.UNIT_TYPE_LIVING; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
+            if eq temp 0;
+              # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target isn't living.";
+              return;
+            end;
           end;
 
-          armorRule.getTag temp Tag.UNIT_TYPE_NULL; # we ignore null units
-          if eq temp 1;
-            # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target is a null.";
-            return;
+          ruleItem.getTag temp Tag.ITEM_MEND_MECHANICAL_ONLY;
+          if gt temp 0;
+            unit.getRuleArmor armorRule;
+            armorRule.getTag temp Tag.UNIT_TYPE_MECHANICAL; # handle hybrid typing; if we also count as living (usually piloted vehicles), continue as normal
+            if eq temp 0;
+              # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target isn't mechanical.";
+              return;
+            end;
+          end;
+
+          ruleItem.getTag temp Tag.ITEM_MEND_MUST_HAVE_FULL_ARMOR;
+          if gt temp 0;
+            loop var i 5;
+              unit.getArmorMax temp i;
+              # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Max armor | Armor facing" temp i;
+              unit.getArmor temp2 i;
+              # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Current armor | Armor facing" temp2 i;
+              if neq temp temp2;
+                # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target doesn't have max frontal armor.";
+                return;
+              end;
+            end;
+          end;
+
+          ruleItem.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
+          if gt temp 0;
+            armorRule.getTag temp Tag.UNIT_TYPE_NULL; # we ignore null units
+            if eq temp 1;
+              # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Aborting. Target is a null.";
+              return;
+            end;
           end;
 
           # debug_log "ROSIGMA_dU_psi_mend_wounds, offset 1: Initial power:" orig_power;

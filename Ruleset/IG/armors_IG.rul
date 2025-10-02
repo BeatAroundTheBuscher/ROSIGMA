@@ -1052,7 +1052,7 @@ armors:
     units:
       - STR_GUARD_BEASTMAN
     stats:
-      bravery: 15  # +5
+      bravery: 20  # +5
       strength: -5  # -10
       tu: -10  # heavy
       stamina: -10  # heavy
@@ -2693,6 +2693,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - type: STR_OGRYN_CARAPACE_BASIC
     refNode: *STR_GUARD_ARMOR_OGRYN_BASIC_DAMAGE
@@ -2742,6 +2744,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - &STR_GUARD_ARMOR_OGRYN_CARAPACE_DAMAGE
     type: STR_OGRYN_CARAPACE
@@ -2774,6 +2778,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - &STR_GUARD_ARMOR_BULLGRYN_SLAB  # DAMAGE + STATS
     type: STR_BULLGRYN_SLAB
@@ -2790,6 +2796,18 @@ armors:
       stamina: -15
       reactions: -5
       melee: 5
+    layersDefaultPrefix: BULLGRYN_SLAB
+    layersSpecificPrefix:
+      0: BULLGRYN_SLAB
+    layersDefinition:
+      M0: ["BULLGRYN_SLABinvent"]
+      M1: ["BULLGRYN_SLABinvent"]
+      M2: ["BULLGRYN_SLABinvent"]
+      M3: ["BULLGRYN_SLABinvent"]
+      F0: ["BULLGRYN_SLABinvent"]
+      F1: ["BULLGRYN_SLABinvent"]
+      F2: ["BULLGRYN_SLABinvent"]
+      F3: ["BULLGRYN_SLABinvent"]
 
 
   - &STR_GUARD_ARMOR_BULLGRYN_BUCKLER  # DAMAGE + STATS
@@ -2805,6 +2823,18 @@ armors:
     stats:
       stamina: -10
       melee: 10
+    layersDefaultPrefix: BULLGRYN_BUCKLER
+    layersSpecificPrefix:
+      0: BULLGRYN_BUCKLER
+    layersDefinition:
+      M0: ["BULLGRYN_BUCKLERinvent"]
+      M1: ["BULLGRYN_BUCKLERinvent"]
+      M2: ["BULLGRYN_BUCKLERinvent"]
+      M3: ["BULLGRYN_BUCKLERinvent"]
+      F0: ["BULLGRYN_BUCKLERinvent"]
+      F1: ["BULLGRYN_BUCKLERinvent"]
+      F2: ["BULLGRYN_BUCKLERinvent"]
+      F3: ["BULLGRYN_BUCKLERinvent"]
 
   # *** Ogryn armors for the riot suppression team allied units
   - type: STR_BULLGRYN_SLAB_RIOT
@@ -3276,6 +3306,9 @@ armors:
     refNode: *STR_COMMISSAR_CLAW
     spriteInv: COMMISSAR_YARRICK
     storeItem: STR_NONE
+    builtInWeapons:
+      - STR_GUARD_PRIMER
+      - STR_COMMISSAR_CLAW_BUILTIN
     units:
       - STR_LORD_COMMISSAR_YARRICK
     tags:
@@ -5017,6 +5050,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - type: STR_LE10_POWER_ARMOR_HULK_SQUAT  # Vault Armor
     refNode: *STR_GUARD_POWER_ARMOR_REF
@@ -5101,16 +5136,16 @@ armors:
     units:
       - STR_GUARD_ORK_NOB
     tags:
-      UNIT_SIZE: 150 # LARGE
+      UNIT_SIZE: 200 # LARGE was 150, now same as meganobs
       UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_IMPERIAL_GUARD: 1
-      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_XENO: 1 # was imperium
+      UNIT_TYPE_ORK: 1 # was guard
 
   - type: STR_LE10_POWER_ARMOR_HULK_CHAOS  # Vault Armor
     refNode: *STR_GUARD_POWER_ARMOR_REF
     storeItem: STR_LE10_POWER_ARMOR_HULK
     customArmorPreviewIndex: 858
-    spriteInv: LE10_POWER_ARMORCHAOS_BS.PCK
+    spriteInv: LE10chaosnventory.SPK
     spriteSheet: LE10_POWER_ARMOR_BS.PCK
     frontArmor: 170
     sideArmor: 140
@@ -5731,6 +5766,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - type: STR_OGRYN_BONEHEAD_SLAB_SHIELD_ARMOR
     refNode: *STR_OGRYN_BONEHEAD_CARAPACE_LAYER
@@ -5770,6 +5807,8 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_IMPERIUM: 1
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -100  # Basic Diehard
 
   - &STR_BANEBLADE_TURRET_ARMOR
     type: 4X4_ARMOR  # STR_4X4_TURRET
@@ -6405,3 +6444,51 @@ armors:
       UNIT_TYPE_IMPERIAL_GUARD: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
+
+
+  - type: STR_ENGINSEER_ARMOR_UC                # Enginseer
+    spriteSheet: ENGINSEER.PCK
+    spriteInv: ENGINSEER.SPK
+    customArmorPreviewIndex: 851 # using the Priest preview as a placeholder
+    forcedTorso: 1
+    corpseBattle:
+      - STR_ENGINSEER_CORPSE
+    storeItem: STR_NONE
+    units:
+      - STR_ENGINSEER
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 20
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    painImmune: true
+    frontArmor: 90
+    sideArmor: 80
+    rearArmor: 60
+    underArmor: 80
+    weight: -15 # partially negate servo arm
+    drawingRoutine: 0
+    damageModifier:
+      - 1.0 #SUPPORT
+      - 1.0 #AP
+      - 0.7 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.0 #PLASMA
+      - 1.0 #STUN
+      - 1.0 #MELEE
+      - 0.5 #ACID naturally resistant to contaminants
+      - 0.0 #SMOKE
+      - 0.2 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [3]
+    builtInWeapons:
+      - STR_TECHPRIEST_SCANNER
+      - STR_TECHPRIEST_REPAIRTOOL
+      - STR_TECHPRIEST_POWERAXE
+      - STR_TECHPRIEST_LASPISTOL
+    tags:
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIAL_GUARD: 1
