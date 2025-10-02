@@ -1383,7 +1383,7 @@ items:
     clipSize: 1
     blastRadius: 1
     twoHanded: true
-    blockBothHands: true
+    blockBothHands: false # was true, but a lot of orks spawn with it one-handed
     oneHandedPenalty: 25
     invWidth: 1
     invHeight: 3
@@ -2271,7 +2271,125 @@ items:
     tuMelee: 14
     flatMelee:
       time: true
-    recover: false # only weirdboys have the ammo for it anyway
+    recover: true # added player weirdboy stick
+
+  - type: STR_PLAYER_WYRDBOY_STIKK  # Sankshunned Psika' Stikk            2021
+    categories: [STR_CAT_MELTA]
+    experienceTrainingMode: 26
+    manaExperience: 200
+    vaporColorSurface: {mod: 40k, index: 3}
+    vaporDensitySurface: 6
+    vaporProbabilitySurface: 30
+    scripts:
+      selectItemSprite: |
+
+        var int temp;
+        var int numOfFrames;
+        set numOfFrames 4;
+
+        if or eq blit_part blit_item_lefthand eq blit_part blit_item_righthand;
+
+            add temp anim_frame;
+            mod temp numOfFrames;
+            mul temp 8;
+            add sprite_index temp;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+        return sprite_index;
+    size: 0.3
+    dropoff: 8
+    weight: 10
+    bigSprite: 2118
+    floorSprite: 2306
+    handSprite: 2260
+    bulletSprite: {mod: 40k, index: 23}  # necron gauss  # 23 shows 3805
+    bulletSpeed: 100
+    fireSound: [{mod: 40k, index: 802}, {mod: 40k, index: 803}]  # change to Zzappy
+    compatibleAmmo:
+      - STR_WYRDBOY_STIKK_ZZAP_CHARGE  # KILLBOLT BEAMER MELTA
+      - STR_WYRDBOY_STIKK_EADBANGER_CHARGE  # Single target
+      - STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE  # MULTIMELTA BARRAGE
+    ammo:
+      0:  # Single melta
+        compatibleAmmo: [STR_WYRDBOY_STIKK_ZZAP_CHARGE]
+        tuUnload: 999 # don't unload spells
+      1:  # Multimelta
+        compatibleAmmo: [STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE]
+        tuUnload: 999 # don't unload spells
+      2:  # AOE
+        compatibleAmmo: [STR_WYRDBOY_STIKK_EADBANGER_CHARGE]
+        tuUnload: 999 # don't unload spells
+    aimRange: 15
+    accuracyAimed: 90
+    confAimed:  # eadbanger AOE
+      ammoSlot: 2
+      name: STR_EADBANGER
+      arcing: false
+    costAimed:
+      time: 35
+      mana: 20
+    flatAimed:
+      mana: true
+    autoRange: 12
+    accuracyAuto: 50
+    autoShots: 3
+    costAuto:
+      time: 45
+      mana: 60
+    flatAuto:
+      mana: true
+    confAuto:  # Da krunch multi-melta
+      ammoSlot: 1
+      name: STR_DA_KRUNCH
+      arcing: false
+    snapRange: 15
+    accuracySnap: 70
+    confSnap:  # zzap
+      ammoSlot: 0
+      name: STR_ZZAP
+      arcing: false
+      shots: 1
+    costSnap:
+      time: 30
+      mana: 10
+    flatSnap:
+      mana: true
+    battleType: 1
+    accuracyMultiplier:
+      firing: 0.5
+      psiSkill: 0.5
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    armor: 40
+    listOrder: 12300
+    # *** Melee green ZAP SMACK
+    meleeAnimation: 4
+    meleeSound: {mod: 40k, index: 753}
+    meleeHitSound: {mod: 40k, index: 754}
+    meleeType: 7
+    meleePower: 100
+    meleeBonus:
+      strength: 0.2
+      melee: 0.2
+    meleeAlter:
+      ArmorEffectiveness: 0.7
+      ToArmorPre: 0.2
+      ToStun: 0.4
+      ToMorale: 0.5
+    accuracyMelee: 100
+    meleeMultiplier:
+      flatHundred: 0.5
+      melee: 0.5
+    costMelee:
+      time: 14
+      mana: 5
+    flatMelee:
+      time: true
+      mana: true
+    fixedWeapon: true
+    recover: false # player built in weapon
 
   - type: STR_WYRDBOY_STIKK_SUMMON_AMMO           # Ork Spawner
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
@@ -2319,9 +2437,8 @@ items:
     power: 5  # used to be 40
     damageType: 1
     blastRadius: 1  # used to be 3
-    clipSize: 3
+    clipSize: -1 # was 3, now unlimited
     battleType: 2
-    recoveryPoints: 1
     LOSRequired: true
     damageAlter:  # HEADSPLODEY
       RandomType: 1  # [0% - 200%]
@@ -2364,7 +2481,6 @@ items:
     battleType: 2
     invWidth: 1
     invHeight: 2
-    recoveryPoints: 1
 
   - type: STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE  # MULTIMELTA AMMO KILLBOLT            2023
     categories: [STR_CAT_MELTA, STR_CAT_DEVASTATOR]
