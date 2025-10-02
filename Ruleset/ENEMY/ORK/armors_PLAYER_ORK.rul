@@ -239,7 +239,7 @@ armors:
     drawingRoutine: 0
     customArmorPreviewIndex: 1265
     corpseBattle:
-      - STR_GUARD_ORK_BOY_CORPSE  # needs unique
+      - STR_PLAYER_MEGANOB_CORPSE
     allowsRunning: true
     storeItem: STR_MEGANOB_ARMOR
     units:
@@ -306,6 +306,11 @@ armors:
 
   - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMED
     refNode: *ORK_MEGANOB
+    ufopediaType: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
+    spriteSheet: BLOODAXE_ARMED_MEGANOB_BS.PCK
+    spriteInv: O6BLOODAXEARMEDMEGANOBINV.SPK
+    drawingRoutine: 4
+    allowsKneeling: false
     builtInWeapons:
       - STR_TWIN_SHOOTAS
       - STR_POWER_KLAW2
@@ -364,6 +369,7 @@ armors:
       - STR_WARBOSS_TWIN_SHOOTAS
       - STR_POWER_KLAW2
     allowsRunning: true # sprintin Warboss
+    allowsKneeling: false
     tags:
       ARMOR_OVERWATCH_TU_RESTORED: 100
       INTIMIDATION_RESISTANCE: 50
@@ -441,6 +447,7 @@ armors:
     zombiImmune: true
     painImmune: true
     fearImmune: false
+    instantWoundRecovery: true
     recovery:  # Manned turrets recover morale rapidly
       morale:
         flatHundred: 0.5
@@ -495,7 +502,8 @@ armors:
       - STR_BURNA_KILLA
       - STR_SCORCHA_TANK_BUILTIN
       - STR_BURNA_TANK_BUILTIN
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: false  # Kanz kan't run
+    allowsKneeling: false
     tags:
       INFECTION_RESIST: 100  # infection immune
       UNIT_SIZE: 200 # HUGE
@@ -513,7 +521,7 @@ armors:
     forcedTorso: 1
     customArmorPreviewIndex: 1264
     corpseBattle:
-      - STR_PLAYER_ORK_STORMBOY_CORPSE  # Should get a unique one
+      - STR_PLAYER_ORK_STORMBOY_CORPSE
     frontArmor: 55
     sideArmor: 30
     rearArmor: 20
@@ -593,6 +601,7 @@ armors:
     zombiImmune: true
     painImmune: true
     fearImmune: false
+    instantWoundRecovery: true
     spriteInv: ORKBIKEINV.SPK
     stats:
       tu: 50
@@ -645,6 +654,7 @@ armors:
       - INV_NULL_2X1_ORK_BIKE_RL
       - INV_NULL_2X1_ORK_BIKE_LL
     allowsRunning: true # vroom vroom
+    allowsKneeling: false
     tags:
       INFECTION_RESIST: 75  # offsets being 4x hit
       UNIT_SIZE: 200 # HUGE
@@ -659,6 +669,7 @@ armors:
     spriteSheet: ORKDEFFKOPTER.PCK  # add
     spriteInv: DeffkopterINV.SPK  # add
     customArmorPreviewIndex: 1261 # Placeholder
+    instantWoundRecovery: true
     movementType: 1
     standHeight: 20
     kneelHeight: 15
@@ -709,6 +720,7 @@ armors:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     allowsRunning: false  # NPC limits for BAI
+    allowsKneeling: false
     tags:
       INFECTION_RESIST: 100
       UNIT_SIZE: 200 # HUGE
@@ -765,6 +777,7 @@ armors:
       - 1.0  # MELTA
     loftempsSet: [3]
     allowsRunning: true
+    specialWeapon: AUX_SNEAKYSTABBA # maybe replace with standard choppa
     storeItem: STR_TANKBUSTA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
@@ -904,14 +917,20 @@ armors:
       - 1.0  # MELTA
     loftempsSet: [3]
     storeItem: STR_NONE
+    recovery:
+      mana:
+        mana: 0.4 # 40% of max recovered per turn
     builtInWeapons:
-      - STR_WYRDBOY_STIKK
+      - STR_PLAYER_WYRDBOY_STIKK
+      - STR_WYRDBOY_STIKK_ZZAP_CHARGE
       - STR_WYRDBOY_STIKK_EADBANGER_CHARGE
       - STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE
     units:
       - STR_GUARD_ORK_WEIRDBOY
     allowsRunning: true
     tags:
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
+      ARMOR_ENERGY_SHIELD_DECAY: 13
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
