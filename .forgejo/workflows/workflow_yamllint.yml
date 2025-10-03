@@ -36,7 +36,7 @@ jobs:
         run: |
           echo "Start Linting"
           RETURN_CODE=0
-          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files-comma.outputs.modified_files }}"
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_changed_files }}"
           for file in "${MODIFIED_FILES_ARRAY[@]}";
           do
             echo "Linting $file"

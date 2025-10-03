@@ -48,7 +48,7 @@ jobs:
         run: |
           echo 'Removing !add, !remove, !seq constructors as check_jsonschema cannot handle them'
           # find . -name "*.rul" | xargs -I {} sed -i 's/\!\(add\|remove\|seq\)//g' {}
-          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files-comma.outputs.modified_files }}"
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_changed_files }}"
           for file in "${MODIFIED_FILES_ARRAY[@]}";
           do
             sed -i 's/\!\(add\|remove\|seq\)//g' "$file"
@@ -62,7 +62,7 @@ jobs:
           RETURN_CODE=0
           cd -
           # for file in $(cat .changed_yaml_files.txt);
-          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files-comma.outputs.modified_files }}"
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_changed_files }}"
           for file in "${MODIFIED_FILES_ARRAY[@]}";
           do
             echo "Validating $file"
