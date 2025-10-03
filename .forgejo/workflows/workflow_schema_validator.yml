@@ -32,6 +32,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v44
         with:
+          separator: ","
           files: |
             **/*.rul
 
@@ -46,7 +47,12 @@ jobs:
       - name: Prepare ROSIGMA dir
         run: |
           echo 'Removing !add, !remove, !seq constructors as check_jsonschema cannot handle them'
-          find . -name "*.rul" | xargs -I {} sed -i 's/\!\(add\|remove\|seq\)//g' {}
+          # find . -name "*.rul" | xargs -I {} sed -i 's/\!\(add\|remove\|seq\)//g' {}
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files-comma.outputs.modified_files }}"
+          for file in "${MODIFIED_FILES_ARRAY[@]}";
+          do
+            sed -i 's/\!\(add\|remove\|seq\)//g' "$file"
+          done
 
       # Step 6
       - name: Run check_jsonschema
@@ -56,10 +62,11 @@ jobs:
           RETURN_CODE=0
           cd -
           # for file in $(cat .changed_yaml_files.txt);
-          for file in ${{ steps.changed-files.outputs.all_changed_files }};
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files-comma.outputs.modified_files }}"
+          for file in "${MODIFIED_FILES_ARRAY[@]}";
           do
             echo "Validating $file"
-            if check-jsonschema --verbose --schemafile $SCHEMA_PATH/ruleset.json --default-filetype yaml --base-uri "file://$SCHEMA_PATH/" $file; then
+            if check-jsonschema --verbose --schemafile $SCHEMA_PATH/ruleset.json --default-filetype yaml --base-uri "file://$SCHEMA_PATH/" "$file"; then
               : # nop on success (return code == 0)
             else
               RETURN_CODE=1
