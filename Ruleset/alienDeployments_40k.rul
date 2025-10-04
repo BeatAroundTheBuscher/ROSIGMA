@@ -2630,7 +2630,7 @@ alienDeployments:
       showTarget: false
       desc: STR_DAKKA_GITZ_BASE_BRIEFING
     missionBountyItem: STR_DAKKA_GITZ_LOOT
-    missionBountyItemCount: 60
+    missionBountyItemCount: 1
     unlockedResearch: STR_DAKKA_GITZ_RECRUITED
     markerName: STR_DAKKA_GITZ_BASE
     alertDescription: STR_DAKKA_GITZ_BASE_BRIEFING
@@ -2715,6 +2715,7 @@ alienDeployments:
     objectiveFailed: [STR_IMPERIAL_BASE_NOT_DESTROYED, -100]
     unlockedResearch: STR_PDF_DEPOT_RAIDED
     missionBountyItem: STR_LEMAN_RUSS_WRECK # to be manufactured into an armored column/ork version
+    missionBountyItemCount: 1
     genMission:
       STR_IMPERIALS_PATROL: 50
     genMissionFreq: 1
@@ -14369,7 +14370,6 @@ alienDeployments:
 
   - type: STR_GANGER_BASE
     markerIcon: 54
-    baseSelfDestructCode: STR_THE_IMPERIAL_LAW_STRATEGY
     terrains:
       - MUNDAINDUSTRIALURBANDIO
       #- CULTIST_TEMPLE
@@ -14456,7 +14456,6 @@ alienDeployments:
 
   - type: STR_GANGER_BASEARBITES
     markerIcon: 54
-    baseSelfDestructCode: STR_CHAOS_STRATEGY
     terrains:
       - MUNDAINDUSTRIALURBANDIO
       #- CULTIST_TEMPLE
@@ -17165,3 +17164,135 @@ alienDeployments:
     script: BOSSBATTLE
     objectiveType: 14
     objectivesRequired: 1
+
+  # chaos ambush line
+
+  - type: STR_CHAOSINFILTRATOR_MISSION
+    startingCondition: STR_CHAOSVALKYRIE_ONLY
+    briefing:
+      title: STR_CHAOSINFILTRATOR_MISSION_TITLE
+      palette: 4
+      desc: STR_CHAOSINFILTRATOR_MISSION_DESCRIPTION
+      music: gmstory2
+      showCraft: true
+      showTarget: false
+      background: REGIMENT_INSPECTION.SCR
+    objectiveType: 101
+    objectiveComplete: [STR_CHAOSINFILTRATOR_MISSION_OBJECTIVE_COMPLETE, 200]
+    objectivePopup: STR_CHAOSINFILTRATOR_MISSION_EXTRACTION_SIGNAL
+    objectiveFailed: [STR_CHAOSINFILTRATOR_MISSION_OBJECTIVE_FAILED, -25]
+    data:
+      - alienRank: 2
+        lowQty: 2
+        highQty: 2
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 1
+        highQty: 1
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 5
+        highQty: 5
+        dQty: 2
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    height: 9
+    abortPenalty: 25
+    width: 50
+    length: 50
+    terrains:
+      - WAR
+    script: WARSCRIPT_TANITH_MISSION0
+    alert: STR_CHAOSINFILTRATOR_MISSION_ALERT
+    alertBackground: REGIMENT_INSPECTION.SCR
+    duration: [9500, 9600] #[min, max] in hours hopefully enough to get a chaos valk if player has none when mission spawn
+    despawnPenalty: 100
+    markerName: STR_CHAOSINFILTRATOR_MISSION_SITE
+    missionBountyItem: STR_FLOATER_LEADER
+    unlockedResearch: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
+
+  - type: STR_AMBUSHSPACEMARINES_MISSION
+    startingCondition: STR_CHAOSVALKYRIE_ONLY
+    briefing:
+      title: STR_AMBUSHSPACEMARINES_MISSION_TITLE
+      palette: 4
+      desc: STR_AMBUSHSPACEMARINES_MISSION_DESCRIPTION
+      music: gmstory2
+      showCraft: true
+      showTarget: false
+      background: REGIMENT_INSPECTION.SCR
+    data:
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 2
+        highQty: 2
+        dQty: 0
+        percentageOutsideUfo: 0
+      - alienRank: 2
+        lowQty: 2
+        highQty: 2
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 4
+        highQty: 4
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 4
+        highQty: 4
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 0
+        highQty: 0
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+    height: 9
+    objectiveComplete: [STR_AMBUSHSPACEMARINES_MISSION_OBJECTIVE_COMPLETE, 300]
+    objectiveFailed: [STR_AMBUSHSPACEMARINES_MISSION_OBJECTIVE_FAILED, -50]
+    abortPenalty: 50
+    width: 50
+    length: 50
+    terrains:
+      - WAR
+    script: WARSCRIPT_TANITH_CONVOYAMBUSH
+    alert: STR_AMBUSHSPACEMARINES_MISSION_ALERT
+    alertBackground: REGIMENT_INSPECTION.SCR
+    duration: [9500, 9600] #[min, max] in hours hopefully enough to get a chaos valk if player has none when mission spawn
+    despawnPenalty: 100
+    markerName: STR_AMBUSHSPACEMARINES_MISSION_SITE
+    unlockedResearch: STR_AMBUSH_SPACEMARINES_COMPLETE
+    missionBountyItem: STR_KILLPOINT_TOKEN
+    missionBountyItemCount: 150

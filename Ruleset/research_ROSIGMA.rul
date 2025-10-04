@@ -764,7 +764,6 @@ research:
     unlocks:
       - STR_MOTION_SCANNER
       - STR_LASER_WEAPONS
-      - STR_MEDI_KIT_PREREQ
       - STR_XIPHON
       - STR_INQ_STORMTROOPER_REQUISITION
       - STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH
@@ -1070,6 +1069,14 @@ research:
     reenables:
       - STR_CYDONIA_OR_BUST
       - STR_CHAPTER_PURITY # for standard missions to spawn.
+
+  - name: STR_GREENEST_SUGGESTIONS_TRIGGER
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GREENEST_ORKZ
+      - STR_GENERALLOCK
+    spawnedEvent: STR_GREENEST_SUGGESTIONS
 
 ## Adeptas #STRATEGY.SOB#
   - name: STR_ADEPTAS  # Sister of Battle
@@ -2552,7 +2559,7 @@ research:
       - STR_IMPERIAL_INQUISITOR_REQUISITION
 
   - name: STR_INQ_STORMTROOPER_REQUISITION  # Requisition Inquisition Storm Troopers
-    cost: 400
+    cost: 200
     points: 10
     dependencies:
       - STR_CHAMBERMILITANT
@@ -2566,29 +2573,91 @@ research:
       - STR_GENERALLOCK
       - STR_INQ_STORMTROOPER_REQUISITION
 
+  # Unlockers for non-default Inquisitorial Stormtrooper Armors
+  - name: STR_INQ_ST_ARMOR_FLAMER_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_ELERIUM_115  # Promethium
+  - name: STR_INQ_ST_ARMOR_JUMP_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_ASS_ARMOR_DEP1 # Assault Armor Technology
+  - name: STR_INQ_ST_ARMOR_MEDICAE_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_APOC_BAY  # Apothecary Bay
+  - name: STR_INQ_ST_ARMOR_POWERARMOR_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+  - name: STR_INQ_ST_ARMOR_PA_AUTOCANNON_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+      - STR_AUTOCANNON_TECH  # Autocannon Technology
+  - name: STR_INQ_ST_ARMOR_PA_BREACHER_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+  - name: STR_INQ_ST_ARMOR_PA_LASCANNON_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_UFO_CONSTRUCTION  # Ceramite
+      - STR_LASCAN_TECH # Lascannon Technology
+  - name: STR_INQ_ST_ARMOR_PLASMA_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_PLASMA_GUN_TWINCORE_ADEPTAS_DEPENDENCY  # Twin Core Plasma Technology
+  - name: STR_INQ_ST_ARMOR_MULTIMELTA_UNLOCKER
+    cost: 0
+    dependencies:
+      - STR_FUSION_MISSILE  # Multimelta Requisition
+
   - name: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
-    cost: 500
-    points: 20
+    cost: 300
+    points: 10
     dependencies:
       - STR_INQ_STORMTROOPER_REQUISITION
       - STR_ALIEN_ALLOYS  # Adamantium
     unlocks:
+      - STR_INQ_ST_ARMOR_FLAMER_UNLOCKER
+      - STR_INQ_ST_ARMOR_JUMP_UNLOCKER
+      - STR_INQ_ST_ARMOR_MEDICAE_UNLOCKER
       - STR_MEDI_KIT_PREREQ
 
   - name: STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
-    cost: 1000
+    cost: 500
     points: 20
     dependencies:
       - STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
       - STR_MIDTIER_PREREQ
-      - STR_UFO_CONSTRUCTION  # Ceramite
+    unlocks:
+      - STR_INQ_ST_ARMOR_POWERARMOR_UNLOCKER
+      - STR_INQ_ST_ARMOR_PA_AUTOCANNON_UNLOCKER
+      - STR_INQ_ST_ARMOR_PA_LASCANNON_UNLOCKER
 
   - name: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
-    cost: 1000
+    cost: 600
     points: 30
     dependencies:
       - STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
       - STR_HIGHTIER_PREREQ
+    unlocks:
+      - STR_INQ_ST_ARMOR_PLASMA_UNLOCKER
+      - STR_INQ_ST_ARMOR_MULTIMELTA_UNLOCKER
+
+  - name: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    cost: 400
+    getOneFree:
+      - STR_PSYKER_REQUISITION
+    dependencies:
+      - STR_RADICAL_INQUISITOR_STRATEGY
+      - STR_MIDTIER_PREREQ
+      - STR_ALIEN_ORIGINS
 
   - name: STR_INQ_SUMMON_IMPERIAL_AGENTS_RESEARCH  # Summon Agents of the Inquisition
     cost: 250
@@ -11244,3 +11313,40 @@ research:
       - STR_HIGHTIER_PREREQ
       - STR_ENGINSEER_REQUISITION
     listOrder: 21
+
+  # chaos ambush line
+
+  - name: STR_SPY_IMPERIALCOMS  # Hack in the Imperial Network
+    cost: 50
+    points: 50
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_NAVY_COMUNICATIONS
+      - STR_CHAOS_PATH
+
+  - name: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE  # Retrieve Location Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_AMBUSH_SPACEMARINES  # Rescue the Chaos Rhinos
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
+      - STR_LEADER_PLUS
+
+  - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_CHAOSREWARD_REQUISITIONS  # Sacred Gift from Chaos
+    cost: 300
+    points: 50
+    dependencies:
+      - STR_AMBUSH_SPACEMARINES_COMPLETE

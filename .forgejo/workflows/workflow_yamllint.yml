@@ -25,6 +25,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v44
         with:
+          separator: ","
           files: |
             **/*.rul
             **/*.yml
@@ -35,10 +36,11 @@ jobs:
         run: |
           echo "Start Linting"
           RETURN_CODE=0
-          for file in ${{ steps.changed-files.outputs.all_changed_files }};
+          IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_changed_files }}"
+          for file in "${MODIFIED_FILES_ARRAY[@]}";
           do
             echo "Linting $file"
-            if yamllint --no-warnings -c ./.yamllint.yml $file; then
+            if yamllint --no-warnings -c ./.yamllint.yml "$file"; then
               : # nop on success (return code == 0)
             else
               RETURN_CODE=1
