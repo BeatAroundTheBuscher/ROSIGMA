@@ -7,7 +7,6 @@ extended:
       COMMISSAR_EXECUTION_MODE_ACTIVE: int #is at least one Commissar execution mode active?
 
   scripts:
-  # this is for setting the order currently active on the Bonehead
     skillUseUnit:
       - new: ROSIGMA_sUU_commissar_execution_mode
         offset: 1
@@ -16,7 +15,6 @@ extended:
           var int executionMode;
           var ptr RuleSoldier rSoldier;
 
-          # Check to see if we're using the Bonehead order skill
           skill.getTag executionMode Tag.SKILL_COMMISSAR_EXECUTION_MODE_ID;
           if le executionMode 0;
             # debug_log "Commissar Execution Mode Scripts; ROSIGMA_sUU_commissar_execution_mode, offset 1: Skill cannot activate execution mode. Aborting, executionMode:" executionMode;
@@ -73,7 +71,7 @@ extended:
           # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
           unit.getFaction temp;
           attacker.getFaction temp2;
-          if and neq temp temp2 neq temp FACTION_NEUTRAL;
+          if neq temp temp2;
             # debug_log "Commissar Execution Mode Scripts; ROSIGMA_hU_commissar_execution_mode, offset 1: Aborting; target is hostile. temp:" temp;
             return power part side;
           end;
@@ -225,8 +223,8 @@ extended:
 
           # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
           unit.getFaction temp;
-          if and neq temp FACTION_PLAYER neq temp FACTION_NEUTRAL;
-            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rUS_commissar_execution_mode, offset 20: Aborting; target is hostile. temp:" temp;
+          if neq temp FACTION_PLAYER;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rUS_commissar_execution_mode, offset 20: Aborting; target is non-friendly. temp:" temp;
             return new_pixel;
           end;
 
@@ -269,8 +267,8 @@ extended:
 
           # we can only execute friendly units; no instakilling enemy dreadnoughts/cataphracts
           myUnit.getFaction temp;
-          if and neq temp FACTION_PLAYER neq temp FACTION_NEUTRAL;
-            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rIS_commissar_execution_mode, offset 30: Aborting; target is hostile. temp:" temp;
+          if neq temp FACTION_PLAYER;
+            # debug_log "Commissar Execution Mode Scripts; ROSIGMA_rIS_commissar_execution_mode, offset 30: Aborting; target is non-friendly. temp:" temp;
             return new_pixel;
           end;
 
