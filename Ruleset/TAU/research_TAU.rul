@@ -141,12 +141,15 @@ research:
     getOneFree:
       - STR_TAU_PULSE_RIFLE_EXPORT_GUEVESA
     spawnedEvent: STR_THE_COLD_TRADE_EVENT_GV   # talk to the Tau here?
-    
-  - name: STR_INQUISITION_ATTENTION_GV
-    points: 0
+
+### Tau Guevesa Trade
+  - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
+    # gives half price access to Tau Export Pulse Rifles at the Trading Post
+    # and Guevesa Flak armor
     cost: 0
+    points: 0    
     dependencies:
-      - STR_THE_COLD_TRADE_GV
+      - STR_GENERALLOCK
 
 ### Community outreach to get beastmen soldiers + cultists - can upgrade to Marin'vesa
 ### gated on mission/interrogation?
@@ -175,6 +178,25 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_HARDER_MISSIONS
     spawnedEvent: STR_CULTURE_CLUB_EVENT_GV
+
+  - name: STR_INQUISITION_ATTENTION_GV
+    points: 0
+    cost: 0
+    dependencies:
+      - STR_GENERALLOCK
+
+### Pathfinders patch you into the system bc theyre bros
+  - name: STR_PATHFINDER_BEACON_GV
+    points: -250
+    cost: 10
+    dependencies:
+      - STR_GENERALLOCK
+    unlocks:
+      - STR_TAU_PATHFINDERS_GV   # unlocks pathfinders arriving
+      - STR_TAU_ARMORY_EXAM
+    spawnedEvent: STR_PATHFINDERS_ARRIVE_FIRST_EVENT_GV # spawns free pathfinders
+    getOneFree:
+      - STR_TAU_XENOTECH      
 
 ### Beastmen arrive, consider gating on mission
   - name: STR_BEASTMEN_CULTISTS_GV
@@ -223,18 +245,9 @@ research:
       - STR_CULTURE_CLUB_GV
     spawnedEvent: STR_TAU_CRAFT_UPGRADES_EVENT_GV
 
-### Pathfinders patch you into the system bc theyre bros
-  - name: STR_PATHFINDER_BEACON_GV
-    points: -250
-    cost: 10
-    dependencies:
-      - STR_CULTURE_CLUB_GV
-    unlocks:
-      - STR_TAU_PATHFINDERS_GV   # unlocks pathfinders arriving
-      - STR_TAU_ARMORY_EXAM
-    spawnedEvent: STR_PATHFINDERS_ARRIVE_FIRST_EVENT_GV # spawns free pathfinders
-    getOneFree:
-      - STR_TAU_XENOTECH
+#      - STR_INTERROGATION_COMPLETED
+#      - STR_ALIEN_ORIGINS
+#      - STR_THREAT_ONE    
 
 ### Full alliance with the Tau
   - name: STR_A_SECRET_PACT_GV
@@ -249,6 +262,19 @@ research:
       - STR_EARTHCASTE_SMITHS_GV    # Low rate Tau weapons manufacturing
     spawnedEvent: STR_A_SECRET_PACT_EVENT_GV
 
+### Full alliance with the Tau
+  - name: STR_A_SECRET_PACT_GV
+    points: -250
+    cost: 250
+    dependencies:
+      - STR_THE_COLD_TRADE_GV
+      - STR_PATHFINDER_BEACON_GV
+    unlocks:
+      - STR_TAU_CONSULATE_GV        # Pathfinders arrive
+      - STR_BIONICS_OPERATION       # proper med facilities redo as tau bionics    
+      - STR_EARTHCASTE_SMITHS_GV    # Low rate Tau weapons manufacturing
+    spawnedEvent: STR_A_SECRET_PACT_EVENT_GV
+
   - name: STR_EARTHCASTE_SMITHS_GV
     dependencies:
       - STR_GENERALLOCK
@@ -257,13 +283,43 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+
+#  - name: STR_FIRE_OF_UNKNOWN_ORIGIN_GV
+#    points: 100
+#    cost: 300
+#    dependencies:
+#      - STR_A_SECRET_PACT_GV
+#      - STR_ALIEN_ORIGINS
+#    unlocks:
+#      - STR_CITIES_ON_FLAME_WITH_ROCK_AND_ROLL_GV
+#    spawnedEvent: STR_FIRE_OF_UNKNOWN_ORIGIN_EVENT_GV
+
   # Ceramite plates
   - name: STR_FOR_THE_GREATER_GOOD_GV
-    cost: 250
-    points: 250
+    points: 100
+    cost: 300
     dependencies:
-      - STR_UFO_CONSTRUCTION
       - STR_A_SECRET_PACT_GV
+      - STR_ALIEN_ORIGINS
+    unlocks:
+      - STR_SEVERE_METHODS_GV
+      - STR_RALLY_THE_GUARD_GV
+
+  - name: STR_SEVERE_METHODS_GV
+    dependencies:
+    - STR_GENERALLOCK  
+
+  - name: STR_RALLY_THE_GUARD_GV
+    dependencies:
+    - STR_GENERALLOCK
+
+  # Ceramite plates
+  - name: STR_AUXILIARY_CADRE_GV
+    points: 100
+    cost: 300
+    dependencies:
+      - STR_A_SECRET_PACT_GV
+      - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_TAU_CERAMITE_TIER
 
@@ -297,14 +353,12 @@ research:
     unlocks:
       - STR_BEASTMEN_GUARDSMEN
 
-### Tau Guevesa Trade
-  - name: STR_TAU_GUEVESA_TRADING  # Guevesa Trade Agreement
-    # gives half price access to Tau Export Pulse Rifles at the Trading Post
-    # and Guevesa Flak armor
-    cost: 0
-    points: 0    
-    dependencies:
-      - STR_GENERALLOCK      
+
+
+###
+#      - STR_INTERROGATION_COMPLETED
+#      - STR_ALIEN_ORIGINS
+#      - STR_THREAT_ONE      
 
   ### Recruit Fire Warriors directly
   - name: STR_RECRUIT_FIREWARRIORS_GV
