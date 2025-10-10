@@ -1,7 +1,31 @@
 extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
+
+  tags:
+    RuleSkill:
+      # Eversor Skills
+      SKILL_EVERSOR_FRENZY_ID: int
+      SKILL_EVERSOR_DEATHBOMB_ACTIVATE_ID: int
+    RuleItem:
+      # Eversor Skills
+      ITEM_IS_EVERSOR_DEATH_BOMB: int # death bomb used for Eversor skills
+
 skills:
+  # EVERSOR ASSASSIN
+  - type: STR_EVERSOR_FRENZY_SKILL
+    flatUse: true
+    costUse:
+      time: 1
+    tags:
+      SKILL_EVERSOR_FRENZY_ID: 1
+
+  - type: STR_EVERSOR_DEATHBOMB_ACTIVATE_SKILL
+    flatUse: true
+    costUse:
+      time: 1
+    tags:
+      SKILL_EVERSOR_DEATHBOMB_ACTIVATE_ID: 1
 
 # Vindicare Special Ammo
   - type: STR_SKILL_EXITUS_HELLFIRE
@@ -157,6 +181,36 @@ items:
       ITEM_DOESNT_HURT_FRIENDS: 1
       ITEM_DAMAGE_PERCENT_VS_MECHANICAL: 100 # actually damages machines
 
+  - type: STR_EVERSOR_DEATH_BOMB_TOKEN
+    refNode: *SKILL_TOKEN
+    armor: 999
+    supportedInventorySections:
+      - STR_BACK_PACK
+    primeSound: 2425
+    battleType: 4
+    fuseType: -1
+    explodeInventory: 2
+    fuseTriggerEvents:
+      throwExplode: true
+    throwRange: 1  # not meant to be thrown
+    power: 300  # deadly
+    damageType: 11
+    damageAlter:
+      RandomType: 6
+      ToArmorPre: 1.0
+      ToTile: 1.0
+      ToItem: 1.0
+      ToArmor: 0
+      ToHealth: 0.7
+      ToWound: 0.05
+      RandomWound: false
+      FireThreshold: 0  # even if it doesn't penetrate your armor you're still gonna burn alright
+      FixRadius: 12
+    tags:
+      ITEM_IS_EVERSOR_DEATH_BOMB: 1 # used for Eversor skill scripts
+      ITEM_DOES_KILL_USER: 1 # using the bomb is certain death
+
+
 soldiers:
 
   - type: STR_GUARD_IMPERIAL_ASSASSIN  # units with ARMOR_IS_INFILTRATOR should have this
@@ -188,3 +242,9 @@ soldiers:
       - STR_SKILL_LIKE_FIGHTING_A_SHADOW
       - STR_SKILL_DEPLOY_DECOY
       - STR_SKILL_NOOSPHERIC_NOISE
+
+  - type: STR_EVERSOR_ASSASSIN
+    skillIconSprite: 232
+    skills:
+      - STR_EVERSOR_FRENZY_SKILL
+      - STR_EVERSOR_DEATHBOMB_ACTIVATE_SKILL
