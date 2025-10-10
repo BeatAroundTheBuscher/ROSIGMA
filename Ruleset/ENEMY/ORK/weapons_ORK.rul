@@ -1268,7 +1268,7 @@ items:
     size: 0.4
     costSell: 30000
     battleType: 1
-    dropoff: 6
+    dropoff: 4 # adjusted for lower accuracy multiplier
     weight: 65
     bigSprite: 2161
     floorSprite: 2057 # using malthus lascannon
@@ -1454,6 +1454,66 @@ items:
       firing: 0.65
       strength: 0.4
     listOrder: 17075
+    tags:
+      ITEM_RECOIL: 130
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_BEAMY_DEFFGUN  # Las Deffgun
+    categories: [STR_CAT_ORK, STR_CAT_TERMINATOR, STR_CAT_LASGUN]
+    requires:
+      - STR_ORK_ONLY
+    size: 0.6
+    dropoff: 4 # to compensate for lower accuracy multiplier.
+    costSell: 40000
+    weight: 100 # ultra heavy when loaded.
+    bigSprite: 2175
+    floorSprite: 922 # using black multilaser
+    handSprite: 650 # using black multilaser
+    bulletSprite: {mod: 40k, index: 0} # rocket. The lascannon and multilaser have their own sprites/sounds
+    fireSound: {mod: 40k, index: 52}
+    ammo:
+      0:
+        compatibleAmmo: [STR_PORTABLE_MULTILASER_BATTERY]
+      1:
+        compatibleAmmo: [STR_ZZAP_GUN_CHARGE, STR_LASCAN_CLIP, STR_LASCANNON_CLIP_SMALL, STR_LASCANNON_CLIP_MALTHUS]
+      2:
+        compatibleAmmo: [STR_SMALL_ROCKET, STR_LARGE_ROCKET, STR_INCENDIARY_ROCKET] # maybe add heavy rockets
+    accuracySnap: 40 # multilaser auto is 45
+    accuracyAuto: 60 # rokkit accuracy
+    accuracyAimed: 50 # slightly more accurate than the zzap gun
+    tuSnap: 40 # multilaser auto is 70
+    tuAuto: 35 # quick-fire rokkit
+    tuAimed: 35 # faster than the zzap gun
+    confSnap: # multilaser
+      ammoSlot: 0
+      shots: 10 # multilaser auto is 12 shots
+      name: STR_BURST_SNAP_SHOT
+      spendPerShot: 2 # still has 100 shots in the battery with this
+    confAuto: # Rokkit
+      ammoSlot: 2
+      shots: 1
+      name: STR_LAUNCH_ROKKIT
+    confAimed: # lascannon
+      ammoSlot: 1
+      shots: 1
+      name: STR_OTHER_TRIGGER
+    battleType: 1
+    twoHanded: true
+    oneHandedPenalty: 100 # meganob/terminator class weapon.
+    invWidth: 2
+    invHeight: 3
+    armor: 200
+    autoRange: 18 # rokkit
+    snapRange: 15 # multilaser
+    aimRange: 22 # slightly lower range than the zzap gun
+    sprayWaypoints: 2
+    bulletSpeed: 25
+    attraction: 1
+    recover: true
+    accuracyMultiplier: # heavy ork weapon multiplier
+      firing: 0.65
+      strength: 0.4
+    listOrder: 17077
     tags:
       ITEM_RECOIL: 130
       ITEM_IS_HEAVY_WEAPON: 1
