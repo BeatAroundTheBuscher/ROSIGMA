@@ -372,6 +372,74 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
 
+  - &STR_LEGIOBIKERNODEPLAYERCHAOS
+    type: STR_UNDIVIDEDCHAOSBIKE_LEGIOARMORPLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    spriteSheet: UNDIVIDED_ARMOR_LEGIOBIKEbattle.PCK
+    spriteInv: UNDIVIDED_ARMOR_LEGIOBIKE.SPK
+    customArmorPreviewIndex: [474, 475, 476]  # placeholder
+    storeItem: STR_CHAOSBIKE_LEGIOARMORPLAYER
+    allowInv: true
+    units:
+      - STR_CHAOS_MARINE
+    corpseBattle:
+      - STR_CHAOSBIKEDEMON_CORPSE_GEO
+      - WSBIKE_CORPSE2
+      - WSBIKE_CORPSE3
+      - WSBIKE_CORPSE4
+    frontArmor: 160
+    sideArmor: 150
+    rearArmor: 85
+    underArmor: 145  # takes 4xHits from AoE
+    size: 2
+    moveSound: {mod: 40k, index: 14}
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.2 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 5
+    builtInWeapons:
+      - AUX_CHAOSTANK_CANNON
+      - AUX_RAM
+      - INV_NULL_3X3
+      - INV_NULL_4X2
+    moveCost:
+      baseNormalPercent: [50, 50]  # halved movement costs
+    movementType: 1
+    specab: 3
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 50
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+  - type: STR_UNDIVIDEDCHAOSBIKE_LEGIOARMORPLAYER
+    stats:
+      tu: 60
+      stamina: 70
+      health: 5
+      bravery: 10  # always multiples of 10
+      reactions: 10
+      firing: 10
+      throwing: 5
+      strength: 20
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15
+
   - &STR_DREADNOUGHT_ARMOR
     type: DREAD_ARMOR_CHAOS_PLAYER
     requires: STR_ALIENS_ONLY
@@ -969,6 +1037,40 @@ armors:
       UNIT_TYPE_KHORNE: 1
       UNIT_SIZE: 200 # HUGE
 
+  - type: STR_KHORNECHAOSBIKE_LEGIOARMORPLAYER
+    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
+    spriteSheet: KHORNE_ARMOR_LEGIOBIKEbattle.PCK
+    spriteInv: KHORNE_ARMOR_LEGIOBIKE.SPK
+    customArmorPreviewIndex: [474, 475, 476]  # placeholder
+    stats:
+      tu: 70  # +10
+      stamina: 100  # +10
+      health: 10  # +5
+      bravery: 20  # +10
+      reactions: 20  # +10
+      firing: -20  # -10
+      throwing: -10  # -15
+      strength: 100  # +80
+      psiStrength: 0
+      psiSkill: 0
+      melee: 30  # +15
+    units:
+      - STR_CHAOS_MARINE_KHORNE
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 50
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      UNIT_TYPE_KHORNE: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      INFECTION_RESIST: 25
+      YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: 5
+      YTAG_DAMAGE_RETURNED_AS_ENERGY_BUFF: 5
+
   ## Nurgle
   - &STR_NURGLE_ARMOR
     type: MUTON_ARMORNURGLEA_PLAYER
@@ -1520,6 +1622,67 @@ armors:
         add_shade new_pixel shade;
         return new_pixel;
 
+  - type: STR_NURGLECHAOSBIKE_LEGIOARMORPLAYER
+    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
+    spriteSheet: NURGLE_ARMOR_LEGIOBIKEbattle.PCK
+    spriteInv: NURGLE_ARMOR_LEGIOBIKE.SPK
+    customArmorPreviewIndex: [474, 475, 476]  # placeholder
+    units:
+      - STR_CHAOS_MARINE_NURGLE
+    instantWoundRecovery: true
+    stats:
+      tu: 50  # -10
+      stamina: 90  # +20
+      health: 20  # +15
+      bravery: 20  # +5
+      reactions: 0  # -15
+      firing: 10  #
+      throwing: 10  # +5
+      strength: 25  # +5
+      psiStrength: 0
+      psiSkill: 0
+      melee: 15  # -5
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 50
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_IS_DIEHARD: 1
+      DIEHARD_TEMP_MODIFIER_INCREMENT: -50  # Two chances
+      DIEHARD_THRESHOLD: 120  # Big damage still kills
+      INTIMIDATION_RESISTANCE: 25  # intimidation
+    scripts:
+      newTurnUnit:
+        var int currentHealth;
+        var int maxHealth;
+        var int targetHealth;
+        var int healAmount;
+        var int unitFaction;
+
+        unit.getHealthMax maxHealth;
+        unit.getHealth currentHealth;
+
+        set targetHealth maxHealth;
+        div targetHealth 3;
+        set healAmount maxHealth;
+        div healAmount 8;
+
+        unit.getFaction unitFaction;
+        if eq side unitFaction;
+          if gt currentHealth 0;
+            if lt currentHealth targetHealth;
+              add currentHealth healAmount;
+              unit.setHealth currentHealth;
+            end;
+          end;
+        end;
+        return;
+
   ## Slaanesh
   - type: MUTON_ARMORSLAANESH_PLAYER  # SLAANESH REGULAR
     refNode: *STR_CSM_ARMOR
@@ -1647,7 +1810,7 @@ armors:
     refNode: *STR_CSM_TERMINATOR_ARMOR
     spriteSheet: SLAANESHtermi_BS.PCK
     spriteInv: SLAANESHtermi_INV.SPK
-    customArmorPreviewIndex: 1116  # placeholder
+    customArmorPreviewIndex: 1116
     units:
       - STR_CHAOS_CHOSEN_SLAANESH
     corpseBattle:
@@ -1794,6 +1957,38 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_SLAANESH: 1
+
+  - type: STR_SLAANESHCHAOSBIKE_LEGIOARMORPLAYER
+    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
+    spriteSheet: SLAANESH_ARMOR_LEGIOBIKEbattle.PCK
+    spriteInv: SLAANESH_ARMOR_LEGIOBIKE.SPK
+    customArmorPreviewIndex: [474, 475, 476]  # placeholder
+    units:
+      - STR_CHAOS_MARINE_SLAANESH
+    stats:
+      tu: 75  # +15
+      stamina: 70
+      health: 5
+      bravery: 10  # always multiples of 10
+      reactions: 15  # +5
+      firing: 5  # -5
+      throwing: 5
+      strength: 15  # -5
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20  # +5
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_SLAANESH: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 50
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      INFECTION_RESIST: 33  # infection resistant
+      INTIMIDATION_RESISTANCE: 50  # intimidate resistant
+
 
   ## Tzeentch
   - type: MUTON_ARMORTZEENTCH_PLAYER  # Rubric Marine
@@ -2113,6 +2308,34 @@ armors:
       UNIT_TYPE_TZEENTCH: 1
       UNIT_TYPE_PSYKER: 1
       UNIT_SIZE: 200 # HUGE
+
+  - type: STR_TZEENTCHCHAOSBIKE_LEGIOARMORPLAYER
+    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
+    spriteSheet: TZEENTCH_ARMOR_LEGIOBIKEbattle.PCK
+    spriteInv: TZEENTCH_ARMOR_LEGIOBIKE.SPK
+    customArmorPreviewIndex: [474, 475, 476]  # placeholder
+    units:
+      - STR_CHAOS_MARINE_TZEENTCH
+    stats:
+      tu: 40  # -20 TZ
+      stamina: 90  # +20
+      health: -20  # -20 TZ
+      bravery: 30  # +15 TZ
+      reactions: -5  # -20 TZ
+      firing: 20  # +10 TZ
+      throwing: 10  # +5
+      strength: 20  #
+      psiStrength: 25  # +25 TZ
+      psiSkill: 20  # +20 TZ
+      melee: 10  # --10 TZ
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 50
+      FLIGHT_DODGE_CHANCE: 30
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   # Playable Chaos Sisters Armors
   # Novice Tier type, Repentia/Assassin Types, Power Armor Types, Seraphim Types and Leader Champion types.
@@ -3379,6 +3602,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
 
   - &CHAOS_MOUNTED_AUTOCANNON
     type: STR_KHORNE_MOUNTED_AUTOCANNON_PLAYER
@@ -3487,6 +3712,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
 
   - &CHAOS_MOUNTED_BOLTER
     type: STR_KHORNE_MOUNTED_BOLTER_PLAYER
@@ -3595,6 +3822,77 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+
+  - &STR_BIKERNODEPLAYERCHAOS
+    type: STR_KHORNECHAOSBIKE_GUARDARMORPLAYER
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    spriteSheet: KHORNE_ARMOR_GUARDBIKEbattle.PCK
+    spriteInv: KHORNE_ARMOR_GUARDBIKE.SPK
+    allowInv: true
+    customArmorPreviewIndex: [1245, 1065, 1247]
+    storeItem: STR_CHAOSBIKE_GUARDARMORPLAYER
+    corpseGeo: STR_FALLEN_CORPSE
+    stats:
+      tu: 50
+      stamina: 50
+    corpseBattle:
+      - WSBIKE_CORPSE1
+      - WSBIKE_CORPSE2
+      - WSBIKE_CORPSE3
+      - WSBIKE_CORPSE4
+    frontArmor: 130
+    sideArmor: 125
+    rearArmor: 85
+    underArmor: 120
+    size: 2
+    moveSound: {mod: 40k, index: 14}
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 5
+    builtInWeapons:
+      - AUX_CHAOS_OUTBOLTER
+      - AUX_RAM
+      - INV_NULL_3X3
+      - INV_NULL_4X2
+      - STR_HWP_CANNON_SHELLS
+      - STR_HWP_CANNON_SHELLS
+    moveCost:
+      baseNormalPercent: [50, 50]  # halved movement costs
+  - type: STR_KHORNECHAOSBIKE_GUARDARMORPLAYER
+    requires: STR_KHORNE_DEVOTION
+    units:
+      - STR_GUARDSM
+      - STR_KHORNE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 30
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_KHORNGOR_ARMOR_PLAYER
     visibilityAtDay: 30
@@ -3847,6 +4145,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_GREEN_MOUNT_CORPSE_1
       - STR_CGUARD_GREEN_MOUNT_CORPSE_2
@@ -3874,6 +4174,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_GREEN_MOUNT_CORPSE_1
       - STR_CGUARD_GREEN_MOUNT_CORPSE_2
@@ -3901,6 +4203,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_GREEN_MOUNT_CORPSE_1
       - STR_CGUARD_GREEN_MOUNT_CORPSE_2
@@ -3915,6 +4219,31 @@ armors:
         end;
         add_shade new_pixel shade;
         return new_pixel;
+
+  - type: STR_NURGLECHAOSBIKE_GUARDARMORPLAYER
+    refNode: *STR_BIKERNODEPLAYERCHAOS
+    requires: STR_NURGLE_DEVOTION
+    spriteSheet: NURGLE_ARMOR_GUARDBIKEbattle.PCK
+    spriteInv: NURGLE_ARMOR_GUARDBIKE.SPK
+    customArmorPreviewIndex: [1245, 1095, 1247]
+    units:
+      - STR_GUARDSM
+      - STR_NURGLE_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_NURGLE: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 30
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_PESTIGOR_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -4414,6 +4743,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_PINK_MOUNT_CORPSE_1
       - STR_CGUARD_PINK_MOUNT_CORPSE_2
@@ -4441,6 +4772,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_PINK_MOUNT_CORPSE_1
       - STR_CGUARD_PINK_MOUNT_CORPSE_2
@@ -4468,6 +4801,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_PINK_MOUNT_CORPSE_1
       - STR_CGUARD_PINK_MOUNT_CORPSE_2
@@ -4482,6 +4817,31 @@ armors:
         end;
         add_shade new_pixel shade;
         return new_pixel;
+
+  - type: STR_SLAANESCHAOSBIKE_GUARDARMORPLAYER
+    refNode: *STR_BIKERNODEPLAYERCHAOS
+    requires: STR_SLAANESH_DEVOTION
+    spriteSheet: SLAANESH_ARMOR_GUARDBIKEbattle.PCK
+    spriteInv: SLAANESH_ARMOR_GUARDBIKE.SPK
+    customArmorPreviewIndex: [1245, 1124, 1247]
+    units:
+      - STR_GUARDSM
+      - STR_SLAANESH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_SLAANESH: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 30
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_SLAANGOR_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -4645,6 +5005,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_BLUE_MOUNT_CORPSE_1
       - STR_CGUARD_BLUE_MOUNT_CORPSE_2
@@ -4672,6 +5034,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_BLUE_MOUNT_CORPSE_1
       - STR_CGUARD_BLUE_MOUNT_CORPSE_2
@@ -4699,6 +5063,8 @@ armors:
       - STR_CHAOSCULT_SOLDIER_LV2
       - STR_CHAOSCULT_GUARDFLAK
       - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
     corpseBattle:
       - STR_CGUARD_BLUE_MOUNT_CORPSE_1
       - STR_CGUARD_BLUE_MOUNT_CORPSE_2
@@ -4713,6 +5079,31 @@ armors:
         end;
         add_shade new_pixel shade;
         return new_pixel;
+
+  - type: STR_TZEENTCHCHAOSBIKE_GUARDARMORPLAYER
+    refNode: *STR_BIKERNODEPLAYERCHAOS
+    requires: STR_TZEENTCH_DEVOTION
+    spriteSheet: TZEENTCH_ARMOR_GUARDBIKEbattle.PCK
+    spriteInv: TZEENTCH_ARMOR_GUARDBIKE.SPK
+    customArmorPreviewIndex: [1245, 1155, 1247]
+    units:
+      - STR_GUARDSM
+      - STR_TZEENTCH_CULTIST_PLAYER
+      - STR_CHAOSCULT_SOLDIER_LV1
+      - STR_CHAOSCULT_SOLDIER_LV2
+      - STR_CHAOSCULT_GUARDFLAK
+      - STR_CHAOSCULT_GUARDCARAP
+      - STR_ADEPTAS_FRATERIS_MILITIA
+      - STR_ADEPTAS_FRATERIS_MILITIA_VETERAN
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_TZEENTCH: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 30
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   - type: STR_TZAANGOR_ARMOR_PLAYER
     visibilityAtDay: 40
@@ -5013,6 +5404,23 @@ armors:
       UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIAL_GUARD: 1
+
+  - type: STR_UNDIVIDEDCHAOSBIKE_GUARDARMORPLAYER
+    refNode: *STR_BIKERNODEPLAYERCHAOS
+    visibilityAtDark: 35  # Superior NV + optics
+    spriteSheet: UNDIVIDED_ARMOR_GUARDBIKEbattle.PCK
+    spriteInv: UNDIVIDED_ARMOR_GUARDBIKE.SPK
+    customArmorPreviewIndex: [1245, 1035, 1247]
+    units:
+      - STR_BLACKSTONE_PLAYER
+    tags:
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_SIZE: 200 # HUGE
+      DODGE_CHANCE: 30
+      FLIGHT_DODGE_CHANCE: 0
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
 
   # Iron Guard
   - &STR_IRON_GUARD_ARMOR_PLAYER
@@ -5651,198 +6059,3 @@ armors:
       UNIT_SIZE: 200 # HUGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_CHAOS: 1
-
-  # khorne biker
-
-  - &STR_BIKERNODEPLAYERCHAOS
-    type: STR_KHORNECHAOSBIKE_GUARDARMORPLAYER
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    spriteSheet: KHORNE_ARMOR_GUARDBIKEbattle.PCK
-    spriteInv: KHORNE_ARMOR_GUARDBIKE.SPK
-    allowInv: true
-    customArmorPreviewIndex: [131, 132, 133]  # placeholder
-    storeItem: STR_CHAOSBIKE_GUARDARMORPLAYER
-    corpseGeo: STR_FALLEN_CORPSE
-    units:
-      - STR_CHAOSCULT_GUARDCARAP  # to replace with your khorne player guard
-    stats:
-      tu: 50
-      stamina: 50
-    corpseBattle:
-      - WSBIKE_CORPSE1
-      - WSBIKE_CORPSE2
-      - WSBIKE_CORPSE3
-      - WSBIKE_CORPSE4
-    frontArmor: 130
-    sideArmor: 125
-    rearArmor: 85
-    underArmor: 120
-    size: 2
-    moveSound: {mod: 40k, index: 14}
-    damageModifier: #VEHICLE ARMOR LARGE
-      - 1.0 #none
-      - 1.0 #AP
-      - 0.4 #FLAMES
-      - 1.0 #HE
-      - 1.4 #LASCANON
-      - 1.0 #PLASMA
-      - 0.0 #STUN
-      - 0.8 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 0.0 #IMPACT
-      - 1.2 #MELTA
-    loftempsSet: [92, 89, 90, 91]
-    drawingRoutine: 5
-    builtInWeapons:
-      - AUX_CHAOS_OUTBOLTER
-      - AUX_RAM
-      - INV_NULL_3X3
-      - INV_NULL_4X2
-      - STR_HWP_CANNON_SHELLS
-      - STR_HWP_CANNON_SHELLS
-    moveCost:
-      baseNormalPercent: [50, 50]  # halved movement costs
-    tags:
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_MECHANICAL: 1
-      UNIT_TYPE_LIVING: 1
-      UNIT_SIZE: 200 # HUGE
-      DODGE_CHANCE: 30
-      FLIGHT_DODGE_CHANCE: 0
-      ARMOR_MAX_SUCCESSFUL_DODGES: 4
-
-  - &STR_LEGIOBIKERNODEPLAYERCHAOS
-    type: STR_KHORNECHAOSBIKE_LEGIOARMORPLAYER
-    visibilityAtDay: 40
-    visibilityAtDark: 30
-    spriteSheet: KHORNE_ARMOR_LEGIOBIKEbattle.PCK
-    spriteInv: KHORNE_ARMOR_LEGIOBIKE.SPK
-    storeItem: STR_CHAOSBIKE_LEGIOARMORPLAYER
-    allowInv: true
-    customArmorPreviewIndex: [474, 475, 476]  # placeholder
-    corpseBattle:
-      - STR_CHAOSBIKEDEMON_CORPSE_GEO
-      - WSBIKE_CORPSE2
-      - WSBIKE_CORPSE3
-      - WSBIKE_CORPSE4
-    units:
-      - STR_CHAOSCULT_LEGIONARIE  # to replace with your khorne player guard
-    stats:
-      tu: 50
-      stamina: 50
-    frontArmor: 160
-    sideArmor: 150
-    rearArmor: 85
-    underArmor: 145  # takes 4xHits from AoE
-    size: 2
-    moveSound: {mod: 40k, index: 14}
-    damageModifier: #VEHICLE ARMOR LARGE
-      - 1.0 #none
-      - 1.0 #AP
-      - 0.4 #FLAMES
-      - 1.0 #HE
-      - 1.2 #LASCANON
-      - 1.0 #PLASMA
-      - 0.0 #STUN
-      - 0.8 #MELEE
-      - 1.0 #ACID
-      - 0.0 #SMOKE
-      - 0.0 #IMPACT
-      - 1.2 #MELTA
-    loftempsSet: [92, 89, 90, 91]
-    drawingRoutine: 5
-    builtInWeapons:
-      - AUX_CHAOSTANK_CANNON
-      - AUX_RAM
-      - INV_NULL_3X3
-      - INV_NULL_4X2
-    moveCost:
-      baseNormalPercent: [50, 50]  # halved movement costs
-    movementType: 1
-    specab: 3
-    tags:
-      UNIT_TYPE_CHAOS: 1
-      UNIT_TYPE_MECHANICAL: 1
-      UNIT_TYPE_LIVING: 1
-      UNIT_SIZE: 200 # HUGE
-      DODGE_CHANCE: 50
-      FLIGHT_DODGE_CHANCE: 30
-      ARMOR_MAX_SUCCESSFUL_DODGES: 4
-
-  # nurgle biker
-
-  - type: STR_NURGLECHAOSBIKE_GUARDARMORPLAYER
-    refNode: *STR_BIKERNODEPLAYERCHAOS
-    spriteSheet: NURGLE_ARMOR_GUARDBIKEbattle.PCK
-    spriteInv: NURGLE_ARMOR_GUARDBIKE.SPK
-    customArmorPreviewIndex: [131, 132, 133]  # placeholder
-    units:
-      - STR_CHAOSCULT_GUARDCARAP  # to replace with your khorne player guard
-
-
-  - type: STR_NURGLECHAOSBIKE_LEGIOARMORPLAYER
-    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
-    spriteSheet: NURGLE_ARMOR_LEGIOBIKEbattle.PCK
-    spriteInv: NURGLE_ARMOR_LEGIOBIKE.SPK
-    customArmorPreviewIndex: [474, 475, 476]  # placeholder
-    units:
-      - STR_CHAOSCULT_LEGIONARIE  # to replace with your khorne player guard
-
-  # slaanesh biker
-
-  - type: STR_SLAANESCHAOSBIKE_GUARDARMORPLAYER
-    refNode: *STR_BIKERNODEPLAYERCHAOS
-    spriteSheet: SLAANESH_ARMOR_GUARDBIKEbattle.PCK
-    spriteInv: SLAANESH_ARMOR_GUARDBIKE.SPK
-    customArmorPreviewIndex: [131, 132, 133]  # placeholder
-    units:
-      - STR_CHAOSCULT_GUARDCARAP  # to replace with your khorne player guard
-
-
-  - type: STR_SLAANESHCHAOSBIKE_LEGIOARMORPLAYER
-    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
-    spriteSheet: SLAANESH_ARMOR_LEGIOBIKEbattle.PCK
-    spriteInv: SLAANESH_ARMOR_LEGIOBIKE.SPK
-    customArmorPreviewIndex: [474, 475, 476]  # placeholder
-    units:
-      - STR_CHAOSCULT_LEGIONARIE  # to replace with your khorne player guard
-
-  # tzeentch biker
-
-  - type: STR_TZEENTCHCHAOSBIKE_GUARDARMORPLAYER
-    refNode: *STR_BIKERNODEPLAYERCHAOS
-    spriteSheet: TZEENTCH_ARMOR_GUARDBIKEbattle.PCK
-    spriteInv: TZEENTCH_ARMOR_GUARDBIKE.SPK
-    customArmorPreviewIndex: [131, 132, 133]  # placeholder
-    units:
-      - STR_CHAOSCULT_GUARDCARAP  # to replace with your khorne player guard
-
-
-  - type: STR_TZEENTCHCHAOSBIKE_LEGIOARMORPLAYER
-    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
-    spriteSheet: TZEENTCH_ARMOR_LEGIOBIKEbattle.PCK
-    spriteInv: TZEENTCH_ARMOR_LEGIOBIKE.SPK
-    customArmorPreviewIndex: [474, 475, 476]  # placeholder
-    units:
-      - STR_CHAOSCULT_LEGIONARIE  # to replace with your khorne player guard
-
-  # undivided biker
-
-  - type: STR_UNDIVIDEDCHAOSBIKE_GUARDARMORPLAYER
-    refNode: *STR_BIKERNODEPLAYERCHAOS
-    spriteSheet: UNDIVIDED_ARMOR_GUARDBIKEbattle.PCK
-    spriteInv: UNDIVIDED_ARMOR_GUARDBIKE.SPK
-    customArmorPreviewIndex: [131, 132, 133]  # placeholder
-    units:
-      - STR_CHAOSCULT_GUARDCARAP  # to replace with your khorne player guard
-
-
-  - type: STR_UNDIVIDEDCHAOSBIKE_LEGIOARMORPLAYER
-    refNode: *STR_LEGIOBIKERNODEPLAYERCHAOS
-    spriteSheet: UNDIVIDED_ARMOR_LEGIOBIKEbattle.PCK
-    spriteInv: UNDIVIDED_ARMOR_LEGIOBIKE.SPK
-    customArmorPreviewIndex: [474, 475, 476]  # placeholder
-    units:
-      - STR_CHAOSCULT_LEGIONARIE  # to replace with your khorne player guard
