@@ -51,11 +51,14 @@ armors:
       - STR_WBSOLDIER
     loftempsSet: [2]
     tags:
-      UNIT_TYPE_IMPERIUM: 1
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
       UNIT_TYPE_LIVING: 1
-      UNIT_SIZE: 125 # LARGE but not as large as power armor
-      DODGE_CHANCE: 10
-      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 30
+      INFECTION_RESIST: 10
+      INTIMIDATION_RESISTANCE: 10
+      DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
 
   - &STR_WBMARINEBASE_ARMOR
     type: STR_WBMARINE_ARMORPLAYER  # WB MARINE ARMOR
@@ -107,9 +110,16 @@ armors:
       - STR_WBSOLDIER
     loftempsSet: [3]
     tags:
-      UNIT_TYPE_LIVING: 1
-      UNIT_TYPE_IMPERIUM: 1
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      # UNIT_POSSESSION_TYPE: 1 #1 means it will spawn STR_WORDBEARER_GALVWARRIORPOSS
+      # UNIT_POSSESSION_MANIFESTATION_CHANCE: 5 #this is a percent
+      INFECTION_RESIST: 20
+      INTIMIDATION_RESISTANCE: 20
+      DODGE_CHANCE: 5
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - type: STR_WBMARINEELITE_ARMORPLAYER  # WB MARINE ELITE ARMOR
     refNode: *STR_WBMARINEBASE_ARMOR
@@ -153,6 +163,17 @@ armors:
       - 1.0  # MELTA
     builtInWeapons:
       - INV_NULL_3X3
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      # UNIT_POSSESSION_TYPE: 1 #1 means it will spawn STR_WORDBEARER_GALVWARRIORPOSS
+      # UNIT_POSSESSION_MANIFESTATION_CHANCE: 5 #this is a percent
+      INFECTION_RESIST: 30
+      INTIMIDATION_RESISTANCE: 30
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
 
   - &STR_WBTERMINATORBASE_ARMOR
     type: STR_WBTERMINATOR_ARMORPLAYER  # WB TERMINATOR ARMOR
@@ -208,9 +229,16 @@ armors:
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
     tags:
-      UNIT_TYPE_IMPERIUM: 1
-      UNIT_TYPE_LIVING: 1
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      # UNIT_POSSESSION_TYPE: 3
+      # UNIT_POSSESSION_MANIFESTATION_CHANCE: 4
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50  # (50 * 100 / 25) = 200. Regenerates from 50 (at 0) to 0 (at 200) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      INFECTION_RESIST: 70 #blessed by the dark gods
+      INTIMIDATION_RESISTANCE: 70 #zealous convictions
+
 
   - type: STR_WBTERMINATORELITE_ARMORPLAYER  # WB TERMINATOR ELITE ARMOR
     refNode: *STR_WBTERMINATORBASE_ARMOR
@@ -251,3 +279,278 @@ armors:
       - 0.0  # SMOKE
       - 0.2  # IMPACT
       - 1.0  # MELTA
+    tags:
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 75  # (75 * 100 / 25) = 200. Regenerates from 75 (at 0) to 0 (at 200) / Turn; artificer shields
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      # UNIT_POSSESSION_TYPE: 3
+      # UNIT_POSSESSION_MANIFESTATION_CHANCE: 4
+      INFECTION_RESIST: 100 #blessed by the dark gods
+      INTIMIDATION_RESISTANCE: 75 #zealous convictions
+
+  - &STR_WBDIABOLISTBASE_ARMOR
+    type: STR_WBDIABOLIST_ARMORPLAYER
+    customArmorPreviewIndex: 13
+    visibilityAtDay: 40
+    visibilityAtDark: 30
+    antiCamouflageAtDay: 5
+    antiCamouflageAtDark: 5
+    heatVision: 20  # basic heat vision
+    spriteSheet: WORDBEARERdiabolistbattle.PCK
+    zombiImmune: true
+    corpseBattle:
+      - STR_WORDBEARER_DIABOLISTPLAYER_CORPSE
+    corpseGeo: STR_WBFALLEN_CORPSE
+    storeItem: STR_WBDIABOLIST_ARMORPLAYER
+    specialWeapon: STR_UNARMED_GAUNTLET_PLUS
+    stats:
+      tu: -10
+      stamina: 10
+      health: 20
+      bravery: 0  # always multiples of 10
+      reactions: 0
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 20
+      psiSkill: 10
+      melee: 0
+    frontArmor: 125
+    sideArmor: 105
+    rearArmor: 80
+    underArmor: 105
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 0.8  # AP was 1.0
+      - 0.7  # FLAMES was 0.8
+      - 0.6  # HE was 0.7
+      - 0.7  # LASCANON was 0.8
+      - 0.9  # PLASMA was 1.1
+      - 0.8  # STUN was 1.1
+      - 0.9  # MELEE was 1.1
+      - 0.8  # ACID was 1.0
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    builtInWeapons:
+      - AUX_CROZIUS
+      - INV_NULL_3X3
+    units:
+      - STR_WBSOLDIER_ACOLYTE
+    loftempsSet: [3]
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      INFECTION_RESIST: 80
+      INTIMIDATION_RESISTANCE: 50
+      DODGE_CHANCE: 5
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_WBARCHDIABOLIST_ARMORPLAYER
+    refNode: *STR_WBDIABOLISTBASE_ARMOR
+    customArmorPreviewIndex: 13
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 10
+    spriteSheet: WORDBEARERarchdiabolistbattle.PCK
+    zombiImmune: true
+    corpseBattle:
+      - STR_WORDBEARER_DIABOLISTELITEPLAYER_CORPSE
+    corpseGeo: STR_WBFALLEN_CORPSE
+    storeItem: STR_WBARCHDIABOLIST_ARMORPLAYER
+    stats:
+      tu: 10
+      stamina: 20
+      health: 40
+      bravery: 0  # always multiples of 10
+      reactions: 10
+      firing: 10
+      throwing: 0
+      strength: 0
+      psiStrength: 40
+      psiSkill: 20
+      melee: 5
+    frontArmor: 135
+    sideArmor: 110
+    rearArmor: 100
+    underArmor: 110
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.6  # FLAMES
+      - 0.6  # HE
+      - 0.7  # LASCANON
+      - 0.9  # PLASMA
+      - 0.8  # STUN
+      - 0.9  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 0.9  # MELTA
+    builtInWeapons:
+      - AUX_CROZIUS
+      - INV_NULL_3X3
+    units:
+      - STR_WBSOLDIER_ACOLYTE
+    loftempsSet: [3]
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      INFECTION_RESIST: 90
+      INTIMIDATION_RESISTANCE: 50
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic, 4322.msg75634.html# msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int floating;
+        var int isFemale;
+
+        var int numOfFrames;
+
+        unit.isWalking walking;
+        unit.isFloating floating;
+        unit.getGender isFemale;
+
+        set numOfFrames 6;
+
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if eq floating 0;
+
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+              if neq 0 isFemale;
+                # using isFemale differently for now;
+                set isFemale 8;
+                mul isFemale numOfFrames;
+                add sprite_index isFemale;
+              end;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;
+
+  - type: STR_WBDARKAPOSTLE_ARMORPLAYER
+    refNode: *STR_WBDIABOLISTBASE_ARMOR
+    customArmorPreviewIndex: 13
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 10
+    corpseBattle:
+      - STR_WORDBEARER_DARKAPOSTLEPLAYER_CORPSE
+    zombiImmune: true
+    corpseBattle:
+      - STR_WORDBEARER_DIABOLISTELITE_CORPSE
+    corpseGeo: STR_WBFALLEN_CORPSE
+    storeItem: STR_WBDARKAPOSTLE_ARMORPLAYER
+    stats:
+      tu: 20
+      stamina: 40
+      health: 80
+      bravery: 20  # always multiples of 10
+      reactions: 30
+      firing: 20
+      throwing: 0
+      strength: 30
+      psiStrength: 60
+      psiSkill: 30
+      melee: 25
+    frontArmor: 135
+    sideArmor: 120
+    rearArmor: 110
+    underArmor: 120
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.6  # FLAMES
+      - 0.6  # HE
+      - 0.7  # LASCANON
+      - 0.9  # PLASMA
+      - 0.8  # STUN
+      - 0.9  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 0.9  # MELTA
+    builtInWeapons:
+      - AUX_CROZIUS
+      - INV_NULL_3X3
+    units:
+      - STR_WBSOLDIER_ACOLYTE
+    loftempsSet: [3]
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      UNIT_HAS_RUINOUS_BLESSING: 1
+      INFECTION_RESIST: 100 #blessed by the dark gods
+      INTIMIDATION_RESISTANCE: 75 #zealous convictions
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 25  # Basic energy field (25 * 100 / 25) = 100. Regenerates from 25 (at 0) to 0 (at 100) / Turn
+      ARMOR_ENERGY_SHIELD_DECAY: 25
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+    scripts:
+      selectUnitSprite: |
+        # https://openxcom.org/forum/index.php/topic, 4322.msg75634.html# msg75634
+        # and power pack for veterans/scions
+        var int temp;
+        var int walking;
+        var int floating;
+        var int isFemale;
+
+        var int numOfFrames;
+
+        unit.isWalking walking;
+        unit.isFloating floating;
+        unit.getGender isFemale;
+
+        set numOfFrames 6;
+
+
+        unit.getId temp;
+
+        add temp anim_frame;
+        mod temp numOfFrames;
+        mul temp 8;
+
+
+        if eq blit_part blit_torso; # if torso to be drawn
+            if eq floating 0;
+
+              set sprite_index 288; # position after female and flying legs (8+8 + some extra offset so it's multiple of 16)
+              add sprite_index temp;
+              if neq 0 isFemale;
+                # using isFemale differently for now;
+                set isFemale 8;
+                mul isFemale numOfFrames;
+                add sprite_index isFemale;
+              end;
+            end;
+        end;
+
+        add sprite_index sprite_offset; # add direction
+
+        return sprite_index;
