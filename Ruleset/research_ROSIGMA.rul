@@ -33,6 +33,7 @@
 # #SM.SCOUT#          Scout Strategy
 # #SM.TAC#            Tactical Strategy
 # #SM.WOLF#           Space Wolf Strategy
+# #SM.WB#             Word Bearers Strategy
 # #CM#              Chamber Militant
 # #CM.DW#             Deathwatch
 # #CM.GK#             Grey Knights
@@ -345,6 +346,7 @@ research:
   - name: STR_NOT_SCOUT  # (Not Scout Strategy)
   - name: STR_NOT_TACTICAL  # (Not Tactical Strategy)
   - name: STR_NOT_SPACEWOLVES  # (Not Spacewolf Strategy)
+  - name: STR_NOT_WORDBEARERS  # (Not Word Bearers Strategy)
 
   - name: STR_NOT_ADEPTUS_TERRA  # (Not Adeptus Terra)
   - name: STR_NOT_ARBITES  # (Not Arbites)
@@ -546,6 +548,8 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_ADEPTAS
       - STR_DEFENSE_CORRIDORBR
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
+      - STR_ADV_DROPPODS
 
 ### Assault Strategy #STRATEGY.SM.ASS#
   - name: STR_ASSAULT  # Assault Strategy
@@ -573,6 +577,9 @@ research:
       - STR_DEVASTATOR
       - STR_SCOUT
       - STR_SPACEWOLVES_STRATEGY
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
+      - STR_ADV_DROPPODS
     spawnedEvent: STR_ASSAULT_CARE_PACKAGE
 
 ### Devastator Strategy #STRATEGY.SM.DEV#
@@ -600,6 +607,9 @@ research:
       - STR_TATICAL
       - STR_SCOUT
       - STR_SPACEWOLVES_STRATEGY
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
+      - STR_ADV_DROPPODS
     spawnedEvent: STR_DEVASTATOR_CARE_PACKAGE
 
 ### Primaris Strategy #STRATEGY.SM.PRIM#
@@ -627,6 +637,8 @@ research:
       - STR_SCOUT
       - STR_SPACEWOLVES_STRATEGY
       - STR_CASS_R
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
     spawnedEvent: STR_PRIMARIS_CARE_PACKAGE
 
 ### Scout #STRATEGY.SM.SCOUT#
@@ -653,6 +665,9 @@ research:
       - STR_DEVASTATOR
       - STR_TATICAL
       - STR_SPACEWOLVES_STRATEGY
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
+      - STR_ADV_DROPPODS
     spawnedEvent: STR_SCOUT_CARE_PACKAGE
 
 ### Tactical Strategy #STRATEGY.SM.TAC#
@@ -681,6 +696,9 @@ research:
       - STR_DEVASTATOR
       - STR_SCOUT
       - STR_SPACEWOLVES_STRATEGY
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
+      - STR_ADV_DROPPODS
     spawnedEvent: STR_TACTICAL_CARE_PACKAGE
 
 ### Space Wolves Strategy #STRATEGY.SM.WOLF#
@@ -709,6 +727,8 @@ research:
       - STR_DEVASTATOR
       - STR_SCOUT
       - STR_TATICAL
+    reenables:
+      - STR_THE_EMPEROR_PROTECTS_RESEARCH
     spawnedEvent: STR_SPACEWOLVES_INITIAL_SITREP
 
   - name: STR_SPACEWOLVES_CARE_PACKAGE_TRIGGER
@@ -738,6 +758,72 @@ research:
   - name: STR_HARDER_MISSIONS_SW #used by missionScript to customize SW missions
     refNode: *STR_LOCKED
 
+### Word Bearers #STRATEGY.SM.WB#
+  - name: STR_WORDBEARERS_STRATEGY  # Word Bearers Strategy
+    cost: 5
+    points: 0
+    dependencies:
+      - STR_MARINES_STRATEGY
+    lookup: STR_CHOSEN_TATICAL
+    unlocks:
+      - STR_HWP_CANNON_SHELLS
+      - STR_POWER_ARMOR_WB_CODEX
+      #- STR_HARDER_MISSIONS
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIUM_RESEARCH
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      #- STR_THUNDERHAWKTYPE1
+      #- STR_STORMHAWKR
+      - STR_PERSONAL_ARMOR_WB
+      - STR_MELTABOMB
+      - STR_CRATED_CHAOSDROPPODS
+      - STR_CRATED_CHAOSRHINOS
+      - STR_MARINE_BOLTERS
+    disables:
+      - STR_NOT_WORDBEARERS
+      - STR_GUARD_SUPORT
+      - STR_MARINES_AND_ADEPTAS
+      - STR_MARINES_AND_DEATHWATCH
+      - STR_MARINES_AND_INQUISITION
+      - STR_ADEPTAS_MARINES_AND_INQUISITION
+      - STR_POWER_ARMOR_SM_CODEX
+      - STR_ARBITES
+      - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_ADEPTAS
+      - STR_DEFENSE_CORRIDORBR
+      - STR_PRIMARIS
+      - STR_ASSAULT
+      - STR_TATICAL
+      - STR_DEVASTATOR
+      - STR_SCOUT
+      - STR_SPACEWOLVES_STRATEGY
+    spawnedEvent: STR_WORDBEARERS_CARE_PACKAGE
+
+  - name: STR_RITUAL_CONTACT  # Ritual of Contact
+    cost: 200  # rather good research that help progress a bit faster so will take more time
+    points: 500  # compensate the chaos path unlock score loss
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_CALL_CHAOSPRIEST
+    getOneFree:
+      - STR_CHAOS_PATH
+
+  - name: STR_RITUAL_SACRIFICE  # Ritual of Sacrifice
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_ELERIUM_115
+      - STR_WORDBEARERS_STRATEGY
+      - STR_RITUAL_CONTACT
+    unlocks:
+      - STR_ALIENS_ONLY
+    getOneFree:
+      - STR_ALIENS_ONLY
+
   - name: STR_SWDROPPODS # SW Drop Pods
     dependencies:
       - STR_SPACEWOLVES_STRATEGY
@@ -753,6 +839,16 @@ research:
   - name: STR_CRATED_SWDROPPODS  # Drop Pods Requisition
     dependencies:
       - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_CRATED_CHAOSRHINOS  # Chaos Rhino Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_CRATED_CHAOSDROPPODS  # Chaos Drop Pods Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
       - STR_GENERALLOCK
 
 ## Chamber Militant #STRATEGY.CM#
@@ -1723,6 +1819,7 @@ research:
       - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_NOT_DEATHWATCH
       - STR_NOT_GK
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_ORK_ONLY
       - STR_ORK_WEAPONS_EXAM
@@ -1796,6 +1893,7 @@ research:
     dependencies:
       - STR_MARINES_STRATEGY
       - STR_ALIEN_ORIGINS
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_CONTACT_CHAOS_MARINES
       - STR_CHAOS_MARINE_HIRE_RESEARCH
@@ -1810,6 +1908,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
       - STR_LOSE_250
     unlocks:
       - STR_CONVERT_TO_CHAOS_RESEARCH
@@ -1834,6 +1933,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
       - STR_MIDTIER_PREREQ
       - STR_LOSE_500
     reenables:
@@ -1854,6 +1954,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
       - STR_LOSE_100
     unlocks:
       - STR_REEDUCATION_RESEARCH
@@ -1864,6 +1965,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
 
   - name: STR_CHAOS_SORCERY  # Chaos Sorcery
     cost: 400
@@ -5548,6 +5650,8 @@ research:
       - STR_ALIENS_ONLY
     getOneFree:
       - STR_PERSONAL_ARMOR
+    disables:
+      - STR_PERSONAL_ARMOR_WB
 
   - name: STR_DEV_ARMOR_CHAOS  # Chaos Havoc Armor
     cost: 180
@@ -5591,6 +5695,8 @@ research:
       - STR_ALIENS_ONLY
     getOneFree:
       - STR_POWER_SUIT
+    disables:
+      - STR_POWER_SUIT_WB
 
   - name: STR_CENT_ARMORR_CHAOS  # Chaos Behemoth Armor
     cost: 330
@@ -5616,6 +5722,47 @@ research:
     getOneFree:
       - STR_DREADNOUGHT_MARINE
 
+  # Word Bearers Armor
+
+  - name: STR_PERSONAL_ARMOR_WB  # Word Bearers Marine Armor
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_WORDBEARERS_STRATEGY
+      - STR_ALIENS_ONLY
+    unlocks:
+      - STR_HARDER_MISSIONS
+
+  - name: STR_POWER_SUIT_WB  # Word Bearers Terminator Armor
+    cost: 205
+    points: 20
+    dependencies:
+      - STR_ELERIUM_115
+      - STR_UFO_POWER_SOURCE
+      - STR_MIDTIER_PREREQ
+      - STR_PERSONAL_ARMOR_WB
+      - STR_WORDBEARERS_STRATEGY
+    unlocks:
+      - STR_TERMINATOR_ARMOR_WB_CODEX
+
+  - name: STR_DIABO_ARMOR_WB  # Word Bearers Diabolist Armor
+    cost: 180
+    points: 20
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_WORDBEARERS_STRATEGY
+      - STR_POWER_SUIT_WB
+
+  - name: STR_DARKAPO_SUIT  # Word Bearers Dark Apostle Armor
+    cost: 205
+    points: 20
+    dependencies:
+      - STR_POWER_SUIT_WB
+      - STR_DIABO_ARMOR_WB
+      - STR_COMMANDER_PLUS
+      - STR_WORDBEARERS_STRATEGY
+
 ### Eldar Alliance
   - name: STR_ELDAR_SHIELD  # Eldar Personal Shield
     cost: 200
@@ -5635,7 +5782,17 @@ research:
       - STR_NOT_SPACEWOLVES
     disables:
       - STR_PERSONAL_ARMOR_CHAOS
+      - STR_PERSONAL_ARMOR_WB
+
   - name: STR_POWER_ARMOR_SM_CODEX  # Power Armor Analysis
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_POWER_ARMOR_WB_CODEX  # WB Power Armor Analysis
+    dependencies:
+      - STR_GENERALLOCK
+
+  - name: STR_TERMINATOR_ARMOR_WB_CODEX  # WB Terminator Armor Analysis
     dependencies:
       - STR_GENERALLOCK
 
@@ -5706,6 +5863,8 @@ research:
       - STR_TERMINATOR_ARMOR_SM_CODEX
     disables:
       - STR_POWER_SUIT_CHAOS
+      - STR_POWER_SUIT_WB
+
   - name: STR_TERMINATOR_ARMOR_SM_CODEX  # Terminator Armor Analysis
     dependencies:
       - STR_GENERALLOCK

@@ -64,17 +64,26 @@ extended:
             return;
           end;
 
+          actor.getHealth temp; # Max out stun.
+          sub temp 2;
+
+          if lt temp 1;
+            battle_game.flashMessage "Eversor Health Too Low!";
+            return;
+          end;
+
+          unit.setHealthWithOverkill temp;
+
+          sub temp 1;
+          actor.setStun temp;
+
+          actor.setMorale 0; # It's time to go tazy crazy
+
           actor.getTimeUnitsMax temp;
           actor.setTimeUnits temp;
 
           actor.getEnergyMax temp;
           actor.setEnergy temp;
-
-          actor.getHealth temp; # Max out stun.
-          sub temp 1;
-          actor.setStun temp;
-
-          actor.setMorale 0; # It's time to go tazy crazy
 
           battle_game.flashMessage "STR_SCRIPT_EVERSOR_FRENZY_ACTIVE";
 
