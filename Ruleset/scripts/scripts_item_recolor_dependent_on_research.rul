@@ -41,6 +41,7 @@ extended:
           var int isCult;
           var int isChaos;
           var int isWolf;
+          var int isWBear;
           var int isPlayerRecolorFaction;
           var int getsRecolor;
           var int getsAccentRecolor;
@@ -78,9 +79,16 @@ extended:
             rules.getRuleResearch researchTopic "STR_SPACEWOLVES_STRATEGY";
             geoScape.isResearched isWolf researchTopic;
 
+            rules.getRuleResearch researchTopic "STR_WORDBEARERS_STRATEGY";
+            geoScape.isResearched isWBear researchTopic;
+
             if or eq blit_part blit_item_big eq blit_part blit_item_lefthand eq blit_part blit_item_righthand eq blit_part blit_item_floor;
               item.getRuleItem weaponRuleset;
-              if eq isWolf 1;
+              if eq isWBear 1;
+                set isPlayerRecolorFaction 1;
+                set newBaseColor 2;
+                set newAccentColor 0;
+              else eq isWolf 1;
                 set isPlayerRecolorFaction 1;
                 set newBaseColor 15;
                 set newAccentColor 1;

@@ -1,0 +1,92 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    BattleUnit:
+      # Eversor Scripts
+      UNIT_EVERSOR_FRENZY_ACTIVE: int
+
+  scripts:
+    skillUseUnit:
+      - new: ROSIGMA_sUU_eversor_death_bomb_activate
+        offset: 1
+        code: |
+          var int temp;
+          var int fuseEnabled;
+          var ptre BattleItem someItem;
+          var int numInventoryItems;
+
+          skill.getTag temp Tag.SKILL_EVERSOR_DEATHBOMB_ACTIVATE_ID;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 1: Skill cannot activate Eversor deathbomb. Aborting, temp:" temp;
+            return;
+          end;
+
+          actor.getInventoryItem.size numInventoryItems;
+          # debug_log "Bomberman Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 50: numInventoryItems" numInventoryItems;
+          loop var i numInventoryItems;
+            actor.getInventoryItem someItem i;
+            someItem.getTag temp Tag.ITEM_IS_EVERSOR_DEATH_BOMB; # get the bomb timer
+            someItem.isFuseEnabled fuseEnabled; # don't bother if the fuse is already active
+            # debug_log "Bomberman Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 50: Current item in inventory:" someItem;
+            # debug_log "Bomberman Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 50: Is fuse enabled?:" fuseEnabled;
+            if gt temp 0;
+              if lt fuseEnabled 1; # if bomb isn't active, activate it
+                someItem.setFuseEnabled 1;
+                someItem.setFuseTimer 0;
+                # debug_log "Bomberman Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 50: Successful. Bomb Triggered. Bomb Item:" someItem;
+                # debug_log "Bomberman Scripts; ROSIGMA_sUU_eversor_death_bomb_activate, offset 50: Successful. Bomb Fuse. Fuse Timer:" temp;
+                battle_game.flashMessage "STR_SCRIPT_EVERSOR_DEATH_BOMB_ACTIVE";
+              else; # if bomb is active, deactivate it
+                someItem.setFuseEnabled 0;
+                battle_game.flashMessage "STR_SCRIPT_EVERSOR_DEATH_BOMB_NOT_ACTIVE";
+              end;
+            end;
+          end;
+
+          return;
+
+      - new: ROSIGMA_sUU_eversor_frenzy_activate
+        offset: 1
+        code: |
+          var int temp;
+
+          skill.getTag temp Tag.SKILL_EVERSOR_FRENZY_ID;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_eversor_frenzy_activate, offset 1: Skill cannot activate frenzy. Aborting, temp:" temp;
+            return;
+          end;
+
+          actor.getTag temp Tag.UNIT_EVERSOR_FRENZY_ACTIVE;
+          if gt temp 0;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_eversor_frenzy_activate, offset 1: Frenzy already activated this mission. Aborting, temp:" temp;
+            battle_game.flashMessage "STR_SCRIPT_EVERSOR_FRENZY_EXPENDED";
+            return;
+          end;
+
+          actor.getHealth temp; # Max out stun.
+          sub temp 2;
+
+          if lt temp 1;
+            battle_game.flashMessage "Eversor Health Too Low!";
+            return;
+          end;
+
+          unit.setHealthWithOverkill temp;
+
+          sub temp 1;
+          actor.setStun temp;
+
+          actor.setMorale 0; # It's time to go tazy crazy
+
+          actor.getTimeUnitsMax temp;
+          actor.setTimeUnits temp;
+
+          actor.getEnergyMax temp;
+          actor.setEnergy temp;
+
+          battle_game.flashMessage "STR_SCRIPT_EVERSOR_FRENZY_ACTIVE";
+
+          actor.setTag Tag.UNIT_EVERSOR_FRENZY_ACTIVE 1;
+
+          return;
