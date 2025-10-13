@@ -75,6 +75,8 @@ armors:
     corpseBattle:
       - STR_WORDBEARER_MARINEPLAYER_CORPSE
     corpseGeo: STR_WBFALLEN_CORPSE
+    selfDestructItem: STR_WORDBEARER_MARINEPLAYER_CORPSE
+    specab: 1
     specialWeapon: STR_UNARMED_GAUNTLET_PLUS
     drawingRoutine: 0
     stats:
@@ -135,6 +137,8 @@ armors:
       - STR_WORDBEARER_MARINEELITEPLAYER_CORPSE
     corpseGeo: STR_WBFALLEN_CORPSE
     storeItem: STR_WBMARINEELITE_ARMORPLAYER
+    selfDestructItem: STR_WORDBEARER_MARINEELITEPLAYER_CORPSE
+    specab: 1
     stats:
       tu: 10
       stamina: 20
@@ -244,6 +248,8 @@ armors:
       - STR_WORDBEARER_TERMINATORPLAYER_CORPSE
     corpseGeo: STR_WBFALLEN_CORPSE
     storeItem: STR_WBTERMINATOR_ARMORPLAYER
+    selfDestructItem: STR_WORDBEARER_TERMINATORPLAYER_CORPSE
+    specab: 1
     stats:
       tu: 10
       stamina: 20
@@ -306,6 +312,8 @@ armors:
       - STR_WORDBEARER_TERMINATORELITEPLAYER_CORPSE
     corpseGeo: STR_WBFALLEN_CORPSE
     storeItem: STR_WBTERMINATORELITE_ARMORPLAYER
+    selfDestructItem: STR_WORDBEARER_TERMINATORELITEPLAYER_CORPSE
+    specab: 1
     stats:
       tu: 20
       stamina: 30
@@ -608,3 +616,182 @@ armors:
         add sprite_index sprite_offset; # add direction
 
         return sprite_index;
+
+
+  # possessed
+
+  - type: STR_WORDBEARER_POSSESSEDLV1_POSSARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemonic
+    heatVision: 33 #daemonic
+    psiVision: 5 #daemonic
+    antiCamouflageAtDay: 5  #Keen senses
+    antiCamouflageAtDark: 5  #Keen senses
+    spriteSheet: WORDBEARERGALVPOSSbattle.PCK
+    spriteInv: WORDBEARERGALVPOSSinvent.SPK
+    corpseBattle:
+      - STR_WORDBEARER_GALV_POSSCORPSE
+    frontArmor: 120
+    sideArmor: 110
+    rearArmor: 80
+    underArmor: 120
+    damageModifier:  # CHAOS ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.6  # FLAMES
+      - 0.7  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 0.9  # MELEE Weakness
+      - 0.5  # ACID; Daemons resistant to poison
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [3]
+    allowsRunning: false  # NPC limits for BAI
+    recovery: #these daemons have slow regeneration
+      health:
+        healthCurrent: 0.1
+        fatalWounds: 1
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      INFECTION_RESIST: 100 #is a daemon
+      INTIMIDATION_RESISTANCE: 75 #too crazy to be easily intimidated
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_WORDBEARER_POSSESSEDLV2_POSSARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemonic
+    heatVision: 33 #daemonic
+    psiVision: 10 #daemonic
+    antiCamouflageAtDay: 10  #Keen senses
+    antiCamouflageAtDark: 10  #Keen senses
+    spriteSheet: WORDBEARERGALVPOSSelitebattle.PCK
+    spriteInv: WORDBEARERGALVPOSSeliteinvent.SPK
+    corpseBattle:
+      - STR_WORDBEARER_GALVELITE_POSSCORPSE
+    frontArmor: 130
+    sideArmor: 120
+    rearArmor: 90
+    underArmor: 130
+    damageModifier:  # CHAOS ARMOR
+      - 1.0  # none
+      - 0.7  # AP
+      - 0.6  # FLAMES
+      - 0.7  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN
+      - 0.8  # MELEE Weakness
+      - 0.5  # ACID; Daemons innately resist acid/poison
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.2  # MELTA
+    loftempsSet: [4]
+    allowsRunning: false  # NPC limits for BAI
+    allowsKneeling: false  # cant do that
+    recovery: #these daemons have slow regeneration
+      health:
+        healthCurrent: 0.1
+    tags:
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      ARMOR_REGENERATES_WOUNDS: 1
+      INFECTION_RESIST: 100 #is a daemon
+      INTIMIDATION_RESISTANCE: 75 #too crazy to be easily intimidated
+      DODGE_CHANCE: 10
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
+
+  - type: STR_WORDBEARER_POSSESSEDLV3_POSSARMOR
+    movementType: 1  # flying
+    visibilityAtDay: 40
+    visibilityAtDark: 40  # terminator sensors + artificer + daemonic senses
+    antiCamouflageAtDay: 10  # terminator sensors + keen senses
+    antiCamouflageAtDark: 10  # terminator sensors + keen senses
+    heatVision: 50  # terminator sensors + artificer
+    psiVision: 10 #daemonic senses
+    spriteSheet: WORDBEARERdemonlordbattle.PCK
+    spriteInv: WORDBEARERdemonlordinvent.SPK
+    corpseBattle:
+      - STR_WORDBEARER_DEMONLORD_CORPSE
+    frontArmor: 120 #-40 from shredded terminator armor across the board; has much higher HP in compensation
+    sideArmor: 110
+    rearArmor: 70
+    underArmor: 120
+    specialWeapon: STR_POWERFIST
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.7  # AP;
+      - 0.1  # FLAMES; Word Bearer Resistance -0.1
+      - 0.6  # HE
+      - 0.8  # LASCANON
+      - 0.9  # PLASMA
+      - 0.7  # STUN; Word Bearer Resistance -0.1
+      - 0.7  # MELEE; Word Bearer Resistance -0.1
+      - 0.2  # ACID; Word Bearer Resistance -0.1 + Daemonic resistance
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA Word Bearer Weakness +0.1
+    loftempsSet: [4]
+    allowsRunning: false  # NPC limits for BAI
+    recovery: #loses shield but regenerates rapidly
+      health:
+        healthCurrent: 0.5
+        fatalWounds: 5
+    tags:
+      UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_PSYKER: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 100
+      INFECTION_RESIST: 100 #blessed by the dark gods
+      INTIMIDATION_RESISTANCE: 100 #zealous convictions
+      DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 3
+
+  # word bearer cultist
+
+  - type: STR_WORDBEARER_CULTIST_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 15
+    spriteSheet: SECTOID.PCK
+    spriteInv: CULTI1
+    corpseBattle:
+      - STR_WORDBEARER_CULTIST_CORPSE
+    frontArmor: 4
+    sideArmor: 3
+    rearArmor: 2
+    underArmor: 2
+    drawingRoutine: 0
+    damageModifier:  # CULTIST ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 2.0  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.2  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [2]
+    tags:
+      UNIT_SIZE: 50 # SMALL
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_LIVING: 1
+      DODGE_CHANCE: 5
+      ARMOR_MAX_SUCCESSFUL_DODGES: 2
