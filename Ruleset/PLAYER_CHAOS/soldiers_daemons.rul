@@ -176,6 +176,55 @@ soldiers:
     rankStrings:
       - STR_DAEMON_SOLDIER_BLOODLETTER
 
+  - type: STR_DAEMON_SOLDIER_KHORNELING
+    refNode: *DAEMON_BASICS
+    standHeight: 10
+    kneelHeight: 10
+    armor: KHORNELING_ARMOR_PLAYER
+    minStats:
+      tu: 58
+      stamina: 44
+      health: 44
+      bravery: 100
+      reactions: 35
+      firing: 70
+      throwing: 70
+      strength: 60
+      psiStrength: 80
+      psiSkill: 0
+      melee: 75
+    maxStats:
+      tu: 72
+      stamina: 52
+      health: 52
+      bravery: 100
+      reactions: 45
+      firing: 70
+      throwing: 70
+      strength: 75
+      psiStrength: 80
+      psiSkill: 0
+      melee: 80
+    statCaps:
+      tu: 68
+      stamina: 48
+      health: 48
+      bravery: 100
+      reactions: 40
+      firing: 70
+      throwing: 70
+      strength: 100
+      psiStrength: 80
+      psiSkill: 0
+      melee: 110
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    deathMale: 8
+    deathFemale: 8
+    value: 5
+    rankStrings:
+      - STR_DAEMON_SOLDIER_KHORNELING
+
 # Nurgle
   - type: STR_DAEMON_SOLDIER_NURGLE_MIDWIFE
     refNode: *DAEMON_BASICS
@@ -821,6 +870,59 @@ armors:
     tags:
       INFECTION_RESIST: 100  # infection immune
       INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      ARMOR_OVERWATCH_TU_RESTORED: 50
+      UNIT_TYPE_DAEMONIC: 1
+      UNIT_TYPE_CHAOS: 1
+      UNIT_TYPE_KHORNE: 1
+
+  - type: KHORNELING_ARMOR_PLAYER
+    refNode: *DAEMON_ARMOR_BASICS
+    units:
+      - STR_DAEMON_SOLDIER_KHORNELING
+    storeItem: STR_NONE
+    customArmorPreviewIndex: 1073
+    visibilityAtDay: 40
+    visibilityAtDark: 40 #daemons have perfect night vision
+    antiCamouflageAtDay: 10
+    antiCamouflageAtDark: 6
+    recovery:
+      energy:
+        stamina: 0.33
+    spriteSheet: KHORNELING_BS.PCK
+    spriteInv: KHORNELING_INV.SPK
+    deathFrames: 8
+    corpseBattle:
+      - STR_KHORNELING_CORPSE
+    heatVision: 33 #daemons have 33% heat vision as standard
+    psiVision: 10
+    frontArmor: 60 #still has a bloodletter skull, bounces off the dome
+    sideArmor: 30 #Right in the arms
+    rearArmor: 20 #All tushy
+    underArmor: 20 #Just a little Guy
+    fearImmune: true #Bloodletters are fear immune
+    zombiImmune: true #It's a daemon; can't zombify this.
+    painImmune: true #Most daemons don't care about pain
+    damageModifier: #DEAMON ARMOR
+      - 1.0 #none
+      - 0.7 #AP; Bloodletters more resilient to physical and fire damage.
+      - 0.0 #FLAMES: They have so little hp they were still dying in fire.
+      - 0.7 #HE
+      - 1.0 #LASCANON
+      - 1.1 #PLASMA
+      - 0.5 #STUN
+      - 0.5 #MELEE; Bloodletters are masters of melee combat, and are especially protected against it
+      - 0.5 #ACID; daemons innately resist poisons/hazardous chems
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    drawingRoutine: 4
+    loftempsSet: [3]
+    builtInWeapons:
+      - STR_KHORNELING_CLAWS
+      - STR_KHORNELING_CLAWS
+    tags:
+      INFECTION_RESIST: 100 #infection immune
+      INTIMIDATION_RESISTANCE: 100 #intimidation immune
       ARMOR_OVERWATCH_TU_RESTORED: 50
       UNIT_TYPE_DAEMONIC: 1
       UNIT_TYPE_CHAOS: 1
