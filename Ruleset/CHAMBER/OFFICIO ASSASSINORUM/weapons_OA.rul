@@ -1062,6 +1062,7 @@ items:
     fireSound: {mod: 40k, index: 864}
     hitAnimation: {mod: 40k, index: 96}
     explosionHitSound: {mod: 40k, index: 801}
+    dropoff: 5
     invWidth: 0
     invHeight: 0
     costAuto:
@@ -1075,9 +1076,13 @@ items:
     costAimed:
       time: 35
       mana: 20
+      energy: 6 # slightly taxing to use
+      stun: 2
     flatAimed:
       time: false
       mana: true
+      energy: true
+      stun: true
     autoRange: 0
     snapRange: 0
     aimRange: 14
@@ -1086,9 +1091,9 @@ items:
     accuracyAimed: 100
     confAimed:
       name: STR_FIRE_ANIMUS
-    maxRange: 14
-    powerRangeThreshold: 14.0
-    powerRangeReduction: 999.0
+#    maxRange: 14
+    powerRangeThreshold: 20.0
+    powerRangeReduction: 10.0 # 10 per tile, useless at 28 tiles.
     damageType: 0
     power: 70
     damageAlter:
@@ -1110,11 +1115,16 @@ items:
       ToTile: 0.0
       ToArmor: 0.0
       ToArmorPre: 0.0
+      ToMana: 1.0  # used by scripts
     recover: false
     fixedWeapon: true
     fixedWeaponShow: false
     specialIconSprite: 3228
     specialUseEmptyHand: true
+    defaultInventorySlot: STR_BACK_PACK
+    defaultInvSlotX: 0
+    defaultInvSlotY: 0
+    twoHanded: false
     clipSize: -1
     bulletSpeed: 25
     explosionSpeed: 2
@@ -1132,6 +1142,8 @@ items:
       DAMAGE_BONUS_PERCENT_MECHANICAL: -1 # No souls to blast
       DAMAGE_BONUS_PERCENT_NULL: -1 # No souls to blast
       DAMAGE_BONUS_PERCENT_NECRON: -1 # No souls to blast
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 300 # absolute nightmare
 
   - type: STR_WITCHKILLER_CLAWS #                              DA POWER
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
