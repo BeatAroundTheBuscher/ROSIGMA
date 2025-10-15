@@ -67,7 +67,7 @@ skills:
     checkHandsOnly: false
 
 # Vanus
-  - type: STR_SKILL_DEPLOY_DECOY
+  - type: STR_SKILL_DEPLOY_DECOY # or Netfly swarms.
     targetMode: 9
     costUse:
       time: 35
@@ -75,8 +75,7 @@ skills:
     flatUse:
       time: true
       mana: true
-    compatibleWeapons:
-      - STR_VANUS_DECOY_TOKEN
+    compatibleWeapons: [STR_VANUS_DECOY_TOKEN, STR_VANUS_NETFLY_TOKEN]
     checkHandsOnly: false
     battleType: 1
 
@@ -105,6 +104,35 @@ skills:
     compatibleWeapons:
       - STR_VANUS_SHIELD_PROJECTOR_TOKEN
     checkHandsOnly: false
+
+# Culexus
+
+  - type: STR_SKILL_ANIMUS_SPECULUM
+    targetMode: 9
+    isPsiRequired: false
+    costUse:
+      time: 35
+      mana: 20
+      energy: 6 # slightly taxing to use
+      stun: 2
+    flatUse:
+      time: false
+      mana: true
+      energy: true
+      stun: true
+    compatibleWeapons:
+      - STR_ANIMUS_SPECULUM
+    checkHandsOnly: false
+
+  - type: STR_CULEXUS_TELEPORT_SKILL
+    flatUse: true
+    costUse:
+      time: 10
+    tags:
+      SKILL_TU_COST: 10
+      SKILL_IS_TELEPORTER: 1
+      SKILL_TELEPORTER_COOLDOWN: 2 # longer cooldown than grey knight teleport
+      SKILL_TELEPORTER_ENERGY: 10
 
 # Intimidation
   - type: STR_SKILL_INTIMIDATION
@@ -256,6 +284,27 @@ items:
     clipSize: -1
     specialUseEmptyHand: true
 
+  - type: STR_VANUS_NETFLY_TOKEN
+    refNode: *SKILL_TOKEN
+    battleType: 1
+    manaExperience: 200
+    arcingShot: true
+    spawnUnit: STR_NETFLY_SWARM
+    spawnUnitFaction: 0
+    damageType: 3
+    power: 1
+    bulletSprite: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 1992}
+    explosionHitSound: {mod: 40k, index: 788}
+    accuracyAimed: 100
+    hidePower: true
+    maxRange: 20
+    clipSize: 2 # can only deploy 2 swarms
+    bulletSpeed: 25
+    defaultInventorySlot: STR_BACK_PACK
+    defaultInvSlotX: 2
+    defaultInvSlotY: 0
+
 # Eversor
 
   - type: STR_EVERSOR_DEATH_BOMB_TOKEN
@@ -319,9 +368,6 @@ items:
       ToItem: 0.0
       ToMana: 1.0  # used by scripts
     clipSize: -1
-    defaultInventorySlot: STR_BACK_PACK
-    defaultInvSlotX: 0
-    defaultInvSlotY: 0
     twoHanded: false
     tags:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
@@ -363,9 +409,10 @@ items:
       ToItem: 0.0
       ToMana: 1.0  # used by scripts
     clipSize: -1
-    defaultInventorySlot: STR_BACK_PACK
-    defaultInvSlotX: 0
-    defaultInvSlotY: 0
+    fixedWeapon: true
+    fixedWeaponShow: false
+    specialIconSprite: 302
+    specialUseEmptyHand: true
     twoHanded: false
     tags:
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
@@ -391,11 +438,12 @@ soldiers:
       - STR_SKILL_CALLIDUS_DECEPTION
 
   - type: STR_CULEXUS_ASSASSIN
-    skillIconSprite: 302
+    skillIconSprite: 3228
     skills:
       - STR_SKILL_LIKE_FIGHTING_A_SHADOW_CHECK
       - STR_SKILL_LIKE_FIGHTING_A_SHADOW
-      - STR_SKILL_INTIMIDATION
+      - STR_CULEXUS_TELEPORT_SKILL
+      - STR_SKILL_ANIMUS_SPECULUM
 
   - type: STR_VANUS_ASSASSIN
     skillIconSprite: 221 # Add new for Vanus

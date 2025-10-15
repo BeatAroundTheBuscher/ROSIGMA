@@ -249,9 +249,9 @@ armors:
         stamina: 0.33
     units:
       - STR_CULEXUS_ASSASSIN
-    specialWeapon: STR_ANIMUS_SPECULUM ####
+    specialWeapon: STR_CULEXUS_INTIMIDATION_TOKEN # hopefully able to react with intimidation
     builtInWeapons:
-      - STR_CULEXUS_INTIMIDATION_TOKEN # enables Intimidation skill
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
@@ -276,7 +276,7 @@ armors:
     refNode: *STR_CULEXUS_ASSASSIN_UNARMED
     ufopediaType: STR_CULEXUS_ASSASSIN_UNARMED
     builtInWeapons:
-      - STR_CULEXUS_INTIMIDATION_TOKEN # enables Intimidation skill
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - STR_WITCHKILLER_CLAWS
       - STR_WITCHKILLER_PISTOL
@@ -285,7 +285,7 @@ armors:
     refNode: *STR_CULEXUS_ASSASSIN_UNARMED
     ufopediaType: STR_CULEXUS_ASSASSIN_UNARMED
     builtInWeapons:
-      - STR_CULEXUS_INTIMIDATION_TOKEN # enables Intimidation skill
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - STR_PURIFIER_FLAMER
 
@@ -297,7 +297,7 @@ armors:
     corpseBattle:
       - STR_CULEXUS_ASSASSIN_CORPSE_GEO
     builtInWeapons:
-      - STR_CULEXUS_INTIMIDATION_TOKEN # enables Intimidation skill
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_INQUISITION_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
@@ -597,6 +597,17 @@ armors:
       - STR_VANUS_SKULL_SPAWNER
       - STR_VANUS_PULSE_CARBINE
 
+  - type: STR_VANUS_NETRUNNER_ARMOR
+    refNode: *STR_VANUS_ASSASSIN_UNARMED
+    ufopediaType: STR_VANUS_ASSASSIN_UNARMED
+    builtInWeapons:
+      - STR_VANUS_NETFLY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SHIELD_PROJECTOR_TOKEN
+      - INV_NULL_INQUISITION_BACKPACK
+      - STR_VANUS_SHOCKGLOVE
+      - STR_VANUS_GRAVPISTOL
+
 # Reprisalia
 
   - &STR_REPRISALIA_ARMOR
@@ -752,3 +763,56 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TURNS_UNTIL_DEATH: 6 # vanish after 2 turns
+
+  - type: STR_NETFLY_ARMOR
+    spriteSheet: NETFLY_SWARM.PCK
+    spriteInv: NEFTLYINV.SPK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_NETFLY_CORPSE
+    visibilityAtDay: 12 # very short range scanners
+    visibilityAtDark: 12
+    antiCamouflageAtDay: 20
+    antiCamouflageAtDark: 20
+    heatVision: 70 # hyper advanced scanners
+    psiVision: 3 # hyper advanced scanners
+    frontArmor: 5
+    sideArmor: 5
+    rearArmor: 5
+    underArmor: 5
+    psiDefence:
+      flatHundred: 1000
+    meleeDodge: # good luck hitting cybernetic flies with your sword.
+      flatHundred: 0.7
+    drawingRoutine: 16
+    constantAnimation: true
+    movementType: 1
+    damageModifier:
+      - 1.0 #none
+      - 0.1 #AP Bullets pass through without hitting many flies
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 0.2 #LASCANON # high energy doesn't hit many, but can still fry them by getting close.
+      - 0.3 #PLASMA # high energy doesn't hit many, but can still fry them by getting close.
+      - 0.1 #STUN
+      - 0.1 #MELEE # maybe kill one fly at a time
+      - 0.2 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT # typically explosions. Hits all flies.
+      - 0.5 #MELTA
+    loftempsSet: [4]
+    specialWeapon: STR_NETFLY_SCANNER
+    personalLight: 5
+    personalLightHostile: 5
+    personalLightNeutral: 5
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      DODGE_CHANCE: 25 # some hits will pass right through
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
