@@ -212,6 +212,8 @@ extended:
         offset: 11
         code: |
           var int temp;
+          var int temp2;
+          var int isTeleporting;
           var int lastActivatedTeleporterTurn;
           var int currentTurn;
 
@@ -226,12 +228,22 @@ extended:
             return;
           end;
 
-          skill.getTag temp Tag.SKILL_TU_COST;
-          mul temp -1;
-          actor.addTimeUnits temp;
+          set spend_tu 1;
 
-          actor.getTag temp Tag.UNIT_IS_TELEPORTING;
-          if ge temp 1;
+          actor.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
+          if lt isTeleporting 1;
+            actor.getMana temp;
+            skill.getTag temp2 Tag.SKILL_MUNITION_COST;
+            if lt temp temp2;
+              # debug_log "skillUseUnit | ROSIGMA_sUU_start_teleport | offset: 11 | Unit lacks adequate Munitions. Aborting.";
+              battle_game.flashMessage "STR_NOT_ENOUGH_MANA";
+              return;
+            end;
+            mul temp2 -1;
+            actor.addMana temp2;
+          end;
+
+          if ge isTeleporting 1;
             actor.setTag Tag.UNIT_IS_TELEPORTING 0;
             actor.MoveCost.setBaseTimePercent 100;
             actor.MoveCost.setBaseClimbEnergyPercent 100;

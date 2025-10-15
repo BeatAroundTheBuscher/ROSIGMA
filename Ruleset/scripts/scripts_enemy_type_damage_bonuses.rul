@@ -4,7 +4,7 @@ extended:
       UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
     RuleItem:
       #percentile damage bonus
-      DAMAGE_BONUS_PERCENT_MECHANICAL: int
+      DAMAGE_BONUS_PERCENT_MECHANICAL: int # if -1 attack will do 0 damage overriding any other target type bonuses; -2 deals 0 damage overriding null bonuses
       DAMAGE_BONUS_PERCENT_DAEMONIC: int
       DAMAGE_BONUS_PERCENT_CONSECRATED: int
       DAMAGE_BONUS_PERCENT_CHAOS: int
@@ -98,15 +98,19 @@ extended:
             # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Health damage flat bonus:" damageFlatBonus;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if or eq damagePercentBonus -1; # null overrides all
               set ongoingDamagePercentBonus damagePercentBonus;
-              # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Health damage flat bonus:" ongoingDamagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
+              set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
             if gt damageFlatBonus ongoingDamageFlatBonus;
               set ongoingDamageFlatBonus damageFlatBonus;
               # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Health damage flat bonus:" ongoingDamageFlatBonus;
             end;
+
           end;
 
           rArmor.getTag temp Tag.UNIT_TYPE_CONSECRATED;
@@ -123,7 +127,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -147,7 +155,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -171,7 +183,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -195,7 +211,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -219,7 +239,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -243,7 +267,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -267,7 +295,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -291,7 +323,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -315,7 +351,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -339,7 +379,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -363,7 +407,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -387,7 +435,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -411,7 +463,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -435,7 +491,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -459,7 +519,11 @@ extended:
             end;
 
             # only highest bonus of each type applies
-            if gt damagePercentBonus ongoingDamagePercentBonus;
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
               set ongoingDamagePercentBonus damagePercentBonus;
             end;
 
@@ -475,10 +539,25 @@ extended:
             return;
           end;
 
+          if lt ongoingDamagePercentBonus 0; # we null and cancel out
+            set to_health 0;
+            set to_stun 0;
+            set to_time 0;
+            set to_morale 0;
+            set to_wound 0;
+            # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Final damage is null:" ongoingDamagePercentBonus;
+            return;
+          end;
+
           # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Final ongoingDamagePercentBonus:" ongoingDamagePercentBonus;
           # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Final ongoingDamageFlatBonus:" ongoingDamageFlatBonus;
           if neq ongoingDamagePercentBonus 0; #apply the percentile damage bonus
+
             muldiv to_health ongoingDamagePercentBonus 100;
+            muldiv to_stun ongoingDamagePercentBonus 100;
+            muldiv to_time ongoingDamagePercentBonus 100;
+            muldiv to_morale ongoingDamagePercentBonus 100;
+            muldiv to_wound ongoingDamagePercentBonus 100;
           end;
 
           add to_health ongoingDamageFlatBonus; #apply the flat damage bonus
