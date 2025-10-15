@@ -1540,6 +1540,124 @@ items:
         set subvoxel_drift 3;
         return;
 
+  - type: STR_VANUS_GRAVPISTOL
+    dropoff: 6
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
+    size: 0.1
+    weight: 5
+    bigSprite: 3502
+    floorSprite: 3405
+    handSprite: 4232
+    bulletSprite: {mod: 40k, index: 14}
+    fireSound: {mod: 40k, index: 829}
+    compatibleAmmo:
+      - STR_VANUS_GRAVPISTOL_AMMO
+    accuracySnap: 70
+    accuracyAimed: 90
+    costSnap:
+      time: 25
+      mana: 0
+    costAimed:
+      time: 25
+      mana: 40
+    flatAimed:
+      mana: true
+    confAimed:  # calculated shot
+      name: STR_CALCULATED_SHOT
+    snapRange: 14
+    aimRange: 18
+    powerRangeThreshold: 20
+    powerRangeReduction: 2
+    battleType: 1
+    twoHanded: false
+    invWidth: 1
+    invHeight: 2
+    listOrder: 13124
+    fixedWeapon: true
+    fixedWeaponShow: true
+    recover: false
+    inventoryMoveCost: #quickdraw
+      basePercent: 50
+    tags:
+      REACTION_MULTIPLIER: 200 # multiplies base reaction score by this amount divided by 100
+      ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 60
+
+  - type: STR_VANUS_GRAVPISTOL_AMMO
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
+    battleType: 2
+    size: 0.1
+    requiresBuy:
+      - STR_ASSASSINORUM
+    costBuy: 10000 # expensive materials
+    costSell: 4000
+    weight: 3
+    bigSprite: {mod: 40k, index: 38} # maybe make a new ammo sprite
+    floorSprite: {mod: 40k, index: 37}
+    handSprite: {mod: 40k, index: 616}
+    hitSound: {mod: 40k, index: 830}
+    hitAnimation: {mod: 40k, index: 130}
+    power: 25
+    clipSize: 8
+    damageType: 12
+    damageAlter:  # GRAV GUN
+      RandomType: 6  # TFTD [50% - 150%]
+      ArmorEffectiveness: 0.0
+      ToArmorPre: 0.5
+      ToArmor: 0.0
+      ToHealth: 1.0
+      ToStun: 0.4
+      ToEnergy: 0.4
+      ToTile: 1.0
+      ToItem: 1.0
+    listOrder: 13124
+
+  - type: STR_VANUS_SHOCKGLOVE
+    categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
+    experienceTrainingMode: 13 # reactions and melee
+    bigSprite: 3503
+    floorSprite: 934 # power knuckle
+    handSprite: 760 # power knuckle
+    weight: 2
+    size: 0.1
+    meleeSound: {mod: 40k, index: 754}  # stun rod
+    meleeHitSound: {mod: 40k, index: 775}  # stun rod
+    meleeAnimation: 0
+    power: 60
+    meleeBonus:
+      reactions: 0.2 # quickly striking weak spots/calibrating shocks just right.
+      melee: 0.1
+    damageType: 7 # melee, maybe change to stun.
+    damageAlter:
+      RandomType: 6
+      ArmorEffectiveness: 0.7 # semi AP electro shocks
+      ToArmorPre: 0.0 # doesn't damage armor
+      ToArmor: 0.0
+      ToHealth: 0.2 # typically non-lethal, can still kill weakened enemies.
+      ToStun: 0.9
+      ToWound: 0.0
+      ToTile: 0.0
+      RandomWound: false
+      RandomStun: false
+    accuracyMelee: 100
+    tuMelee: 8
+    costMelee:
+      energy: 1
+    flatRate: true
+    clipSize: -1
+    battleType: 3
+    twoHanded: false
+    meleeMultiplier:
+      melee: 0.6
+      reactions: 0.4
+    strengthApplied: false
+    invWidth: 1
+    invHeight: 2
+    armor: 200
+    recover: false
+    inventoryMoveCost: # its a glove.
+      basePercent: 20
+    listOrder: 13124
+
   - type: STR_NETFLY_SCANNER # comes with melee attack
     weight: 0
     specialIconSprite: 208 # 5
