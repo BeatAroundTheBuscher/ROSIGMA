@@ -1,0 +1,68 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    RuleSkill:
+      SKILL_CULEXUS_HORROR_STORM_ID: int
+    BattleUnit:
+      # Eversor Scripts
+      UNIT_CULEXUS_HORROR_STORM_ACTIVE: int
+
+  scripts:
+    skillUseUnit:
+      - new: ROSIGMA_sUU_culexus_activate
+        offset: 1
+        code: |
+          var int temp;
+
+          skill.getTag temp Tag.SKILL_CULEXUS_HORROR_STORM_ID;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Skill cannot activate Horror Storm. Aborting, temp:" temp;
+            return;
+          end;
+
+          actor.getTag temp Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE;
+          if neq temp 0;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Horror Storm already activated this mission. Aborting, temp:" temp;
+            if gt temp 0;
+              battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_EXPENDED_COUNTER" temp;
+            else;
+              battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_EXPENDED";
+            end;
+            return;
+          end;
+
+          actor.getMana temp; # consume all remaining munitions
+          mul temp 2;
+          actor.setTag Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE temp;
+
+          battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_ACTIVE" temp;
+
+          return;
+
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_culexus_activate
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+
+          unit.getTag temp Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Aborting. No positive Horror Storm tag. temp:" temp;
+            return;
+          end;
+
+          battle_game.getTurnSide temp; # trigger only on the same turn as the unit's faction
+          unit.getFaction temp2;
+          if neq temp temp2;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Aborting. Not unit's turn. temp:" temp;
+            return;
+          end;
+
+          unit.setMana 0; #zero out munitions on turn after using Horror Storm
+          battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_ACTIVE" temp;
+          unit.setTag Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE -1;
+
+          return;

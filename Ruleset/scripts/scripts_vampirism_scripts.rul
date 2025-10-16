@@ -7,12 +7,14 @@ extended:
       TAG_TIME_RETURNED_ON_KILL: int
       TAG_MORALE_RETURNED_ON_KILL: int
       TAG_STUN_RETURNED_ON_KILL: int
+      TAG_MANA_RETURNED_ON_KILL: int
 # vampiric on damage; weapons
       YTAG_DAMAGE_RETURNED_AS_HP: int
       YTAG_DAMAGE_RETURNED_AS_ENERGY: int
       YTAG_DAMAGE_RETURNED_AS_TIME: int
       YTAG_DAMAGE_RETURNED_AS_MORALE: int
       YTAG_DAMAGE_RETURNED_AS_STUN: int
+      YTAG_DAMAGE_RETURNED_AS_MANA: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE: int
 # vampiric on damage; armors
     RuleArmor:
@@ -21,6 +23,7 @@ extended:
       YTAG_DAMAGE_RETURNED_AS_TIME_BUFF: int
       YTAG_DAMAGE_RETURNED_AS_MORALE_BUFF: int
       YTAG_DAMAGE_RETURNED_AS_STUN_BUFF: int
+      YTAG_DAMAGE_RETURNED_AS_MANA_BUFF: int
       YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR: int
     RuleSoldier:
 # *** Tag for reducing wound time after battle ***
@@ -38,6 +41,7 @@ extended:
           var int timeReturnedCoefficient;
           var int moraleReturnedCoefficient;
           var int stunReturnedCoefficient;
+          var int manaReturnedCoefficient;
           var int damageReturnedResistType;
           var int hpDamageDone;
           var int hpTarget;
@@ -48,6 +52,7 @@ extended:
           var int timeReturned;
           var int moraleReturned;
           var int stunReturned;
+          var int manaReturned;
           var int temp;
 
           var int KillHPReturnedValue;
@@ -55,12 +60,15 @@ extended:
           var int KillTimeReturnedValue;
           var int KillMoraleReturnedValue;
           var int KillStunReturnedValue;
+          var int KillManaReturnedValue;
 
           var int HPReturnedOnKill;
           var int EnergyReturnedOnKill;
           var int TimeReturnedOnKill;
           var int MoraleReturnedOnKill;
           var int StunReturnedOnKill;
+          var int ManaReturnedOnKill;
+
 
           var int numWounds;
 
@@ -81,12 +89,14 @@ extended:
           itemRuleset.getTag timeReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_TIME;
           itemRuleset.getTag moraleReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_MORALE;
           itemRuleset.getTag stunReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_STUN;
+          itemRuleset.getTag manaReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_MANA;
 
           itemRuleset.getTag HPReturnedOnKill Tag.TAG_HP_RETURNED_ON_KILL;
           itemRuleset.getTag EnergyReturnedOnKill Tag.TAG_ENERGY_RETURNED_ON_KILL;
           itemRuleset.getTag TimeReturnedOnKill Tag.TAG_TIME_RETURNED_ON_KILL;
           itemRuleset.getTag MoraleReturnedOnKill Tag.TAG_MORALE_RETURNED_ON_KILL;
           itemRuleset.getTag StunReturnedOnKill Tag.TAG_STUN_RETURNED_ON_KILL;
+          itemRuleset.getTag manaReturnedCoefficient Tag.YTAG_DAMAGE_RETURNED_AS_MANA;
 
           add temp hpReturnedCoefficient;
           add temp energyReturnedCoefficient;
@@ -98,6 +108,7 @@ extended:
           add temp TimeReturnedOnKill;
           add temp MoraleReturnedOnKill;
           add temp StunReturnedOnKill;
+
 
           if eq temp 0;
             # debug_log "rain On Hit/Kill: No vampirism tags detected. Aborting.";
@@ -122,6 +133,8 @@ extended:
             add moraleReturnedCoefficient temp;
             attackerArmor.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_STUN_BUFF;
             add stunReturnedCoefficient temp;
+            attackerArmor.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_MANA_BUFF;
+            add manaReturnedCoefficient temp;
           else;
             attackerArmor.getTag temp Tag.YTAG_DAMAGE_RETURNED_RESIST_TYPE_ARMOR;
             if eq temp damageReturnedResistType;
@@ -135,6 +148,8 @@ extended:
               add moraleReturnedCoefficient temp;
               attackerArmor.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_STUN_BUFF;
               add stunReturnedCoefficient temp;
+              attackerArmor.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_MANA_BUFF;
+              add manaReturnedCoefficient temp;
             end;
           end;
 
@@ -160,6 +175,8 @@ extended:
               add moraleReturnedCoefficient temp;
               itemRuleset.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_STUN;
               add stunReturnedCoefficient temp;
+              itemRuleset.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_MANA;
+              add manaReturnedCoefficient temp;
             end;
           end;
 
@@ -184,6 +201,8 @@ extended:
               add moraleReturnedCoefficient temp;
               itemRuleset.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_STUN;
               add stunReturnedCoefficient temp;
+              itemRuleset.getTag temp Tag.YTAG_DAMAGE_RETURNED_AS_MANA;
+              add manaReturnedCoefficient temp;
             end;
           end;
 
@@ -210,6 +229,7 @@ extended:
             set timeReturned hpDamageDone;
             set moraleReturned hpDamageDone;
             set stunReturned hpDamageDone;
+            set manaReturned hpDamageDone;
 
             # multiply damage returned to attacker as drain with coefs; muldiv is a*b/c
             muldiv hpReturned hpReturnedCoefficient 100;
@@ -221,6 +241,7 @@ extended:
             # debug_log "Drain On Hit/Kill: hpReturned after applying hpReturnedCoefficient:" hpReturnedCoefficient;
             muldiv moraleReturned moraleReturnedCoefficient 100;
             muldiv stunReturned stunReturnedCoefficient 100;
+            muldiv manaReturned manaReturnedCoefficient 100;
 
             # onKill only yields benefits if the target is dead; i.e. current Health is equal to or less than 0.
             # debug_log "Drain On Hit/Kill: Pre-Kill Check; Damage Done:" hpDamageDone;
@@ -237,6 +258,8 @@ extended:
               # debug_log "Drain On Hit/Kill: KillMoraleReturnedValue" KillMoraleReturnedValue;
               add KillStunReturnedValue StunReturnedOnKill;
               # debug_log "Drain On Hit/Kill: KillStunReturnedValue" KillStunReturnedValue;
+              add KillManaReturnedValue ManaReturnedOnKill;
+              # debug_log "Drain On Hit/Kill: KillStunReturnedValue" KillStunReturnedValue;
             end;
 
             # debug_log "Drain On Hit/Kill: hpReturned before resistances" hpReturned;
@@ -247,6 +270,7 @@ extended:
             unit.reduceByResistance timeReturned damageReturnedResistType;
             unit.reduceByResistance moraleReturned damageReturnedResistType;
             unit.reduceByResistance stunReturned damageReturnedResistType;
+            unit.reduceByResistance manaReturned damageReturnedResistType;
             # debug_log "Drain On Hit/Kill: hpReturned after resistances" hpReturned;
             # debug_log "Drain On Hit/Kill: timeReturned after resistances" timeReturned;
 
@@ -327,8 +351,16 @@ extended:
             sub statAttacker stunReturned;
             sub statAttacker KillStunReturnedValue;
             limit_lower stunReturned 0;
-            # debug_log "Drain On Hit/Kill: moraleReturned final" moraleReturned;
+            # debug_log "Drain On Hit/Kill: stunReturned final" moraleReturned;
             attackingUnit.setStun statAttacker;
+
+            attackingUnit.getMana statAttacker;
+            attackingUnit.getManaMax statMaxAttacker;
+            add statAttacker manaReturned;
+            add statAttacker KillManaReturnedValue;
+            limit_upper manaReturned statMaxAttacker;
+            # debug_log "Drain On Hit/Kill: manaReturned final" moraleReturned;
+            attackingUnit.setMana statAttacker;
           end;
 
           return;

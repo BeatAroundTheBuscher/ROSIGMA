@@ -758,6 +758,24 @@ research:
   - name: STR_HARDER_MISSIONS_SW #used by missionScript to customize SW missions
     refNode: *STR_LOCKED
 
+  - name: STR_SWDROPPODS # SW Drop Pods
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK #Unlocks via SW Strategy pick
+  - name: STR_SWRHINOS # SW Rhino convoy
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK #Unlocks via SW Strategy pick
+  - name: STR_CRATED_SWRHINOS  # Razorback Requisition
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
+  - name: STR_CRATED_SWDROPPODS  # Drop Pods Requisition
+    dependencies:
+      - STR_SPACEWOLVES_STRATEGY
+      - STR_GENERALLOCK
+
+
 ### Word Bearers #STRATEGY.SM.WB#
   - name: STR_WORDBEARERS_STRATEGY  # Word Bearers Strategy
     cost: 5
@@ -803,11 +821,11 @@ research:
     spawnedEvent: STR_WORDBEARERS_CARE_PACKAGE
 
   - name: STR_RITUAL_CONTACT  # Ritual of Contact
-    cost: 200  # rather good research that help progress a bit faster so will take more time
-    points: 500  # compensate the chaos path unlock score loss
+    cost: 200
+    points: 500
     dependencies:
       - STR_WORDBEARERS_STRATEGY
-      - STR_CALL_CHAOSPRIEST
+      - STR_MOTION_SCANNER
     getOneFree:
       - STR_CHAOS_PATH
 
@@ -821,35 +839,9 @@ research:
       - STR_RITUAL_CONTACT
     unlocks:
       - STR_ALIENS_ONLY
+      - STR_HARDER_MISSIONS
     getOneFree:
       - STR_ALIENS_ONLY
-
-  - name: STR_SWDROPPODS # SW Drop Pods
-    dependencies:
-      - STR_SPACEWOLVES_STRATEGY
-      - STR_GENERALLOCK #Unlocks via SW Strategy pick
-  - name: STR_SWRHINOS # SW Rhino convoy
-    dependencies:
-      - STR_SPACEWOLVES_STRATEGY
-      - STR_GENERALLOCK #Unlocks via SW Strategy pick
-  - name: STR_CRATED_SWRHINOS  # Razorback Requisition
-    dependencies:
-      - STR_SPACEWOLVES_STRATEGY
-      - STR_GENERALLOCK
-  - name: STR_CRATED_SWDROPPODS  # Drop Pods Requisition
-    dependencies:
-      - STR_SPACEWOLVES_STRATEGY
-      - STR_GENERALLOCK
-
-  - name: STR_CRATED_CHAOSRHINOS  # Chaos Rhino Requisition
-    dependencies:
-      - STR_WORDBEARERS_STRATEGY
-      - STR_GENERALLOCK
-
-  - name: STR_CRATED_CHAOSDROPPODS  # Chaos Drop Pods Requisition
-    dependencies:
-      - STR_WORDBEARERS_STRATEGY
-      - STR_GENERALLOCK
 
 ## Chamber Militant #STRATEGY.CM#
   - name: STR_CHAMBERMILITANT  # Chamber Militant
@@ -4968,12 +4960,15 @@ research:
     dependencies:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MIDTIER
+
   - name: STR_NEW_FIGHTER_TRANSPORTER  # Assault Transport Requisition
     # Ceramite tier marines and adeptas
     cost: 700
     points: 30
     dependencies:
       - STR_NEW_FIGHTER_CRAFT
+      - STR_NOT_WORDBEARERS
+
   - name: STR_NEW_FIGHTER_CRAFT  # Gunship Requisition
     # Stormraven
     cost: 600
@@ -4981,6 +4976,8 @@ research:
     dependencies:
       - STR_UFO_CONSTRUCTION
       - STR_MARINES_AND_ADEPTAS
+      - STR_NOT_WORDBEARERS
+
   - name: STR_STORMEAGLE_INTERCEPTOR  # Stormeagle Requisition
     cost: 600
     points: 25
@@ -5722,7 +5719,7 @@ research:
     getOneFree:
       - STR_DREADNOUGHT_MARINE
 
-  # Word Bearers Armor
+#ARMORS.SM.WB#
 
   - name: STR_PERSONAL_ARMOR_WB  # Word Bearers Marine Armor
     cost: 180
@@ -5730,9 +5727,6 @@ research:
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_WORDBEARERS_STRATEGY
-      - STR_ALIENS_ONLY
-    unlocks:
-      - STR_HARDER_MISSIONS
 
   - name: STR_POWER_SUIT_WB  # Word Bearers Terminator Armor
     cost: 205
@@ -5762,6 +5756,50 @@ research:
       - STR_DIABO_ARMOR_WB
       - STR_COMMANDER_PLUS
       - STR_WORDBEARERS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+
+#CRAFTS.SM.WB#
+
+  - name: STR_CRATED_CHAOSRHINOS  # Chaos Rhino Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_CRATED_CHAOSDROPPODS  # Chaos Drop Pods Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBNEW_FIGHTER_CRAFT  # WB Hellblade Requisition
+    # Stormraven
+    cost: 600
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_UFO_CONSTRUCTION
+
+  - name: STR_WBNEW_FIGHTER_TRANSPORTER  # WB Assault Transport Requisition
+    # Ceramite tier marines and adeptas
+    cost: 700
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_WBNEW_FIGHTER_CRAFT
+      - STR_MIDTIER_PREREQ
+
+  - name: STR_WBTHUNDERABILTY # WB Thunderhawk
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_WBNEW_FIGHTER_TRANSPORTER
+
+  - name: STR_WBHOLYWARSHIPFINAL # WB The Holy Warship
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_CHAPTERARMYR
       - STR_HIGHTIER_PREREQ
 
 ### Eldar Alliance
