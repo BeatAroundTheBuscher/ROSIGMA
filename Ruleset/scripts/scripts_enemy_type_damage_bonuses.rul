@@ -6,7 +6,7 @@ extended:
       UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
     RuleItem:
       #percentile damage bonus
-      DAMAGE_BONUS_PERCENT_MECHANICAL: int # if -1 attack will do 0 damage overriding any other target type bonuses; -2 deals 0 damage overriding null bonuses
+      DAMAGE_BONUS_PERCENT_MECHANICAL: int # % extra damage; if -1 attack will do 0 damage overriding any other target type bonuses; -2 deals 0 damage overriding null bonuses
       DAMAGE_BONUS_PERCENT_DAEMONIC: int
       DAMAGE_BONUS_PERCENT_CONSECRATED: int
       DAMAGE_BONUS_PERCENT_CHAOS: int
@@ -25,7 +25,7 @@ extended:
       DAMAGE_BONUS_PERCENT_NECRON: int
       DAMAGE_BONUS_PERCENT_SYNAPSE: int
       #flat damage bonus
-      DAMAGE_BONUS_FLAT_MECHANICAL: int
+      DAMAGE_BONUS_FLAT_MECHANICAL: int # flat extra damage
       DAMAGE_BONUS_FLAT_DAEMONIC: int
       DAMAGE_BONUS_FLAT_CONSECRATED: int
       DAMAGE_BONUS_FLAT_CHAOS: int
@@ -44,7 +44,7 @@ extended:
       DAMAGE_BONUS_FLAT_NECRON: int
       DAMAGE_BONUS_FLAT_SYNAPSE: int
       #ignition
-      DAMAGE_THRESHOLD_FOR_IGNITION: int
+      DAMAGE_THRESHOLD_FOR_IGNITION: int # if to_health deals damage equal to or greater than the threshold, ignites target
 
   scripts:
     damageUnit:
@@ -598,7 +598,7 @@ extended:
           # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Final to_health:" to_health;
 
           itemRule.getTag temp Tag.DAMAGE_THRESHOLD_FOR_IGNITION;
-          if and gt to_health temp gt temp 0;
+          if and ge to_health temp gt temp 0;
             unit.setFire 1; # set target on fire
           end;
 
