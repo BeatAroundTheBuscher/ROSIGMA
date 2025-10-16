@@ -1,4 +1,6 @@
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
   tags:
     # intimidation script tags
     RuleItem:
@@ -18,6 +20,7 @@ extended:
           var int temp;
           var int temp2;
           var int isSermon;
+          var int intimidateResistPenalty;
           var int intimidateDamage;
           var int moraleMultiplier; # percent of damage the triggering attack inflicts
           var int infectionDamage;
@@ -25,43 +28,43 @@ extended:
           var ptr RuleArmor armorRule;
 
           if le to_mana 0; # only proceed if we actually do damage
-            # debug_log "Intimidation Scripts; ROSIGMA_dU_intimidation, offset 24: Aborting. No damage dealt.";
+            debug_log "Intimidation Scripts; ROSIGMA_dU_intimidation, offset 24: Aborting. No damage dealt.";
             return;
           end;
 
           weapon_item.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; # get morale damage multiplier
           if le moraleMultiplier 0; # morale damage multiplier has to be greater than 0, otherwise abort
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
+            debug_log "Intimidation Scripts; damageUnit, offset 24: No morale multiplier detected, Aborting.";
             return;
           end;
 
           unit.isFearable temp; # fear immune targets ignore this
           if lt temp 1;
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is fear immune.";
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is fear immune.";
             return;
           end;
 
           unit.getFaction temp;
           attacker.getFaction temp2;
           if eq temp temp2;
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is friendly/same faction.";
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is friendly/same faction.";
             return;
           end;
 
           unit.getStun temp;
           unit.getHealth temp2;
           if ge temp temp2;
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is unconscious." unit;
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Target is unconscious." unit;
             return;
           end;
 
           set intimidateDamage to_mana;
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Initial Power:" to_mana;
 
           weapon_item.getTag isSermon Tag.DARK_SERMON_CORRUPTION; # is this a dark sermon?
 
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Weapon:" weapon_item;
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Weapon:" weapon_item;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: Initialize, Target:" unit;
 
           if lt isSermon 1;
             unit.Stats.getBravery temp2;
@@ -69,18 +72,40 @@ extended:
             unit.Stats.getPsiSkill temp2;
           end;
           sub intimidateDamage temp2; # subtract target Bravery from our power
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: target Bravery:" temp2;
-          if le intimidateDamage 0; # if our net power is null or negative, abort.
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: target Bravery:" temp2;
+          # Culexus Horror Storm enhancement START
+          attacker.getTag temp Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE;
+          if gt temp 0;
+            add intimidateDamage temp;
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Horror storm empowered!";
+            battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_EMPOWERED";
+            armorRule.getTag temp2 Tag.UNIT_TYPE_DAEMONIC; # If we're daemonic or psyker, our Intimidation Resistance is lowered by the amount it's empowered by; half otherwise
+            armorRule.getTag infectionDamage Tag.UNIT_TYPE_PSYKER;
+            if or gt temp2 0 gt infectionDamage 0;
+              add intimidateResistPenalty temp;
+            else;
+              armorRule.getTag temp2 Tag.UNIT_TYPE_MECHANICAL; # If we're mechanical and non-living we're unaffected
+              armorRule.getTag infectionDamage Tag.UNIT_TYPE_LIVING;
+              if or lt temp2 1 gt infectionDamage 0;
+                div temp 2;
+                add intimidateResistPenalty temp;
+              end;
+            end;
+          end;
+          # Culexus Horror Storm enhancement END
+          if lt intimidateDamage 1; # if our net power is null or negative, abort.
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
             return;
           end;
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery:" intimidateDamage;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery:" intimidateDamage;
 
           unit.getRuleArmor armorRule;
           if lt isSermon 1;
             armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; # if our intimidate resist is 100% and applies to all infection types we're immune; abort
+            sub intimidateResist intimidateResistPenalty;
+            limit_lower intimidateResist 0; # can't go below 0 intimidate resistance
             if ge intimidateResist 100; # Abort if the target has immunity
-              # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to intimidate:" intimidateResist;
+              debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to intimidate:" intimidateResist;
               return;
             end;
           else;
@@ -88,7 +113,7 @@ extended:
             armorRule.getTag intimidateResist Tag.INFECTION_RESIST; # if our corruption resist is 100%
             if or eq temp 0 eq temp 13; #we only care about resisting Chaos corruption not GSC
               if ge intimidateResist 100; # Abort if the target has immunity to chaos corruption
-                # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to Chaos corruption:" intimidateResist;
+                debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to Chaos corruption:" intimidateResist;
                 return;
               else;
                 set intimidateResist 0; #non-Chaos/omni corruption resistance doesn't matter
@@ -105,15 +130,15 @@ extended:
           end;
           muldiv temp 100 temp2;
           limit_lower temp 50; # we can't reduce after Bravery intimidation from health loss by more than 50%
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: intimidate Health Loss multiplier:" temp;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: intimidate Health Loss multiplier:" temp;
           muldiv intimidateDamage temp 100;
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Health Loss:" intimidateDamage;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Health Loss:" intimidateDamage;
 
           sub intimidateResist 100; # invert intimidateResist
           mul intimidateResist -1; # invert intimidateResist
 
           muldiv intimidateDamage intimidateResist 100; # get the percentage
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery and Resistance:" intimidateDamage;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: intimidateDamage after Bravery and Resistance:" intimidateDamage;
 
           armorRule.getSize temp;
           if eq temp 2; # divide damage to 2x2 by 4, because they get hit 4x as much.
@@ -122,7 +147,7 @@ extended:
 
           # calculate target Morale; we bypass to_morale because high Bravery reduces damage too aggressively
           muldiv intimidateDamage moraleMultiplier 100; # calculate morale damage
-          # debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" intimidateDamage;
+          debug_log "Intimidation Scripts; damageUnit, offset 24: Morale damage dealt:" intimidateDamage;
           unit.getMorale temp2;
           sub temp2 intimidateDamage;
           unit.setMorale temp2; # apply Morale damages
@@ -130,17 +155,17 @@ extended:
             set temp temp2; # calculate Morale overflow for negative values
             mul temp -1; # change from negative to positive
             if lt isSermon 1;
-              # debug_log "Intimidation Scripts; damageUnit, offset 24: Morale overflow Stun damage dealt:" temp;
+              debug_log "Intimidation Scripts; damageUnit, offset 24: Morale overflow Stun damage dealt:" temp;
               add to_stun temp;
               unit.getHealth temp2; # calculate stun overflow
               sub temp2 temp;
-              # debug_log "Intimidation Scripts; damageUnit, offset 24: Health minus Stun:" temp2;
+              debug_log "Intimidation Scripts; damageUnit, offset 24: Health minus Stun:" temp2;
               if lt temp2 0; # if stun overflows, do health damage
                 mul temp2 -1;
                 div temp2 2; # divide health damage in half; doing the full amount is too punishing
                 unit.getHealth temp;
                 limit_upper temp2 temp; # cap health damage at current health; no disintegrations
-                # debug_log "Intimidation Scripts; damageUnit, offset 24: Stun overflow Health damage dealt:" temp2;
+                debug_log "Intimidation Scripts; damageUnit, offset 24: Stun overflow Health damage dealt:" temp2;
                 add to_health temp2; # do health damage equal to the excess stun damage; target is terrified to death
               end;
             else;
@@ -172,7 +197,7 @@ extended:
             set temp2 intimidateDamage; # set our damage to TU
             muldiv temp2 moraleMultiplier 100;
             add to_time temp2; # apply TU damages
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp2;
+            debug_log "Intimidation Scripts; damageUnit, offset 24: TU damage dealt:" temp2;
           end;
 
           # process stun damage
@@ -181,7 +206,7 @@ extended:
             set temp2 intimidateDamage; # set our damage to TU
             muldiv temp2 moraleMultiplier 100;
             add to_stun temp2; # apply TU damages
-            # debug_log "Intimidation Scripts; damageUnit, offset 24: Stun damage dealt:" temp2;
+            debug_log "Intimidation Scripts; damageUnit, offset 24: Stun damage dealt:" temp2;
           end;
 
           if lt isSermon 1;
@@ -202,25 +227,25 @@ extended:
           var int temp;
 
           reaction_weapon.getTag moraleMultiplier Tag.INTIMIDATION_MORALE_DAMAGE_MULTIPLIER; # get morale damage multiplier
-          # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Initiating. Reaction weapon:" reaction_weapon;
-          # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Initiating. Morale Multiplier:" moraleMultiplier;
+          debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Initiating. Reaction weapon:" reaction_weapon;
+          debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Initiating. Morale Multiplier:" moraleMultiplier;
           if le moraleMultiplier 0; # this is not an intimidate weapon; continue as normal
-            # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Weapon has no intimidation parameters." moraleMultiplier;
+            debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Weapon has no intimidation parameters." moraleMultiplier;
             return reaction_chance;
           end;
 
           action_unit.getTimeUnits temp;
           if lt temp 1;
-            # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target has no time units remaining." temp;
+            debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target has no time units remaining." temp;
             return 0; # don't bother reacting to those without time units
           end;
 
           weapon.getTag temp Tag.DARK_SERMON_CORRUPTION; # is this a dark sermon?
           if lt temp 1;
             action_unit.isFearable temp; # ignore fear immune with this reaction
-            # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Target fear immunity:" temp;
+            debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Target fear immunity:" temp;
             if lt temp 1;
-              # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is fear immune." temp;
+              debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is fear immune." temp;
               return 0; # don't bother reacting to those immune to fear
             end;
           end;
@@ -228,9 +253,9 @@ extended:
           action_unit.getRuleArmor armorRule;
           if lt temp 1;
             armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; # if our intimidation resist is 100% we're immune; abort
-            # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Target intimidation resistance:" intimidateResist;
+            debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Target intimidation resistance:" intimidateResist;
             if ge intimidateResist 100;
-              # debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is intimidation immune." intimidateResist;
+              debug_log "Intimidation Scripts; ROSIGMA_rUA_intimidation, offset 24: Aborting. Target is intimidation immune." intimidateResist;
               return 0; # don't bother reacting to those immune to fear
             end;
           else;
@@ -238,7 +263,7 @@ extended:
             armorRule.getTag intimidateResist Tag.INFECTION_RESIST; # if our corruption resist is 100%
             if or eq temp 0 eq temp 13; #we only care about resisting Chaos corruption not GSC
               if ge intimidateResist 100; # Abort if the target has immunity to chaos corruption
-                # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to Chaos corruption:" intimidateResist;
+                debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to Chaos corruption:" intimidateResist;
                 return 0;
               end;
             end;
@@ -263,7 +288,7 @@ extended:
           battle_game.getTurnSide temp;
           if neq temp FACTION_PLAYER; #we trigger at the start of the player's turn
             item.setAmmoQuantity 1;
-            # debug_log "newTurnUnit | ROSIGMA_nTU_intimidation_enemy_turn_only | offset: 2 | Turn isn't player turn.";
+            debug_log "newTurnUnit | ROSIGMA_nTU_intimidation_enemy_turn_only | offset: 2 | Turn isn't player turn.";
             return;
           end;
 
