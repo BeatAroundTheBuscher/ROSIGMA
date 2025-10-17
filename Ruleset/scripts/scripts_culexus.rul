@@ -42,7 +42,7 @@ extended:
 
 
     newTurnUnit:
-      - new: ROSIGMA_nTU_culexus_activate
+      - new: ROSIGMA_nTU_culexus_exhausted
         offset: 1
         code: |
           var int temp;
@@ -50,19 +50,19 @@ extended:
 
           unit.getTag temp Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE;
           if lt temp 1;
-            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Aborting. No positive Horror Storm tag. temp:" temp;
+            # debug_log "Eversor Scripts; ROSIGMA_nTU_culexus_exhausted, offset 1: Aborting. No positive Horror Storm tag. temp:" temp;
             return;
           end;
 
           battle_game.getTurnSide temp; # trigger only on the same turn as the unit's faction
           unit.getFaction temp2;
           if neq temp temp2;
-            # debug_log "Eversor Scripts; ROSIGMA_sUU_culexus_activate, offset 1: Aborting. Not unit's turn. temp:" temp;
+            # debug_log "Eversor Scripts; ROSIGMA_nTU_culexus_exhausted, offset 1: Aborting. Not unit's turn. temp:" temp;
             return;
           end;
 
           unit.setMana 0; #zero out munitions on turn after using Horror Storm
-          battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_ACTIVE" temp;
+          battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_EXHAUSTED" temp;
           unit.setTag Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE -1;
 
           return;
