@@ -1,0 +1,101 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    BattleUnit:
+      # Eversor Scripts
+      UNIT_VINDICARE_KILLSHOT_ACTIVE: int #Relevant values: 1 = expended but active, -1 = expended but inactive.
+
+  scripts:
+    skillUseUnit:
+      - new: ROSIGMA_sUU_vindicare_killshot_activate
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+
+          skill.getTag temp Tag.SKILL_VINDICARE_KILLSHOT_ID;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_vindicare_killshot_activate, offset 1: Skill cannot activate frenzy. Aborting, temp:" temp;
+            return;
+          end;
+
+          actor.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
+          if neq temp 0;
+            # debug_log "Eversor Scripts; ROSIGMA_sUU_vindicare_killshot_activate, offset 1: Frenzy already activated this mission. Aborting, temp:" temp;
+            battle_game.flashMessage "STR_SCRIPT_VINDICARE_KILLSHOT_EXPENDED";
+            return;
+          end;
+
+          battle_game.flashMessage "STR_SCRIPT_VINDICARE_KILLSHOT_ACTIVE";
+
+          actor.setTag Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE 1;
+
+          return;
+
+
+    hitUnit:
+      - new: ROSIGMA_hU_vindicare_killshot_bonus
+        offset: 2
+        code: |
+          var int temp;
+
+          if neq battle_action BA_AIMEDSHOT; #only works for aimed shots
+            # debug_log "ROSIGMA_hU_vindicare_killshot_bonus | Aborting. Not an aimed shot." battle_action;
+            return power part side;
+          end;
+
+          unit.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
+          if lt temp 1;
+            # debug_log "ROSIGMA_hU_vindicare_killshot_bonus, offset 1: Aborting. No positive Kill Shot value. temp:" temp;
+            return power part side;
+          end;
+
+          mul power 4; #quad damage
+
+          battle_game.flashMessage "STR_SCRIPT_VINDICARE_KILLSHOT_EXPIRED" temp;
+          unit.setTag Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE -1;
+
+          return power part side;
+
+    accuracyMultiplierBonusStats:
+      - new: ROSIGMA_aMBS_vindicare_killshot_bonus
+        offset: 1
+        code: |
+          var int temp;
+
+          unit.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
+          if lt temp 1;
+            # debug_log "ROSIGMA_aMBS_vindicare_killshot_bonus, offset 1: Aborting. No positive Kill Shot value. temp:" temp;
+            return bonus;
+          end;
+
+          mul bonus 4; # multiply our accuracy by 4x.
+
+          return bonus;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_vindicare_killshot_end
+        offset: 1
+        code: |
+          var int temp;
+          var int temp2;
+
+          unit.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
+          if lt temp 1;
+            # debug_log "Eversor Scripts; ROSIGMA_nTU_vindicare_killshot_end, offset 1: Aborting. No positive Kill Shot value. temp:" temp;
+            return;
+          end;
+
+          battle_game.getTurnSide temp; # trigger only on the same turn as the unit's faction
+          unit.getFaction temp2;
+          if neq temp temp2;
+            # debug_log "Eversor Scripts; ROSIGMA_nTU_vindicare_killshot_end, offset 1: Aborting. Not unit's turn. temp:" temp;
+            return;
+          end;
+
+          battle_game.flashMessage "STR_SCRIPT_VINDICARE_KILLSHOT_EXPIRED" temp;
+          unit.setTag Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE -1;
+
+          return;
+
