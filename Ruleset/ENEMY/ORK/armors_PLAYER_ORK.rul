@@ -50,7 +50,9 @@ armors:
       UNIT_TYPE_ORK: 1
 
 #Player Standard Ork Armors
-  - type: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR
+
+  - &ORK_FLAK
+    type: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR
     visibilityAtDay: 35  # abhuman beast malus
     visibilityAtDark: 20  # abhuman beast bonus
     antiCamouflageAtDay: 3
@@ -85,12 +87,15 @@ armors:
       stamina: 10
     loftempsSet: [3]
     units:
-      - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
     specialWeapon: AUX_CHOPPA
     tags:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
     scripts:
       returnFromMissionUnit:
 
@@ -114,6 +119,14 @@ armors:
         end;
 
         return;
+
+  - type: STR_GUARD_ORK_FLAK_ARMOR
+    refNode: *ORK_FLAK
+    ufopediaType: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR # probably separate them later
+    spriteInv: ORKYGUARD_INV.SPK # neater than the mercenary armor. Propah yoo-nii-farmz
+    customArmorPreviewIndex: 1286
+    units:
+      - STR_GUARD_ORK_BOY
 
   - &ORK_KARAPACE
     type: STR_BLOODAXE_KARAPACE_PLAYER_ARMOR
@@ -160,6 +173,8 @@ armors:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
     scripts:
       returnFromMissionUnit:
 
@@ -207,9 +222,9 @@ armors:
     refNode: *ORK_KARAPACE
     # Ork Bad Moons Nobz O3 Armor
     spriteSheet: ORK_BLOODAXE_NOB_BS.PCK
-    spriteInv: O3BLOODAXES_NOB_PLAYER.SPK
-    forcedTorso: 2  # Player Torso
-    customArmorPreviewIndex: 1263
+    spriteInv: BLOODAXES_NOB.SPK
+    forcedTorso: 1  # helmet, not hat
+    customArmorPreviewIndex: 1287
     storeItem: STR_NONE
     corpseBattle:
       - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
@@ -222,7 +237,35 @@ armors:
     units:
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - type: STR_OFFICORK_NOB_ARMOR # same as nob armor for now
+    refNode: *ORK_KARAPACE
+    # Ork Bad Moons Nobz O3 Armor
+    spriteSheet: ORK_BLOODAXE_NOB_BS.PCK
+    spriteInv: O3BLOODAXES_NOB_PLAYER.SPK # has the hat, that means he is the boss.
+    forcedTorso: 2  # torso with the hat
+    customArmorPreviewIndex: 1263
+    storeItem: STR_NONE
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
+    # Not much better than 'ardboy, main benefit of unit is stats
+    frontArmor: 95
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 60
+    loftempsSet: [4]
+    units:
+      - STR_GUARD_OFFICORK
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -244,6 +287,7 @@ armors:
     storeItem: STR_MEGANOB_ARMOR
     units:
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     specialWeapon: AUX_CHOPPA
     stats:
       tu: 10
@@ -276,7 +320,9 @@ armors:
       - 1.1  # MELTA
     loftempsSet: [5]
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 200 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -304,14 +350,14 @@ armors:
 
         return;
 
-  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMED
+  - type: STR_ASSAULT_MEGA_ARMOR # meganob armor with built in weapons
     refNode: *ORK_MEGANOB
-    ufopediaType: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
     spriteSheet: BLOODAXE_ARMED_MEGANOB_BS.PCK
     spriteInv: O6BLOODAXEARMEDMEGANOBINV.SPK
     customArmorPreviewIndex: [1266, 1267]
     drawingRoutine: 4
     allowsKneeling: false
+    storeItem: STR_ASSAULT_MEGANOB_ARMOR
     builtInWeapons:
       - STR_TWIN_SHOOTAS
       - STR_POWER_KLAW2
@@ -372,10 +418,11 @@ armors:
     allowsRunning: true # sprintin Warboss
     allowsKneeling: false
     tags:
-      ARMOR_OVERWATCH_TU_RESTORED: 100
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INTIMIDATION_RESISTANCE: 50
       INFECTION_RESIST: 75  # offsets being 4x hit
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -394,6 +441,7 @@ armors:
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     corpseBattle:
       - STR_PLAYER_ORKMEKBOY_CORPSE
     frontArmor: 75
@@ -432,7 +480,9 @@ armors:
     specialWeapon: AUX_PROBE
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -508,6 +558,7 @@ armors:
     tags:
       INFECTION_RESIST: 100  # infection immune
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -558,10 +609,14 @@ armors:
     storeItem: STR_STORMBOY_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -645,6 +700,7 @@ armors:
     storeItem: STR_ORK_WARBIKE_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     builtInWeapons:
@@ -659,6 +715,7 @@ armors:
     tags:
       INFECTION_RESIST: 75  # offsets being 4x hit
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -718,6 +775,7 @@ armors:
       - STR_DEFFKOPTER_ROKKITPOD
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     allowsRunning: false  # NPC limits for BAI
@@ -725,6 +783,7 @@ armors:
     tags:
       INFECTION_RESIST: 100
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -782,11 +841,14 @@ armors:
     storeItem: STR_TANKBUSTA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 10
@@ -844,12 +906,15 @@ armors:
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     meleeDodge:
       reactions: 0.2
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       ARMOR_OVERWATCH_TU_RESTORED: 50
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -930,10 +995,12 @@ armors:
       - STR_GUARD_ORK_WEIRDBOY
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
       ARMOR_ENERGY_SHIELD_DECAY: 13
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
       UNIT_TYPE_PSYKER: 1
@@ -990,8 +1057,10 @@ armors:
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
@@ -1044,10 +1113,13 @@ armors:
     storeItem: STR_BURNA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
