@@ -6,12 +6,16 @@ research:
   - name: STR_TAU_EMPIRE_GV         # (Tau and friends)
     dependencies:
       - STR_GENERALLOCK
-  - name: STR_TAU_GUEVESA         # (Guevesa faction with Imperial weapons access)≠–
+  - name: STR_TAU_GUEVESA_GV         # (Guevesa faction with Imperial weapons access)≠–
+    dependencies:
+      - STR_GENERALLOCK      
+  - name: STR_TAU_AUXILIARY_GV         # (Guevesa faction with Imperial weapons access)≠–
     dependencies:
       - STR_GENERALLOCK      
   # Everyone has these two by default
   - name: STR_NOT_TAU_EMPIRE_GV         # (Not Tau and friends)
   - name: STR_NOT_TAU_GUEVESA_GV        # (Not xenophile scum)
+  - name: STR_NOT_TAU_AUXILIARY_GV      # (Not xenophile scum with friends)
   # this one is specific to Arbites
   - name: STR_NOT_TAU_ARBITES_GV        # (Not Tau in the Adeptus Terra section)
     dependencies:
@@ -77,7 +81,8 @@ research:
       - STR_CHIMERA_LIGHT_IG  # homemade light chimeras are pretty but buggy
       - STR_CHIMERA_IG        # homemade regular chimeras are pretty but buggy
       - STR_TAU_EMPIRE_GV
-      - STR_TAU_GUEVESA
+      - STR_TAU_GUEVESA_GV
+      - STR_TAU_AUXILIARY_GV
       - STR_CHAPTER_PURITY
       - STR_NOT_CHAOSCULT
       - STR_NOT_ARBITES       # We are both STR_ARBITES and STR_NOT_ARBITES. STR_ARBITES means terra and STR_NOT_ARBITES means not the imperial law :P
@@ -98,7 +103,7 @@ research:
     cost: 0
     points: 0
     dependencies:
-      - STR_TAU_GUEVESA
+      - STR_TAU_GUEVESA_GV
 
 ### Progression strategies to mid-tier
 ### "Remedial Imperial Guard Operations"
@@ -109,7 +114,7 @@ research:
     points: 250  # counteracts STR_TAU_TRADING - net 0
     cost: 200
     dependencies:
-      - STR_GUEVESA_STRATEGY_PDF_GV
+      - STR_TAU_GUEVESA_GV     # Any Guevesa can hook in here
       - STR_LASER_WEAPONS   # desperate for bigger guns
       - STR_MOTION_SCANNER
       - STR_GAIN_250
@@ -131,7 +136,7 @@ research:
     cost: 200
     dependencies:
       - STR_WHITESHIELD_BLACK_MARKET_GV
-      - STR_ELERIUM_115                   # tau crawlers need fuel
+      - STR_ELERIUM_115                   # guevesa supply crawlers need fuel
       - STR_LOSE_250
     unlocks:
       - STR_TAU_GUEVESA_TRADING           # unlocks cheaper rifles and carbines + flak
@@ -198,7 +203,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
     unlocks:
-      - STR_TAU_PATHFINDERS_GV   # unlocks pathfinders arriving
+      - STR_TAU_PATHFINDERS_GV   # unlocks pathfinders
       - STR_TAU_ARMORY_EXAM
     spawnedEvent: STR_PATHFINDERS_ARRIVE_FIRST_EVENT_GV # spawns free pathfinders
     getOneFree:
@@ -206,7 +211,7 @@ research:
 
 ### Beastmen arrive, consider gating on mission - consider later launching mission at same time to cover cost
   - name: STR_BEASTMEN_CULTISTS_GV
-    points: -250
+    points: 0
     cost: 10
     dependencies:
       - STR_GENERALLOCK
@@ -233,14 +238,14 @@ research:
 ### Leads eventually to retrofitting the Navy Thunderbolts with Tau tech
 ### Leads eventually to Tau craft weapons
 ### Manufacturing projects along these lines
-  - name: STR_COOPT_NAVY_INTERCEPTORS_GV
+  - name: STR_COOPT_NAVY_PILOTS_GV
     points: 0
     cost: 10
     dependencies:
       - STR_CULTURE_CLUB_GV
     getOneFree:
       - STR_AIRSTRIKE_REQUISITION
-    spawnedEvent: STR_COOPT_NAVY_INTERCEPTORS_EVENT_GV
+    spawnedEvent: STR_COOPT_NAVY_PILOTS_EVENT_GV
 
 #      - STR_INTERROGATION_COMPLETED
 #      - STR_ALIEN_ORIGINS
@@ -249,7 +254,7 @@ research:
 ### Full alliance with the Tau - midtier complete
 ### "Light" Tau base
   - name: STR_A_SECRET_PACT_GV
-    points: -250
+    points: 0
     cost: 300
     dependencies:
       - STR_THE_COLD_TRADE_GV
@@ -265,7 +270,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
     unlocks:
-      - STR_TAU_PATHFINDERS_GV        # Pathfinder recruitment
       - STR_REMORA_INTERCEPTORS_GV    # upgraded light interceptor no pilot
       - STR_DALYTH_PATTERN_GV         # Tau rebuilt Imperial weapons
 
@@ -280,31 +284,30 @@ research:
 # Ceramite plates part 2
 # "Medium" Tau base
 # STR_A_SECRET_PACT_GV + STR_NAVY_COMUNICATIONS => 
-#     - STR_AUXILIARY_CADRE_GV (DEVILFISH, STEALTHS, REMORAS, TAU SMITHS, TAU CHIMERAS, TAU SENTINELS)
-#     - STR_RELOCATION_SUPPORT_GV which offsets the score penalty from STR_AUXILIARY_CADRE and provides free PATHFINDER CONTINGENT
+#     - STR_INFILTRATION_CADRE_GV (DEVILFISH, STEALTHS, REMORAS, TAU SMITHS, TAU CHIMERAS, TAU SENTINELS)
+#     - STR_RELOCATION_SUPPORT_GV which offsets the score penalty from STR_INFILTRATION_CADRE and provides free PATHFINDER CONTINGENT
 #     - STR_EARTHCASTE_SMITHS_GV which allows for limited manufacturing of Devilfish, Stealths, and Remoras.
 #     - STR_IMPERIAL_CRUSADE_GV which activates the Imperial Crusade content
 #     - STR_GUEVESA_HEAVY_WEAPONS_GV which activates Tau heavy weapons)
-  - name: STR_AUXILIARY_CADRE_GV
-    points: -500
+  - name: STR_INFILTRATION_CADRE_GV
+    points: 0
     cost: 300
     dependencies:
       - STR_A_SECRET_PACT_GV
       - STR_NAVY_COMUNICATIONS
-      - STR_LOSE_500
     unlocks:
       # Fire Warriors deploy from these. Integrated workshops and/ or science facilities?
       # Limited recruits depending on Consulate/Embassy + Caravan Market/Starport?
       # 10 per barracks?
-      - STR_FIRECASTE_BARRACKS_GV           # Fire Warriors deploy from here, limited recruit per barracks?
+      - STR_INFILTRATION_FIREBASE_GV           # Fire Warriors deploy from here, limited recruit per barracks?
       - STR_IMPERIAL_CRUSADE_GV       # Super Danger!
-    spawnedEvent: STR_AUXILIARY_CADRE_EVENT_GV
+    spawnedEvent: STR_INFILTRATION_CADRE_EVENT_GV
 
 ### Recruit Fire Warriors directly
-# Fire Warriors deploy from related buildings. Integrated workshops and/ or science facilities?
+# Fire Warriors deploy from here. Integrated workshops and/ or science facilities?
 # Limited recruits depending on Consulate/Embassy + Caravan Market/Starport?
 # 10 per barracks?  
-  - name: STR_FIRECASTE_BARRACKS_GV
+  - name: STR_INFILTRATION_FIREBASE_GV
     dependencies:
       - STR_GENERALLOCK
     unlocks:
@@ -312,7 +315,7 @@ research:
       - STR_TAU_STRIKE_TEAMS_GV
       - STR_EARTHCASTE_SMITHS_GV      # Basic Tau manufacturing & engineering - opens Dal'yth Pattern 
       - STR_DEVILFISH_TRANSPORTS_GV   # Build devilfish
-      - STR_STEALTH_SUITS_GV          # Build stealth suits
+      - STR_XV15_STEALTH_SUITS_GV          # Build stealth suits
       - STR_BIONICS_OPERATION         # proper med facilities redo as tau bionics
 
 ### start building outlandish stuff + advanced Tau weapons + drones
@@ -325,8 +328,8 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-### build Stealth suits from parts
-  - name: STR_STEALTH_SUITS_GV
+### build XV15 Stealth suits from parts
+  - name: STR_XV15_STEALTH_SUITS_GV
     dependencies:
       - STR_GENERALLOCK
 
@@ -342,8 +345,8 @@ research:
   - name: STR_GUEVESA_HEAVY_WEAPONS_GV
     cost: 200
     dependencies:
-      - STR_AUXILIARY_CADRE_GV
-      - STR_COOPT_NAVY_INTERCEPTORS_GV
+      - STR_INFILTRATION_CADRE_GV
+      - STR_COOPT_NAVY_PILOTS_GV
       - STR_TANKERS_DELIGHT_GV
     spawnedEvent: STR_GUEVESA_HEAVY_WEAPONS_EVENT_GV
 
@@ -351,35 +354,30 @@ research:
 ### Ceramite tier part 3
 ### Tau "Large" Base
 ### Overt Tau military alliance
-# STR_AUXILIARY_CADRE_GV + STR_UFO_CONSTRUCTION => STR_HOTSPRING_CADRE (HOTSPRING CADRE, TAU FACTORIES, BARRACUDA, T1 CRISIS, ADV PATHFINDERS, ADV STEALTHS)
-#     - STR_HOTSPRING_CADRE_GV which opens up advanced Pathfinders, advanced Stealth suits, and combat Water Caste options)
-#     - STR_EARTHCASTE_WORKSHOPS_GV which allows for serious manufacturing of Devilfish, Remoras, Barracudas, Stealths, etc
-#     - STR_MASTER_CRAFTING
-#     - STR_COME_DOWN_TO_US_GV which opens up basic Crisis suits
-  - name: STR_HOTSPRING_CADRE_GV
+# STR_INFILTRATION_CADRE_GV + STR_UFO_CONSTRUCTION => STR_AUXILIARY_CADRE_GV (TAU FACTORIES, BARRACUDA, T1 CRISIS, ADV PATHFINDERS, ADV STEALTHS)
+  - name: STR_AUXILIARY_CADRE_GV
     points: 100
     cost: 500
     dependencies:
-      - STR_AUXILIARY_CADRE_GV
+      - STR_INFILTRATION_CADRE_GV
       - STR_UFO_CONSTRUCTION
     unlocks:      
-      - STR_CRISIS_SUITS_GV           # Starscythe Crisis 
-      - STR_HAMMERHEAD_GUNSHIPS_GV             # Ion Hammerhead tanks
-      - STR_BARRACUDA_INTERCEPTORS_GV              # Barracuda Interceptors
-      - STR_FORM_KILL_TEAMS_GV         # Advanced Stealth and Pathfinder gear from Kill Teams, side missions, get Darkstrider?
+      - STR_STARSCYTHE_CRISIS_GV        # Starscythe Crisis 
+      - STR_XV26_STEALTH_SUITS_GV       # XV26 Stealth Suits
+      - STR_HAMMERHEAD_GUNSHIPS_GV      # Ion Hammerhead tanks
+      - STR_BARRACUDA_INTERCEPTORS_GV   # Barracuda Interceptors
+      - STR_FORM_KILL_TEAMS_GV          # Advanced Pathfinder gear from Kill Teams, side missions, get Darkstrider?
       - STR_MASTER_CRAFTING
-    spawnedEvent: STR_HOTSPRING_CADRE_EVENT_GV
-
-  ### Unlocks crisis suits
-  - name: STR_CRISIS_SUITS_GV
-    dependencies:
-      - STR_GENERALLOCK
-    unlocks:
-      - STR_STARSCYTHE_CRISIS_GV
+    spawnedEvent: STR_AUXILIARY_CADRE_EVENT_GV
 
   - name: STR_STARSCYTHE_CRISIS_GV
     dependencies:
       - STR_GENERALLOCK
+
+### build XV26 Stealth suits from parts
+  - name: STR_XV26_STEALTH_SUITS_GV
+    dependencies:
+      - STR_GENERALLOCK      
 
   - name: STR_HAMMERHEAD_GUNSHIPS_GV
     dependencies:
@@ -396,17 +394,8 @@ research:
       - STR_GENERALLOCK
     spawnedEvent: STR_FORM_KILL_TEAMS_EVENT_GV
 
-### Wall of Mirrors
-### Unlocks advanced stealth suits
-  - name: STR_WALL_OF_MIRRORS_GV
-    dependencies:
-      - STR_FORM_KILL_TEAMS_GV
-      - STR_THE_TERRAN_PROBLEM_GV
-
-
-
 ### The Tau realize the warp storm is a serious threat
-# STR_AUXILIARY_CADRE_GV + STR_ALIEN_ORIGINS => STR_FIRE_OF_UNKNOWN_ORIGIN_GV (EMERGENCY MEASURES, REACH OUT TO SISTERS, RALLY GUARD)
+# STR_INFILTRATION_CADRE_GV + STR_ALIEN_ORIGINS => STR_FIRE_OF_UNKNOWN_ORIGIN_GV (EMERGENCY MEASURES, REACH OUT TO SISTERS, RALLY GUARD)
   - name: STR_FIRE_OF_UNKNOWN_ORIGIN_GV
     points: 30
     cost: 300
@@ -441,7 +430,7 @@ research:
     dependencies:
       - STR_EMERGENCY_PROTOCOLS_GV
 
-### Assert control over what's left of the Pelagan Imperial Creed
+### Work out an arrangement over what's left of the Pelagan Imperial Creed
 ### Allows priest requisition
   - name: STR_COOPT_ECCLESIARCHY_GV
     points: 250
@@ -479,11 +468,10 @@ research:
     points: 60
     cost: 1000
     dependencies:
-      - STR_HOTSPRING_CADRE_GV
+      - STR_AUXILIARY_CADRE_GV
       - STR_THE_TERRAN_PROBLEM_GV
     unlocks:
       - STR_APPOINT_FIREBLADE_GV
-      - STR_WALL_OF_MIRRORS_GV      
       - STR_FIREKNIFE_CRISIS_GV
       - STR_SUNFORGE_CRISIS_GV
       - STR_BROADSIDE_SUITS_GV
@@ -497,7 +485,7 @@ research:
 ### Improves resistance to psychic attack, corruption, intimidation
 ### and has a bit better luck all around
 ### Doesn't work unless a (blooded?) combat vet wears it, though...
-  - name: STR_WARDED_SHASVRE_ARMOR_GV
+  - name: STR_ILLUMINATED_ARMORS_GV
     cost: 200
     dependencies:
       - STR_KNIGHTS_OF_CYDONIA_GV
@@ -526,12 +514,12 @@ research:
     dependencies:
       - STR_GENERALLOCK      
 
-  - name: STR_WARDED_CRISIS_SUITS_GV      
+  - name: STR_ILLUMINATED_BATTLESUITS_GV      
     points: 10
     cost: 200
     dependencies:
-      - STR_WARDED_SHASVRE_ARMOR_GV
-    spawnedEvent: STR_WARDED_CRISIS_SUITS_GV
+      - STR_ILLUMINATED_ARMORS_GV
+    spawnedEvent: STR_ILLUMINATED_BATTLESUITS_GV
 
   - name: STR_THE_SILVER_TOWER_GV
     points: 60
@@ -540,10 +528,9 @@ research:
       - STR_KNIGHTS_OF_CYDONIA_GV
       - STR_COMMANDER_PLUS
 
-
 # # Future Imperial Crusade content
 # [NYI] STR_THE_TERRAN_PROBLEM_GV bifurcates into STR_THE_WARPSTORM_PROBLEM_GV and STR_THE_CRUSADE_PROBLEM_GV
-# [NYI] STR_AUXILIARY_CADRE_GV + STR_THREAT_ONE => STR_WITCH_HUNTER_CADRE (FLAMER_FUSION_AND_PULSE, OCCULT METHODS, CONTACT NICASSAR, CO-OPT ECCLESIARCHY, DAMPED ARMOR)
+# [NYI] STR_INFILTRATION_CADRE_GV + STR_THREAT_ONE => STR_WITCH_HUNTER_CADRE (FLAMER_FUSION_AND_PULSE, OCCULT METHODS, CONTACT NICASSAR, CO-OPT ECCLESIARCHY, DAMPED ARMOR)
 # - EITHER one of
 #     - STR_FLAMER_FUSION_AND_PULSE_GV
 #     - STR_CONTACT_NICASSAR_GV

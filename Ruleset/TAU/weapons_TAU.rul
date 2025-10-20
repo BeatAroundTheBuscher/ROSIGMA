@@ -34,6 +34,102 @@ items:
     invHeight: 3
     bulletSpeed: 50
 
+
+  - &STR_SUIT_BURST_CANNONS_GV
+    type: STR_TAU_SUIT_BURST_CANNON_GV
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
+    weight: 1
+    dropoff: 4 #tau carbine
+    bigSprite: 3140
+    floorSprite: 949
+    handSprite: 864
+    bulletSprite: {mod: 40k, index: 12}
+    fireSound: 2450
+    hitSound: {mod: 40k, index: 19}
+    hitAnimation: {mod: 40k, index: 100}
+    explosionSpeed: 10
+    bulletSpeed: 50
+    # better accuracy
+    accuracyAuto: 60
+    accuracySnap: 80
+    autoRange: 12
+    snapRange: 16
+    tuAuto: 50
+    tuSnap: 33
+    autoShots: 6
+    sprayWaypoints: 2
+    clipSize: -1
+    confSnap:
+      name: TAUSUITBC_BURST
+      shots: 3
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    confAuto:
+      name: TAUSUITBC_AUTO
+      followProjectiles: false   # the camera stays still while shooting (prevents minigun seizures)
+    power: 90
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.3  # melts some armor on the way in
+      ArmorEffectiveness: 0.9  # some armor penetration
+    battleType: 1
+    twoHanded: false
+    invWidth: 2
+    invHeight: 3
+    arcingShot: false
+    recover: false
+    fixedWeapon: true
+    fixedWeaponShow: false  # do not appear in the drone sprites hand
+    vaporColorSurface: {mod: 40k, index: 2}
+    vaporDensitySurface: 3
+    vaporProbabilitySurface: 50
+    scripts:
+      vaporParticleAmmo: |
+        # noting
+        set particle_lifetime 20;
+        set subvoxel_drift 3;
+        return;
+
+  - type: STR_TAU_SUIT_BURST_CANNON_TWINLINKED_GV
+    refNode: *STR_SUIT_BURST_CANNONS_GV
+    categories: [STR_CAT_PLASMA, STR_CAT_TACTICAL, STR_CAT_TAU]
+    shotgunSpread: 1  # twin linked
+    shotgunBehavior: 1  # twin linked
+    shotgunPellets: 2
+
+  - &STR_TAU_FLAMERS_GV
+    type: STR_TAU_SUIT_FLAMER_GV #                          10500
+    categories: [ STR_CAT_FLAMER, STR_CAT_TACTICAL]
+    size: 0.2
+    weight: 1
+    bigSprite: {mod: 40k, index: 215}
+    floorSprite: {mod: 40k, index: 102}
+    handSprite: {mod: 40k, index: 200}
+    bulletSprite: {mod: 40k, index: 5}
+    fireSound: {mod: 40k, index: 706}
+    clipSize: -1
+    accuracyAuto: 30
+    tuAuto: 35
+    battleType: 1
+    twoHanded: false
+    maxRange: 9
+    invWidth: 2
+    invHeight: 3
+    autoShots: 6
+    attraction: 7
+    armor: 200
+    arcingShot: true
+    noLOSAccuracyPenalty: 75  # indirect fire weapon
+    listOrder: 10500
+
+  - type: STR_TAU_SUIT_FLAMER_TWIN_LINKED_GV #                          10500
+    refNode: *STR_TAU_FLAMERS_GV
+    shotgunSpread: 1  # twin linked
+    shotgunBehavior: 1  # twin linked
+    shotgunPellets: 2    
+
+
+
 ### need to fix up Tau guns and ammo properly....
 ### don't touch existing exports
 
