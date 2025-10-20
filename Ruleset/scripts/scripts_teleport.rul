@@ -223,12 +223,13 @@ extended:
             return;
           end;
 
-          if lt have_tu 1;
+          actor.getTimeUnits temp;
+          skill.getTag temp2 Tag.SKILL_TU_COST;
+          if lt temp temp2;
             # debug_log "skillUseUnit | ROSIGMA_sUU_start_teleport | offset: 11 | Unit lacks adequate TU. Aborting.";
+            battle_game.flashMessage "STR_NOT_ENOUGH_TIMEUNITS";
             return;
           end;
-
-          set spend_tu 1;
 
           actor.getTag isTeleporting Tag.UNIT_IS_TELEPORTING;
           if lt isTeleporting 1;
@@ -250,6 +251,7 @@ extended:
             actor.MoveCost.setBaseNormalEnergyPercent 100;
             actor.MoveCost.setBaseFlyEnergyPercent 100;
             actor.getOriginalMovementType temp;
+            actor.setMovementType 0;
             actor.setMovementType temp;
             actor.getTag temp Tag.UNIT_ENERGY_BEFORE_TELEPORT; # this assumes no weapon requires energy
             actor.setEnergy temp;

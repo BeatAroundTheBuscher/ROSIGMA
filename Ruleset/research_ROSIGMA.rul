@@ -701,6 +701,14 @@ research:
       - STR_ADV_DROPPODS
     spawnedEvent: STR_TACTICAL_CARE_PACKAGE
 
+  - name: STR_SMGIVEOTHER_INTERCEPTOR
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_MARINES_STRATEGY
+      - STR_GENERALLOCK
+    spawnedEvent: STR_SMGIVESECONDINTERCEPTOR
+
 ### Space Wolves Strategy #STRATEGY.SM.WOLF#
   - name: STR_SPACEWOLVES_STRATEGY
     cost: 5
@@ -820,9 +828,17 @@ research:
       - STR_SPACEWOLVES_STRATEGY
     spawnedEvent: STR_WORDBEARERS_CARE_PACKAGE
 
+  - name: STR_WBLIGHTNING_COMING
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+    spawnedEvent: STR_WBLIGHTNING_ARRIVING
+
   - name: STR_RITUAL_CONTACT  # Ritual of Contact
     cost: 200
-    points: 500
+    points: 250
     dependencies:
       - STR_WORDBEARERS_STRATEGY
       - STR_MOTION_SCANNER
@@ -831,7 +847,7 @@ research:
 
   - name: STR_RITUAL_SACRIFICE  # Ritual of Sacrifice
     cost: 200
-    points: 200
+    points: 300
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_ELERIUM_115
@@ -843,15 +859,22 @@ research:
     getOneFree:
       - STR_ALIENS_ONLY
 
-  - name: STR_CRATED_CHAOSRHINOS  # Chaos Rhino Requisition
+  - name: STR_RITUAL_FAVOURS  # Ritual of Favours
+    cost: 300
+    points: 200
     dependencies:
       - STR_WORDBEARERS_STRATEGY
-      - STR_GENERALLOCK
+      - STR_RITUAL_SACRIFICE
+      - STR_MIDTIER_PREREQ
 
-  - name: STR_CRATED_CHAOSDROPPODS  # Chaos Drop Pods Requisition
+  - name: STR_RITUAL_BETRAYAL  # Ritual of Betrayal
+    cost: 500
+    points: 200
     dependencies:
       - STR_WORDBEARERS_STRATEGY
-      - STR_GENERALLOCK
+      - STR_RITUAL_FAVOURS
+      - STR_LEADER_PLUS
+      - STR_MIDTIER_PREREQ
 
 ## Chamber Militant #STRATEGY.CM#
   - name: STR_CHAMBERMILITANT  # Chamber Militant
@@ -1717,7 +1740,6 @@ research:
       - STR_ADEPTAS_CHAOS_PATH
       - STR_CHAMBER_CHAOS_PATH
       - STR_MARINE_CHAOS_PATH
-      - STR_HERETICAL_INQUISITOR_STRATEGY
     unlocks:
       - STR_ELDAR_ARMORY_EXAM
     getOneFree:
@@ -3517,6 +3539,11 @@ research:
       - STR_HARDER_MISSIONS
     cutscene: c2
 
+  - name: STR_ORK_CERAMITE_TIER  # Greenest Ceramite-Tier Requisitions
+    dependencies:
+      - STR_GREENEST_ORKZ
+      - STR_UFO_CONSTRUCTION
+
   - name: STR_ORKZ_HIGHTIER  # Greenest High-tier Requisitions
     cost: 900
     points: 30
@@ -3530,6 +3557,12 @@ research:
       - STR_DAKKA_GITZ_RECRUITED
     unlocks:
       - STR_HIGHTIER_PREREQ
+
+  - name: STR_ORK_REGIMENT_OFFICERS  # Regment Officerz
+    cost: 200
+    points: 50
+    dependencies:
+      - STR_GREENEST_ORKZ
 
   - name: STR_ORKZ_MASTER_CRAFTING  # Ork Master crafting, for ammo and maybe weapons.
     cost: 200
@@ -4970,12 +5003,15 @@ research:
     dependencies:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MIDTIER
+
   - name: STR_NEW_FIGHTER_TRANSPORTER  # Assault Transport Requisition
     # Ceramite tier marines and adeptas
     cost: 700
     points: 30
     dependencies:
       - STR_NEW_FIGHTER_CRAFT
+      - STR_NOT_WORDBEARERS
+
   - name: STR_NEW_FIGHTER_CRAFT  # Gunship Requisition
     # Stormraven
     cost: 600
@@ -4983,6 +5019,8 @@ research:
     dependencies:
       - STR_UFO_CONSTRUCTION
       - STR_MARINES_AND_ADEPTAS
+      - STR_NOT_WORDBEARERS
+
   - name: STR_STORMEAGLE_INTERCEPTOR  # Stormeagle Requisition
     cost: 600
     points: 25
@@ -5724,16 +5762,16 @@ research:
     getOneFree:
       - STR_DREADNOUGHT_MARINE
 
-  # Word Bearers Armor
+#ARMORS.SM.WB#
 
-  - name: STR_PERSONAL_ARMOR_WB  # Word Bearers Marine Armor
+  - name: STR_PERSONAL_ARMOR_WB  # Armor of the Champion
     cost: 180
     points: 20
     dependencies:
       - STR_ALIEN_ALLOYS
       - STR_WORDBEARERS_STRATEGY
 
-  - name: STR_POWER_SUIT_WB  # Word Bearers Terminator Armor
+  - name: STR_POWER_SUIT_WB  # Armor of the Anointed
     cost: 205
     points: 20
     dependencies:
@@ -5745,7 +5783,7 @@ research:
     unlocks:
       - STR_TERMINATOR_ARMOR_WB_CODEX
 
-  - name: STR_DIABO_ARMOR_WB  # Word Bearers Diabolist Armor
+  - name: STR_DIABO_ARMOR_WB  # Armor of the Acolyte
     cost: 180
     points: 20
     dependencies:
@@ -5753,17 +5791,54 @@ research:
       - STR_WORDBEARERS_STRATEGY
       - STR_POWER_SUIT_WB
 
-  - name: STR_DARKAPO_SUIT  # Word Bearers Dark Apostle Armor
+  - name: STR_DARKAPO_SUIT  # Armor of the Chosen
     cost: 205
-    points: 20
+    points: 100
     dependencies:
       - STR_POWER_SUIT_WB
       - STR_DIABO_ARMOR_WB
       - STR_COMMANDER_PLUS
       - STR_WORDBEARERS_STRATEGY
       - STR_HIGHTIER_PREREQ
+      - STR_RITUAL_BETRAYAL
 
-  - name: STR_WBHOLYWARSHIPFINAL # The Holy Warship
+#CRAFTS.SM.WB#
+
+  - name: STR_CRATED_CHAOSRHINOS  # Chaos Rhino Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_CRATED_CHAOSDROPPODS  # Chaos Drop Pods Requisition
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBNEW_FIGHTER_CRAFT  # WB Hellblade Requisition
+    # Stormraven
+    cost: 600
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_UFO_CONSTRUCTION
+
+  - name: STR_WBNEW_FIGHTER_TRANSPORTER  # WB Assault Transport Requisition
+    # Ceramite tier marines and adeptas
+    cost: 700
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_WBNEW_FIGHTER_CRAFT
+      - STR_MIDTIER_PREREQ
+
+  - name: STR_WBTHUNDERABILTY # WB Thunderhawk
+    cost: 900
+    points: 30
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_WBNEW_FIGHTER_TRANSPORTER
+
+  - name: STR_WBHOLYWARSHIPFINAL # WB The Holy Warship
     cost: 900
     points: 30
     dependencies:

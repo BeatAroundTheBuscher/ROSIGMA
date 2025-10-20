@@ -1,10 +1,12 @@
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
   tags:
     BattleUnit:
       UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
     RuleItem:
       #percentile damage bonus
-      DAMAGE_BONUS_PERCENT_MECHANICAL: int # if -1 attack will do 0 damage overriding any other target type bonuses; -2 deals 0 damage overriding null bonuses
+      DAMAGE_BONUS_PERCENT_MECHANICAL: int # % extra damage; if -1 attack will do 0 damage overriding any other target type bonuses; -2 deals 0 damage overriding null bonuses
       DAMAGE_BONUS_PERCENT_DAEMONIC: int
       DAMAGE_BONUS_PERCENT_CONSECRATED: int
       DAMAGE_BONUS_PERCENT_CHAOS: int
@@ -21,8 +23,9 @@ extended:
       DAMAGE_BONUS_PERCENT_IMPERIUM: int
       DAMAGE_BONUS_PERCENT_ORK: int
       DAMAGE_BONUS_PERCENT_NECRON: int
+      DAMAGE_BONUS_PERCENT_SYNAPSE: int
       #flat damage bonus
-      DAMAGE_BONUS_FLAT_MECHANICAL: int
+      DAMAGE_BONUS_FLAT_MECHANICAL: int # flat extra damage
       DAMAGE_BONUS_FLAT_DAEMONIC: int
       DAMAGE_BONUS_FLAT_CONSECRATED: int
       DAMAGE_BONUS_FLAT_CHAOS: int
@@ -39,6 +42,9 @@ extended:
       DAMAGE_BONUS_FLAT_IMPERIUM: int
       DAMAGE_BONUS_FLAT_ORK: int
       DAMAGE_BONUS_FLAT_NECRON: int
+      DAMAGE_BONUS_FLAT_SYNAPSE: int
+      #ignition
+      DAMAGE_THRESHOLD_FOR_IGNITION: int # if to_health deals damage equal to or greater than the threshold, ignites target
 
   scripts:
     damageUnit:
@@ -67,7 +73,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_DAEMONIC;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_DAEMONIC;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_DAEMONIC;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -116,7 +122,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_CONSECRATED;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CONSECRATED;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CONSECRATED;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_CONSECRATED;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -144,7 +150,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_CHAOS;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_CHAOS;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_CHAOS;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_CHAOS;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -172,7 +178,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_PSYKER;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_PSYKER;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_PSYKER;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_PSYKER;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -200,7 +206,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_NULL;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NULL;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NULL;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_NULL;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -228,7 +234,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_TYRANID;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TYRANID;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TYRANID;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_TYRANID;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -256,7 +262,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_LIVING;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_LIVING;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_LIVING;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_LIVING;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -284,7 +290,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_TZEENTCH;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_TZEENTCH;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_TZEENTCH;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_TZEENTCH;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -312,7 +318,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_KHORNE;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_KHORNE;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_KHORNE;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_KHORNE;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -340,7 +346,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_NURGLE;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NURGLE;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NURGLE;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_NURGLE;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -368,7 +374,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_SLAANESH;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_SLAANESH;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SLAANESH;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_SLAANESH;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -396,7 +402,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_XENO;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_XENO;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_XENO;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_XENO;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -424,7 +430,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_ELDAR;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ELDAR;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ELDAR;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_ELDAR;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -452,7 +458,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_ORK;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_ORK;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_ORK;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_ORK;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -480,7 +486,7 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_IMPERIUM;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_IMPERIUM;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_IMPERIUM;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_IMPERIUM;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
@@ -508,12 +514,40 @@ extended:
           rArmor.getTag temp Tag.UNIT_TYPE_NECRON;
           if gt temp 0;
             itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_NECRON;
-            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_NECRON;
             if gt temp damagePercentBonus; #apply the higher of the two
               set damagePercentBonus temp;
             end;
             itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_NECRON;
             ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_NECRON;
+            if gt temp damageFlatBonus; #apply the higher of the two
+              set damageFlatBonus temp;
+            end;
+
+            # only highest bonus of each type applies
+            if eq damagePercentBonus -1; # null overrides all
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else and eq damagePercentBonus -2 eq ongoingDamagePercentBonus 0; # -2 null overrides 0, but not a higher value
+              set ongoingDamagePercentBonus damagePercentBonus;
+            else gt damagePercentBonus ongoingDamagePercentBonus;
+              set ongoingDamagePercentBonus damagePercentBonus;
+            end;
+
+            if gt damageFlatBonus ongoingDamageFlatBonus;
+              set ongoingDamageFlatBonus damageFlatBonus;
+            end;
+
+          end;
+
+          rArmor.getTag temp Tag.UNIT_TYPE_SYNAPSE;
+          if gt temp 0;
+            itemRule.getTag damagePercentBonus Tag.DAMAGE_BONUS_PERCENT_SYNAPSE;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_PERCENT_SYNAPSE;
+            if gt temp damagePercentBonus; #apply the higher of the two
+              set damagePercentBonus temp;
+            end;
+            itemRule.getTag damageFlatBonus Tag.DAMAGE_BONUS_FLAT_SYNAPSE;
+            ammoItem.getTag temp Tag.DAMAGE_BONUS_FLAT_SYNAPSE;
             if gt temp damageFlatBonus; #apply the higher of the two
               set damageFlatBonus temp;
             end;
@@ -562,5 +596,10 @@ extended:
 
           add to_health ongoingDamageFlatBonus; #apply the flat damage bonus
           # debug_log "ROSIGMA_dU_damage_enhancement; damageUnit, offset 1: Final to_health:" to_health;
+
+          itemRule.getTag temp Tag.DAMAGE_THRESHOLD_FOR_IGNITION;
+          if and ge to_health temp gt temp 0;
+            unit.setFire 1; # set target on fire
+          end;
 
           return;

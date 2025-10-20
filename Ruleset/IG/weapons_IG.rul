@@ -2771,6 +2771,31 @@ items:
     fireSound: {mod: 40k, index: 711}
     compatibleAmmo:
       - STR_EXITUS_AMMO
+      - STR_EXITUS_AMMO_HELLFIRE
+      - STR_EXITUS_AMMO_TURBOPENETRATOR
+      - STR_EXITUS_AMMO_SHELLBREAKER
+    ammo:
+      0:
+        compatibleAmmo:
+          - STR_EXITUS_AMMO
+        tuLoad: 40
+      1:
+        compatibleAmmo:
+          - STR_EXITUS_AMMO_TURBOPENETRATOR
+          - STR_EXITUS_AMMO_HELLFIRE
+          - STR_EXITUS_AMMO_SHELLBREAKER
+        tuLoad: 40
+    confSnap:
+      shots: 1
+      ammoSlot: 0
+    confAimed:
+      ammoSlot: 0
+      shots: 1
+    confAuto: # fires special ammo loaded into second slot
+      ammoSlot: 1
+      shots: 1
+      name: STR_SPECIAL_AMMO
+      shortName: STR_SPECIAL_AMMO_SHORT
     battleType: 1
     twoHanded: true
     blockBothHands: true
@@ -2786,19 +2811,20 @@ items:
     autoRange: 0
     snapRange: 21
     aimRange: 40  # it's an Exitus rifle; it has the best aimed range of any sniper rifle in the game
-    accuracyAuto: 0
+    accuracyAuto: 160
     accuracySnap: 80
     accuracyAimed: 160
-    tuAuto: 0
+    tuAuto: 85
     tuSnap: 45
     tuAimed: 85
     kneelBonus: 150
-    tuLoad: 40  # reloading this heavy weapon is a PITA; also puts *some* limits on it
+#    tuLoad: 40  # reloading this heavy weapon is a PITA; also puts *some* limits on it
     defaultInventorySlot: STR_RIGHT_HAND
     accuracyMultiplier:  # sniper rifle accuracy
       firing: [0.5, 0.005]
     tags:
       ITEM_AIMED_ACCURACY_POWER_BONUS_PERCENT: 75  # Sniper rifle bonus to aimed shots; power of precision
+      ITEM_AUTO_ACCURACY_POWER_BONUS_PERCENT: 75  # bonus for special ammo on auto shot.
       ITEM_COLOR_CHANGES_WITH_AMMO_NON_GRAY: 6
 
   - &STR_EXITUS_BULLETS
@@ -2925,7 +2951,7 @@ items:
       ToTile: 0.0
       ToArmorPre: 0.1  # high velocity
       RandomType: 6
-      ArmorEffectiveness: 0.8
+      ArmorEffectiveness: 0.7
     clipSize: 10
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
@@ -2950,6 +2976,9 @@ items:
       ToWound: 0.5  # acid and armor piercing needles cause lots of mortal wounds
       ToMorale: 2.0  # painful
       FixRadius: 1
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
+      ITEM_FORCE_OVERKILL: 1
 
   - type: STR_EXITUS_PISTOL_AMMO_TURBOPENETRATOR
     refNode: *STR_EXITUS_PISTOL_BULLETS
@@ -2966,7 +2995,7 @@ items:
       ToHealth: 0.7  # armor piercing
       ToArmor: 0.5  # obliterates armor on penetration
     tags:
-      DAMAGE_RESIST_PENETRATION_PERCENT: 95
+      DAMAGE_RESIST_PENETRATION_PERCENT: 100
 
   - type: STR_EXITUS_PISTOL_AMMO_SHELLBREAKER  # shield piercing
     refNode: *STR_EXITUS_PISTOL_BULLETS
@@ -2979,7 +3008,7 @@ items:
       ToTile: 0.0
       ToArmorPre: 0.1  # high velocity
       RandomType: 6
-      ArmorEffectiveness: 0.8
+      ArmorEffectiveness: 0.7
     tags:
       ITEM_ENERGY_SHIELD_REDUCTION_PERCENT: 100  # breaks shields
 

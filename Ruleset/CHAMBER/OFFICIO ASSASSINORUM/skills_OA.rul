@@ -7,20 +7,22 @@ extended:
       # Eversor Skills
       SKILL_EVERSOR_FRENZY_ID: int
       SKILL_EVERSOR_DEATHBOMB_ACTIVATE_ID: int
+      # Vindicare Skills
+      SKILL_VINDICARE_KILLSHOT_ID: int
     RuleItem:
       # Eversor Skills
       ITEM_IS_EVERSOR_DEATH_BOMB: int # death bomb used for Eversor skills
 
 skills:
   # EVERSOR ASSASSIN
-  - type: STR_EVERSOR_FRENZY_SKILL
+  - type: STR_SKILL_EVERSOR_FRENZY
     flatUse: true
     costUse:
       time: 1
     tags:
       SKILL_EVERSOR_FRENZY_ID: 1
 
-  - type: STR_EVERSOR_DEATHBOMB_ACTIVATE_SKILL
+  - type: STR_SKILL_EVERSOR_DEATHBOMB_ACTIVATE
     flatUse: true
     costUse:
       time: 1
@@ -28,29 +30,14 @@ skills:
       SKILL_EVERSOR_DEATHBOMB_ACTIVATE_ID: 1
 
 # Vindicare Special Ammo
-  - type: STR_SKILL_EXITUS_HELLFIRE
+  - type: STR_SKILL_VINDICARE_KILLSHOT
     costUse:
-      time: 85
-    targetMode: 8
-    compatibleWeapons: [STR_EXITUS_BUILTIN_SPECIAL]
-    checkHandsOnly: false
-    battleType: 1
+      time: 1
+    flatUse:
+      time: true
+    tags:
+      SKILL_VINDICARE_KILLSHOT_ID: 1
 
-  - type: STR_SKILL_EXITUS_SHELLBREAKER
-    costUse:
-      time: 85
-    targetMode: 9
-    compatibleWeapons: [STR_EXITUS_BUILTIN_SPECIAL]
-    checkHandsOnly: false
-    battleType: 1
-
-  - type: STR_SKILL_EXITUS_TURBOPENETRATOR
-    costUse:
-      time: 85
-    targetMode: 7
-    compatibleWeapons: [STR_EXITUS_BUILTIN_SPECIAL]
-    checkHandsOnly: false
-    battleType: 1
 
 # Callidus Deception
   - type: STR_SKILL_CALLIDUS_DECEPTION
@@ -138,7 +125,6 @@ skills:
     flatUse:
       time: true
     tags:
-      SKILL_TU_COST: 1
       SKILL_MUNITION_COST: 40
       SKILL_IS_TELEPORTER: 1
       SKILL_TELEPORTER_COOLDOWN: 1
@@ -434,7 +420,6 @@ items:
     # FireBlastCalc: false
       IgnoreOverKill: false
       IgnoreSelfDestruct: true
-      FireThreshold: 106 # should only set vulnerable enemies on fire.
       ArmorEffectiveness: 0.6
       ToHealth: 1.0
       ToTime: 0.5
@@ -467,16 +452,21 @@ items:
     tags:
       ITEM_DOESNT_HURT_USER: 1
       DAMAGE_RESIST_PENETRATION_PERCENT: 100 # should mean it doesn't get resisted
-      DAMAGE_BONUS_PERCENT_DAEMONIC: 200
-      DAMAGE_BONUS_PERCENT_PSYKER: 200
-      DAMAGE_BONUS_PERCENT_TZEENTCH: 125 # higher psychic sensitivity
-      DAMAGE_BONUS_PERCENT_NURGLE: 140 # durable because of warp magic, take away the magic, you have a dead body
-      DAMAGE_BONUS_PERCENT_ELDAR: 140 # all of em are at least partially psychic. Poor farseers.
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 300
+      DAMAGE_BONUS_PERCENT_PSYKER: 300
+      DAMAGE_BONUS_PERCENT_SYNAPSE: 300 # among already vulnerable tyranids, synapse creatures are the most vulnerable; often also psykers
+      DAMAGE_BONUS_PERCENT_TZEENTCH: 150 # higher psychic sensitivity
+      DAMAGE_BONUS_PERCENT_NURGLE: 200 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_PERCENT_TYRANID: 200 # tyranids especially vulneable to psychic interference due to reliance on hive mind
+      DAMAGE_BONUS_PERCENT_ELDAR: 200 # all of em are at least partially psychic. Poor farseers.
+      DAMAGE_THRESHOLD_FOR_IGNITION: 120 #ignites vulnerable/unlucky enemies
       DAMAGE_BONUS_PERCENT_MECHANICAL: -2 #No souls to blast, but bonuses take priority due to Daemon Engines and piloted vehicles being a thing
       DAMAGE_BONUS_PERCENT_NULL: -1 # No souls to blast
       DAMAGE_BONUS_PERCENT_NECRON: -1 # No souls to blast
       INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
       INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
+      YTAG_DAMAGE_RETURNED_RESIST_TYPE: 0  # untyped damage so no modifications
+      ITEM_DENY_TRANSFORM: 1
 
 soldiers:
 
@@ -485,9 +475,7 @@ soldiers:
     skills:
       - STR_SKILL_LIKE_FIGHTING_A_SHADOW_CHECK
       - STR_SKILL_LIKE_FIGHTING_A_SHADOW
-      - STR_SKILL_EXITUS_HELLFIRE
-      - STR_SKILL_EXITUS_TURBOPENETRATOR
-      - STR_SKILL_EXITUS_SHELLBREAKER
+      - STR_SKILL_VINDICARE_KILLSHOT
 
   - type: STR_ADEPTAS_CALLIDUS
     skillIconSprite: 221
@@ -517,6 +505,6 @@ soldiers:
   - type: STR_EVERSOR_ASSASSIN
     skillIconSprite: 232
     skills:
-      - STR_EVERSOR_DEATHBOMB_ACTIVATE_SKILL
+      - STR_SKILL_EVERSOR_DEATHBOMB_ACTIVATE
       - STR_SKILL_INTIMIDATION
-      - STR_EVERSOR_FRENZY_SKILL
+      - STR_SKILL_EVERSOR_FRENZY
