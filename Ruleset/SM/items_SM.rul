@@ -33,6 +33,11 @@ items:
     explosionSpeed: 5
     compatibleAmmo: !remove
       - STR_ASSC_CLIP
+    tags:
+      ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_BASE_COLOR: 7
+      ITEM_GETS_ACCENT_RECOLOR: 1
+      ITEM_ACCENT_COLOR: 1
 
   - type: STR_ROCKET_LAUNCHER
     armor: 200
@@ -108,7 +113,7 @@ items:
   - type: STR_RIFLE  # BOLTER  #         10300
     armor: 200
     requiresBuy:
-      - STR_MARINES_AND_INQUISITION
+      - STR_MARINE_BOLTERS
       - STR_IMPERIAL_WEAPONS
     costBuy: 10000
 
@@ -145,21 +150,28 @@ items:
       ITEM_COLOR_CHANGES_WITH_AMMO: 15
       ITEM_FIRING_SPRITE: 1
 
-  - type: STR_RIFLEB  # BOLTER  # To remove deathwatch requirement
-    requiresBuy: !remove
-      - STR_DEATHWATCH
-
-  - type: STR_RIFLEB  # BOLTER  #        10310  TYPE BLUE
-    armor: 200
+  - type: STR_RIFLEB
+    requiresBuyBaseFunc: [TRADE]
     requiresBuy:
-      - STR_MARINES_AND_INQUISITION
+      - STR_MARINE_BOLTERS
       - STR_IMPERIAL_WEAPONS
+    costBuy: 200000
+    armor: 200  # to avoid item pile destruction
+    listOrder: 10310
+    tags:
+      ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_BASE_COLOR: 7
+      ITEM_GETS_ACCENT_RECOLOR: 1
+      ITEM_ACCENT_COLOR: 1
 
   - type: STR_RIFLEC  # BOLTER  #        10320  TYPE STALKER           AIMED
-    armor: 200
     ufopediaType: ""
+    costBuy: 200000
+    armor: 200  # to avoid item pile destruction
+    listOrder: 10320
+    requiresBuyBaseFunc: [TRADE]
     requiresBuy:
-      - STR_MARINES_AND_INQUISITION
+      - STR_MARINE_BOLTERS
       - STR_IMPERIAL_WEAPONS
 
   - type: STR_MCRIFLE  # BOLTER                 10400                   MC no aim
@@ -254,6 +266,14 @@ items:
       strength: 0.15
     damageAlter:
       RandomWound: false
+
+  # this so the faction recolor does not influence the other chainswords
+  - type: STR_CHAINSWORD
+    tags:
+      ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_BASE_COLOR: 7
+      ITEM_GETS_ACCENT_RECOLOR: 1
+      ITEM_ACCENT_COLOR: 1
 
   - type: STR_HEAVY_CANNON  # Sniper Rifle
     armor: 200
@@ -504,6 +524,7 @@ items:
   # - type: STR_HWP_CANNON_SHELLS
 
   - type: AUX_RAM  # AUX BIKE ARMOR AUX
+    specialIconSprite: 2778
     bigSprite: {mod: 40k, index: 222}
     meleeSound: {mod: 40k, index: 753}  # 753 Powerswrod miss
     meleeHitSound: {mod: 40k, index: 709}  # 709 chainhit
@@ -523,6 +544,11 @@ items:
     armor: 200
     requiresBuy:
       - STR_MARINES_STRATEGY
+    tags:
+      ITEM_GETS_FACTION_RECOLOR: 1
+      ITEM_BASE_COLOR: 7
+      ITEM_GETS_ACCENT_RECOLOR: 1
+      ITEM_ACCENT_COLOR: 1
 
   # - type: STR_PLASMA_PISTOL_TERRAN
   #   weight: 4  # was 10  # MC PP has weight 3
@@ -1371,6 +1397,8 @@ items:
       - STR_HB_CLIP_MC
       - STR_STORMBOLTER_PSI_MAG
     bigSprite: 2520
+    tags:
+      REACTION_MULTIPLIER: 150
 
   - type: STR_GK_HB_MC
     refNode: *STR_GK_STORMBOLTER_TEMPLATE

@@ -1,0 +1,57 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    BattleUnit:
+      UNIT_OVERKILL_DISABLE_SELF_DESTRUCT: int  # is our self-destruct disabled?
+    RuleItem:
+      ITEM_FORCE_OVERKILL: int # forces overkill on kill
+      ITEM_DENY_TRANSFORM: int # prevents transform on kill
+    RuleArmor:
+      ARMOR_OVERKILL_IMMUNE: int # are we immune to overkill/having our transforms aborted? Mostly used for bosses like Marbo and Kharne
+
+  scripts:
+    damageUnit:
+      - new: ROSIGMA_dU_overkill_forcing
+        offset: 88 # set to trigger just before Feel No Pain
+        code: |
+          var int temp;
+          var int itemTagProperty;
+          var ptr RuleItem itemRule;
+          var ptr RuleArmor rArmor;
+
+          if lt to_health 1;
+            # debug_log "ROSIGMA_dU_overkill_forcing; damageUnit, offset 99: Aborted. Null to_health:" to_health;
+            return;
+          end;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.ARMOR_OVERKILL_IMMUNE;
+          if gt temp 0;
+            # debug_log "ROSIGMA_dU_overkill_forcing; damageUnit, offset 99: Aborted. Unit immune to Overkill. ARMOR_OVERKILL_IMMUNE:" temp;
+            return;
+          end;
+
+          unit.getHealth temp;
+          sub temp to_health;
+          if gt temp 0;
+            # debug_log "ROSIGMA_dU_overkill_forcing; damageUnit, offset 99: Aborted. Unit has taken non-lethal damage. ARMOR_OVERKILL_IMMUNE:" temp;
+            return;
+          end;
+
+          # forced overkill
+          damaging_item.getRuleItem itemRule;
+          damaging_item.getTag itemTagProperty Tag.ITEM_FORCE_OVERKILL;
+          if gt itemTagProperty 0;
+            unit.setHealthWithOverkill -9999;
+            # debug_log "ROSIGMA_dU_overkill_forcing; damageUnit, offset 99: Success. Unit overkilled.";
+          end;
+          # deny transform
+          damaging_item.getTag itemTagProperty Tag.ITEM_DENY_TRANSFORM;
+          if gt itemTagProperty 0;
+            unit.setSpawnUnit null;
+            unit.setSpawnUnitInstantRespawn 0;
+            # debug_log "ROSIGMA_dU_overkill_forcing; damageUnit, offset 99: Success. Unit transform disabled.";
+          end;
+
+          return;

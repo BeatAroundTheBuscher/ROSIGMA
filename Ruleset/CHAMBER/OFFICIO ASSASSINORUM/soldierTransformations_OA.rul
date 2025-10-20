@@ -82,6 +82,7 @@ soldierTransformation:
     allowsDeadSoldiers: true
     allowsLiveSoldiers: true
     allowsWoundedSoldiers: true
+    needsCorpseRecovered: false
     transferTime: 0
     allowedSoldierTypes:
       - STR_ADEPTAS_CALLIDUS
@@ -89,6 +90,42 @@ soldierTransformation:
       - STR_EVERSOR_ASSASSIN
       - STR_CULEXUS_ASSASSIN
       - STR_VANUS_ASSASSIN
+
+  - name: STR_INTENSIVE_RECOVERY # for healing assassins with greater than 20 day wound time
+    requires:
+      - STR_ASSASSINORUM
+      - STR_APOC_BAY
+    cost: 100000
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+    requiresBaseFunc:
+      - APOC
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: false # only allow wounded soldiers.
+    allowsWoundedSoldiers: true
+    transferTime: 480 # 20 day fixed recovery time
+    recoveryTime: 1 # override any existing wound recovery, total time 21 days.
+    percentOverallStatChange: # temporarily lose some stats. Does not affect statcaps.
+      tu: -10
+      stamina: -10
+      health: -10
+      bravery: 0
+      reactions: -10
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 0
+      psiSkill: 0
+      melee: -10
+    allowedSoldierTypes: # temple assassins and Inquisitors
+      - STR_ADEPTAS_CALLIDUS
+      - STR_GUARD_IMPERIAL_ASSASSIN
+      - STR_EVERSOR_ASSASSIN
+      - STR_CULEXUS_ASSASSIN
+      - STR_VANUS_ASSASSIN
+      - STR_IMPERIAL_INQUISITOR
+      - STR_IMPERIAL_ASSASSINFEM
 
   - name: STR_GRANT_REFRACTOR_FIELD
     forbiddenPreviousTransformations:
@@ -113,7 +150,7 @@ soldierTransformation:
       - STR_VANUS_ASSASSIN
     soldierBonusType: STR_BONUS_REFRACTOR_FIELD
     requiredCommendations:
-      STR_TERMINATOR_CROSS: 0
+      STR_VETERAN_COMMENDATION: 1
 
 soldierBonuses:
   - name: STR_BONUS_REFRACTOR_FIELD

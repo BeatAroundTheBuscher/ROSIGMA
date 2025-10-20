@@ -2,9 +2,9 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 soldiers:
-  - type: STR_GUARD_ORK_BOY  # Blood Axe Ork Boy
+  - type: STR_GUARD_ORK_BOY  # Emprah's Greenest Ork Boy
     requires:
-      - STR_ORK_BOY_RECRUITMENT
+      - STR_GREENEST_ORKZ
     costBuy: 25000 #Make them cheaper? Less armor upgrades.
     costSalary: 5000 #Make them cheaper? Less armor upgrades.
     minStats:
@@ -37,7 +37,86 @@ soldiers:
       health: 90 #+10 vs beastmen, goes much higher with the Ork Veteran soldier
       bravery: 100 # -10 vs humans
       reactions: 80 # same as humans/Beastmen
-      firing: 90 # -10 vs humans.
+      firing: 80 # -20 vs humans.
+      throwing: 80 #+10 vs humans.
+      strength: 80 # Same as beastmen.
+      psiStrength: 100
+      psiSkill: 50
+      melee: 100 #+5 vs Beastmen, +15 vs humans.
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 30
+      firing: 70
+      throwing: 65
+      strength: 45
+      psiStrength: 100
+      psiSkill: 50
+      melee: 50
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_GUARD_ORK_FLAK_ARMOR #Upgrade option is the O2 heavy flak or carapace pre veteran
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 0 # gender 2 Cap torso sprite is already forced by the armor
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: true
+    rankSprite: 1130
+    rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1000}
+    rankStrings:
+      - STR_GUARD_ORK_BOY_RANK_0
+      - STR_GUARD_ORK_BOY_RANK_1
+      - STR_GUARD_ORK_BOY_RANK_2
+    soldierNames:
+      - delete
+      - Names/Orks.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 5 #very low score hit to losses
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 50
+
+  - type: STR_BLOOD_AXE_ORK_BOY  # Blood Axe Mercenary Ork Boy. Same as guard ork, different uniform
+    requires:
+      - STR_ORK_MERCENARIES
+    costBuy: 25000 #Make them cheaper? Less armor upgrades.
+    costSalary: 5000 #Make them cheaper? Less armor upgrades.
+    minStats:
+      tu: 45 #+5 TU vs humans, -5 vs Beastmen
+      stamina: 50 #same as beastmen
+      health: 30 #same as beastmen
+      bravery: 10 #-10, same as beastmen. Bigger spread of bravery than humans.
+      reactions: 30 #same as humans
+      firing: 30 #-10 vs humans, bigger spread.
+      throwing: 45 #+10 vs humans
+      strength: 25 #+15 vs humans, +5 vs beastmen
+      psiStrength: 0
+      psiSkill: 0 #devotion
+      melee: 45 #+25 vs humans, -10 vs beastmen. Bigger spread in stats, still very good at melee.
+    maxStats:
+      tu: 70 #+10 vs humans, -10 vs beastmen.
+      stamina: 80 #+10 vs humans
+      health: 70 #+10 vs beastmen, higher spread
+      bravery: 70 #same as beastmen, bigger spread than humans
+      reactions: 70 #+10 vs humans, bigger spread
+      firing: 60 #same as beastmen, -10 vs humans
+      throwing: 75 #+10 vs humans
+      strength: 60 #+10 vs Beastmen, bigger spread
+      psiStrength: 100
+      psiSkill: 6
+      melee: 70 #same as beastguard
+    statCaps:
+      tu: 100 #-10 vs beastmen
+      stamina: 110 #was 90
+      health: 90 #+10 vs beastmen, goes much higher with the Ork Veteran soldier
+      bravery: 100 # -10 vs humans
+      reactions: 80 # same as humans/Beastmen
+      firing: 80 # -20 vs humans.
       throwing: 80 #+10 vs humans.
       strength: 80 # Same as beastmen.
       psiStrength: 100
@@ -116,7 +195,7 @@ soldiers:
       health: 130  # +40
       bravery: 110  # +10
       reactions: 85  # +5
-      firing: 95  # +5
+      firing: 85  # +5
       throwing: 80
       strength: 105  # +25
       psiStrength: 100
@@ -146,6 +225,7 @@ soldiers:
     allowPromotion: true
     rankSprite: 1130
     rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1006}
     rankStrings:
       - STR_ARDBOY_RANK_0
       - STR_ARDBOY_RANK_1
@@ -153,7 +233,7 @@ soldiers:
       - STR_ARDBOY_RANK_3
     soldierNames:
       - delete
-      - Names/Orks.nam
+      - Names/Ork_Ardboys.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 10  # +5
@@ -196,7 +276,7 @@ soldiers:
       health: 170  # +40
       bravery: 110
       reactions: 95  # + 10
-      firing: 100  # +5
+      firing: 90  # +5
       throwing: 100  # +20
       strength: 140  # +40
       psiStrength: 100
@@ -227,6 +307,7 @@ soldiers:
     allowPromotion: true
     rankSprite: 1130
     rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1018}
     rankStrings:
       - STR_NOB_RANK_0
       - STR_NOB_RANK_1
@@ -235,7 +316,91 @@ soldiers:
       - STR_NOB_RANK_4
     soldierNames:
       - delete
-      - Names/Orks.nam
+      - Names/Ork_Nobs.nam
+    deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
+    value: 20
+    tags:
+      SOLDIER_WOUND_TIME_MULTIPLIER: 33
+
+  - type: STR_GUARD_OFFICORK  # Guard Ork Nob Officer
+    requires:
+      - STR_ORK_RESPECT
+    costSalary: 10000
+    # Stat comments relative to Blood Axe 'ardboy
+    minStats:
+      # Only relevant for if given via event/capture/etc
+      tu: 65  # +10
+      stamina: 65  # +10
+      health: 65  # +25
+      bravery: 80  # 20 higher bravery minimum than Nobs.
+      reactions: 45  # +10
+      firing: 50  # +15
+      throwing: 55  # +10
+      strength: 80  # +30, minimum for 'ardboy
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  #
+    maxStats:
+      tu: 75  # +5
+      stamina: 90  # +5
+      health: 100  # +20
+      bravery: 90  # +10
+      reactions: 80  # +5
+      firing: 70  # +5
+      throwing: 80  # +5
+      strength: 95  # +15
+      psiStrength: 100
+      psiSkill: 6
+      melee: 80  #
+    statCaps:
+      tu: 110  # +20
+      stamina: 140  # + 20
+      health: 170  # +40
+      bravery: 110
+      reactions: 95  # + 10
+      firing: 90  # +5
+      throwing: 100  # +20
+      strength: 140  # +40
+      psiStrength: 100
+      psiSkill: 100 # Officorks can be quite devoted to da Emprah
+      melee: 125  # +15
+    trainingStatCaps:
+      # Not much better except Strength/Health. Orks don't take well to regimented training.
+      tu: 70  # +5
+      stamina: 80  # +5
+      health: 75  # +30
+      firing: 80  # +5
+      throwing: 65
+      strength: 80  # +35
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70  # +10
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    armor: STR_OFFICORK_NOB_ARMOR
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 0
+    avatarOffsetX: 67
+    avatarOffsetY: 42
+    allowPromotion: true
+    rankSprite: 1130
+    rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1012}
+    rankStrings:
+      - STR_OFFICORK_RANK_0
+      - STR_OFFICORK_RANK_1
+      - STR_OFFICORK_RANK_2
+      - STR_OFFICORK_RANK_3
+      - STR_OFFICORK_RANK_4
+      - STR_OFFICORK_RANK_5
+    soldierNames:
+      - delete
+      - Names/Ork_Officers.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 20
@@ -278,7 +443,7 @@ soldiers:
       health: 170  # +40
       bravery: 110
       reactions: 95  # + 10
-      firing: 100  # +5
+      firing: 90  # +5
       throwing: 100  # +20
       strength: 140  # +40
       psiStrength: 100
@@ -309,13 +474,14 @@ soldiers:
     allowPromotion: true
     rankSprite: 1130
     rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1000}
     rankStrings:
       - STR_KILLA_RANK_0
       - STR_KILLA_RANK_1
       - STR_KILLA_RANK_2
     soldierNames:
       - delete
-      - Names/Orks.nam
+      - Names/Ork_Kans.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 20
@@ -373,7 +539,7 @@ soldiers:
       throwing: 65
       strength: 80  # +35
       psiStrength: 100
-      psiSkill: 50
+      psiSkill: 100
       melee: 70  # +10
     dogfightExperience:
       bravery: 10
@@ -383,11 +549,12 @@ soldiers:
     armor: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR
     standHeight: 22
     kneelHeight: 14
-    avatarOffsetX: 67
-    avatarOffsetY: 42
+    avatarOffsetX: 70 # 67
+    avatarOffsetY: 65 # 42
     allowPromotion: true
     rankSprite: 1130
     rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1012}
     rankStrings:
       - STR_WARBOSS_RANK_0
       - STR_WARBOSS_RANK_1
@@ -397,7 +564,7 @@ soldiers:
       - STR_WARBOSS_RANK_5
     soldierNames:
       - delete
-      - Names/Orks.nam
+      - Names/Orks.nam # can only be gained through promotion, so this doesn't matter
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 20
@@ -416,42 +583,45 @@ soldiers:
       health: 65  # +25
       bravery: 60  # +25
       reactions: 45  # +10
-      firing: 60  # +25
+      firing: 50  # +25
       throwing: 55  # +10
       strength: 70  # +30, minimum for 'ardboy
       psiStrength: 75
-      psiSkill: 30
-      melee: 55  #
+      psiSkill: 50
+      melee: 55
+      mana: 40
     maxStats:
       tu: 75  # +5
       stamina: 90  # +5
       health: 100  # +20
       bravery: 90  # +10
       reactions: 80  # +5
-      firing: 80  # +15
+      firing: 70  # +15
       throwing: 80  # +5
       strength: 85  # +15
       psiStrength: 100
-      psiSkill: 60
-      melee: 80  #
+      psiSkill: 70
+      melee: 80
+      mana: 60
     statCaps:
       tu: 110  # +20
       stamina: 140  # + 20
       health: 170  # +40
       bravery: 110
       reactions: 95  # + 10
-      firing: 110  # +15
+      firing: 85  # weirdboys are even less likely to shoot straight
       throwing: 100  # +20
       strength: 140  # +40
       psiStrength: 100
-      psiSkill: 100
+      psiSkill: 110
       melee: 115  # +15
+      mana: 100
     trainingStatCaps:
       # Not much better except Strength/Health. Orks don't take well to regimented training.
       tu: 70  # +5
       stamina: 80  # +5
       health: 75  # +30
-      firing: 80  # +5
+      firing: 75  # +5
       throwing: 65
       strength: 80  # +35
       psiStrength: 100
@@ -471,13 +641,14 @@ soldiers:
     allowPromotion: true
     rankSprite: 1130
     rankBattleSprite: 1130
+    rankTinySprite: {mod: 40k, index: 1006}
     rankStrings:
       - STR_WEIRDBOY_RANK_0
       - STR_WEIRDBOY_RANK_1
       - STR_WEIRDBOY_RANK_2
     soldierNames:
       - delete
-      - Names/Orks.nam
+      - Names/Ork_Weirdboys.nam
     deathMale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     deathFemale: [{mod: 40k, index: 882}, {mod: 40k, index: 883}, {mod: 40k, index: 884}, {mod: 40k, index: 885}, {mod: 40k, index: 886}]
     value: 20

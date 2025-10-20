@@ -50,7 +50,9 @@ armors:
       UNIT_TYPE_ORK: 1
 
 #Player Standard Ork Armors
-  - type: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR
+
+  - &ORK_FLAK
+    type: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR
     visibilityAtDay: 35  # abhuman beast malus
     visibilityAtDark: 20  # abhuman beast bonus
     antiCamouflageAtDay: 3
@@ -85,12 +87,15 @@ armors:
       stamina: 10
     loftempsSet: [3]
     units:
-      - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
     specialWeapon: AUX_CHOPPA
     tags:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
     scripts:
       returnFromMissionUnit:
 
@@ -114,6 +119,14 @@ armors:
         end;
 
         return;
+
+  - type: STR_GUARD_ORK_FLAK_ARMOR
+    refNode: *ORK_FLAK
+    ufopediaType: STR_BLOODAXE_CAPFLAK_PLAYER_ARMOR # probably separate them later
+    spriteInv: ORKYGUARD_INV.SPK # neater than the mercenary armor. Propah yoo-nii-farmz
+    customArmorPreviewIndex: 1286
+    units:
+      - STR_GUARD_ORK_BOY
 
   - &ORK_KARAPACE
     type: STR_BLOODAXE_KARAPACE_PLAYER_ARMOR
@@ -160,6 +173,8 @@ armors:
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
     scripts:
       returnFromMissionUnit:
 
@@ -207,9 +222,9 @@ armors:
     refNode: *ORK_KARAPACE
     # Ork Bad Moons Nobz O3 Armor
     spriteSheet: ORK_BLOODAXE_NOB_BS.PCK
-    spriteInv: O3BLOODAXES_NOB_PLAYER.SPK
-    forcedTorso: 2  # Player Torso
-    customArmorPreviewIndex: 1263
+    spriteInv: BLOODAXES_NOB.SPK
+    forcedTorso: 1  # helmet, not hat
+    customArmorPreviewIndex: 1287
     storeItem: STR_NONE
     corpseBattle:
       - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
@@ -222,7 +237,35 @@ armors:
     units:
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+
+  - type: STR_OFFICORK_NOB_ARMOR # same as nob armor for now
+    refNode: *ORK_KARAPACE
+    # Ork Bad Moons Nobz O3 Armor
+    spriteSheet: ORK_BLOODAXE_NOB_BS.PCK
+    spriteInv: O3BLOODAXES_NOB_PLAYER.SPK # has the hat, that means he is the boss.
+    forcedTorso: 2  # torso with the hat
+    customArmorPreviewIndex: 1263
+    storeItem: STR_NONE
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE  # Needs Unique
+    # Not much better than 'ardboy, main benefit of unit is stats
+    frontArmor: 95
+    sideArmor: 60
+    rearArmor: 50
+    underArmor: 60
+    loftempsSet: [4]
+    units:
+      - STR_GUARD_OFFICORK
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -244,14 +287,15 @@ armors:
     storeItem: STR_MEGANOB_ARMOR
     units:
       - STR_GUARD_ORK_NOB
-    specialWeapon: AUX_CHOPPA
+      - STR_GUARD_OFFICORK
+    specialWeapon: STR_MFIST # fist instead of choppa. Power/terminator armor
     stats:
       tu: 10
       stamina: 30
       health: 10
       bravery: 20  # always multiples of 10
       reactions: 10
-      firing: 15
+      firing: 5 # was 15
       throwing: 10
       strength: 30
       psiStrength: 0
@@ -276,7 +320,9 @@ armors:
       - 1.1  # MELTA
     loftempsSet: [5]
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 200 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -304,13 +350,18 @@ armors:
 
         return;
 
-  - type: STR_BLOODAXE_MEGANOB_PLAYER_ARMED
+  - type: STR_ASSAULT_MEGA_ARMOR # meganob armor with built in weapons
     refNode: *ORK_MEGANOB
-    ufopediaType: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
     spriteSheet: BLOODAXE_ARMED_MEGANOB_BS.PCK
     spriteInv: O6BLOODAXEARMEDMEGANOBINV.SPK
+    customArmorPreviewIndex: [1266, 1267]
     drawingRoutine: 4
     allowsKneeling: false
+    storeItem: STR_ASSAULT_MEGANOB_ARMOR
+    frontArmor: 155 # 15 better front/side
+    sideArmor: 125
+    rearArmor: 80 # 10 worse rear
+    underArmor: 110
     builtInWeapons:
       - STR_TWIN_SHOOTAS
       - STR_POWER_KLAW2
@@ -321,9 +372,13 @@ armors:
     heatVision: 30  # antismoke vision, tech based
     spriteSheet: ORKWARBOSS.PCK
     spriteInv: WarbossINV.SPK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: [1268, 1269]
     moveSound: {mod: 40k, index: 700}
     storeItem: STR_NONE
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: false
+    fearImmune: false
     units:
       - STR_GUARD_ORK_WARBOSS
     stats:
@@ -346,7 +401,7 @@ armors:
     frontArmor: 170
     sideArmor: 150
     rearArmor: 120
-    underArmor: 120
+    underArmor: 200 # was 120. increased because it is 2x2
     drawingRoutine: 5
     standHeight: 20
     kneelHeight: 15
@@ -371,10 +426,11 @@ armors:
     allowsRunning: true # sprintin Warboss
     allowsKneeling: false
     tags:
-      ARMOR_OVERWATCH_TU_RESTORED: 100
+      ARMOR_OVERWATCH_TU_RESTORED: 50
       INTIMIDATION_RESISTANCE: 50
       INFECTION_RESIST: 75  # offsets being 4x hit
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -385,14 +441,15 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20
-    spriteSheet: ORKMekboyz.PCK  # placeholder
-    spriteInv: MEKBOYINV.SPK  # placeholder
-    customArmorPreviewIndex: 1261 # Placeholder
+    spriteSheet: ORKMekboyz.PCK
+    spriteInv: MEKBOYINV.SPK
+    customArmorPreviewIndex: 1299
     forcedTorso: 1
     storeItem: STR_MEKBOY_ARMOR
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     corpseBattle:
       - STR_PLAYER_ORKMEKBOY_CORPSE
     frontArmor: 75
@@ -431,7 +488,9 @@ armors:
     specialWeapon: AUX_PROBE
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -441,7 +500,7 @@ armors:
     visibilityAtDark: 20
     heatVision: 20  # tech
     spriteSheet: ORKDR5.PCK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: [1316, 1317, 1318]
     moveSound: {mod: 40k, index: 700}
     bleedImmune: true
     zombiImmune: true
@@ -507,6 +566,7 @@ armors:
     tags:
       INFECTION_RESIST: 100  # infection immune
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -557,10 +617,14 @@ armors:
     storeItem: STR_STORMBOY_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -595,7 +659,7 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 20
     spriteSheet: ORKBIKE.PCK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: [1310, 1311, 1312]
     allowInv: true  # false?
     bleedImmune: true
     zombiImmune: true
@@ -620,10 +684,10 @@ armors:
       - PLAYER_ORKBIKE_CORPSE2
       - PLAYER_ORKBIKE_CORPSE3
       - PLAYER_ORKBIKE_CORPSE4
-    frontArmor: 100
-    sideArmor: 70
-    rearArmor: 70
-    underArmor: 70
+    frontArmor: 120
+    sideArmor: 100
+    rearArmor: 80
+    underArmor: 90
     size: 2
     moveSound: {mod: 40k, index: 14}
     damageModifier:  # VEHICLE ARMOR LARGE
@@ -644,13 +708,12 @@ armors:
     storeItem: STR_ORK_WARBIKE_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+    specialWeapon: AUX_RAM
     builtInWeapons:
-      - STR_ORK_KILLA_WEAPON  # Deffgunz
-      - AUX_RAM
-      - INV_NULL_3X3
-      - INV_NULL_4X2
+      - STR_DEFFKOPTER_SHOOTAS  # Deffgunz
       - INV_NULL_2X1_ORK_BIKE_RL
       - INV_NULL_2X1_ORK_BIKE_LL
     allowsRunning: true # vroom vroom
@@ -658,6 +721,7 @@ armors:
     tags:
       INFECTION_RESIST: 75  # offsets being 4x hit
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -668,8 +732,12 @@ armors:
     heatVision: 30  # antismoke vision, ork scou vision
     spriteSheet: ORKDEFFKOPTER.PCK  # add
     spriteInv: DeffkopterINV.SPK  # add
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: [1313, 1314, 1315]
     instantWoundRecovery: true
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: true
+    fearImmune: false
     movementType: 1
     standHeight: 20
     kneelHeight: 15
@@ -691,10 +759,10 @@ armors:
       - PLAYER_ORKDEFFKOPTER_CORPSE2
       - PLAYER_ORKDEFFKOPTER_CORPSE3
       - PLAYER_ORKDEFFKOPTER_CORPSE4
-    frontArmor: 60
-    sideArmor: 50
-    rearArmor: 30
-    underArmor: 50
+    frontArmor: 90 # AI is 60
+    sideArmor: 70 # 50
+    rearArmor: 50 # 30
+    underArmor: 60 # 50
     drawingRoutine: 21
     size: 2
     damageModifier:  # TERMINATOR ARMOR
@@ -717,13 +785,15 @@ armors:
       - STR_DEFFKOPTER_ROKKITPOD
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
-    allowsRunning: false  # NPC limits for BAI
+    allowsRunning: false
     allowsKneeling: false
     tags:
       INFECTION_RESIST: 100
       UNIT_SIZE: 200 # HUGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -738,7 +808,7 @@ armors:
     heatVision: 20  # tech
     spriteSheet: ORKtankhuntazbattlesprite.PCK
     spriteInv: ORKTankhuntaz.SPK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: 1294
     forcedTorso: 1
     corpseBattle:
       - STR_PLAYER_ORK_TANKBUSTAZ_CORPSE
@@ -781,11 +851,14 @@ armors:
     storeItem: STR_TANKBUSTA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 10
@@ -801,7 +874,7 @@ armors:
     heatVision: 30  # tech
     spriteSheet: ORKKOMMANDO_SNIPER.PCK  # Sniper Version
     spriteInv: KOMMANDOZ_SNIPER_INV.SPK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: 1298
     forcedTorso: 1
     corpseBattle:
       - STR_PLAYER_ORKKOMMANDO_CORPSE
@@ -843,12 +916,15 @@ armors:
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     meleeDodge:
       reactions: 0.2
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       ARMOR_OVERWATCH_TU_RESTORED: 50
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
@@ -890,7 +966,7 @@ armors:
     heatVision: 30  # antismoke vision, psyker based
     spriteSheet: ORKWYRDBOY.PCK
     spriteInv: ORKWYRDBOYINV.SPK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: 1306
     forcedTorso: 1
     corpseBattle:
       - STR_PLAYER_ORKWEIRDBOY_CORPSE
@@ -917,18 +993,24 @@ armors:
       - 1.0  # MELTA
     loftempsSet: [3]
     storeItem: STR_NONE
+    recovery:
+      mana:
+        mana: 0.4 # 40% of max recovered per turn
     builtInWeapons:
-      - STR_WYRDBOY_STIKK
+      - STR_PLAYER_WYRDBOY_STIKK
+      - STR_WYRDBOY_STIKK_ZZAP_CHARGE
       - STR_WYRDBOY_STIKK_EADBANGER_CHARGE
       - STR_WYRDBOY_STIKK_DA_KRUNCH_CHARGE
     units:
       - STR_GUARD_ORK_WEIRDBOY
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
       ARMOR_ENERGY_SHIELD_DECAY: 13
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
       UNIT_TYPE_PSYKER: 1
@@ -943,7 +1025,7 @@ armors:
     heatVision: 20  # tech
     spriteSheet: ORKFlashgitz.PCK
     spriteInv: FlashgitzINV.SPK
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: 1303
     forcedTorso: 1
     corpseBattle:
       - STR_PLAYER_FLASHGITZ_CORPSE
@@ -985,8 +1067,10 @@ armors:
     units:
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
     allowsRunning: true
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
@@ -998,7 +1082,7 @@ armors:
     heatVision: 10  # tech
     spriteSheet: Burnaboyz.PCK
     spriteInv: ORKBURNABOYZINV
-    customArmorPreviewIndex: 1261 # Placeholder
+    customArmorPreviewIndex: 1301
     forcedTorso: 1
     corpseBattle:
       - STR_PLAYER_ORKBURNABOY_CORPSE
@@ -1039,10 +1123,13 @@ armors:
     storeItem: STR_BURNA_ARMOR
     units:
       - STR_GUARD_ORK_BOY
+      - STR_BLOOD_AXE_ORK_BOY
       - STR_GUARD_ORK_ARDBOY
       - STR_GUARD_ORK_NOB
     tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1

@@ -5,7 +5,6 @@ missionScripts:
         STR_CIVILIAN_TERROR: 70
         STR_CIVILIAN_TERROR_GSC: 30
     researchTriggers:
-      STR_CHAMBERMILITANT: false
       STR_STEEL_LEGION_STRATEGY: false
       STR_ALIENS_ONLY: false
       STR_ARBITES: false
@@ -120,7 +119,6 @@ missionScripts:
         STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 10
         STR_CIVILIAN_TERROR_GSC: 25
     researchTriggers:
-      STR_CHAMBERMILITANT: false  # GK shouldn't get Guardsmen from Terror missions
       STR_HARDER_MISSIONS: false
       STR_STEEL_LEGION_STRATEGY: false  # get their own ork tilted list
       STR_ALIENS_ONLY: false
@@ -142,7 +140,6 @@ missionScripts:
     researchTriggers:
       STR_ALIENS_ONLY: false
       STR_HARDER_MISSIONS: true
-      STR_CHAMBERMILITANT: false
       STR_ARBITES: false
       STR_STEEL_LEGION_STRATEGY: false
       STR_SPACEWOLVES_STRATEGY: false
@@ -258,67 +255,6 @@ missionScripts:
       0:
         STR_ORK_BASE_SPACEHULK_LEVEL3: 100
 
-# Special Ork Bases for Da Emprah's Greenest Strategy
-  - type: STR_MEK_KLAN_FOUND
-    missionWeights:
-      0:
-        STR_MEK_KLAN_BASE_FOUND: 100
-    useTable: false
-    firstMonth: 0
-    executionOdds: 100
-    maxRuns: 1
-    varName: mekklanbase # maxruns 1 need a varname to avoid crash
-    researchTriggers:
-      STR_GREENEST_ORKZ: true
-
-  - type: STR_SPEED_KULT_FOUND
-    missionWeights:
-      0:
-        STR_SPEED_KULT_BASE_FOUND: 100
-    useTable: false
-    firstMonth: 0
-    executionOdds: 100
-    maxRuns: 1
-    varName: speedkultbase # maxruns 1 need a varname to avoid crash
-    researchTriggers:
-      STR_GREENEST_ORKZ: true
-
-  - type: STR_SPOOKUM_KAMP_FOUND
-    missionWeights:
-      0:
-        STR_SPOOKUM_KAMP_BASE_FOUND: 100
-    useTable: false
-    firstMonth: 0
-    executionOdds: 100
-    maxRuns: 1
-    varName: spookumkampbase # maxruns 1 need a varname to avoid crash
-    researchTriggers:
-      STR_GREENEST_ORKZ: true
-
-  - type: STR_DAKKA_GITZ_FOUND
-    missionWeights:
-      0:
-        STR_DAKKA_GITZ_BASE_FOUND: 100
-    useTable: false
-    firstMonth: 0
-    executionOdds: 100
-    maxRuns: 1
-    varName: dakkagitzbase # maxruns 1 need a varname to avoid crash
-    researchTriggers:
-      STR_GREENEST_ORKZ: true
-
-  - type: STR_PDF_DEPOT_FOUND
-    missionWeights:
-      0:
-        STR_PDF_DEPOT_FOUND: 100
-    useTable: false
-    firstMonth: 0
-    executionOdds: 100
-    maxRuns: 1
-    varName: pdfdepotbase # maxruns 1 need a varname to avoid crash
-    researchTriggers:
-      STR_GREENEST_ORKZ: true
-
   - &EARTHQUAKE_NECRON_BASE
     type: EARTHQUAKE_NECRON_BASE_1
     missionWeights:
@@ -411,7 +347,7 @@ missionScripts:
       STR_CHAOS_PATH: false
       STR_NOT_CHAOSCULT: true
 
-  - type: MMElse  # SM, CSM, IG, GK
+  - type: MMElse  # SM, CSM, IG
     refNode: *STR_MONTHLY_MISSIONS
     missionWeights:
       # 0 is just for safety
@@ -435,6 +371,7 @@ missionScripts:
       STR_ADEPTAS: false
       STR_CHAOS_PATH: false
       STR_NOT_CHAOSCULT: true
+      STR_CHAMBERMILITANT: false #CMil uses MMEarlyGK
 
   - type: MMEarlyGK
     refNode: *STR_MONTHLY_MISSIONS
@@ -452,8 +389,8 @@ missionScripts:
         STR_SUPPORT_PDF_ASSAULT: 10  # PDF assaulting chaos base of cult or traitor guard
         STR_SUPPORT_MARINE_ASSAULT: 10  # Marines assaulting chaos base of traitor marines or raptors
         STR_SUPPORT_CATAMARINE_ASSAULT: 10  # Marines Cataphractii assaulting chaos base of traitor marines or raptors
-    firstMonth: 2  # was 0
-    lastMonth: 12
+    firstMonth: 1  # was 0
+#    lastMonth: 12
     researchTriggers:
       STR_CHAMBERMILITANT: true
       STR_NOT_CHAOSCULT: true
@@ -492,15 +429,16 @@ missionScripts:
   - type: MMAssassinorum # should be in addition to standard chamber militant missions. Will make adjustments as I go
     missionWeights:
       0:
-        STR_GUARD_OUTPOST_DEFENSE: 25 # defend outpost against traitor guard, traitor marines, raptors, cultists
-        STR_SUPPORT_PDF_ASSAULT: 35 # PDF assaulting chaos base of cult or traitor guard
-        STR_SUPPORT_MARINE_ASSAULT: 40 # Marines assaulting chaos base of traitor marines or raptors
+#        STR_GUARD_OUTPOST_DEFENSE: 25 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_PDF_ASSAULT: 30 # PDF assaulting chaos base of cult or traitor guard
+        STR_SUPPORT_MARINE_ASSAULT: 60 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_CATAMARINE_ASSAULT: 10  # Marines Cataphractii assaulting chaos base of traitor marines or raptors
     regionWeights:
       0:
         REGION_HULK_SITES: 100
     useTable: false
     firstMonth: 0
-    executionOdds: 75 # sometimes there won't be anything
+    executionOdds: 65 # sometimes there won't be anything
     startDelay: 10  # 10k = 7 days
     randomDelay: 40320
     researchTriggers:
@@ -510,15 +448,16 @@ missionScripts:
   - type: MMAssassinorum_MidTier # replaces early missions
     missionWeights:
       0:
-        STR_GUARD_OUTPOST_DEFENSE: 10 # defend outpost against traitor guard, traitor marines, raptors, cultists
-        STR_SUPPORT_PDF_ASSAULT: 25 # PDF assaulting chaos base of cult or traitor guard
+#        STR_GUARD_OUTPOST_DEFENSE: 10 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_PDF_ASSAULT: 20 # PDF assaulting chaos base of cult or traitor guard
         STR_SUPPORT_MARINE_ASSAULT: 65 # Marines assaulting chaos base of traitor marines or raptors
+        STR_SUPPORT_CATAMARINE_ASSAULT: 15  # Marines Cataphractii assaulting chaos base of traitor marines or raptors
     regionWeights:
       0:
         REGION_HULK_SITES: 100
     useTable: false
     firstMonth: 0
-    executionOdds: 60 # reduced chance because imposter bases can also be made.
+    executionOdds: 55 # reduced chance because imposter bases can also be made.
     startDelay: 10  # 10k = 7 days
     randomDelay: 40320
     researchTriggers:
@@ -553,7 +492,7 @@ missionScripts:
   - type: MMChaosCultPath
     missionWeights:
       0:
-        STR_CHAOSRESCUE_PDF_VALKYRIE: 1  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+        STR_CHAOSRESCUE_PDF_VALKYRIE: 10  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
       1:
         STR_CHAOSRESCUE_PDF_VALKYRIE: 20
         STR_SUPPORT_CHAOSGUARD_ASSAULT: 10
@@ -1338,42 +1277,6 @@ missionScripts:
     startDelay: 4320  # 3 days
     randomDelay: 4320  # additional random 0 to 3 days
 
-  # month 0 ganger base for adeptus terra
-
-  - type: Gangerbase1
-    missionWeights:
-      # 0 is just for safety
-      0:
-        STR_GANGERBASE: 100
-    regionWeights:
-      0:
-        REGION_HULK_SITES: 100
-    researchTriggers:
-      STR_ARBITES: true
-    varName: Gangerbase1
-    useTable: false
-    firstMonth: 0
-    maxRuns: 1
-    executionOdds: 100
-    startDelay: 2880  # not too much as it is the base creating itself
-
-  - type: Gangerbase1ARBITES
-    missionWeights:
-      # 0 is just for safety
-      0:
-        STR_GANGERBASEARBITES: 100
-    regionWeights:
-      0:
-        REGION_HULK_SITES: 100
-    researchTriggers:
-      STR_ARBITES: true
-    varName: Gangerbase1ARBITES
-    useTable: false
-    firstMonth: 0
-    maxRuns: 1
-    executionOdds: 100
-    startDelay: 2890  # not too much as it is the base creating itself
-
   # ported from 40k to get chaos versions
 
   - type: RepeatingFallthroughMissions
@@ -1918,19 +1821,375 @@ missionScripts:
     maxRuns: 1
     varName: finalMissionCCULT
 
-  # final mission space wolves
+  # chaos ambush line
 
-  - type: finalMissionSW #SpaceWolves
+  - type: rescuechaosinfiltrator
     missionWeights:
       0:
-        STR_FINAL_MISSION_MARINES: 100 #change once custom SW version is done
+        STR_CHAOSINFILTRATOR_MISSION: 100
     regionWeights:
       0:
-        REGION_FINAL_MISSION: 100
-    researchTriggers:
-      STR_CYDONIA_OR_BUST: true
-      STR_SPACEWOLVES_STRATEGY: true
-      STR_CHAPTER_PURITY: true
+        TANITH_MISSION0_SITES: 100
     useTable: false
-    maxRuns: 1
-    varName: finalMissionMarines #change once custom SW version is done
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_SPY_IMPERIALCOMS: true
+      STR_RESCUE_CHAOSINFILTRATORS_COMPLETE: false
+
+  - type: ambushspacemarines
+    missionWeights:
+      0:
+        STR_AMBUSHSPACEMARINES_MISSION: 100
+    regionWeights:
+      0:
+        TANITH_MISSION1_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_AMBUSH_SPACEMARINES: true
+      STR_AMBUSH_SPACEMARINES_COMPLETE: false
+
+  # word bearers
+
+  - type: WBRepeatingFallthroughMissions
+    missionWeights:
+      0:
+        STR_CHAOSGUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
+        STR_SUPPORT_CHAOSMARINE_ASSAULT: 33
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 4
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_WORDBEARERS_STRATEGY: true
+
+  - type: WBSecondRepeatingFallthroughMissions
+    missionWeights:
+      0:
+        STR_CHAOSGUARD_OUTPOST_DEFENSE: 33 # defend outpost against traitor guard, traitor marines, raptors, cultists
+        STR_SUPPORT_CHAOSGUARD_ASSAULT: 33
+        STR_SUPPORT_CHAOSMARINE_ASSAULT: 33
+    regionWeights:
+      0:
+        STR_NORTH_AMERICA: 18
+        STR_ARCTIC: 4
+        STR_ANTARCTICA: 4
+        STR_SOUTH_AMERICA: 10
+        STR_EUROPE: 16
+        STR_NORTH_AFRICA: 12
+        STR_SOUTHERN_AFRICA: 8
+        STR_CENTRAL_ASIA: 12
+        STR_SOUTH_EAST_ASIA: 15
+        STR_SIBERIA: 10
+        STR_AUSTRALASIA: 10
+    useTable: false
+    firstMonth: 11
+    executionOdds: 50
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
+      STR_WORDBEARERS_STRATEGY: true
+
+  # chaos cult ai imperial bases replace ai chaos bases
+
+  - &STR_NORMAL_CHAOSMISSION_TABLEWB
+    type: warpStormWB
+    firstMonth: 1
+    missionWeights:
+      0:  # equal distribution for now
+        STR_ALIEN_RESEARCH: 15
+        STR_ALIEN_RESEARCH_TZEENTCH: 15
+        STR_NURGLE_RESEARCH: 10
+        STR_ALIEN_HARVEST: 15
+        STR_NURGLE_HARVEST: 15
+        STR_ALIEN_HARVEST_TZEENTCH: 10
+        STR_SLAANESH_HARVEST: 10
+        STR_ALIEN_ABDUCTION: 15
+        STR_NURGLE_ABDUCTION: 10
+        STR_ALIEN_ABDUCTION_TZEENTCH: 10
+        STR_SLAANESH_ABDUCTION: 10
+        STR_ALIEN_INFILTRATION: 5
+        STR_NURGLE_INFILTRATION: 5
+        STR_ALIEN_INFILTRATION_SLAANESH: 5
+        STR_ALIEN_INFILTRATION_TZEENTCH: 5
+        STR_IMPERIALGUARD_BASE: 60
+
+      3:  # equal distribution for now
+        STR_ALIEN_RESEARCH: 10
+        STR_ALIEN_RESEARCH_TZEENTCH: 10
+        STR_NURGLE_RESEARCH: 5
+        STR_ALIEN_HARVEST: 10
+        STR_NURGLE_HARVEST: 10
+        STR_ALIEN_HARVEST_TZEENTCH: 5
+        STR_SLAANESH_HARVEST: 5
+        STR_ALIEN_ABDUCTION: 10
+        STR_NURGLE_ABDUCTION: 5
+        STR_ALIEN_ABDUCTION_TZEENTCH: 5
+        STR_SLAANESH_ABDUCTION: 5
+        STR_ALIEN_INFILTRATION: 5
+        STR_NURGLE_INFILTRATION: 5
+        STR_ALIEN_INFILTRATION_SLAANESH: 5
+        STR_ALIEN_INFILTRATION_TZEENTCH: 5
+        STR_IMPERIALGUARD_BASE: 30
+        STR_ULTRAMARINE_BASE: 50
+        STR_BLACKTEMPLAR_BASE: 50
+        STR_SPACEWOLVES_BASE: 50
+        STR_CRIMSONFIST_BASE: 50
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+
+      7:  # equal distribution for now
+        STR_ALIEN_RESEARCH: 5
+        STR_ALIEN_RESEARCH_TZEENTCH: 5
+        STR_NURGLE_RESEARCH: 5
+        STR_ALIEN_HARVEST: 5
+        STR_NURGLE_HARVEST: 5
+        STR_ALIEN_HARVEST_TZEENTCH: 5
+        STR_SLAANESH_HARVEST: 5
+        STR_ALIEN_ABDUCTION: 5
+        STR_NURGLE_ABDUCTION: 5
+        STR_ALIEN_ABDUCTION_TZEENTCH: 5
+        STR_SLAANESH_ABDUCTION: 5
+        STR_ALIEN_INFILTRATION: 5
+        STR_NURGLE_INFILTRATION: 5
+        STR_ALIEN_INFILTRATION_SLAANESH: 5
+        STR_ALIEN_INFILTRATION_TZEENTCH: 5
+        STR_IMPERIALGUARD_BASE: 10
+        STR_ULTRAMARINE_BASE: 70
+        STR_BLACKTEMPLAR_BASE: 70
+        STR_SPACEWOLVES_BASE: 70
+        STR_CRIMSONFIST_BASE: 70
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+    researchTriggers:
+      STR_HARDER_MISSIONS: false
+      STR_WORDBEARERS_STRATEGY: true
+      STR_RITUAL_BETRAYAL: false
+
+  - type: warpStormBuildingCHAOSWB
+    refNode: *STR_NORMAL_CHAOSMISSION_TABLEWB
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+
+  - type: warpStormRagingCHAOSWB
+    refNode: *STR_NORMAL_CHAOSMISSION_TABLEWB
+    firstMonth: 6
+
+  - &STR_HARD_CHAOSMISSION_TABLEWB
+    type: warpStormHardCHAOSWB
+    missionWeights:
+      0:  # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 20
+        STR_NURGLE_RESEARCH_HARD: 20
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 20
+        STR_ALIEN_HARVEST_HARD: 20
+        STR_NURGLE_HARVEST_HARD: 20
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 20
+        STR_SLAANESH_HARVEST_HARD: 15  # rare
+        STR_ALIEN_ABDUCTION_HARD: 20
+        STR_NURGLE_ABDUCTION_HARD: 15
+        STR_SLAANESH_ABDUCTION_HARD: 20
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 15
+        STR_ALIEN_INFILTRATION_HARD: 10
+        STR_NURGLE_INFILTRATION_HARD: 10
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 10
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 10
+        STR_IMPERIALGUARD_BASE: 40
+        STR_ULTRAMARINE_BASEV2: 40
+        STR_BLACKTEMPLAR_BASEV2: 40
+        STR_SPACEWOLVES_BASEV2: 40
+        STR_CRIMSONFIST_BASEV2: 40
+
+      3:  # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 10
+        STR_NURGLE_RESEARCH_HARD: 10
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 10
+        STR_ALIEN_HARVEST_HARD: 10
+        STR_NURGLE_HARVEST_HARD: 10
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 10
+        STR_SLAANESH_HARVEST_HARD: 10  # rare
+        STR_ALIEN_ABDUCTION_HARD: 10
+        STR_NURGLE_ABDUCTION_HARD: 10
+        STR_SLAANESH_ABDUCTION_HARD: 10
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 10
+        STR_ALIEN_INFILTRATION_HARD: 5
+        STR_NURGLE_INFILTRATION_HARD: 5
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 5
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 5
+        STR_IMPERIALGUARD_BASE: 20
+        STR_ULTRAMARINE_BASEV2: 50
+        STR_BLACKTEMPLAR_BASEV2: 50
+        STR_SPACEWOLVES_BASEV2: 50
+        STR_CRIMSONFIST_BASEV2: 50
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+
+      6:  # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 5
+        STR_NURGLE_RESEARCH_HARD: 5
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 5
+        STR_ALIEN_HARVEST_HARD: 5
+        STR_NURGLE_HARVEST_HARD: 5
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 5
+        STR_SLAANESH_HARVEST_HARD: 5  # rare
+        STR_ALIEN_ABDUCTION_HARD: 5
+        STR_NURGLE_ABDUCTION_HARD: 5
+        STR_SLAANESH_ABDUCTION_HARD: 5
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 5
+        STR_ALIEN_INFILTRATION_HARD: 5
+        STR_NURGLE_INFILTRATION_HARD: 5
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 5
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 5
+        STR_IMPERIALGUARD_BASE: 5
+        STR_ULTRAMARINE_BASEV2: 70
+        STR_BLACKTEMPLAR_BASEV2: 70
+        STR_SPACEWOLVES_BASEV2: 70
+        STR_CRIMSONFIST_BASEV2: 70
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+    firstMonth: 1
+    useTable: true
+    researchTriggers:
+      STR_HARDER_MISSIONS: true
+      STR_WORDBEARERS_STRATEGY: true
+      STR_RITUAL_BETRAYAL: false
+
+  - type: warpStormBuildingHardCHAOSWB
+    refNode: *STR_HARD_CHAOSMISSION_TABLEWB
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+    useTable: true
+
+  - type: warpStormRagingHardCHAOSWB
+    refNode: *STR_HARD_CHAOSMISSION_TABLEWB
+    firstMonth: 6
+    useTable: true
+
+  - &STR_WBETRAYALHARD_MISSION_TABLE
+    type: warpStormHardWBbetray
+    missionWeights:
+      0:  # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 33
+        STR_NURGLE_RESEARCH_HARD: 11
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 20
+        STR_ALIEN_HARVEST_HARD: 33
+        STR_NURGLE_HARVEST_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 8 # rare
+        STR_SLAANESH_HARVEST_HARD: 8 # rare
+        STR_ALIEN_ABDUCTION_HARD: 33
+        STR_NURGLE_ABDUCTION_HARD: 12
+        STR_SLAANESH_ABDUCTION_HARD: 20
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 8
+        STR_ALIEN_INFILTRATION_HARD: 33
+        STR_NURGLE_INFILTRATION_HARD: 11
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 11
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 11
+        STR_ALIEN_BASE: 33
+        STR_NURGLE_BASE: 11
+        STR_SLAANESH_BASE: 11
+        STR_TZEENTCH_BASE: 11
+        STR_ULTRAMARINE_BASEV2: 30
+        STR_BLACKTEMPLAR_BASEV2: 30
+        STR_SPACEWOLVES_BASEV2: 30
+        STR_CRIMSONFIST_BASEV2: 30
+      2:  # equal distribution for now
+        STR_ALIEN_RESEARCH_HARD: 33
+        STR_NURGLE_RESEARCH_HARD: 11
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 20
+        STR_ALIEN_HARVEST_HARD: 33
+        STR_NURGLE_HARVEST_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 8 # rare
+        STR_SLAANESH_HARVEST_HARD: 8 # rare
+        STR_ALIEN_ABDUCTION_HARD: 33
+        STR_NURGLE_ABDUCTION_HARD: 12
+        STR_SLAANESH_ABDUCTION_HARD: 20
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 8
+        STR_ALIEN_INFILTRATION_HARD: 33
+        STR_NURGLE_INFILTRATION_HARD: 11
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 11
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 11
+        STR_ALIEN_BASE: 33
+        STR_NURGLE_BASE: 11
+        STR_SLAANESH_BASE: 11
+        STR_TZEENTCH_BASE: 11
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+        STR_ULTRAMARINE_BASEV2: 50
+        STR_BLACKTEMPLAR_BASEV2: 50
+        STR_SPACEWOLVES_BASEV2: 50
+        STR_CRIMSONFIST_BASEV2: 50
+    firstMonth: 0
+    useTable: true
+    researchTriggers:
+      STR_HARDER_MISSIONS: true
+      STR_WORDBEARERS_STRATEGY: true
+      STR_RITUAL_BETRAYAL: true
+
+  - type: warpStormBuildingHardWBbetray
+    refNode: *STR_WBETRAYALHARD_MISSION_TABLE
+    firstMonth: 2
+    lastMonth: 4
+    executionOdds: 50
+    useTable: true
+
+  - type: warpStormRagingHardWBbetray
+    refNode: *STR_WBETRAYALHARD_MISSION_TABLE
+    firstMonth: 5
+    useTable: true
+
+  - type: MMWBPath
+    missionWeights:
+      0:
+        STR_WBRESCUE_PDF_VALKYRIE: 10  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+      1:
+        STR_WBRESCUE_PDF_VALKYRIE: 20
+        STR_SUPPORT_KHORNECHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_NURGLECHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_TZEENTCHCHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_SLAANESHCHAOSMARINE_ASSAULT: 5
+      3:
+        STR_WBRESCUE_PDF_VALKYRIE: 10
+        STR_ELDAR_ARTIFACT: 5
+        STR_SUPPORT_KHORNECHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_NURGLECHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_TZEENTCHCHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_SLAANESHCHAOSMARINE_ASSAULT: 15
+      7:
+        STR_WBRESCUE_PDF_VALKYRIE: 5
+        STR_ELDAR_ARTIFACT: 10
+        STR_SUPPORT_KHORNECHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_NURGLECHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_TZEENTCHCHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_SLAANESHCHAOSMARINE_ASSAULT: 25
+        STR_ALIEN_ARTIFACT: 10
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    # varName: hulk
+    useTable: false
+    firstMonth: 0
+    executionOdds: 70
+    startDelay: 15000  # 10k = 7 days
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_RITUAL_FAVOURS: true

@@ -1,4 +1,6 @@
 extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
   tags:
     # intimidation script tags
     RuleItem:
@@ -18,6 +20,7 @@ extended:
           var int temp;
           var int temp2;
           var int isSermon;
+          var int intimidateResistPenalty;
           var int intimidateDamage;
           var int moraleMultiplier; # percent of damage the triggering attack inflicts
           var int infectionDamage;
@@ -70,7 +73,27 @@ extended:
           end;
           sub intimidateDamage temp2; # subtract target Bravery from our power
           # debug_log "Intimidation Scripts; damageUnit, offset 24: target Bravery:" temp2;
-          if le intimidateDamage 0; # if our net power is null or negative, abort.
+          # Culexus Horror Storm enhancement START
+          attacker.getTag temp Tag.UNIT_CULEXUS_HORROR_STORM_ACTIVE;
+          if gt temp 0;
+            add intimidateDamage temp;
+            # debug_log "Intimidation Scripts; damageUnit, offset 24: Horror storm empowered!";
+            battle_game.flashMessage "STR_SCRIPT_HORROR_STORM_EMPOWERED";
+            armorRule.getTag temp2 Tag.UNIT_TYPE_DAEMONIC; # If we're daemonic or psyker, our Intimidation Resistance is lowered by the amount it's empowered by; half otherwise
+            armorRule.getTag infectionDamage Tag.UNIT_TYPE_PSYKER;
+            if or gt temp2 0 gt infectionDamage 0;
+              add intimidateResistPenalty temp;
+            else;
+              armorRule.getTag temp2 Tag.UNIT_TYPE_MECHANICAL; # If we're mechanical and non-living we're unaffected
+              armorRule.getTag infectionDamage Tag.UNIT_TYPE_LIVING;
+              if or lt temp2 1 gt infectionDamage 0;
+                div temp 2;
+                add intimidateResistPenalty temp;
+              end;
+            end;
+          end;
+          # Culexus Horror Storm enhancement END
+          if lt intimidateDamage 1; # if our net power is null or negative, abort.
             # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Null or negative morale damage:" temp;
             return;
           end;
@@ -79,6 +102,8 @@ extended:
           unit.getRuleArmor armorRule;
           if lt isSermon 1;
             armorRule.getTag intimidateResist Tag.INTIMIDATION_RESISTANCE; # if our intimidate resist is 100% and applies to all infection types we're immune; abort
+            sub intimidateResist intimidateResistPenalty;
+            limit_lower intimidateResist 0; # can't go below 0 intimidate resistance
             if ge intimidateResist 100; # Abort if the target has immunity
               # debug_log "Intimidation Scripts; damageUnit, offset 24: Aborting. Unit is immune to intimidate:" intimidateResist;
               return;

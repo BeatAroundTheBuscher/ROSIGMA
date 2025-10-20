@@ -3,6 +3,150 @@ extended:
 
 armors:
 
+  - &STR_ADEPTAS_ARMORI_UC
+    type: STR_ADEPTAS_ARMORI_UC    # Inquisitor (used in Chamber Militant and Adeptas)
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    antiCamouflageAtDay: 12
+    antiCamouflageAtDark: 15
+    specialWeapon: AUX_ADEPTAS_PROBE
+    spriteSheet: XCOM_44.PCK
+    spriteInv: MAN_44
+    customArmorPreviewIndex: 66
+    spriteFaceGroup: 6
+    spriteFaceColor: [96, 96, 96, 96, 160, 160, 163, 163, 96, 96, 96, 96, 96, 96]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    spriteHairGroup: 9
+    spriteHairColor: [144, 144, 164, 164, 245, 245, 166, 166, 245, 32, 224, 224, 224, 224]  # M0 F0 M1 F1 M2 F2 M3 F3 M4 F4 M5 F5 M6 F6
+    corpseBattle:
+      - STR_ADEPTASI_CORPSE
+    storeItem: STR_ADEPTAS_ARMORI
+    stats:
+      tu: 20
+      stamina: 25
+      health: 25
+      bravery: 30  # always multiples of 10
+      reactions: 15
+      firing: 15
+      throwing: 15
+      strength: 30
+      psiStrength: 50
+      psiSkill: 30
+      melee: 30
+    frontArmor: 145
+    sideArmor: 135
+    rearArmor: 130
+    underArmor: 135
+    damageModifier:  # MARINE ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 0.2  # FLAMES
+      - 0.6  # HE
+      - 0.7  # LASCANON
+      - 0.8  # PLASMA
+      - 0.7  # STUN
+      - 0.8  # MELEE
+      - 0.7  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 0.9  # MELTA
+    units:
+      - STR_CANONESS
+      - STR_ADEPTAS_SUPERIOR
+      - STR_ADEPTAS_REPENTIA_SUPERIOR
+      - STR_ADEPTAS_NOVITIATE_SUPERIOR
+      - STR_IMPERIAL_INQUISITOR
+    builtInWeapons:
+      - INV_NULL_3X1_BACKPACK
+    loftempsSet: [3]
+    tags:
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: STR_INQ_INQUISITOR_ARMOR_BIOMANCER
+    refNode: *STR_ADEPTAS_ARMORI_UC
+    requires: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    stats: # biomancers can manipulate their biology to become much hardier and more durable
+      stamina: 35  # Base +10
+      health: 35  # Base +10
+      strength: 40  # Base +10
+    specialWeapon: STR_MEND_WOUNDS_SPELL
+    builtInWeapons:
+      - STR_BIOMANCER_STAFF
+    tags:
+      ARMOR_REGENERATES_HEALTH: 1
+      ARMOR_REGENERATES_WOUNDS: 1
+      ARMOR_HEALTH_REGENERATE_DYNAMIC_MAX: 50
+      ARMOR_PSI_REGENERATE_DIVISOR: 1000
+      ARMOR_WOUND_TIME_MULTIPLIER: 10
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_PSYKER: 1
+
+  - type: STR_INQ_INQUISITOR_ARMOR_DIVINER
+    refNode: *STR_ADEPTAS_ARMORI_UC
+    requires: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    visibilityAtDark: 40
+    antiCamouflageAtDay: 25
+    antiCamouflageAtDark: 25
+    psiVision: 10
+    stats:  # diviners can utilize their gifts to anticipate enemy actions and movements, allowing for superior accuracy and reactions
+      firing: 25  # Base +10
+      reactions: 25  # Base +10
+      melee: 40  # Base +10
+    specialWeapon: STR_PSYKER_SPELL
+    tags:
+      DODGE_CHANCE: 100  # perfect dodge chance but we only get one
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_PSYKER: 1
+
+  - type: STR_INQ_INQUISITOR_ARMOR_PYROMANCER
+    refNode: *STR_ADEPTAS_ARMORI_UC
+    requires: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    builtInWeapons:
+      - STR_PYROMANCER_STAFF
+      - STR_PSYKER_FLAME_STRIKE
+      - STR_DOUSE_FLAMES
+    recovery:  # Pyromancers recover energy faster (hot-blooded!)
+      energy:
+        energyRegen: 1.0
+        psiSkill: 0.2
+
+  - type: STR_INQ_INQUISITOR_ARMOR_TELEKINE
+    refNode: *STR_ADEPTAS_ARMORI_UC
+    requires: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    specialWeapon: STR_PSYKER_SPELL
+    builtInWeapons:
+      - STR_TELEKINE_STAFF
+      - STR_PSYKER_STUN_STRIKE
+      - STR_TELEKINETIC_SHIELD
+
+  - type: STR_INQ_INQUISITOR_ARMOR_TELEPATH
+    refNode: *STR_ADEPTAS_ARMORI_UC
+    requires: STR_INQ_PSYCHIC_SANCTION_RESEARCH
+    antiCamouflageAtDay: 15
+    antiCamouflageAtDark: 15
+    psiVision: 5
+    stats:  # not as talented as diviners, but the ESP of telepaths affords significant advantages to effective accuracy and reflexes
+      firing: 20  # Base +5
+      reactions: 20  # Base +5
+      melee: 35  # Base +5
+    # specialWeapon: STR_MIND_READ  # This is currently just a worse Inquisitor Analyzor.
+    builtInWeapons:
+      - STR_TELEPATH_STAFF
+    tags:
+      DODGE_CHANCE: 50  # telepath can 'read' the thoughts of enemies, giving it some preternatural dodging capabilities
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_GAINS_PSISKILL_SECONDARY_EXPERIENCE: 6
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_PSYKER: 1
+
+
   - &STR_INQ_ARMOR_CARAPACE_STORMTROOPER  # DAMAGE + STATS
     type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR
     visibilityAtDay: 40
@@ -100,6 +244,7 @@ armors:
   - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_FLAMER
     refNode: *STR_INQ_ARMOR_CARAPACE_STORMTROOPER
     storeItem: STR_NONE
+    requires: STR_INQ_ST_ARMOR_FLAMER_UNLOCKER
     damageModifier:  # Better insulated against fire/heat
       - 0.4  # FLAMES
       - 0.7  # LASCANNON
@@ -112,7 +257,7 @@ armors:
   - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_PLASMA
     refNode: *STR_INQ_ARMOR_CARAPACE_STORMTROOPER
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
+    requires: STR_INQ_ST_ARMOR_PLASMA_UNLOCKER
     builtInWeapons:
       - STR_INQ_PLASMA
       - INV_NULL_INQUISITION_BACKPACK  # needs a black version
@@ -120,7 +265,7 @@ armors:
   - type: STR_INQ_STORMTROOPER_CARAPACE_ARMOR_MULTIMELTA
     refNode: *STR_INQ_ARMOR_CARAPACE_STORMTROOPER
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_3_RESEARCH
+    requires: STR_INQ_ST_ARMOR_MULTIMELTA_UNLOCKER
     builtInWeapons:
       - STR_INQ_MULTIMELTA
       - INV_NULL_INQUISITION_BACKPACK  # needs a black version
@@ -134,7 +279,6 @@ armors:
     stats:
       firing: 20  # Improved firing accuracy; +10 over baseline
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
     specialWeapon: AUX_ADEPTAS_PROBE
     builtInWeapons:
       - STR_INQ_LONGLAS
@@ -154,7 +298,7 @@ armors:
       firing: -20  # Armor is more CQC focused
       melee: 10
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+    requires: STR_INQ_ST_ARMOR_JUMP_UNLOCKER
     builtInWeapons:
       - INV_NULL_3X3  # jumppack takes up backpack slot
     tags:
@@ -228,7 +372,7 @@ armors:
       - 1.0  # MELTA
     specialWeapon: STR_INQ_MEDI_KIT
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_1_RESEARCH
+    requires: STR_INQ_ST_ARMOR_MEDICAE_UNLOCKER
     builtInWeapons:
       - INV_NULL_MEDI_KIT
       - STR_INQ_HELLPISTOL
@@ -250,7 +394,7 @@ armors:
     drawingRoutine: 0
     customArmorPreviewIndex: 877  # 580
     storeItem: STR_NONE
-    requires: STR_INQ_STORMTROOPER_ARMOR_2_RESEARCH
+    requires: STR_INQ_ST_ARMOR_POWERARMOR_UNLOCKER
     corpseBattle:
       - STR_INQ_STORMTROOPER_CORPSE_GEO  # Inq Stormtrooper corpse
     frontArmor: 100  # +10 from heavier armor
@@ -292,17 +436,20 @@ armors:
 
   - type: STR_INQ_POWER_ARMOR_AUTOCANNON
     refNode: *STR_INQ_POWER_ARMOR_REF
+    requires: STR_INQ_ST_ARMOR_PA_AUTOCANNON_UNLOCKER
     builtInWeapons:
       - STR_INQ_AUTOCANNON  # Anti-armor heavy weapon. Outclassed by Dekker plasma gun, but available earlier + no overheating
       - STR_AUTOCANNON_CLIP  # First clip is free, workaround for SoB/Space Marines
 
   - type: STR_INQ_POWER_ARMOR_LASCANNON
     refNode: *STR_INQ_POWER_ARMOR_REF
+    requires: STR_INQ_ST_ARMOR_PA_LASCANNON_UNLOCKER
     builtInWeapons:
       - STR_INQ_LIGHT_LASCANNON  # Improved version of malthus. Infinite ammo, somewhat better accuracy, still not at all suited for CQC
       - INV_NULL_INQUISITION_BACKPACK
 
   - type: STR_INQ_POWER_ARMOR_BREACHER
+    requires: STR_INQ_ST_ARMOR_PA_BREACHER_UNLOCKER
     refNode: *STR_INQ_POWER_ARMOR_REF
     frontArmor: 110  # +20 from heavier armor + shield
     sideArmor: 100  # +20 from heavier armor + shield

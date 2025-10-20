@@ -76,7 +76,7 @@ armors:
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 20
 
   - type: STR_CALLIDUS_ASSASSIN_ARMOR
     refNode: *STR_CALLIDUS_ASSASSIN_UNARMED
@@ -103,6 +103,15 @@ armors:
       - INV_NULL_2X1_LL
       - STR_POWER_DAGGER_AND_DIGI_MELTA
       - STR_DIGI_MELTA_AMMO
+    tags:
+      ARMOR_IS_INFILTRATOR: 4  # 4 turns to infiltrate, disguised as enemy
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 3 # even faster than regular callidus infiltration
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      DODGE_CHANCE: 50
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 20
 
 # Vindicare
 
@@ -155,7 +164,7 @@ armors:
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 100 # can't be dodged
 
   - type: STR_GUARD_IMPERIAL_ASSASSIN_UC
     refNode: *STR_VINDICARE_ASSASSIN_UNARMED
@@ -163,7 +172,7 @@ armors:
     builtInWeapons:
     #  - STR_EXITUS_PISTOL # changed to standard item
       - STR_EXITUS_BUILTIN
-      - STR_EXITUS_BUILTIN_SPECIAL
+    #  - STR_EXITUS_BUILTIN_SPECIAL # putting special ammo back into the sniper itself
       - INV_NULL_3X1_BACKPACK
 
   - type: STR_VINDICARE_GUNSLINGER_ARMOR
@@ -175,6 +184,15 @@ armors:
     builtInWeapons:
       - INV_NULL_3X1_BACKPACK
       - STR_DOUBLE_EXITUS_PISTOL
+    tags:
+      ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 4 # quicker to infiltrate again
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_IMPERIUM: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
+      DODGE_CHANCE: 50
+      ARMOR_MAX_SUCCESSFUL_DODGES: 4
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 100 # can't be dodged
 
   - type: STR_VINDICARE_LANCER_ARMOR
     refNode: *STR_VINDICARE_ASSASSIN_UNARMED
@@ -249,8 +267,9 @@ armors:
         stamina: 0.33
     units:
       - STR_CULEXUS_ASSASSIN
-    specialWeapon: STR_ANIMUS_SPECULUM ####
+    specialWeapon: STR_CULEXUS_INTIMIDATION_TOKEN # hopefully able to react with intimidation
     builtInWeapons:
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
@@ -269,12 +288,13 @@ armors:
       INTIMIDATION_RESISTANCE: 75 # without space magic, many things aren't nearly as scary. Especially when the really scary stuff is scared of you.
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 10 # Are they really there?
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 0
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 20
 
   - type: STR_CULEXUS_WITCHKILLER_ARMOR
     refNode: *STR_CULEXUS_ASSASSIN_UNARMED
     ufopediaType: STR_CULEXUS_ASSASSIN_UNARMED
     builtInWeapons:
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - STR_WITCHKILLER_CLAWS
       - STR_WITCHKILLER_PISTOL
@@ -283,6 +303,7 @@ armors:
     refNode: *STR_CULEXUS_ASSASSIN_UNARMED
     ufopediaType: STR_CULEXUS_ASSASSIN_UNARMED
     builtInWeapons:
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_3X1_BACKPACK
       - STR_PURIFIER_FLAMER
 
@@ -294,6 +315,7 @@ armors:
     corpseBattle:
       - STR_CULEXUS_ASSASSIN_CORPSE_GEO
     builtInWeapons:
+      - STR_ANIMUS_SPECULUM # used as a skill now
       - INV_NULL_INQUISITION_BACKPACK
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
@@ -340,10 +362,14 @@ armors:
         flatHundred: 0.1 # frenzon every three turns
       energy:
         stamina: 0.33
+      stun:
+        flatHundred: 0.05 # 5 stun damage recovered per turn. Default is 1.
     units:
       - STR_EVERSOR_ASSASSIN
     specialWeapon: STR_FRENZON_AND_NEURO_GAUNTLET
     builtInWeapons:
+      - STR_EVERSOR_DEATH_BOMB_TOKEN # death bomb used with skills
+      - STR_EVERSOR_INTIMIDATION_TOKEN # enables Intimidation skill
       - INV_NULL_3X1_BACKPACK # grenade backpack
     meleeDodge:  # temple assassin
       reactions: 0.3
@@ -358,16 +384,19 @@ armors:
       DIEHARD_THRESHOLD: 80  # Big damage still kills
       ARMOR_REGENERATES_WOUNDS: 1 # autoinjected chems in Eversor include meds and coagulants.
       ARMOR_REGENERATES_HEALTH: 1
-      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: 80 # can't heal to full. Any damage (including Frenzon) will incur wound recover time.
+      ARMOR_HEALTH_REGENERATE_CEILING_PERCENT: 85 # can't heal to full. Any damage (including Frenzon) will incur wound recover time.
       ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 10 # sturdier Eversor heal more per turn
-      DODGE_CHANCE: 60
+      DODGE_CHANCE: 65
       ARMOR_MAX_SUCCESSFUL_DODGES: 6
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 5
+      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: 5
+      ARMOR_OVERWATCH_TU_RESTORED: 50
 
   - type: STR_EVERSOR_ASSASSIN_ARMOR
     refNode: *STR_EVERSOR_ASSASSIN_UNARMED
     ufopediaType: STR_EVERSOR_ASSASSIN_UNARMED
     builtInWeapons:
+      - STR_EVERSOR_DEATH_BOMB_TOKEN # death bomb used with skills
+      - STR_EVERSOR_INTIMIDATION_TOKEN # enables Intimidation skill
       - INV_NULL_3X1_BACKPACK # grenade backpack
       - STR_EVERSOR_PSWORD
       - STR_EXECUTIONER_PISTOL
@@ -376,6 +405,8 @@ armors:
     refNode: *STR_EVERSOR_ASSASSIN_UNARMED
     ufopediaType: STR_EVERSOR_ASSASSIN_UNARMED
     builtInWeapons:
+      - STR_EVERSOR_DEATH_BOMB_TOKEN # death bomb used with skills
+      - STR_EVERSOR_INTIMIDATION_TOKEN # enables Intimidation skill
       - INV_NULL_3X1_BACKPACK # grenade backpack
       - STR_EXTERMINATOR_SHOTGUN
 
@@ -418,6 +449,8 @@ armors:
     meleeDodge:  # temple assassin in power armor
       reactions: 0.25
     builtInWeapons:
+      - STR_EVERSOR_DEATH_BOMB_TOKEN # death bomb used with skills
+      - STR_EVERSOR_INTIMIDATION_TOKEN # enables Intimidation skill
       - INV_NULL_3X1_BACKPACK # grenade backpack
       - STR_EVERSOR_THAMMER
     tags:
@@ -435,7 +468,8 @@ armors:
       ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 10 # sturdier Eversor heal more per turn
       DODGE_CHANCE: 30
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: 5
+      ARMOR_OVERWATCH_TU_RESTORED: 40 # slightly less, slow reactions in power armor
 
   - type: STR_EVERSOR_DESTROYER_ARMOR
     refNode: *STR_EVERSOR_ASSASSIN_UNARMED
@@ -478,10 +512,14 @@ armors:
         flatHundred: 0.0 # No Frenzon
       energy:
         stamina: 0.45 # steady stream of stims instead of bursts
+      stun:
+        flatHundred: 0.10 # 10 stun damage recovered per turn
     meleeDodge:  # temple assassin in power armor
       reactions: 0.25
     specialWeapon: STR_JUMPPACK_AND_NEURO_GAUNTLET
     builtInWeapons:
+      - STR_EVERSOR_DEATH_BOMB_TOKEN # death bomb used with skills
+      - STR_EVERSOR_INTIMIDATION_TOKEN # enables Intimidation skill
       - INV_NULL_3X3
       - STR_EVERSOR_WARSCYTHE
     tags:
@@ -499,9 +537,10 @@ armors:
       ARMOR_HEALTH_REGENERATE_PERCENTAGE_AMOUNT_MAX_HP: 8 # Somewhat lower regeneration speed from constant stims
       DODGE_CHANCE: 40 # better dodge than power armor
       ARMOR_MAX_SUCCESSFUL_DODGES: 3
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 8
+      ARMOR_DODGE_CHANCE_DECLINE_PER_SUCCESS: 5
       MaxFlight: 1
       MaxCoolDown: 1
+      ARMOR_OVERWATCH_TU_RESTORED: 45
 
 # Vanus
 
@@ -543,7 +582,7 @@ armors:
     personalLight: 5
     recovery:
       mana:
-        mana: 0.5 # half of max recovered per turn
+        mana: 0.35 # was .5. now three turns for full
       energy:
         stamina: 0.33
     units:
@@ -552,20 +591,19 @@ armors:
     builtInWeapons:
       - STR_VANUS_DECOY_TOKEN
       - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SHIELD_PROJECTOR_TOKEN
       - STR_VANUS_SKULL_SPAWNER
-      - STR_VANUS_SKULL_SPAWNER2
-      - STR_VANUS_SKULL_SPAWNER3
     meleeDodge:  # temple assassin
       reactions: 0.3
     tags:
       ARMOR_IS_INFILTRATOR: 2  # 2 turns to infiltrate
-      ARMOR_RESTEALTH_KILL_REQUIREMENT: 6
+      ARMOR_RESTEALTH_KILL_REQUIREMENT: 8 # was 6, now has notably worse infiltration than other temple assassins
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_IMPERIUM: 1
       ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # cannot be traitor
       DODGE_CHANCE: 50
       ARMOR_MAX_SUCCESSFUL_DODGES: 4
-      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 10
+      ARMOR_DODGE_CHANCE_PERCENT_REDUCTION: 20
 
   - type: STR_VANUS_ASSASSIN_ARMOR
     refNode: *STR_VANUS_ASSASSIN_UNARMED
@@ -573,10 +611,20 @@ armors:
     builtInWeapons:
       - STR_VANUS_DECOY_TOKEN
       - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SHIELD_PROJECTOR_TOKEN
       - STR_VANUS_SKULL_SPAWNER
-      - STR_VANUS_SKULL_SPAWNER2
-      - STR_VANUS_SKULL_SPAWNER3
       - STR_VANUS_PULSE_CARBINE
+
+  - type: STR_VANUS_NETRUNNER_ARMOR
+    refNode: *STR_VANUS_ASSASSIN_UNARMED
+    ufopediaType: STR_VANUS_ASSASSIN_UNARMED
+    builtInWeapons:
+      - STR_VANUS_NETFLY_TOKEN
+      - STR_VANUS_NOISE_TOKEN
+      - STR_VANUS_SHIELD_PROJECTOR_TOKEN
+      - INV_NULL_INQUISITION_BACKPACK
+      - STR_VANUS_SHOCKGLOVE
+      - STR_VANUS_GRAVPISTOL
 
 # Reprisalia
 
@@ -639,3 +687,150 @@ armors:
       - INV_NULL_MEDI_KIT
       - INV_NULL_2X1_RL
       - INV_NULL_2X1_LL
+
+# Turret/Other
+
+  - type: STR_TELEPORTARIUM_GRENADE_TURRET_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    spriteSheet: TELEPORTARIUM_GRENADE_TURRET.PCK
+    antiCamouflageAtDay: 8
+    antiCamouflageAtDark: 8
+    heatVision: 20
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: false
+    painImmune: true
+    corpseGeo: STR_TAUROS_SMALL_TURRET_CORPSE
+    corpseBattle:
+      - STR_TAUROS_SMALL_TURRET_CORPSE
+    frontArmor: 100
+    sideArmor: 100
+    rearArmor: 100
+    underArmor: 100
+    specialWeapon: STR_TURRET_RELOAD
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 0.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [4]
+    drawingRoutine: 19
+    allowsKneeling: false
+    allowsRunning: false
+    allowsMoving: false
+    personalLight: 5
+    personalLightHostile: 5
+    personalLightNeutral: 5
+    recovery:
+      energy:
+        energyRegen: 0.0
+        flatHundred: 1.0
+      morale:
+        flatHundred: 0.5
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+
+  - type: DECAYING_TARGET_GUARDSMAN
+    spriteSheet: TARGET_GUARDSMAN.PCK
+    spriteInv: TARGET_GUARDSMAN
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_DISABLEMODULE
+    frontArmor: 10
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 10
+    size: 1
+    damageModifier: #TARGET ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 1.0 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 1.0 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.0 #MELTA
+    loftempsSet: [3]
+    drawingRoutine: 16
+    constantAnimation: true
+    movementType: 2
+    allowsMoving: false
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TURNS_UNTIL_DEATH: 6 # vanish after 2 turns
+
+  - type: STR_NETFLY_ARMOR
+    spriteSheet: NETFLY_SWARM.PCK
+    spriteInv: NEFTLYINV.SPK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_NETFLY_CORPSE
+    visibilityAtDay: 12 # very short range scanners
+    visibilityAtDark: 12
+    antiCamouflageAtDay: 20
+    antiCamouflageAtDark: 20
+    heatVision: 70 # hyper advanced scanners
+    psiVision: 3 # hyper advanced scanners
+    frontArmor: 5
+    sideArmor: 5
+    rearArmor: 5
+    underArmor: 5
+    psiDefence:
+      flatHundred: 1000
+    meleeDodge: # good luck hitting cybernetic flies with your sword.
+      flatHundred: 0.5
+    drawingRoutine: 16
+    constantAnimation: true
+    movementType: 1
+    damageModifier:
+      - 1.0 #none
+      - 0.3 #AP Bullets pass through without hitting many flies
+      - 1.0 #FLAMES
+      - 1.0 #HE
+      - 0.4 #LASCANON # high energy doesn't hit many, but can still fry them by getting close.
+      - 0.6 #PLASMA # high energy doesn't hit many, but can still fry them by getting close.
+      - 0.3 #STUN
+      - 0.4 #MELEE # maybe kill one fly at a time
+      - 0.4 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT # typically explosions. Hits all flies.
+      - 0.6 #MELTA
+    loftempsSet: [4]
+    specialWeapon: STR_NETFLY_SCANNER
+    personalLight: 5
+    personalLightHostile: 5
+    personalLightNeutral: 5
+    tags:
+      INFECTION_RESIST: 100  # infection immune
+      INTIMIDATION_RESISTANCE: 100  # intimidation immune
+      UNIT_TYPE_MECHANICAL: 1
+      UNIT_TYPE_IMPERIUM: 1
+      DODGE_CHANCE: 25 # some hits will pass right through
+      ARMOR_MAX_SUCCESSFUL_DODGES: 5
