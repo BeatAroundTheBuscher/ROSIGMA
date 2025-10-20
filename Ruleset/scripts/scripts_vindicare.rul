@@ -39,10 +39,15 @@ extended:
         offset: 2
         code: |
           var int temp;
+          var ptr RuleItem rItem;
 
-          if neq battle_action BA_AIMEDSHOT; #only works for aimed shots
-            # debug_log "ROSIGMA_hU_vindicare_killshot_bonus | Aborting. Not an aimed shot." battle_action;
-            return power part side;
+          if neq battle_action BA_AIMEDSHOT; #only works for aimed shots, and the exitus 'autoshot' fire selector
+            damaging_item.getRuleItem rItem;
+            rItem.getTag temp Tag.ITEM_IS_EXITUS_RIFLE;
+            if or neq battle_action BA_AUTOSHOT lt temp 1;
+              # debug_log "ROSIGMA_hU_vindicare_killshot_bonus | Aborting. Not an aimed shot, or autofire from Exitus Rifle." battle_action;
+              return power part side;
+            end;
           end;
 
           unit.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
@@ -63,6 +68,16 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var ptr RuleItem rItem;
+
+          if neq battle_action BA_AIMEDSHOT; #only works for aimed shots, and the exitus 'autoshot' fire selector
+            weapon.getRuleItem rItem;
+            rItem.getTag temp Tag.ITEM_IS_EXITUS_RIFLE;
+            if or neq battle_action BA_AUTOSHOT lt temp 1;
+              # debug_log "ROSIGMA_aMBS_vindicare_killshot_bonus | Aborting. Not an aimed shot, or autofire from Exitus Rifle." battle_action;
+              return bonus;
+            end;
+          end;
 
           unit.getTag temp Tag.UNIT_VINDICARE_KILLSHOT_ACTIVE;
           if lt temp 1;
