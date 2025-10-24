@@ -45,23 +45,23 @@ research:
   ### Enter via Adeptus Terra
   - name: STR_ARBITES
     unlocks: !add
-      - STR_GUEVESA_STRATEGY_PDF_GV
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
 
   - name: STR_THE_IMPERIAL_LAW_STRATEGY
     unlocks: !add
       - STR_NOT_TAU_ARBITES_GV
     disables: !add
-      - STR_GUEVESA_STRATEGY_PDF_GV
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
 
   - name: STR_CHAOS_STRATEGY_ARBITES
     unlocks: !add
       - STR_NOT_TAU_ARBITES_GV
     disables: !add
-      - STR_GUEVESA_STRATEGY_PDF_GV
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
 
 ### PDF commander strategy
 ### the big strategy that makes all the rules
-  - name: STR_GUEVESA_STRATEGY_PDF_GV
+  - name: STR_GUEVESA_STRATEGY_MILITIA_GV
     points: 0
     cost: 5
     dependencies:
@@ -96,7 +96,9 @@ research:
       - STR_NOT_TAU_GUEVESA_GV
       - STR_NOT_TAU_ARBITES_GV
       - STR_GREENEST_ORKZ
-    spawnedEvent: STR_TAU_PDF_START_EVENT_GV
+      - STR_THE_MARTIAN_SOLUTION  # More like a Terran problem!
+      - STR_PSI_LAB               # You'll get it back later. Maybe
+    spawnedEvent: STR_GUEVESA_STRATEGY_MILITIA_EVENT_GV
 
 ### allows the guevesa interceptors
   - name: STR_BASIC_GUEVESA_INTERCEPTORS
@@ -109,14 +111,13 @@ research:
 ### "Remedial Imperial Guard Operations"
 ### Gives you a 2x2 (1x1?) TRADE facility you can more easily put in a regular base.
 ### Use the Inquisition Office sprite to test ideas?
-### Gives you TAU trade access
+### Gives you TAU and TRADE access in a convenient package
   - name: STR_WHITESHIELD_BLACK_MARKET_GV
     points: 250  # counteracts STR_TAU_TRADING - net 0
     cost: 200
     dependencies:
-      - STR_TAU_GUEVESA_GV     # Any Guevesa can hook in here
-      - STR_LASER_WEAPONS   # desperate for bigger guns
-      - STR_MOTION_SCANNER
+      - STR_TAU_GUEVESA_GV    # Any Guevesa can hook in here
+      - STR_LASER_WEAPONS     # desperate for bigger guns
       - STR_GAIN_250
     unlocks:
       - STR_HEAVY_WEAPONS_IG            # cannot make mounted equipment
@@ -127,7 +128,6 @@ research:
     spawnedEvent: STR_WHITESHIELD_BLACK_MARKET_EVENT_GV
 
 ### Gives you more affordable export pulse weapons
-### Opens Inquisition interest
 ### Establish contact with Tau
 ### export pulse rifle deals
 ### high quality parts and supplies
@@ -171,16 +171,16 @@ research:
 
 ### Skilled pilgrims, veterans, etc start arriving
   - name: STR_CULTURE_CLUB_GV
-    points: -250
-    cost: 10
+    points: 0
+    cost: 200
     dependencies:
       - STR_GENERALLOCK
     unlocks:
       - STR_PATHFINDER_BEACON_GV    # pathfinders infiltrate
       - STR_INQUISITION_ATTENTION_GV      # uh oh!
       - STR_BALLISTIC_WEAPONS_HIGHGRADE   # Guard mid-tiers
-      - STR_MIDTIER_PREREQ
-      - STR_HARDER_MISSIONS
+    reenables:
+      - STR_PSI_LAB
     spawnedEvent: STR_CULTURE_CLUB_EVENT_GV
 
 ### Various degrees of danger
@@ -247,10 +247,6 @@ research:
       - STR_AIRSTRIKE_REQUISITION
     spawnedEvent: STR_COOPT_NAVY_PILOTS_EVENT_GV
 
-#      - STR_INTERROGATION_COMPLETED
-#      - STR_ALIEN_ORIGINS
-#      - STR_THREAT_ONE    
-
 ### Full alliance with the Tau - midtier complete
 ### "Light" Tau base
   - name: STR_A_SECRET_PACT_GV
@@ -263,8 +259,9 @@ research:
     unlocks:
       - STR_WATERCASTE_OUTPOST_GV        # Opens up TAU services and pathfinders
       - STR_MIDTIER_PREREQ
+      - STR_HARDER_MISSIONS
       - STR_INQUISITION_DANGER_GV     # You are in danger from the Inquisition
-    spawnedEvent: STR_A_SECRET_PACT_EVENT_GV
+    spawnedEvent: STR_A_SECRET_PACT_EVENT_GV  # breadcrumb the navy communications here
 
   - name: STR_WATERCASTE_OUTPOST_GV
     dependencies:
@@ -286,7 +283,6 @@ research:
 # STR_A_SECRET_PACT_GV + STR_NAVY_COMUNICATIONS => 
 #     - STR_INFILTRATION_CADRE_GV (DEVILFISH, STEALTHS, REMORAS, TAU SMITHS, TAU CHIMERAS, TAU SENTINELS)
 #     - STR_RELOCATION_SUPPORT_GV which offsets the score penalty from STR_INFILTRATION_CADRE and provides free PATHFINDER CONTINGENT
-#     - STR_EARTHCASTE_SMITHS_GV which allows for limited manufacturing of Devilfish, Stealths, and Remoras.
 #     - STR_IMPERIAL_CRUSADE_GV which activates the Imperial Crusade content
 #     - STR_GUEVESA_HEAVY_WEAPONS_GV which activates Tau heavy weapons)
   - name: STR_INFILTRATION_CADRE_GV
@@ -313,15 +309,9 @@ research:
     unlocks:
       - STR_TAU_BREACHERS_GV
       - STR_TAU_STRIKE_TEAMS_GV
-      - STR_EARTHCASTE_SMITHS_GV      # Basic Tau manufacturing & engineering - opens Dal'yth Pattern 
       - STR_DEVILFISH_TRANSPORTS_GV   # Build devilfish
-      - STR_XV15_STEALTH_SUITS_GV          # Build stealth suits
+      - STR_XV15_STEALTH_OPERATIONS_GV          # Build stealth suits
       - STR_BIONICS_OPERATION         # proper med facilities redo as tau bionics
-
-### start building outlandish stuff + advanced Tau weapons + drones
-  - name: STR_EARTHCASTE_SMITHS_GV
-    dependencies:
-      - STR_GENERALLOCK
 
 ### build Devilfish from parts
   - name: STR_DEVILFISH_TRANSPORTS_GV
@@ -329,7 +319,7 @@ research:
       - STR_GENERALLOCK
 
 ### build XV15 Stealth suits from parts
-  - name: STR_XV15_STEALTH_SUITS_GV
+  - name: STR_XV15_STEALTH_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
@@ -362,20 +352,20 @@ research:
       - STR_INFILTRATION_CADRE_GV
       - STR_UFO_CONSTRUCTION
     unlocks:      
-      - STR_STARSCYTHE_CRISIS_GV        # Starscythe Crisis 
-      - STR_XV26_STEALTH_SUITS_GV       # XV26 Stealth Suits
+      - STR_STARSCYTHE_CRISIS_OPERATIONS_GV        # Starscythe Crisis 
+      - STR_XV26_STEALTH_OPERATIONS_GV       # XV26 Stealth Suits
       - STR_HAMMERHEAD_GUNSHIPS_GV      # Ion Hammerhead tanks
       - STR_BARRACUDA_INTERCEPTORS_GV   # Barracuda Interceptors
       - STR_FORM_KILL_TEAMS_GV          # Advanced Pathfinder gear from Kill Teams, side missions, get Darkstrider?
       - STR_MASTER_CRAFTING
     spawnedEvent: STR_AUXILIARY_CADRE_EVENT_GV
 
-  - name: STR_STARSCYTHE_CRISIS_GV
+  - name: STR_STARSCYTHE_CRISIS_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
 ### build XV26 Stealth suits from parts
-  - name: STR_XV26_STEALTH_SUITS_GV
+  - name: STR_XV26_STEALTH_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK      
 
@@ -432,17 +422,6 @@ research:
       - STR_EMERGENCY_PROTOCOLS_GV
     spawnedEvent: STR_RALLY_GUARD_EVENT_GV
 
-### Work out an arrangement over what's left of the Pelagan Imperial Creed
-### Allows priest requisition
-  - name: STR_COOPT_ECCLESIARCHY_GV
-    points: 250
-    cost: 300
-    dependencies:
-      - STR_CULTURE_CLUB_GV
-      - STR_EMERGENCY_PROTOCOLS_GV
-      - STR_RECUSANT_SISTERS_GV
-    spawnedEvent: STR_COOPT_ECCLESIARCHY_EVENT_GV
-
 ### Tau version of The Heart of Chaos
   - name: STR_THE_TERRAN_PROBLEM_GV
     points: 60
@@ -452,17 +431,23 @@ research:
       - STR_LEADER_PLUS
     spawnedEvent: STR_THE_TERRAN_PROBLEM_EVENT_GV
 
-
-### Contact a Nicassar to administer psyker training
-### The Tau will reluctantly allow psyker training under Nicassar supervision
-  - name: STR_CONTACT_NICASSAR_GV
-    points: -250    # unpopular with Tau
-    cost: 1000
+### Work out an arrangement over what's left of the Pelagan Imperial Creed
+### Allows priest requisition and covers you from public opinion hits
+  - name: STR_COOPT_ECCLESIARCHY_GV
+    points: 250
+    cost: 300
     dependencies:
-      - STR_EMERGENCY_PROTOCOLS_GV
       - STR_THE_TERRAN_PROBLEM_GV
-      - STR_LOSE_250
-    spawnedEvent: STR_CONTACT_NICASSAR_EVENT_GV
+      - STR_RECUSANT_SISTERS_GV
+    spawnedEvent: STR_COOPT_ECCLESIARCHY_EVENT_GV
+
+  # - name: STR_CONTACT_NICASSAR_GV
+  #   points: -250    # unpopular with Tau
+  #   cost: 500
+  #   dependencies:
+  #     - STR_COOPT_ECCLESIARCHY
+  #     - STR_LOSE_250
+  #   spawnedEvent: STR_CONTACT_NICASSAR_EVENT_GV
 
 ### Tau high tier - part 1
 ### High tier starts a little early to reward the player
@@ -475,8 +460,8 @@ research:
       - STR_THE_TERRAN_PROBLEM_GV
     unlocks:
       - STR_APPOINT_FIREBLADE_GV
-      - STR_FIREKNIFE_CRISIS_GV
-      - STR_SUNFORGE_CRISIS_GV
+      - STR_FIREKNIFE_CRISIS_OPERATIONS_GV
+      - STR_SUNFORGE_CRISIS_OPERATIONS_GV
       - STR_BROADSIDE_SUITS_GV
       - STR_STALKER_SUITS_GV
       - STR_HIGHTIER_PREREQ
@@ -493,7 +478,6 @@ research:
     dependencies:
       - STR_COALITION_COMMAND_GV
       - STR_COOPT_ECCLESIARCHY_GV
-      - STR_CONTACT_NICASSAR_GV
       - STR_LOSE_250
     spawnedEvent: STR_ILLUMINATED_ARMORS_EVENT_GV
 
@@ -501,11 +485,11 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_FIREKNIFE_CRISIS_GV
+  - name: STR_FIREKNIFE_CRISIS_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_SUNFORGE_CRISIS_GV
+  - name: STR_SUNFORGE_CRISIS_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
@@ -625,7 +609,7 @@ research:
   - name: STR_DELIVER_DEBUG_PACKAGE_GV
     cost: 10
     dependencies:
-      - STR_GUEVESA_STRATEGY_PDF_GV
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
     spawnedEvent: STR_DELIVER_DEBUG_PACKAGE_EVENT_GV
 
 #   # destroy the Watch Fortress and send a fake signal

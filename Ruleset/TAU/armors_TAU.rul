@@ -5,22 +5,21 @@ items:
   - type: STR_GUARDPD_ARMOR_UC_ITEM_GV
     requiresBuy:
       - STR_WHITESHIELD_BLACK_MARKET_GV
+    requiresBuyBaseFunc: [TRADE]
     costBuy: 5000
     costSell: 0
 
   - type: STR_TAUGUEVESAFLAK_PC_ARMOR_ITEM_GV
     requiresBuy:
       - STR_TAU_GUEVESA_TRADING
+    requiresBuyBaseFunc: [TRADE, TAU]
     costBuy: 15000
     costSell: 0
 
   - type: STR_TAUGUEVESACARAP_PC_ARMOR_ITEM_GV
     costSell: 0
 
-  - type: STR_TAU_BASIC_ARMOR_ITEM_GV
-    costSell: 0
-
-  - type: STR_TAU_ADV_ARMOR_ITEM_GV
+  - type: STR_ILLUMINATED_ARMOR_ITEM_GV
     costSell: 0   
 
   - type: STR_XV15_STEALTH_SUIT_ITEM_GV
@@ -210,8 +209,8 @@ armors:
       ARMOR_ENERGY_SHIELD_DECAY: 50      
 
 ### pathfinders are pathfinders
-  - &STR_TAUPATHFINDER_TEMPLATE_GV
-    type: STR_TAUPATHFINDER_ARMOR_GV
+  - &STR_TAU_PATHFINDER_TEMPLATE_GV
+    type: STR_TAU_PATHFINDER_ARMOR_GV
     requires: STR_TAU_PATHFINDERS_GV
     refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
     visibilityAtDark: 40
@@ -280,8 +279,8 @@ armors:
       HAS_MARKERLIGHT: 1
       ARMOR_OVERWATCH_TU_RESTORED: 30
 
-  - type: STR_TAUPATHFINDER_LEADER_ARMOR_GV
-    refNode: *STR_TAUPATHFINDER_TEMPLATE_GV
+  - type: STR_TAU_PATHFINDER_LEADER_ARMOR_GV
+    refNode: *STR_TAU_PATHFINDER_TEMPLATE_GV
     spriteSheet: TAUFIREWARRIORLEADERbattle_GOG.PCK
     spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     corpseBattle:
@@ -305,8 +304,8 @@ armors:
 
 
 ### TAU FIRE WARRIOR ADVANCED ARMORS
-  - &STR_TAU_ADV_ARMOR_TEMPLATE_GV
-    type: STR_TAU_ADV_ARMOR_GV
+  - &STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    type: STR_ILLUMINATED_ARMORS_GV
     requires: STR_GENERALLOCK
     storeItem: STR_NONE
     visibilityAtDay: 40
@@ -339,7 +338,6 @@ armors:
       - 0.7  # IMPACT
       - 0.9  # MELTA
     units:
-      - STR_FIREWARRIOR_SHASUI_GV
       - STR_FIREWARRIOR_SHASVRE_GV
     loftempsSet: [3]
     allowsRunning: true
@@ -355,8 +353,10 @@ armors:
 
 ### Strike Armor is specialized for long range fire
 ### Captain quality optics and firing accuracy bonus
-  - type: STR_TAU_ADVSTRIKE_ARMOR_GV
-    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+  - type: STR_WARDED_SHASVRE_STRIKE_ARMOR_GV
+    requires: STR_ILLUMINATED_ARMORS_GV
+    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    storeItem: STR_ILLUMINATED_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 10
@@ -369,8 +369,10 @@ armors:
 ### breacher armor is better sealed
 ### resistant to flames/HE/stun/melee/impact
 ### has shield (is this busted?)
-  - type: STR_TAU_ADVBREACHER_ARMOR_GV
-    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+  - type: STR_WARDED_SHASVRE_BREACHER_ARMOR_GV
+    requires: STR_ILLUMINATED_ARMORS_GV
+    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    storeItem: STR_ILLUMINATED_ARMOR_ITEM_GV
     damageModifier:  # Captain quality damage resist
       - 1.0  # none
       - 0.7  # AP
@@ -397,8 +399,10 @@ armors:
       HAS_MARKERLIGHT: 1
 
 ### pathfinders are pathfinders
-  - type: STR_TAU_ADVPATHFINDER_ARMOR_GV
-    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+  - type: STR_WARDED_SHASVRE_PATHFINDER_ARMOR_GV
+    requires: STR_ILLUMINATED_ARMORS_GV
+    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    storeItem: STR_ILLUMINATED_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 15
     antiCamouflageAtDay: 15
@@ -428,6 +432,7 @@ armors:
 
 ### TAU CADRE FIREBLADE ARMORS
   - type: STR_TAUFIREBLADE_ARMOR_GV
+    requires: STR_APPOINT_FIREBLADE_GV
     visibilityAtDay: 40
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
@@ -478,6 +483,7 @@ armors:
       ARMOR_OVERWATCH_TU_RESTORED: 50
 
   - type: STR_XV15_STEALTH_SUIT_GV
+    requires: STR_XV15_STEALTH_OPERATIONS_GV
     # Strike quality
     visibilityAtDay: 40
     visibilityAtDark: 35
@@ -527,6 +533,7 @@ armors:
 
 
   - type: STR_XV26_STEALTH_SUIT_GV
+    requires: STR_XV26_STEALTH_OPERATIONS_GV
     visibilityAtDay: 40
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
@@ -574,13 +581,14 @@ armors:
 
   - &STR_STARSCYTHE_OPTIONS_GV
     type: STR_STARSCYTHE_CRISIS_SUIT_BC2X_GV
+    requires: STR_STARSCYTHE_CRISIS_OPERATIONS_GV
     visibilityAtDay: 40
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 10
     heatVision: 40
-    camouflageAtDark: -15 #tanith level camo
-    camouflageAtDay: -7
+    camouflageAtDark: 0
+    camouflageAtDay: 0
     spriteSheet: XCOM_1.PCK
     customArmorPreviewIndex: 1
     corpseBattle:
@@ -644,7 +652,7 @@ armors:
     spriteFaceColor: [164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96, 164, 164, 96, 96, 160, 160, 96, 96]
     corpseBattle:
       - STR_TAUGUEVESA_PCCORPSE
-    storeItem: STR_TAUGUEVESAFLAK_PC_ARMOR_ITEM_GV
+    storeItem: STR_NONE
     frontArmor: 40
     sideArmor: 30
     rearArmor: 20
@@ -666,10 +674,9 @@ armors:
       - 1.0  # IMPACT
       - 1.0  # MELTA
     units:
-      - STR_GUARDSM
+      # - STR_GUARDSM
       - STR_MILITIA_GV
-      - STR_MILITIA_OFFICER_GV
-      # - STR_GUEVESACULTIST_GV
+      # - STR_MILITIA_OFFICER_GV
       - STR_GUEVESALA_GV
       - STR_GUEVESAUI_GV
       - STR_GUEVESAVRE_GV
@@ -687,11 +694,12 @@ armors:
   - &STR_GUEVESA_CARAPACE_ARMOR_TEMPLATE_GV
     type: STR_TAUGUEVESACARAP_ARMOR_GV
     refNode: *STR_TAU_BASIC_ARMOR_TEMPLATE_GV
+    requires: STR_A_SECRET_PACT_GV
     spriteSheet: TAUGUEVESALV2battle_GOG.PCK
     spriteInv: TAUGUEVESALV2ARMOR.PCK
     corpseBattle:
       - STR_TAUGUEVESA_PCCORPSE
-    storeItem: STR_TAUGUEVESACARAP_PC_ARMOR_ITEM_GV
+    storeItem: STR_NONE
     stats:
       melee: 5        # focus on what they're best at
       strength: 5
@@ -729,7 +737,7 @@ armors:
 
 
   - type: STR_TAUGUEVESACARAP_VETERAN_ARMOR_GV
-    refNode: *STR_TAU_ADV_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
     spriteSheet: TAUGUEVESALV2battle_GOG.PCK
     spriteInv: TAUGUEVESALV2ARMOR.PCK
     corpseBattle:
