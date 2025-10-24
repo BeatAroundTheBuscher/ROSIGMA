@@ -120,6 +120,7 @@ missionScripts:
         STR_CIVILIAN_TERROR_GSC: 25
     researchTriggers:
       STR_HARDER_MISSIONS: false
+      STR_EVEN_HARDER_MISSIONS: false
       STR_STEEL_LEGION_STRATEGY: false  # get their own ork tilted list
       STR_ALIENS_ONLY: false
       STR_ARBITES: false
@@ -140,9 +141,29 @@ missionScripts:
     researchTriggers:
       STR_ALIENS_ONLY: false
       STR_HARDER_MISSIONS: true
+      STR_EVEN_HARDER_MISSIONS: false
       STR_ARBITES: false
       STR_STEEL_LEGION_STRATEGY: false
       STR_SPACEWOLVES_STRATEGY: false
+    useTable: false
+    startDelay: 150
+    randomDelay: 4320  # additional random 0 to 3 days
+
+  - type: recurringTerrorExtraHard # Who's ready for month 0 Terminators?
+    executionOdds: 80
+    firstMonth: 1
+    missionWeights:
+      0:
+        STR_ALIEN_TERROR_EXTRA_HARD: 33
+        STR_NURGLE_TERROR: 11
+        STR_ALIEN_TERROR_TZEENTCH: 11
+        STR_TERROR_MISSION_SLAAN: 11
+        STR_SHRINE_TERROR: 10
+        STR_CIVILIAN_SHRINE_TERROR_MIXEDADEPTAS: 10
+        STR_CIVILIAN_SHRINE_TERROR_ADEPTAS: 10
+    researchTriggers:
+      STR_ALIENS_ONLY: false
+      STR_EVEN_HARDER_MISSIONS: true
     useTable: false
     startDelay: 150
     randomDelay: 4320  # additional random 0 to 3 days
@@ -224,6 +245,7 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: false
       STR_NOT_TAU_EMPIRE_GV: true  # Gue'vesa have missions without Tau - can still fire month 0
+      STR_EVEN_HARDER_MISSIONS: false
 
   - type: deserterHideoutHard
     refNode: *STR_DESERTER_HIDEOUT
@@ -233,6 +255,15 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: true
       STR_NOT_TAU_EMPIRE_GV: true
+      STR_EVEN_HARDER_MISSIONS: false
+
+  - type: deserterHideoutExtraHard
+    refNode: *STR_DESERTER_HIDEOUT
+    missionWeights:
+      0:
+        STR_DESERTER_HIDEOUT_EXTRA_HARD: 100
+    researchTriggers:
+      STR_EVEN_HARDER_MISSIONS: true
 
   - &SPACEHULK_ORK_BASE
     type: SPACEHULK_ORK_BASE_1
@@ -593,6 +624,7 @@ missionScripts:
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
       STR_HARDER_MISSIONS: false
+      STR_EVEN_HARDER_MISSIONS: false
       STR_CHAPTER_PURITY: true
       STR_NOT_TAU_EMPIRE_GV: true
 
@@ -650,6 +682,7 @@ missionScripts:
     useTable: true
     researchTriggers:
       STR_HARDER_MISSIONS: true
+      STR_EVEN_HARDER_MISSIONS: false
       STR_CHAPTER_PURITY: true
       STR_NOT_TAU_EMPIRE_GV: true
 
@@ -662,6 +695,68 @@ missionScripts:
 
   - type: warpStormRagingHard
     refNode: *STR_HARD_MISSION_TABLE
+    firstMonth: 6
+    useTable: true
+
+  - &STR_EXTRA_HARD_MISSION_TABLE
+    type: warpStormExtraHard
+    missionWeights:
+      0:  # equal distribution for now
+        STR_ALIEN_RESEARCH_EXTRA_HARD: 33
+        STR_NURGLE_RESEARCH_EXTRA_HARD: 11
+        STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 20
+        STR_ALIEN_HARVEST_EXTRA_HARD: 33
+        STR_NURGLE_HARVEST_EXTRA_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 8 # rare
+        STR_SLAANESH_HARVEST_EXTRA_HARD: 8 # rare
+        STR_ALIEN_ABDUCTION_EXTRA_HARD: 33
+        STR_NURGLE_ABDUCTION_EXTRA_HARD: 12
+        STR_SLAANESH_ABDUCTION_EXTRA_HARD: 20
+        STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 8
+        STR_ALIEN_INFILTRATION_EXTRA_HARD: 33
+        STR_NURGLE_INFILTRATION_EXTRA_HARD: 11
+        STR_ALIEN_INFILTRATION_SLAANESH_EXTRA_HARD: 11
+        STR_ALIEN_INFILTRATION_TZEENTCH_EXTRA_HARD: 11
+        STR_ALIEN_BASE: 33
+        STR_NURGLE_BASE: 11
+        STR_SLAANESH_BASE: 11
+        STR_TZEENTCH_BASE: 11
+      2:  # equal distribution for now
+        STR_ALIEN_RESEARCH_EXTRA_HARD: 33
+        STR_NURGLE_RESEARCH_EXTRA_HARD: 11
+        STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 20
+        STR_ALIEN_HARVEST_EXTRA_HARD: 33
+        STR_NURGLE_HARVEST_EXTRA_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 8 # rare
+        STR_SLAANESH_HARVEST_EXTRA_HARD: 8 # rare
+        STR_ALIEN_ABDUCTION_EXTRA_HARD: 33
+        STR_NURGLE_ABDUCTION_EXTRA_HARD: 12
+        STR_SLAANESH_ABDUCTION_EXTRA_HARD: 20
+        STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 8
+        STR_ALIEN_INFILTRATION_EXTRA_HARD: 33
+        STR_NURGLE_INFILTRATION_EXTRA_HARD: 11
+        STR_ALIEN_INFILTRATION_SLAANESH_EXTRA_HARD: 11
+        STR_ALIEN_INFILTRATION_TZEENTCH_EXTRA_HARD: 11
+        STR_ALIEN_BASE_EXTRA_HARD: 33
+        STR_NURGLE_BASE: 11
+        STR_SLAANESH_BASE: 11
+        STR_TZEENTCH_BASE: 11
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+    firstMonth: 1
+    useTable: true
+    researchTriggers:
+      STR_EVEN_HARDER_MISSIONS: true
+      STR_CHAPTER_PURITY: true
+
+  - type: warpStormBuildingExtraHard
+    refNode: *STR_EXTRA_HARD_MISSION_TABLE
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+    useTable: true
+
+  - type: warpStormRagingExtraHard
+    refNode: *STR_EXTRA_HARD_MISSION_TABLE
     firstMonth: 6
     useTable: true
 
@@ -690,6 +785,7 @@ missionScripts:
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: false
       STR_GUEVESA_STRATEGY_MILITIA_GV: false
+      STR_EVEN_HARDER_MISSIONS: false
 
   - type: gameStartCultist_SL
     executionOdds: 40  # was 75
@@ -715,6 +811,25 @@ missionScripts:
     label: 100
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: true
+      STR_EVEN_HARDER_MISSIONS: false
+
+  - type: gameStartCultistExtraHard # Word Bearers instead of cultists
+    executionOdds: 75
+    firstMonth: 2
+    lastMonth: 2
+    missionWeights:
+      0:
+        STR_CULTIST_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_WORDBEARERS_MID: 33
+    startDelay: 3000
+    randomDelay: 4320  # additional random 0 to 3 days
+    label: 100
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false
+      STR_EVEN_HARDER_MISSIONS: true
 
   - type: gameStartTraitorGuard
     executionOdds: 75  # either Cultists or Traitor Guard
@@ -723,6 +838,7 @@ missionScripts:
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: false
       STR_GUEVESA_STRATEGY_MILITIA_GV: false
+      STR_EVEN_HARDER_MISSIONS: false
 
   - type: gameStartTraitorGuard_SL
     executionOdds: 75  #
@@ -744,6 +860,29 @@ missionScripts:
     label: 101
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: true
+      STR_EVEN_HARDER_MISSIONS: false
+
+  - type: gameStartTraitorGuardExtraHard # high end traitor guard. Probably easier than the word bearers
+    executionOdds: 75
+    firstMonth: 2
+    lastMonth: 2
+    conditionals: [-100]
+    missionWeights:
+      0:
+        STR_TRAITOR_GUARD_BASE_START: 100
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SNAKEMAN_ELITE: 33
+        STR_TZEENTCH_TRAITOR_GUARD_STORMTROOPERS: 33
+        STR_SLAANESH_TRAITOR_GUARD_LATE: 33
+        STR_BLACKSTONE_STORMTROOPERS_LIST: 10
+    startDelay: 3000
+    randomDelay: 4320  # additional random 0 to 3 days
+    label: 101
+    researchTriggers:
+      STR_STEEL_LEGION_STRATEGY: false
+      STR_EVEN_HARDER_MISSIONS: true
 
   - &STR_START_MISSION
     type: gameStart  # initial mission in player region
@@ -767,6 +906,7 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: false
       STR_GUEVESA_STRATEGY_MILITIA_GV: false
+      STR_EVEN_HARDER_MISSIONS: false
 
   - type: gameStartHard
     refNode: *STR_START_MISSION
@@ -798,6 +938,38 @@ missionScripts:
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
       STR_HARDER_MISSIONS: true
+      STR_EVEN_HARDER_MISSIONS: false
+
+  - type: gameStartExtraHard
+    refNode: *STR_START_MISSION
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_EXTRA_HARD: 33
+        STR_ALIEN_ABDUCTION_EXTRA_HARD: 33
+        STR_ALIEN_HARVEST_EXTRA_HARD: 33
+        STR_NURGLE_RESEARCH_EXTRA_HARD: 8
+        STR_NURGLE_HARVEST_EXTRA_HARD: 20
+        STR_NURGLE_ABDUCTION_EXTRA_HARD: 8
+        STR_SLAANESH_ABDUCTION_EXTRA_HARD: 20
+        STR_SLAANESH_HARVEST_EXTRA_HARD: 8 # rare
+        STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 5
+        STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 5
+      2:
+        STR_ALIEN_RESEARCH_EXTRA_HARD: 33
+        STR_ALIEN_ABDUCTION_EXTRA_HARD: 33
+        STR_ALIEN_HARVEST_EXTRA_HARD: 33
+        STR_NURGLE_RESEARCH_EXTRA_HARD: 8
+        STR_NURGLE_HARVEST_EXTRA_HARD: 15
+        STR_NURGLE_ABDUCTION_EXTRA_HARD: 8
+        STR_SLAANESH_ABDUCTION_EXTRA_HARD: 20
+        STR_SLAANESH_HARVEST_EXTRA_HARD: 8  # rare
+        STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 5
+        STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 5
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+    researchTriggers:
+      STR_EVEN_HARDER_MISSIONS: true
 
   - type: gameStartHard_SW #Tzeentch Weighting
     refNode: *STR_START_MISSION
@@ -1054,6 +1226,25 @@ missionScripts:
     useTable: false
     maxRuns: 1
     varName: HULKERInquisition
+
+  - type: HULKERAssassinorum
+    # FIXME: retaliationOdds: 0
+    missionWeights:
+      0:
+        STR_ALIENER_ARTIFACT: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    researchTriggers:
+      STR_CHAMBERMILITANT: true
+      STR_ASSASSINORUM: true
+      STR_WARPED_VAULT: true
+    firstMonth: 0
+    startDelay: 4320  # 3 days
+    randomDelay: 4320  # additional random 0 to 3 days
+    useTable: false
+    maxRuns: 1
+    varName: HULKERAssassinorum
 
   - type: HULKERChaosCult
     # FIXME: retaliationOdds: 0

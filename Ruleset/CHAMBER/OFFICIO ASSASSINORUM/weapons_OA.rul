@@ -671,7 +671,7 @@ items:
     specialUseEmptyHand: true
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
-    meleeType: 8 # acid
+    meleeType: 7 # Melee
     meleePower: 50
     confMelee:
       name: STR_NEURO_GAUNTLET_STRIKE #
@@ -680,6 +680,7 @@ items:
       melee: 0.1
     meleeAlter:
       RandomType: 6
+      ResistType: 8  # toxins/acids
       ToArmorPre: 0.02
       ArmorEffectiveness: 1.0
       ToArmor: 0.02
@@ -1025,7 +1026,7 @@ items:
     specialUseEmptyHand: true
     meleeHitSound: {mod: 40k, index: 101}
     meleeAnimation: 0
-    meleeType: 8 # acid
+    meleeType: 7 # Melee
     meleePower: 50
     confMelee:
       name: STR_NEURO_GAUNTLET_STRIKE #
@@ -1034,6 +1035,7 @@ items:
       melee: 0.1
     meleeAlter:
       RandomType: 6
+      ResistType: 8  # toxins/acids
       ToArmorPre: 0.02
       ArmorEffectiveness: 1.0
       ToArmor: 0.02
@@ -1177,7 +1179,7 @@ items:
     #  psi: -100
     damageAlter:     #DA POWER
       ArmorEffectiveness: 0.7
-      ToArmorPre: 0.2
+      ToArmorPre: 0.3
       ToHealth: 0.9
       ToMorale: 5.0 # Blank Horror
     accuracyMelee: 90
@@ -1203,11 +1205,13 @@ items:
       basePercent: 25
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 35
-      DAMAGE_BONUS_FLAT_DAEMONIC: 50
-      DAMAGE_BONUS_FLAT_PSYKER: 65
-      DAMAGE_BONUS_FLAT_TZEENTCH: 25 # higher psychic sensitivity
-      DAMAGE_BONUS_FLAT_NURGLE: 35 # durable because of warp magic, take away the magic, you have a dead body
-      DAMAGE_BONUS_FLAT_ELDAR: 25
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 180
+      DAMAGE_BONUS_PERCENT_PSYKER: 200
+      DAMAGE_BONUS_PERCENT_SYNAPSE: 150 # among already vulnerable tyranids, synapse creatures are the most vulnerable; often also psykers
+      DAMAGE_BONUS_PERCENT_TZEENTCH: 120 # higher psychic sensitivity
+      DAMAGE_BONUS_PERCENT_NURGLE: 150 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_PERCENT_TYRANID: 150 # tyranids especially vulneable to psychic interference due to reliance on hive mind
+      DAMAGE_BONUS_PERCENT_ELDAR: 150
 
   - type: STR_WITCHKILLER_PISTOL
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_BOLTER]
@@ -1264,7 +1268,7 @@ items:
     handSprite: {mod: 40k, index: 464}
     hitSound: {mod: 40k, index: 708}
     hitAnimation: {mod: 40k, index: 120}
-    power: 70
+    power: 80
     damageType: 1
     damageAlter:  # DA BOLTER
       ToArmorPre: 0.1
@@ -1284,12 +1288,13 @@ items:
     invHeight: 2
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 35
-      DAMAGE_BONUS_FLAT_DAEMONIC: 40
-      DAMAGE_BONUS_FLAT_PSYKER: 55
-      DAMAGE_BONUS_FLAT_TZEENTCH: 15 # higher psychic sensitivity
-      DAMAGE_BONUS_FLAT_NURGLE: 25 # durable because of warp magic, take away the magic, you have a dead body
-      DAMAGE_BONUS_FLAT_ELDAR: 15
-
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 200
+      DAMAGE_BONUS_PERCENT_PSYKER: 200
+      DAMAGE_BONUS_PERCENT_SYNAPSE: 150 # among already vulnerable tyranids, synapse creatures are the most vulnerable; often also psykers
+      DAMAGE_BONUS_PERCENT_TZEENTCH: 130 # higher psychic sensitivity
+      DAMAGE_BONUS_PERCENT_NURGLE: 140 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_PERCENT_TYRANID: 150 # tyranids especially vulneable to psychic interference due to reliance on hive mind
+      DAMAGE_BONUS_PERCENT_ELDAR: 150
 
   - type: STR_PURIFIER_FLAMER
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_FLAMER]
@@ -1380,11 +1385,13 @@ items:
     tags:
       ITEM_DOESNT_HURT_USER: 1
       DAMAGE_RESIST_PENETRATION_PERCENT: 35
-      DAMAGE_BONUS_FLAT_DAEMONIC: 40
-      DAMAGE_BONUS_FLAT_PSYKER: 25
-      DAMAGE_BONUS_FLAT_TZEENTCH: 10 # higher psychic sensitivity
-      DAMAGE_BONUS_FLAT_NURGLE: 20 # durable because of warp magic, take away the magic, you have a dead body
-      DAMAGE_BONUS_FLAT_ELDAR: 10
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 220
+      DAMAGE_BONUS_PERCENT_PSYKER: 170
+      DAMAGE_BONUS_PERCENT_SYNAPSE: 150 # among already vulnerable tyranids, synapse creatures are the most vulnerable; often also psykers
+      DAMAGE_BONUS_PERCENT_TZEENTCH: 120 # higher psychic sensitivity
+      DAMAGE_BONUS_PERCENT_NURGLE: 170 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_PERCENT_TYRANID: 150 # tyranids especially vulneable to psychic interference due to reliance on hive mind
+      DAMAGE_BONUS_PERCENT_ELDAR: 140
 
   - type: STR_LIQUIDATOR_MELTA  # Based on Inquisition Multimelta
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELTA, STR_CAT_DEVASTATOR]
@@ -1434,10 +1441,15 @@ items:
     recover: false
     clipSize: -1
     listOrder: 13123
-    tags:
+    tags: # smaller damage bonuses than other Culexus weapons
       DAMAGE_RESIST_PENETRATION_PERCENT: 35
-      DAMAGE_BONUS_FLAT_DAEMONIC: 5
-      DAMAGE_BONUS_FLAT_PSYKER: 3
+      DAMAGE_BONUS_PERCENT_DAEMONIC: 150
+      DAMAGE_BONUS_PERCENT_PSYKER: 150
+      DAMAGE_BONUS_PERCENT_SYNAPSE: 125 # among already vulnerable tyranids, synapse creatures are the most vulnerable; often also psykers
+      DAMAGE_BONUS_PERCENT_TZEENTCH: 120 # higher psychic sensitivity
+      DAMAGE_BONUS_PERCENT_NURGLE: 120 # durable because of warp magic, take away the magic, you have a dead body
+      DAMAGE_BONUS_PERCENT_TYRANID: 110 # tyranids especially vulneable to psychic interference due to reliance on hive mind
+      DAMAGE_BONUS_PERCENT_ELDAR: 130
 
 # Vanus
 
@@ -1571,6 +1583,7 @@ items:
   - type: STR_VANUS_GRAVPISTOL
     dropoff: 6
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_GRAVGUN, STR_CAT_TACTICAL]
+    manaExperience: 100
     size: 0.1
     weight: 5
     bigSprite: 3502
@@ -1642,6 +1655,7 @@ items:
   - type: STR_VANUS_SHOCKGLOVE
     categories: [STR_CAT_ASSASSINORUM, STR_CAT_MELEE]
     experienceTrainingMode: 13 # reactions and melee
+    manaExperience: 100
     bigSprite: 3503
     floorSprite: 934 # power knuckle
     handSprite: 760 # power knuckle
@@ -1654,7 +1668,7 @@ items:
     meleeBonus:
       reactions: 0.2 # quickly striking weak spots/calibrating shocks just right.
       melee: 0.1
-    damageType: 7 # melee, maybe change to stun.
+    damageType: 6 # stun
     damageAlter:
       RandomType: 6
       ArmorEffectiveness: 0.7 # semi AP electro shocks
@@ -1667,7 +1681,7 @@ items:
       RandomWound: false
       RandomStun: false
     accuracyMelee: 100
-    tuMelee: 8
+    tuMelee: 16 # stun melee isn't quick. Takes time to adjust shocks to target
     costMelee:
       energy: 1
     flatRate: true
