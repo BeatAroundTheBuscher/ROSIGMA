@@ -1,5 +1,5 @@
 ufos:
-  - type: STR_GUARD_LEMAN_RUSS_FRIENDLY_GV
+  - type: STR_GUARD_LEMAN_RUSS_PC_GV
     battlescapeTerrainData:
       name: ORK_LEMAN  # working with what we have
       mapDataSets:
@@ -24,6 +24,34 @@ ufos:
             STR_LEMAN_RUSS_BATTLECANNON_SPAWNER_GV: [0, 0]
             STR_LEMAN_RUSS_SPONSON_SPAWNER_GV: [0, 0]
             STR_LEMAN_RUSS_HULL_SPAWNER_GV: [0, 0]
+
+  - type: STR_GUARD_LEMAN_RUSS_FRIENDLY_GV
+    battlescapeTerrainData:
+      name: ORK_LEMAN  # working with what we have
+      mapDataSets:
+        - BLANKS
+        - CHIMERA  # TODO: Remove Chimera and Hidra in map tile set
+        - HIDRA  # move indices forward
+        - LEMON
+      mapBlocks:
+        - name: ORK_LEMAN
+          width: 10
+          length: 10
+          height: 4
+          items:
+            STR_LEMAN_RUSS_BATTLECANNON_FRIENDLY_SPAWNER_GV:
+              - [2, 6, 1]
+            STR_LEMAN_RUSS_SPONSON_FRIENDLY_SPAWNER_GV:
+              - [0, 6, 0]
+              - [5, 6, 0]
+            STR_LEMAN_RUSS_HULL_FRIENDLY_SPAWNER_GV:
+              - [3, 8, 0]
+          fuseTimers:
+            STR_LEMAN_RUSS_BATTLECANNON_FRIENDLY_SPAWNER_GV: [0, 0]
+            STR_LEMAN_RUSS_SPONSON_FRIENDLY_SPAWNER_GV: [0, 0]
+            STR_LEMAN_RUSS_HULL_FRIENDLY_SPAWNER_GV: [0, 0]
+
+
 
   - type: STR_GUEVESA_CONVOY_CRAWLER_GV
     battlescapeTerrainData:
@@ -119,15 +147,15 @@ ufos:
 
 
 items:
-  - &STR_LEMAN_RUSS_SPAWNERS_GV  # DO NOT TOUCH; FINAL MISSION DOESN'T CARE ABOUT THIS SCRIPT
+  - &STR_LEMAN_RUSS_SPAWNERS_GV  
     type: STR_LEMAN_RUSS_BATTLECANNON_SPAWNER_GV
     spawnUnit: STR_LEMONRUSS  # Battle Cannon
-    spawnUnitFaction: 2
+    spawnUnitFaction: 0
     invWidth: 0
     invHeight: 0
     battleType: 4
 
-  - type: STR_LEMAN_RUSS_SPONSON_SPAWNER_GV  # DO NOT TOUCH; FINAL MISSION DOESN'T CARE ABOUT THIS SCRIPT
+  - type: STR_LEMAN_RUSS_SPONSON_SPAWNER_GV 
     refNode: *STR_LEMAN_RUSS_SPAWNERS_GV
     spawnUnit: STR_BOLTER_SPONSON  # Bolter
 
@@ -135,4 +163,19 @@ items:
     refNode: *STR_LEMAN_RUSS_SPAWNERS_GV
     spawnUnit: STR_LEMAN_HULL_BOLTER  # Bolter
 
+  - &STR_LEMAN_RUSS_FRIENDLY_SPAWNERS_GV
+    type: STR_LEMAN_RUSS_BATTLECANNON_FRIENDLY_SPAWNER_GV
+    spawnUnit: STR_LEMONRUSS  # Battle Cannon
+    spawnUnitFaction: 2
+    invWidth: 0
+    invHeight: 0
+    battleType: 4
+
+  - type: STR_LEMAN_RUSS_SPONSON_FRIENDLY_SPAWNER_GV 
+    refNode: *STR_LEMAN_RUSS_FRIENDLY_SPAWNERS_GV
+    spawnUnit: STR_BOLTER_SPONSON  # Bolter
+
+  - type: STR_LEMAN_RUSS_HULL_FRIENDLY_SPAWNER_GV
+    refNode: *STR_LEMAN_RUSS_FRIENDLY_SPAWNERS_GV
+    spawnUnit: STR_LEMAN_HULL_BOLTER  # Bolter
     
