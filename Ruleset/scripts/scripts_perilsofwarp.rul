@@ -27,16 +27,34 @@ extended:
           var ptr RuleArmor rArmor;
           var ptr RuleUnit myRuleUnit;
 
+          damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
+          if eq temp 0;
+            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
+            return power part side;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
+          if eq temp 1;
+            unit.getFaction temp;
+            attacker.getFaction temp2;
+            if neq temp temp2; # don't roll for enemies caught in buff effects
+              # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Buff power targeting a non-ally.";
+              return power part side;
+            end;
+          end;
+
           attacker.getFaction temp;
           if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
             # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
             return power part side;
           end;
 
-          damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
-          if eq temp 0;
-            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
-            return power part side;
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_NULL; # we don't affect nulls
+          if eq temp 1;
+            battle_game.flashMessage "STR_PSYCHIC_TARGET_NULL"; # let the player know the power was resisted
+            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Aborting. Target is a null. temp:" temp;
+            return 0 0 0;
           end;
 
           damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_FLAT_CHECK;
@@ -50,38 +68,20 @@ extended:
             end;
           end;
 
-          damaging_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
-          if eq temp 1;
-            unit.getFaction temp;
-            attacker.getFaction temp2;
-            if neq temp temp2; # don't roll for enemies caught in buff effects
-              # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Buff power targeting a non-ally.";
-              return power part side;
-            end;
-          end;
-
-          unit.getRuleArmor rArmor;
-          rArmor.getTag temp Tag.UNIT_TYPE_NULL; # we don't affect nulls
-          if eq temp 1;
-            battle_game.flashMessage "STR_PSYCHIC_TARGET_NULL"; # let the player know the power was resisted
-            # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Aborting. Target is a null. temp:" temp;
-            return 0 0 0;
-          end;
-
           attacker.getFaction temp;
           battle_game.getTurnSide temp2;
           if neq temp temp2; # abort if it's not our turn; only test for perils on our turn so reaction fire doesn't trigger
-            # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
+            # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 22: Aborting. Faction turn doesn't equal user turn.";
             return power part side;
           end;
 
           attacker.getMorale perilsMagnitude;
-          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
+          # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Initial Morale:" perilsMagnitude;
           attacker.getTag perilsModifier Tag.UNIT_PERILS_MODIFIER;
-          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: UNIT_PERILS_MODIFIER:" perilsModifier;
+          # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: UNIT_PERILS_MODIFIER:" perilsModifier;
           add perilsMagnitude 10; # offset for morale cost
           sub perilsMagnitude perilsModifier;
-          # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
+          # debug_log "ROSIGMA_hU_perils Scripts; hitUnit, offset 1: Effective Morale after perils modifier:" perilsMagnitude;
 
           damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER; # increment our Perils of the Warp chance
           unit.getRuleArmor rArmor;
@@ -131,7 +131,7 @@ extended:
               attacker.setTag Tag.CURRENT_INFECTION_TYPE 4;
             end;
             attacker.setTag Tag.CURRENT_INFECTION_FACTION 1; # infection faction is hostile
-            attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; # randomize our infection type
+            # attacker.getTag temp Tag.CURRENT_INFECTION_TYPE; # randomize our infection type
             # debug_log "ROSIGMA_tPAU_perils Scripts; hitUnit, offset 1: Infection type after Perils increment:" temp;
           end;
 
@@ -176,15 +176,16 @@ extended:
             attacker.setSpawnUnitInstantRespawn 1;
           else lt randomNumber 11; # psyker is almost zeroed out
             attacker.setHealth 1;
-            attacker.setStun 0;
+            attacker.getHealth temp;
+            attacker.setStun temp;
             attacker.setMorale 0;
             attacker.setEnergy 0;
           else lt randomNumber 31; # KO
-            attacker.setStun 0;
+            attacker.getHealthMax temp;
+            attacker.setStun temp;
             attacker.setMorale 0;
             attacker.setEnergy 0;
           else lt randomNumber 71; # do extra stun and energy damage in proportion to perilsMagnitude
-            battle_game.randomRange temp 1 perilsMagnitude;
             attacker.getEnergy temp;
             battle_game.randomRange temp2 1 perilsMagnitude;
             sub temp temp2;
@@ -192,7 +193,7 @@ extended:
 
             attacker.getStun temp;
             battle_game.randomRange temp2 1 perilsMagnitude;
-            sub temp temp2;
+            add temp temp2;
             attacker.setStun temp;
           end;
 
@@ -202,48 +203,6 @@ extended:
           end;
 
           return power part side;
-
-    damageUnit:
-      - new: ROSIGMA_dU_perils
-        offset: 1
-        code: |
-          var int randomNumber;
-          var int temp;
-          var int temp2;
-          var int perilsMagnitude;
-          var int perilsModifier;
-          var ptr RuleArmor rArmor;
-          var ptr RuleUnit myRuleUnit;
-
-          attacker.getFaction temp;
-          if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
-            # debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 22: Aborting. Unit is a non-player faction.";
-            return;
-          end;
-
-          damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
-          if eq temp 0;
-            # debug_log "ROSIGMA_dU_perils Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
-            return;
-          end;
-
-          damaging_item.getTag temp Tag.ITEM_PSYCHIC_POWER_MODIFIER;
-          unit.getRuleArmor rArmor;
-          rArmor.getSize temp2;
-          if gt temp2 1; # if our target is large, divide the psychic ability's power by 4 after armor
-            div to_armor 4;
-            div to_energy 4;
-            div to_health 4;
-            div to_mana 4;
-            div to_morale 4;
-            div to_stun 4;
-            div to_time 4;
-            div to_transform 4;
-            div to_wound 4;
-          end;
-
-          return;
-
 
     newTurnUnit:  # reset our Perils modifier
       - new: ROSIGMA_nTU_perils
@@ -287,6 +246,45 @@ extended:
             end;
           end;
 
+          return;
+
+    damageUnit:
+      - new: ROSIGMA_dU_perils_player_null_effects
+        offset: 1
+        code: |
+          var int temp;
+          var ptr RuleArmor rArmor;
+
+          unit.getFaction temp;
+          if neq temp FACTION_PLAYER; # abort if the faction isn't the player faction; minimize overhead
+            # debug_log "ROSIGMA_dU_perils_player_null_effects Scripts; hitUnit, offset 1: Aborting. Unit is a non-player faction.";
+            return;
+          end;
+
+          damaging_item.getTag temp Tag.ITEM_IS_PSYCHIC_POWER;
+          if eq temp 0;
+            # debug_log "ROSIGMA_dU_perils_player_null_effects Scripts; hitUnit, offset 1: Aborting. Item not psychic power. Temp: " damaging_item;
+            return;
+          end;
+
+          unit.getRuleArmor rArmor;
+          rArmor.getTag temp Tag.UNIT_TYPE_NULL;
+          if neq temp 1;
+            # debug_log "ROSIGMA_dU_perils_player_null_effects Scripts; hitUnit, offset 1: Aborting. Target isn't a null. temp:" temp;
+            return;
+          end;
+
+          add to_stun to_health; #converts health and corruption damage to stun because AI cannot play around null immunities
+          set to_mana 0;
+          set to_health 0;
+          set to_morale 0;
+          set to_armor 0;
+          set to_energy 0;
+          set to_time 0;
+          set to_wound 0;
+          set to_transform 0;
+
+          battle_game.flashMessage "STR_PSYCHIC_TARGET_NULL_ABSORB_PLAYER"; # let the player know the power was resisted
           return;
 
 #    newTurnItem:  # reset our Perils modifier
