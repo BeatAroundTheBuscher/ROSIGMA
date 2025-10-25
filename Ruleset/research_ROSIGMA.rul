@@ -87,6 +87,8 @@ research:
   - delete: STR_ETHEREAL
   - delete: STR_MUTON
   - delete: STR_FLOATER
+  - delete: STR_LEADER_PLUS
+  - delete: STR_COMMANDER_PLUS
 
 ####################################
 #UNCATEGORIZED# Uncategorized Section
@@ -225,6 +227,23 @@ research:
 
   - name: STR_HARDER_MISSIONS  # (Harder Missions)
     refNode: *STR_LOCKED
+
+  - name: STR_EVEN_HARDER_MISSIONS  # (Extra Hard Missions)
+    refNode: *STR_LOCKED
+
+  - name: STR_ENABLE_EVEN_HARDER_MISSIONS  # (The Salty Spitoon) Choice to enable extra hard missions
+    dependencies:
+      - STR_HARDER_MISSIONS # available as an option if you have harder missions.
+      - STR_CHAPTER_PURITY # Doesn't affect player chaos missions at the moment.
+    cost: 10 # has to be researched
+    unlocks:
+      - STR_EVEN_HARDER_MISSIONS
+
+  - name: STR_DISABLE_EVEN_HARDER_MISSIONS  # (Weenie Hut Jr.) Disables extra hard missions
+    refNode: *STR_LOCKED
+    cost: 10 # has to be researched
+    disables:
+      - STR_EVEN_HARDER_MISSIONS # should revert to regular harder missions
 
   - name: STR_OGRYN_AVAILABLE  # (Ogryn Recruitment)
     # Because there are multiple ogryn recruiting factions now
@@ -873,6 +892,7 @@ research:
     dependencies:
       - STR_WORDBEARERS_STRATEGY
       - STR_RITUAL_FAVOURS
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_MIDTIER_PREREQ
 
@@ -1015,6 +1035,8 @@ research:
       - STR_IMPERIAL_ASSASSINS
       - STR_REPRISALIA_ACCESS
       - STR_MEDI_KIT_PREREQ
+      - STR_EVEN_HARDER_MISSIONS
+      - STR_DISABLE_EVEN_HARDER_MISSIONS
     disables:
       - STR_DEATHWATCH
       - STR_GREYKNIGHTS
@@ -1639,8 +1661,6 @@ research:
       - STR_GENERALLOCK
 
   - name: STR_LEADER_PLUS  # Leader Interrogation
-    requires:
-      - STR_ALIEN_ORIGINS
     dependencies:
       - STR_GENERALLOCK
 
@@ -1655,14 +1675,12 @@ research:
     cost: 670
     points: 25
     dependencies:
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_CHAOS_BASE_DATA
 
+  # unlocked and given by appropriate interrogations
   - name: STR_COMMANDER_PLUS  # Commander Interrogation
-    unlocks:
-      - STR_CYDONIA_OR_BUST
-    requires:
-      - STR_THE_MARTIAN_SOLUTION
     dependencies:
       - STR_GENERALLOCK
 
@@ -1671,6 +1689,7 @@ research:
     cutscene: c3
     points: 60
     dependencies:
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
@@ -2405,6 +2424,7 @@ research:
     # Ends the Alpha Legion infiltration event
     dependencies:
       - STR_ALPHA_LEGION_INFILTRATED
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
       - STR_HYPER_WAVE_DECODER
       - STR_ALPHA_LEGION_INTERROGATION
@@ -3229,6 +3249,7 @@ research:
     points: 60
     dependencies:
       - STR_DEATHWATCH
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
@@ -3463,6 +3484,7 @@ research:
       - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_TAU_XENOTECH
+      - STR_HB_DEP1
 
   - name: STR_OA_HIGHTIER  # Assassinorum High-tier Requisitions
     cost: 900
@@ -3521,6 +3543,7 @@ research:
     points: 60
     dependencies:
       - STR_THE_IMPERIAL_LAW_STRATEGY
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
@@ -4588,6 +4611,7 @@ research:
     points: 0
     dependencies:
       - STR_IMPERIAL_GUARD_MISSIONS_TANITH0_COMPLETE
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
 
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE  # (Captured Chaos Convoy)
@@ -5719,6 +5743,7 @@ research:
       - STR_PERSONAL_ARMOR
       - STR_ASS_ARMOR
       - STR_DEV_ARMOR
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_CHAOS_MARINE_HIRE_RESEARCH
     getOneFree:
@@ -5797,6 +5822,7 @@ research:
     dependencies:
       - STR_POWER_SUIT_WB
       - STR_DIABO_ARMOR_WB
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
       - STR_WORDBEARERS_STRATEGY
       - STR_HIGHTIER_PREREQ
@@ -5918,6 +5944,7 @@ research:
       - STR_PERSONAL_ARMOR
       - STR_ASS_ARMOR
       - STR_DEV_ARMOR
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_CHAPTER_PURITY
       - STR_NOT_SPACEWOLVES
@@ -5930,6 +5957,7 @@ research:
     dependencies:
       - STR_POWER_SUIT
       # - STR_LORD_CORPSE
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
       - STR_CHAPTER_PURITY
 
@@ -6122,6 +6150,7 @@ research:
       - STR_SPACEWOLVES_MIDTIER_RESEARCH
       - STR_PERSONAL_ARMOR
       - STR_ASS_ARMOR
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_CHAPTER_PURITY
     getOneFree:
@@ -6174,6 +6203,13 @@ research:
       - STR_GENERALLOCK
     cost: 0
     points: 0
+
+  - name: STR_IMPROVED_BODYGLOVES  # Allows manufacturing improved bodygloves for the relevant transformation
+    cost: 200
+    points: 20
+    dependencies:
+      - STR_ALIEN_ALLOYS
+      - STR_ASSASSINORUM
 
 ## Adeptus Terra #ARMORS.AT#
 ### The Imperial Law Strategy #ARMORS.AT.LAW#
@@ -6630,6 +6666,7 @@ research:
     points: 0
     dependencies:
       - STR_MIDTIER_PREREQ
+      - STR_THE_MARTIAN_SOLUTION
       - STR_COMMANDER_PLUS
 
   - delete: STR_HEAVY_PLASMA_CLIP
@@ -8992,6 +9029,8 @@ research:
       - STR_WORDBEARER_TERMINATOR
     destroyItem: true
   - name: STR_WORDBEARER_TERMINATOR  # Word Bearer Terminator Chosen
+    cost: 192
+    points: 200
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -9000,6 +9039,8 @@ research:
       - STR_WORDBEARER_GALVWARRIORELITE
     destroyItem: true
   - name: STR_WORDBEARER_GALVWARRIORELITE  # Word Bearer Champion
+    cost: 192
+    points: 100
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -9009,6 +9050,8 @@ research:
       - STR_WORDBEARER_GALVWARRIORPOSSELITE
     destroyItem: true
   - name: STR_WORDBEARER_GALVWARRIORPOSSELITE  # Word Bearer Champion Possessed
+    cost: 192
+    points: 150
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -9018,6 +9061,8 @@ research:
       - STR_WORDBEARER_GALVWARRIORELITE
     destroyItem: true
   - name: STR_WORDBEARER_GALVWARRIOR  # Word Bearer Marine
+    cost: 100
+    points: 50
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -9027,6 +9072,8 @@ research:
       - STR_WORDBEARER_GALVWARRIORPOSS
     destroyItem: true
   - name: STR_WORDBEARER_GALVWARRIORPOSS  # Word Bearer Champion Possessed
+    cost: 192
+    points: 200
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -9036,6 +9083,8 @@ research:
       - STR_WORDBEARER_GALVWARRIOR
     destroyItem: true
   - name: STR_WORDBEARER_SCOUT  # Word Bearer Aspirant
+    cost: 60
+    points: 20
     needItem: true
     unlocks:
       - STR_INTERROGATION_COMPLETED
@@ -11255,6 +11304,7 @@ research:
     cost: 420
     points: 25
     dependencies:
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
       - STR_MIDTIER_PREREQ
       - STR_EXAMINATION_ROOM
@@ -11622,6 +11672,7 @@ research:
     points: 0
     dependencies:
       - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
+      - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
 
   - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed

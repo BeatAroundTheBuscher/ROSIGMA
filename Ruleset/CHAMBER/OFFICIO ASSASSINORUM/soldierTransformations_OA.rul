@@ -2,77 +2,6 @@ extended:
   tagsFile: Ruleset/tags_ROSIGMA.rul
 
 soldierTransformation:
-
-  - name: STR_PROMOTE_TO_VINDICARE
-    cost: 0
-    requires:
-      - STR_ASSASSINORUM
-    producedSoldierType: STR_GUARD_IMPERIAL_ASSASSIN
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    upperBoundType: 1
-    requiredCommendations:
-      STR_HERO_TO_THE_IMPERIUM: 0
-    allowedSoldierTypes:
-      - STR_IMPERIAL_ASSASSINFEM
-
-  - name: STR_PROMOTE_TO_CALLIDUS
-    cost: 0
-    requires:
-      - STR_ASSASSINORUM
-    producedSoldierType: STR_ADEPTAS_CALLIDUS
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    upperBoundType: 1
-    requiredCommendations:
-      STR_HERO_TO_THE_IMPERIUM: 0
-    allowedSoldierTypes:
-      - STR_IMPERIAL_ASSASSINFEM
-
-  - name: STR_PROMOTE_TO_EVERSOR
-    cost: 0
-    requires:
-      - STR_ASSASSINORUM
-    producedSoldierType: STR_EVERSOR_ASSASSIN
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    upperBoundType: 1
-    requiredCommendations:
-      STR_HERO_TO_THE_IMPERIUM: 0
-    allowedSoldierTypes:
-      - STR_IMPERIAL_ASSASSINFEM
-
-  - name: STR_PROMOTE_TO_CULEXUS
-    cost: 0
-    requires:
-      - STR_ASSASSINORUM
-    producedSoldierType: STR_CULEXUS_ASSASSIN
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    upperBoundType: 1
-    requiredCommendations:
-      STR_HERO_TO_THE_IMPERIUM: 0
-    allowedSoldierTypes:
-      - STR_IMPERIAL_ASSASSINFEM
-
-  - name: STR_PROMOTE_TO_VANUS
-    cost: 0
-    requires:
-      - STR_ASSASSINORUM
-    producedSoldierType: STR_VANUS_ASSASSIN
-    allowsDeadSoldiers: false
-    allowsLiveSoldiers: true
-    allowsWoundedSoldiers: true
-    upperBoundType: 1
-    requiredCommendations:
-      STR_HERO_TO_THE_IMPERIUM: 0
-    allowedSoldierTypes:
-      - STR_IMPERIAL_ASSASSINFEM
-
   - name: STR_REPLACE_ASSASSIN #For swapping out live assassins without needing to get them killed
     producedItem: STR_TEMPLE_TOKEN
     requires:
@@ -94,18 +23,18 @@ soldierTransformation:
   - name: STR_INTENSIVE_RECOVERY # for healing assassins with greater than 20 day wound time
     requires:
       - STR_ASSASSINORUM
-      - STR_APOC_BAY
+#      - STR_APOC_BAY # doesn't need Apothecary bay. Sending the Assassins back to the Officio for recovery.
     cost: 100000
     requiredItems:
       STR_KILLPOINT_TOKEN: 50
-    requiresBaseFunc:
-      - APOC
+#    requiresBaseFunc:
+#      - APOC
     keepSoldierArmor: true
     allowsDeadSoldiers: false
     allowsLiveSoldiers: false # only allow wounded soldiers.
     allowsWoundedSoldiers: true
-    transferTime: 480 # 20 day fixed recovery time
-    recoveryTime: 1 # override any existing wound recovery, total time 21 days.
+    transferTime: 144 # 6 day fixed recovery time
+    recoveryTime: 1 # override any existing wound recovery, total time 7 days.
     percentOverallStatChange: # temporarily lose some stats. Does not affect statcaps.
       tu: -10
       stamina: -10
@@ -141,19 +70,51 @@ soldierTransformation:
     allowsWoundedSoldiers: true
     transferTime: 0
     requires:
-      - STR_OA_HIGHTIER
+      - STR_OA_MIDTIER
     allowedSoldierTypes:
       - STR_ADEPTAS_CALLIDUS
       - STR_GUARD_IMPERIAL_ASSASSIN
       - STR_EVERSOR_ASSASSIN
       - STR_CULEXUS_ASSASSIN
       - STR_VANUS_ASSASSIN
+      - STR_IMPERIAL_ASSASSINFEM
     soldierBonusType: STR_BONUS_REFRACTOR_FIELD
     requiredCommendations:
-      STR_VETERAN_COMMENDATION: 1
+      STR_ELIMINATOR: 0
+
+  - name: STR_IMPROVE_BODYGLOVE
+    forbiddenPreviousTransformations:
+      - STR_IMPROVE_BODYGLOVE
+    requiredItems:
+      STR_IMPROVED_BODYGLOVE: 1
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    transferTime: 0
+    requires:
+      - STR_IMPROVED_BODYGLOVES # Research that is also needed to manufacture the item
+    allowedSoldierTypes:
+      - STR_ADEPTAS_CALLIDUS
+      - STR_GUARD_IMPERIAL_ASSASSIN
+      - STR_EVERSOR_ASSASSIN
+      - STR_CULEXUS_ASSASSIN
+      - STR_VANUS_ASSASSIN
+      - STR_IMPERIAL_ASSASSINFEM
+    soldierBonusType: STR_BONUS_IMPROVED_BODYGLOVE
 
 soldierBonuses:
   - name: STR_BONUS_REFRACTOR_FIELD
     tags:
-      BONUS_ENERGY_SHIELD_HP_PER_TURN: 50
-      BONUS_ENERGY_SHIELD_DECAY: 50
+      BONUS_ENERGY_SHIELD_HP_PER_TURN: 75
+      BONUS_ENERGY_SHIELD_DECAY: 75
+
+  - name: STR_BONUS_IMPROVED_BODYGLOVE
+    frontArmor: 25
+    sideArmor: 20
+    rearArmor: 15
+    underArmor: 25 # substantially better blast padding
+    stats:
+      stamina: 10 # better fitting, easier to move, micro servos, whatever
+      reactions: 10
+      health: 20 # thicker padding
