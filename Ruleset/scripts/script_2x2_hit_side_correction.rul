@@ -1,0 +1,195 @@
+
+extended:
+  scripts:
+    hitUnit:
+# Improved override that takes into account attacker position and facing.
+      - new: CORRECT_POWER_SIDE_MELEE_V2
+        offset: -90
+        code: |
+          # Check if this is a melee attack
+          if eq battle_action BA_HIT;
+            var ptr RuleArmor rule_armor;
+            var int unit_size;
+
+            unit.getRuleArmor rule_armor;
+            rule_armor.getSize unit_size;
+
+            # Check if the target is a large unit (size 2)
+            if eq unit_size 2;
+              var int relPosX;
+              var int relPosY;
+              var int facing_attacker;
+              var int facing_target;
+              var int facing_modifier_A;
+              var int facing_modifier_B;
+              var int pos_modifier;
+              var int cw8_side;
+
+              begin;
+                # Calculate relative X and Y position between attacker and target (we don't need Z)
+                begin;
+                  var Position relative_position;
+                  var Position target_position;
+
+                  attacker.getPosition relative_position;
+                  unit.getPosition target_position;
+
+                  sub relative_position target_position;
+                  relative_position.getX relPosX;
+                  relative_position.getY relPosY;
+                end;
+
+                attacker.getDirection facing_attacker;
+                unit.getDirection facing_target;
+
+                # We shift values 0 or lower for small attackers, large attackers remain the same.
+                attacker.getRuleArmor rule_armor;
+                rule_armor.getSize unit_size;
+                if eq unit_size 1;
+                  if le relPosX 0;
+                    sub relPosX 1;
+                  end;
+                  if le relPosY 0;
+                    sub relPosY 1;
+                  end;
+
+                # Handle 'oddball' diagonal hits from size 2 attackers. We shift values as needed to match a non-diagonal facing in an adjacent position.
+                else;
+                  var int tempA;
+                  var int tempB;
+                  var int tempC;
+
+                  set tempA relPosX;
+                  mul tempA relPosY;
+                  set tempB facing_attacker;
+                  mod tempB 2;
+                  # We check if the size 2 attacker is fully adjacent to its target but is facing diagonally
+                  if and eq tempA 0 eq tempB 1;
+                    # tempC modifier checks if relPosY is 2 or 0 and will be either -1 or 1 respectively.
+                    # We only need to check one of the 2 relative positions because we know the other will be the opposite here.
+                    set tempB relPosY;
+                    abs tempB;
+                    div tempB 2;
+                    set tempC -1;
+                    pow tempC tempB;
+
+                    # For tempB modifier we 1st reduce the 4 possible diagonal values (1,3,5,7) to (0,1,2,3) via integer division.
+                    # Of these 4 values tempB will take a value of 1 for evens and -1 for odds.
+                    # Effectively applies a modifier of +1 to (1,5) and a modifier of -1 to (3,7).
+                    set tempA facing_attacker;
+                    div tempA 2;
+                    mod tempA 2;
+                    set tempB -1;
+                    pow tempB tempA;
+
+                    # tempA will be [-1,1] as one of the relative positions will be 0 and the other [-2,2]
+                    set tempA relPosX;
+                    add tempA relPosY;
+                    div tempA 2;
+
+                    # We adjust the relative position that is 0
+                    if eq relPosX 0;
+                      aggregate relPosX tempA tempB;
+                    else eq relPosY 0;
+                      aggregate relPosY tempA tempB;
+                    end;
+
+                    # And we finally adjust the facing
+                    # Originally we had 'abs tempA' for the aggregate, but this was pointless as it would always be 1 from [-1,1];
+                    # This is now no longer needed 'mul tempB tempC' as it is done in the aggregate;
+                    aggregate facing_attacker tempB tempC;
+                  end;
+                end;
+              end;
+
+              # The constant is +8 circular shift in facing to avoid negative numbers and +1 to invert the modulo 2 calculation.
+              # This facing modifier is needed when diagonal attacks are performed to non-corners of the target. Final valid values for facing_modifier_A = [0,1]
+              set facing_modifier_A 9;
+              add facing_modifier_A relPosX;
+              add facing_modifier_A relPosY;
+              add facing_modifier_A facing_attacker;
+              mod facing_modifier_A 2;
+
+              # This is used for diagonal corner attacks.
+              # This modifier will only ever have a value of 1 when both relative positions have an absolute value of 2, it'll be 0 otherwise.
+              # Final valid values for facing_modifier_B = [0,1]
+              set facing_modifier_B relPosX;
+              mul facing_modifier_B relPosY;
+              abs facing_modifier_B;
+              div facing_modifier_B 4;
+
+              # Determine additional modifier based on position combinations.
+              # This modifier is based on the sign of the 2 relative positions but additionally by relPosX absolute value.
+              # If the absolute value of relPosX is 2 then the final sign will be changed, if it's 1 no change will be made.
+              # Since the only options for the products of the relative positions are: [-4,-2,0,2,4] we divide by 2 to reduce and module by 2 to limit the pos_modifier to [-1,0,1].
+              begin;
+                var int tempA;
+                var int tempB -1;
+
+                set pos_modifier relPosX;
+                mul pos_modifier relPosY;
+                set tempA relPosX;
+                abs tempA;
+                add tempA 1;
+                mod tempA 2;
+                pow tempB tempA;
+                mul pos_modifier tempB;
+                div pos_modifier 2;
+                mod pos_modifier 2;
+              end;
+
+              # After determining all modifiers we now actually perform the calculations for the side being hit.
+              # Constant is composed by +8 direction shift (to avoid negatives) and +4 from attacker facing 0 and target facing 0, strike side would be 4 as base reference.
+              set cw8_side facing_modifier_A;
+              mul cw8_side pos_modifier;
+              add cw8_side 12;
+              add cw8_side facing_attacker;
+              sub cw8_side facing_target;
+
+              # Section that handles RNG rolls for cases were 2 possible sides could be hit.
+              begin;
+                var int temp;
+                set temp cw8_side;
+                mod temp 2;
+                if eq temp 1;
+                  if or eq facing_modifier_A 1 eq facing_modifier_B 1;
+                    var int coin;
+                    battle_game.randomRange coin 0 1;
+                    add cw8_side coin;
+
+                  # handling of cases were the target's 2 possible sides that can be hit are the same.
+                  else;
+                    sub cw8_side pos_modifier;
+                  end;
+                end;
+              end;
+
+              # Calculation is done and now we proceed to covert to OXCE enumeration.
+              # We reduce the value of the clock-wise 8-side option to the 0-7 range.
+              mod cw8_side 8;
+
+              # We then trim it to a 4-side clock-wise selection of 0-3.
+              div cw8_side 2;
+
+              # Here we remap the side hit from our clock-wise numbering to OXCE enumeration. Note that we never need to consider SIDE_UNDER.
+              if eq cw8_side 3;
+                set side SIDE_LEFT;
+              else eq cw8_side 2;
+                set side SIDE_REAR;
+              else eq cw8_side 1;
+                set side SIDE_RIGHT;
+              else;
+                set side SIDE_FRONT;
+              end;
+
+              # Based on the side finally obtained we also set the part hit.
+              if eq side SIDE_LEFT;
+                set part BODYPART_LEFTARM;
+              else eq side SIDE_RIGHT;
+                set part BODYPART_RIGHTARM;
+              else;
+                set part BODYPART_TORSO;
+              end;
+            end;
+          end;
+          return power part side;
