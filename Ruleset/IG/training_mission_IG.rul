@@ -207,11 +207,21 @@ startingConditions:
         STR_GUARDSL_ARMOR_TRAIN: 100
 
       STR_GUARD_ORK_BOY:
-        STR_GUARD_ARMOR_TRAIN: 100
+        STR_ORK_ARMOR_TRAIN: 100
+      STR_BLOOD_AXE_ORK_BOY:
+        STR_ORK_ARMOR_TRAIN: 100
       STR_GUARD_ORK_ARDBOY:
-        STR_GUARD_ARMOR_TRAIN: 100
+        STR_ORK_ARMOR_TRAIN: 100
       STR_GUARD_ORK_NOB:
-        STR_GUARD_ARMOR_TRAIN: 100
+        STR_ORK_ARMOR_TRAIN: 100
+      STR_GUARD_OFFICORK:
+        STR_ORK_ARMOR_TRAIN: 100
+      STR_GUARD_ORK_KAN_BOY:
+        STR_ORK_ARMOR_TRAIN: 100
+      STR_GUARD_ORK_WARBOSS:
+        STR_ORK_ARMOR_TRAIN: 100
+      STR_GUARD_ORK_WEIRDBOY:
+        STR_ORK_ARMOR_TRAIN: 100
 
       STR_DARK_DISCIPLE_PLAYER:
         STR_GUARD_ARMOR_TRAIN: 100
@@ -293,6 +303,7 @@ startingConditions:
       - STR_GUARD_ARMOR_TRAIN
       - STR_GUARDSL_ARMOR_TRAIN
       - STR_CULTIST_ARMOR_TRAIN
+      - STR_ORK_ARMOR_TRAIN
 
 armors:
   - type: STR_GUARD_ARMOR_TRAIN  # DR10 SPACE MARINE SUPORT
@@ -605,6 +616,145 @@ armors:
       - 1.1  # IMPACT
       - 1.0  # MELTA
     loftempsSet: [2]
+    scripts:
+      # https://www.ufopaedia.org/index.php/Experience
+      # max Training is 2-6 for primary
+      # max Training is always 10 for bravery
+
+      # max Training is 0-5 for TUs and Health
+      # max Training is 0-7 for Strength
+      # max Training is 0-6 for Stamina
+      # The overall formula is that you gain 0 to 2 points,
+      # plus a tenth (rounded down) of the remaining increase possible
+
+      # random(0, 2) + (Cap - Current)/10
+
+      returnFromMissionUnit:
+
+        var int statCurrent;
+        var int statCap;
+
+        var int randomNumber;
+        var int temp;
+
+        var ptr RuleSoldier ruleSoldier;
+
+        soldier.getRuleSoldier ruleSoldier;
+
+        ruleSoldier.StatsCap.getTimeUnits statCap;
+        soldier.Stats.getTimeUnits statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setTimeUnits statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getHealth statCap;
+        soldier.Stats.getHealth statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setHealth statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStrength statCap;
+        soldier.Stats.getStrength statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStrength statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getStamina statCap;
+        soldier.Stats.getStamina statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 0 2;
+          set temp statCap;
+          sub temp statCurrent;
+          div temp 10;
+          add statCurrent randomNumber;
+          add statCurrent temp;
+          soldier.Stats.setStamina statCurrent;
+        end;
+
+
+        ruleSoldier.StatsCap.getReactions statCap;
+        soldier.Stats.getReactions statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setReactions statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getFiring statCap;
+        soldier.Stats.getFiring statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setFiring statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getMelee statCap;
+        soldier.Stats.getMelee statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setMelee statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getThrowing statCap;
+        soldier.Stats.getThrowing statCurrent;
+        if lt statCurrent statCap;
+          battle_game.randomRange randomNumber 2 6;
+          add statCurrent randomNumber;
+          soldier.Stats.setThrowing statCurrent;
+        end;
+
+        ruleSoldier.StatsCap.getBravery statCap;
+        soldier.Stats.getBravery statCurrent;
+        if lt statCurrent statCap;
+          add statCurrent 10;
+          soldier.Stats.setBravery statCurrent;
+        end;
+
+        return;
+
+  - type: STR_ORK_ARMOR_TRAIN
+    visibilityAtDay: 40
+    visibilityAtDark: 15
+    spriteSheet: ORK_BLOODAXE_BOY_BS.PCK
+    forcedTorso: 2
+    spriteInv: ORKYGUARD_INV.SPK
+    customArmorPreviewIndex: 1260
+    corpseBattle:
+      - STR_GUARD_ORK_BOY_CORPSE
+    drawingRoutine: 0
+    damageModifier:  # GUARD ARMOR
+      - 1.0  # none
+      - 1.0  # AP
+      - 1.2  # FLAMES
+      - 1.0  # HE
+      - 1.0  # LASCANON
+      - 1.0  # PLASMA
+      - 0.9  # STUN 10% Ork bonus
+      - 1.0  # MELEE 10% Ork bonus
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 1.0  # IMPACT
+      - 1.0  # MELTA
+    loftempsSet: [3]
     scripts:
       # https://www.ufopaedia.org/index.php/Experience
       # max Training is 2-6 for primary
