@@ -1,0 +1,29 @@
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  scripts:
+    returnFromMissionUnit:
+      - new: ROSIGMA_rFMU_bonus_strength_gain
+        offset: 1
+        code: |
+          var ptr RuleSoldier ruleSoldier;
+          var int maxGain;
+          var int statCap;
+          var int statCurrent;
+          var int randomNumber;
+
+          soldier.getRuleSoldier ruleSoldier;
+          ruleSoldier.getTag maxGain Tag.SOLDIER_GAINS_EXTRA_STRENGTH;
+          if eq maxGain 0;
+            return;
+          end;
+
+          ruleSoldier.StatsCap.getStrength statCap;
+          soldier.Stats.getStrength statCurrent;
+          if lt statCurrent statCap;
+            battle_game.randomRange randomNumber 1 maxGain;
+            add statCurrent randomNumber;
+            soldier.Stats.setStrength statCurrent;
+          end;
+
+          return;
