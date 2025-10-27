@@ -306,7 +306,7 @@ research:
       - STR_TAU_STRIKE_TEAMS_GV
       - STR_DEVILFISH_TRANSPORTS_GV   # Build devilfish
       - STR_REMORA_INTERCEPTORS_GV    # Build remoras
-      - STR_XV15_STEALTH_OPERATIONS_GV          # Build stealth suits
+      - STR_STEALTH_SUIT_OPERATIONS_GV          # Build stealth suits
       - STR_BIONICS_OPERATION         # proper med facilities redo as tau bionics
 
 ### build Devilfish from parts
@@ -314,8 +314,8 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-### build XV15 Stealth suits from parts
-  - name: STR_XV15_STEALTH_OPERATIONS_GV
+### Operate XV25 stealth suits
+  - name: STR_STEALTH_SUIT_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
@@ -333,13 +333,13 @@ research:
 
 ### Combine Tau guns and Imperial chassis
   - name: STR_GUEVESA_HEAVY_WEAPONS_GV
-    cost: 200
+    points: 10
+    cost: 100
     dependencies:
       - STR_INFILTRATION_CADRE_GV
       - STR_COOPT_NAVY_PILOTS_GV
       - STR_TANKERS_DELIGHT_GV
     spawnedEvent: STR_GUEVESA_HEAVY_WEAPONS_EVENT_GV
-
 
 ### Ceramite tier part 3
 ### Tau "Large" Base
@@ -353,19 +353,12 @@ research:
       - STR_UFO_CONSTRUCTION
     unlocks:
       - STR_STARSCYTHE_CRISIS_OPERATIONS_GV        # Starscythe Crisis
-      - STR_XV26_STEALTH_OPERATIONS_GV       # XV26 Stealth Suits
       - STR_HAMMERHEAD_GUNSHIPS_GV      # Ion Hammerhead tanks
       - STR_BARRACUDA_INTERCEPTORS_GV   # Barracuda Interceptors
-      - STR_FORM_KILL_TEAMS_GV          # Advanced Pathfinder gear from Kill Teams, side missions, get Darkstrider?
       - STR_MASTER_CRAFTING
     spawnedEvent: STR_AUXILIARY_CADRE_EVENT_GV
 
   - name: STR_STARSCYTHE_CRISIS_OPERATIONS_GV
-    dependencies:
-      - STR_GENERALLOCK
-
-### build XV26 Stealth suits from parts
-  - name: STR_XV26_STEALTH_OPERATIONS_GV
     dependencies:
       - STR_GENERALLOCK
 
@@ -376,13 +369,6 @@ research:
   - name: STR_BARRACUDA_INTERCEPTORS_GV
     dependencies:
       - STR_GENERALLOCK
-
-  - name: STR_FORM_KILL_TEAMS_GV
-    points: 10
-    cost: 100
-    dependencies:
-      - STR_GENERALLOCK
-    spawnedEvent: STR_FORM_KILL_TEAMS_EVENT_GV
 
 ### The Tau realize the warp storm is a serious threat
 # STR_INFILTRATION_CADRE_GV + STR_ALIEN_ORIGINS => STR_FIRE_OF_UNKNOWN_ORIGIN_GV (EMERGENCY MEASURES, REACH OUT TO SISTERS, RALLY GUARD)
@@ -397,6 +383,16 @@ research:
       - STR_RECUSANT_SISTERS_GV   # Contact loyal Sisters
       - STR_RALLY_GUARD_GV            # Rally what remains of the Guard
     spawnedEvent: STR_FIRE_OF_UNKNOWN_ORIGIN_EVENT_GV
+
+### Pathfinder KT gizmos
+### Advanced XV26 Stealth Suits from new KT
+  - name: STR_FORM_KILL_TEAMS_GV
+    points: 10
+    cost: 100
+    dependencies:
+      - STR_INFILTRATION_CADRE_GV
+      - STR_FIRE_OF_UNKNOWN_ORIGIN_GV
+    spawnedEvent: STR_FORM_KILL_TEAMS_EVENT_GV   
 
 ### Imperials generally approve of burning witches
   - name: STR_EMERGENCY_PROTOCOLS_GV
@@ -611,6 +607,8 @@ research:
     dependencies:
       - STR_GUEVESA_STRATEGY_MILITIA_GV
     spawnedEvent: STR_DELIVER_DEBUG_PACKAGE_EVENT_GV
+    getOneFree:
+      - STR_STEALTH_SUIT_OPERATIONS_GV
 
 #   # destroy the Watch Fortress and send a fake signal
 #   - name: STR_END_OF_WATCH_GV

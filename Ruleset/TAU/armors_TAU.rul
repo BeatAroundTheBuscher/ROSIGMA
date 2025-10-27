@@ -22,10 +22,9 @@ items:
   - type: STR_ENGRAVED_ARMOR_ITEM_GV
     costSell: 0
 
-  - type: STR_XV15_STEALTH_SUIT_ITEM_GV
+  - type: STR_STEALTH_SUIT_ITEM_GV
     costSell: 0
 
-  - type: STR_XV26_STEALTH_SUIT_ITEM_GV
     costSell: 0
 
   - type: STR_CRISIS_SUIT_ITEM_GV
@@ -305,7 +304,7 @@ armors:
 
 
 ### TAU FIRE WARRIOR ADVANCED ARMORS
-  - &STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+  - &STR_TAU_ENGRAVED_ARMOR_TEMPLATE_GV
     type: STR_ENGRAVED_ARMORS_GV
     requires: STR_GENERALLOCK
     storeItem: STR_NONE
@@ -354,9 +353,9 @@ armors:
 
 ### Strike Armor is specialized for long range fire
 ### Captain quality optics and firing accuracy bonus
-  - type: STR_WARDED_SHASVRE_STRIKE_ARMOR_GV
+  - type: STR_ENGRAVED_STRIKE_ARMOR_GV
     requires: STR_ENGRAVED_ARMORS_GV
-    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_ENGRAVED_ARMOR_TEMPLATE_GV
     storeItem: STR_ENGRAVED_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
@@ -370,9 +369,9 @@ armors:
 ### breacher armor is better sealed
 ### resistant to flames/HE/stun/melee/impact
 ### has shield (is this busted?)
-  - type: STR_WARDED_SHASVRE_BREACHER_ARMOR_GV
+  - type: STR_ENGRAVED_BREACHER_ARMOR_GV
     requires: STR_ENGRAVED_ARMORS_GV
-    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_ENGRAVED_ARMOR_TEMPLATE_GV
     storeItem: STR_ENGRAVED_ARMOR_ITEM_GV
     damageModifier:  # Captain quality damage resist
       - 1.0  # none
@@ -400,9 +399,9 @@ armors:
       HAS_MARKERLIGHT: 1
 
 ### pathfinders are pathfinders
-  - type: STR_WARDED_SHASVRE_PATHFINDER_ARMOR_GV
+  - type: STR_ENGRAVED_PATHFINDER_ARMOR_GV
     requires: STR_ENGRAVED_ARMORS_GV
-    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_ENGRAVED_ARMOR_TEMPLATE_GV
     storeItem: STR_ENGRAVED_ARMOR_ITEM_GV
     visibilityAtDark: 40
     antiCamouflageAtDark: 15
@@ -483,58 +482,9 @@ armors:
       ARMOR_ENERGY_SHIELD_DECAY: 50
       ARMOR_OVERWATCH_TU_RESTORED: 50
 
-  - type: STR_XV15_STEALTH_SUIT_GV
-    requires: STR_XV15_STEALTH_OPERATIONS_GV
-    # Strike quality
-    visibilityAtDay: 40
-    visibilityAtDark: 35
-    antiCamouflageAtDark: 7
-    antiCamouflageAtDay: 7
-    heatVision: 35
-    camouflageAtDark: -15 #tanith level camo
-    camouflageAtDay: -7
-    spriteSheet: XCOM_1.PCK
-    customArmorPreviewIndex: 1
-    corpseBattle:
-      - STR_TAUFIREWARRIORLEADER_PCCORPSE
-    storeItem: STR_XV15_STEALTH_SUIT_ITEM_GV
-    # specialWeapon: STR_UNARMED_GAUNTLET_PLUS Some kind of special stealth suit ability
-    # Same as regular Fire Warrior armor - the XV15 is for Stealth
-    frontArmor: 80 # +10 vs basic Guard Carapace
-    sideArmor: 70
-    rearArmor: 50
-    underArmor: 70
-    drawingRoutine: 0
-    damageModifier: # TAU ARMOR
-      - 1.0  # none
-      - 0.8  # AP
-      - 0.6  # FLAMES; partially environmentally sealed
-      - 0.8  # HE
-      - 0.8  # LASCANON
-      - 0.9  # PLASMA
-      - 0.9  # STUN
-      - 1.1  # MELEE
-      - 0.9  # ACID
-      - 0.0  # SMOKE
-      - 0.7  # IMPACT
-      - 0.9  # MELTA
-    units:
-      - STR_FIREWARRIOR_SHASUI_GV
-      - STR_FIREWARRIOR_SHASVRE_GV
-    # The XV15 is not a full battlesuit
-    stats:
-      tu: 10
-      stamina: 10
-      health: 5  # suits are not invincible
-      firing: 5  # bonus to hit from sensors and firing computer
-    loftempsSet: [3]
-    builtInWeapons:
-      - INV_NULL_3X3
-      - STR_TAU_SUIT_BURST_CANNON_GV
 
-
-  - type: STR_XV26_STEALTH_SUIT_GV
-    requires: STR_XV26_STEALTH_OPERATIONS_GV
+  - type: STR_XV25_STEALTH_SUIT_GV
+    requires: STR_STEALTH_SUIT_OPERATIONS_GV
     visibilityAtDay: 40
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
@@ -542,11 +492,13 @@ armors:
     heatVision: 40
     camouflageAtDark: -15 #tanith level camo
     camouflageAtDay: -7
-    spriteSheet: XCOM_1.PCK
     customArmorPreviewIndex: 1
+    movementType: 1
+    spriteSheet: WHITESCARSTERMIbattle.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     corpseBattle:
-      - STR_TAUFIREWARRIORLEADER_PCCORPSE
-    storeItem: STR_XV26_STEALTH_SUIT_ITEM_GV
+      - STR_XV25_STEALTH_SUIT_PCCORPSE
+    storeItem: STR_STEALTH_SUIT_ITEM_GV
     # specialWeapon: STR_UNARMED_GAUNTLET_PLUS Some kind of special stealth suit ability
     # Tactical marine amounts of armor
     frontArmor: 110
@@ -573,30 +525,33 @@ armors:
     stats:
       tu: 20
       stamina: 20
-      health: 15  # suits are not invincible
+      health: 25  # +1 wound
       firing: 10  # bonus to hit from sensors and firing computer
     loftempsSet: [4]
     builtInWeapons:
       - INV_NULL_3X3
       - STR_TAU_SUIT_BURST_CANNON_GV
 
-  - &STR_STARSCYTHE_OPTIONS_GV
-    type: STR_STARSCYTHE_CRISIS_SUIT_BC2X_GV
-    requires: STR_STARSCYTHE_CRISIS_OPERATIONS_GV
+
+### cloned for now
+  - type: STR_XV26_STEALTH_SUIT_GV
+    requires: STR_FORM_KILL_TEAMS_GV
     visibilityAtDay: 40
     visibilityAtDark: 40
     antiCamouflageAtDark: 10
     antiCamouflageAtDay: 10
     heatVision: 40
-    camouflageAtDark: 0
-    camouflageAtDay: 0
-    spriteSheet: XCOM_1.PCK
+    camouflageAtDark: -15 #tanith level camo
+    camouflageAtDay: -7
+    spriteSheet: WHITESCARSTERMIbattle.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
     customArmorPreviewIndex: 1
+    movementType: 1
     corpseBattle:
-      - STR_TAUFIREWARRIORLEADER_PCCORPSE
-    storeItem: STR_CRISIS_SUIT_ITEM_GV  # this is how we swap between different types of crisis
+      - STR_XV26_STEALTH_SUIT_PCCORPSE
+    storeItem: STR_STEALTH_SUIT_ITEM_GV
     # specialWeapon: STR_UNARMED_GAUNTLET_PLUS Some kind of special stealth suit ability
-    # Tactical marine amounts of armor - Crisis are 3+
+    # Tactical marine amounts of armor with high Dodge- stealths are T4 3+ -1 to hit
     frontArmor: 110
     sideArmor: 90
     rearArmor: 80
@@ -615,31 +570,99 @@ armors:
       - 0.0  # SMOKE
       - 0.7  # IMPACT
       - 0.9  # MELTA
+    units:
+      - STR_FIREWARRIOR_SHASUI_GV
+      - STR_FIREWARRIOR_SHASVRE_GV
     stats:
       tu: 20
       stamina: 20
-      health: 30  # suits are not invincible
-      firing: 20  # bonus to hit from advanced sensors and firing computer
+      health: 25  # suits are not invincible
+      firing: 10  # bonus to hit from sensors and firing computer
+    loftempsSet: [4]
+    builtInWeapons:
+      - INV_NULL_3X3
+      - STR_TAU_SUIT_BURST_CANNON_GV
+
+
+  - &STR_STARSCYTHE_OPTIONS_GV
+    type: STR_STARSCYTHE_TEMPLATE_GV
+    requires: STR_STARSCYTHE_CRISIS_OPERATIONS_GV
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    antiCamouflageAtDark: 10
+    antiCamouflageAtDay: 10
+    heatVision: 40
+    camouflageAtDark: 0
+    camouflageAtDay: 0
+    spriteSheet: CHAOSCULT_DEMONLORDbattle.PCK
+    spriteInv: TAUFIREWARRIORSLEADERARMOR.PCK
+    corpseBattle:
+      - STR_STARSCYTHE_CRISIS_SUIT_BC2X_PCCORPSE    
+    customArmorPreviewIndex: 1
+    movementType: 1
+    # storeItem: STR_CRISIS_SUIT_ITEM_GV  # this is how we swap between different types of crisis
+    # specialWeapon: STR_UNARMED_GAUNTLET_PLUS Some kind of special stealth suit ability
+    # Term marine amounts of armor? - Crisis are T5 3+
+    frontArmor: 150
+    sideArmor: 130
+    rearArmor: 100
+    underArmor: 150
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.6  # AP
+      - 0.3  # FLAMES
+      - 0.4  # HE
+      - 0.9  # LASCANON
+      - 0.8  # PLASMA
+      - 1.0  # STUN
+      - 0.9  # MELEE
+      - 0.8  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.0  # MELTA
+    stats:
+      tu: 20
+      stamina: 20
+      health: 50  # let's try this +2 wound
+      firing: 10  # bonus to hit from sensors and firing computer
     units:
       - STR_FIREWARRIOR_SHASUI_GV
       - STR_FIREWARRIOR_SHASVRE_GV
     loftempsSet: [5]
+
+  - type: STR_STARSCYTHE_CRISIS_SUIT_BC2X_GV
+    refNode: *STR_STARSCYTHE_OPTIONS_GV
+    corpseBattle:
+      - STR_STARSCYTHE_CRISIS_SUIT_BC2X_PCCORPSE
     builtInWeapons:
-      - INV_NULL_3X3
       - STR_TAU_SUIT_BURST_CANNON_TWINLINKED_GV
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
 
   - type: STR_STARSCYTHE_CRISIS_SUIT_BCFL_GV
     refNode: *STR_STARSCYTHE_OPTIONS_GV
+    corpseBattle:
+      - STR_STARSCYTHE_CRISIS_SUIT_BCFL_PCCORPSE
     builtInWeapons:
-      - INV_NULL_3X3
       - STR_TAU_SUIT_BURST_CANNON_GV
       - STR_TAU_SUIT_FLAMER_GV
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2
 
   - type: STR_STARSCYTHE_CRISIS_SUIT_FL2X_GV
     refNode: *STR_STARSCYTHE_OPTIONS_GV
+    corpseBattle:
+      - STR_STARSCYTHE_CRISIS_SUIT_FL2X_PCCORPSE
     builtInWeapons:
-      - INV_NULL_3X3
       - STR_TAU_SUIT_FLAMER_TWIN_LINKED_GV
+      - INV_NULL_3X3
+      - INV_NULL_2X1_RL
+      - INV_NULL_2X1_LL
+      - INV_NULL_4X2      
 
 
 ### GUEVESA FLAK AND CARAPACE ARMORS
@@ -738,7 +761,7 @@ armors:
 
 
   - type: STR_TAUGUEVESACARAP_VETERAN_ARMOR_GV
-    refNode: *STR_TAU_WARDED_ARMOR_TEMPLATE_GV
+    refNode: *STR_TAU_ENGRAVED_ARMOR_TEMPLATE_GV
     spriteSheet: TAUGUEVESALV2battle_GOG.PCK
     spriteInv: TAUGUEVESALV2ARMOR.PCK
     corpseBattle:
