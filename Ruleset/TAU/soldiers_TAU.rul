@@ -1,0 +1,596 @@
+soldiers:
+# Fire Warriors. Currently no diff btwn Fire Warriors and Pathfinders beyond armor.
+# stats are placeholders for shas'ui and higher
+# TODO: Remember to do Tau bionics and maybe some kind of medal like Blooded or something
+
+# Fire Warriors are bred and trained for war but are not superhuman
+# Tabletop BS 4+ and Ld 7+ matches Guard stats in these regards
+# So my thoughts are
+# Managed genetics: Reliably usable soldiers in terms of bravery (40-60) and psiStrength (80-100).
+# Overwatch specialists: Excellent reactions
+# Mobile hunters: Good TU + stamina, better min firing accuracy
+# Weak arms: Terrible melee, low strength cap
+# Never psykers: No psiSkill, ever
+
+# Guevesa cloned off IG ranks
+# No Guevesa > Officer promotion for egalitarian Tau!
+# You must go Gue'vesa'la > Gue'vesa'ui by veterancy
+# Then you can go > Gue'vesa'vre by a promotion (with more veterancy).
+# Guevesa cultists can become higher Gue'vesa by rank once A Secret Pact is researched as they are Old Gue'vesa
+
+# == Soldier Types ==
+# Fire Warriors (done)
+# Guevesa (done)
+# Need officer orders - Breach and Clear, Keep Firing!, Recon Sweep
+# Beastmen gue'vesa (Morin'vesa - NYI)
+
+### Tau don't use penitents in combat
+  - type: STR_PENITENT
+    requires: !add
+      - STR_NOT_TAU_EMPIRE_GV
+
+### Fire warrior base
+  - &STR_FIREWARRIOR_GV
+    type: STR_FIREWARRIOR_GV
+    requires:
+      - STR_INFILTRATION_FIREBASE_GV
+    requiresBuyBaseFunc: [TAU]
+    costBuy: 30000
+    monthlyBuyLimit: 10
+    costSalary: 10000
+    minStats:
+      tu: 55  # Guard 50 -- better runners with better rations
+      stamina: 45  # Guard 40 -- better runners with better rations
+      health: 25
+      bravery: 30  # Guard 20 -- I sack all my 20 bravery guard
+      reactions: 40  # Guard 30 -- the overwatchers
+      firing: 55  # Guard 40 -- Tau need to shoot to be useful in combat
+      throwing: 30  # Guard 30
+      strength: 10  # Guard 10 -- <10 strengths lead to problems with basic firearms
+      psiStrength: 80 # Guard 0 -- Tau not warp sensitive
+      psiSkill: 0  # Tau never produce psykers
+      melee: 0 # Guard 20
+      mana: 0
+    maxStats:
+      tu: 65  # Guard 60
+      stamina: 75  # Guard 70
+      health: 40
+      bravery: 60  # Guard 60
+      reactions: 70  # Guard 60
+      firing: 70     # Guard 70
+      throwing: 65   # Guard 65
+      strength: 25  # Guard 25 -- Need high STR to use rail rifle well
+      psiStrength: 100 # -- Tau not warp sensitive
+      psiSkill: 0  # Tau never produce psykers
+      melee: 40  # Guard 60
+      mana: 0
+    statCaps:
+      tu: 80  # Guard 75
+      stamina: 95  # Guard 90
+      health: 55
+      bravery: 110  # Guard 110
+      reactions: 90  # Guard 80
+      firing: 100   # Guard 100
+      throwing: 70  # Guard 70
+      strength: 55  # Guard 65
+      psiStrength: 100
+      psiSkill: 0 # No psykers
+      melee: 100  # Guard 120
+      mana: 0
+    trainingStatCaps:
+      tu: 65
+      stamina: 75
+      health: 30
+      firing: 75
+      throwing: 65
+      strength: 25
+      psiStrength: 100
+      psiSkill: 0
+      melee: 40
+      mana: 0
+    armor: STR_TAU_PATHFINDER_ARMOR_GV
+    allowPiloting: false
+    allowPromotion: true
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_0
+    rankSprite: {mod: 40k, index: 1000}
+    rankBattleSprite: {mod: 40k, index: 1000}
+    rankTinySprite: {mod: 40k, index: 1000}
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    soldierNames:
+      - delete
+      - Names/tau_firecaste.nam
+    deathMale: [41, 42, 43]
+    deathFemale: [44, 45, 46]
+    value: 10
+
+  - &STR_SHASUIS_GV
+    type: STR_FIREWARRIOR_SHASUI_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAU_PATHFINDER_LEADER_ARMOR_GV
+    costBuy: 0
+    statCaps:
+      tu: 80
+      stamina: 125
+      health: 60
+      bravery: 110
+      reactions: 90
+      firing: 100  # was 90
+      throwing: 70
+      strength: 55  # was 60
+      psiStrength: 100
+      psiSkill: 100
+      melee: 100
+      mana: 0
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_1
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+  - &STR_SHASVRES_GV
+    type: STR_FIREWARRIOR_SHASVRE_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_ENGRAVED_PATHFINDER_ARMOR_GV
+    costBuy: 0
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_2
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+  - type: STR_FIREWARRIOR_FIREBLADE_GV
+    refNode: *STR_FIREWARRIOR_GV
+    armor: STR_TAUFIREBLADE_ARMOR_GV
+    costBuy: 0
+    rankStrings:
+      - STR_FIREWARRIOR_GV_RANK_3
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+
+  - &STR_GUEVESA_SOLDIERS_GV
+    type: STR_GUEVESALA_GV
+    # costBuy: 30000
+    costSalary: 5000
+    requires:
+      - STR_A_SECRET_PACT_GV
+    armor: STR_TAUGUEVESAFLAK_PC_ARMOR_GV
+    rankStrings:
+      - STR_GUEVESA_GV_RANK_0
+    soldierNames:
+      - delete
+      - Names/tau_guevesa.nam
+    flagOffset: 42
+    minStats:
+      tu: 40  # was 50
+      stamina: 40
+      health: 30      # better health care
+      bravery: 30     # fighting for a cause
+      reactions: 30
+      firing: 40
+      throwing: 35
+      strength: 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 45
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 25
+      psiStrength: 100
+      psiSkill: 6
+      melee: 60
+      mana: 0
+    statCaps:
+      tu: 75  # was 65
+      stamina: 90
+      health: 60  # was 45
+      bravery: 110  # was 100
+      reactions: 80  # was 60
+      firing: 100  # was 100
+      throwing: 70
+      strength: 65  # was 60
+      psiStrength: 100
+      psiSkill: 50
+      melee: 90
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 35
+      firing: 70
+      throwing: 65
+      strength: 30
+      psiStrength: 100
+      psiSkill: 50
+      melee: 50
+      mana: 0
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    deathMale: [41, 42, 43]
+    deathFemale: [44, 45, 46]
+    allowPiloting: true
+    allowPromotion: true
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    value: 10
+
+
+  - type: STR_GUEVESAUI_GV
+    refNode: *STR_GUEVESA_SOLDIERS_GV
+    armor: STR_TAUGUEVESACARAP_ARMOR
+    rankStrings:
+      - STR_GUEVESA_GV_RANK_1
+    flagOffset: 42
+    minStats:  # raise as veterans are now created by the game
+      tu: 50
+      stamina: 60  # was 40
+      health: 40  # was 25
+      bravery: 50  # was 20
+      reactions: 50  # was 30
+      firing: 60  # was 40
+      throwing: 50  # was 35
+      strength: 20  # was 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 50  # was 20
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 45
+      bravery: 60
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 30  # was 20
+      psiStrength: 100
+      psiSkill: 6
+      melee: 60
+      mana: 0
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 65
+      bravery: 110
+      reactions: 80
+      firing: 130  # was 90  # Scion was highest
+      throwing: 80
+      strength: 65
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 80  # was 70  # Scion was highest  # doesn't matter
+      health: 45
+      firing: 80  # was 70  # Scion was highest  # doesn't matter
+      throwing: 70  # was 65  # Scion was highest
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
+      mana: 0
+    tags:
+      SOLDIER_IS_OFFICER: 1
+    value: 20
+
+
+  - type: STR_GUEVESAVRE_GV
+    refNode: *STR_GUEVESA_SOLDIERS_GV
+    armor: STR_TAUGUEVESACARAP_ARMOR
+    rankStrings:
+      - STR_GUEVESA_GV_RANK_2
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 65
+      bravery: 110
+      reactions: 80
+      firing: 130  # was 90  # Scion was highest
+      throwing: 80
+      strength: 65
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 80  # was 70  # Scion was highest  # doesn't matter
+      health: 45
+      firing: 80  # was 70  # Scion was highest  # doesn't matter
+      throwing: 70  # was 65  # Scion was highest
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
+      mana: 0
+    tags:
+      SOLDIER_IS_OFFICER: 1
+    value: 20
+
+
+
+### Guevesa cultists
+#  - type: STR_GUEVESACULTIST_GV
+#    refNode: *STR_GUEVESA_SOLDIERS_GV
+#    requires:
+#      - STR_WATERCASTE_PROPAGANDA_GV
+#    costBuy: 10000
+#    costSalary: 5000   # more expensive to maintain than Guard
+#    armor: STR_TAUGUEVESAROBE_ARMOR_GV
+#    value: 5
+
+  - type: STR_MILITIA_GV
+    flagOffset: 42
+    requires:
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
+    costBuy: 12000
+    costSalary: 4000
+    # shrine-bandits = penitents but can train
+    minStats:
+      tu: 35  # 40
+      stamina: 40
+      health: 20  # 25
+      bravery: 20  # 20
+      reactions: 25  # 30
+      firing: 30  # 40
+      throwing: 35
+      strength: 15  # 10, prison yard workout mode
+      psiStrength: 0
+      psiSkill: 0
+      melee: 25  # 20, prison yard skills
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 80  # 70
+      health: 40
+      bravery: 60
+      reactions: 60
+      firing: 65  # 70
+      throwing: 65
+      strength: 30  # 25, prison yard workout mode
+      psiStrength: 100
+      psiSkill: 6
+      melee: 70  # 60, prison yard skills
+      mana: 0
+    statCaps:
+      tu: 75
+      stamina: 90
+      health: 50  # 40, still below fell fed Guardsman
+      bravery: 110
+      reactions: 80
+      firing: 100
+      throwing: 70
+      strength: 65
+      psiStrength: 100
+      psiSkill: 50
+      melee: 90
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 80
+      health: 30
+      firing: 65
+      throwing: 65
+      strength: 30
+      psiStrength: 100
+      psiSkill: 50
+      melee: 70
+      mana: 0
+    armor: STR_TAUGUEVESA_IMPROVARMOR_T0_GV
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    soldierNames:
+      - delete
+      - Names/guard.nam
+    moraleLossWhenKilled: 75  # people don't care about the grunts so much
+    allowPiloting: true
+    allowPromotion: true
+    rankStrings:
+      - STR_GUARD_RANK_0
+      - STR_GUARD_RANK_1
+      - STR_GUARD_RANK_2
+      - STR_GUARD_RANK_3
+    rankSprite: {mod: 40k, index: 1000}
+    rankBattleSprite: {mod: 40k, index: 1000}
+    rankTinySprite: {mod: 40k, index: 1000}
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    deathMale: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
+    deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
+    value: 10
+
+
+  - type: STR_MILITIA_OFFICER_GV
+    flagOffset: 42
+    requires:
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
+    # costBuy: 100000 # you will manuf this gamer eventually
+    costSalary: 30000
+    minStats:
+      tu: 50
+      stamina: 40
+      health: 25
+      bravery: 30
+      reactions: 30
+      firing: 50
+      throwing: 35
+      strength: 15
+      psiStrength: 0
+      psiSkill: 0
+      melee: 40
+      mana: 0
+    maxStats:
+      tu: 60
+      stamina: 70
+      health: 40
+      bravery: 70
+      reactions: 60
+      firing: 70
+      throwing: 65
+      strength: 25
+      psiStrength: 100
+      psiSkill: 16
+      melee: 70
+      mana: 0
+    statCaps:
+      tu: 75
+      stamina: 120
+      health: 60
+      bravery: 110
+      reactions: 80
+      firing: 100  # was 90
+      throwing: 70
+      strength: 65  # was 60
+      psiStrength: 100
+      psiSkill: 100
+      melee: 120
+      mana: 0
+    trainingStatCaps:
+      tu: 60
+      stamina: 70
+      health: 40
+      firing: 70
+      throwing: 65
+      strength: 35
+      psiStrength: 100
+      psiSkill: 100
+      melee: 70
+      mana: 0
+    armor: STR_OFFICER_FLAK_ARMOR_NOAIRSTRIKE
+    dogfightExperience:
+      bravery: 10
+      reactions: 30
+      firing: 25
+    allowPiloting: true
+    allowPromotion: true
+    standHeight: 22
+    kneelHeight: 14
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 42
+    soldierNames:
+      - delete
+      - Names/officer.nam
+    deathMale: [{mod: 40k, index: 41}, {mod: 40k, index: 42}, {mod: 40k, index: 43}]
+    deathFemale: [{mod: 40k, index: 44}, {mod: 40k, index: 45}, {mod: 40k, index: 46}]
+    rankStrings:
+      - STR_OFFICER_RANK_0
+      - STR_OFFICER_RANK_1
+      - STR_OFFICER_RANK_2
+      - STR_OFFICER_RANK_3
+      - STR_OFFICER_RANK_4
+      # - STR_OFFICER_RANK_5
+    rankSprite: {mod: 40k, index: 1012}
+    rankBattleSprite: {mod: 40k, index: 1012}
+    rankTinySprite: {mod: 40k, index: 1012}
+    value: 25
+    tags:
+      SOLDIER_IS_OFFICER: 1
+
+
+  - type: STR_BEASTMAN_CULTIST_GV
+    requires:
+      - STR_BEASTMEN_CULTISTS_GV
+    costBuy: 12500  # lower purchase cost, temporary until we decide on recruitment methods, while paid less perhaps they should not be that easy to acquire in mass for non abhuman strategy
+    costSalary: 2500
+    minStats:
+      tu: 50  # was 40
+      stamina: 50  # was 40
+      health: 30  # was 25
+      bravery: 10  # was 20
+      reactions: 40  # was 30
+      firing: 35  # was 40
+      throwing: 35  # was 35
+      strength: 20  # was 10
+      psiStrength: 0
+      psiSkill: 0
+      melee: 55  # was 20
+      mana: 0
+    maxStats:
+      tu: 80  # was 60
+      stamina: 80  # was 70
+      health: 60  # was 40
+      bravery: 70  # was 60
+      reactions: 75  # was 60
+      firing: 60  # was 70
+      throwing: 70  # was 65
+      strength: 50  # was 25
+      psiStrength: 100
+      psiSkill: 6  # was 6
+      melee: 70  # was 60
+      mana: 0
+    statCaps:
+      tu: 110  # was 75
+      stamina: 110  # was 90
+      health: 80  # was 55
+      bravery: 100  # was 100
+      reactions: 80  # was 60
+      firing: 90  # was 100
+      throwing: 80
+      strength: 80  # was 65
+      psiStrength: 100
+      psiSkill: 50
+      melee: 95  # was 90
+      mana: 0
+    trainingStatCaps:
+      tu: 90
+      stamina: 90
+      health: 70
+      firing: 60
+      throwing: 60
+      strength: 65
+      psiStrength: 100
+      psiSkill: 50
+      melee: 85
+      mana: 0
+    armor: STR_PENAL_ARMOR_BEASTMAN
+    # dogfightExperience:
+    #   bravery: 10
+    #   reactions: 30
+    #   firing: 25
+    allowPiloting: false
+    allowPromotion: true
+    standHeight: 21
+    kneelHeight: 16
+    femaleFrequency: 50
+    avatarOffsetX: 66
+    avatarOffsetY: 35
+    soldierNames:
+      - delete
+      - Names/beastman.nam
+    deathMale: [2680, 2681, 2682, 2683, 2684]
+    deathFemale: [2686, 2687, 2688, 2689, 2690]
+    rankStrings:
+      - STR_GUARD_RANK_0
+      - STR_GUARD_RANK_1
+      - STR_GUARD_RANK_2
+      - STR_GUARD_RANK_3
+    rankSprite: {mod: 40k, index: 1000}
+    rankBattleSprite: {mod: 40k, index: 1000}
+    rankTinySprite: {mod: 40k, index: 1000}
+    value: 10
+    moraleLossWhenKilled: 100
