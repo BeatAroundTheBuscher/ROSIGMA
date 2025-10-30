@@ -2,7 +2,6 @@ facilities:
   - type: STR_ACCESS_OUTPOST_ORK
     requires:
       - STR_GREENEST_ORKZ
-      - STR_GENERALLOCK
     placeSound: {mod: 40k, index: 98}
     spriteShape: {mod: 40k, index: 0}
     spriteFacility: {mod: 40k, index: 632}
@@ -26,8 +25,9 @@ facilities:
   - type: STR_OUTPOST_ORK
     requires:
       - STR_GREENEST_ORKZ
-      - STR_GENERALLOCK
     requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [ORKOUT]
+    forbiddenBaseFunc: [ORKOUT]
     connectorsDisabled: true
     placeSound: {mod: 40k, index: 98}
     spriteShape: {mod: 40k, index: 637}
@@ -38,7 +38,7 @@ facilities:
     buildTime: 10
     monthlyCost: 400000
     canBeBuiltOver: true
-    maxAllowedPerBase: 2
+    maxAllowedPerBase: 1
     personnel: 150
     storage: 80
     radarRange: 2577
@@ -48,13 +48,16 @@ facilities:
     trainingRooms: 50 # Orks are always roughhousing. They have poor training caps though.
     mapName: XBASE_ORK00
     storageTiles:
-      - [24, 6, 0]
-      - [25, 6, 0]
-      - [27, 6, 0]
-      - [22, 4, 0]
-#      - [34, 10, 0]
-      - [28, 3, 0]
-      - [27, 3, 1]
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
     verticalLevels:
       - type: ground
         terrain: baseTerrain
@@ -70,18 +73,19 @@ facilities:
     requires:
       - STR_GREENEST_ORKZ
       - STR_HYPER_WAVE_DECODER
-      - STR_GENERALLOCK
     requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [ORKOUT]
     connectorsDisabled: true
     placeSound: {mod: 40k, index: 98}
     spriteShape: {mod: 40k, index: 637}
     # spriteFacility:  {mod: 40k, index: 637}
     size: 3
-    buildCost: 2200000
+    buildCost: 400000 # can only be built as an upgrade
     crafts: 1
     buildTime: 10
     canBeBuiltOver: true
-    maxAllowedPerBase: 1 # only need 1 hyperwave
+    maxAllowedPerBase: 1
+    upgradeOnly: true # would need regular outpost first, then upgrade into this version, ensuring there can only be one fort.
     monthlyCost: 600000
     personnel: 150 # lotsa boys and meks
     storage: 75 # build storage facilities
@@ -90,13 +94,16 @@ facilities:
     trainingRooms: 50 # Orks are always roughhousing. They have poor training caps though.
     mapName: XBASE_ORK00
     storageTiles:
-      - [24, 6, 0]
-      - [25, 6, 0]
-      - [27, 6, 0]
-      - [22, 4, 0]
-#      - [34, 10, 0]
-      - [28, 3, 0]
-      - [27, 3, 1]
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
     verticalLevels:
       - type: ground
         terrain: baseTerrain
@@ -113,10 +120,117 @@ facilities:
     buildOverFacilities:
       - STR_OUTPOST_ORK
 
+  - type: STR_OUTPOST_ORK_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [ORKOUT, SHIELD]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: {mod: 40k, index: 637}
+    # spriteFacility:  {mod: 40k, index: 637}
+    size: 3
+    buildCost: 500000 # can only be built as an upgrade.
+    crafts: 1
+    buildTime: 10
+    monthlyCost: 400000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    upgradeOnly: true # would need regular outpost first
+    personnel: 150
+    storage: 80
+    radarRange: 2577
+    radarChance: 20
+    labs: 25
+    workshops: 50
+    trainingRooms: 50 # Orks are always roughhousing. They have poor training caps though.
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    destroyedFacility: STR_OUTPOST_ORK_SHIELD # Functionally indestructable
+    mapName: XBASE_ORK05
+    storageTiles:
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [3, 3, 0]
+        blocks: [10] # 10 is 3x3 with holes cut out for ramps
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [5] # 5 because it is the sixth entry
+        size: [3, 3, 3] # if the craft is going on z = 1, the height here needs to be 1
+    listOrder: 800
+    buildOverFacilities:
+      - STR_OUTPOST_ORK
+
+  - type: STR_OUTPOST_ORK_DECODER_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_HYPER_WAVE_DECODER
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [ORKOUT, SHIELD]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: {mod: 40k, index: 637}
+    # spriteFacility:  {mod: 40k, index: 637}
+    size: 3
+    buildCost: 800000 # can only be built as an upgrade
+    crafts: 1
+    buildTime: 10
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    upgradeOnly: true # would need regular outpost first, then upgrade into this version, ensuring there can only be one fort.
+    monthlyCost: 600000
+    personnel: 150 # lotsa boys and meks
+    storage: 75 # build storage facilities
+    labs: 25 # Meks can come up with stuff here
+    workshops: 50 # Meks can also build stuff. Build hangars for more workshop space.
+    trainingRooms: 50 # Orks are always roughhousing. They have poor training caps though.
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    destroyedFacility: STR_OUTPOST_ORK_DECODER_SHIELD # Functionally indestructable
+    mapName: XBASE_ORK05
+    storageTiles:
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [3, 3, 0]
+        blocks: [10] # 10 is 3x3 with holes cut out for ramps
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [5] # 5 because it is the sixth entry
+        size: [3, 3, 3] # if the craft is going on z = 1, the height here needs to be 1
+    listOrder: 800
+    radarRange: 2759
+    radarChance: 100
+    hyper: true
+    buildOverFacilities:
+      - STR_OUTPOST_ORK
+      - STR_OUTPOST_ORK_DECODER
+      - STR_OUTPOST_ORK_SHIELD
+
   - type: STR_HANGAR_ORK_OUTPOST
     requires:
       - STR_GREENEST_ORKZ
-      - STR_GENERALLOCK
     requiresBaseFunc: [ORKZ]
     connectorsDisabled: true
     placeSound: {mod: 40k, index: 98}
@@ -126,11 +240,42 @@ facilities:
     crafts: 1
     buildTime: 5
     monthlyCost: 25000
+    canBeBuiltOver: true
     workshops: 50 # Mek shop and Hangar
-#    storage: 5
     mapName: XBASE_ORK01
-#    storageTiles:
-#      - [3, 6, 0]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: middle
+        terrain: XBASE_ORK
+        blocks: [1] # 1, 2nd entry
+        size: [2, 2, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: MIG2x2 # needs a 20x20 map to match the hangar
+        blocks: [0]
+    listOrder: 800
+
+  - type: STR_HANGAR_ORK_OUTPOST_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110
+    size: 2
+    buildCost: 900000 # pay double to ensure it can't be destroyed
+    crafts: 1
+    buildTime: 5
+    monthlyCost: 25000
+    canBeBuiltOver: true
+    workshops: 50 # Mek shop and Hangar
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    destroyedFacility: STR_HANGAR_ORK_OUTPOST_SHIELD # Functionally indestructable
+    mapName: XBASE_ORK01
     verticalLevels:
       - type: ground
         terrain: baseTerrain
@@ -149,7 +294,6 @@ facilities:
   - type: STR_GENERAL_STORES_ORK_OUTPOST
     requires:
       - STR_GREENEST_ORKZ
-      - STR_GENERALLOCK
     placeSound: {mod: 40k, index: 98}
     spriteShape: {mod: 40k, index: 0}
     spriteFacility: 740
@@ -159,14 +303,64 @@ facilities:
     buildTime: 10
     monthlyCost: 5000
     storage: 100
+    canBeBuiltOver: true
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK
     mapName: XBASE_ORK03
     storageTiles:
-      - [4, 6, 0]
+      - [3, 2, 0]
+      - [5, 2, 0]
+      - [7, 2, 0]
+      - [2, 4, 0]
+      - [4, 4, 0]
+      - [6, 4, 0]
+      - [3, 6, 0]
       - [5, 6, 0]
       - [7, 6, 0]
+      - [4, 2, 2]
+      - [5, 3, 2]
+      - [4, 4, 2]
+      - [5, 5, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [1, 1, 0]
+        groups: [10] # 1x1
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [3] # xbase_ork03 is listed 4th in the terrain, so it is 3, since it starts with 0.
+        size: [1, 1, 3] # if the craft is going on z = 1, the height here needs to be 1
+
+  - type: STR_GENERAL_STORES_ORK_OUTPOST_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD]
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: {mod: 40k, index: 0}
+    spriteFacility: 740
+    connectorsDisabled: true
+    buildCost: 300000 # pay double to ensure it can't be destroyed
+    buildTime: 10
+    monthlyCost: 5000
+    storage: 100
+    canBeBuiltOver: true
+    destroyedFacility: STR_GENERAL_STORES_ORK_OUTPOST_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK03
+    storageTiles:
+      - [3, 2, 0]
+      - [5, 2, 0]
+      - [7, 2, 0]
       - [2, 4, 0]
-      - [8, 3, 0]
-      - [7, 3, 1]
+      - [4, 4, 0]
+      - [6, 4, 0]
+      - [3, 6, 0]
+      - [5, 6, 0]
+      - [7, 6, 0]
+      - [4, 2, 2]
+      - [5, 3, 2]
+      - [4, 4, 2]
+      - [5, 5, 2]
     verticalLevels:
       - type: ground
         terrain: baseTerrain
@@ -180,7 +374,6 @@ facilities:
   - type: STR_CORRIDOR_OUTPOST_ORK
     requires:
       - STR_GREENEST_ORKZ
-      - STR_GENERALLOCK
     requiresBaseFunc: [ORKZ]
     placeSound: {mod: 40k, index: 99}
     spriteShape: {mod: 40k, index: 0}
@@ -189,6 +382,8 @@ facilities:
     buildCost: 10000 # little bit of cost to dig tunnels
     buildTime: 0
     monthlyCost: 0
+    canBeBuiltOver: true
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK # functionally indestructable, but can still soak up UFO attacks.
     mapName: XBASE_ORK04
     verticalLevels:
       - type: ground
@@ -200,3 +395,125 @@ facilities:
         blocks: [4] # 4 because it is the 5th entry
         size: [1, 1, 3] # if the craft is going on z = 1, the height here needs to be 1
 
+  - type: STR_ORK_SHRINE
+    placeSound: {mod: 40k, index: 98}
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [PSI]
+    forbiddenBaseFunc: [PSI]
+    requires:
+      - STR_PSI_LAB
+      - STR_GREENEST_ORKZ
+    spriteShape: {mod: 40k, index: 1}
+    spriteFacility: {mod: 40k, index: 31}
+    maxAllowedPerBase: 1
+    connectorsDisabled: true
+    buildCost: 750000
+    buildTime: 24
+    monthlyCost: 16000
+    psiLabs: 10
+    personnel: 25 # some boyz will sleep at the shrine ta keep it from getting stolen. Again.
+    refundValue: 225000
+    canBeBuiltOver: true
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK
+    mapName: XBASE_14
+
+  - type: STR_ORK_SHRINE_SHIELD
+    placeSound: {mod: 40k, index: 98}
+    requires:
+      - STR_PSI_LAB
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD, PSI]
+    provideBaseFunc: [PSI]
+    spriteShape: {mod: 40k, index: 1}
+    spriteFacility: {mod: 40k, index: 31}
+    maxAllowedPerBase: 1
+    upgradeOnly: true # can only be built on an existing shrine
+    connectorsDisabled: true
+    buildCost: 500000 # 500k more, built on top of existing shrine
+    buildTime: 24
+    monthlyCost: 16000
+    psiLabs: 10
+    personnel: 25 # some boyz will sleep at the shrine ta keep it from getting stolen. Again.
+    refundValue: 225000
+    canBeBuiltOver: true
+    destroyedFacility: STR_ORK_SHRINE_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_14
+    buildOverFacilities:
+      - STR_ORK_SHRINE
+
+  - type: STR_MAD_DOK_HOSPITAL
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_APOC_BAY
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [APOC, PRISION]
+    forbiddenBaseFunc: [PRISION]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as hangar. Needs new
+    size: 2
+    buildCost: 750000
+    refundValue: 275000
+    buildTime: 15
+    monthlyCost: 45000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    sickBayAbsoluteBonus: 0.5 # combines meds of both apothecary bay and techmarine bay
+    sickBayRelativeBonus: 0.4
+    personnel: 50
+    aliens: 10
+    mapName: XBASE_ORK06
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: middle
+        terrain: XBASE_ORK
+        blocks: [6]
+        size: [2, 2, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # for adding the Green Tube and maybe other bitz.
+        blocks: [0]
+    listOrder: 800
+
+  - type: STR_MAD_DOK_HOSPITAL_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_APOC_BAY
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD, APOC]
+    provideBaseFunc: [APOC, PRISION]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as hangar. Needs new
+    size: 2
+    buildCost: 500000 # 500k more
+    refundValue: 275000
+    buildTime: 15
+    monthlyCost: 45000
+    maxAllowedPerBase: 1
+    upgradeOnly: true # can only be built on an existing hospital
+    sickBayAbsoluteBonus: 0.5 # combines meds of both apothecary bay and techmarine bay
+    sickBayRelativeBonus: 0.4
+    personnel: 50
+    aliens: 10
+    canBeBuiltOver: true
+    destroyedFacility: STR_MAD_DOK_HOSPITAL_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK06
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [6] #
+        size: [2, 2, 3] # if the craft is going on z = 1, the height here needs to be 1
+    listOrder: 800
+    buildOverFacilities:
+      - STR_MAD_DOK_HOSPITAL
