@@ -442,3 +442,74 @@ facilities:
     mapName: XBASE_14
     buildOverFacilities:
       - STR_ORK_SHRINE
+
+  - type: STR_MAD_DOK_HOSPITAL
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_APOC_BAY
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [APOC, PRISION]
+    forbiddenBaseFunc: [PRISION]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as hangar. Needs new
+    size: 2
+    buildCost: 750000
+    refundValue: 275000
+    buildTime: 15
+    monthlyCost: 45000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    sickBayAbsoluteBonus: 0.5 # combines meds of both apothecary bay and techmarine bay
+    sickBayRelativeBonus: 0.4
+    personnel: 50
+    aliens: 10
+    mapName: XBASE_ORK06
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [6] #
+        size: [2, 2, 3] # if the craft is going on z = 1, the height here needs to be 1
+    listOrder: 800
+
+  - type: STR_MAD_DOK_HOSPITAL_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_APOC_BAY
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD, APOC]
+    provideBaseFunc: [APOC, PRISION]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as hangar. Needs new
+    size: 2
+    buildCost: 500000 # 500k more
+    refundValue: 275000
+    buildTime: 15
+    monthlyCost: 45000
+    maxAllowedPerBase: 1
+    upgradeOnly: true # can only be built on an existing hospital
+    sickBayAbsoluteBonus: 0.5 # combines meds of both apothecary bay and techmarine bay
+    sickBayRelativeBonus: 0.4
+    personnel: 50
+    aliens: 10
+    canBeBuiltOver: true
+    destroyedFacility: STR_MAD_DOK_HOSPITAL_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK06
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [6] #
+        size: [2, 2, 3] # if the craft is going on z = 1, the height here needs to be 1
+    listOrder: 800
+    buildOverFacilities:
+      - STR_MAD_DOK_HOSPITAL
