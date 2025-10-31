@@ -225,6 +225,9 @@ research:
     unlocks:
       - STR_UNSANCTIONED_REQUISITIONS
 
+  - name: STR_STRATEGYCOMESFIRST
+    refNode: *STR_LOCKED
+
   - name: STR_HARDER_MISSIONS  # (Harder Missions)
     refNode: *STR_LOCKED
 
@@ -235,6 +238,7 @@ research:
     dependencies:
       - STR_HARDER_MISSIONS # available as an option if you have harder missions.
       - STR_CHAPTER_PURITY # Doesn't affect player chaos missions at the moment.
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
     cost: 10 # has to be researched
     unlocks:
       - STR_EVEN_HARDER_MISSIONS
@@ -244,6 +248,15 @@ research:
     cost: 10 # has to be researched
     disables:
       - STR_EVEN_HARDER_MISSIONS # should revert to regular harder missions
+
+  - name: STR_EXTRA_RETALIATIONS  # (Extra retaliations)
+    refNode: *STR_LOCKED
+
+  - name: STR_DISABLE_EXTRA_RETALIATIONS  # (Ekkstra Panzy) Choice to disable bonus retaliations
+    refNode: *STR_LOCKED
+    cost: 10 # has to be researched
+    disables:
+      - STR_EXTRA_RETALIATIONS # turns off the extra fun of owning a shoota for home defense
 
   - name: STR_OGRYN_AVAILABLE  # (Ogryn Recruitment)
     # Because there are multiple ogryn recruiting factions now
@@ -589,6 +602,7 @@ research:
       - STR_CRATED_LANDSPEEDER
       - STR_HAND_FLAMETHROWER_REQUISITION
       - STR_MARINE_BOLTERS
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_ASSAULT
       - STR_PRIMARIS
@@ -619,6 +633,7 @@ research:
       - STR_CRATED_DROPPODS
       - STR_CRATED_RHINO
       - STR_MARINE_BOLTERS
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_DEVASTATOR
       - STR_PRIMARIS
@@ -647,6 +662,7 @@ research:
       - STR_BOLTER_AMMO_PREREQ
       - STR_PRIMARIS_AND_DEATHWATCH
       - STR_PRIMARIS_AND_ADEPTAS
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_PRIMARIS
       - STR_PERSONAL_ARMOR
@@ -677,6 +693,7 @@ research:
       - STR_TRAINFACILITYR
       - STR_CRATED_LANDSPEEDER
       - STR_MARINE_BOLTERS
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_SCOUT
       - STR_PRIMARIS
@@ -708,6 +725,7 @@ research:
       - STR_CRATED_DROPPODS
       - STR_CRATED_RHINO
       - STR_MARINE_BOLTERS
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_TACTICAL
       - STR_PRIMARIS
@@ -747,6 +765,7 @@ research:
       - STR_SWRHINOS
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS_SW
+      - STR_STRATEGYCOMESFIRST
     disables:
       - STR_NOT_SPACEWOLVES
       - STR_PRIMARIS
@@ -822,7 +841,6 @@ research:
       - STR_HOLOGRAM_GRENADE_REQUISITION
       #- STR_THUNDERHAWKTYPE1
       #- STR_STORMHAWKR
-      - STR_PERSONAL_ARMOR_WB
       - STR_MELTABOMB
       - STR_CRATED_CHAOSDROPPODS
       - STR_CRATED_CHAOSRHINOS
@@ -864,6 +882,15 @@ research:
     getOneFree:
       - STR_CHAOS_PATH
 
+  - name: STR_RITUAL_CONSECRATE  # Ritual of Consecration
+    cost: 200
+    points: 250
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_RITUAL_CONTACT
+    getOneFree:
+      - STR_CHAOS_PATH
+
   - name: STR_RITUAL_SACRIFICE  # Ritual of Sacrifice
     cost: 200
     points: 300
@@ -871,12 +898,23 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_ELERIUM_115
       - STR_WORDBEARERS_STRATEGY
-      - STR_RITUAL_CONTACT
+      - STR_RITUAL_CONSECRATE
     unlocks:
       - STR_ALIENS_ONLY
       - STR_HARDER_MISSIONS
     getOneFree:
       - STR_ALIENS_ONLY
+
+  - name: STR_RITUAL_TRUTH  # Ritual of Truth
+    cost: 210
+    points: 20
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_PERSONAL_ARMOR_WB
+    unlocks:
+      - STR_MEDI_KIT_PREREQ
+    lookup: STR_MEDI_KIT_PREREQ
+
 
   - name: STR_RITUAL_FAVOURS  # Ritual of Favours
     cost: 300
@@ -1044,6 +1082,7 @@ research:
       - STR_CHAOS_PATH
       - STR_INQUISITION_VALKYRIE
       - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_ENABLE_EVEN_HARDER_MISSIONS # starts with extra hard missions enabled, shouldn't see the redundant Salty Spitoon research.
 
   - name: STR_OFFICIO_ASSASSINORUM_TIPS # PLEASE READ THE CODEX DEAR PLAYER
     dependencies:
@@ -1122,6 +1161,7 @@ research:
       - STR_NOT_ARBITES
       - STR_HB_DEP1
       - STR_GREENEST_ORKZ
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
 
 ### Chaos Cult #STRATEGY.AT.CULT#
   - name: STR_CHAOS_STRATEGY  # Ruinous Powers
@@ -1163,6 +1203,7 @@ research:
       - STR_MELTAGUN_TECH
       - STR_NOT_CHAOSCULT
       - STR_GREENEST_ORKZ
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
     unlocks:
       - STR_CHAOS_STRATEGY
       - STR_MOTION_SCANNER
@@ -1202,6 +1243,8 @@ research:
       - STR_ORK_SHOOTA_EXAM
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+      - STR_EXTRA_RETALIATIONS
+      - STR_DISABLE_EXTRA_RETALIATIONS
     disables:
       - STR_MARINES_STRATEGY
       - STR_CHAMBERMILITANT
@@ -2294,6 +2337,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
     getOneFree:
       - STR_UNLOCK_CHIMVALK
 
@@ -2307,6 +2351,7 @@ research:
       - STR_UFO_CONSTRUCTION
       - STR_UNLOCK_CHIMVALK_ALT
       - STR_NOT_CHAOSCULT
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_CHIMVALKLOCK
     getOneFree:
@@ -3210,7 +3255,12 @@ research:
       - STR_GAUSS_REAPER
       - STR_NECRON_WARSCYTHE
       - STR_STAFF_OF_LIGHT
+      - STR_NECRON_REMNANT_RESEARCH
       - STR_LOSE_250
+
+  - name: STR_NECRON_REMNANT_RESEARCH # free research for completing any Necron remnant research
+    dependencies:
+      - STR_GENERALLOCK
 
   - name: STR_MT_DW  # Deathwatch Mid-tier Requisitions  # mid tier  # cutcscene c2 DEATHWATCH
     cost: 200
@@ -3560,6 +3610,7 @@ research:
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_HARDER_MISSIONS
+      - STR_GRAV_SHIELD # grav shield tech is used for shielded Ork Forts
     cutscene: c2
 
   - name: STR_ORK_CERAMITE_TIER  # Greenest Ceramite-Tier Requisitions
@@ -6527,6 +6578,7 @@ research:
       - STR_NOT_ADEPTAS
       - STR_NOT_GUARD
       - STR_NOT_PRIMARIS
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_BOLTER_AMMO_PREREQ
 
@@ -6536,6 +6588,15 @@ research:
       - STR_UFO_CONSTRUCTION
       - STR_ALIENS_ONLY
       - STR_NOT_CHAOSCULT
+    unlocks:
+      - STR_MARINE_BOLTERS
+
+  - name: STR_MARINE_BOLTERS_WB  # Word Bearers Bolters
+    dependencies:
+      - STR_LIGHT_BOLTERS
+      - STR_ALIENS_ONLY
+      - STR_RITUAL_CONSECRATE
+      - STR_WORDBEARERS_STRATEGY
     unlocks:
       - STR_MARINE_BOLTERS
 
@@ -7612,34 +7673,75 @@ research:
     refNode: *ELDAR_WEAPON_EXAM
 
 ### Necron #WEAPONS.FOE.XENO.NECRO#
-  - name: STR_GAUSS_BLASTER  # Gauss Blaster
-    cost: 100
-    points: 25
-    needItem: true
+  - &NECRON_WEAPON_RESEARCH_TEMPLATE
+    name: STR_GAUSS_BLASTER  # Free researches with corresponding remnants
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_SYNAPTIC_DISINTEGRATOR  # Synaptic Disintegrator
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
   - name: STR_GAUSS_FLAYER  # Gauss Flayer
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
   - name: STR_HYPERPHASESWORD  # Hyperphase Sword
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
   - name: STR_GAUSS_REAPER  # Gauss Reaper
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
   - name: STR_NECRON_WARSCYTHE  # Necron Warscythe
-    cost: 100
-    points: 25
-    needItem: true
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
   - name: STR_STAFF_OF_LIGHT  # Staff of Light
+    refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
+
+  - &NECRON_REMNANT_RESEARCH_TEMPLATE
+    name: STR_GAUSS_BLASTER_REMNANT
     cost: 100
     points: 25
     needItem: true
+
+  - name: STR_GAUSS_BLASTER_REMNANT
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_GAUSS_BLASTER
+
+  - name: STR_SYNAPTIC_DISINTEGRATOR_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_SYNAPTIC_DISINTEGRATOR
+
+  - name: STR_GAUSS_FLAYER_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_GAUSS_FLAYER
+
+  - name: STR_HYPERPHASESWORD_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_HYPERPHASESWORD
+
+  - name: STR_GAUSS_REAPER_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_GAUSS_REAPER
+
+  - name: STR_NECRON_WARSCYTHE_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_NECRON_WARSCYTHE
+
+  - name: STR_STAFF_OF_LIGHT_REMNANT
+    refNode: *NECRON_REMNANT_RESEARCH_TEMPLATE
+    unlocks:
+      - STR_NECRON_REMNANT_RESEARCH
+      - STR_STAFF_OF_LIGHT
 
 ### Ork #WEAPONS.FOE.XENO.ORK#
   - name: STR_ORK_WEAPONS_EXAM
