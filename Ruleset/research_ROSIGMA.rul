@@ -238,7 +238,7 @@ research:
     dependencies:
       - STR_HARDER_MISSIONS # available as an option if you have harder missions.
       - STR_CHAPTER_PURITY # Doesn't affect player chaos missions at the moment.
-      - STR_STRATEGYCOMESFIRST
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
     cost: 10 # has to be researched
     unlocks:
       - STR_EVEN_HARDER_MISSIONS
@@ -248,6 +248,22 @@ research:
     cost: 10 # has to be researched
     disables:
       - STR_EVEN_HARDER_MISSIONS # should revert to regular harder missions
+
+  - name: STR_EXTRA_RETALIATIONS  # (Extra retaliations)
+    refNode: *STR_LOCKED
+
+  - name: STR_ENABLE_EXTRA_RETALIATIONS  # (I Own A Bolter For Home Defense) Enables monthly retaliations
+    dependencies:
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
+    cost: 10 # has to be researched
+    unlocks:
+      - STR_EXTRA_RETALIATIONS
+
+  - name: STR_DISABLE_EXTRA_RETALIATIONS  # (Ekkstra Panzy) Choice to disable bonus retaliations
+    refNode: *STR_LOCKED
+    cost: 10 # has to be researched
+    disables:
+      - STR_EXTRA_RETALIATIONS # turns off the extra fun of owning a shoota for home defense
 
   - name: STR_OGRYN_AVAILABLE  # (Ogryn Recruitment)
     # Because there are multiple ogryn recruiting factions now
@@ -925,6 +941,16 @@ research:
       - STR_LEADER_PLUS
       - STR_MIDTIER_PREREQ
 
+  - name: STR_RITUAL_BLESSING  # Ritual of Blessings
+    cost: 500
+    points: 200
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_HIGHTIER_PREREQ
+      - STR_RITUAL_BETRAYAL
+      - STR_ALIEN_ORIGINS
+      - STR_COMMANDER_PLUS
+
 ## Chamber Militant #STRATEGY.CM#
   - name: STR_CHAMBERMILITANT  # Chamber Militant
     cost: 0
@@ -1032,6 +1058,7 @@ research:
       - STR_CORVUS_RESEARCH
     unlocks:
       - STR_REEDUCATION_RESEARCH
+      - STR_LASGUN_HOTSHOT
     spawnedEvent: STR_REINFORCEMENTS_RADICAL_EVENT
     disables:
       - STR_NOT_RADICAL
@@ -1073,6 +1100,7 @@ research:
       - STR_CHAOS_PATH
       - STR_INQUISITION_VALKYRIE
       - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_ENABLE_EVEN_HARDER_MISSIONS # starts with extra hard missions enabled, shouldn't see the redundant Salty Spitoon research.
 
   - name: STR_OFFICIO_ASSASSINORUM_TIPS # PLEASE READ THE CODEX DEAR PLAYER
     dependencies:
@@ -1151,6 +1179,7 @@ research:
       - STR_NOT_ARBITES
       - STR_HB_DEP1
       - STR_GREENEST_ORKZ
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
 
 ### Chaos Cult #STRATEGY.AT.CULT#
   - name: STR_CHAOS_STRATEGY  # Ruinous Powers
@@ -1192,6 +1221,7 @@ research:
       - STR_MELTAGUN_TECH
       - STR_NOT_CHAOSCULT
       - STR_GREENEST_ORKZ
+      - STR_GUEVESA_STRATEGY_MILITIA_GV
     unlocks:
       - STR_CHAOS_STRATEGY
       - STR_MOTION_SCANNER
@@ -1231,6 +1261,8 @@ research:
       - STR_ORK_SHOOTA_EXAM
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+      - STR_EXTRA_RETALIATIONS
+      - STR_DISABLE_EXTRA_RETALIATIONS
     disables:
       - STR_MARINES_STRATEGY
       - STR_CHAMBERMILITANT
@@ -1245,6 +1277,7 @@ research:
       - STR_MASTER_CRAFTING
       - STR_IMPERIAL_GUARD_MISSIONS
       - STR_ELDAR_ALLIANCE # Da Greenest aint workin' wif no pansies.
+      - STR_ENABLE_EXTRA_RETALIATIONS # Redundant when playing as Orks.
     reenables:
       - STR_CYDONIA_OR_BUST
       - STR_CHAPTER_PURITY # for standard missions to spawn.
