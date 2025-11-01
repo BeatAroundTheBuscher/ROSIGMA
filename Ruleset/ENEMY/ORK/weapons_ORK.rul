@@ -1812,6 +1812,7 @@ items:
     fireSound: {mod: 40k, index: 861}  # charging + discharge sound
     compatibleAmmo:
       - STR_TELEPORT_GUN_GRETCHIN
+      - STR_TELEPORT_GUN_GRETCHIN_PLAYER
     accuracySnap: 45
     accuracyAuto: 34
     tuSnap: 34
@@ -1842,16 +1843,17 @@ items:
     handSprite: {mod: 40k, index: 448}
     clipSize: 9
     specialChance: 90  # 90% chance of summoning a Gretchin per missile
-    power: 9
+    power: 25
+    powerForAnimation: 9
     damageType: 7
     battleType: 2
-    blastRadius: 3
     damageAlter:  # GRAV GUN
       RandomType: 2  # TFTD [50% - 150%]
       ArmorEffectiveness: 0.2
       ToArmorPre: 5.0  # 1.2
       ToHealth: 5.0  # 0.6
       ToStun: 5.0  # 1.0
+      FixRadius: 1 # was 3
     spawnUnit: STR_GRETCHIN
     spawnUnitFaction: -1
     invWidth: 0
@@ -1862,6 +1864,43 @@ items:
     hitAnimation: 1110
     hitAnimFrames: 16
     listOrder: 12152
+
+  - type: STR_TELEPORT_GUN_GRETCHIN_PLAYER  # Player version. Less spawn chance.
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    size: 0.1
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORKZ_MIDTIER
+      - STR_MEK_KLAN_RECRUITED
+    costBuy: 10000
+    costSell: 5000
+    weight: 20
+    bigSprite: {mod: 40k, index: 1038} # small lascannon clip sprites
+    floorSprite: {mod: 40k, index: 1038}
+    handSprite: {mod: 40k, index: 1304}
+    clipSize: 9
+    specialChance: 25  # 25% chance of summoning a Gretchin per shot
+    power: 25
+    powerForAnimation: 9
+    damageType: 7
+    battleType: 2
+    damageAlter:  # GRAV GUN
+      RandomType: 2  # TFTD [50% - 150%]
+      ArmorEffectiveness: 0.2
+      ToArmorPre: 5.0  # 1.2
+      ToHealth: 5.0  # 0.6
+      ToStun: 5.0  # 1.0
+      FixRadius: 1 # was 3
+    spawnUnit: STR_PLAYER_GROT
+    spawnUnitFaction: 2 # civilian
+    invWidth: 2
+    invHeight: 1
+    hitSound: 2123  # sizzlebamf
+    explosionHitSound: {mod: 40k, index: 790}  # vortexpull
+    hitAnimation: 1110
+    hitAnimFrames: 16
+    listOrder: 17075
 
   - type: STR_ORK_GAUSS_FLAYER # sankshunned gauzz flaya'
     categories: [STR_CAT_ORK, STR_CAT_NECRON, STR_CAT_TACTICAL]
