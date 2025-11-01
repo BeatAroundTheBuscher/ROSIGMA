@@ -347,6 +347,36 @@ items:
     recover: false
 
 #Player Ork Corpses
+  - type: STR_PLAYER_GRETCHIN_CORPSE                 #ORK 19970
+    weight: 10
+    bigSprite: {mod: 40k, index: 604}
+    floorSprite: {mod: 40k, index: 316}
+    invWidth: 2
+    invHeight: 3
+    battleType: 11
+    armor: 10
+    recover: false
+    scripts:
+      selectItemSprite: |
+        var ptr BattleUnit unit;
+        var int unitID;
+
+        item.getBattleUnit unit;
+        unit.getId unitID;
+
+        unit.getId unitID; # Base visual on ID to not make as many tags
+        offsetmod unitID 11 0 12; # Make it look somewhat random, picking between the 3 variants
+
+        #if or eq blit_part blit_item_floor eq blit_part blit_item_big;
+        if eq blit_part blit_item_floor;
+
+          set sprite_offset unitID;
+
+        end;
+
+        add sprite_index sprite_offset;
+        return sprite_index;
+
   - type: STR_GUARD_ORK_BOY_CORPSE
     size: 0.4
     costSell: 0
@@ -408,6 +438,66 @@ items:
     invHeight: 3
     battleType: 11
     armor: 60
+    recover: false
+
+  - type: STR_PLAYER_KILLA_CORPSE     #19991
+    battleType: 11
+  - type: PLAYER_KILLA_CORPSE1 #ORK KILLA
+    name: STR_CORPSE
+    armor: 100
+    floorSprite: {mod: 40k, index: 329}
+    invWidth: 0
+    invHeight: 0
+    battleType: 11
+    recover: false
+    recoverCorpse: false
+  - type: PLAYER_KILLA_CORPSE2
+    armor: 100
+    floorSprite: {mod: 40k, index: 330}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+  - type: PLAYER_KILLA_CORPSE3
+    armor: 100
+    floorSprite: {mod: 40k, index: 331}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+  - type: PLAYER_KILLA_CORPSE4
+    armor: 100
+    floorSprite: {mod: 40k, index: 332}
+    invWidth: 0
+    invHeight: 0
+    recover: false
+
+  - type: STR_PLAYER_BIG_MEK_CORPSE
+    weight: 50
+    battleType: 11
+    power: 5
+    powerForAnimation: 1
+    hitAnimFrames: 16
+    blastRadius: 6
+    hitAnimation: 1100
+  - type: PLAYER_BIG_MEK_CORPSE1
+    floorSprite: 2324
+    invWidth: 0
+    invHeight: 0
+    recover: false
+    battleType: 11
+  - type: PLAYER_BIG_MEK_CORPSE2
+    floorSprite: 2324
+    invWidth: 0
+    invHeight: 0
+    recover: false
+  - type: PLAYER_BIG_MEK_CORPSE3
+    floorSprite: 2324
+    invWidth: 0
+    invHeight: 0
+    recover: false
+  - type: PLAYER_BIG_MEK_CORPSE4
+    floorSprite: 2325
+    invWidth: 0
+    invHeight: 0
     recover: false
 
 # Speed Kult
