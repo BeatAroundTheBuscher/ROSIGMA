@@ -1881,7 +1881,7 @@ items:
     requires:
       - STR_ORK_ONLY
     size: 0.4
-    dropoff: 7
+    dropoff: 4
     costSell: 3000
     weight: 0
     bigSprite: 2146
@@ -1894,11 +1894,11 @@ items:
       - STR_TELEPORT_GUN_GRETCHIN_PLAYER
     accuracySnap: 45
     accuracyAuto: 34
-    tuSnap: 34
-    tuAuto: 69
+    tuSnap: 25
+    tuAuto: 45
     autoShots: 3
-    snapRange: 18
-    autoRange: 12
+    snapRange: 25 # good range, bad accuracy
+    autoRange: 18
     maxRange: 28
     battleType: 1
     twoHanded: false # was true
@@ -1910,7 +1910,7 @@ items:
     fixedWeapon: true
     fixedWeaponShow: false
 
-  - type: STR_TELEPORT_GUN_GRETCHIN  # copied from STR_DAEMONETTE_MISSILE_PACK
+  - type: STR_TELEPORT_GUN_GRETCHIN # AI version, higher ammo and spawn chance # copied from STR_DAEMONETTE_MISSILE_PACK
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
@@ -1920,19 +1920,22 @@ items:
     bigSprite: 2146  # ToDO: should be invisible?
     floorSprite: 2429  # ToDO: should be invisible?
     handSprite: {mod: 40k, index: 448}
-    clipSize: 9
+    clipSize: 45 # was 9. AI big meks wont run out
     specialChance: 90  # 90% chance of summoning a Gretchin per missile
-    power: 25
+    power: 18 # 90 after multipliers
     powerForAnimation: 9
     damageType: 7 # Melee
     battleType: 2
     damageAlter:  # GRAV GUN
       RandomType: 2  # TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2
+      ArmorEffectiveness: 0.04 # 20% with other multipliers
       ToArmorPre: 5.0  # 1.2
       ToHealth: 5.0  # 0.6
       ToStun: 5.0  # 1.0
       FixRadius: 1 # was 3
+      RadiusReduction: 999 # not actually an AOE weapon. has radius for animation/hitting underside
+      ToWound: 1.0  # massive internal bleeding
+      RandomWound: false
     spawnUnit: STR_GRETCHIN
     spawnUnitFaction: -1
     invWidth: 0
@@ -1945,6 +1948,7 @@ items:
     listOrder: 12152
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 99
+      ITEM_IGNORES_2X2_REDUCTION: 1
 
   - type: STR_TELEPORT_GUN_GRETCHIN_PLAYER  # Player version. Less spawn chance.
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
@@ -1962,17 +1966,20 @@ items:
     handSprite: {mod: 40k, index: 1304}
     clipSize: 9
     specialChance: 25  # 25% chance of summoning a Gretchin per shot
-    power: 25
+    power: 18 # 90 after multipliers
     powerForAnimation: 9
     damageType: 7 # Melee
     battleType: 2
     damageAlter:  # GRAV GUN
       RandomType: 2  # TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2
+      ArmorEffectiveness: 0.04 # 20% with other multipliers
       ToArmorPre: 5.0  # 1.2
       ToHealth: 5.0  # 0.6
       ToStun: 5.0  # 1.0
       FixRadius: 1 # was 3
+      RadiusReduction: 999 # not actually an AOE weapon. has radius for animation/hitting underside
+      ToWound: 1.0  # massive internal bleeding
+      RandomWound: false
     spawnUnit: STR_PLAYER_GROT
     spawnUnitFaction: 2 # civilian
     invWidth: 2
@@ -1984,6 +1991,7 @@ items:
     listOrder: 17075
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 99
+      ITEM_IGNORES_2X2_REDUCTION: 1
 
   - type: STR_ORK_GAUSS_FLAYER # sankshunned gauzz flaya'
     categories: [STR_CAT_ORK, STR_CAT_NECRON, STR_CAT_TACTICAL]
