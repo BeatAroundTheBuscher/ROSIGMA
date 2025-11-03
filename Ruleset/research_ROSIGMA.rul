@@ -228,8 +228,21 @@ research:
   - name: STR_STRATEGYCOMESFIRST
     refNode: *STR_LOCKED
 
+  - name: STR_DIFFICULTY_OPTIONS # enables additional researches that adjust difficulty
+    dependencies:
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
+    cost: 1 # has to be researched
+
   - name: STR_HARDER_MISSIONS  # (Harder Missions)
     refNode: *STR_LOCKED
+
+  - name: STR_DISABLE_HARDER_MISSIONS  # (Coughing Infant) Choice to disable regular harder missions, for easier playthroughs
+    cost: 1 # has to be researched
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS
+    disables:
+      - STR_HARDER_MISSIONS
+      - STR_EVEN_HARDER_MISSIONS
 
   - name: STR_EVEN_HARDER_MISSIONS  # (Extra Hard Missions)
     refNode: *STR_LOCKED
@@ -238,14 +251,16 @@ research:
     dependencies:
       - STR_HARDER_MISSIONS # available as an option if you have harder missions.
       - STR_CHAPTER_PURITY # Doesn't affect player chaos missions at the moment.
-      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
-    cost: 10 # has to be researched
+      - STR_DIFFICULTY_OPTIONS # generally only shows up after choosing a strategy
+    cost: 1 # has to be researched
     unlocks:
       - STR_EVEN_HARDER_MISSIONS
 
   - name: STR_DISABLE_EVEN_HARDER_MISSIONS  # (Weenie Hut Jr.) Disables extra hard missions
-    refNode: *STR_LOCKED
-    cost: 10 # has to be researched
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS
+      - STR_EVEN_HARDER_MISSIONS
+    cost: 1 # has to be researched
     disables:
       - STR_EVEN_HARDER_MISSIONS # should revert to regular harder missions
 
@@ -254,14 +269,16 @@ research:
 
   - name: STR_ENABLE_EXTRA_RETALIATIONS  # (I Own A Bolter For Home Defense) Enables monthly retaliations
     dependencies:
-      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
-    cost: 10 # has to be researched
+      - STR_DIFFICULTY_OPTIONS # generally only shows up after choosing a strategy
+    cost: 1 # has to be researched
     unlocks:
       - STR_EXTRA_RETALIATIONS
 
   - name: STR_DISABLE_EXTRA_RETALIATIONS  # (Ekkstra Panzy) Choice to disable bonus retaliations
-    refNode: *STR_LOCKED
-    cost: 10 # has to be researched
+    dependencies:
+      - STR_DIFFICULTY_OPTIONS
+      - STR_EXTRA_RETALIATIONS
+    cost: 1 # has to be researched
     disables:
       - STR_EXTRA_RETALIATIONS # turns off the extra fun of owning a shoota for home defense
 
@@ -391,6 +408,7 @@ research:
   - name: STR_NOT_ARBITES  # (Not Arbites)
     dependencies: []
   - name: STR_NOT_CHAOSCULT  # (Not Chaos Cult)
+  - name: STR_NOT_GREENEST_ORKZ  # (Not Greenest Orkz)
 
   - name: STR_NOT_CHAMBER  # (Not Chamber Militant)
   - name: STR_NORMAL_INQUISITION  # (Normal Inquisition)
@@ -872,6 +890,7 @@ research:
       - STR_SPACEWOLVES_STRATEGY
       - STR_ENABLE_EVEN_HARDER_MISSIONS
       - STR_ENABLE_EXTRA_RETALIATIONS  # for now
+      - STR_DIFFICULTY_OPTIONS
     spawnedEvent: STR_WORDBEARERS_CARE_PACKAGE
 
   - name: STR_WBLIGHTNING_COMING
@@ -1094,7 +1113,6 @@ research:
       - STR_REPRISALIA_ACCESS
       - STR_MEDI_KIT_PREREQ
       - STR_EVEN_HARDER_MISSIONS
-      - STR_DISABLE_EVEN_HARDER_MISSIONS
     disables:
       - STR_DEATHWATCH
       - STR_GREYKNIGHTS
@@ -1264,7 +1282,6 @@ research:
       - STR_ORK_KOMBI_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
       - STR_EXTRA_RETALIATIONS
-      - STR_DISABLE_EXTRA_RETALIATIONS
     disables:
       - STR_MARINES_STRATEGY
       - STR_CHAMBERMILITANT
@@ -1280,6 +1297,7 @@ research:
       - STR_IMPERIAL_GUARD_MISSIONS
       - STR_ELDAR_ALLIANCE # Da Greenest aint workin' wif no pansies.
       - STR_ENABLE_EXTRA_RETALIATIONS # Redundant when playing as Orks.
+      - STR_NOT_GREENEST_ORKZ
     reenables:
       - STR_CYDONIA_OR_BUST
       - STR_CHAPTER_PURITY # for standard missions to spawn.
