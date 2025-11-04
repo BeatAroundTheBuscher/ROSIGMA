@@ -549,3 +549,66 @@ facilities:
     listOrder: 800
     buildOverFacilities:
       - STR_MAD_DOK_HOSPITAL
+
+  - type: STR_ORK_LABORATORY # Finkin Towa
+    requires:
+      - STR_GREENEST_ORKZ
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [RESE, TOWER]
+    forbiddenBaseFunc: [TOWER] # prevents making another after upgrading to shielded version
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as Hangar, needs new
+    size: 2
+    buildCost: 2100000 # three labs and living quarters all in one.
+    buildTime: 25
+    monthlyCost: 35000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    personnel: 50 # not quite enough space to fill all labs.
+    labs: 75
+    mapName: XBASE_ORK07
+    verticalLevels:
+      - type: ground
+        terrain: XBASE_ORK
+        blocks: [7]
+        size: [2, 2, 0] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 4] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # tower bits
+        blocks: [3]
+    listOrder: 800
+
+  - type: STR_ORK_LABORATORY_SHIELD # Protekted Finkin Towa
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD]
+    provideBaseFunc: [RESE, TOWER]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2110 # same as Hangar, needs new
+    size: 2
+    buildCost: 500000 # cost to upgrade
+    buildTime: 25
+    monthlyCost: 40000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    personnel: 50 # not quite enough space to fill all labs.
+    labs: 75
+    upgradeOnly: true # can only be built on an existing Finkin Towa
+    destroyedFacility: STR_ORK_LABORATORY_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK07
+    verticalLevels:
+      - type: ground
+        terrain: XBASE_ORK
+        blocks: [7]
+        size: [2, 2, 0] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 4] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # tower bits
+        blocks: [3]
+    listOrder: 800
+    buildOverFacilities:
+      - STR_ORK_LABORATORY
