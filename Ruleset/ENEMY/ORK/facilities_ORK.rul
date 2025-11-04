@@ -478,7 +478,7 @@ facilities:
     forbiddenBaseFunc: [PRISION]
     connectorsDisabled: true
     placeSound: {mod: 40k, index: 98}
-    spriteShape: 2110 # same as hangar. Needs new
+    spriteShape: 2118
     size: 2
     buildCost: 1250000 # sick bay, prison, lab, living quarters.
     refundValue: 500000
@@ -516,7 +516,7 @@ facilities:
     provideBaseFunc: [APOC, PRISION, RESE]
     connectorsDisabled: true
     placeSound: {mod: 40k, index: 98}
-    spriteShape: 2110 # same as hangar. Needs new
+    spriteShape: 2118
     size: 2
     buildCost: 500000 # 500k more
     refundValue: 275000
@@ -549,3 +549,164 @@ facilities:
     listOrder: 800
     buildOverFacilities:
       - STR_MAD_DOK_HOSPITAL
+
+  - type: STR_ORK_LABORATORY # Finkin Towa
+    requires:
+      - STR_GREENEST_ORKZ
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [RESE, TOWER]
+    forbiddenBaseFunc: [TOWER] # prevents making another after upgrading to shielded version
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2126
+    size: 2
+    buildCost: 2100000 # three labs and living quarters all in one.
+    buildTime: 25
+    monthlyCost: 35000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    personnel: 75
+    labs: 75
+    mapName: XBASE_ORK07
+    verticalLevels:
+      - type: ground
+        terrain: XBASE_ORK
+        blocks: [7]
+        size: [2, 2, 0] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 4] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # tower bits
+        blocks: [3]
+    listOrder: 800
+
+  - type: STR_ORK_LABORATORY_SHIELD # Protekted Finkin Towa
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD]
+    provideBaseFunc: [RESE, TOWER]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: 2126
+    size: 2
+    buildCost: 500000 # cost to upgrade
+    buildTime: 25
+    monthlyCost: 40000
+    canBeBuiltOver: true
+    maxAllowedPerBase: 1
+    personnel: 75
+    labs: 75
+    upgradeOnly: true # can only be built on an existing Finkin Towa
+    destroyedFacility: STR_ORK_LABORATORY_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK07
+    verticalLevels:
+      - type: ground
+        terrain: XBASE_ORK
+        blocks: [7]
+        size: [2, 2, 0] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 4] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # tower bits
+        blocks: [3]
+    listOrder: 800
+    buildOverFacilities:
+      - STR_ORK_LABORATORY
+
+  - type: STR_ORK_FORGE
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_STEELMILLR
+    requiresBaseFunc: [ORKZ]
+    provideBaseFunc: [MILL, MANU]
+    forbiddenBaseFunc: [MILL] # prevents making another after upgrading to shielded version
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: {mod: 40k, index: 318} # Forge. Needs new.
+    # spriteFacility:  {mod: 40k, index: 318}
+    size: 3
+    buildCost: 3000000
+    buildTime: 30
+    monthlyCost: 300000
+    refundValue: 1500000
+    maxAllowedPerBase: 1
+    canBeBuiltOver: true
+    workshops: 200
+    storage: 100
+    mapName: XBASE_ORK08
+    storageTiles:
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [3, 3, 0]
+        blocks: [10] # 10 is 3x3 with holes cut out for ramps
+      - type: middle
+        terrain: XBASE_ORK
+        blocks: [8]
+        size: [3, 3, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # extra bits. not much at the moment
+        blocks: [4]
+    listOrder: 800
+
+  - type: STR_ORK_FORGE_SHIELD
+    requires:
+      - STR_GREENEST_ORKZ
+      - STR_STEELMILLR
+      - STR_GRAV_SHIELD
+    requiresBaseFunc: [ORKZ, SHIELD]
+    provideBaseFunc: [MILL, MANU]
+    connectorsDisabled: true
+    placeSound: {mod: 40k, index: 98}
+    spriteShape: {mod: 40k, index: 318} # Forge. Needs new.
+    # spriteFacility:  {mod: 40k, index: 318}
+    size: 3
+    buildCost: 500000 # cost to upgrade
+    buildTime: 30
+    monthlyCost: 300000
+    refundValue: 1500000 # should refund original forge too
+    maxAllowedPerBase: 1
+    upgradeOnly: true # would need regular outpost first
+    workshops: 200
+    storage: 100
+    destroyedFacility: STR_ORK_FORGE_SHIELD
+    missileAttraction: 0 # cannot be hit by bombardment/missile strikes
+    mapName: XBASE_ORK08
+    storageTiles:
+      - [14, 20, 0]
+      - [15, 23, 0]
+      - [10, 24, 0]
+      - [10, 20, 0]
+      - [14, 24, 0]
+      - [9, 1, 0]
+      - [12, 2, 0]
+      - [12, 22, 2]
+      - [14, 23, 2]
+      - [12, 24, 2]
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [3, 3, 0]
+        blocks: [10] # 10 is 3x3 with holes cut out for ramps
+      - type: middle
+        terrain: XBASE_ORK
+        blocks: [8]
+        size: [3, 3, 1] # if the craft is going on z = 1, the height here needs to be 1
+      - type: ceiling
+        size: [2, 2, 3] # x and y need to match the size of the facility, and all of the heights should add up to the deployment height
+        terrain: XBASE_IMPERIAL_ORK # extra bits. not much at the moment
+        blocks: [4]
+    listOrder: 800
+    buildOverFacilities:
+      - STR_ORK_FORGE
