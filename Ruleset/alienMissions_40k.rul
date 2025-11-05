@@ -10224,6 +10224,36 @@ alienMissions:
         trajectory: P8
         timer: 3000
 
+  - type: STR_ORK_RETALIATION
+    points: 0
+    objective: 4
+    spawnUfo: ""  # Spawned for the final retaliation run
+    skipScoutingPhase: true
+    raceWeights:  # In the case of a shootdown, race comes from the UFO that triggered the mission.
+      0:
+        STR_ORK: 5
+        STR_ORK_EARLY: 10
+      2:
+        STR_ORK: 15
+        STR_ORK_EARLY: 10
+        STR_ORK_DEATHSKULLS_EARLY: 5
+      4:
+        STR_ORK_MIDTIER: 5
+        STR_ORK_MIDTIER_EVILSUNZ: 5
+        STR_ORK_DEATHSKULLS: 5
+    waves:
+      - ufo: STR_WAGGON_CONVOY_UFO  # Larger Ork convoy, goes direct to base. Can be intercepted pretty easy.
+        count: 1
+        trajectory: P8
+        timer: 3000
+      - ufo: STR_ORK_MIG_UFO # Ork Fighta Escorts
+        count: 2
+        trajectory: P8
+        timer: 0
+        hunterKillerPercentage: 100
+        escort: true
+        objective: false                # can become a HK/escort
+
 # dungeon specific start
 
   - type: STR_ALIENER_ARTIFACT
@@ -13732,18 +13762,70 @@ alienMissions:
         STR_ALPHA_LEGION_FALSE_FLAG: 25
         STR_ALPHA_LEGION_FALSE_FLAG2GREYK: 75
     waves:
-      - ufo: STR_SMLARGE_SCOUT
+      - ufo: STR_SMLARGE_SCOUT_IMPOSTER
         count: 1
         trajectory: P5
         timer: 10000
-      - ufo: STR_SMABDUCTOR
+      - ufo: STR_SMABDUCTOR_IMPOSTER
         count: 2
         trajectory: P5
         timer: 5000
-      - ufo: STR_SMBATTLESHIP
+      - ufo: STR_SMBATTLESHIP_IMPOSTER
         count: 1
         trajectory: P6
         timer: 5000
+
+  - type: STR_IMPERIALS_PATROL_IMPOSTER
+    operationType: 6    # hunt mission
+    points: 0
+    raceWeights: # Doesn't matter, race comes from base. Fallthrough, just in case.
+      0:
+        STR_ALPHA_LEGION_FALSE_FLAG: 100
+      2:
+        STR_ALPHA_LEGION_FALSE_FLAG: 100
+      4:
+        STR_ALPHA_LEGION_FALSE_FLAG: 75
+        STR_ALPHA_LEGION_FALSE_FLAG2GREYK: 25
+      6:
+        STR_ALPHA_LEGION_FALSE_FLAG: 50
+        STR_ALPHA_LEGION_FALSE_FLAG2GREYK: 50
+      9:
+        STR_ALPHA_LEGION_FALSE_FLAG: 25
+        STR_ALPHA_LEGION_FALSE_FLAG2GREYK: 75
+    waves:
+      - ufo: STR_SMMEDIUM_SCOUT_DOUBLE_IMPOSTER
+        count: 1
+        trajectory: D0
+        timer: 9000
+        hunterKillerPercentage: 100
+        huntMode: 0
+        huntBehavior: 0
+      - ufo: STR_SMLARGE_SCOUT_IMPOSTER
+        count: 1
+        trajectory: D0
+        timer: 10
+        hunterKillerPercentage: 100
+        huntMode: 0
+        huntBehavior: 0
+
+  - type: STR_IMPERIALS_SUPPLY_IMPOSTER # WITH HK/escort
+    points: 0
+    objective: 5
+    raceWeights: {} #Special case, race comes from base.
+    waves:
+      - ufo: STR_SMMEDIUM_SCOUT_DOUBLE_IMPOSTER
+        count: 1
+        trajectory: P9
+        timer: 0
+        objective: true                 # cannot become a HK/escort
+      - ufo: STR_SMLARGE_SCOUT_IMPOSTER
+        count: 2
+        trajectory: P9
+        timer: 0
+        hunterKillerPercentage: 100
+        escort: true
+        objective: false                # can become a HK/escort
+
 
   # bowl
 

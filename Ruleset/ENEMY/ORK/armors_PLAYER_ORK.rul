@@ -97,6 +97,72 @@ armors:
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
 
+  - type: STR_PLAYER_GROTS_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 20
+    spriteSheet: ORKDR4.PCK
+    spriteInv: ORK4
+    corpseBattle:
+      - STR_PLAYER_GRETCHIN_CORPSE
+    weight: -15
+    frontArmor: 4
+    sideArmor: 3
+    rearArmor: 2
+    underArmor: 2
+    damageModifier:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.2
+      - 1.6
+      - 0.0
+    allowsRunning: false  # NPC limits for BAI
+    loftempsSet: [2]
+    tags:
+      UNIT_SIZE: 25 # TINY
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      DODGE_CHANCE: 15
+      ARMOR_MAX_SUCCESSFUL_DODGES: 1
+    scripts:
+      selectUnitSprite: |
+        var int unitID;
+
+        unit.getId unitID; # Base visual on ID to not make as many tags
+        offsetmod unitID 11 0 12; # Make it look somewhat random, picking between the 3 variants
+
+        if eq blit_part blit_torso;
+
+          if neq 0 unitID;
+
+            set sprite_index 268;
+            sub unitID 1;
+            mul unitID 12;
+            add sprite_index unitID;
+
+          end;
+
+        else eq blit_part blit_collapse;
+
+          if neq 0 unitID;
+
+            set sprite_index 276;
+            sub unitID 1;
+            mul unitID 12;
+            add sprite_index unitID;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+        return sprite_index;
+
 #Player Standard Ork Armors
 
   - &ORK_FLAK
@@ -494,11 +560,10 @@ armors:
     units:
       - STR_GUARD_ORK_KAN_BOY
     corpseBattle:
-      - 9_ORK1
-      - 9_ORK2
-      - 9_ORK3
-      - 9_ORK4
-    corpseGeo: STR_KILLA_CORPSE
+      - PLAYER_KILLA_CORPSE1
+      - PLAYER_KILLA_CORPSE2
+      - PLAYER_KILLA_CORPSE3
+      - PLAYER_KILLA_CORPSE4
     frontArmor: 160
     sideArmor: 140
     rearArmor: 110
@@ -548,6 +613,74 @@ armors:
       UNIT_TYPE_MECHANICAL: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+
+  - type: STR_PLAYER_BIG_MEK_ARMOR  # ToDo: BALANCE
+    visibilityAtDay: 40
+    visibilityAtDark: 25
+    heatVision: 30  # antismoke vision, tech based
+    spriteSheet: DEATHSKULL_MEKBOY.PCK
+    spriteInv: DEATHSKULL_MEKBOY_INV.SPK
+    customArmorPreviewIndex: 1299 # Needs new, using Mekboy for now
+    moveSound: {mod: 40k, index: 700}
+    storeItem: STR_NONE
+    bleedImmune: true
+    zombiImmune: true
+    painImmune: false
+    fearImmune: false
+    units:
+      - STR_GUARD_ORK_BIG_MEK
+    stats:
+      tu: 20
+      stamina: 35
+      health: 20
+      bravery: 20  # always multiples of 10
+      reactions: 10
+      firing: 15
+      throwing: 10
+      strength: 40
+      psiStrength: 0
+      psiSkill: 0
+      melee: 20
+    corpseBattle:
+      - PLAYER_BIG_MEK_CORPSE1
+      - PLAYER_BIG_MEK_CORPSE2
+      - PLAYER_BIG_MEK_CORPSE3
+      - PLAYER_BIG_MEK_CORPSE4
+    frontArmor: 65 # regular big Meks are 17?!
+    sideArmor: 55 # regular big Meks are 15
+    rearArmor: 45 # regular big Meks are 12
+    underArmor: 70 # regular big Meks are 12
+    drawingRoutine: 5
+    # deathFrames: 16
+    size: 2
+    damageModifier:  # TERMINATOR ARMOR
+      - 1.0  # none
+      - 0.8  # AP
+      - 0.4  # FLAMES
+      - 0.8  # HE
+      - 0.9  # LASCANON
+      - 1.0  # PLASMA
+      - 1.0  # STUN
+      - 1.0  # MELEE
+      - 1.0  # ACID
+      - 0.0  # SMOKE
+      - 0.2  # IMPACT
+      - 1.1  # MELTA
+    loftempsSet: [92, 89, 90, 91]
+    builtInWeapons:
+      - STR_ORK_TELEPORT_GUN
+    specialWeapon: AUX_PROBE_ADVANCED
+    allowsRunning: true # sprintin Mek
+    allowsKneeling: false
+    tags:
+      INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
+      UNIT_SIZE: 150 # LARGE
+      UNIT_TYPE_IMPERIUM: 1
+      UNIT_TYPE_LIVING: 1
+      UNIT_TYPE_XENO: 1
+      UNIT_TYPE_ORK: 1
+      ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 # Mega Powa Field.
+      ARMOR_ENERGY_SHIELD_DECAY: 25
 
 ### Speed Kult
 

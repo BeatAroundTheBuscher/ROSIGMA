@@ -122,7 +122,7 @@ items:
     armor: 30
     bulletSpeed: 30
     attraction: 1
-    listOrder: 17040
+    listOrder: 16998
 
   - type: STR_GRETCHIN_AMMO_BIT
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
@@ -142,7 +142,7 @@ items:
     invHeight: 1
     armor: 30
     attraction: 1
-    listOrder: 17050
+    listOrder: 16999
 
   - type: STR_SLUGGA  # ORK PISTOL       17000
     categories: [STR_CAT_ORK, STR_CAT_TACTICAL]
@@ -164,6 +164,12 @@ items:
     snapRange: 7
     confSnap:
       name: STR_PULL_TRIGGER
+    confAuto:
+      shots: 10
+      name: STR_FULL_DAKKA
+    tuAuto: 65
+    autoRange: 1
+    accuracyAuto: 25
     # tuAimed: 35
     battleType: 1
     twoHanded: false
@@ -208,6 +214,12 @@ items:
     confSnap:
       shots: 2
       name: STR_PULL_TRIGGER
+    confAuto:
+      shots: 20
+      name: STR_FULL_DAKKA
+    tuAuto: 65
+    accuracyAuto: 25
+    autoRange: 1
     battleType: 1
     twoHanded: false
     invWidth: 2
@@ -1046,6 +1058,9 @@ items:
       firing: 0.65
       strength: [0.5, -0.0008]
     listOrder: 17050
+    tags:
+      ITEM_RECOIL: 60
+      ITEM_IS_HEAVY_WEAPON: 1
 
   - type: STR_SNAZZY_BIG_SHOOTA  # MC big shoota
     categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
@@ -1091,6 +1106,83 @@ items:
       firing: 0.65
       strength: [0.5, -0.0008]
     listOrder: 17050
+    tags:
+      ITEM_RECOIL: 60
+      ITEM_IS_HEAVY_WEAPON: 1
+
+  - type: STR_BOLTER_KOMBI_SHOOTA  # Heavy Bolter/Big Shoota hybrid
+    categories: [STR_CAT_BOLTER, STR_CAT_DEVASTATOR, STR_CAT_ORK]
+    size: 0.3
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORK_BOLTERS
+      - STR_ORK_CERAMITE_TIER
+    costBuy: 100000
+    costSell: 1200
+    weight: 55
+    dropoff: 5
+    bigSprite: 2171
+    floorSprite: 2066
+    handSprite: 2108
+    bulletSprite: {mod: 40k, index: 6}
+    fireSound: [{mod: 40k, index: 868}, {mod: 40k, index: 869}, {mod: 40k, index: 870}, {mod: 40k, index: 707}, {mod: 40k, index: 12}, 2138]
+    ammo:
+      0:
+        compatibleAmmo: # can load heavy bolter and big dakka ammo
+          - STR_AC_AP_AMMO
+          - STR_AC_HE_AMMO
+          - STR_AC_I_AMMO
+          - STR_AC_MC_AMMO
+          - STR_AMMO_TWINBIT50
+          - STR_BOOMY_AMMO_TWINBIT50
+          - STR_SPARKY_AMMO_TWINBIT50
+      1:
+        compatibleAmmo: # bolter or regular shoota ammo
+          - STR_RIFLE_CLIP
+          - STR_RIFLE_CLIP_EX
+          - STR_RIFLE_CLIP_AP
+          - STR_RIFLE_CLIP_MC
+          - STR_SPARKY_AMMO_BIT20
+          - STR_BOOMY_AMMO_BIT20
+          - STR_AMMO_BIT20
+    confAuto:  # Big Gun
+      name: STR_HOLD_TRIGGER
+      ammoSlot: 0  # Big gun
+      shots: 6
+    confSnap:  # Big Gun
+      name: STR_PULL_TRIGGER
+      ammoSlot: 0  # Big gun
+      shots: 3
+    confAimed: # auto rifle
+      ammoSlot: 1
+      shots: 10
+      name: STR_OTHER_TRIGGER
+    accuracySnap: 60
+    accuracyAuto: 50
+    accuracyAimed: 40 # Lots of shots with good range, low multiplier
+    tuSnap: 30
+    tuAuto: 45
+    tuAimed: 40
+    autoRange: 15
+    snapRange: 17
+    aimRange: 20
+    battleType: 1
+    kneelBonus: 110
+    twoHanded: true
+    oneHandedPenalty: 50
+    invWidth: 2
+    invHeight: 3
+    armor: 300
+    bulletSpeed: 50
+    attraction: 8
+    accuracyMultiplier: # heavy ork weapon multiplier
+      firing: 0.65
+      strength: [0.5, -0.0008]
+    listOrder: 17050
+    tags:
+      ITEM_RECOIL: 80
+      ITEM_IS_HEAVY_WEAPON: 1
 
   - type: STR_SNAZZ_GUN  # Flash Gitz Kustom Shoota
     categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
@@ -1100,7 +1192,7 @@ items:
       - STR_MIDTIER_PREREQ
       - STR_DAKKA_GITZ_RECRUITED
     size: 0.6
-    dropoff: 3 # was 7. Adjusted to compensate for lower accuracy multiplier.
+    dropoff: 4 # was 7. Adjusted to compensate for lower accuracy multiplier.
     costBuy: 200000
     costSell: 20000
     weight: 45
@@ -1119,11 +1211,12 @@ items:
       shots: 5 # was 3
       spendPerShot: 1 # was 3. Now a direct upgrade to big shootas. might change it back if needed though
       name: STR_PULL_TRIGGER
-    tuSnap: 25
-    tuAuto: 33
+    tuSnap: 32 # was 25
+    tuAuto: 70 # was 33
     confAuto:
       spendPerShot: 1 # was 3.
       name: STR_HOLD_TRIGGER
+      shots: 20 # was 10
     battleType: 1
     twoHanded: true
     invWidth: 2
@@ -1131,7 +1224,6 @@ items:
     armor: 40
     autoRange: 16 # was 10. Longer range, lower accuracy. Spray bullets further.
     snapRange: 20 # was 14. Might reduce, or further lower accuracy.
-    autoShots: 10 # was 9
     sprayWaypoints: 2
     bulletSpeed: 50
     attraction: 1
@@ -1140,6 +1232,9 @@ items:
       firing: 0.65
       strength: [0.5, -0.0008]
     listOrder: 17051
+    tags:
+      ITEM_RECOIL: 80
+      ITEM_IS_HEAVY_WEAPON: 1
 
   - type: STR_TWIN_SHOOTAS  # MEGANOB Kustom Shoota
     categories: [STR_CAT_TERMINATOR, STR_CAT_BOLTER]
@@ -1292,7 +1387,7 @@ items:
       - STR_LOCAL_ORKZ_RECRUITED
 #    requiresBuyBaseFunc: [TRADE]
     size: 0.1
-    costBuy: 2400
+    costBuy: 5000
     costSell: 400
     weight: 20
     bigSprite: {mod: 40k, index: 503}
@@ -1788,9 +1883,9 @@ items:
   - type: STR_ORK_TELEPORT_GUN  # copied from STR_SLAANESH_ROCKET_LAUNCHER
     categories: [STR_CAT_ROCKETL, STR_CAT_DEVASTATOR, STR_CAT_CHAOS]
     requires:
-      - STR_ALIENS_ONLY
+      - STR_ORK_ONLY
     size: 0.4
-    dropoff: 7
+    dropoff: 4
     costSell: 3000
     weight: 0
     bigSprite: 2146
@@ -1800,17 +1895,18 @@ items:
     fireSound: {mod: 40k, index: 861}  # charging + discharge sound
     compatibleAmmo:
       - STR_TELEPORT_GUN_GRETCHIN
+      - STR_TELEPORT_GUN_GRETCHIN_PLAYER
     accuracySnap: 45
     accuracyAuto: 34
-    tuSnap: 34
-    tuAuto: 69
+    tuSnap: 25
+    tuAuto: 45
     autoShots: 3
-    snapRange: 18
-    autoRange: 12
+    snapRange: 25 # good range, bad accuracy
+    autoRange: 18
     maxRange: 28
     battleType: 1
-    twoHanded: true
-    blockBothHands: true
+    twoHanded: false # was true
+#    blockBothHands: true
     invWidth: 2
     invHeight: 3
     bulletSpeed: 50
@@ -1818,7 +1914,7 @@ items:
     fixedWeapon: true
     fixedWeaponShow: false
 
-  - type: STR_TELEPORT_GUN_GRETCHIN  # copied from STR_DAEMONETTE_MISSILE_PACK
+  - type: STR_TELEPORT_GUN_GRETCHIN # AI version, higher ammo and spawn chance # copied from STR_DAEMONETTE_MISSILE_PACK
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
     requires:
       - STR_ALIENS_ONLY
@@ -1828,18 +1924,22 @@ items:
     bigSprite: 2146  # ToDO: should be invisible?
     floorSprite: 2429  # ToDO: should be invisible?
     handSprite: {mod: 40k, index: 448}
-    clipSize: 9
+    clipSize: 45 # was 9. AI big meks wont run out
     specialChance: 90  # 90% chance of summoning a Gretchin per missile
-    power: 9
-    damageType: 7
+    power: 18 # 90 after multipliers
+    powerForAnimation: 9
+    damageType: 7 # Melee
     battleType: 2
-    blastRadius: 3
     damageAlter:  # GRAV GUN
       RandomType: 2  # TFTD [50% - 150%]
-      ArmorEffectiveness: 0.2
+      ArmorEffectiveness: 0.04 # 20% with other multipliers
       ToArmorPre: 5.0  # 1.2
       ToHealth: 5.0  # 0.6
       ToStun: 5.0  # 1.0
+      FixRadius: 1 # was 3
+      RadiusReduction: 999 # not actually an AOE weapon. has radius for animation/hitting underside
+      ToWound: 1.0  # massive internal bleeding
+      RandomWound: false
     spawnUnit: STR_GRETCHIN
     spawnUnitFaction: -1
     invWidth: 0
@@ -1850,6 +1950,52 @@ items:
     hitAnimation: 1110
     hitAnimFrames: 16
     listOrder: 12152
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 99
+      ITEM_IGNORES_2X2_REDUCTION: 1
+
+  - type: STR_TELEPORT_GUN_GRETCHIN_PLAYER  # Player version. Less spawn chance.
+    categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL]
+    size: 0.1
+    requires:
+      - STR_ORK_ONLY
+    requiresBuy:
+      - STR_ORKZ_MIDTIER
+      - STR_MEK_KLAN_RECRUITED
+    costBuy: 10000
+    costSell: 5000
+    weight: 20
+    bigSprite: {mod: 40k, index: 1038} # small lascannon clip sprites
+    floorSprite: {mod: 40k, index: 1038}
+    handSprite: {mod: 40k, index: 1304}
+    clipSize: 9
+    specialChance: 25  # 25% chance of summoning a Gretchin per shot
+    power: 18 # 90 after multipliers
+    powerForAnimation: 9
+    damageType: 7 # Melee
+    battleType: 2
+    damageAlter:  # GRAV GUN
+      RandomType: 2  # TFTD [50% - 150%]
+      ArmorEffectiveness: 0.04 # 20% with other multipliers
+      ToArmorPre: 5.0  # 1.2
+      ToHealth: 5.0  # 0.6
+      ToStun: 5.0  # 1.0
+      FixRadius: 1 # was 3
+      RadiusReduction: 999 # not actually an AOE weapon. has radius for animation/hitting underside
+      ToWound: 1.0  # massive internal bleeding
+      RandomWound: false
+    spawnUnit: STR_PLAYER_GROT
+    spawnUnitFaction: 2 # civilian
+    invWidth: 2
+    invHeight: 1
+    hitSound: 2123  # sizzlebamf
+    explosionHitSound: {mod: 40k, index: 790}  # vortexpull
+    hitAnimation: 1110
+    hitAnimFrames: 16
+    listOrder: 17075
+    tags:
+      DAMAGE_RESIST_PENETRATION_PERCENT: 99
+      ITEM_IGNORES_2X2_REDUCTION: 1
 
   - type: STR_ORK_GAUSS_FLAYER # sankshunned gauzz flaya'
     categories: [STR_CAT_ORK, STR_CAT_NECRON, STR_CAT_TACTICAL]
@@ -3277,7 +3423,7 @@ items:
     LOSRequired: true
     damageAlter:  # HEADSPLODEY
       RandomType: 1  # [0% - 200%]
-      ArmorEffectiveness: 0.1
+      ArmorEffectiveness: 0.01 # deals only 5 damage.
       ToHealth: 6.0  # 0.6
       ToStun: 10.0
       ToMorale: 16.0
