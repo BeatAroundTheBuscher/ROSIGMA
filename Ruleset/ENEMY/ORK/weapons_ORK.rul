@@ -2159,11 +2159,12 @@ items:
     handSprite: {mod: 40k, index: 904}
     power: 100
     damageType: 3
-    damageAlter:  # DA KRAKKIT Doesn't penetrate like regular Krak, shreds armor instead.
+    damageAlter:  # DA KRAKKIT
       RandomType: 6
+      ArmorEffectiveness: 0.7 # penetrates a bit and shreds.
       ToArmorPre: 0.6
       ToArmor: 0.6
-      ToHealth: 0.7 # was .4. Presumably to be less effective against 2x2s.
+      ToHealth: 0.4
       ToStun: 0.2
       ToTime: 0.2
       ResistType: 1
@@ -2174,14 +2175,14 @@ items:
     listOrder: 17101
     throwRange: 18 # was 14, longer range for ork nades. But they are heavier still.
     tags:
-      DAMAGE_RESIST_PENETRATION_PERCENT: 50
+      DAMAGE_RESIST_PENETRATION_PERCENT: 60
 
   - type: STR_TANKBUSTA_BOMB  # ORK Krak Grenade  17100
     categories: [STR_CAT_GRENADES, STR_CAT_TACTICAL, STR_CAT_ORK]
     size: 0.1
     requires:
       - STR_ORK_ONLY
-    costBuy: 5000
+    costBuy: 25000 # increased substantially because it ignores 2x2 damage reduction
     requiresBuy:
       - STR_ORK_BASIC_WEAPONS
 #    requiresBuyBaseFunc: [TRADE]
@@ -2200,27 +2201,29 @@ items:
     flatPrime:
       time: false
       energy: true
-    bigSprite: {mod: 40k, index: 502}  # Needs Custom Sprite
+    bigSprite: 2187
     floorSprite: {mod: 40k, index: 304}  # Needs Custom Sprite
     handSprite: {mod: 40k, index: 904}  # Needs Custom Sprite
     power: 140
     damageType: 1
     damageAlter:  # DA KRAKKIT
       RandomType: 6
+      ArmorEffectiveness: 0.7 # penetrates a bit and shreds.
       ToArmorPre: 0.6
       ToArmor: 0.6
-      ToHealth: 0.7 # was .4
+      ToHealth: 0.5 # was .4
       ToStun: 0.2
       ToTime: 0.2
       ResistType: 1
     battleType: 4
-    invWidth: 1
-    invHeight: 3
+    invWidth: 2
+    invHeight: 2
     blastRadius: 4
-    throwRange: 12 # was 8. heavier weight.
+    throwRange: 10 # was 8. heavier weight. danger close range
     listOrder: 17102
     tags:
       DAMAGE_RESIST_PENETRATION_PERCENT: 75
+      ITEM_IGNORES_2X2_REDUCTION: 1 # Busts Tanks
 
   - type: STR_ORK_STINKBOMB  # Stun grenade
     requires:
@@ -2323,7 +2326,8 @@ items:
     damageAlter:  # DA ROKKIT
       ToArmorPre: 0.5
       ToArmor: 0.5
-      ToHealth: 0.6 # was .3
+      ArmorEffectiveness: 0.7 # penetrates a bit and shreds.
+      ToHealth: 0.4 # was .3
       ToStun: 0.2
     clipSize: 1
     blastRadius: 1
