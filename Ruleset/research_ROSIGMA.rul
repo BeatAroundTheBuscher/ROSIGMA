@@ -4194,6 +4194,53 @@ research:
     neededItem: STR_CHAOS_ARTIFACTS
     destroyItem: false  # do not destroy item we need it for manufacture
 
+  - name: STR_SPY_IMPERIALCOMS  # Hack in the Imperial Network
+    cost: 50
+    points: 50
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_NAVY_COMUNICATIONS
+      - STR_CHAOS_PATH
+
+  - name: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE  # Retrieve Location Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_AMBUSH_SPACEMARINES  # Rescue the Chaos Rhinos
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+
+  - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_MANUFACTURE_CHAOS_BIKE
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+      - STR_AMBUSH_SPACEMARINES_COMPLETE
+
+  - name: STR_CHAOSREWARD_REQUISITIONS  # Sacred Gift from Chaos
+    cost: 300
+    points: 50
+    dependencies:
+      - STR_AMBUSH_SPACEMARINES_COMPLETE
+    unlocks:
+      - STR_MANUFACTURE_CHAOS_BIKE
+      - STR_LEADER_PLUS
+      - STR_COMMANDER_PLUS
+
 ## Adeptas #PROGRESSION.SOB#
   - delete: STR_STORMBOLTER_DEAZ
   - delete: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
@@ -4331,6 +4378,16 @@ research:
       - STR_GENERALLOCK
     unlocks:
       - STR_CALLIDUS_CODEX
+
+  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
+    cost: 400
+    points: 20
+    unlocks:
+      - STR_ENGINSEER_REQUISITION
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+    listOrder: 20
 
   - name: STR_ADEPTAS_MIDTIER  # Orders' Mid-tier Requisitions
     # cutcscene c2
@@ -4661,6 +4718,22 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
+
+  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+    listOrder: 20
+
+  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_ENGINSEER_REQUISITION
+    listOrder: 21
 
   # MISSIONS
   - name: STR_IMPERIAL_GUARD_BASIC_TRAINING  # Basic Training
@@ -12189,80 +12262,3 @@ research:
     points: 50
     needItem: true
     destroyItem: true
-
-# Techpriest
-
-  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
-    cost: 400
-    points: 20
-    unlocks:
-      - STR_ENGINSEER_REQUISITION
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_ADEPTAS
-    listOrder: 20
-
-  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
-    cost: 400
-    points: 20
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    listOrder: 20
-
-  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
-    cost: 400
-    points: 20
-    dependencies:
-      - STR_HIGHTIER_PREREQ
-      - STR_ENGINSEER_REQUISITION
-    listOrder: 21
-
-  # chaos ambush line
-
-  - name: STR_SPY_IMPERIALCOMS  # Hack in the Imperial Network
-    cost: 50
-    points: 50
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_NAVY_COMUNICATIONS
-      - STR_CHAOS_PATH
-
-  - name: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE  # Retrieve Location Completed
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-    needItem: true
-
-  - name: STR_AMBUSH_SPACEMARINES  # Rescue the Chaos Rhinos
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
-      - STR_ALIEN_ORIGINS
-      - STR_LEADER_PLUS
-
-  - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-    needItem: true
-
-  - name: STR_MANUFACTURE_CHAOS_BIKE
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-      - STR_AMBUSH_SPACEMARINES_COMPLETE
-
-  - name: STR_CHAOSREWARD_REQUISITIONS  # Sacred Gift from Chaos
-    cost: 300
-    points: 50
-    dependencies:
-      - STR_AMBUSH_SPACEMARINES_COMPLETE
-    unlocks:
-      - STR_MANUFACTURE_CHAOS_BIKE
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
