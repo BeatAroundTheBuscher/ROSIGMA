@@ -4,6 +4,7 @@
 # MISSION SCRIPT TYPE     DESCRIPTION                                   SEARCH CODE
 #
 # Game Start              Runs only at game start to populate geoscape  #START#
+# Bases                   Generates extra bases as the game continues   #BASE#
 # Warp Storm              Runs monthly, generic missions that make      #STORM#
 #                           ships fly around and establish alien bases
 # General Enemy Activity  Other general geoscape activity.              #GEN#
@@ -164,6 +165,68 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS_SW: true
 
+
+### Bases #BASE#
+  - type: newTraditionalBasesEarly
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 33
+        STR_TRAITOR_GUARD_BASE: 33
+        STR_ORK_BASE: 33
+        # Low chances of harder races
+    firstMonth: 1
+    lastMonth: 2
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 50
+
+  - type: newTraditionalBasesLater
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 33
+        STR_TRAITOR_GUARD_BASE: 33
+        STR_ORK_BASE: 33
+        # Higher chances of harder races for 3-5
+        # Even chances of all for beyond that
+    firstMonth: 3
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 100
+
+  - type: newTraditionalBasesExtra
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 33
+        STR_TRAITOR_GUARD_BASE: 33
+        STR_ORK_BASE: 33
+        # Higher chances of harder races
+        STR_NECRON_BASE: 50
+    firstMonth: 6
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 50
+
+  # Genestealers
+  - type: GeneBASES
+    missionWeights:
+      0:
+        STR_GENE_BASE: 100
+    firstMonth: 7
+    startDelay: 120
+    randomDelay: 40160 # Up to 4 weeks random delay
+    executionOdds: 25
+
+  # Eldar
+  - type: EldarBASES
+    missionWeights:
+      0:
+        STR_ELDAR_BASE: 100
+    firstMonth: 8
+    startDelay: 120
+    randomDelay: 40160 # Up to 4 weeks random delay
+    executionOdds: 25
+    researchTriggers:
+      STR_ELDAR_PATH: false
 
 ### Warp Storm scripts #STORM#
   # These are recurring missions that continue to cause alien activity,
@@ -971,13 +1034,22 @@ missionScripts:
 
   # Cultists
   - type: gameStartCultist
+    missionWeights:
+      0:
+        STR_CULTIST_BASE_START: 100
     executionOdds: 75
     firstMonth: 2
     lastMonth: 2
+    targetBaseOdds: 100
+    raceWeights:
+      0:
+        STR_SECTOID: 100
+    startDelay: 3000
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: false
       STR_GUEVESA_STRATEGY_MILITIA_GV: false
       STR_EVEN_HARDER_MISSIONS: false
+    label: 100
 
   - type: gameStartCultistExtraHard # Word Bearers instead of cultists. Guaranteed to spawn.
     executionOdds: 100
@@ -1063,13 +1135,23 @@ missionScripts:
 
   # Traitor Guard
   - type: gameStartTraitorGuard
+    conditionals: [-100]
+    missionWeights:
+      0:
+        STR_TRAITOR_GUARD_BASE_START: 100
+    raceWeights:
+      0:
+        STR_SNAKEMAN: 100
     executionOdds: 75  # either Cultists or Traitor Guard
     firstMonth: 2
     lastMonth: 2
+    targetBaseOdds: 100
+    startDelay: 3000
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: false
       STR_GUEVESA_STRATEGY_MILITIA_GV: false
       STR_EVEN_HARDER_MISSIONS: false
+    label: 101
 
   - type: gameStartTraitorGuard_SL
     executionOdds: 75  #
@@ -1167,9 +1249,22 @@ missionScripts:
       STR_GSC_ARBITES_SPAWNED: false
 
   # Orks
-  - type: gameStartOrk
-  # Orkz as starting enemy for SL
-    # conditionals: [-100, -101]  # relates to gameStartTraitorGuard and gameStartCultist in 40k
+  #- type: gameStartOrk
+  #  conditionals: [-100, -101]
+  #  missionWeights:
+  #    0:
+  #      STR_ORK_BASE_START: 100
+  #  lastMonth: 0
+  #  targetBaseOdds: 100
+  #  raceWeights:
+  #    0:
+  #      STR_ORK: 100
+  #  startDelay: 3000
+  #  executionOdds: 100
+  #  label: 102
+
+  - type: gameStartOrkSL
+    # Orkz as starting enemy for SL
     missionWeights:
       0:
         STR_ORK_BASE_START: 100
@@ -1181,9 +1276,9 @@ missionScripts:
     startDelay: 4320  # 3 days
     randomDelay: 4320  # additional random 0 to 3 days
     executionOdds: 100
-    label: 102
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: true  # only triggers for steel legion  playthroughs
+    label: 102
 
   # Necrons
   - &EARTHQUAKE_NECRON_BASE
@@ -1206,10 +1301,14 @@ missionScripts:
 ### Terror Missions #TERROR#
   # Generic
   - type: firstMonthTerror
+    executionOdds: 100
+    lastMonth: 0
     missionWeights:
       0:
         STR_CIVILIAN_TERROR: 70
         STR_CIVILIAN_TERROR_GSC: 30
+    useTable: false
+    startDelay: 3000
     researchTriggers:
       STR_STEEL_LEGION_STRATEGY: false
       STR_ALIENS_ONLY: false
@@ -1256,6 +1355,8 @@ missionScripts:
       STR_ARBITES: false
       STR_NOT_CHAOSCULT: true
       STR_NOT_WORDBEARERS: true
+    useTable: false
+    startDelay: 150
 
   - type: recurringTerrorHard
     executionOdds: 80
@@ -1437,6 +1538,20 @@ missionScripts:
         REGION_HULK_SITES: 100
     useTable: false
 
+  - type: SpaceHulk
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_ALIEN_ARTIFACT: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    varName: hulk
+    useTable: false
+    firstMonth: 6
+    executionOdds: 30
+    startDelay: 10000
+
   - &SPACEHULK_ORK_BASE
     type: SPACEHULK_ORK_BASE_1
     missionWeights:
@@ -1451,7 +1566,6 @@ missionScripts:
       STR_NOT_CHAOSCULT: true
       STR_SPACEHULK_ORK: true
       STR_SPACEHULK_FIRST: false
-
   - type: SPACEHULK_ORK_BASE_2
     refNode: *SPACEHULK_ORK_BASE
     missionWeights:
@@ -1835,6 +1949,26 @@ missionScripts:
 
 ### General Story/Event Missions #SPECIAL#
   #Non-faction specific story and special event missions
+  - type: researchRetaliation
+    # Spawns a retaliation when researching Heart of Chaos
+    missionWeights:
+      0:
+        STR_ALIEN_RETALIATION: 100
+    researchTriggers:
+      STR_THE_MARTIAN_SOLUTION: true
+    startDelay: 150
+    targetBaseOdds: 100
+    useTable: false
+    label: 1
+
+  - type: timedRetaliation
+    missionWeights:
+      0:
+        STR_ALIEN_RETALIATION: 100
+    firstMonth: 12
+    targetBaseOdds: 100
+    useTable: false
+    startDelay: 150
 
   # Dungeon
   - type: HULKER
@@ -1932,8 +2066,24 @@ missionScripts:
 ### Training Missions and their consequences #TRAIN#
   # Originally guard only, but more factions have training mission triggered mission scripts now
   - type: GuardTrainingMission
+    missionWeights:
+      0:
+        STR_GUARD_TRAINING: 100
+    useTable: false
+    firstMonth: 0
+    targetBaseOdds: 100
+    executionOdds: 100
+    startDelay: 10
     researchTriggers:
       STR_IMPERIAL_GUARD_BASIC_TRAINING: true
+
+  - type: DummyCheckForOneOffMissions
+    conditionals: [-1001, -1002, -1003]
+    label: 1200
+    missionWeights:
+      0:
+        STR_DUMMY: 100 # necessary to not generate a mission from the table
+    useTable: false
 
   - type: RepeatingFallthroughMissions
     conditionals:
@@ -2035,6 +2185,22 @@ missionScripts:
       STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE: true
       STR_CHAOS_PATH: false
       STR_NOT_CHAOSCULT: true
+    label: 1298
+
+  # Guard Campaign
+  - type: BullgrynRiotMissionLater
+    missionWeights:
+      0:
+        STR_BULLGRYN_RIOT: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 20
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSIONS_BULLGRYN_RIOT: true
+      STR_IMPERIAL_GUARD_MISSION_BULLGRYN_RIOT_COMPLETE: true
+    label: 1101
 
   # Chaos Cult Campaign
   - type: CCultRepeatingFallthroughMissions
@@ -2212,12 +2378,145 @@ missionScripts:
 
 ### Faction Specific Campaign Missions #CAMP#
   # Marines
+  - type: War
+    missionWeights:
+      0:
+        STR_ALIEN_WAR: 100
+    regionWeights:
+      0:
+        WAR_SITES: 100
+    useTable: false
+    researchTriggers:
+      STR_ALIENS_ONLY: false
+      STR_MARINES_STRATEGY: true
+    #startDelay: 10
+    firstMonth: 15
+    executionOdds: 60
+    startDelay: 15000
+
   - type: Mission1
     # No longer triggers in ROSIGMA
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_1MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
     researchTriggers:
       STR_SIDEOPERATIONS: true
       STR_TATICALTRAININFO: false
       STR_GENERALLOCK: true
+
+  - type: Mission2
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_2MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    researchTriggers:
+      STR_TATICALTRAININFO: true
+      STR_COMPLETEMAP: false
+
+  - type: Mission3 #OUTPOST RESCUE
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_3MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: Defense
+    researchTriggers:
+      STR_COMPLETEMAP: true
+      STR_COMPLETRELIC: false
+
+  - type: Mission4 #Cathedral
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_4MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    researchTriggers:
+      STR_COMPLETEMAP: true
+      STR_COMPLETRELIC: false
+
+  - type: Mission5 #Fortress
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_5MISSION: 100
+    regionWeights:
+      0:
+        M5_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    researchTriggers:
+      STR_COMPLETRELIC: true
+      STR_GENESEED: false
+
+  - type: Mission6 #TANK HUNTER
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_6MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    researchTriggers:
+      STR_GENESEED: true
+      STR_MISSION6REPORT: false
+
+  - type: Mission7 #SPACESHIP PART1
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_7MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    researchTriggers:
+      STR_MISSION6REPORT: true
+      STR_MISSION7REPORT: false
+
+  - type: Mission8 #SPACESHIP PART2
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_8MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    researchTriggers:
+      STR_MISSION7REPORT: true
+      STR_TELEPORTDATA: false
+
+  - type: Mission9 #SPACESHIP PART2
+    missionWeights:
+      # 0 is just for safety
+      0:
+        STR_M_9MISSION: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    researchTriggers:
+      STR_TELEPORTDATA: true
+      STR_VETERAN: false
 
   - type: finalMissionMarines  # ported for 40k to prevent it to happen for space wolves
     missionWeights:
@@ -2252,12 +2551,99 @@ missionScripts:
     maxRuns: 1
     varName: finalMissionSpaceWolves
 
+  # Adeptas
+  - type: WarAdeptas
+    missionWeights:
+      0:
+        STR_ADEPTAS_WAR: 100
+    regionWeights:
+      0:
+        WAR_SITES: 100
+    useTable: false
+    researchTriggers:
+      STR_ALIENS_ONLY: false
+      STR_ADEPTAS: true
+    #startDelay: 10
+    firstMonth: 15
+    executionOdds: 60
+    startDelay: 15000
+
+  - type: finalMissionAdeptas
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_ADEPTAS: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_ADEPTAS: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionAdeptas
+
   # Guard
+  - type: BullgrynRiotMissionFirst
+    missionWeights:
+      0:
+        STR_BULLGRYN_RIOT: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSIONS_BULLGRYN_RIOT: true
+      STR_IMPERIAL_GUARD_MISSION_BULLGRYN_RIOT_COMPLETE: false
+    label: 1001
+
+  - type: TanithMission0
+    missionWeights:
+      0:
+        STR_TANITH_MISSION0: 100
+    regionWeights:
+      0:
+        TANITH_MISSION0_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSIONS_TANITH: true
+      STR_IMPERIAL_GUARD_MISSIONS_TANITH0_COMPLETE: false
+    label: 1002
+
+  - type: TanithMission1
+    missionWeights:
+      0:
+        STR_TANITH_MISSION_CONVOYAMBUSH: 100
+    regionWeights:
+      0:
+        TANITH_MISSION1_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    randomDelay: 40320
+    researchTriggers:
+      STR_IMPERIAL_GUARD_MISSIONS_TANITH_CONVOYAMBUSH: true
+      STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE: false
+
   - type: finalMissionGuard
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_GUARD: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
     researchTriggers:
       STR_CYDONIA_OR_BUST: true
       STR_IMPERIAL_GUARD_OPERATIONS: true
       STR_STEEL_LEGION_STRATEGY: false
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionGuard
 
   # Steel Legion
   - type: finalMissionGuard_SL
@@ -2289,22 +2675,50 @@ missionScripts:
     maxRuns: 1
     varName: finalMissionOrkz
 
+  # Chamber
+  - type: finalMissionChamber
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_CHAMBER: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_CHAMBERMILITANT: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionChamber
+
   # Deathwatch
-  # - delete: finalMissionDeathwatch
-  # - type: finalMissionDeathwatch
-  #   missionWeights:
-  #     0:
-  #       STR_FINAL_MISSION_DEATHWATCH: 100
-  #   regionWeights:
-  #     0:
-  #       REGION_FINAL_MISSION_DEATHWATCH: 100
-  #   researchTriggers:
-  #     STR_NOT_TAU_EMPIRE_GV: true
-  #     STR_DEATHWATCH_BUST: true
-  #     STR_DEATHWATCH: true
-  #   useTable: false
-  #   maxRuns: 1
-  #   varName: finalMissionDeathwatch
+  - type: finalMissionDeathwatch
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_DEATHWATCH: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION_DEATHWATCH: 100
+    researchTriggers:
+      STR_DEATHWATCH_BUST: true
+      STR_DEATHWATCH: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionDeathwatch
+
+  # Arbites
+  - type: finalMissionArbites
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_ARBITES: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_ARBITES_BUST: true
+      STR_ARBITES: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionArbites
 
   # General Chaos
   - delete: Inquisition  # This was the previous 40k mod chaos retaliation
