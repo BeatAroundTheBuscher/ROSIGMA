@@ -1,10 +1,14 @@
-#
 # # Each research topic entry should include a comment after its name entry with its corresponding string from the langauge file
 # # Do not add research topics for fixed weapons or unrecoverable items that require the item.
 #     If codex article access is needed for a fixed weapon or recover: false item it needs to be keyed off of other research.
 # # When adding new items, heavily consider keying their purchase, manufacturing, and codex access off of existing appropriate research if it exists to avoid bloat.
 #     Including enemy weapons.
 #
+# █▀▄ █▀█   █▄ █ █▀█ ▀█▀   █▀▄ █ █ █▀▄▀█ █▀█   █▄ █ █▀▀ █ █ █   █▀█ █▀▀ █▀ █▀▀ ▄▀█ █▀█ █▀▀ █ █   
+# █▄▀ █▄█   █ ▀█ █▄█  █    █▄▀ █▄█ █ ▀ █ █▀▀   █ ▀█ ██▄ ▀▄▀▄▀   █▀▄ ██▄ ▄█ ██▄ █▀█ █▀▄ █▄▄ █▀█   
+#
+# ▄▀█ ▀█▀   █▀▀ █▄ █ █▀▄   █▀█ █▀▀   █▀▀ █ █   █▀▀
+# █▀█  █    ██▄ █ ▀█ █▄▀   █▄█ █▀    █▀  █ █▄▄ ██▄
 #
 # Search codes have been added to the file to facilitate looking up sections of research.
 # Search query should look like this and is case insensitive: #SECTION.FACTION#
@@ -16,13 +20,13 @@
 # #STRATEGY#        Faction and Strategy Selection Research
 # #PROGRESSION#     Progression Research
 # #FLAVOR#          Flavor Topics
+# #FACILITIES#      Base Facilities
 # #CRAFTS#          Crafts and UFOs
 # #ARMORS#          Armors
 # #WEAPONS#         Weapons
 # #ITEMS#           Items
 # #CAPTIVES#        Captives
 # #CORPSES#         Corpses
-# #FACILITIES#      Base Facilities
 #
 # Factions:
 # #MULT#            Multifaction Research
@@ -161,13 +165,16 @@ research:
   - name: STR_LOSE_1000
 
 ## Blockers and Unlockers
+  - delete: STR_GAME_START
   - name: STR_GAME_START  # (Started the Game)
     unlockFinalMission: true
 
+  - delete: STR_GENERALLOCK
   - name: STR_GENERALLOCK  # (Needs Special Unlock)
   # Used to block normal access to research that is later granted via unlock, event, etc.
     needItem: true
 
+  - delete: STR_DONTSHOWYET
   - &STR_LOCKED
     name: STR_DONTSHOWYET  # DONT SHOW YET
     cost: 0
@@ -179,6 +186,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_CHAPTER_PURITY
   - name: STR_CHAPTER_PURITY  # (Uncontaminated by Chaos)
     # Disabled by going chaos, required for some items, soldiers, etc.
     dependencies:
@@ -188,6 +196,7 @@ research:
     # Access to Imperial Weaponry, disabled by Chaos Path/Unholy Wartools
     # Could also be used for Xeno factions if added.
 
+  - delete: STR_ALIENS_ONLY
   - name: STR_ALIENS_ONLY  # Chaos Corruption
     # Serves as the lock for use of chaos items
     cost: 0
@@ -350,45 +359,70 @@ research:
       - STR_CHAMBERMILITANT
       - STR_GENERALLOCK
 
+  - delete: STR_MARINES_AND_ADEPTAS
   - name: STR_MARINES_AND_ADEPTAS  # (Marines or Adeptas)
     refNode: *STR_LOCKED
+  - delete: STR_MARINES_AND_DEATHWATCH
+  - name: STR_MARINES_AND_DEATHWATCH
+    refNode: *STR_LOCKED
+  - delete: STR_PRIMARIS_AND_ADEPTAS
   - name: STR_PRIMARIS_AND_ADEPTAS  # (Primaris or Adeptas)
     refNode: *STR_LOCKED
+  - delete: STR_PRIMARIS_AND_DEATHWATCH
+  - name: STR_PRIMARIS_AND_DEATHWATCH
+    refNode: *STR_LOCKED
+  - delete: STR_DEATHWATCH_AND_ADEPTAS
+  - name: STR_DEATHWATCH_AND_ADEPTAS
+    refNode: *STR_LOCKED
+  - delete: STR_GUARD_AND_ARBITES
   - name: STR_GUARD_AND_ARBITES  # (Arbites or Guard)
     refNode: *STR_LOCKED
+  - delete: STR_GUARD_SUPORT
   - name: STR_GUARD_SUPORT  # (Non-Arbites Guard Requisitions)
     refNode: *STR_LOCKED
 
+  - delete: STR_PICK_STRATEGY
   - name: STR_PICK_STRATEGY  # Strategy Selection
     refNode: *STR_LOCKED
+  - delete: STR_PICK_STRATEGY_CM
   - name: STR_PICK_STRATEGY_CM  # Ordos Selection
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_ADEPTAS
   - name: STR_CHOSEN_ADEPTAS  # Sisters of Battle Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_ARBITES
   - name: STR_CHOSEN_ARBITES  # Adeptus Arbites Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_TATICAL
   - name: STR_CHOSEN_TATICAL  # Tactical Strategy Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_ASSAULT
   - name: STR_CHOSEN_ASSAULT  # Assault Strategy Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_DEVASTATOR
   - name: STR_CHOSEN_DEVASTATOR  # Devastator Strategy Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_SCOUT
   - name: STR_CHOSEN_SCOUT  # Scout Strategy Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_PRIMARIS
   - name: STR_CHOSEN_PRIMARIS  # Primaris Strategy Selected
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_SPACEWOLVES  # Space Wolves Selected
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_WORDBEARERS  # Word Bearers Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_IGS
   - name: STR_CHOSEN_IGS  # Imperial Guard Selected
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_STEELLEGION  # Steel Legion Selected
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_KRIEG  # Krieg Selected
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_ELDAR
   - name: STR_CHOSEN_ELDAR  # Eldar Path
     refNode: *STR_LOCKED
+  - delete: STR_CHOSEN_GREYKNIGHTS
   - name: STR_CHOSEN_GREYKNIGHTS  # Grey Knights Selected
     refNode: *STR_LOCKED
   - name: STR_CHOSEN_ASSASSINORUM  # Officio Assassinorum Selected
@@ -407,8 +441,8 @@ research:
   - name: STR_NOT_WORDBEARERS  # (Not Word Bearers Strategy)
 
   - name: STR_NOT_ADEPTUS_TERRA  # (Not Adeptus Terra)
+  - delete: STR_NOT_ARBITES
   - name: STR_NOT_ARBITES  # (Not Arbites)
-    dependencies: []
   - name: STR_NOT_CHAOSCULT  # (Not Chaos Cult)
   - name: STR_NOT_GREENEST_ORKZ  # (Not Greenest Orkz)
 
@@ -440,6 +474,8 @@ research:
   - name: STR_SPACEHULK_FIRST  # Spacehulk
     refNode: *STR_LOCKED
   - name: STR_SPACEHULK_SECOND  # Spacehulk
+    refNode: *STR_LOCKED
+  - name: STR_SPACEHULK_ORK
     refNode: *STR_LOCKED
   - name: STR_NECRONS_SPAWNED  # Earthquake Detected
     refNode: *STR_LOCKED
@@ -584,6 +620,7 @@ research:
 ####################################
 # Multifaction Research #STRATEGY.MULT#
 ## Space Marines #STRATEGY.SM#
+  - delete: STR_MARINES_STRATEGY
   - name: STR_MARINES_STRATEGY  # Space Marines
     cost: 0
     points: 0
@@ -611,6 +648,7 @@ research:
       - STR_ADV_DROPPODS
 
 ### Assault Strategy #STRATEGY.SM.ASS#
+  - delete: STR_ASSAULT
   - name: STR_ASSAULT  # Assault Strategy
     cost: 5
     points: 0
@@ -643,6 +681,7 @@ research:
     spawnedEvent: STR_ASSAULT_CARE_PACKAGE
 
 ### Devastator Strategy #STRATEGY.SM.DEV#
+  - delete: STR_DEVASTATOR
   - name: STR_DEVASTATOR  # Devastator Strategy
     cost: 5
     points: 0
@@ -674,6 +713,7 @@ research:
     spawnedEvent: STR_DEVASTATOR_CARE_PACKAGE
 
 ### Primaris Strategy #STRATEGY.SM.PRIM#
+  - delete: STR_PRIMARIS
   - name: STR_PRIMARIS  # Primaris Strategy
     cost: 5
     points: 0
@@ -704,6 +744,7 @@ research:
     spawnedEvent: STR_PRIMARIS_CARE_PACKAGE
 
 ### Scout #STRATEGY.SM.SCOUT#
+  - delete: STR_SCOUT
   - name: STR_SCOUT  # Scout Strategy
     cost: 5
     points: 0
@@ -734,6 +775,7 @@ research:
     spawnedEvent: STR_SCOUT_CARE_PACKAGE
 
 ### Tactical Strategy #STRATEGY.SM.TAC#
+  - delete: STR_TATICAL
   - name: STR_TATICAL  # Tactical Strategy
     cost: 5
     points: 0
@@ -975,6 +1017,7 @@ research:
       - STR_COMMANDER_PLUS
 
 ## Chamber Militant #STRATEGY.CM#
+  - delete: STR_CHAMBERMILITANT
   - name: STR_CHAMBERMILITANT  # Chamber Militant
     cost: 0
     points: 0
@@ -1010,6 +1053,7 @@ research:
       - STR_DREADNOUGHT_MARINE
 
 ### Deathwatch #STRATEGY.CM.DW#
+  - delete: STR_DEATHWATCH
   - name: STR_DEATHWATCH  # Deathwatch
     cost: 5
     points: 0
@@ -1038,11 +1082,13 @@ research:
     reenables:
       - STR_DREADNOUGHT_MARINE
     spawnedEvent: STR_DEATHWATCH_CARE_PACKAGE
+  - delete: STR_CHOSEN_DEATHWATCH
   - name: STR_CHOSEN_DEATHWATCH
     dependencies:
       - STR_GENERALLOCK
 
 ### Grey Knights #STRATEGY.CM.GK#
+  - delete: STR_GREYKNIGHTS
   - name: STR_GREYKNIGHTS  # Grey Knights
     cost: 5
     points: 0
@@ -1152,6 +1198,7 @@ research:
     points: 0
 
 ## Adeptus Terra #STRATEGY.AT#
+  - delete: STR_ARBITES
   - name: STR_ARBITES  # Arbites
     cost: 0
     points: 0
@@ -1271,11 +1318,9 @@ research:
     lookup: STR_CHOSEN_ORKZ
     unlocks:
       - STR_MOTION_SCANNER
-      - STR_GUARD_BARRACKS
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
       - STR_IMPERIAL_GUARD_BASIC_TRAINING # da greenest knows 'ow ta train da boyz.
       - STR_LASER_WEAPONS
-      - STR_LIGHT_BOLTERS_LOWTIER
       - STR_ORK_BOY_RECRUITMENT
       - STR_ORK_ONLY
       - STR_ORK_BASIC_WEAPONS
@@ -1314,6 +1359,7 @@ research:
     spawnedEvent: STR_GREENEST_SUGGESTIONS
 
 ## Adeptas #STRATEGY.SOB#
+  - delete: STR_ADEPTAS
   - name: STR_ADEPTAS  # Sister of Battle
     cost: 0
     points: 0
@@ -1487,6 +1533,7 @@ research:
       - STR_NORMAL_STRATEGY_ADEPTAS
 
 ## Imperial Guard #STRATEGY.IG#
+  - delete: STR_IMPERIAL_GUARD_OPERATIONS
   - name: STR_IMPERIAL_GUARD_OPERATIONS  # Imperial Guard
     points: 0
     dependencies:
@@ -1697,6 +1744,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_ALIEN_ORIGINS
   - name: STR_ALIEN_ORIGINS  # Warp Origins
     cost: 250
     points: 100
@@ -1704,16 +1752,19 @@ research:
       - STR_ALIEN_FOOD
       - STR_ALIEN_SURGERY
 
+  - delete: STR_INTERROGATION_COMPLETED
   - name: STR_INTERROGATION_COMPLETED  # (Live Captive Researched)
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_MIDTIER_PREREQ
   - name: STR_MIDTIER_PREREQ  # (Mid-tier Researched)
     cost: 0
     points: 0
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_CRAFTADD
   - name: STR_CRAFTADD  # Craft Auxiliary Systems
     cost: 200
     points: 30
@@ -1721,34 +1772,39 @@ research:
       - STR_MIDTIER_PREREQ
     spawnedItem: STR_SCANNER
 
+  - delete: STR_MASTER_CRAFTING_AMMO
   - name: STR_MASTER_CRAFTING_AMMO  # Mid-tier Master Crafting
     cost: 200
     points: 30
     dependencies:
       - STR_MIDTIER_PREREQ  # instead of being dependent on STR_MASTER_CRAFTING
 
+  - delete: STR_MASTER_CRAFTING
   - name: STR_MASTER_CRAFTING  # High-tier Master Crafting
     cost: 800
     points: 30
     dependencies:
       - STR_MASTER_CRAFTING_AMMO
       - STR_UFO_CONSTRUCTION  # instead of midtier
-    unlocks: []
 
+  - delete: STR_HIGHTIER_PREREQ
   - name: STR_HIGHTIER_PREREQ  # (High-tier Researched)
     cost: 0
     points: 0
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_MEDI_KIT_PREREQ
   - name: STR_MEDI_KIT_PREREQ  # (Medical Gear Researched)
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_LEADER_PLUS
   - name: STR_LEADER_PLUS  # Leader Interrogation
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_THE_MARTIAN_SOLUTION
   - name: STR_THE_MARTIAN_SOLUTION  # The Heart of Chaos
     cost: 500
     points: 60
@@ -1756,6 +1812,7 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
 
+  - delete: STR_HYPER_WAVE_DECODER
   - name: STR_HYPER_WAVE_DECODER  # Transmission Decoder
     cost: 670
     points: 25
@@ -1777,10 +1834,12 @@ research:
       - STR_HYPER_WAVE_DECODER
 
   # unlocked and given by appropriate interrogations
+  - delete: STR_COMMANDER_PLUS
   - name: STR_COMMANDER_PLUS  # Commander Interrogation
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_CYDONIA_OR_BUST
   - name: STR_CYDONIA_OR_BUST  # Ending the Warp # cutcscene c3
     cost: 600
     cutscene: c3
@@ -1790,10 +1849,12 @@ research:
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
+  - delete: STR_SPELLS_PREREQ
   - name: STR_SPELLS_PREREQ  # (Teachings Researched)
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_THREAT_ONE
   - name: STR_THREAT_ONE  # Threat One # THREAT_ONE ARMOR PATH
     cost: 0
     points: 0
@@ -1830,6 +1891,7 @@ research:
   - name: STR_ELDAR_LEADER_INTERROGATED  # Eldar Leader Interrogation
     refNode: *STR_LOCKED
 
+  - delete: STR_ELDAR_ALLIANCE
   - name: STR_ELDAR_ALLIANCE  # Eldar Proposal
     cost: 800
     points: -500
@@ -1844,6 +1906,7 @@ research:
     unlocks:
       - STR_ELDAR_ONLY
 
+  - delete: STR_ELDAR_PATH
   - name: STR_ELDAR_PATH  # Eldar Alliance
     cost: 800
     points: -500
@@ -1877,6 +1940,7 @@ research:
       - STR_ELDAR_CHAINSWORD
     spawnedItemCount: 1
 
+  - delete: STR_SCORPION_R
   - name: STR_SCORPION_R  # Scorpion Requesition
     # The craft, not the unit
     cost: 1000
@@ -2424,6 +2488,7 @@ research:
       - STR_NEW_FIGHTER_TRANSPORTER
 
 ### Missions
+  - delete: STR_SIDEOPERATIONS
   - name: STR_SIDEOPERATIONS  # CHAPTER SIDEOPERATIONS # MISSION 1
     cost: 200
     points: 25
@@ -2434,6 +2499,7 @@ research:
     unlocks:
       - STR_TATICALTRAININFO  # skip training mission
 
+  - delete: STR_TATICALTRAININFO
   - name: STR_TATICALTRAININFO  # Tactical Training Data # MISSION 2
     cost: 200
     points: 25
@@ -2442,23 +2508,27 @@ research:
       - STR_SIDEOPERATIONS
       - STR_GENERALLOCK
 
+  - delete: STR_DISTRESSDATA
   - name: STR_DISTRESSDATA  # DISTRESS DATA # MISSION 3
     cost: 200
     points: 25
     needItem: true
 
+  - delete: STR_UNLOCKED1
   - name: STR_UNLOCKED1  # Unlocked # 4 UNLOCK1
     cost: 200
     points: 25
     dependencies:
       - STR_DISTRESSDATA
 
+  - delete: STR_UNLOCKED2
   - name: STR_UNLOCKED2  # Unlocked # 4 UNLOCK2 was the final lock
     cost: 200
     points: 25
     dependencies:
       - STR_DISTRESSDATA
 
+  - delete: STR_COMPLETEMAP
   - name: STR_COMPLETEMAP  # Completed Data Slate # 4 MISSION 4
     cost: 200
     points: 25
@@ -2466,36 +2536,43 @@ research:
     dependencies:
       - STR_TATICALTRAININFO
 
+  - delete: STR_GENESEED
   - name: STR_GENESEED  # Geneseed Sample # MISSION 5
     cost: 200
     points: 25
     needItem: true
 
+  - delete: STR_MISSION6REPORT
   - name: STR_MISSION6REPORT  # Orbiting Ship # MISSION 6 TANK HUNT
     cost: 100
     points: 25
     needItem: true
 
+  - delete: STR_MISSION7REPORT
   - name: STR_MISSION7REPORT  # Return to Orbiting Ship # MISSION 8
     cost: 100
     points: 25
     needItem: true
 
+  - delete: STR_TELEPORTDATA
   - name: STR_TELEPORTDATA  # Ship Teleport Data # MISSION 9
     cost: 100
     points: 25
     needItem: true
 
+  - delete: STR_MISSION9REPORT
   - name: STR_MISSION9REPORT  # Congrats # MISSION 9
     cost: 100
     points: 25
     needItem: true
 
+  - delete: STR_COMPLETRELIC
   - name: STR_COMPLETRELIC  # Completed Relic # 4 MISSION 5
     cost: 200
     points: 25
     needItem: true
 
+  - delete: STR_VETERAN
   - name: STR_VETERAN  # Veterans
     cost: 50
     points: 0
@@ -2609,6 +2686,7 @@ research:
   # Phase 3: Infector weapons you can use in the battlescape to turn units/Get free recruits?
 
 ## Space Marines #PROGRESSION.SM#
+  - delete: STR_MEDI_KIT
   - name: STR_MEDI_KIT  # Apothecary Requisition
     # Apothecary for Marines
     cost: 210
@@ -2620,6 +2698,7 @@ research:
       - STR_MEDI_KIT_PREREQ
     lookup: STR_MEDI_KIT_PREREQ
 
+  - delete: STR_SPELLSR
   - name: STR_SPELLSR  # Chapter Teachings
     cost: 120
     points: 10
@@ -2644,6 +2723,7 @@ research:
     disables:
       - STR_DREADNOUGHT_CHAOS
 
+  - delete: STR_MT
   - name: STR_MT  # Chapter Mid-tier Requisitions  # cutcscene c2
     cost: 200
     points: 200
@@ -2662,15 +2742,16 @@ research:
       - STR_SIDEOPERATIONS
     cutscene: c2
 
+  - delete: STR_CHAPTERARMYR
   - name: STR_CHAPTERARMYR  # Final Order
     cost: 900
     points: 30
     dependencies:
       - STR_MARINES_STRATEGY
-      # - STR_HIGHTIER_PREREQ
       - STR_STORMEAGLE_INTERCEPTOR
       - STR_MIDTIER_PREREQ
 
+  - delete: STR_ULTIMATE_CRAFT
   - name: STR_ULTIMATE_CRAFT  # Chapter High-tier Requisitions
     cost: 900
     points: 30
@@ -2686,6 +2767,7 @@ research:
 ### Assault Strategy #PROGRESSION.SM.ASS#
 ### Devastator Strategy #PROGRESSION.DEV.ASS#
 ### Primaris Strategy
+  - delete: STR_APOTHECARY
   - &STR_APOTHECARY
     name: STR_APOTHECARY  # Apothecary Requisition
     # apothecary for PRIMARIS
@@ -3317,6 +3399,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_MT_DW
   - name: STR_MT_DW  # Deathwatch Mid-tier Requisitions  # mid tier  # cutcscene c2 DEATHWATCH
     cost: 200
     points: 200
@@ -3334,6 +3417,7 @@ research:
       - STR_SIDEOPERATIONS
     cutscene: c2
 
+  - delete: STR_DW_PRIMARIS
   - name: STR_DW_PRIMARIS  # Primaris Requisition
     cost: 205
     points: 20
@@ -3347,6 +3431,7 @@ research:
     getOneFree:
       - STR_PRIMARIS_ARMOR
 
+  - delete: STR_DEATHWATCH_BUST
   - name: STR_DEATHWATCH_BUST  # Deconstructing The Architect
     # cutcscene c3 STR_DEATHWATCH disables STR_CYDONIA_OR_BUST SO MISSION CAN DIFERE
     cost: 600
@@ -3358,6 +3443,7 @@ research:
       - STR_COMMANDER_PLUS
     unlockFinalMission: false
 
+  - delete: STR_DW_HIGHTIER
   - name: STR_DW_HIGHTIER  # Chapter High-tier Requisitions
     cost: 900
     points: 30
@@ -3369,18 +3455,21 @@ research:
       - STR_HIGHTIER_PREREQ
 
 ### Grey Knights #PROGRESSION.CM.GK#
+  - delete: STR_APOTHECARY_GK
   - name: STR_APOTHECARY_GK  # Apothecary Requisition
     # apothecary for GREY KNIGHTS
     refNode: *STR_APOTHECARY
     dependencies: !add
       - STR_GREYKNIGHTS
   - delete: STR_DREAD_R_GK  # Dreadnought Requisition ¬
+  - delete: STR_REINFORCEMENT
   - name: STR_REINFORCEMENT  # Reinforcements Requisition
     cost: 1000
     points: 0
     dependencies:
       - STR_GREYKNIGHTS
     spawnedEvent: STR_REINFORCEMENTS_GK_1
+  - delete: STR_REINFORCEMENT_2
   - name: STR_REINFORCEMENT_2  # Reinforcements Requisition
     cost: 2000
     points: 0
@@ -3388,6 +3477,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT
     spawnedEvent: STR_REINFORCEMENTS_GK_2
+  - delete: STR_REINFORCEMENT_3
   - name: STR_REINFORCEMENT_3  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3395,6 +3485,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_2
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_4
   - name: STR_REINFORCEMENT_4  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3402,6 +3493,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_3
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_5
   - name: STR_REINFORCEMENT_5  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3409,6 +3501,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_4
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_6
   - name: STR_REINFORCEMENT_6  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3416,6 +3509,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_5
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_7
   - name: STR_REINFORCEMENT_7  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3423,6 +3517,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_6
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_8
   - name: STR_REINFORCEMENT_8  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3430,6 +3525,7 @@ research:
       - STR_GREYKNIGHTS
       - STR_REINFORCEMENT_7
     spawnedEvent: STR_REINFORCEMENTS_GK_3
+  - delete: STR_REINFORCEMENT_9
   - name: STR_REINFORCEMENT_9  # Reinforcements Requisition
     cost: 4000
     points: 0
@@ -3438,6 +3534,7 @@ research:
       - STR_REINFORCEMENT_8
     spawnedEvent: STR_REINFORCEMENTS_GK_3
 
+  - delete: STR_MT_GK
   - name: STR_MT_GK  # Inquisition Mid-tier Requisitions
     # cutcscene c2 GREYKNIGHTS
     cost: 200
@@ -3457,9 +3554,8 @@ research:
     getOneFree:
       - STR_POWER_SWORD
     cutscene: c2
-    spawnedEvent: ""
-    # spawnedEvent: STR_REINFORCEMENTS_GK_3
 
+  - delete: STR_GK_HIGHTIER
   - name: STR_GK_HIGHTIER  # Chapter High-tier Requisitions
     # Grey Knight High-tier
     cost: 900
@@ -3612,8 +3708,8 @@ research:
       - STR_GENERALLOCK
 
 ### The Imperial Law Strategy #PROGRESSION.AT.LAW#
+  - delete: STR_ARBITES_MIDTIER
   - name: STR_ARBITES_MIDTIER  # Precinct Mid-tier Requisitions
-    # cutcscene c2
     cost: 200
     points: 200
     dependencies:
@@ -3631,6 +3727,7 @@ research:
       - STR_BIONICS_OPERATION
     cutscene: c2
 
+  - delete: STR_ARBITES_HIGHTIER
   - name: STR_ARBITES_HIGHTIER  # Precinct High-tier Requisitions
     cost: 900
     points: 30
@@ -3642,6 +3739,7 @@ research:
     unlocks:
       - STR_HIGHTIER_PREREQ
 
+  - delete: STR_ARBITES_BUST
   - name: STR_ARBITES_BUST  # Ending the Warp # cutcscene c3 STR_ARBITES disables STR_CYDONIA_OR_BUST SO MISSION CAN DIFERE
     cost: 600
     cutscene: c3
@@ -4196,11 +4294,59 @@ research:
     neededItem: STR_CHAOS_ARTIFACTS
     destroyItem: false  # do not destroy item we need it for manufacture
 
+  - name: STR_SPY_IMPERIALCOMS  # Hack in the Imperial Network
+    cost: 50
+    points: 50
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_NAVY_COMUNICATIONS
+      - STR_CHAOS_PATH
+
+  - name: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE  # Retrieve Location Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_AMBUSH_SPACEMARINES  # Rescue the Chaos Rhinos
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+
+  - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+    needItem: true
+
+  - name: STR_MANUFACTURE_CHAOS_BIKE
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_GENERALLOCK
+      - STR_AMBUSH_SPACEMARINES_COMPLETE
+
+  - name: STR_CHAOSREWARD_REQUISITIONS  # Sacred Gift from Chaos
+    cost: 300
+    points: 50
+    dependencies:
+      - STR_AMBUSH_SPACEMARINES_COMPLETE
+    unlocks:
+      - STR_MANUFACTURE_CHAOS_BIKE
+      - STR_LEADER_PLUS
+      - STR_COMMANDER_PLUS
+
 ## Adeptas #PROGRESSION.SOB#
   - delete: STR_STORMBOLTER_DEAZ
   - delete: STR_STORMBOLTER_CLIP  # Storm Bolter De'az Box Magazine
     # Depreciated adeptas specific stormbolter research
 
+  - delete: STR_SPELLS_ADEPTAS
   - name: STR_SPELLS_ADEPTAS  # Orders' Teachings
     cost: 120
     points: 10
@@ -4212,6 +4358,7 @@ research:
       - STR_SPELLS_PREREQ
     lookup: STR_SPELLS_PREREQ
 
+  - delete: STR_ADEPTAS_HIGHTIER
   - name: STR_ADEPTAS_HIGHTIER  # Orders' High-tier Requistions
     cost: 900
     points: 30
@@ -4273,6 +4420,7 @@ research:
       - STR_MEDI_KIT_PREREQ
     lookup: STR_MEDI_KIT_PREREQ
 
+  - delete: STR_HOSPITALLER
   - name: STR_HOSPITALLER  # Hospitaller Requisition
     cost: 500
     points: 50
@@ -4334,6 +4482,16 @@ research:
     unlocks:
       - STR_CALLIDUS_CODEX
 
+  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
+    cost: 400
+    points: 20
+    unlocks:
+      - STR_ENGINSEER_REQUISITION
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_ADEPTAS
+
+  - delete: STR_ADEPTAS_MIDTIER
   - name: STR_ADEPTAS_MIDTIER  # Orders' Mid-tier Requisitions
     # cutcscene c2
     cost: 200
@@ -4572,6 +4730,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_OGRYN_REQUISITION
   - name: STR_OGRYN_REQUISITION  # Ogryn Requisitions
     cost: 150
     points: 25
@@ -4602,6 +4761,7 @@ research:
     unlocks:
       - STR_PSYKER_RECRUITMENT
 
+  - delete: STR_PSYKER_REQUISITION
   - name: STR_PSYKER_REQUISITION  # Sanctioned Psyker Requisition
     cost: 400
     points: 100
@@ -4640,6 +4800,7 @@ research:
       - STR_GUARDSMEN_VETERAN
       - STR_CERAMITE_TIER_GUARDSMEN  # Ceramite tier for normal guard
 
+  - delete: STR_STORMTROOPER_REQUISITION
   - name: STR_STORMTROOPER_REQUISITION  # Storm Trooper Requisition
   # unlocks Transformation Scion Officer,  Manufacture Hellpistol,  Manufacture Hellgun, Research Volleygun
     cost: 300  # getOneFree
@@ -4664,7 +4825,22 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
 
+  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+
+  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
+    cost: 400
+    points: 20
+    dependencies:
+      - STR_HIGHTIER_PREREQ
+      - STR_ENGINSEER_REQUISITION
+
   # MISSIONS
+  - delete: STR_IMPERIAL_GUARD_BASIC_TRAINING
   - name: STR_IMPERIAL_GUARD_BASIC_TRAINING  # Basic Training
     cost: 100
     points: 15
@@ -4672,6 +4848,7 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS_BULLGRYN_RIOT
   - name: STR_IMPERIAL_GUARD_MISSIONS_BULLGRYN_RIOT  # Mission: Riot Suppression
     cost: 50
     points: 50
@@ -4679,12 +4856,14 @@ research:
       - STR_OGRYN_REQUISITION
       - STR_IMPERIAL_GUARD_MISSIONS
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS
   - name: STR_IMPERIAL_GUARD_MISSIONS  # Regiment Missions
     cost: 50
     points: 50
     dependencies:
       - STR_IMPERIAL_GUARD_BASIC_TRAINING
 
+  - delete: STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE
   - name: STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE  # (Completed Basic Training)
     cost: 0
     points: 0
@@ -4692,6 +4871,7 @@ research:
       - STR_GENERALLOCK
     needItem: true
 
+  - delete: STR_IMPERIAL_GUARD_MISSION_BULLGRYN_RIOT_COMPLETE
   - name: STR_IMPERIAL_GUARD_MISSION_BULLGRYN_RIOT_COMPLETE  # (Suppressed Riot)
     cost: 0
     points: 0
@@ -4699,6 +4879,7 @@ research:
       - STR_GENERALLOCK
     needItem: true
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS_TANITH
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH  # Contact: Tanith Scouts
     cost: 50
     points: 50
@@ -4707,7 +4888,9 @@ research:
       - STR_NAVY_COMUNICATIONS
       - STR_IMPERIAL_GUARD_MISSION_TRAINING_COMPLETE
       - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_CHAPTER_PURITY
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS_TANITH0_COMPLETE
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH0_COMPLETE  # (Assisted Tanith Scouts)
     cost: 0
     points: 0
@@ -4715,6 +4898,7 @@ research:
       - STR_GENERALLOCK
     needItem: true
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS_TANITH_CONVOYAMBUSH
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH_CONVOYAMBUSH  # Message from Tanith Scouts
     cost: 0
     points: 0
@@ -4723,6 +4907,7 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_LEADER_PLUS
 
+  - delete: STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE
   - name: STR_IMPERIAL_GUARD_MISSIONS_TANITH1_COMPLETE  # (Captured Chaos Convoy)
     cost: 0
     points: 0
@@ -4730,6 +4915,7 @@ research:
       - STR_GENERALLOCK
     needItem: true
 
+  - delete: STR_TANITH_REQUISITIONS
   - name: STR_TANITH_REQUISITIONS  # Tanith Gear Requisitions
     cost: 300
     points: 50
@@ -4782,6 +4968,7 @@ research:
       - STR_FELINID_GUARDSMEN
       - STR_FELINID_ASSASSIN_DEP1
 
+  - delete: STR_IMPERIAL_GUARD_MIDTIER
   - name: STR_IMPERIAL_GUARD_MIDTIER  # Regiment Mid-tier Requisitions
     cost: 200
     points: 200
@@ -4795,6 +4982,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_BIONICS_OPERATION
 
+  - delete: STR_REGIMENT_OFFICERS
   - name: STR_REGIMENT_OFFICERS  # Regimental Officers
     cost: 200
     points: 50
@@ -4829,6 +5017,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE
   - name: STR_IMPERIAL_GUARD_MISSION_ELYSIAN_DROP_COMPLETE  # Tauros Drop Requisition
     # TAUROS craft access and Jump Armor, This will be available later as a mission unlock
     # Currently unused
@@ -4857,6 +5046,7 @@ research:
       - STR_NOT_STEEL_LEGION_STRATEGY
       - STR_GENERALLOCK
 
+  - delete: STR_HEAVY_SENTINEL
   - name: STR_HEAVY_SENTINEL  # Advanced Sentinel Requisition
     cost: 200
     points: 25
@@ -4882,6 +5072,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_APOC_BAY
 
+  - delete: STR_IMPERIAL_GUARD_HIGHTIER
   - name: STR_IMPERIAL_GUARD_HIGHTIER  # Regiment High-tier Requisitions
     cost: 900
     points: 30
@@ -5101,30 +5292,228 @@ research:
 # Entries in this section shouldn't provide or be prerequisites for crafts, items etc. Just a point reward and flavor/desciptions.
 ####################################
 ## Alien Mission Types
+  - delete: STR_ALIEN_RESEARCH
   - name: STR_ALIEN_RESEARCH  # Warp Amplifictation
     points: 50
     needItem: true
+  - delete: STR_ALIEN_HARVEST
   - name: STR_ALIEN_HARVEST  # Plague Spread
     points: 50
     needItem: true
+  - delete: STR_ALIEN_ABDUCTION
   - name: STR_ALIEN_ABDUCTION  # Slave Raid
     points: 50
     needItem: true
+  - delete: STR_ALIEN_INFILTRATION
   - name: STR_ALIEN_INFILTRATION  # Corruption
     points: 50
     needItem: true
+  - delete: STR_ALIEN_BASE
   - name: STR_ALIEN_BASE  # Chaos Base
     points: 50
     needItem: true
+  - delete: STR_ALIEN_TERROR
   - name: STR_ALIEN_TERROR  # Massacre
     points: 50
     needItem: true
+  - delete: STR_ALIEN_RETALIATION
   - name: STR_ALIEN_RETALIATION  # Retaliation
     points: 50
     needItem: true
+  - delete: STR_ALIEN_SUPPLY
   - name: STR_ALIEN_SUPPLY  # Chaos Resupply
     points: 50
     needItem: true
+
+####################################
+# Base Facilities Section #FACILITIES#
+####################################
+## Multifaction #FACILITIES.MULT#
+  - name: STR_PSI_LAB  # Chapel
+    cost: 420
+    points: 25
+    dependencies:
+      - STR_ALIEN_ORIGINS
+      - STR_LEADER_PLUS
+      - STR_MIDTIER_PREREQ
+      - STR_EXAMINATION_ROOM
+  - delete: STR_LASER_DEFENSE
+  - name: STR_LASER_DEFENSE  # Lascannon Defenses
+    cost: 510
+    points: 15
+    dependencies:
+      - STR_LASER_CANNON
+  - delete: STR_PLASMA_DEFENSE
+  - name: STR_PLASMA_DEFENSE  # Plasma Defenses
+    cost: 620
+    points: 25
+    dependencies:
+      - STR_PLASMA_CANNON
+  - delete: STR_FUSION_DEFENSE
+  - name: STR_FUSION_DEFENSE  # Multi-Melta Defenses
+    cost: 800
+    points: 25
+    dependencies:
+      - STR_FUSION_MISSILE
+  - delete: STR_GRAV_SHIELD
+  - name: STR_GRAV_SHIELD  # Grav Shield
+    cost: 930
+    points: 25
+    dependencies:
+      - STR_NEW_FIGHTER_TRANSPORTER
+  - delete: STR_MIND_SHIELD
+  - name: STR_MIND_SHIELD  # Cloaking Shroud
+    cost: 360
+    points: 25
+    dependencies:
+      - STR_PSI_LAB
+  - delete: STR_STEELMILLR
+  - name: STR_STEELMILLR  # Advanced Ceramics Requisition
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_ALIEN_ALLOYS
+  - delete: STR_DEFENSE_CORRIDORBR
+  - name: STR_DEFENSE_CORRIDORBR  # facility OTHER FACTIONS BLACK
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MOTION_SCANNER
+  - delete: STR_NAVY_COMUNICATIONS
+  - name: STR_NAVY_COMUNICATIONS  # Orbital Communications
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MIDTIER_PREREQ
+  - delete: STR_APOC_BAY
+  - name: STR_APOC_BAY  # Apothecary Bay
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MIDTIER_PREREQ
+    unlocks:
+      - STR_APOTHECARY_CORRUPTION_RESEARCH
+
+  - name: STR_APOTHECARY_CORRUPTION_RESEARCH  # Apothecary corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [APOC]
+    dependencies:
+      - STR_APOC_BAY
+
+  - delete: STR_PSI_LAB
+  - name: STR_PSI_LAB  # Chapel
+    cost: 100
+    points: 15
+    unlocks:
+      - STR_CHAPEL_CORRUPTION_RESEARCH
+
+  - name: STR_CHAPEL_CORRUPTION_RESEARCH  # Chapel corruption research
+    cost: 150
+    points: 50
+    requiresBaseFunc: [PSI]
+    dependencies:
+      - STR_PSI_LAB
+
+  - delete: STR_TRAINFACILITYR
+  - name: STR_TRAINFACILITYR  # Soldier Improvement
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_MARINES_AND_ADEPTAS
+
+## Space Marines #FACILITIES.SM#
+  - delete: STR_DEFENSE_CORRIDORR
+  - name: STR_DEFENSE_CORRIDORR  # Defense Corridor
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MOTION_SCANNER
+      - STR_MARINES_STRATEGY
+  - delete: STR_LIBRARY
+  - name: STR_LIBRARY  # Librarium
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MARINES_STRATEGY
+      - STR_PSI_AMP
+  - delete: STR_TEC_BAYR
+  - name: STR_TEC_BAYR  # Techmarine Bay Requisition
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_MARINES_STRATEGY
+      - STR_APOC_BAY
+### Assault Strategy #FACILITIES.SM.ASS#
+### Devastator Strategy #FACILITIES.SM.DEV#
+### Primaris Strategy #FACILITIES.SM.PRIM#
+### Scout Strategy #FACILITIES.SM.SCOUT#
+### Tactical Strategy #FACILITIES.SM.TAC#
+## Chamber Militant #FACILITIES.CM#
+  - delete: STR_LIBRARY_GK
+  - name: STR_LIBRARY_GK  # Librarium
+    cost: 100
+    points: 15
+    getOneFree:
+      - STR_LIBRARY
+    dependencies:
+      - STR_CHAMBERMILITANT
+      - STR_PSI_AMP
+  - delete: STR_TEC_BAY_CHAMBER_R
+  - name: STR_TEC_BAY_CHAMBER_R  # Techmarine Bay Requisition
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_CHAMBERMILITANT
+      - STR_APOC_BAY
+
+### Deathwatch #FACILITIES.CM.DW#
+### Grey Knights #FACILITIES.CM.GK#
+  - delete: STR_DEFENSE_CORRIDORGK
+  - name: STR_DEFENSE_CORRIDORGK  # Defense Corridor
+    # facility Grey Knights White
+    # DeathWatch uses STR_DEFENSE_CORRIDORBR
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_MOTION_SCANNER
+      - STR_GREYKNIGHTS
+      - STR_CHAMBERMILITANT
+
+### The Radical Road #FACILITIES.CM.RAD#
+## Adeptus Terra #FACILITIES.AT#
+### The Imperial Law Strategy #FACILITIES.AT.LAW#
+### Chaos Cult #FACILITIES.AT.CULT#
+## Adeptas #FACILITIES.SOB#
+  - delete: STR_INQOFF
+  - name: STR_INQOFF  # Inquisition Office
+    cost: 100
+    points: 15
+    dependencies:
+      - STR_ADEPTAS
+      - STR_PSI_AMP
+    unlocks:
+      - STR_INQ_STORMTROOPER_REQUISITION
+      - STR_IMPERIAL_INQUISITOR_REQUISITION
+      - STR_CALLIDUS_ASSASSIN_REQUISITION
+
+### Repentia Strategy #FACILITIES.SOB.REP#
+### Novice Strategy #FACILITIES.SOB.NOV#
+### Battle Sister Strategy #FACILITIES.SOB.BAT#
+### Dominion Strategy #FACILITIES.SOB.DOM#
+## Imperial Guard #FACILITIES.IG#
+  - name: STR_GUARD_BARRACKS  # Barracks
+    dependencies:
+      - STR_MIDTIER_PREREQ
+      - STR_IMPERIAL_GUARD_OPERATIONS
+
+### Guardsman Strategy #FACILITIES.IG.GUARD#
+### Scion Strategy #FACILITIES.IG.SCION#
+### Abhuman Strategy #FACILITIES.IG.ABHUMAN#
+### Steel Legion Strategy #FACILITIES.IG.STEEL#
 
 ####################################
 #CRAFTS# Crafts and UFOs Section
@@ -5137,6 +5526,7 @@ research:
       - STR_ADEPTAS_AND_INQUISITION
       - STR_ADEPTAS_MIDTIER
 
+  - delete: STR_NEW_FIGHTER_TRANSPORTER
   - name: STR_NEW_FIGHTER_TRANSPORTER  # Assault Transport Requisition
     # Ceramite tier marines and adeptas
     cost: 700
@@ -5145,6 +5535,7 @@ research:
       - STR_NEW_FIGHTER_CRAFT
       - STR_NOT_WORDBEARERS
 
+  - delete: STR_NEW_FIGHTER_CRAFT
   - name: STR_NEW_FIGHTER_CRAFT  # Gunship Requisition
     # Stormraven
     cost: 600
@@ -5154,10 +5545,10 @@ research:
       - STR_MARINES_AND_ADEPTAS
       - STR_NOT_WORDBEARERS
 
+  - delete: STR_STORMEAGLE_INTERCEPTOR
   - name: STR_STORMEAGLE_INTERCEPTOR  # Stormeagle Requisition
     cost: 600
     points: 25
-    listOrder: 5050
     dependencies:
       - STR_MARINES_AND_ADEPTAS
       - STR_MIDTIER_PREREQ
@@ -5168,23 +5559,27 @@ research:
       - STR_SUPPLY_SHIP
 
     # Craft Weapons
+  - delete: STR_PLASMA_CANNON
   - name: STR_PLASMA_CANNON  # Plasma Cannon
     cost: 660
     points: 25
     dependencies:
       - STR_PLASMA_CANNON_DEP1
       - STR_PLASMA_CANNON_DEP2
+  - delete: STR_FUSION_MISSILE
   - name: STR_FUSION_MISSILE  # Multimelta Requisition
     cost: 880
     points: 25
     dependencies:
       - STR_BLASTER_LAUNCHER
+  - delete: STR_CRAFT_QUADLASER
   - name: STR_CRAFT_QUADLASER  # Quad-Linked Lascannon
     cost: 420
     points: 15
     dependencies:
       - STR_GUARD_AND_ARBITES
       - STR_LASCAN_TECH
+  - delete: STR_CRAFT_AUTOCANNON
   - name: STR_CRAFT_AUTOCANNON  # Quad-Linked Autocannon
     cost: 420
     points: 15
@@ -5192,6 +5587,7 @@ research:
       - STR_GUARD_AND_ARBITES
       - STR_MIDTIER_PREREQ
       - STR_AUTOCANNON_TECH
+  - delete: STR_LASER_CANNON
   - name: STR_LASER_CANNON  # Craft Lascannon
     cost: 420
     points: 15
@@ -5199,6 +5595,7 @@ research:
       - STR_LASCAN_TECH
 
 ## Space Marines #CRAFTS.SM#
+  - delete: STR_ADV_DROPPODS
   - name: STR_ADV_DROPPODS  # Firestorm Drop Pods Requisition
     cost: 500
     points: 50
@@ -5210,6 +5607,7 @@ research:
     # Devastator and Tactical
     dependencies:
       - STR_GENERALLOCK
+  - delete: STR_CRATED_DROPPODS
   - name: STR_CRATED_DROPPODS  # Drop Pods Requisition
     # Assault, Devastator, and Tactical
     dependencies:
@@ -5217,6 +5615,7 @@ research:
   - name: STR_SKYRANGER  # DROP PODS
     requires:
       - STR_CRATED_DROPPODS
+  - delete: STR_SPEEDR
   - name: STR_SPEEDR  # Landspeeder Requisition
     # Assault and Scout
     cost: 150
@@ -5233,18 +5632,21 @@ research:
   - name: STR_CRATED_LANDSPEEDER  # Landspeeder Requisition
     dependencies:
       - STR_GENERALLOCK
+  - delete: STR_STORMHAWKR
   - name: STR_STORMHAWKR  # Stormhawk Requisition
     # Devastator and Tactical
     cost: 150
     points: 10
     dependencies:
       - STR_GENERALLOCK
+  - delete: STR_THUNDERHAWKTYPE1
   - name: STR_THUNDERHAWKTYPE1  # THUNDERHAWK
     # Tactical and Devastator
     cost: 0
     points: 0
     dependencies:
       - STR_GENERALLOCK
+  - delete: STR_THUNDERHAWKTYPE2
   - name: STR_THUNDERHAWKTYPE2  # THUNDERHAWK
     # Assault and Scout
     cost: 0
@@ -5264,39 +5666,35 @@ research:
     cost: 0
     points: 0
 ### Deathwatch #CRAFTS.CM.DW#
+  - delete: STR_STORMEAGLE_INTERCEPTOR_DW
   - name: STR_STORMEAGLE_INTERCEPTOR_DW  # Stormeagle ¤ Requisition
     cost: 600
     points: 25
-    listOrder: 5050
     dependencies:
       - STR_DEATHWATCH
       - STR_MIDTIER_PREREQ
       - STR_ELERIUM_115
-      # - STR_BATTLESHIP
-      # - STR_ABDUCTOR
-      # - STR_TERROR_SHIP
-      # - STR_HARVESTER
-      # - STR_SUPPLY_SHIP
     getOneFree:
       - STR_STORMEAGLE_INTERCEPTOR
+  - delete: STR_THUNDERHAWK_DW_REQ
   - name: STR_THUNDERHAWK_DW_REQ  # Thunderhawk ¤ Requisition
     cost: 900
     points: 30
     dependencies:
-      # - STR_DW_HIGHTIER
       - STR_DEATHWATCH
-      # - STR_HIGHTIER_PREREQ
       - STR_ELERIUM_115
       - STR_MIDTIER_PREREQ
+    getOneFree:
+      - STR_NEW_FIGHTER_TRANSPORTER
+  - delete: STR_LANDRAIDER_DW
   - name: STR_LANDRAIDER_DW  # Watch Company Composition
     # DW Manufacturing requirement tech
     cost: 900
     points: 30
     dependencies:
       - STR_DEATHWATCH
-      # - STR_HIGHTIER_PREREQ
-      # - STR_STORMEAGLE_INTERCEPTOR
       - STR_UFO_CONSTRUCTION
+  - delete: STR_STORMRAVEN_DW
   - name: STR_STORMRAVEN_DW  # STORMRAVEN Requesition
     dependencies:
       - STR_UFO_CONSTRUCTION
@@ -5310,25 +5708,25 @@ research:
     points: 0
     dependencies:
       - STR_CHAMBERMILITANT
+  - delete: STR_STORMRAVEN_GK
   - name: STR_STORMRAVEN_GK  # STORMRAVEN ¬
     dependencies:
       - STR_UFO_CONSTRUCTION
       - STR_GREYKNIGHTS
       - STR_CHAMBERMILITANT
+  - delete: STR_THUNDERHAWK_GK_REQ
   - name: STR_THUNDERHAWK_GK_REQ  # Thunderhawk ¬ Requisition
     cost: 900
     points: 30
     dependencies:
-      # - STR_GK_HIGHTIER
       - STR_GREYKNIGHTS
-      # - STR_HIGHTIER_PREREQ
       - STR_ELERIUM_115
       - STR_MIDTIER_PREREQ
       - STR_CHAMBERMILITANT
+  - delete: STR_STORMEAGLE_INTERCEPTOR_GK
   - name: STR_STORMEAGLE_INTERCEPTOR_GK  # Stormeagle ¬ Requisition
     cost: 600
     points: 25
-    listOrder: 5050
     dependencies:
       - STR_GK_HIGHTIER
       - STR_GREYKNIGHTS
@@ -5336,6 +5734,7 @@ research:
       - STR_CHAMBERMILITANT
       - STR_MIDTIER_PREREQ
       - STR_ELERIUM_115
+  - delete: STR_XIPHON
   - name: STR_XIPHON  # XIPHON ¬
     dependencies:
       - STR_GENERALLOCK
@@ -5362,6 +5761,7 @@ research:
 
 ## Adeptus Terra #CRAFTS.AT#
 ### The Imperial Law Strategy #CRAFTS.AT.LAW#
+  - delete: STR_LANDRAIDER_ARBITES
   - name: STR_LANDRAIDER_ARBITES  # Mobile Precint Requisition
     cost: 900
     points: 30
@@ -5374,6 +5774,7 @@ research:
     dependencies:
       - STR_UFO_CONSTRUCTION
       - STR_THE_IMPERIAL_LAW_STRATEGY
+  - delete: STR_NEW_TRANSPORT_PD
   - name: STR_NEW_TRANSPORT_PD  # Taurox Transporter Requisition
     cost: 300
     points: 75
@@ -5385,6 +5786,7 @@ research:
     dependencies:
       - STR_THE_IMPERIAL_LAW_STRATEGY
       - STR_ARBITES_MIDTIER
+  - delete: STR_PREATOR_PD_R
   - name: STR_PREATOR_PD_R  # Praetor Requisition
     dependencies:
       - STR_ARBITES_HIGHTIER
@@ -5407,6 +5809,7 @@ research:
       - STR_ADEPTAS
       - STR_UFO_CONSTRUCTION
       - STR_ELITE_STRATEGY_ADEPTAS
+  - delete: STR_LANDRAIDER_ADEPTAS
   - name: STR_LANDRAIDER_ADEPTAS  # Landraider Requisition
     cost: 100
     points: 10
@@ -5443,6 +5846,7 @@ research:
     dependencies:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
+  - delete: STR_MARAUDER_REQUISITION
   - name: STR_MARAUDER_REQUISITION  # Marauder Requisition
     cost: 600
     points: 25
@@ -5451,9 +5855,11 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_UFO_POWER_SOURCE
       - STR_UFO_NAVIGATION
+  - delete: STR_BANEBLADE_R
   - name: STR_BANEBLADE_R  # Baneblade Requisition
     dependencies:
       - STR_IMPERIAL_GUARD_HIGHTIER
+  - delete: STR_PREATOR_R
   - name: STR_PREATOR_R  # Praetor Requisition
     dependencies:
       - STR_IMPERIAL_GUARD_HIGHTIER
@@ -5500,6 +5906,7 @@ research:
       - STR_HELLS
 
 ###  Chaos #CRAFTS.FOE.CHAOS#
+  - delete: STR_CHAOS_BASE_DATA
   - name: STR_CHAOS_BASE_DATA  # Chaos Base Scan Data
     needItem: true
     cost: 50
@@ -5507,6 +5914,7 @@ research:
   - name: STR_SMALL_SCOUT  # Hell Blade
     points: 50
     needItem: true
+  - delete: STR_SMALL_SCOUT_DATA
   - name: STR_SMALL_SCOUT_DATA  # Hell Blade Scan Data
     needItem: true
     cost: 50
@@ -5516,6 +5924,7 @@ research:
   - name: STR_MEDIUM_SCOUT  # Transport Ship
     points: 50
     needItem: true
+  - delete: STR_MEDIUM_SCOUT_DATA
   - name: STR_MEDIUM_SCOUT_DATA  # Transport Ship Scan Data
     needItem: true
     cost: 50
@@ -5525,6 +5934,7 @@ research:
   - name: STR_LARGE_SCOUT  # Hell Cruiser
     points: 50
     needItem: true
+  - delete: STR_LARGE_SCOUT_DATA
   - name: STR_LARGE_SCOUT_DATA  # Hell Cruiser Scan Data
     needItem: true
     cost: 50
@@ -5534,6 +5944,7 @@ research:
   - name: STR_HARVESTER  # Plague Ship
     points: 50
     needItem: true
+  - delete: STR_HARVESTER_DATA
   - name: STR_HARVESTER_DATA  # Plague Ship Scan Data
     needItem: true
     cost: 50
@@ -5543,6 +5954,7 @@ research:
   - name: STR_ABDUCTOR  # Altar Ship
     points: 50
     needItem: true
+  - delete: STR_ABDUCTOR_DATA
   - name: STR_ABDUCTOR_DATA  # Altar Ship Scan Data
     needItem: true
     cost: 50
@@ -5552,6 +5964,7 @@ research:
   - name: STR_TERROR_SHIP  # Blood Ship
     points: 50
     needItem: true
+  - delete: STR_TERROR_SHIP_DATA
   - name: STR_TERROR_SHIP_DATA  # Blood Ship Scan Data
     needItem: true
     cost: 50
@@ -5561,6 +5974,7 @@ research:
   - name: STR_BATTLESHIP  # Flying Fortress
     points: 50
     needItem: true
+  - delete: STR_BATTLESHIP_DATA
   - name: STR_BATTLESHIP_DATA  # Flying Fortress Scan Data
     needItem: true
     cost: 50
@@ -5570,24 +5984,29 @@ research:
   - name: STR_SUPPLY_SHIP  # Supply Ship
     points: 50
     needItem: true
+  - delete: STR_SUPPLY_SHIP_DATA
   - name: STR_SUPPLY_SHIP_DATA  # Supply Ship Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_SUPPLY_SHIP
+  - delete: STR_HELLT
   - name: STR_HELLT  # Hell Talon
     points: 50
     needItem: true
+  - delete: STR_HELLT_DATA
   - name: STR_HELLT_DATA  # Hell Talon Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_HELLT
+  - delete: STR_HELLS
   - name: STR_HELLS  # Hell Sword
     points: 50
     needItem: true
+  - delete: STR_HELLS_DATA
   - name: STR_HELLS_DATA  # Hell Sword Scan Data
     needItem: true
     cost: 50
@@ -5624,36 +6043,44 @@ research:
 
 #### Cultists and Mutants #CRAFTS.FOE.CHAOS.CULT#
 #### Traitor Guard #CRAFTS.FOE.CHAOS.TG#
+  - delete: STR_CHAOS_VOSS
   - name: STR_CHAOS_VOSS  # Traitor Guard Lightning
     points: 50
     needItem: true
+  - delete: STR_CHAOS_VOSS_DATA
   - name: STR_CHAOS_VOSS_DATA  # Traitor Guard Lightning Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_CHAOS_VOSS
+  - delete: STR_TRAITOR_CHIMERA
   - name: STR_TRAITOR_CHIMERA  # Traitor Guard Chimera
     points: 50
     needItem: true
+  - delete: STR_TRAITOR_CHIMERA_DATA
   - name: STR_TRAITOR_CHIMERA_DATA  # Traitor Guard Chimera Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_TRAITOR_CHIMERA
+  - delete: STR_TRAITOR_CASSIUM
   - name: STR_TRAITOR_CASSIUM  # Traitor Guard Crassus
     points: 50
     needItem: true
+  - delete: STR_TRAITOR_CASSIUM_DATA
   - name: STR_TRAITOR_CASSIUM_DATA  # Traitor Guard Crassus Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_TRAITOR_CASSIUM
+  - delete: STR_TRAITOR_CONVOY
   - name: STR_TRAITOR_CONVOY  # Traitor Guard Convoy
     points: 50
     needItem: true
+  - delete: STR_TRAITOR_CONVOY_DATA
   - name: STR_TRAITOR_CONVOY_DATA  # Traitor Guard Preator Scan Data
     needItem: true
     cost: 50
@@ -5673,36 +6100,44 @@ research:
 ### Deserters and Instigators #CRAFTS.FOE.RENE#
 ## Xenos #CRAFTS.FOE.XENO#
 ### Eldar #CRAFTS.FOE.XENO.ELD#
+  - delete: STR_ELDAR_HEMLOCK_UFO
   - name: STR_ELDAR_HEMLOCK_UFO  # Hemlock Wraithfighter
     points: 50
     needItem: true
+  - delete: STR_ELDAR_HEMLOCK_UFO_DATA
   - name: STR_ELDAR_HEMLOCK_UFO_DATA  # Hemlock Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_ELDAR_HEMLOCK_UFO
+  - delete: STR_ELDAR_WAVESERPENT_UFO
   - name: STR_ELDAR_WAVESERPENT_UFO  # Wave Serpent Transport
     points: 50
     needItem: true
+  - delete: STR_ELDAR_WAVESERPENT_UFO_DATA
   - name: STR_ELDAR_WAVESERPENT_UFO_DATA  # Wave Serpent Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_ELDAR_WAVESERPENT_UFO
+  - delete: STR_ELDAR_COBRA_UFO
   - name: STR_ELDAR_COBRA_UFO  # Cobra Type I
     points: 50
     needItem: true
+  - delete: STR_ELDAR_COBRA_UFO_DATA
   - name: STR_ELDAR_COBRA_UFO_DATA  # Cobra Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_ELDAR_COBRA_UFO
+  - delete: STR_ELDAR_HORNET_UFO
   - name: STR_ELDAR_HORNET_UFO  # Hornet Fighter
     points: 50
     needItem: true
+  - delete: STR_ELDAR_HORNET_UFO_DATA
   - name: STR_ELDAR_HORNET_UFO_DATA  # Hornet Scan Data
     needItem: true
     cost: 50
@@ -5712,18 +6147,22 @@ research:
 
 
 ### Necron #CRAFTS.FOE.XENO.NECRO#
+  - delete: STR_MONOLITH
   - name: STR_MONOLITH  # Necron Monolith
     points: 100
     needItem: true
+  - delete: STR_MONOLITH_DATA
   - name: STR_MONOLITH_DATA  # Necron Monolith Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_MONOLITH
+  - delete: STR_DOOMSDAY_MONOLITH
   - name: STR_DOOMSDAY_MONOLITH  # Necron Doomsday Monolith
     points: 200
     needItem: true
+  - delete: STR_DMONOLITH_DATA
   - name: STR_DMONOLITH_DATA  # Necron Doomsday Monolith Scan Data
     needItem: true
     cost: 50
@@ -5732,35 +6171,44 @@ research:
       - STR_DOOMSDAY_MONOLITH
 
 ### Ork #CRAFTS.FOE.XENO.ORK#
+  - delete: STR_TRUKK_UFO
   - name: STR_TRUKK_UFO  # Ork Expedition
     points: 50
     needItem: true
+  - delete: STR_TRUKK_UFO_DATA
   - name: STR_TRUKK_UFO_DATA  # Ork Expedition Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_TRUKK_UFO
+  - delete: STR_WAGGON_UFO
   - name: STR_WAGGON_UFO  # Ork Waggon
     points: 50
     needItem: true
+  - delete: STR_WAGGON_UFO_DATA
   - name: STR_WAGGON_UFO_DATA  # Ork Waggon Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_WAGGON_UFO
+  - delete: STR_WAGGON_CONVOY_UFO
   - name: STR_WAGGON_CONVOY_UFO  # Ork Waggon Convoy
     points: 50
     needItem: true
+  - delete: STR_WAGGON_CONVOY_UFO_DATA
   - name: STR_WAGGON_CONVOY_UFO_DATA  # Ork Waggon Convoy Scan Data
     needItem: true
     cost: 50
     points: 50
     getOneFree:
       - STR_WAGGON_CONVOY_UFO
+  - delete: STR_ORK_MIG_UFO
   - name: STR_ORK_MIG_UFO  # Ork Fighta
     refNode: *STR_LOCKED
+  - delete: STR_ORK_MIG_UFO_DATA
+  - delete: STR_ORK_MIG_UFO_DATA
   - name: STR_ORK_MIG_UFO_DATA  # Ork Fighta Scan Data
     needItem: true
     cost: 50
@@ -5795,9 +6243,11 @@ research:
   - name: STR_IMP_TRANSPORT_BATTLESHIP
     points: 50
     needItem: true
+  - delete: STR_GOLIATH_UFO
   - name: STR_GOLIATH_UFO
     points: 50
     needItem: true
+  - delete: STR_GOLIATH_UFO_DATA
   - name: STR_GOLIATH_UFO_DATA  # Goliath Truck Scan Data
     needItem: true
     cost: 50
@@ -6003,6 +6453,7 @@ research:
       - STR_HIGHTIER_PREREQ
 
 ### Eldar Alliance
+  - delete: STR_ELDAR_SHIELD
   - name: STR_ELDAR_SHIELD  # Eldar Personal Shield
     cost: 200
     points: 50
@@ -6010,6 +6461,7 @@ research:
       - STR_ELDAR_PATH
 
 ## Space Marines #ARMORS.SM#
+  - delete: STR_PERSONAL_ARMOR
   - name: STR_PERSONAL_ARMOR  # Armor
     cost: 180
     points: 20
@@ -6035,6 +6487,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_DEV_ARMOR
   - name: STR_DEV_ARMOR  # MK7 Devastator Armor
     cost: 180
     points: 20
@@ -6056,6 +6509,7 @@ research:
       - STR_LIVE_CAPTURE_RAPTOR_COMMANDER
       - STR_LIVE_CAPTURE_SERAPHIM
 
+  - delete: STR_ASS_ARMOR
   - name: STR_ASS_ARMOR  # MK7 Assault Armor
     cost: 180
     points: 20
@@ -6067,6 +6521,7 @@ research:
     disables:
       - STR_ASS_ARMOR_CHAOS
 
+  - delete: STR_SARGENT_ARMOR
   - name: STR_SARGENT_ARMOR  # MK7 Sergeant Armor
     cost: 180
     points: 20
@@ -6081,6 +6536,7 @@ research:
     disables:
       - STR_SARGENT_ARMOR_CHAOS
 
+  - delete: STR_CAPTAIN_SUIT
   - name: STR_CAPTAIN_SUIT  # Captain Armor
     cost: 205
     points: 20
@@ -6091,6 +6547,7 @@ research:
       - STR_COMMANDER_PLUS
       - STR_CHAPTER_PURITY
 
+  - delete: STR_POWER_SUIT
   - name: STR_POWER_SUIT  # Terminator Armor
     cost: 205
     points: 20
@@ -6110,6 +6567,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_FLYING_SUIT
   - name: STR_FLYING_SUIT  # Terminator Assault Armor
     # unchanged from XCOM1
     cost: 330
@@ -6120,6 +6578,7 @@ research:
       - STR_CHAPTER_PURITY
       - STR_NOT_SPACEWOLVES
 
+  - delete: STR_CHAP_ARMOR
   - name: STR_CHAP_ARMOR  # MK7 Chaplain Armor
     cost: 300
     points: 20
@@ -6129,6 +6588,7 @@ research:
       - STR_CHAPTER_PURITY
       - STR_NOT_SPACEWOLVES  # no such armor for spacewolves for now
 
+  - delete: STR_TSARGENT
   - name: STR_TSARGENT  # Terminator Sergeant Armor
     cost: 205
     points: 20
@@ -6139,6 +6599,7 @@ research:
       - STR_CHAPTER_PURITY
       - STR_NOT_SPACEWOLVES  # no such armor for spacewolves for now
 
+  - delete: STR_CENT_ARMORR
   - name: STR_CENT_ARMORR  # Centurion Warsuit Requisition
     cost: 330
     points: 20
@@ -6152,6 +6613,7 @@ research:
       - STR_CENT_ARMORR_CHAOS
 
 ### Assault Strategy #ARMORS.SM.ASS#
+  - delete: STR_HONOR_ARMOR_RESEARCH
   - name: STR_HONOR_ARMOR_RESEARCH  # Vanguard Armor Requisition
     cost: 180
     points: 20
@@ -6162,6 +6624,7 @@ research:
       - STR_CHAPTER_PURITY
 
 ### Devastator Strategy #ARMORS.SM.DEV#
+  - delete: STR_SIGNAL_ARMOR_RESEARCH
   - name: STR_SIGNAL_ARMOR_RESEARCH  # MK7 Sergeant Signum Armor Requisition
     cost: 180
     points: 20
@@ -6171,6 +6634,7 @@ research:
       - STR_SARGENT_ARMOR
 
 ### Primaris Strategy #ARMORS.SM.PRIM#
+  - delete: STR_PRIMARIS_ARMOR
   - name: STR_PRIMARIS_ARMOR  # Primaris Armor
     cost: 180
     points: 20
@@ -6180,6 +6644,7 @@ research:
       - STR_THREAT_ONE
       - STR_MARINES_STRATEGY
 
+  - delete: STR_MKX_PHB_ARMOR
   - name: STR_MKX_PHB_ARMOR  # MKX Phobos Armor
     cost: 180
     points: 20
@@ -6187,6 +6652,7 @@ research:
       - STR_ALIEN_ALLOYS  # necessary because Tactical Strategy unlocks STR_PERSONAL_ARMOR
       - STR_PRIMARIS_ARMOR
 
+  - delete: STR_MKX_INC_ARMOR
   - name: STR_MKX_INC_ARMOR  # MKX Light Gravis Armor
     cost: 180
     points: 20
@@ -6195,6 +6661,7 @@ research:
       - STR_PRIMARIS_ARMOR
       - STR_MKX_PHB_ARMOR
 
+  - delete: STR_MKX_GRV_ARMOR
   - name: STR_MKX_GRV_ARMOR  # MKX Gravis Armor
     cost: 205
     points: 20
@@ -6204,6 +6671,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_PRIMARIS_ARMOR
 
+  - delete: STR_MKX_CHP_ARMOR
   - name: STR_MKX_CHP_ARMOR  # MKX Chaplain Armor
     cost: 205
     points: 20
@@ -6212,6 +6680,7 @@ research:
       - STR_PRIMARIS_ARMOR
 
 ### Scout Strategy #ARMORS.SM.SCOUT#
+  - delete: STR_SCOUTH_RESEARCH
   - name: STR_SCOUTH_RESEARCH  # Advanced Scout Armor Requisition
     cost: 180
     points: 20
@@ -6221,6 +6690,7 @@ research:
       - STR_SARGENT_ARMOR
 
 ### Tactical Strategy #ARMORS.SM.TAC#
+  - delete: STR_HONOR_ARMOR
   - name: STR_HONOR_ARMOR  # MK7 Honor Guard Armor
     cost: 180
     points: 20
@@ -6295,12 +6765,18 @@ research:
 
 ## Chamber Militant #ARMORS.CM#
 ### Deathwatch #ARMORS.CM.DW#
+  - delete: STR_DW_CAP_ARMOR
   - name: STR_DW_CAP_ARMOR  # MK7 Captain Armor
+    cost: 180
+    points: 20
     dependencies:
       - STR_DEATHWATCH
       - STR_ALIEN_ALLOYS
       - STR_ASS_ARMOR_DEP1
+  - delete: STR_DW_WM_ARMOR
   - name: STR_DW_WM_ARMOR  # Watch Master Armor
+    cost: 205
+    points: 20
     dependencies:
       - STR_DEATHWATCH
       - STR_POWER_SUIT
@@ -6308,6 +6784,7 @@ research:
       - STR_DW_CAP_ARMOR
 
 ### Grey Knights #ARMORS.CM.GK#
+  - delete: STR_GK_CHP_ARMOR
   - name: STR_GK_CHP_ARMOR  # Aegis T. Chaplain Armor
     cost: 205
     points: 20
@@ -6343,6 +6820,7 @@ research:
 
 ## Adeptus Terra #ARMORS.AT#
 ### The Imperial Law Strategy #ARMORS.AT.LAW#
+  - delete: STR_ARBITOR_ARMOR
   - name: STR_ARBITOR_ARMOR  # Arbitor Armor
     cost: 205
     points: 20
@@ -6352,6 +6830,7 @@ research:
       - STR_ARBITES_MIDTIER
       - STR_JUDGE_BIKE_ARMOR
 
+  - delete: STR_MARSHAL_ARMOR
   - name: STR_MARSHAL_ARMOR  # Marshal Armor
     cost: 300
     points: 20
@@ -6360,6 +6839,7 @@ research:
       - STR_HIGHTIER_PREREQ
       - STR_ARBITOR_ARMOR
 
+  - delete: STR_JUDGE_BIKE_ARMOR
   - name: STR_JUDGE_BIKE_ARMOR  # Outrider Bike
     cost: 180
     points: 20
@@ -6370,6 +6850,7 @@ research:
     unlocks:
       - STR_HWP_CANNON_SHELLS
 
+  - delete: STR_ENFORCER_HEAVY_ARMOR
   - name: STR_ENFORCER_HEAVY_ARMOR  # Heavy Enforcer Armor
     cost: 180
     points: 20
@@ -6377,10 +6858,10 @@ research:
       - STR_ALIEN_ALLOYS
       - STR_THREAT_ONE
       - STR_THE_IMPERIAL_LAW_STRATEGY
-      # - STR_ENFORCER_ARMOR
 
 ### Chaos Cult #ARMORS.AT.CULT#
 ## Adeptas #ARMORS.SOB#
+  - delete: STR_ADEPTAS_ARMOR
   - name: STR_ADEPTAS_ARMOR  # Adeptas Advanced Armor
     cost: 180
     points: 20
@@ -6391,6 +6872,7 @@ research:
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_ADEPTAS_MIDTIER_NOVICE
 
+  - delete: STR_ADEPTAS_ARMORB
   - name: STR_ADEPTAS_ARMORB  # Adeptas Assassin Suit
     cost: 180
     points: 20
@@ -6411,6 +6893,7 @@ research:
   #   dependencies:
   #     - STR_ADEPTAS_ARMORB
 
+  - delete: STR_ADEPTAS_ARMORS
   - name: STR_ADEPTAS_ARMORS  # Seraphim Armor
     cost: 180
     points: 20
@@ -6443,6 +6926,7 @@ research:
       - STR_UFO_CONSTRUCTION  # ceramite
       - STR_FAITHFUL_ARMORY
 
+  - delete: STR_ADEPTAS_ARMOR_HONOR
   - name: STR_ADEPTAS_ARMOR_HONOR  # Sororitas Honorguard Armor
     cost: 180
     points: 20
@@ -6450,10 +6934,8 @@ research:
       - STR_MASTER_CRAFTING
       - STR_UFO_CONSTRUCTION
       - STR_FAITHFUL_ARMORY
-      # - STR_MIDTIER_PREREQ
-      # - STR_ADEPTAS_ARMORS
-      # - STR_ADEPTAS_ARMORB
 
+  - delete: STR_ADEPTAS_ARMORCEL
   - name: STR_ADEPTAS_ARMORCEL  # Geminae Armor
     cost: 205
     points: 20
@@ -6464,6 +6946,7 @@ research:
       - STR_FAITHFUL_ARMORY
       - STR_ADEPTAS_ARMORS
 
+  - delete: STR_ADEPTAS_ARMORD
   - name: STR_ADEPTAS_ARMORD  # Dominion Armor
     cost: 205
     points: 20
@@ -6474,17 +6957,16 @@ research:
       - STR_FAITHFUL_ARMORY
       - STR_ADEPTAS
 
+  - delete: STR_ADEPTAS_ARMORC
   - name: STR_ADEPTAS_ARMORC  # Geminae Armor
     cost: 300
     points: 20
     dependencies:
-      # - STR_HIGHTIER_PREREQ
-      # - STR_ADEPTAS_ARMORS
-      # - STR_ADEPTAS_ARMORB
       - STR_MASTER_CRAFTING
       - STR_UFO_CONSTRUCTION
       - STR_FAITHFUL_ARMORY
 
+  - delete: STR_ADEPTAS_ARMORSUP
   - name: STR_ADEPTAS_ARMORSUP  # Celestine Superior Armor
     cost: 205
     points: 20
@@ -6563,6 +7045,7 @@ research:
   #    - STR_CARAPACE_ARMOR_IG
   #    - STR_MOTION_SCANNER
 
+  - delete: STR_BULLGRYN_ARMOR
   - name: STR_BULLGRYN_ARMOR  # Bullgryn Armor
     cost: 100
     points: 25
@@ -6596,6 +7079,7 @@ research:
 # For research to unlock or give codex articles for weapons
 ####################################
 ## Multifaction Research #WEAPONS.MULT#
+  - delete: STR_LASER_WEAPONS
   - name: STR_LASER_WEAPONS  # Weapons Requisition
     cost: 50
     points: 10
@@ -6645,6 +7129,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_LIGHT_BOLTERS
   - name: STR_LIGHT_BOLTERS  # Human-sized Bolters
     dependencies:
       - STR_GENERALLOCK
@@ -6700,6 +7185,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_CASS_R
   - name: STR_CASS_R  # Assault Cannon Technology
     cost: 1000
     points: 40
@@ -6748,12 +7234,14 @@ research:
     dependencies:
       - STR_CHAOSHARMONIC_MELTAGUN
 
+  - delete: STR_MGRENADE
   - name: STR_MGRENADE  # Melta Grenade
     cost: 100
     points: 25
     dependencies:
       - STR_MELTAGUN_TECH
       - STR_MIDTIER_PREREQ
+  - delete: STR_MELTABOMB
   - name: STR_MELTABOMB  # Melta Bomb Requisition
     cost: 100
     points: 25
@@ -6769,6 +7257,7 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_HFLAMERR
   - name: STR_HFLAMERR  # Heavy Flamer Requisition
     cost: 1000
     points: 20
@@ -6777,6 +7266,7 @@ research:
     unlocks:
       - STR_HFLAMER_FUEL_MANUFACTURING  # uses unlocks since IG needs access to the fuel for Heavy Sentinels
 
+  - delete: STR_HFLAMER_FUEL_MANUFACTURING
   - name: STR_HFLAMER_FUEL_MANUFACTURING  # (Heavy Flamer Fuel pre-req.)
     # Allows IG to access fuel manufacturing for Heavy Sentinels
     dependencies:
@@ -6812,6 +7302,7 @@ research:
   - delete: STR_HEAVY_PLASMA_CLIP
     # Ammo no longer needs research
 
+  - delete: STR_HEAVY_PLASMA_MC
   - name: STR_HEAVY_PLASMA_MC  # Master Crafted Heavy Plasma
     cost: 100
     points: 25
@@ -6821,12 +7312,14 @@ research:
       - STR_MASTER_CRAFTING
       - STR_HEAVY_PLASMA_DEP1
 
+  - delete: STR_PLASMA_CANNON_DEP1
   - name: STR_PLASMA_CANNON_DEP1  # Craft Plasma Cannon Technology 1
     dependencies:
       - STR_HEAVY_PLASMA_DEP1
     unlocks:
       - STR_PLASMA_CANNON
 
+  - delete: STR_PLASMA_CANNON_DEP2
   - name: STR_PLASMA_CANNON_DEP2  # Craft Plasma Cannon Technology 2
     dependencies:
       - STR_PLASMA_RIFLE_DEP1
@@ -6873,6 +7366,7 @@ research:
     # Because the research exists in XCOM1
 
   # Grenades
+  - delete: STR_SMOKE
   - name: STR_SMOKE  # Smoke Grenade Requisition
     cost: 100
     points: 25
@@ -6887,6 +7381,7 @@ research:
       - STR_SMOKE
 
   # Melee
+  - delete: STR_CHAINSWORD_MC
   - name: STR_CHAINSWORD_MC  # Master Crafted Chainsword
     # Marines and Adeptas
     cost: 100
@@ -6897,6 +7392,7 @@ research:
       - STR_MASTER_CRAFTING
       - STR_MARINES_STRATEGY
 
+  - delete: STR_POWER_SWORD
   - name: STR_POWER_SWORD  # Power Sword
     cost: 560
     points: 20
@@ -6907,6 +7403,7 @@ research:
       - STR_NOT_CHAOSCULT
 
 ## Space Marines #WEAPONS.SM#
+  - delete: STR_HAMMER
   - name: STR_HAMMER  # Thunder Hammer
     cost: 560
     points: 20
@@ -6926,6 +7423,7 @@ research:
 
 ### Deathwatch #WEAPONS.CM.DW#
 ### Grey Knights #WEAPONS.CM.GK#
+  - delete: STR_HALLEBARD
   - name: STR_HALLEBARD  # Force Halberd
     cost: 50
     points: 15
@@ -7160,6 +7658,7 @@ research:
       - STR_IMPERIAL_GUARD_OPERATIONS
       - STR_GENERALLOCK
 
+  - delete: STR_HOTSHOT_VOLLEY_GUN
   - name: STR_HOTSHOT_VOLLEY_GUN  # Hotshot Volley Gun
     cost: 300
     points: 30
@@ -7202,6 +7701,7 @@ research:
     dependencies:
       - STR_ROTOR_CANNON_RESEARCH
 
+  - delete: STR_PHOTON_GRENADE_REQUISITION
   - name: STR_PHOTON_GRENADE_REQUISITION  # Photon Flash Grenade Requisition
     cost: 150
     points: 25
@@ -7295,6 +7795,7 @@ research:
   # Snipers
 
   # Bolters
+  - delete: STR_BOLTPISTOL_CHAOS
   - &BOLTER_CHAOS_WEAPON
     name: STR_BOLTPISTOL_CHAOS  # Chaos Boltpistol
     cost: 50
@@ -7336,6 +7837,7 @@ research:
     unlocks: !add
       - STR_CHAOS_ARMORY_EXAM_TZEENTCH
 
+  - delete: STR_BOLTERC
   - name: STR_BOLTERC  # Chaos Bolter
     refNode: *BOLTER_CHAOS_WEAPON
   - name: STR_IWCOMBIBOLTER  # Iron Warrior Combi-Bolter
@@ -7361,6 +7863,7 @@ research:
     unlocks: !add
       - STR_CHAOS_ARMORY_EXAM_NURGLE
 
+  - delete: STR_CHB
   - &STORM_BOLTER_CHAOS_WEAPON
     name: STR_CHB  # Chaos Storm Bolter
     cost: 500
@@ -7372,6 +7875,7 @@ research:
       - STR_HB_DEP1
 
   # Autocannons and Assault Cannons
+  - delete: STR_CASSC
   - &AUTOCANNON_CHAOS_WEAPON
     name: STR_CASSC  # Reaper Autocannon
     cost: 150
@@ -7383,6 +7887,14 @@ research:
     needItem: true
   - name: STR_IW_AUTOCANNON  # Iron Warrior Autocannon
     refNode: *AUTOCANNON_CHAOS_WEAPON
+
+  - delete: STR_ASSCTZ
+  - name: STR_ASSCTZ
+    cost: 500
+    points: 25
+    needItem: true
+    getOneFree:
+      - STR_CASS_R
 
   # Lasguns
   - name: STR_LASER_PISTOLCS  # Slaanesh Laspistol
@@ -7441,6 +7953,7 @@ research:
 
 
   # Meltas
+  - delete: STR_CHAOS_MELTAGUN
   - &MELTA_CHAOS_WEAPON
     name: STR_CHAOS_MELTAGUN  # Chaos Meltagun
     cost: 200
@@ -7463,6 +7976,7 @@ research:
       - STR_CHAOS_ARMORY_EXAM_MELTA
     needItem: true
 
+  - delete: STR_BLASTER_LAUNCHER
   - name: STR_BLASTER_LAUNCHER  # Chaos Multimelta
     cost: 300
     points: 60
@@ -7475,6 +7989,7 @@ research:
   - delete: STR_BLASTER_BOMB  # Multimelta Charge
 
   # Plasma
+  - delete: STR_PLASMA_PISTOL
   - &PLASMA_PISTOL_CHAOS_WEAPON
     name: STR_PLASMA_PISTOL  # Chaos Plasma Pistol
     cost: 600
@@ -7494,6 +8009,7 @@ research:
     unlocks: !add
       - STR_CHAOS_ARMORY_EXAM_TZEENTCH
 
+  - delete: STR_PLASMA_RIFLE
   - &PLASMA_RIFLE_CHAOS_WEAPON
     name: STR_PLASMA_RIFLE  # Chaos Plasma Gun
     cost: 1000
@@ -7518,6 +8034,7 @@ research:
   - name: STR_PLASMA_CARBINE_CHAOS  # Chaos Plasma Carbine
     refNode: *PLASMA_LIGHT_CHAOS_WEAPON
 
+  - delete: STR_HEAVY_PLASMA
   - name: STR_HEAVY_PLASMA  # Chaos Heavy Plasma
     cost: 1200
     points: 80
@@ -7552,6 +8069,7 @@ research:
       - STR_CHAOS_ARMORY_EXAM_TZEENTCH
 
   # Graviton
+  - delete: STR_SMALL_LAUNCHER
   - &GRAV_CHAOS_WEAPON
     name: STR_SMALL_LAUNCHER  # Chaos Graviton Gun
     cost: 500
@@ -7627,6 +8145,7 @@ research:
     lookup: STR_BLASTMASTER
     cost: 800
     destroyItem: false
+  - delete: STR_SONIC_CANON
   - name: STR_SONIC_CANON  # Sonic Blaster
     refNode: *SONIC_CHAOS_WEAPON
 
@@ -7647,6 +8166,7 @@ research:
       - STR_CHAOS_ARMORY_EXAM_SLAANESH
 
   # Explosive Launchers
+  - delete: STR_CHAOS_ROCKET_LAUNCHER
   - name: STR_CHAOS_ROCKET_LAUNCHER  # Chaos Missile Launcher
     refNode: *BASIC_CHAOS_WEAPON
   - name: STR_SLAANESH_ROCKET_LAUNCHER  # Slaanesh Missile Launcher
@@ -7659,6 +8179,7 @@ research:
       - STR_CHAOS_ARMORY_EXAM_NURGLE
 
   # Grenades
+  - delete: STR_ALIEN_GRENADE
   - name: STR_ALIEN_GRENADE  # Chaos HE Grenade
     refNode: *BASIC_CHAOS_WEAPON
   - name: STR_BLIGHT_GRENADE  # Blight Grenade
@@ -7677,6 +8198,7 @@ research:
     refNode: *BASIC_CHAOS_WEAPON
 
   # Melee
+  - delete: STR_AXE
   - name: STR_AXE  # Chaos Chain Axe
     refNode: *BASIC_CHAOS_WEAPON
   - name: STR_PLAGUE_KNIFE  # Plague Knife
@@ -7696,6 +8218,7 @@ research:
     unlocks: !add
       - STR_CHAOS_ARMORY_EXAM_SLAANESH
 
+  - delete: STR_CHAOS_CROZIUS
   - &DAEMONIC_CHAOS_WEAPONS
     name: STR_CHAOS_CROZIUS  # Chaos Sorcerer's Staff
     cost: 250
@@ -7728,9 +8251,12 @@ research:
 ### Deserters and Instigators #WEAPONS.FOE.RENE.DESE#
 ## Xenos #WEAPONS.FOE.XENO#
 ### Eldar #WEAPONS.FOE.XENO.ELD#
+  - delete: STR_SHURIKEN_CLIP
+
   - name: STR_ELDAR_ARMORY_EXAM
     refNode: *STR_LOCKED
 
+  - delete: STR_CATAPULT_PISTOL
   - &ELDAR_WEAPON_EXAM
     name: STR_CATAPULT_PISTOL  # Shuriken Pistol
     cost: 100
@@ -7738,29 +8264,38 @@ research:
     needItem: true
     unlocks:
       - STR_ELDAR_ARMORY_EXAM
+  - delete: STR_CATAPULT
   - name: STR_CATAPULT  # Shuriken Catapult
     refNode: *ELDAR_WEAPON_EXAM
+  - delete: STR_EPOWER_SWORD
   - name: STR_EPOWER_SWORD  # Eldar Mirrorsword
     refNode: *ELDAR_WEAPON_EXAM
+  - delete: STR_ELDAR_CHAINSWORD
   - name: STR_ELDAR_CHAINSWORD  # Scorpion Chainsword
     refNode: *ELDAR_WEAPON_EXAM
+  - delete: STR_ELDAR_GRENADE
   - name: STR_ELDAR_GRENADE  # Eldar Plasma Grenade
     refNode: *ELDAR_WEAPON_EXAM
+  - delete: STR_ELDAR_MGRENADE
   - name: STR_ELDAR_MGRENADE  # Eldar Melta Bomb
     refNode: *ELDAR_WEAPON_EXAM
 
 ### Necron #WEAPONS.FOE.XENO.NECRO#
+  - delete: STR_GAUSS_BLASTER
   - &NECRON_WEAPON_RESEARCH_TEMPLATE
     name: STR_GAUSS_BLASTER  # Free researches with corresponding remnants
     dependencies:
       - STR_GENERALLOCK
 
+  - delete: STR_SYNAPTIC_DISINTEGRATOR
   - name: STR_SYNAPTIC_DISINTEGRATOR  # Synaptic Disintegrator
     refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
 
+  - delete: STR_GAUSS_FLAYER
   - name: STR_GAUSS_FLAYER  # Gauss Flayer
     refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
 
+  - delete: STR_HYPERPHASESWORD
   - name: STR_HYPERPHASESWORD  # Hyperphase Sword
     refNode: *NECRON_WEAPON_RESEARCH_TEMPLATE
 
@@ -7834,13 +8369,17 @@ research:
   - delete: STR_AMMO_BIT20  # Ammo Bit
   - delete: STR_AMMO_BIT50  # Ammo Belt
 
+  - delete: STR_CHOPPA
   - &ORK_WEAPONS_EXAM
     name: STR_CHOPPA  # Choppa
     cost: 50
     points: 15
     needItem: true
+    dependencies:
+      - STR_NOT_GREENEST_ORKZ
     unlocks:
       - STR_ORK_WEAPONS_EXAM
+  - delete: STR_BIGCHOPPA
   - name: STR_BIGCHOPPA  # Big Choppa
     refNode: *ORK_WEAPONS_EXAM
   - name: STR_TANKHAMMER  # Tank Busta Hammer
@@ -7848,6 +8387,7 @@ research:
     points: 25
     needItem: true
     refNode: *ORK_WEAPONS_EXAM
+  - delete: STR_ORK_GRENADE
   - name: STR_ORK_GRENADE  # Stikkbombs
     refNode: *ORK_WEAPONS_EXAM
   - name: STR_WYRDBOY_STIKK  # Ork Wyrd Stikk
@@ -7866,15 +8406,19 @@ research:
     cost: 50
     points: 50
     needItem: true
+    dependencies:
+      - STR_NOT_GREENEST_ORKZ
     unlocks:
       - STR_ORK_WEAPONS_EXAM
       - STR_ORK_SHOOTA_EXAM
   - name: STR_GRETCHIN_AMMO_BIT  # Small Blasta Ammo Bit
     refNode: *ORK_SHOOTA_EXAM
+  - delete: STR_SLUGGA
   - name: STR_SLUGGA  # Slugga
     refNode: *ORK_SHOOTA_EXAM
   - name: STR_SNEAKY_SLUGGA  # Sneaky Slugga
     refNode: *ORK_SHOOTA_EXAM
+  - delete: STR_SHOOTA
   - name: STR_SHOOTA  # Shoota
     refNode: *ORK_SHOOTA_EXAM
   - name: STR_SNAZZY_SHOOTA  # Snazzy Shoota
@@ -7885,6 +8429,8 @@ research:
     cost: 50
     points: 50
     needItem: true
+    dependencies:
+      - STR_NOT_GREENEST_ORKZ
     unlocks:
       - STR_ORK_WEAPONS_EXAM
       - STR_ORK_SHOOTA_EXAM
@@ -7895,14 +8441,18 @@ research:
   - name: STR_SNAZZ_GUN  # Flashy Snazzgun
     refNode: *ORK_SHOOTA_EXAM
 
+  - delete: STR_ORK_RL
   - &ORK_BIG_DAKKA_EXAM
     name: STR_ORK_RL  # Rokkit Launcha
     cost: 50
     points: 15
     needItem: true
+    dependencies:
+      - STR_NOT_GREENEST_ORKZ
     unlocks:
       - STR_ORK_WEAPONS_EXAM
       - STR_ORK_BIG_DAKKA_EXAM
+  - delete: STR_BIG_SHOOTA
   - name: STR_BIG_SHOOTA  # Big Shoota
     refNode: *ORK_BIG_DAKKA_EXAM
 
@@ -8047,14 +8597,17 @@ research:
     dependencies:
       - STR_GENERALLOCK
 ### Components (And Ship Parts)
+  - delete: STR_ELERIUM_115
   - name: STR_ELERIUM_115  # Promethium
     cost: 450
     points: 60
     needItem: true
+  - delete: STR_ALIEN_ALLOYS
   - name: STR_ALIEN_ALLOYS  # Adamantium Component
     cost: 400
     points: 30
     needItem: true
+  - delete: STR_UFO_CONSTRUCTION
   - name: STR_UFO_CONSTRUCTION  # Ceramite Plates
     cost: 450
     points: 30
@@ -8063,37 +8616,55 @@ research:
       - STR_ELERIUM_115
       - STR_UFO_POWER_SOURCE
       - STR_UFO_NAVIGATION
+  - delete: STR_ALIEN_FOOD
   - name: STR_ALIEN_FOOD  # Warp Stones
     # Technically a component for chaos players
     cost: 150
     points: 30
     needItem: true
+  - delete: STR_UFO_POWER_SOURCE
   - name: STR_UFO_POWER_SOURCE  # Power Source
     cost: 450
     points: 30
     needItem: true
+  - delete: STR_UFO_NAVIGATION
   - name: STR_UFO_NAVIGATION  # Warp Drives
     cost: 450
     points: 30
     needItem: true
+  - delete: STR_ALIEN_REPRODUCTION
   - name: STR_ALIEN_REPRODUCTION  # Stasis Tombs
     cost: 150
     points: 30
     needItem: true
+  - delete: STR_ALIEN_ENTERTAINMENT
   - name: STR_ALIEN_ENTERTAINMENT  # Plasma Reactors
     cost: 150
     points: 30
     needItem: true
+  - delete: STR_ALIEN_SURGERY
+  - name: STR_ALIEN_SURGERY  # Chaos Sacrifices
+    cost: 150
+    points: 30
+    needItem: true
+  - delete: STR_EXAMINATION_ROOM
+  - name: STR_EXAMINATION_ROOM
+    cost: 150
+    points: 30
+    needItem: true
 ### Other
+  - delete: STR_PSI_AMP
   - name: STR_PSI_AMP  # Tome of the Mind
     cost: 500
     points: 20
     dependencies:
       - STR_PSI_LAB
+  - delete: STR_MIND_PROBE
   - name: STR_MIND_PROBE  # Tome of the Vision
     cost: 600
     points: 25
     needItem: true
+  - delete: STR_MOTION_SCANNER
   - name: STR_MOTION_SCANNER  # Motion Scanner
     cost: 180
     points: 20
@@ -8506,6 +9077,7 @@ research:
     destroyItem: true
 
 ## Chamber Militant #CAPTIVES.CM#
+  - delete: STR_GK_SOLDIER
   - name: STR_GK_SOLDIER  # Grey Knight
     cost: 192
     points: 50
@@ -8789,6 +9361,7 @@ research:
       - STR_CHAOS_PATH
       - STR_PSI_LAB
 
+  - delete: STR_SECTOID_COMMANDER
   - name: STR_SECTOID_COMMANDER  # Cultist High Priest
     cost: 190
     points: 50
@@ -8991,6 +9564,7 @@ research:
     # required as it shares a key with a base xcom unit
   - delete: STR_SNAKEMAN_LEADER  # Traitor Guardsman Sergeant
 
+  - delete: STR_SNAKEMAN_COMMANDER
   - name: STR_SNAKEMAN_COMMANDER  # Traitor Guardsman Commander
     cost: 192
     points: 50
@@ -9318,6 +9892,7 @@ research:
       - STR_CHAOS_PATH
     destroyItem: true
 
+  - delete: STR_WARPTALON
   - name: STR_LIVE_CAPTURE_RAPTOR  # Chaos Raptor
     cost: 192
     points: 50
@@ -9461,6 +10036,7 @@ research:
     getOneFree:
       - STR_MUTON_SOLDIER
 
+  - delete: STR_ETHEREAL_COMMANDER
   - name: STR_ETHEREAL_COMMANDER  # Chaos Champion
     cost: 192
     points: 500
@@ -9484,6 +10060,7 @@ research:
     unlocks:
       - STR_ALIEN_ORIGINS
 
+  - delete: STR_CHAOS_BEHEMOTH
   - name: STR_CHAOS_BEHEMOTH  # Chaos Behemoth
     cost: 192
     points: 500
@@ -9496,7 +10073,17 @@ research:
       - STR_THREAT_ONE
     destroyItem: true
 
+  - delete: STR_OBLITERATOR
+  - name: STR_OBLITERATOR_SOLDIER
+    cost: 192
+    points: 500
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
+
   # Khorne
+  - delete: STR_KHRONE_TERRORIST
   - name: STR_LIVE_CAPTURE_KHORNE_MARINE  # Khorne Berserker
     cost: 192
     points: 50
@@ -9507,6 +10094,7 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_THREAT_ONE
 
+  - delete: STR_KHORNE_CHAMP
   - name: STR_KHORNE_CHAMP  # Khorne Champion
     cost: 192
     points: 500
@@ -9665,6 +10253,8 @@ research:
     destroyItem: true
 
   # Nurgle
+  - delete: STR_NURGLE_SOLDIER
+
   - name: STR_LIVE_CAPTURE_NURGLE_MARINE  # Plauge Marine
     cost: 192
     points: 50
@@ -9675,6 +10265,7 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_THREAT_ONE
 
+  - delete: STR_NURGLE_CHAMP
   - name: STR_NURGLE_CHAMP  # Nurgle Champion
     cost: 192
     points: 500
@@ -9699,6 +10290,8 @@ research:
       - STR_NURGLE_CHAMP
 
   # Slaanesh
+  - delete: STR_SLAANESH_SOLDIER
+
   - name: STR_LIVE_CAPTURE_SLAANESH_MARINE  # Noise Marine
     cost: 192
     points: 50
@@ -9742,6 +10335,8 @@ research:
       - STR_CHAOS_PATH
 
   # Tzeentch
+  - delete: STR_TZEENTCH_SOLDIER
+
   - name: STR_LIVE_CAPTURE_TZEENTCH_MARINE  # Rubric Marine
     cost: 192
     points: 50
@@ -9752,6 +10347,7 @@ research:
       - STR_ALIEN_ORIGINS
       - STR_THREAT_ONE
 
+  - delete: STR_TZEENTCH_LEADER
   - name: STR_TZEENTCH_LEADER  # Tzeentch Sorcerer
     cost: 192
     points: 500
@@ -10026,10 +10622,7 @@ research:
     unlocks:
       - STR_ALIEN_ORIGINS
     getOneFree:
-      - STR_SLAANESH_SOLDIER
       - STR_DIRE_DAEMONETTE
-      # - STR_HAVOC_SLAANESH
-      # - STR_CHRYSSALID_TERRORISTSELENE
   - name: STR_CHRYSSALID  # Slaanesh Daemonette
     points: 50
     needItem: true
@@ -10045,6 +10638,7 @@ research:
     destroyItem: true
 
   # Tzeentch
+  - delete: STR_SCREAMER_TERRORIST
   - name: STR_SCREAMER_TERRORIST  # Tzeentch Screamer
     cost: 200
     points: 50
@@ -10052,6 +10646,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
+  - delete: STR_FLAMER_TERRORIST
   - name: STR_FLAMER_TERRORIST  # Tzeentch Flamer
     cost: 200
     points: 50
@@ -10209,6 +10804,7 @@ research:
 ## Renegades #CAPTIVES.FOE.RENE#
 ### Deserters and Instigators #CAPTIVES.FOE.RENE.DESE#
 ## Xenos #CAPTIVES.FOE.XENO#
+  - delete: STR_ELDAR_PLAT
   - name: STR_ELDAR_PLAT  # Eldar Grav Platform
     cost: 150
     points: 50
@@ -10216,6 +10812,7 @@ research:
     destroyItem: true
 
 ### Eldar #CAPTIVES.FOE.XENO.ELD#
+  - delete: STR_ELDAR_DAVENGER
   - name: STR_ELDAR_DAVENGER  # Eldar Davenger
     cost: 150
     points: 50
@@ -10223,6 +10820,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
     destroyItem: true
+  - delete: STR_ELDAR_SCORPION
   - name: STR_ELDAR_SCORPION  # Eldar Scorpion
     cost: 150
     points: 50
@@ -10230,6 +10828,7 @@ research:
     unlocks:
       - STR_INTERROGATION_COMPLETED
     destroyItem: true
+  - delete: STR_ELDAR_SEER
   - name: STR_ELDAR_SEER  # Eldar Seer
     cost: 192
     points: 50
@@ -10242,6 +10841,7 @@ research:
       - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
     spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
+  - delete: STR_ELDAR_GUARDIAN
   - name: STR_ELDAR_GUARDIAN  # Eldar Guardian
     cost: 192
     points: 50
@@ -10252,6 +10852,7 @@ research:
       - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
     spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
+  - delete: STR_ELDAR_BANSHEE
   - name: STR_ELDAR_BANSHEE  # Eldar Banshee
     cost: 192
     points: 50
@@ -10262,6 +10863,14 @@ research:
       - STR_ELDAR_LEADER_INTERROGATED
     destroyItem: true
     spawnedEvent: STR_ELDAR_LEADER_INTERROGATION
+  - delete: STR_ELDAR_REAPER
+  - name: STR_ELDAR_REAPER
+    cost: 192
+    points: 50
+    needItem: true
+    unlocks:
+      - STR_INTERROGATION_COMPLETED
+      - STR_THREAT_ONE
 
 ### Necron #CAPTIVES.FOE.XENO.NECRON#
   - name: STR_NECRON_WARRIOR  # Necron Warrior
@@ -10294,6 +10903,7 @@ research:
     destroyItem: true
 
 ### Orks #CAPTIVES.FOE.XENO.ORK#
+  - delete: STR_GRETCHIN
   - name: STR_GRETCHIN  # Grot Gang
     cost: 50
     points: 25
@@ -10324,6 +10934,7 @@ research:
     getOneFree:
       - STR_BADMOONS_ORK_BIGBOYZ
     destroyItem: true
+  - delete: STR_ORK_BOY
   - name: STR_ORK_BOY  # Ork Boy
     cost: 192
     points: 50
@@ -10333,6 +10944,7 @@ research:
     getOneFree:
       - STR_ORK_ARDBOY
     destroyItem: true
+  - delete: STR_ORK_ARDBOY
   - name: STR_ORK_ARDBOY  # Ork 'ard Boy
     cost: 192
     points: 50
@@ -10342,6 +10954,7 @@ research:
     getOneFree:
       - STR_ORK_NOBBOY
     destroyItem: true
+  - delete: STR_ORK_NOBBOY
   - name: STR_ORK_NOBBOY  # Ork Nob
     cost: 192
     points: 50
@@ -10568,6 +11181,7 @@ research:
       - STR_DEATHSKULL_ORK_MEGANOB
     spawnedEvent: STR_ORK_LEADER_INTERROGATION
     destroyItem: true
+  - delete: STR_ORK_KILLA
   - name: STR_ORK_KILLA  # Ork Killa Kan
     cost: 192
     points: 50
@@ -10581,6 +11195,7 @@ research:
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_CARNI_TERRORIST
   - name: STR_CARNI_TERRORIST  # Carnifex
     cost: 150
     points: 50
@@ -10588,11 +11203,13 @@ research:
     destroyItem: true
 
 #### Genestealer #CAPTIVES.FOE.XENO.TYR.GENE#
+  - delete: STR_XENO_SOLDIER
   - name: STR_XENO_SOLDIER  # Genestealer Cultist
     cost: 150
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_XENO_COMMANDER
   - name: STR_XENO_COMMANDER  # Genestealer Cult Priest
     cost: 192
     points: 50
@@ -11061,6 +11678,7 @@ research:
       - STR_INTERROGATION_COMPLETED
       - STR_THREAT_ONE
     destroyItem: true
+  - delete: STR_GENE_CULTIST
   - &STR_GSC_CULTIST
     name: STR_GENE_CULTIST  # Brood Brother
     cost: 100
@@ -11076,6 +11694,7 @@ research:
   - name: STR_GENE_CULTIST_S  # Brood Sister
     refNode: *STR_GSC_CULTIST
     destroyItem: true
+  - delete: STR_GENE_SAB
   - name: STR_GENE_SAB  # Reductus Saboteur
     refNode: *STR_GSC_CULTIST
     cost: 125
@@ -11261,41 +11880,53 @@ research:
 # Entries in this section are not as sorted or labeled,
 # because frankly I did not have the willpower to do so.
 ####################################
+  - delete: STR_SECTOID_AUTOPSY
   - name: STR_SECTOID_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_SNAKEMAN_AUTOPSY
   - name: STR_SNAKEMAN_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_ETHEREAL_AUTOPSY
   - name: STR_ETHEREAL_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_MUTON_AUTOPSY
   - name: STR_MUTON_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_FLOATER_AUTOPSY
   - name: STR_FLOATER_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_CELATID_AUTOPSY
   - name: STR_CELATID_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_SILACOID_AUTOPSY
   - name: STR_SILACOID_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_CHRYSSALID_AUTOPSY
   - name: STR_CHRYSSALID_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_REAPER_AUTOPSY
   - name: STR_REAPER_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_SECTOPOD_AUTOPSY
   - name: STR_SECTOPOD_AUTOPSY
     points: 0
     needItem: true
+  - delete: STR_CYBERDISC_AUTOPSY
   - name: STR_CYBERDISC_AUTOPSY
     points: 0
     needItem: true
 ## Space Marines #CORPSES.SM#
 ## Chamber Militant #CORPSES.CM#
+  - delete: STR_GREYK_CORPSE
   - &STR_CORPSE_BASIC
     name: STR_GREYK_CORPSE
     cost: 25
@@ -11559,62 +12190,85 @@ research:
     refNode: *STR_CORPSE_BASIC
   - name: STR_HERETIC_SERAPHIM_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_CSENTINEL_CORPSE
   - name: STR_CSENTINEL_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_PRIEST_CORPSE
   - name: STR_PRIEST_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_LORD_CORPSE
   - name: STR_LORD_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SORC_CORPSE
   - name: STR_SORC_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_WARPTALON_CORPSE
   - name: STR_WARPTALON_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_OBLITERATOR_CORPSE
   - name: STR_OBLITERATOR_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_BEHEMOTH_CORPSE
   - name: STR_BEHEMOTH_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_PREDATOR_CORPSE
   - name: STR_PREDATOR_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_PREDATORSIDE_CORPSE
   - name: STR_PREDATORSIDE_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_BERSERKER_CORPSE
   - name: STR_BERSERKER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_FLAMER_CORPSE
   - name: STR_FLAMER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SCREAMER_CORPSE
   - name: STR_SCREAMER_CORPSE
     refNode: *STR_CORPSE_BASIC
   - name: STR_ZOMBIE_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SECTOID_CORPSE
   - name: STR_SECTOID_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_SECTOID_AUTOPSY
+  - delete: STR_SNAKEMAN_CORPSE
   - name: STR_SNAKEMAN_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_SNAKEMAN_AUTOPSY
+  - delete: STR_ETHEREAL_CORPSE
   - name: STR_ETHEREAL_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_ETHEREAL_AUTOPSY
+  - delete: STR_MUTON_CORPSE
   - name: STR_MUTON_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_MUTON_AUTOPSY
+  - delete: STR_FLOATER_CORPSE
   - name: STR_FLOATER_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_FLOATER_AUTOPSY
+  - delete: STR_CELATID_CORPSE
   - name: STR_CELATID_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_CELATID_AUTOPSY
+  - delete: STR_SILACOID_CORPSE
   - name: STR_SILACOID_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_SILACOID_AUTOPSY
+  - delete: STR_CHRYSSALID_CORPSE
   - name: STR_CHRYSSALID_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_CHRYSSALID_AUTOPSY
+  - delete: STR_REAPER_CORPSE
   - name: STR_REAPER_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_REAPER_AUTOPSY
+  - delete: STR_SECTOPOD_CORPSE
   - name: STR_SECTOPOD_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_SECTOPOD_AUTOPSY
+  - delete: STR_CYBERDISC_CORPSE
   - name: STR_CYBERDISC_CORPSE
     refNode: *STR_CORPSE_BASIC
     lookup: STR_CYBERDISC_AUTOPSY
@@ -11643,18 +12297,24 @@ research:
   - name: STR_CATACHAN_TRAITORTOP_CORPSE_GEO
     refNode: *STR_CORPSE_BASIC
   # Necron #CORPSES.FOE.XENO.NECRO#
+  - delete: STR_NECRON_WARRIOR_CORPSE
   - name: STR_NECRON_WARRIOR_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_NECRON_IMORTAL_CORPSE
   - name: STR_NECRON_IMORTAL_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_NECRON_DEATHMARK_CORPSE
   - name: STR_NECRON_DEATHMARK_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_NECRON_LYCHGUARD_CORPSE
   - name: STR_NECRON_LYCHGUARD_CORPSE
     refNode: *STR_CORPSE_BASIC
   - name: STR_NECRON_FLAYED_ONE_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_DESTROYER_CORPSE
   - name: STR_DESTROYER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_NECRON_SCARAB_CORPSE
   - name: STR_NECRON_SCARAB_CORPSE
     refNode: *STR_CORPSE_BASIC
   - name: STR_NECRON_LORD_CORPSE # STR_NECRON_LORD
@@ -11664,12 +12324,16 @@ research:
   - name: STR_NECRON_PORTAL_CORPSE
     refNode: *STR_CORPSE_BASIC
   # Eldar #COPRSES.FOE.XENO.ELD#
+  - delete: STR_PLAT_CORPSE
   - name: STR_PLAT_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SEER_CORPSE
   - name: STR_SEER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_GUARDIAN_CORPSE
   - name: STR_GUARDIAN_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_BANSHEE_CORPSE
   - name: STR_BANSHEE_CORPSE
     refNode: *STR_CORPSE_BASIC
   # Hrud #CORPSES.FOE.XENO.HRUD#
@@ -11713,13 +12377,16 @@ research:
     refNode: *STR_CORPSE_BASIC
   - name: STR_SPOREMINE_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_CARNI_CORPSE
   - name: STR_CARNI_CORPSE
     refNode: *STR_CORPSE_BASIC
   # Genestealers #CORPSES.FOE.XENO.TYR.GENE#
+  - delete: STR_BW_CORPSE
   - name: STR_BW_CORPSE  # GENE CULT
     refNode: *STR_CORPSE_BASIC
   - name: STR_BW2_CORPSE  # GENE CULT
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SOB_CORPSE
   - name: STR_SOB_CORPSE  # GENE CULT
     refNode: *STR_CORPSE_BASIC
   - name: STR_GSC_GUARD_CARAPACE_CORPSE
@@ -11780,6 +12447,7 @@ research:
     refNode: *STR_CORPSE_BASIC
   - name: STR_GSC_KELER_CORPSE  # GENE CULT
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_XENO_CORPSE
   - name: STR_XENO_CORPSE
     refNode: *STR_CORPSE_BASIC
   - name: BROLONEW_CORPSE_GEO
@@ -11787,23 +12455,32 @@ research:
   # Eldar #CORPSES.FOE.XENO.ELD#
   - name: STR_SEER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_DAVENGER_CORPSE
   - name: STR_DAVENGER_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_SCORPION_CORPSE
   - name: STR_SCORPION_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_WRAITHGUARD_CORPSE
   - name: STR_WRAITHGUARD_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_ELDAR_REAPER_CORPSE
   - name: STR_ELDAR_REAPER_CORPSE
     refNode: *STR_CORPSE_BASIC
   # Ork #CORPSES.FOE.XENO.ORK#
+  - delete: STR_ORKBOY_CORPSE
   - name: STR_ORKBOY_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_ORKARDBOY_CORPSE
   - name: STR_ORKARDBOY_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_ORKNOBBOY_CORPSE
   - name: STR_ORKNOBBOY_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_KILLA_CORPSE
   - name: STR_KILLA_CORPSE
     refNode: *STR_CORPSE_BASIC
+  - delete: STR_GRETCHIN_CORPSE
   - name: STR_GRETCHIN_CORPSE
     refNode: *STR_CORPSE_BASIC
   - name: STR_BADMOONS_ORK_BOY_CORPSE
@@ -11857,181 +12534,6 @@ research:
     refNode: *STR_CORPSE_BASIC
   - name: STR_TAUFIREWARRIORCAPTAIN_AICORPSE
     refNode: *STR_CORPSE_BASIC
-
-####################################
-# Base Facilities Section #FACILITIES#
-####################################
-## Multifaction #FACILITIES.MULT#
-  - name: STR_PSI_LAB  # Chapel
-    cost: 420
-    points: 25
-    dependencies:
-      - STR_ALIEN_ORIGINS
-      - STR_LEADER_PLUS
-      - STR_MIDTIER_PREREQ
-      - STR_EXAMINATION_ROOM
-  - name: STR_SPACEHULK_ORK
-    dependencies:
-      - STR_GENERALLOCK
-  - name: STR_LASER_DEFENSE  # Lascannon Defenses
-    cost: 510
-    points: 15
-    dependencies:
-      - STR_LASER_CANNON
-  - name: STR_PLASMA_DEFENSE  # Plasma Defenses
-    cost: 620
-    points: 25
-    dependencies:
-      - STR_PLASMA_CANNON
-  - name: STR_FUSION_DEFENSE  # Multi-Melta Defenses
-    cost: 800
-    points: 25
-    dependencies:
-      - STR_FUSION_MISSILE
-  - name: STR_GRAV_SHIELD  # Grave Shield
-    cost: 930
-    points: 25
-    dependencies:
-      - STR_NEW_FIGHTER_TRANSPORTER
-  - name: STR_MIND_SHIELD  # Cloaking Shroud
-    cost: 360
-    points: 25
-    dependencies:
-      - STR_PSI_LAB
-  - name: STR_STEELMILLR  # Advanced Ceramics Requisition
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_ALIEN_ALLOYS
-  - name: STR_DEFENSE_CORRIDORBR  # facility OTHER FACTIONS BLACK
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MOTION_SCANNER
-  - name: STR_NAVY_COMUNICATIONS  # Orbital Communications
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MIDTIER_PREREQ
-  - name: STR_APOC_BAY  # Apothecary Bay
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MIDTIER_PREREQ
-    unlocks:
-      - STR_APOTHECARY_CORRUPTION_RESEARCH
-
-  - name: STR_APOTHECARY_CORRUPTION_RESEARCH  # Apothecary corruption research
-    cost: 150
-    points: 50
-    requiresBaseFunc: [APOC]
-    dependencies:
-      - STR_APOC_BAY
-
-  - name: STR_PSI_LAB  # Chapel
-    cost: 100
-    points: 15
-    unlocks:
-      - STR_CHAPEL_CORRUPTION_RESEARCH
-
-  - name: STR_CHAPEL_CORRUPTION_RESEARCH  # Chapel corruption research
-    cost: 150
-    points: 50
-    requiresBaseFunc: [PSI]
-    dependencies:
-      - STR_PSI_LAB
-
-  - name: STR_TRAINFACILITYR  # Soldier Improvement
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_MARINES_AND_ADEPTAS
-
-## Space Marines #FACILITIES.SM#
-  - name: STR_DEFENSE_CORRIDORR  # Defense Corridor
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MOTION_SCANNER
-      - STR_MARINES_STRATEGY
-  - name: STR_LIBRARY  # Librarium
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MARINES_STRATEGY
-      - STR_PSI_AMP
-  - name: STR_TEC_BAYR  # Techmarine Bay Requisition
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_MARINES_STRATEGY
-      - STR_APOC_BAY
-### Assault Strategy #FACILITIES.SM.ASS#
-### Devastator Strategy #FACILITIES.SM.DEV#
-### Primaris Strategy #FACILITIES.SM.PRIM#
-### Scout Strategy #FACILITIES.SM.SCOUT#
-### Tactical Strategy #FACILITIES.SM.TAC#
-## Chamber Militant #FACILITIES.CM#
-  - name: STR_LIBRARY_GK  # Librarium
-    cost: 100
-    points: 15
-    getOneFree:
-      - STR_LIBRARY
-    dependencies:
-      - STR_CHAMBERMILITANT
-      - STR_PSI_AMP
-  - name: STR_TEC_BAY_CHAMBER_R  # Techmarine Bay Requisition
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_CHAMBERMILITANT
-      - STR_APOC_BAY
-
-### Deathwatch #FACILITIES.CM.DW#
-### Grey Knights #FACILITIES.CM.GK#
-  - name: STR_DEFENSE_CORRIDORGK  # Defense Corridor
-    # facility Grey Knights White
-    # DeathWatch uses STR_DEFENSE_CORRIDORBR
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_MOTION_SCANNER
-      - STR_GREYKNIGHTS
-      - STR_CHAMBERMILITANT
-
-### The Radical Road #FACILITIES.CM.RAD#
-## Adeptus Terra #FACILITIES.AT#
-### The Imperial Law Strategy #FACILITIES.AT.LAW#
-### Chaos Cult #FACILITIES.AT.CULT#
-## Adeptas #FACILITIES.SOB#
-  - name: STR_INQOFF  # Inquisition Office
-    cost: 100
-    points: 15
-    dependencies:
-      - STR_ADEPTAS
-      - STR_PSI_AMP
-    unlocks:
-      - STR_INQ_STORMTROOPER_REQUISITION
-      - STR_IMPERIAL_INQUISITOR_REQUISITION
-      - STR_CALLIDUS_ASSASSIN_REQUISITION
-
-### Repentia Strategy #FACILITIES.SOB.REP#
-### Novice Strategy #FACILITIES.SOB.NOV#
-### Battle Sister Strategy #FACILITIES.SOB.BAT#
-### Dominion Strategy #FACILITIES.SOB.DOM#
-## Imperial Guard #FACILITIES.IG#
-  - name: STR_GUARD_BARRACKS  # Barracks
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
-
-### Guardsman Strategy #FACILITIES.IG.GUARD#
-### Scion Strategy #FACILITIES.IG.SCION#
-### Abhuman Strategy #FACILITIES.IG.ABHUMAN#
-### Steel Legion Strategy #FACILITIES.IG.STEEL#
 
 ####################################
 # dungeon specific start
@@ -12139,124 +12641,66 @@ research:
 # These research projectes are here to retain compatability before the codex refactor.
 #  Once the codex refactor is concluded these projects should be removed and codex articles should instead be unlocked directly via useful research.
 
+  - delete: STR_SECTOID
   - name: STR_SECTOID
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_SNAKEMAN
   - name: STR_SNAKEMAN
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_ETHEREAL
   - name: STR_ETHEREAL
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_MUTON
   - name: STR_MUTON
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_FLOATER
   - name: STR_FLOATER
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_CELATID
   - name: STR_CELATID
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_SILACOID
   - name: STR_SILACOID
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_CHRYSSALID
   - name: STR_CHRYSSALID
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_REAPER
   - name: STR_REAPER
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_SECTOPOD
   - name: STR_SECTOPOD
     points: 50
     needItem: true
     destroyItem: true
+  - delete: STR_CYBERDISC
   - name: STR_CYBERDISC
     points: 50
     needItem: true
     destroyItem: true
 
-# Techpriest
-
-  - name: STR_WRIT_ILLUMINAT                 # Enginseer for SoB
-    cost: 400
-    points: 20
-    unlocks:
-      - STR_ENGINSEER_REQUISITION
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_ADEPTAS
-    listOrder: 20
-
-  - name: STR_ENGINSEER_REQUISITION                 # Enginseer
-    cost: 400
-    points: 20
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_IMPERIAL_GUARD_OPERATIONS
-    listOrder: 20
-
-  - name: STR_ADV_TECHPRIEST_GEAR                 # Enginseer
-    cost: 400
-    points: 20
-    dependencies:
-      - STR_HIGHTIER_PREREQ
-      - STR_ENGINSEER_REQUISITION
-    listOrder: 21
-
-  # chaos ambush line
-
-  - name: STR_SPY_IMPERIALCOMS  # Hack in the Imperial Network
-    cost: 50
-    points: 50
-    dependencies:
-      - STR_MIDTIER_PREREQ
-      - STR_NAVY_COMUNICATIONS
-      - STR_CHAOS_PATH
-
-  - name: STR_RESCUE_CHAOSINFILTRATORS_COMPLETE  # Retrieve Location Completed
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-    needItem: true
-
-  - name: STR_AMBUSH_SPACEMARINES  # Rescue the Chaos Rhinos
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_RESCUE_CHAOSINFILTRATORS_COMPLETE
-      - STR_ALIEN_ORIGINS
-      - STR_LEADER_PLUS
-
-  - name: STR_AMBUSH_SPACEMARINES_COMPLETE  # Rescue the Chaos Rhinos Completed
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-    needItem: true
-
-  - name: STR_MANUFACTURE_CHAOS_BIKE
-    cost: 0
-    points: 0
-    dependencies:
-      - STR_GENERALLOCK
-      - STR_AMBUSH_SPACEMARINES_COMPLETE
-
-  - name: STR_CHAOSREWARD_REQUISITIONS  # Sacred Gift from Chaos
-    cost: 300
-    points: 50
-    dependencies:
-      - STR_AMBUSH_SPACEMARINES_COMPLETE
-    unlocks:
-      - STR_MANUFACTURE_CHAOS_BIKE
-      - STR_LEADER_PLUS
-      - STR_COMMANDER_PLUS
+# █▀▀▄  █▀▀▀█   █▄  █  █▀▀▀█ ▀▀█▀▀    █▀▀▄  █  █  █▀▄▀█  █▀▀█    █▄  █  █▀▀▀  █   █    █▀▀█  █▀▀▀  █▀▀▀█  █▀▀▀  █▀▀█  █▀▀█  █▀▀█  █  █
+# █  █  █   █   █ █ █  █   █   █      █  █  █  █  █ █ █  █▄▄█    █ █ █  █▀▀▀  █ █ █    █▄▄▀  █▀▀▀  ▀▀▀▄▄  █▀▀▀  █▄▄█  █▄▄▀  █     █▀▀█
+# █▄▄▀  █▄▄▄█   █  ▀█  █▄▄▄█   █      █▄▄▀  ▀▄▄▀  █   █  █       █  ▀█  █▄▄▄  █▄▀▄█    █  █  █▄▄▄  █▄▄▄█  █▄▄▄  █  █  █  █  █▄▄█  █  █
+#
+# █▀▀█ ▀▀█▀▀    █▀▀▀  █▄  █  █▀▀▄    █▀▀▀█  █▀▀▀    █▀▀▀ ▀█▀  █     █▀▀▀ 
+# █▄▄█   █      █▀▀▀  █ █ █  █  █    █   █  █▀▀▀    █▀▀▀  █   █     █▀▀▀ 
+# █  █   █      █▄▄▄  █  ▀█  █▄▄▀    █▄▄▄█  █       █    ▄█▄  █▄▄█  █▄▄▄ 
