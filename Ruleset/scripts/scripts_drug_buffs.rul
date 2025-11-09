@@ -1,4 +1,6 @@
 extended:  # WIP
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
   tags:
     RuleItem:
       IS_DRUG: int  # is this a drug?
@@ -44,6 +46,12 @@ extended:  # WIP
 
           item.getTag drugDoseCount Tag.IS_DRUG;
           if lt drugDoseCount 1;
+            return;
+          end;
+
+          target.getTag temp Tag.UNIT_IS_TELEPORTING;
+          if gt temp 0;
+            battle_game.flashMessage "STR_SCRIPT_TELEPORTER_NO_BENEFIT";
             return;
           end;
 
