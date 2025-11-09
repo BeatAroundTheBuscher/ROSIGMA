@@ -38,6 +38,7 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var int temp2;
           var int faction;
           var int targetfaction;
 
@@ -51,6 +52,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_CHAOS;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_CHAOS_IS_ALLY; UNIT_TYPE_CHAOS:" temp;
+          else; # if factions are turned on, but we do not have a specific value for the ally variable, set this to increasing on a unit type match.
+            ai_unit.getTag temp Tag.UNIT_TYPE_CHAOS;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_CHAOS;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_TYRANID_IS_ALLY;
@@ -58,6 +65,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_TYRANID;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TYRANID_IS_ALLY; UNIT_TYPE_TYRANID:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_TYRANID;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_TYRANID;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_IMPERIUM_IS_ALLY;
@@ -65,6 +78,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_IMPERIUM;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_IMPERIUM_IS_ALLY; UNIT_TYPE_IMPERIUM:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_IMPERIUM;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_IMPERIUM;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_NURGLE_IS_ALLY;
@@ -72,6 +91,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_NURGLE;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NURGLE_IS_ALLY; UNIT_TYPE_NURGLE:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_NURGLE;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_NURGLE;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_TZEENTCH_IS_ALLY;
@@ -79,6 +104,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_TZEENTCH;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TZEENTCH_IS_ALLY; UNIT_TYPE_TZEENTCH:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_TZEENTCH;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_KHORNE_IS_ALLY;
@@ -86,6 +117,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_KHORNE;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_KHORNE_IS_ALLY; UNIT_TYPE_KHORNE:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_KHORNE;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_KHORNE;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_SLAANESH_IS_ALLY;
@@ -93,6 +130,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_SLAANESH;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_SLAANESH_IS_ALLY; UNIT_TYPE_SLAANESH:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_SLAANESH;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_SLAANESH;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_NECRON_IS_ALLY;
@@ -100,6 +143,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_NECRON;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NECRON_IS_ALLY; UNIT_TYPE_NECRON:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_NECRON;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_NECRON;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_TAU_IS_ALLY;
@@ -107,6 +156,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_TAU;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TAU_IS_ALLY; UNIT_TYPE_TAU:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_TAU;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_TAU;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_ORK_IS_ALLY;
@@ -114,6 +169,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_ORK;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ORK_IS_ALLY; UNIT_TYPE_ORK:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_ORK;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_ORK;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           battle_game.getTag temp Tag.GAME_ELDAR_IS_ALLY;
@@ -121,6 +182,12 @@ extended:
             target_unit.getTag temp Tag.UNIT_TYPE_ELDAR;
             add targetfaction temp;
             # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ELDAR_IS_ALLY; UNIT_TYPE_ELDAR:" temp;
+          else;
+            ai_unit.getTag temp Tag.UNIT_TYPE_ELDAR;
+            target_unit.getTag temp2 Tag.UNIT_TYPE_ELDAR;
+            if and neq temp 0 eq temp temp2;
+              add targetfaction temp;
+            end;
           end;
 
           if gt targetfaction 0; #if our targetfaction is allied we don't attack them
@@ -236,6 +303,8 @@ items:
     hiddenOnMinimap: true
     supportedInventorySections:
       - STR_GROUND
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
 
   - type: STR_FACTION_SETUP_TOKEN_CHAOS_ALLY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
