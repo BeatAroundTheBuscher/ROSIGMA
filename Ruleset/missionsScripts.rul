@@ -18,11 +18,17 @@
 # Faction Specific        Special campaign missions for specific        #CAMP#
 #   Campaign Missions       factions. Includes final mission scripts.
 
-missionScripts:
-### Game Start Scripts #START#
-  # These only happen at the start of the game
+adhocScripts:
+### Adhoc Game Start Scripts #START#
+  # Geoscape initialization for the first month is now triggered via adhocScripts to allow for
+  # different factions having completely different starting conditions.
+  # This means each strategy _needs_ to have an event associated with it, triggered via
+  # spawnedEvent on their strategy research.
+
   - &STR_START_MISSION
-    type: gameStart  # initial mission in player region
+    type: adhocGameStart
+    # initial mission in player region
+    adhocMissionScriptTags: ["gameStart"]
     missionWeights:
       0:
         STR_ALIEN_RESEARCH: 33
@@ -35,18 +41,14 @@ missionScripts:
         STR_SLAANESH_HARVEST: 8
         STR_ALIEN_RESEARCH_TZEENTCH: 15
         STR_ALIEN_HARVEST_TZEENTCH: 8
-    lastMonth: 0
     targetBaseOdds: 100
     startDelay: 4320  # 3 days
     randomDelay: 4320  # additional random 0 to 3 days
     useTable: true
-    researchTriggers:
-      STR_HARDER_MISSIONS: false
-      STR_GUEVESA_STRATEGY_MILITIA_GV: false  # Can't have at month 0, doesn't do anything here
-      STR_EVEN_HARDER_MISSIONS: false
 
-  - type: gameStartHard
+  - type: adhocGameStartHard
     refNode: *STR_START_MISSION
+    adhocMissionScriptTags: ["gameStartHard"]
     missionWeights:
       0:
         STR_ALIEN_RESEARCH_HARD: 33
@@ -60,38 +62,10 @@ missionScripts:
         STR_ALIEN_RESEARCH_TZEENTCH_HARD: 15
         STR_ALIEN_HARVEST_TZEENTCH_HARD: 5
         STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 5
-      2:
-        STR_ALIEN_RESEARCH_HARD: 33
-        STR_ALIEN_ABDUCTION_HARD: 33
-        STR_ALIEN_HARVEST_HARD: 33
-        STR_NURGLE_RESEARCH_HARD: 8
-        STR_NURGLE_HARVEST_HARD: 15
-        STR_NURGLE_ABDUCTION_HARD: 8
-        STR_SLAANESH_ABDUCTION_HARD: 20
-        STR_SLAANESH_HARVEST_HARD: 8  # rare
-        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 15
-        STR_ALIEN_HARVEST_TZEENTCH_HARD: 5
-        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 5
-      # added to delay possible tau orca expedition
-      4:
-        STR_ALIEN_RESEARCH_HARD: 33
-        STR_ALIEN_ABDUCTION_HARD: 33
-        STR_ALIEN_HARVEST_HARD: 33
-        STR_NURGLE_RESEARCH_HARD: 8
-        STR_NURGLE_HARVEST_HARD: 15
-        STR_NURGLE_ABDUCTION_HARD: 8
-        STR_SLAANESH_ABDUCTION_HARD: 20
-        STR_SLAANESH_HARVEST_HARD: 8  # rare
-        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 15
-        STR_ALIEN_HARVEST_TZEENTCH_HARD: 5
-        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 5
-        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
-    researchTriggers:
-      STR_HARDER_MISSIONS: true
-      STR_EVEN_HARDER_MISSIONS: false  # Can't have at month 0, doesn't do anything here
 
-  - type: gameStartExtraHard
+  - type: adhocGameStartExtraHard
     refNode: *STR_START_MISSION
+    adhocMissionScriptTags: ["gameStartExtraHard"]
     missionWeights:
       0:
         STR_ALIEN_RESEARCH_EXTRA_HARD: 33
@@ -105,23 +79,10 @@ missionScripts:
         STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 15
         STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 5
         STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 5
-      2:
-        STR_ALIEN_RESEARCH_EXTRA_HARD: 33
-        STR_ALIEN_ABDUCTION_EXTRA_HARD: 33
-        STR_ALIEN_HARVEST_EXTRA_HARD: 33
-        STR_NURGLE_RESEARCH_EXTRA_HARD: 8
-        STR_NURGLE_HARVEST_EXTRA_HARD: 15
-        STR_NURGLE_ABDUCTION_EXTRA_HARD: 8
-        STR_SLAANESH_ABDUCTION_EXTRA_HARD: 20
-        STR_SLAANESH_HARVEST_EXTRA_HARD: 8  # rare
-        STR_ALIEN_RESEARCH_TZEENTCH_EXTRA_HARD: 15
-        STR_ALIEN_HARVEST_TZEENTCH_EXTRA_HARD: 5
-        STR_ALIEN_ABDUCTION_TZEENTCH_EXTRA_HARD: 5
-        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
-    researchTriggers:
-      STR_EVEN_HARDER_MISSIONS: true  # Can't have at month 0, doesn't do anything here
 
-  - type: gameStartHard_SW #Tzeentch Weighting
+  - type: adhocGameStartHard_SW
+    adhocMissionScriptTags: ["gameStartWolves"]
+    # Spacewolves Tzeentch Weighting
     refNode: *STR_START_MISSION
     missionWeights:
       0:
@@ -136,35 +97,12 @@ missionScripts:
         STR_ALIEN_RESEARCH_TZEENTCH_HARD: 33
         STR_ALIEN_HARVEST_TZEENTCH_HARD: 33
         STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 33
-      2:
-        STR_ALIEN_RESEARCH_HARD: 15
-        STR_ALIEN_ABDUCTION_HARD: 15
-        STR_ALIEN_HARVEST_HARD: 15
-        STR_NURGLE_RESEARCH_HARD: 8
-        STR_NURGLE_HARVEST_HARD: 10
-        STR_NURGLE_ABDUCTION_HARD: 8
-        STR_SLAANESH_ABDUCTION_HARD: 10
-        STR_SLAANESH_HARVEST_HARD: 4  # rare
-        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 33
-        STR_ALIEN_HARVEST_TZEENTCH_HARD: 33
-        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 33
-      # added to delay possible orca tau expedition
-      4:
-        STR_ALIEN_RESEARCH_HARD: 15
-        STR_ALIEN_ABDUCTION_HARD: 15
-        STR_ALIEN_HARVEST_HARD: 15
-        STR_NURGLE_RESEARCH_HARD: 8
-        STR_NURGLE_HARVEST_HARD: 10
-        STR_NURGLE_ABDUCTION_HARD: 8
-        STR_SLAANESH_ABDUCTION_HARD: 10
-        STR_SLAANESH_HARVEST_HARD: 4  # rare
-        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 33
-        STR_ALIEN_HARVEST_TZEENTCH_HARD: 33
-        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 33
-        STR_TAU_ORCAEXPEDITION: 5 #delayed onset
-    researchTriggers:
-      STR_HARDER_MISSIONS_SW: true  # Can't have at month 0, doesn't do anything here
 
+missionScripts:
+### Game Start Scripts
+  # game start scripts have been depreciated, their function has been move to adhoc scripts (see above).
+  - delete: gameStart
+  - delete: gameStartHard
 
 ### Bases #BASE#
   - type: newTraditionalBasesEarly
@@ -180,7 +118,7 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 50
     researchTriggers:
-      STR_GUEVESA_STRATEGY_MILITIA_GV: false
+      STR_DEFAULT_CAMPAIGN: true
 
   - type: newTraditionalBasesLater
     missionWeights:
@@ -195,7 +133,7 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 100
     researchTriggers:
-      STR_GUEVESA_STRATEGY_MILITIA_GV: false
+      STR_DEFAULT_CAMPAIGN: true
 
   - type: newTraditionalBasesExtra
     missionWeights:
@@ -209,6 +147,8 @@ missionScripts:
     startDelay: 120
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 50
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
 
   # Genestealers
   - type: GeneBASES
@@ -219,6 +159,9 @@ missionScripts:
     startDelay: 120
     randomDelay: 40160 # Up to 4 weeks random delay
     executionOdds: 25
+    researchTriggers:
+      STR_GENESTEALERS_ACTIVE: true
+      STR_GENESTEALERS_INACTIVE: false
 
   # Eldar
   - type: EldarBASES
@@ -230,7 +173,8 @@ missionScripts:
     randomDelay: 40160 # Up to 4 weeks random delay
     executionOdds: 25
     researchTriggers:
-      STR_ELDAR_PATH: false
+      STR_ELDAR_ACTIVE: true
+      STR_ELDAR_INACTIVE: false
 
 ### Warp Storm scripts #STORM#
   # These are recurring missions that continue to cause alien activity,
@@ -303,14 +247,20 @@ missionScripts:
         STR_TZEENTCH_BASE: 11
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
       STR_HARDER_MISSIONS: false
       STR_EVEN_HARDER_MISSIONS: false
       STR_CHAPTER_PURITY: true
-      STR_NOT_TAU_EMPIRE_GV: true
   - type: warpStormBuilding
     refNode: *STR_NORMAL_MISSION_TABLE
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+    useTable: true
   - type: warpStormRaging
     refNode: *STR_NORMAL_MISSION_TABLE
+    firstMonth: 6
+    useTable: true
 
   - &STR_HARD_MISSION_TABLE
     type: warpStormHard
@@ -380,10 +330,10 @@ missionScripts:
     firstMonth: 1
     useTable: true
     researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
       STR_HARDER_MISSIONS: true
       STR_EVEN_HARDER_MISSIONS: false
       STR_CHAPTER_PURITY: true
-      STR_NOT_TAU_EMPIRE_GV: true
   - type: warpStormBuildingHard
     refNode: *STR_HARD_MISSION_TABLE
     firstMonth: 3
@@ -452,6 +402,70 @@ missionScripts:
     useTable: true
   - type: warpStormRagingExtraHard
     refNode: *STR_EXTRA_HARD_MISSION_TABLE
+    firstMonth: 6
+    useTable: true
+
+  # Space Wolves Campaign
+  - &STR_HARD_MISSION_TABLE
+    type: warpStormHardSW
+    # For space Wolves, weighted towards tzeentch missions
+    missionWeights:
+      0:
+        STR_ALIEN_RESEARCH_HARD: 25
+        STR_NURGLE_RESEARCH_HARD: 9
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 30
+        STR_ALIEN_HARVEST_HARD: 33
+        STR_NURGLE_HARVEST_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 8
+        STR_SLAANESH_HARVEST_HARD: 8
+        STR_ALIEN_ABDUCTION_HARD: 25
+        STR_NURGLE_ABDUCTION_HARD: 10
+        STR_SLAANESH_ABDUCTION_HARD: 12
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 22
+        STR_ALIEN_INFILTRATION_HARD: 25
+        STR_NURGLE_INFILTRATION_HARD: 8
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 8
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 30
+        STR_ALIEN_BASE: 23
+        STR_NURGLE_BASE: 8
+        STR_SLAANESH_BASE: 8
+        STR_TZEENTCH_BASE: 27
+      3:
+        STR_ALIEN_RESEARCH_HARD: 25
+        STR_NURGLE_RESEARCH_HARD: 9
+        STR_ALIEN_RESEARCH_TZEENTCH_HARD: 30
+        STR_ALIEN_HARVEST_HARD: 33
+        STR_NURGLE_HARVEST_HARD: 15
+        STR_ALIEN_HARVEST_TZEENTCH_HARD: 8
+        STR_SLAANESH_HARVEST_HARD: 8
+        STR_ALIEN_ABDUCTION_HARD: 25
+        STR_NURGLE_ABDUCTION_HARD: 10
+        STR_SLAANESH_ABDUCTION_HARD: 12
+        STR_ALIEN_ABDUCTION_TZEENTCH_HARD: 22
+        STR_ALIEN_INFILTRATION_HARD: 25
+        STR_NURGLE_INFILTRATION_HARD: 8
+        STR_ALIEN_INFILTRATION_SLAANESH_HARD: 8
+        STR_ALIEN_INFILTRATION_TZEENTCH_HARD: 30
+        STR_ALIEN_BASE: 23
+        STR_NURGLE_BASE: 8
+        STR_SLAANESH_BASE: 8
+        STR_TZEENTCH_BASE: 27
+        STR_TAU_ORCAEXPEDITION: 10 #delayed onset
+    firstMonth: 1
+    useTable: true
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_HARDER_MISSIONS: true
+      STR_EVEN_HARDER_MISSIONS: false
+      STR_CHAPTER_PURITY: true
+  - type: warpStormBuildingHardSW
+    refNode: *STR_HARD_MISSION_TABLE
+    firstMonth: 3
+    lastMonth: 5
+    executionOdds: 50
+    useTable: true
+  - type: warpStormRagingHardSW
+    refNode: *STR_HARD_MISSION_TABLE
     firstMonth: 6
     useTable: true
 
