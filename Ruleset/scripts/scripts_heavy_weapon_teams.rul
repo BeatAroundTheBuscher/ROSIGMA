@@ -127,11 +127,25 @@ extended:
       - new: ROSIGMA_healU_heavy_weapons_team
         offset: 1
         code: |
-          var int deployed;
+          var int temp;
 
-          target.getTag deployed Tag.UNIT_IS_DEPLOYED;
+          target.getTag temp Tag.UNIT_IS_TELEPORTING; #teleporting units shouldn't be benefitting from no-script medikits; no need to create a seperate script for this
+          if gt temp 0;
+            if or gt wound_recovery 0 gt energy_recovery 0 gt stun_recovery 0 gt morale_recovery 0 gt health_recovery 0; # should derive no actual benefit from the medikit use while teleporting, but be compatible with medikits used for script activations
+              battle_game.flashMessage "STR_SCRIPT_TELEPORTER_NO_BENEFIT";
+              set wound_recovery 0;
+              set energy_recovery 0;
+              set stun_recovery 0;
+              set health_recovery 0;
+              set morale_recovery 0;
+              set painkiller_recovery 0;
+              return;
+            end;
+          end;
 
-          if eq deployed 1;
+          target.getTag temp Tag.UNIT_IS_DEPLOYED;
+          if gt temp 0;
+            battle_game.flashMessage "STR_SCRIPT_DEPLOYED_NO_BENEFIT";
             set energy_recovery 0;
           end;
 

@@ -17,6 +17,7 @@
 #
 # Sections:
 # #UNCATEGORIZED#   Uncategorized
+# #GEOSCAPE#        Geoscape Setup (Controls Mission Scripts)
 # #STRATEGY#        Faction and Strategy Selection Research
 # #PROGRESSION#     Progression Research
 # #FLAVOR#          Flavor Topics
@@ -242,9 +243,6 @@ research:
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE # generally only shows up after choosing a strategy
     cost: 1 # has to be researched
 
-  - name: STR_HARDER_MISSIONS  # (Harder Missions)
-    refNode: *STR_LOCKED
-
   - name: STR_DISABLE_HARDER_MISSIONS  # (Coughing Infant) Choice to disable regular harder missions, for easier playthroughs
     cost: 1 # has to be researched
     dependencies:
@@ -252,9 +250,6 @@ research:
     disables:
       - STR_HARDER_MISSIONS
       - STR_EVEN_HARDER_MISSIONS
-
-  - name: STR_EVEN_HARDER_MISSIONS  # (Even Harder Missions)
-    refNode: *STR_LOCKED
 
   - name: STR_ENABLE_EVEN_HARDER_MISSIONS  # (The Salty Spitoon) Choice to enable extra hard missions
     dependencies:
@@ -273,9 +268,6 @@ research:
     disables:
       - STR_EVEN_HARDER_MISSIONS # should revert to regular harder missions
 
-  - name: STR_EXTRA_RETALIATIONS  # (Extra retaliations)
-    refNode: *STR_LOCKED
-
   - name: STR_ENABLE_EXTRA_RETALIATIONS  # (I Own A Bolter For Home Defense) Enables monthly retaliations
     dependencies:
       - STR_DIFFICULTY_OPTIONS # generally only shows up after choosing a strategy
@@ -293,9 +285,6 @@ research:
 
   - name: STR_OGRYN_AVAILABLE  # (Ogryn Recruitment)
     # Because there are multiple ogryn recruiting factions now
-    refNode: *STR_LOCKED
-
-  - name: STR_WEAK_ALLY_OBTAINED  # (Alliance)
     refNode: *STR_LOCKED
 
 ## XCom in region research
@@ -448,6 +437,8 @@ research:
 
   - name: STR_NOT_CHAMBER  # (Not Chamber Militant)
   - name: STR_NORMAL_INQUISITION  # (Normal Inquisition)
+    refNode: *STR_LOCKED
+  - name: STR_NOT_NORMAL_INQUISITION  # (Not Normal Inquisition)
     refNode: *STR_LOCKED
   - name: STR_NOT_DEATHWATCH  # (Not Deathwatch Strategy)
   - name: STR_NOT_GK  # (Not Grey Knights Strategy)
@@ -612,6 +603,48 @@ research:
     dependencies:
       - STR_THE_EMPEROR_PROTECTS_RESEARCH
       - STR_THE_EMPEROR_PROTECTS_MARINE_SUPPORT_RESEARCH
+
+####################################
+#GEOSCAPE# Geoscape Setup
+####################################
+# These projects are used as flags for mission scripts to control which missions are generated each month.
+# They will never be unlocked directly, but instead will be unlocked/disabled by strategies, missions, etc.
+####################################
+  - name: STR_DEFAULT_CAMPAIGN  # (Default Campaign)
+    # All factions unlock this by default. If the player has this the standard campaign mission scripts will fire.
+    # Other research can cause other scripts to fire in addition to the ones controlled by this.
+    # Only disable it if you have a full set of replacement missions for your strategy.
+
+  - name: STR_GENESTEALERS_ACTIVE  # (Genestealer Activity)
+  - name: STR_GENESTEALERS_INACTIVE  # (Genestealers Inactive)
+    refNode: *STR_LOCKED
+  - name: STR_ELDAR_ACTIVE  # (Eldar Activity)
+  - name: STR_ELDAR_INACTIVE  # (Eldar Inactive)
+    refNode: *STR_LOCKED
+
+  # Mission Difficult Modifers
+  - name: STR_HARDER_MISSIONS  # (Harder Missions)
+    # Factions either start with this, or gain it later.
+    # Enables harder enemy lists.
+    refNode: *STR_LOCKED
+
+  - name: STR_EVEN_HARDER_MISSIONS  # (Even Harder Missions)
+    # Assassins eventually unlock this, optional for other factions
+    refNode: *STR_LOCKED
+
+  - name: STR_HARDER_MISSIONS_SW
+    # Enables mission scripts specific to space wolves
+    refNode: *STR_LOCKED
+
+  - name: STR_EXTRA_RETALIATIONS  # (Extra retaliations)
+    # Optional modifier
+    refNode: *STR_LOCKED
+
+  - name: STR_WEAK_ALLY_OBTAINED  # (Alliance)
+    # Granted when the player obtains any minor alliance (Hrud, Orks, etc)
+    # Can be used to prevent multiple missions requesting an alliance with the player from firing during a campaign.
+    refNode: *STR_LOCKED
+
 
 ####################################
 #STRATEGY# Faction and Strategy Section
@@ -870,9 +903,6 @@ research:
       - STR_GENERALLOCK
     spawnedEvent: STR_SPACEWOLVES_WOLFPRIEST_PACKAGE_GIVE
 
-  - name: STR_HARDER_MISSIONS_SW #used by missionScript to customize SW missions
-    refNode: *STR_LOCKED
-
   - name: STR_SWDROPPODS # SW Drop Pods
     dependencies:
       - STR_SPACEWOLVES_STRATEGY
@@ -1043,6 +1073,7 @@ research:
       - STR_ADEPTAS_MARINES_AND_INQUISITION
       - STR_HARDER_MISSIONS
       - STR_INQ_STORMTROOPER_CODEX_UNLOCKER
+      - STR_NORMAL_INQUISITION
     disables:
       - STR_NOT_CHAMBER
       - STR_ARBITES
@@ -1070,6 +1101,7 @@ research:
       - STR_CORVUS_RESEARCH  # instead of STR_DEATHWATCH_AND_ADEPTAS setup
       - STR_LASER_WEAPONS
       - STR_MOTION_SCANNER
+      - STR_NOT_NORMAL_INQUISITION
     getOneFree:
       - STR_PERSONAL_ARMOR
     disables:
@@ -1103,6 +1135,7 @@ research:
       - STR_LASER_WEAPONS
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_NOT_NORMAL_INQUISITION
     disables:
       - STR_NORMAL_INQUISITION
       - STR_NOT_GK
@@ -1128,20 +1161,19 @@ research:
     unlocks:
       - STR_REEDUCATION_RESEARCH
       - STR_LASGUN_HOTSHOT
-    spawnedEvent: STR_REINFORCEMENTS_RADICAL_EVENT
     disables:
       - STR_NOT_RADICAL
       - STR_GREYKNIGHTS
       - STR_DEATHWATCH
       - STR_ASSASSINORUM
+      - STR_NORMAL_INQUISITION
+    spawnedEvent: STR_REINFORCEMENTS_RADICAL_EVENT
 
 
 ### Officio Assassinorum #STRATEGY.CM.OA#
-
   - name: STR_ASSASSINORUM            # Assassinorum Strat
     cost: 5
     points: 0
-    spawnedEvent: STR_ASSASSINORUM_CARE_PACKAGE
     dependencies:
       - STR_CHAMBERMILITANT
     lookup: STR_CHOSEN_ASSASSINORUM
@@ -1151,7 +1183,6 @@ research:
       - STR_LASER_WEAPONS
       - STR_HOLOGRAM_GRENADE_REQUISITION
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-      - STR_NORMAL_INQUISITION
       - STR_GUARD_BARRACKS
       - STR_BALLISTIC_WEAPONS_HIGHGRADE
       - STR_LASGUN_HOTSHOT
@@ -1161,6 +1192,7 @@ research:
       - STR_REPRISALIA_ACCESS
       - STR_MEDI_KIT_PREREQ
       - STR_EVEN_HARDER_MISSIONS
+      - STR_NOT_NORMAL_INQUISITION
     disables:
       - STR_DEATHWATCH
       - STR_GREYKNIGHTS
@@ -1169,6 +1201,7 @@ research:
       - STR_INQUISITION_VALKYRIE
       - STR_INQ_STORMTROOPER_REQUISITION
       - STR_ENABLE_EVEN_HARDER_MISSIONS # starts with extra hard missions enabled, shouldn't see the redundant Salty Spitoon research.
+    spawnedEvent: STR_ASSASSINORUM_CARE_PACKAGE
 
   - name: STR_OFFICIO_ASSASSINORUM_TIPS # PLEASE READ THE CODEX DEAR PLAYER
     dependencies:
@@ -1222,7 +1255,6 @@ research:
 ### The Imperial Law Strategy #STRATEGY.AT.LAW#
   - name: STR_THE_IMPERIAL_LAW_STRATEGY  # The Imperial Law Strategy
     # Added new arbites research used as a way to prevent arbites joining if you go chaos
-    spawnedEvent: STR_RECRUITS_IMPERIAL_LAW_STRATEGY
     cost: 5
     points: 0
     reenables:
@@ -1249,6 +1281,7 @@ research:
       - STR_HB_DEP1
       - STR_GREENEST_ORKZ
       - STR_GUEVESA_STRATEGY_MILITIA_GV
+    spawnedEvent: STR_RECRUITS_IMPERIAL_LAW_STRATEGY
 
 ### Chaos Cult #STRATEGY.AT.CULT#
   - name: STR_CHAOS_STRATEGY  # Ruinous Powers
@@ -1274,7 +1307,6 @@ research:
       - STR_GENERALLOCK
 
   - name: STR_CHAOS_STRATEGY_ARBITES  # Chaos Cult Strategy
-    spawnedEvent: STR_RECRUITS_CHAOS_STRATEGY_ARBITES
     cost: 5
     points: 0
     dependencies:
@@ -1307,10 +1339,10 @@ research:
       - STR_NOT_STEEL_LEGION_STRATEGY
     reenables:
       - STR_CYDONIA_OR_BUST
+    spawnedEvent: STR_RECRUITS_CHAOS_STRATEGY_ARBITES
 
 ### Da Emprah's Greenest Ork Strategy
   - name: STR_GREENEST_ORKZ  # Ork Strategy
-    spawnedEvent: STR_GREENEST_CARE_PACKAGE
     points: 0
     cost: 5
     dependencies:
@@ -1350,6 +1382,7 @@ research:
     reenables:
       - STR_CYDONIA_OR_BUST
       - STR_CHAPTER_PURITY # for standard missions to spawn.
+    spawnedEvent: STR_GREENEST_CARE_PACKAGE
 
   - name: STR_GREENEST_SUGGESTIONS_TRIGGER
     cost: 0
@@ -1392,7 +1425,6 @@ research:
     cost: 5
     dependencies:
       - STR_ADEPTAS  # - STR_GENERALLOCK
-    spawnedEvent: STR_RECRUITS_REPENTIA_SUPERIOR_STRATEGY_ADEPTAS
     lookup: STR_CHOSEN_ADEPTAS
     unlocks:
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
@@ -1417,6 +1449,7 @@ research:
       - STR_NORMAL_STRATEGY_ADEPTAS
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_SMOKE
+    spawnedEvent: STR_RECRUITS_REPENTIA_SUPERIOR_STRATEGY_ADEPTAS
 
 ### Novice Strategy #STRATEGY.SOB.NOV#
   - name: STR_NOVICE_STRATEGY_ADEPTAS  # Novice Strategy
@@ -1424,7 +1457,6 @@ research:
     cost: 5
     dependencies:
       - STR_ADEPTAS  # - STR_GENERALLOCK
-    spawnedEvent: STR_RECRUITS_NOVITIATE_SUPERIOR_STRATEGY_ADEPTAS
     lookup: STR_CHOSEN_ADEPTAS
     unlocks:
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
@@ -1448,6 +1480,7 @@ research:
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_REPENTIA_STRATEGY_ADEPTAS
       - STR_NORMAL_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_NOVITIATE_SUPERIOR_STRATEGY_ADEPTAS
 
 ### Battle Sister Strategy #STRATEGY.SOB.BAT#
   - name: STR_NORMAL_STRATEGY_ADEPTAS  # Battle Sister Strategy
@@ -1491,6 +1524,7 @@ research:
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_REPENTIA_STRATEGY_ADEPTAS
       - STR_NOVICE_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_NORMAL_STRATEGY_ADEPTAS
 
 ### Dominion Strategy #STRATEGY.SOB.DOM#
   - name: STR_ELITE_STRATEGY_ADEPTAS  # Dominion Strategy
@@ -1498,7 +1532,6 @@ research:
     cost: 5
     dependencies:
       - STR_ADEPTAS  # - STR_GENERALLOCK
-    spawnedEvent: STR_RECRUITS_ELITE_SUPERIOR_STRATEGY_ADEPTAS
     lookup: STR_CHOSEN_ADEPTAS
     unlocks:
       - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
@@ -1532,6 +1565,7 @@ research:
       - STR_REPENTIA_STRATEGY_ADEPTAS
       - STR_NOVICE_STRATEGY_ADEPTAS
       - STR_NORMAL_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_ELITE_SUPERIOR_STRATEGY_ADEPTAS
 
 ## Imperial Guard #STRATEGY.IG#
   - delete: STR_IMPERIAL_GUARD_OPERATIONS
@@ -1592,6 +1626,7 @@ research:
       - STR_ELITE_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
       - STR_STEEL_LEGION_STRATEGY
+    spawnedEvent: STR_RECRUITS_NORMAL_STRATEGY_IG
 
 ### Scion Strategy #STRATEGY.IG.SCION#
   - name: STR_ELITE_STRATEGY_IG  # Scion Strategy
@@ -1631,6 +1666,7 @@ research:
       - STR_NORMAL_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
       - STR_STEEL_LEGION_STRATEGY
+    spawnedEvent: STR_RECRUITS_ELITE_STRATEGY_IG
 
 ### Abhuman Strategy #STRATEGY.IG.ABHUMAN#
   - name: STR_ABHUMAN_STRATEGY_IG  # Abhuman Strategy
@@ -1664,6 +1700,7 @@ research:
       - STR_NORMAL_STRATEGY_IG
       - STR_ELITE_STRATEGY_IG
       - STR_STEEL_LEGION_STRATEGY
+    spawnedEvent: STR_RECRUITS_ABHUMAN_STRATEGY_IG
 
 ### Steel Legion Strategy #STRATEGY.IG.STEEL#
   - name: STR_STEEL_LEGION_STRATEGY  # Steel Legion Strategy
@@ -1672,7 +1709,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
     lookup: STR_CHOSEN_STEELLEGION
-    spawnedEvent: STR_STEELLEGION_OFFICERS_EVENT
     unlocks:
       - STR_STEELLEGION_GUARDSMEN
       - STR_SQUAT_GUARDSMEN  # Steel Legion link
@@ -1698,6 +1734,7 @@ research:
       - STR_ELITE_STRATEGY_IG
       - STR_ABHUMAN_STRATEGY_IG
       - STR_NORMAL_STRATEGY_IG
+    spawnedEvent: STR_RECRUITS_STEELLEGION_STRATEGY_IG
 
 ### Krieg Strategy #STRATEGY.IG.KRIEG#
   - name: STR_KRIEG_STRATEGY  # Krieg Strategy
@@ -1706,7 +1743,6 @@ research:
     dependencies:
       - STR_GENERALLOCK
     # lookup: STR_CHOSEN_KRIEG  # Commented out until there is a 'pedia page, will crash otherwise
-    spawnedEvent: STR_KRIEG_OFFICER_PACKAGE_GIVE
     unlocks:
       - STR_KRIEG_GUARDSMEN #Already Exists
       - STR_MOTION_SCANNER
@@ -1734,6 +1770,7 @@ research:
       - STR_ABHUMAN_STRATEGY_IG
       - STR_NORMAL_STRATEGY_IG
       - STR_STEEL_LEGION_STRATEGY
+    spawnedEvent: STR_RECRUITS_KRIEG_STRATEGY_IG
 
 ####################################
 #PROGRESSION# Progression Research Section
@@ -1906,6 +1943,9 @@ research:
       - STR_CHAPTER_PURITY
     unlocks:
       - STR_ELDAR_ONLY
+      - STR_ELDAR_INACTIVE
+    disables:
+      - STR_ELDAR_ACTIVE
 
   - delete: STR_ELDAR_PATH
   - name: STR_ELDAR_PATH  # Eldar Alliance
@@ -2485,6 +2525,17 @@ research:
       - STR_CHAOS_PATH
       - STR_NOT_CHAOSCULT
       - STR_HIGHTIER_PREREQ
+    unlocks:
+      - STR_NEW_FIGHTER_TRANSPORTER
+
+  - name: STR_ASSAULT_TRANSPORT_UNLOCKER_WB  # (Word Bearer Assault Transport)
+    # Word Bearers need the hightier dependencies changed
+    cost: 0
+    points: 0
+    dependencies:
+      - STR_CHAOS_PATH
+      - STR_NOT_CHAOSCULT
+      - STR_CYDONIA_OR_BUST
     unlocks:
       - STR_NEW_FIGHTER_TRANSPORTER
 

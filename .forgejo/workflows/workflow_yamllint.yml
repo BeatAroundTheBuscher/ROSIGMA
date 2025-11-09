@@ -19,6 +19,8 @@ jobs:
 
       - name: Install Yamllint
         run: |
+          python3 -m venv ci
+          source ./ci/bin/activate
           pip3 install yamllint
 
       - name: Get changed files
@@ -34,6 +36,7 @@ jobs:
       # Step 3: Run yamllint on all YAML files
       - name: Lint YAML files
         run: |
+          source ./ci/bin/activate
           echo "Start Linting"
           RETURN_CODE=0
           IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.all_changed_files }}"

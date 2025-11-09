@@ -5,31 +5,31 @@ extended:
   tags:
     BattleGame:
       GAME_FACTIONS_SET: int # are factions specified for this mission? Specified by ITEM_IS_FACTION_TOKEN on the faction token item for a mission.
-      GAME_CHAOS_IS_ALLY: int # which factions are considered allies for the AI? Specified by ITEM_FACTION_SETUP_X variables on the faction token item for a mission.
-      GAME_IMPERIUM_IS_ALLY: int
-      GAME_NURGLE_IS_ALLY: int
-      GAME_TZEENTCH_IS_ALLY: int
-      GAME_KHORNE_IS_ALLY: int
-      GAME_SLAANESH_IS_ALLY: int
-      GAME_TAU_IS_ALLY: int
-      GAME_NECRON_IS_ALLY: int
-      GAME_TYRANID_IS_ALLY: int
-      GAME_ORK_IS_ALLY: int
-      GAME_ELDAR_IS_ALLY: int
+      GAME_CHAOS_FACTION_SETTING: int # which factions are considered allies for the AI? Specified by ITEM_FACTION_SETUP_X variables on the faction token item for a mission.
+      GAME_IMPERIUM_FACTION_SETTING: int
+      GAME_NURGLE_FACTION_SETTING: int
+      GAME_TZEENTCH_FACTION_SETTING: int
+      GAME_KHORNE_FACTION_SETTING: int
+      GAME_SLAANESH_FACTION_SETTING: int
+      GAME_TAU_FACTION_SETTING: int
+      GAME_NECRON_FACTION_SETTING: int
+      GAME_TYRANID_FACTION_SETTING: int
+      GAME_ORK_FACTION_SETTING: int
+      GAME_ELDAR_FACTION_SETTING: int
 
     RuleItem:
       ITEM_IS_FACTION_TOKEN: int #is this a token for setting up faction alliances for the AI?
-      ITEM_FACTION_SETUP_CHAOS_ALLY: int # using ITEM_FACTION_SETUP_X we specify which factions count as allies for the AI. Set to 1+ to designate a faction as an ally.
-      ITEM_FACTION_SETUP_IMPERIUM_ALLY: int
-      ITEM_FACTION_SETUP_TYRANID_ALLY: int
-      ITEM_FACTION_SETUP_NURGLE_ALLY: int
-      ITEM_FACTION_SETUP_TZEENTCH_ALLY: int
-      ITEM_FACTION_SETUP_KHORNE_ALLY: int
-      ITEM_FACTION_SETUP_SLAANESH_ALLY: int
-      ITEM_FACTION_SETUP_TAU_ALLY: int
-      ITEM_FACTION_SETUP_NECRON_ALLY: int
-      ITEM_FACTION_SETUP_ORK_ALLY: int
-      ITEM_FACTION_SETUP_ELDAR_ALLY: int
+      ITEM_FACTION_SETUP_CHAOS_SETTING: int # using ITEM_FACTION_SETUP_X we specify which factions count as allies for the AI. Set to 1+ to designate a faction as an ally. -1 to null this. 0 to default to matching unit types. -2 and less to designate a hostile faction
+      ITEM_FACTION_SETUP_IMPERIUM_SETTING: int
+      ITEM_FACTION_SETUP_TYRANID_SETTING: int
+      ITEM_FACTION_SETUP_NURGLE_SETTING: int
+      ITEM_FACTION_SETUP_TZEENTCH_SETTING: int
+      ITEM_FACTION_SETUP_KHORNE_SETTING: int
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: int
+      ITEM_FACTION_SETUP_TAU_SETTING: int
+      ITEM_FACTION_SETUP_NECRON_SETTING: int
+      ITEM_FACTION_SETUP_ORK_SETTING: int
+      ITEM_FACTION_SETUP_ELDAR_SETTING: int
 
 # if a unit's targetfaction nets to 1+, it will be ignored by targeting and considered an 'ally'
   scripts:
@@ -38,89 +38,161 @@ extended:
         offset: 1
         code: |
           var int temp;
+          var int temp2;
           var int faction;
           var int targetfaction;
+          var ptr RuleArmor unitArmorRule;
+          var ptr RuleArmor targetArmorRule;
 
           battle_game.getTag temp Tag.GAME_FACTIONS_SET; # don't proceed unless we have our factions set
           if lt temp 1;
             return current_target_weight;
           end;
 
-          battle_game.getTag temp Tag.GAME_CHAOS_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_CHAOS;
+          ai_unit.getRuleArmor unitArmorRule; # Set our armors
+          target_unit.getRuleArmor targetArmorRule;
+
+          battle_game.getTag temp Tag.GAME_CHAOS_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_CHAOS;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_CHAOS;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1; # if factions are turned on and we have a value other than -1 which ignores unit type matching, set the targeting value appropriately
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_CHAOS;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_CHAOS_IS_ALLY; UNIT_TYPE_CHAOS:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_CHAOS_FACTION_SETTING; UNIT_TYPE_CHAOS:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_TYRANID_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_TYRANID;
+          battle_game.getTag temp Tag.GAME_TYRANID_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_TYRANID;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_TYRANID;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_TYRANID;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TYRANID_IS_ALLY; UNIT_TYPE_TYRANID:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TYRANID_FACTION_SETTING; UNIT_TYPE_TYRANID:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_IMPERIUM_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_IMPERIUM;
+          battle_game.getTag temp Tag.GAME_IMPERIUM_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_IMPERIUM;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_IMPERIUM;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_IMPERIUM;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_IMPERIUM_IS_ALLY; UNIT_TYPE_IMPERIUM:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_IMPERIUM_FACTION_SETTING; UNIT_TYPE_IMPERIUM:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_NURGLE_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_NURGLE;
+          battle_game.getTag temp Tag.GAME_NURGLE_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_NURGLE;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_NURGLE;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_NURGLE;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NURGLE_IS_ALLY; UNIT_TYPE_NURGLE:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NURGLE_FACTION_SETTING; UNIT_TYPE_NURGLE:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_TZEENTCH_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+          battle_game.getTag temp Tag.GAME_TZEENTCH_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_TZEENTCH;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_TZEENTCH;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TZEENTCH_IS_ALLY; UNIT_TYPE_TZEENTCH:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TZEENTCH_FACTION_SETTING; UNIT_TYPE_TZEENTCH:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_KHORNE_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_KHORNE;
+          battle_game.getTag temp Tag.GAME_KHORNE_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_KHORNE;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_KHORNE;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_KHORNE;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_KHORNE_IS_ALLY; UNIT_TYPE_KHORNE:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_KHORNE_FACTION_SETTING; UNIT_TYPE_KHORNE:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_SLAANESH_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_SLAANESH;
+          battle_game.getTag temp Tag.GAME_SLAANESH_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_SLAANESH;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_SLAANESH;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_SLAANESH;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_SLAANESH_IS_ALLY; UNIT_TYPE_SLAANESH:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_SLAANESH_FACTION_SETTING; UNIT_TYPE_SLAANESH:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_NECRON_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_NECRON;
+          battle_game.getTag temp Tag.GAME_NECRON_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_NECRON;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_NECRON;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_NECRON;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NECRON_IS_ALLY; UNIT_TYPE_NECRON:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_NECRON_FACTION_SETTING; UNIT_TYPE_NECRON:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_TAU_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_TAU;
+          battle_game.getTag temp Tag.GAME_TAU_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_TAU;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_TAU;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_TAU;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TAU_IS_ALLY; UNIT_TYPE_TAU:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_TAU_FACTION_SETTING; UNIT_TYPE_TAU:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_ORK_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_ORK;
+          battle_game.getTag temp Tag.GAME_ORK_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_ORK;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_ORK;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_ORK;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ORK_IS_ALLY; UNIT_TYPE_ORK:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ORK_FACTION_SETTING; UNIT_TYPE_ORK:" temp;
           end;
 
-          battle_game.getTag temp Tag.GAME_ELDAR_IS_ALLY;
-          if gt temp 1;
-            target_unit.getTag temp Tag.UNIT_TYPE_ELDAR;
+          battle_game.getTag temp Tag.GAME_ELDAR_FACTION_SETTING;
+          if eq temp 0; # if factions are turned on, but we do not have a specific value for the faction setting variable, set this to increasing on a unit type match.
+            unitArmorRule.getTag temp Tag.UNIT_TYPE_ELDAR;
+            targetArmorRule.getTag temp2 Tag.UNIT_TYPE_ELDAR;
+            if and neq temp 0 eq temp temp2; #if we have a valid unit type and our unit type is equal to the target's
+              add targetfaction temp;
+            end;
+          else or gt temp 0 lt temp -1;
+            targetArmorRule.getTag temp Tag.UNIT_TYPE_ELDAR;
             add targetfaction temp;
-            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ELDAR_IS_ALLY; UNIT_TYPE_ELDAR:" temp;
+            # debug_log "ROSIGMA_aCTW_set_factions | offset: 1 | GAME_ELDAR_FACTION_SETTING; UNIT_TYPE_ELDAR:" temp;
           end;
 
           if gt targetfaction 0; #if our targetfaction is allied we don't attack them
@@ -153,70 +225,70 @@ extended:
           battle_game.setTag Tag.GAME_FACTIONS_SET 1;
 
           #check for and apply environmental parameters to the game state.
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_CHAOS_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_CHAOS_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_CHAOS_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_CHAOS_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_CHAOS_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_CHAOS_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_IMPERIUM_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_IMPERIUM_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_IMPERIUM_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_IMPERIUM_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_IMPERIUM_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_IMPERIUM_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TYRANID_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TYRANID_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_TYRANID_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TYRANID_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_TYRANID_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TYRANID_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_NURGLE_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_NURGLE_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_NURGLE_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_NURGLE_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_NURGLE_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_NURGLE_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TZEENTCH_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TZEENTCH_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_TZEENTCH_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TZEENTCH_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_TZEENTCH_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TZEENTCH_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_KHORNE_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_KHORNE_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_KHORNE_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_KHORNE_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_KHORNE_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_KHORNE_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_SLAANESH_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_SLAANESH_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_SLAANESH_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_SLAANESH_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_SLAANESH_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_SLAANESH_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TAU_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_TAU_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_TAU_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TAU_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_TAU_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_TAU_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_NECRON_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_NECRON_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_NECRON_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_NECRON_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_NECRON_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_NECRON_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_ORK_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_ORK_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_ORK_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_ORK_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_ORK_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_ORK_FACTION_SETTING set:" temp;
           end;
 
-          rItem.getTag temp Tag.ITEM_FACTION_SETUP_ELDAR_ALLY;
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_ELDAR_SETTING;
           if neq temp 0;
-            battle_game.setTag Tag.GAME_ELDAR_IS_ALLY temp;
-            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_ELDAR_IS_ALLY set:" temp;
+            battle_game.setTag Tag.GAME_ELDAR_FACTION_SETTING temp;
+            # debug_log "ROSIGMA_cI_process_faction_token | offset: -1 | GAME_ELDAR_FACTION_SETTING set:" temp;
           end;
 
           return;
@@ -236,135 +308,203 @@ items:
     hiddenOnMinimap: true
     supportedInventorySections:
       - STR_GROUND
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
 
-  - type: STR_FACTION_SETUP_TOKEN_CHAOS_ALLY
+  - type: STR_FACTION_SETUP_TOKEN_CHAOS_ALLY # Use ally tokens to designate a faction as an ally to the AI
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_CHAOS_ALLY: 1
+      ITEM_FACTION_SETUP_CHAOS_SETTING: 99
 
-  - type: STR_FACTION_SETUP_TOKEN_CHAOS_ENEMY
+  - type: STR_FACTION_SETUP_TOKEN_CHAOS_EXCLUDE # Use exclude tokens to exclude modifiers for a faction for AI targeting; mostly useful for pitting subfactions against each other (e.g. Tzeentch vs Nurgle)
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_CHAOS_ALLY: -99
+      ITEM_FACTION_SETUP_CHAOS_SETTING: -1
+
+  - type: STR_FACTION_SETUP_TOKEN_CHAOS_ENEMY # Use enemy tokens to designate a faction as hostile to the AI
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_CHAOS_SETTING: -99
 
   - type: STR_FACTION_SETUP_TOKEN_IMPERIUM_ALLY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_IMPERIUM_ALLY: 1
+      ITEM_FACTION_SETUP_IMPERIUM_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_IMPERIUM_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_IMPERIUM_SETTING: -1
 
   - type: STR_FACTION_SETUP_TOKEN_IMPERIUM_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_IMPERIUM_ALLY: -99
+      ITEM_FACTION_SETUP_IMPERIUM_SETTING: -99
 
   - type: STR_FACTION_SETUP_TOKEN_TYRANID_ALLY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_TYRANID_ALLY: 1
+      ITEM_FACTION_SETUP_TYRANID_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_TYRANID_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_TYRANID_SETTING: -1
 
   - type: STR_FACTION_SETUP_TOKEN_TYRANID_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_TYRANID_ALLY: -99
+      ITEM_FACTION_SETUP_TYRANID_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_NURGLE_ALLY
+  - type: ITEM_FACTION_SETUP_NURGLE_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_NURGLE_ALLY: 1
+      ITEM_FACTION_SETUP_NURGLE_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_NURGLE_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_NURGLE_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_NURGLE_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_NURGLE_ALLY: -99
+      ITEM_FACTION_SETUP_NURGLE_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_TZEENTCH_ALLY
+  - type: ITEM_FACTION_SETUP_TZEENTCH_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_TZEENTCH_ALLY: 1
+      ITEM_FACTION_SETUP_TZEENTCH_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_TZEENTCH_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_TZEENTCH_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_TZEENTCH_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_TZEENTCH_ALLY: -99
+      ITEM_FACTION_SETUP_TZEENTCH_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_KHORNE_ALLY
+  - type: ITEM_FACTION_SETUP_KHORNE_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_KHORNE_ALLY: 1
+      ITEM_FACTION_SETUP_KHORNE_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_KHORNE_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_KHORNE_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_KHORNE_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_KHORNE_ALLY: -99
+      ITEM_FACTION_SETUP_KHORNE_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_SLAANESH_ALLY
+  - type: ITEM_FACTION_SETUP_SLAANESH_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_SLAANESH_ALLY: 1
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_SLAANESH_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_SLAANESH_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_SLAANESH_ALLY: -99
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_TAU_ALLY
+  - type: ITEM_FACTION_SETUP_TAU_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_TAU_ALLY: 1
+      ITEM_FACTION_SETUP_TAU_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_TAU_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_TAU_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_TAU_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_SLAANESH_ALLY: -99
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_NECRON_ALLY
+  - type: ITEM_FACTION_SETUP_NECRON_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_NECRON_ALLY: 1
+      ITEM_FACTION_SETUP_NECRON_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_NECRON_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_NECRON_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_NECRON_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_SLAANESH_ALLY: -99
+      ITEM_FACTION_SETUP_SLAANESH_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_ORK_ALLY
+  - type: ITEM_FACTION_SETUP_ORK_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_ORK_ALLY: 1
+      ITEM_FACTION_SETUP_ORK_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_ORK_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_ORK_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_ORK_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_ORK_ALLY: -99
+      ITEM_FACTION_SETUP_ORK_SETTING: -99
 
-  - type: ITEM_FACTION_SETUP_ELDAR_ALLY
+  - type: ITEM_FACTION_SETUP_ELDAR_SETTING
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_ELDAR_ALLY: 1
+      ITEM_FACTION_SETUP_ELDAR_SETTING: 1
+
+  - type: STR_FACTION_SETUP_TOKEN_ELDAR_EXCLUDE
+    refNode: *FACTION_SETUP_TOKEN_TEMPLATE
+    tags:
+      ITEM_IS_FACTION_TOKEN: 1
+      ITEM_FACTION_SETUP_ELDAR_SETTING: -1
 
   - type: ITEM_FACTION_SETUP_ELDAR_ENEMY
     refNode: *FACTION_SETUP_TOKEN_TEMPLATE
     tags:
       ITEM_IS_FACTION_TOKEN: 1
-      ITEM_FACTION_SETUP_ELDAR_ALLY: -99
+      ITEM_FACTION_SETUP_ELDAR_SETTING: -99
