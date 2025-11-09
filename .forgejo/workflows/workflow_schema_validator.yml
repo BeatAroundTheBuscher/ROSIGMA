@@ -20,6 +20,8 @@ jobs:
       # Step 3
       - name: Install check-jsonschema and json-merger
         run: |
+          python3 -m venv ci
+          source ./ci/bin/activate
           pip3 install check-jsonschema
           npm install json-merger
 
@@ -57,6 +59,7 @@ jobs:
       # Step 6
       - name: Run check_jsonschema
         run: |
+          source ./ci/bin/activate
           cd ./vscode-ruleset/schemas/oxce
           SCHEMA_PATH=$(pwd)
           RETURN_CODE=0
