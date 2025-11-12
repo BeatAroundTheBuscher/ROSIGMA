@@ -923,27 +923,14 @@ research:
 
 ### Word Bearers #STRATEGY.SM.WB#
   - name: STR_WORDBEARERS_STRATEGY  # Word Bearers Strategy
-    cost: 5
+    cost: 3
     points: 0
     dependencies:
       - STR_MARINES_STRATEGY
     lookup: STR_CHOSEN_WORDBEARERS
     unlocks:
-      - STR_HWP_CANNON_SHELLS
-      - STR_POWER_ARMOR_WB_CODEX
-      #- STR_HARDER_MISSIONS  # given by a further WB research so not now
-      - STR_LIGHT_BOLTERS
-      - STR_IMPERIUM_RESEARCH
-      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
-      - STR_MOTION_SCANNER
-      - STR_LASER_WEAPONS
-      - STR_HOLOGRAM_GRENADE_REQUISITION
-      #- STR_THUNDERHAWKTYPE1
-      #- STR_STORMHAWKR
-      - STR_MELTABOMB
-      - STR_CRATED_CHAOSDROPPODS
-      - STR_CRATED_CHAOSRHINOS
-      - STR_MARINE_BOLTERS
+      - STR_BOOK_EREBUS
+      - STR_BOOK_KORPHAERON
     disables:
       - STR_NOT_WORDBEARERS
       - STR_GUARD_SUPORT
@@ -965,6 +952,53 @@ research:
       - STR_ENABLE_EVEN_HARDER_MISSIONS
       - STR_ENABLE_EXTRA_RETALIATIONS  # for now
       - STR_DIFFICULTY_OPTIONS
+
+  - name: STR_BOOK_EREBUS
+    cost: 1
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+    unlocks:
+      - STR_HWP_CANNON_SHELLS
+      - STR_POWER_ARMOR_WB_CODEX
+      #- STR_HARDER_MISSIONS  # given by a further WB research so not now
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIUM_RESEARCH
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      #- STR_THUNDERHAWKTYPE1
+      #- STR_STORMHAWKR
+      - STR_MELTABOMB
+      - STR_CRATED_CHAOSDROPPODS
+      - STR_CRATED_CHAOSRHINOS
+      - STR_MARINE_BOLTERS
+    disables:
+      - STR_BOOK_KORPHAERON
+    spawnedEvent: STR_WORDBEARERS_CARE_PACKAGEMK3
+
+  - name: STR_BOOK_KORPHAERON
+    cost: 1
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+    unlocks:
+      - STR_HWP_CANNON_SHELLS
+      - STR_POWER_ARMOR_WB_CODEX
+      #- STR_HARDER_MISSIONS  # given by a further WB research so not now
+      - STR_LIGHT_BOLTERS
+      - STR_IMPERIUM_RESEARCH
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_HOLOGRAM_GRENADE_REQUISITION
+      #- STR_THUNDERHAWKTYPE1
+      #- STR_STORMHAWKR
+      - STR_MELTABOMB
+      - STR_CRATED_CHAOSDROPPODS
+      - STR_CRATED_CHAOSRHINOS
+      - STR_MARINE_BOLTERS
+    disables:
+      - STR_BOOK_EREBUS
     spawnedEvent: STR_WORDBEARERS_CARE_PACKAGE
 
   - name: STR_WBLIGHTNING_COMING
@@ -2218,6 +2252,7 @@ research:
     dependencies:
       - STR_NOT_CHAOSCULT
       - STR_ALIENS_ONLY
+      - STR_NOT_WORDBEARERS
     getOneFree:
       - STR_PSI_AMP  # Tome of the Mind
 
@@ -2419,6 +2454,7 @@ research:
       - STR_NOT_CHAOSCULT
       - STR_MIDTIER_PREREQ
       - STR_NOT_GUARD
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_REGIMENT_OFFICERS
       - STR_CARAPACE_ARMOR_IG
@@ -2433,6 +2469,7 @@ research:
     dependencies:
       - STR_CHAOS_PATH
       - STR_IMPERIAL_GUARD_OPERATIONS
+      - STR_NOT_WORDBEARERS
   - name: STR_KHORNE_GUARD_ARMOR  # (Khorne Guard Armor)
     dependencies:
       - STR_CHAOS_BASIC_GUARD_ARMOR
@@ -2786,6 +2823,26 @@ research:
       - STR_MEDI_KIT_PREREQ
       - STR_MARINES_STRATEGY
       - STR_NOT_SPACEWOLVES
+      - STR_NOT_WORDBEARERS
+    unlocks:
+      - STR_MIDTIER_PREREQ
+      - STR_CASS_R
+      - STR_HB_DEP1
+      - STR_HFLAMERR
+      - STR_SIDEOPERATIONS
+    cutscene: c2
+
+  - name: STR_MT_WB  # Word Bearers Mid-tier Ceremony
+    cost: 200
+    points: 200
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_MELTAGUN_TECH
+      - STR_ALIEN_ALLOYS
+      - STR_MOTION_SCANNER
+      - STR_MEDI_KIT_PREREQ
+      - STR_MARINES_STRATEGY
+      - STR_RITUAL_SACRIFICE
     unlocks:
       - STR_MIDTIER_PREREQ
       - STR_CASS_R
@@ -3883,6 +3940,13 @@ research:
   - name: STR_LOCAL_ORKZ_RECRUITED
     dependencies:
       - STR_GENERALLOCK
+
+  - name: STR_ORK_VINDI_GROT_REQUISITION # Unlocks Vindigrots.
+    cost: 400
+    points: 100
+    dependencies:
+      - STR_ORKZ_MIDTIER
+      - STR_UFO_CONSTRUCTION  # Ceramite Plates
 
 ### Chaos Cult #PROGRESSION.AT.CULT#
   - name: STR_CHAOS_CULT_MIDTIER_WARNING  # We Must Choose Our Path
@@ -5840,6 +5904,13 @@ research:
       - STR_ARBITES_HIGHTIER
 ### Chaos Cult #CRAFTS.AT.CULT#
 
+### Da Emprah's Greenest #CRAFTS.AT.ORKZ#
+  - name: STR_ORK_LOOTED_UFO # Funky Flying Fing. Unlocked with the event that gives it.
+    dependencies:
+      - STR_GENERALLOCK
+    cost: 0
+    points: 0
+
 ## Adeptas #CRAFTS.SOB#
   - name: STR_ADEPTAS_DROPPOD_RESEARCH  # Drop Pod Access
     cost: 0
@@ -6445,7 +6516,7 @@ research:
       - STR_HIGHTIER_PREREQ
       - STR_RITUAL_BETRAYAL
       - STR_RITUAL_BLESSING
-    spawnedEvent: STR_BOOKLORGAR_GIFT
+    spawnedEvent: STR_BOOKKORPHAERON_GIFT
 
   - name: STR_WBOBLITERATOR_SUIT # Obliterator Creation
     cost: 900
