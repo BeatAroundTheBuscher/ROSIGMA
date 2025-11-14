@@ -188,12 +188,11 @@ items:
     bulletSpeed: 100
     battleType: 2
     clipSize: 36
-    # define these on the weapons
-    # power: 90
-    # damageType: 5
-    # damageAlter:  # DA PLASMA
-      # RandomType: 6
-      # ToArmorPre: 0.3  # melts some armor on the way in
+    power: 90
+    damageType: 5
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.2 # 0.3  # melts some armor on the way in
       # ArmorEffectiveness: 0.9  # some armor penetration
 
   - type: STR_TAU_PULSE_MAG_EXPORT
@@ -219,6 +218,17 @@ items:
     clipSize: 24
     costBuy: 4000 # friends pay 40% per shot
     costSell: 500
+
+  - type: STR_TAU_PULSE_BLASTER_MAG
+    refNode: *STR_TAU_PULSE_AMMO_TEMPLATE
+    bigSprite: 3149
+    floorSprite: 3150
+    handSprite: 3703
+    damageAlter:  # DA PLASMA
+      RandomType: 6
+      ToArmorPre: 0.2 # 0.3  # melts some armor on the way in
+      ArmorEffectiveness: 0.8  # blaster armor penetration
+
 
   - &STR_TAU_PULSE_CARBINE_TEMPLATE
     type: STR_TAU_PULSE_CARBINE
@@ -641,9 +651,8 @@ items:
       RandomType: 1   # random means some pellets will roll high
       ToArmorPre: 0.2 # was 0.3  # melts some armor on the way in
       ArmorEffectiveness: 0.8  # the blaster retains armor penetration
-    ammo:
-      0:
-        compatibleAmmo: [STR_TAU_PULSE_MAG]
+    compatibleAmmo:
+      - STR_TAU_PULSE_BLASTER_MAG
     confSnap:
       spendPerShot: 2 #effectively half the normal ammo cap
     battleType: 1
