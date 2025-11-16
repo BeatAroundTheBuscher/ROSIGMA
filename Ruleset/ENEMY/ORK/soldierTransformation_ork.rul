@@ -101,6 +101,8 @@ soldierTransformation:
       - STR_GUARD_ORK_WARBOSS
 
   - name: STR_RECOVER_WARBOSS # IM BACK
+    forbiddenPreviousTransformations: # special one-time way to recover a warboss, even if the corpse is lost
+      - STR_RECOVER_WARBOSS
     requires:
       - STR_ORKZ_HIGHTIER
       - STR_ORK_BASE_LEVEL5_DEFEATED
@@ -212,6 +214,115 @@ soldierTransformation:
       - STR_GUARD_ORK_BIG_MEK
     soldierBonusType: STR_BONUS_BIONICS
 
+  - name: STR_MAD_DOC_RECOVERY # Da rew-bee-kawn Primorkus
+    forbiddenPreviousTransformations:
+      - STR_MAD_DOC_RECOVERY
+    requires:
+      - STR_ORKZ_MIDTIER
+    requiresBaseFunc: # needs hozptal
+      - APOC
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 75
+      STR_ELERIUM_115: 20 # promethium powered heart
+      STR_ALIEN_ALLOYS: 5
+    cost: 500000
+    transferTime: 240
+    percentOverallStatChange: # temporarily lose some stats. Does not affect statcaps.
+      tu: -10
+      stamina: -10
+      health: -10
+      bravery: 0
+      reactions: -10
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 0
+      psiSkill: 0
+      melee: -10
+    keepSoldierArmor: true
+    allowsDeadSoldiers: true
+    allowsLiveSoldiers: false
+    needsCorpseRecovered: true # Mad Doks may be miracle workers, but even they need something to work with
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
+      - STR_GUARD_ORK_WEIRDBOY
+      - STR_GUARD_ORK_BIG_MEK
+      - STR_GUARD_ORK_WARBOSS
+    soldierBonusType: STR_MAD_DOC_BONUS # small but permanent boost to TUs, Reactions, and melee
+
+  - name: STR_MEGA_CYBORK_RECOVERY # Mega Cyborking
+    forbiddenPreviousTransformations:
+      - STR_MEGA_CYBORK_RECOVERY
+    requires:
+      - STR_ORKZ_MIDTIER
+      - STR_MEK_KLAN_RECRUITED
+    requiresBaseFunc: # needs sky-antz towa for spechul gubbinz
+      - TOWER
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+      STR_ALIEN_ALLOYS: 15 # gotta add ard bitz
+      STR_ELERIUM_115: 5
+    cost: 500000
+    transferTime: 240
+    percentOverallStatChange: # temporarily lose some stats. Does not affect statcaps.
+      tu: -10
+      stamina: -10
+      health: -10
+      bravery: 0
+      reactions: -10
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 0
+      psiSkill: 0
+      melee: -10
+    keepSoldierArmor: true
+    allowsDeadSoldiers: true
+    allowsLiveSoldiers: false
+    needsCorpseRecovered: true # still need something to work with
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_BIG_MEK
+      - STR_GUARD_ORK_WARBOSS
+    soldierBonusType: STR_MEGA_CYBORK_BONUS # small but permanent boost to Health, Stamina, and Strength
+
+  - name: STR_ARMOR_OF_FATE_RECOVERY # Arma o' Fight
+    forbiddenPreviousTransformations:
+      - STR_ARMOR_OF_FATE_RECOVERY
+    requires:
+      - STR_ORKZ_HIGHTIER
+    requiresBaseFunc: # needs science tower, hospital, and workshop space
+      - TOWER
+      - MANU
+      - APOC
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 50
+      STR_ALIEN_ALLOYS: 10 # gotta add ard bitz
+      STR_UFO_POWER_SOURCE: 1 # I iz Metal-Git
+      STR_UFO_CONSTRUCTION: 10 # Extra Ard platin
+    cost: 300000 # costs less because it needs a power source
+    transferTime: 240
+    percentOverallStatChange: # temporarily lose some stats. Does not affect statcaps.
+      tu: -10
+      stamina: -10
+      health: -10
+      bravery: 0
+      reactions: -10
+      firing: -10
+      throwing: -10
+      strength: -10
+      psiStrength: 0
+      psiSkill: 0
+      melee: -10
+    keepSoldierArmor: true
+    allowsDeadSoldiers: true
+    allowsLiveSoldiers: false
+    needsCorpseRecovered: true # still need something to work with
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_BIG_MEK
+      - STR_GUARD_ORK_WARBOSS
+    soldierBonusType: STR_ARMOR_OF_FATE_BONUS # permanent boost to armor
+
 soldierBonuses:
   - name: STR_BONUS_SPARKY_POWER_FIELD
     tags:
@@ -231,3 +342,24 @@ soldierBonuses:
     recovery:
       energy:
         flatOne: 10
+
+  - name: STR_MAD_DOC_BONUS
+    stats:
+      tu: 5
+      reactions: 5
+      melee: 10
+
+  - name: STR_MEGA_CYBORK_BONUS
+    stats:
+      stamina: 10
+      health: 10
+      strength: 10
+    recovery:
+      energy:
+        flatOne: 5
+
+  - name: STR_ARMOR_OF_FATE_BONUS
+    frontArmor: 15
+    sideArmor: 10
+    rearArmor: 10
+    underArmor: 15
