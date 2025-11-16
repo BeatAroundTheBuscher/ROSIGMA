@@ -651,6 +651,7 @@ items:
       ToItem: 1.0
       ToHealth: 0.7
       ToWound: 0.05
+      RadiusReduction: 20 # melta explosions decay at twice the normal rate
       RandomWound: false
       FireThreshold: 0
       FixRadius: 4
@@ -689,6 +690,7 @@ items:
       RandomWound: false
       FireThreshold: 0
       FixRadius: 5
+      RadiusReduction: 15 # melta explosions decay at twice the normal rate; coheres somewhat better than Imperium melta
 
   - type: STR_HIGH_EXPLOSIVE  # melta bomb    4009  # melta munition
     primeActionName: STR_PRIME_CHARGE
@@ -839,6 +841,7 @@ items:
       ToArmor: 0.0  # melts armor on the way in
       ToHealth: 0.7
       ToWound: 0.05
+      RadiusReduction: 15 # melta explosions decay at twice the normal rate; coheres somewhat better than Imperium melta
       RandomWound: false
       FireThreshold: 0
       FixRadius: 5
@@ -855,6 +858,7 @@ items:
       ToHealth: 0.7
       ToWound: 0.05
       RandomWound: false
+      RadiusReduction: 20 # melta explosions decay at twice the normal rate
       FireThreshold: 0  # even if it doesn't penetrate your armor you're still gonna burn alright
     clipSize: 3
     blastRadius: 2
@@ -989,19 +993,26 @@ items:
     power: 100
     damageType: 8
     damageAlter:  # DA SPOOKY GAS
-      RandomType: 6
+      RandomType: 1  # Swingy; unpredictable response
       ToHealth: 0.01
       ToWound: 0.0
       RandomWound: false
       ToTile: 0.0  # doesn't damage tiles
       ToItem: 0.0  # doesn't damage items
       ToArmor: 0.0  # doesn't damage armor
-      ToEnergy: 0.3
-      ToStun: 0.3
-      ToMorale: 4.0  # even with high bravery this will fuck you up
+      ToEnergy: 0.5
+      ToStun: 0.1
+      ToMorale: 2.0  # even with high bravery this will fuck you up; lowered to account for Intimidation component
       ArmorEffectiveness: 0.4
       FixRadius: 10
+      ToMana: 2.0  # used by scripts; intimidate; higher to compensate for armor
       SmokeThreshold: 0  # scare gas creates smoke which now synergizes with Night Lords
+    tags:
+      INTIMIDATION_TU_DAMAGE_MULTIPLIER: 100
+      INTIMIDATION_MORALE_DAMAGE_MULTIPLIER: 100
+      DAMAGE_RESIST_PENETRATION_PERCENT: 50
+      ITEM_ENERGY_SHIELD_PENETRATION_PERCENT: 100 # ignores shields; it's a gas
+
 
   - type: STR_SONIC_GRENADE  # Scare Gas Grenade, pink gas
     throwRange: 18
