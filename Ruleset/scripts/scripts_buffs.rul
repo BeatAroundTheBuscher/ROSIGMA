@@ -36,7 +36,7 @@ extended:
           end;
 
           weapon_item.getTag temp Tag.ITEM_IS_BUFF_WEAPON;
-          if le temp 0; # if we're not a buff weapon, pass
+          if lt temp 1; # if we're not a buff weapon, pass
             # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacking item is not a buff item. ITEM_IS_BUFF_WEAPON:" temp;
             return power part side;
           end;
@@ -54,6 +54,12 @@ extended:
           if eq attacker unit;
             # debug_log "ROSIGMA_hU_buffs Scripts; damageUnit, offset 1: Aborting. Attacker is also target. Hit power set to 0" faction;
             return 0 part side;
+          end;
+
+          unit.getTag temp Tag.UNIT_IS_TELEPORTING;
+          if gt temp 0;
+            battle_game.flashMessage "STR_SCRIPT_TELEPORTER_NO_BENEFIT";
+            return;
           end;
 
           attacker.getFaction faction; # the target must be from the buffer's faction
