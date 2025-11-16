@@ -214,11 +214,38 @@ soldierTransformation:
       - STR_GUARD_ORK_BIG_MEK
     soldierBonusType: STR_BONUS_BIONICS
 
+  - name: STR_ASSIGN_STASIS_TOMB # Make Kustom Deff Stoppa
+    forbiddenPreviousTransformations:
+      - STR_ASSIGN_STASIS_TOMB
+    requires:
+      - STR_ORKZ_MIDTIER
+      - STR_ALIEN_REPRODUCTION # need to research stasis tombs
+    requiresBaseFunc: # needs workshop service, either from an outpost or mek shop
+      - MANU
+    requiredItems:
+      STR_KILLPOINT_TOKEN: 25
+      STR_ALIEN_REPRODUCTION: 5 # Stasis Tomb (Deff Stoppa)
+    cost: 100000
+    keepSoldierArmor: true
+    allowsDeadSoldiers: false
+    allowsLiveSoldiers: true
+    allowsWoundedSoldiers: true
+    allowedSoldierTypes:
+      - STR_GUARD_ORK_NOB
+      - STR_GUARD_OFFICORK
+      - STR_GUARD_ORK_WEIRDBOY
+      - STR_GUARD_ORK_BIG_MEK
+      - STR_GUARD_ORK_WARBOSS
+    soldierBonusType: STR_STASIS_TOMB_BONUS # reduces Health by 1, mostly just to make it clear if the transformation has been done or not.
+
   - name: STR_MAD_DOC_RECOVERY # Da rew-bee-kawn Primorkus
+    requiredPreviousTransformations: # Soldiers must have a stasis tomb assigned to have a chance to recover
+      - STR_ASSIGN_STASIS_TOMB
     forbiddenPreviousTransformations:
       - STR_MAD_DOC_RECOVERY
     requires:
       - STR_ORKZ_MIDTIER
+      - STR_ALIEN_REPRODUCTION # need to research stasis tombs
     requiresBaseFunc: # needs hozptal
       - APOC
     requiredItems:
@@ -239,7 +266,7 @@ soldierTransformation:
       psiStrength: 0
       psiSkill: 0
       melee: -10
-    keepSoldierArmor: true
+    keepSoldierArmor: false # reset to default instead of keeping any special armors
     allowsDeadSoldiers: true
     allowsLiveSoldiers: false
     needsCorpseRecovered: true # Mad Doks may be miracle workers, but even they need something to work with
@@ -363,3 +390,7 @@ soldierBonuses:
     sideArmor: 10
     rearArmor: 10
     underArmor: 15
+
+  - name: STR_STASIS_TOMB_BONUS # reduces Health by 1. Makes it clear the transformation was done.
+    stats:
+      health: -1
