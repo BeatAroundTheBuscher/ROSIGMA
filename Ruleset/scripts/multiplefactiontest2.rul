@@ -1,0 +1,392 @@
+#
+# A script will run on unit creation and evaluate all the faction tags on a unit,
+#   and assign the tag UNIT_FACTIONS on that unit a value based on the chart below.
+#   Values are added together to create a bitmask for that unit.
+#
+# FACTIONS -
+#   1     Player Faction (So that civilians can be set to attack the player)
+#   2     Enemy Faction (So that Civilians can attack both the player and enemy side)
+#   4     Civilian Faction (So that Civilians can be set to attack the player if desired)
+#   8     Chaos
+#   16    Khorne*
+#   32    Nurgle*
+#   64    Slaanesh*
+#   128   Tzeentch*
+#   256   Daemonic*
+#   512   Tyranid (Includes GSC)
+#   1024  Eldar
+#   2048  Ork
+#   4096  Necron
+#   8192  Tau
+#  16384  Imperium
+#  32768  Guard*
+#
+#  *Factions flagged with an asterisk are subfactions.
+#
+
+
+extended:
+  tagsFile: Ruleset/tags_ROSIGMA.rul
+
+  tags:
+    BattleGame:
+      GAME_FACTIONS_SET: int # have we set factions for this mission? used to streamline aiCalculateTargetWeight computations.
+      GAME_FACTIONS_FFA: int
+      GAME_FACTION_1: int
+      GAME_FACTION_2: int
+      GAME_FACTION_3: int
+
+    RuleItem:
+      ITEM_FACTION_SETUP_FFA: int
+      ITEM_FACTION_SETUP_SIDE1: int
+      ITEM_FACTION_SETUP_SIDE2: int
+      ITEM_FACTION_SETUP_SIDE3: int
+
+    BattleUnit:
+      UNIT_FACTIONS: int
+      UNIT_FRIENDLY_FACTIONS_TEMP: int  # Allows setting temporary effects
+      UNIT_HOSTILE_FACTIONS_TEMP: int  # Allows setting temporary effects
+      UNIT_OVERRIDE_FACTIONS_TEMP: int  # Temporarily overrides UNIT_FACTIONS
+      UNIT_MINDCONTROL_FACTIONS_TEMP: int  # Temporarily overrides UNIT_FACTIONS for mind control specifically as other temp overrides might last longer
+
+# if a unit's targetfaction nets to 1+, it will be ignored by targeting and considered an 'ally'
+  scripts:
+    createUnit:
+      - new: ROSIGMA_cU_assign_factions
+        offset: 1
+        code: |
+
+          var int temp;
+          var int factions;
+          var ptr RuleArmor unitArmorRule;
+
+          unit.getRuleArmor unitArmorRule;
+
+          unit.getFaction temp;
+          if eq temp FACTION_PLAYER;
+            add factions 1;
+          else eq temp FACTION_HOSTILE;
+            add factions 2;
+          else eq temp FACTION_NEUTRAL;
+            add factions 4;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_CHAOS;
+          if eq temp 1;
+            add factions 8;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_KHORNE;
+          if eq temp 1;
+            add factions 16;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_NURGLE;
+          if eq temp 1;
+            add factions 32;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_SLAANESH;
+          if eq temp 1;
+            add factions 64;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_TZEENTCH;
+          if eq temp 1;
+            add factions 128;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_DAEMONIC;
+          if eq temp 1;
+            add factions 256;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_TYRANID;
+          if eq temp 1;
+            add factions 512;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_ELDAR;
+          if eq temp 1;
+            add factions 1024;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_ORK;
+          if eq temp 1;
+            add factions 2048;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_NECRON;
+          if eq temp 1;
+            add factions 4096;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_TAU;
+          if eq temp 1;
+            add factions 8192;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_IMPERIUM;
+          if eq temp 1;
+            add factions 16384;
+          end;
+
+          unitArmorRule.getTag temp Tag.UNIT_TYPE_IMPERIAL_GUARD;
+          if eq temp 1;
+            add factions 32768;
+          end;
+
+          unit.setTag Tag.UNIT_FACTIONS factions;
+
+          return;
+
+    aiCalculateTargetWeight:
+      - new: ROSIGMA_aCTW_evaluate_target_faction
+        offset: 1
+        code: |
+
+          var int temp;
+          var int aiUnitFactions;
+          var int targetUnitFactions;
+          var int gameFFA;
+          var int gameFaction1;
+          var int gameFaction2;
+          var int gameFaction3;
+
+          battle_game.getTag temp Tag.GAME_FACTIONS_SET;
+          if lt temp 1; #if we have no FFA settings abort
+            return current_target_weight;
+          end;
+
+          battle_game.getTag gameFFA Tag.GAME_FACTIONS_FFA;
+          battle_game.getTag gameFaction1 Tag.GAME_FACTION_1;
+          battle_game.getTag gameFaction2 Tag.GAME_FACTION_2;
+          battle_game.getTag gameFaction3 Tag.GAME_FACTION_3;
+
+          # FFA Block
+          # FFA should not be used in conjunction with multiple specific factions.
+          if gt gameFFA 0; # If game is set to simple FFA rules
+            ai_unit.getTag aiUnitFactions Tag.UNIT_FACTIONS;
+            target_unit.getTag targetUnitFactions Tag.UNIT_FACTIONS;
+
+            bit_and aiUnitFactions gameFFA; # Compare the units factions to FFA settings
+            bit_and targetUnitFactions gameFFA; # Compare the targets factions to the FFA settings
+
+            if and gt aiUnitFactions 0 gt targetUnitFactions 0 neq aiUnitFactions targetUnitFactions; # If both units have a faction that corresponds to the FFA settings, and they aren't equal.
+              set current_target_weight 100;
+            end;
+
+            return current_target_weight;
+          end;
+
+          # Up to 3 faction war block
+          # Units need to evaluate to only being part of 1 faction for this to work as expected.
+          # In this mode units will not attack other units that are not in another faction.
+          # If the player should be friendly to one faction, whether the units are civilan or hostile in the engine,
+          #   then the player should be included in that faction via setup item.
+          # Similar for if a faction should attack civilians, etc.
+
+          set current_target_weight 0; # Initializing target weight.
+
+          ai_unit.getTag aiUnitFactions Tag.UNIT_FACTIONS;
+          ai_unit.getTag temp Tag.UNIT_OVERRIDE_FACTIONS_TEMP; # Override our unit factions if we have them
+          if gt temp 0;
+            set aiUnitFactions temp;
+          end;
+          ai_unit.getTag temp Tag.UNIT_MINDCONTROL_FACTIONS_TEMP; # Override our unit factions with mind control we have them
+          if gt temp 0;
+            set aiUnitFactions temp;
+          end;
+          target_unit.getTag targetUnitFactions Tag.UNIT_FACTIONS;
+
+          # Block for ai_unit being faction 1
+          set temp aiUnitFactions;
+          bit_and temp gameFaction1;
+          if gt temp 0;
+            set temp targetUnitFactions;
+            bit_and temp gameFaction2;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            set temp targetUnitFactions;
+            bit_and temp gameFaction3;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            return current_target_weight;
+          end;
+
+          # Block for ai_unit being faction 2
+          set temp aiUnitFactions;
+          bit_and temp gameFaction2;
+          if gt temp 0;
+            set temp targetUnitFactions;
+            bit_and temp gameFaction1;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            set temp targetUnitFactions;
+            bit_and temp gameFaction3;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            return current_target_weight;
+          end;
+
+          # Block for ai_unit being faction 3
+          set temp aiUnitFactions;
+          bit_and temp gameFaction3;
+          if gt temp 0;
+            set temp targetUnitFactions;
+            bit_and temp gameFaction1;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            set temp targetUnitFactions;
+            bit_and temp gameFaction2;
+            if gt temp 0;
+              set current_target_weight 100;
+            end;
+
+            return current_target_weight;
+          end;
+
+          return current_target_weight;
+
+      - new: ROSIGMA_aCTW_evaluate_target_faction_temp_effects
+        offset: 2
+        code: |
+
+          var int unitTempFactions;
+          var int targetUnitFactions;
+
+          ai_unit.getTag unitTempFactions Tag.UNIT_HOSTILE_FACTIONS_TEMP;
+          target_unit.getTag targetUnitFactions Tag.UNIT_FACTIONS;
+
+          # Temporarily hostile block
+          bit_and unitTempFactions targetUnitFactions;
+          if gt unitTempFactions 0;
+            set current_target_weight 100;
+          end;
+
+          # Temporarily friendly block, takes precedence over temporary hostility.
+          ai_unit.getTag unitTempFactions Tag.UNIT_FRIENDLY_FACTIONS_TEMP;
+          bit_and unitTempFactions targetUnitFactions;
+          if gt unitTempFactions 0;
+            set current_target_weight 0;
+          end;
+
+          return current_target_weight;
+
+    damageUnit: # if we successfully mind control a unit, change their factions to our factions temporarily
+      - new: ROSIGMA_dU_mindcontrol_set_temp_factions
+        offset: -1
+        code: |
+          var int unitTempFactions;
+
+          if lt battle_action_mindcontrol 1;
+            return;
+          end;
+
+          if lt to_mana 1;
+            return;
+          end;
+
+          set to_mana 0;
+
+          attacker.getTag unitTempFactions Tag.UNIT_FACTIONS;
+          unit.setTag Tag.UNIT_MINDCONTROL_FACTIONS_TEMP unitTempFactions; # mind controlled unit temporarily inherits the faction data of the mind controller
+
+          return;
+
+    newTurnUnit:
+      - new: ROSIGMA_nTU_mindcontrol_clear_temp_factions
+        offset: 99
+        code: |
+          var int temp;
+          var int temp2;
+          var int unitTempFactions;
+
+          unit.getFaction temp;
+          battle_game.getTurnSide temp2;
+          if neq temp temp2;
+            # debug_log "ROSIGMA_nTU_mindcontrol_clear_temp_factions, offset 99: Aborting. Current turn not equal to unit's turn." unit;
+            return;
+          end;
+
+          unit.setTag Tag.UNIT_MINDCONTROL_FACTIONS_TEMP 0; # clear our mind control override
+
+          return;
+
+    createItem:
+      - new: ROSIGMA_cI_process_faction_token_test
+        offset: -1
+        code: |
+          var int temp;
+          var int factionsSet;
+          var ptr RuleItem rItem;
+
+          item.getRuleItem rItem;
+
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_FFA;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_FACTIONS_FFA temp;
+            set factionsSet 1;
+          end;
+
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_SIDE1;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_FACTION_1 temp;
+            set factionsSet 1;
+          end;
+
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_SIDE2;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_FACTION_2 temp;
+            set factionsSet 1;
+          end;
+
+          rItem.getTag temp Tag.ITEM_FACTION_SETUP_SIDE3;
+          if gt temp 0;
+            battle_game.setTag Tag.GAME_FACTION_3 temp;
+            set factionsSet 1;
+          end;
+
+          if gt factionsSet 0;
+            battle_game.setTag Tag.GAME_FACTIONS_SET factionsSet;
+          end;
+
+          return;
+
+# Spawn these tokens with missions to stop the AI from attacking units with the corresponding armor/unit type tag.
+# You can combine multiple ALLY faction tokens to omit those factions from being attacked.
+# ENEMY faction tokens will omit units with the related armor/unit type tag from targeting exclusion
+items:
+  - &FACTION_SETUP_TOKEN_TEMPLATE
+    type: STR_FACTION_SETUP_TOKEN_ELDARvsCHAOSvsTYRANIDS_FFA
+    size: 0
+    weight: 0
+    invWidth: 0
+    invHeight: 0
+    armor: 999
+    recover: false
+    hiddenOnMinimap: true
+    supportedInventorySections:
+      - STR_GROUND
+  - type: STR_FACTION_SETUP_TOKEN_ELDARvsChaosvsPlayer_FFA
+    tags:
+      ITEM_FACTION_SETUP_FFA: 1544
+      # FFA does not override Civilian/Enemy alignment. So for example eldar that are enemies to the player at the engine level will attack Chaos and Tyranids AND the player.
+
+  - type: STR_FACTION_SETUP_TOKEN_ELDARandPLAYERandCIVILIANvsORKSvsNECRONS
+    tags:
+      ITEM_FACTION_SETUP_SIDE1: 1029  # Player, Civilians, and Eldar
+      ITEM_FACTION_SETUP_SIDE2: 2048  # Orks
+      ITEM_FACTION_SETUP_SIDE3: 4096  # Necrons
+      # under multiple factions, units that correspond to any faction will refuse to attack units not part of another faction.
+      # So for example eldar that are enemies at the engine level will not attack the player.
