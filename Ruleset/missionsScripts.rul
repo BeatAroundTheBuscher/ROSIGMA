@@ -116,9 +116,11 @@ missionScripts:
     lastMonth: 2
     startDelay: 120
     randomDelay: 20160 # Up to 2 weeks random delay
-    executionOdds: 50
+    executionOdds: 70
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
+      STR_NOT_WORDBEARERS: true
+      STR_NOT_CHAOSCULT: true
 
   - type: newTraditionalBasesLater
     missionWeights:
@@ -134,6 +136,8 @@ missionScripts:
     executionOdds: 100
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
+      STR_NOT_WORDBEARERS: true
+      STR_NOT_CHAOSCULT: true
 
   - type: newTraditionalBasesExtra
     missionWeights:
@@ -146,9 +150,114 @@ missionScripts:
     firstMonth: 6
     startDelay: 120
     randomDelay: 20160 # Up to 2 weeks random delay
-    executionOdds: 50
+    executionOdds: 70
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
+      STR_NOT_WORDBEARERS: true
+      STR_NOT_CHAOSCULT: true
+
+  # chaos version
+
+  - type: newTraditionalBasesEarlyCHAOS
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 23
+        STR_TRAITOR_GUARD_BASE: 23
+        STR_IMPERIALGUARD_BASE: 33
+        STR_ORK_BASE: 23
+    firstMonth: 1
+    lastMonth: 2
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 70
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_NOT_WORDBEARERS: true
+
+  - type: newTraditionalBasesLaterCHAOS
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 23
+        STR_TRAITOR_GUARD_BASE: 23
+        STR_IMPERIALGUARD_BASE: 33
+        STR_ORK_BASE: 23
+    firstMonth: 3
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 100
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_NOT_WORDBEARERS: true
+
+  - type: newTraditionalBasesExtraCHAOS
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 33
+        STR_TRAITOR_GUARD_BASE: 33
+        STR_ULTRAMARINE_BASE: 33
+        STR_ORK_BASE: 33
+        STR_NECRON_BASE: 50
+    firstMonth: 6
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 70
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_NOT_WORDBEARERS: true
+
+  # word bearers version
+
+  - type: newTraditionalBasesEarlyWB
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 33
+        STR_TRAITOR_GUARD_BASE: 33
+        STR_IMPERIALGUARD_BASE: 33
+        STR_ORK_BASE: 5
+    firstMonth: 1
+    lastMonth: 2
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 70
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_WORDBEARERS_STRATEGY: true
+
+  - type: newTraditionalBasesLaterWB
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 23
+        STR_TRAITOR_GUARD_BASE: 23
+        STR_ULTRAMARINE_BASE: 43
+        STR_ORK_BASE: 5
+    firstMonth: 3
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 100
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_WORDBEARERS_STRATEGY: true
+
+  - type: newTraditionalBasesExtraWB
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 13
+        STR_TRAITOR_GUARD_BASE: 13
+        STR_ULTRAMARINE_BASE: 63
+        STR_NECRON_BASE: 50
+    firstMonth: 6
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 70
+    researchTriggers:
+      STR_DEFAULT_CAMPAIGN: true
+      STR_CHAPTER_PURITY: false
+      STR_WORDBEARERS_STRATEGY: true
 
   # Genestealers
   - type: GeneBASES
@@ -1270,19 +1379,28 @@ missionScripts:
       STR_GSC_ARBITES_SPAWNED: false
 
   # Orks
-  #- type: gameStartOrk
-  #  conditionals: [-100, -101]
-  #  missionWeights:
-  #    0:
-  #      STR_ORK_BASE_START: 100
-  #  lastMonth: 0
-  #  targetBaseOdds: 100
-  #  raceWeights:
-  #    0:
-  #      STR_ORK: 100
-  #  startDelay: 3000
-  #  executionOdds: 100
-  #  label: 102
+  # ported from 40k and disabled for chaos and tau
+
+  - type: gameStartOrk
+    missionWeights:
+      0:
+        STR_ORK_BASE_START: 100
+    firstMonth: 1
+    lastMonth: 2
+    targetBaseOdds: 30  # less chances as there are other orks bases that can spawn
+    raceWeights:
+      0:
+        STR_ORK: 100
+    startDelay: 13000  # more delay
+    executionOdds: 100
+    researchTriggers:
+      STR_CHAPTER_PURITY: true
+      STR_NOT_CHAOSCULT: true
+      STR_NOT_WORDBEARERS: true
+      STR_NOT_TAU_EMPIRE_GV: true
+      STR_NOT_TAU_GUEVESA_GV: true
+      STR_NOT_TAU_AUXILIARY_GV: true
+      STR_NOT_DEBUG_TAU_EMPIRE_GV: true
 
   - type: gameStartOrkSL
     # Orkz as starting enemy for SL
