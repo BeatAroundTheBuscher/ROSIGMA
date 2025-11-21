@@ -138,6 +138,7 @@ armors:
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_ALPHA_TARGET_VALUE_MODIFIER: -1 # no chance of turning into an alpha legionaire from killing grots
     scripts:
       selectUnitSprite: |
         var int unitID;
@@ -174,7 +175,7 @@ armors:
 
   - type: STR_PLAYER_VINDI_GROT_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 30
     antiCamouflageAtDay: 6
     antiCamouflageAtDark: 6
     spriteSheet: ORKDR4.PCK # needs new
@@ -216,6 +217,7 @@ armors:
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 15
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1 # cant be alpha legion
 
 #Player Standard Ork Armors
 
@@ -319,6 +321,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 75 # less likely to be alpha legion
 
   - type: STR_BLOODAXE_ARDBOY_KARAPACE_PLAYER_ARMOR
     refNode: *ORK_KARAPACE
@@ -364,6 +367,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 50 # less likely to be alpha legion
 
   - type: STR_OFFICORK_NOB_ARMOR # same as nob armor for now
     refNode: *ORK_KARAPACE
@@ -390,12 +394,15 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 15 # much less likely to be alpha legion
 
   - &ORK_MEGANOB
     type: STR_BLOODAXE_MEGANOB_PLAYER_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 25 # slightly better night vision
     heatVision: 20  # tech
+    antiCamouflageAtDay: 5 # now same as karapace armor
+    antiCamouflageAtDark: 5
     spriteSheet: ORK_BLOODAXE_MEGANOB_BS.PCK
     spriteInv: O5BLOODAXEMEGANOBINV.SPK
     moveSound: {mod: 40k, index: 700}
@@ -447,6 +454,7 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 35 # less likely to be alpha legion
 
   - type: STR_ASSAULT_MEGA_ARMOR # meganob armor with built in weapons
     refNode: *ORK_MEGANOB
@@ -466,8 +474,10 @@ armors:
 
   - type: STR_PLAYER_ORK_MEGAWARBOSS_ARMOR  # Warboss Mega Armour
     visibilityAtDay: 40
-    visibilityAtDark: 25
+    visibilityAtDark: 30
     heatVision: 30  # antismoke vision, tech based
+    antiCamouflageAtDay: 7 # not as good as the big mek for spotting, but still good
+    antiCamouflageAtDark: 7
     spriteSheet: ORKWARBOSS.PCK
     spriteInv: WarbossINV.SPK
     customArmorPreviewIndex: [1268, 1269]
@@ -532,13 +542,16 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # too big and Orky to be anything other than an Ork
 
 ### Mek Klan
 
   - type: STR_PLAYER_ORK_MEKBOY_ARMOR
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 25
     heatVision: 20
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
     spriteSheet: ORKMekboyz.PCK
     spriteInv: MEKBOYINV.SPK
     customArmorPreviewIndex: 1299
@@ -592,11 +605,12 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 65 # less likely to be alpha legion
 
   - type: STR_PLAYER_ORK_KILLA_ARMOR  # KILLA KAN
     group: 1 # to prevent it from going on the speed trukk
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 25
     heatVision: 20  # tech
     spriteSheet: ORKDR5.PCK
     customArmorPreviewIndex: [1316, 1317, 1318]
@@ -738,12 +752,15 @@ armors:
       UNIT_TYPE_ORK: 1
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 50 # Mega Powa Field.
       ARMOR_ENERGY_SHIELD_DECAY: 25
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: -1  # too big and Orky to be anything other than an Ork
 
 ### Speed Kult
 
   - type: STR_BLOODAXE_STORM_PLAYER_ARMOR
     visibilityAtDay: 40
     visibilityAtDark: 20
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
     spriteSheet: ORK_BLOODAXE_STORMBOY_BS.PCK
     spriteInv: O5BLOODAXESSTORMBOYZINV.SPK
     forcedTorso: 1
@@ -799,6 +816,7 @@ armors:
       DODGE_CHANCE: 0
       FLIGHT_DODGE_CHANCE: 25
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 65 # less likely to be alpha legion
 
   - type: STR_PLAYER_ORK_BIKE_ARMOR            # ORK WARBIKE
     visibilityAtDay: 40
@@ -1011,6 +1029,7 @@ armors:
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 10
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 75 # less likely to be alpha legion
 
   - type: STR_PLAYER_ORK_KOMMANDO_ARMOR  # ARMOR
     visibilityAtDay: 40
@@ -1078,6 +1097,7 @@ armors:
       UNIT_TYPE_ORK: 1
       DODGE_CHANCE: 20
       ARMOR_MAX_SUCCESSFUL_DODGES: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 65 # less likely to be alpha legion
 
   - type: STR_PLAYER_WEIRDORK_ARMOR
     movementType: 0
@@ -1112,6 +1132,8 @@ armors:
     visibilityAtDay: 45
     visibilityAtDark: 20
     heatVision: 30  # antismoke vision, psyker based
+    antiCamouflageAtDay: 4
+    antiCamouflageAtDark: 4
     spriteSheet: ORKWYRDBOY.PCK
     spriteInv: ORKWYRDBOYINV.SPK
     customArmorPreviewIndex: 1307
@@ -1152,7 +1174,7 @@ armors:
     units:
       - STR_GUARD_ORK_WEIRDBOY
     allowsRunning: true
-    tags:
+    tags: # no modifier to alpha legion chance. More likely to be an infiltrator.
       INFECTION_RESIST: 75  # infection/corruption resistant due to ORKY
       ARMOR_ENERGY_SHIELD_HP_PER_TURN: 20 # waaaagh! field blocking bullets.
       ARMOR_ENERGY_SHIELD_DECAY: 13
@@ -1171,6 +1193,8 @@ armors:
     visibilityAtDay: 40
     visibilityAtDark: 20
     heatVision: 20  # tech
+    antiCamouflageAtDay: 3
+    antiCamouflageAtDark: 3
     spriteSheet: ORKFlashgitz.PCK
     spriteInv: FlashgitzINV.SPK
     customArmorPreviewIndex: 1303
@@ -1223,10 +1247,11 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 65 # less likely to be alpha legion
 
   - type: STR_PLAYER_ORK_ARMOR_BURNA
     visibilityAtDay: 40
-    visibilityAtDark: 20
+    visibilityAtDark: 20 # no anti-camo. Fire-blinded senses
     heatVision: 10  # tech
     spriteSheet: Burnaboyz.PCK
     spriteInv: ORKBURNABOYZINV
@@ -1281,3 +1306,4 @@ armors:
       UNIT_TYPE_LIVING: 1
       UNIT_TYPE_XENO: 1
       UNIT_TYPE_ORK: 1
+      ARMOR_ALPHA_ATTACKER_BONUS_MODIFIER: 65 # less likely to be alpha legion
