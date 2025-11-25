@@ -105,6 +105,7 @@ missionScripts:
   - delete: gameStartHard
 
 ### Bases #BASE#
+  # Default Loyalist
   - type: newTraditionalBasesEarly
     missionWeights:
       0:
@@ -149,9 +150,9 @@ missionScripts:
     executionOdds: 70
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
+      STR_NOT_WORDBEARERS: true
 
   # chaos version
-
   - type: newTraditionalBasesEarlyCHAOS
     missionWeights:
       0:
@@ -165,7 +166,6 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
@@ -181,7 +181,6 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 100
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
@@ -198,12 +197,10 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
   # word bearers version
-
   - type: newTraditionalBasesEarlyWB
     missionWeights:
       0:
@@ -248,6 +245,19 @@ missionScripts:
       STR_WORDBEARERS_STRATEGY: true
 
   # Genestealers
+  - type: GSC_GENE_HIVE_BASE_GEN  # Generates the underground GSC Genestealer hive base
+    missionWeights:
+      0:
+        STR_GENE_BASE: 100  # from 40k, generates a hive if there isn't one
+    firstMonth: 1  # can show up after month 1, with 4 weeks random delay
+    lastMonth: 6
+    startDelay: 120
+    randomDelay: 40160  # Up to 4 weeks random delay
+    executionOdds: 25  # 25% chance of firing every month until month 7
+    researchTriggers:
+      STR_GENESTEALERS_ACTIVE: true
+      STR_GENESTEALERS_INACTIVE: false
+
   - type: GeneBASES
     missionWeights:
       0:
@@ -678,8 +688,7 @@ missionScripts:
     researchTriggers:
       STR_HARDER_MISSIONS: true
       STR_CHAPTER_PURITY: false
-      STR_NOT_CHAOSCULT: true
-      STR_NOT_WORDBEARERS: true
+      STR_DEFAULT_CAMPAIGN: true
   - type: warpStormBuildingHardCHAOS
     refNode: *STR_HARD_CHAOSMISSION_TABLE
     firstMonth: 3
@@ -1380,12 +1389,7 @@ missionScripts:
     executionOdds: 100
     researchTriggers:
       STR_CHAPTER_PURITY: true
-      STR_NOT_CHAOSCULT: true
-      STR_NOT_WORDBEARERS: true
-      STR_NOT_TAU_EMPIRE_GV: true
-      STR_NOT_TAU_GUEVESA_GV: true
-      STR_NOT_TAU_AUXILIARY_GV: true
-      STR_NOT_DEBUG_TAU_EMPIRE_GV: true
+      STR_DEFAULT_CAMPAIGN: true
 
   - type: gameStartOrkSL
     # Orkz as starting enemy for SL
@@ -1554,16 +1558,6 @@ missionScripts:
         STR_CIVILIAN_TERROR_GSC: 100  # could make late game ones have NPCs with death grenades that spawn disguised hybrids
     useTable: false
     firstMonth: 1
-
-  - type: GSC_GENE_HIVE_BASE_GEN  # Generates the underground GSC Genestealer hive base
-    missionWeights:
-      0:
-        STR_GENE_BASE: 100  # from 40k, generates a hive if there isn't one
-    firstMonth: 1  # can show up after month 1, with 4 weeks random delay
-    lastMonth: 6
-    startDelay: 120
-    randomDelay: 40160  # Up to 4 weeks random delay
-    executionOdds: 25  # 25% chance of firing every month until month 7
 
   # Steel Legion Campaign
   - type: firstMonthOrkTerror  # for Steel Legion
