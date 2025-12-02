@@ -2387,3 +2387,102 @@ armors:
       INFECTION_RESIST: 100  # infection immune
       UNIT_TYPE_IMPERIUM: 1
       UNIT_TYPE_LIVING: 1
+
+
+  # imperial predator
+
+  - type: IMPPREDATOR_ARMOR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: IMPPREDTURRET.PCK
+    allowInv: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    spriteInv: CTANK
+    corpseGeo: STR_PREDATOR_CORPSE
+    corpseBattle:
+      - P_CORPSE1
+      - P_CORPSE2
+      - P_CORPSE3
+      - P_CORPSE4
+    frontArmor: 130
+    sideArmor: 130
+    rearArmor: 130
+    underArmor: 150
+    size: 2
+    allowsMoving: false
+    damageModifier: #VEHICLE ARMOR LARGE
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.4 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [92, 89, 90, 91]
+    drawingRoutine: 3
+
+  - type: IMPPREDATOR_SIDE_ARMOR #AR
+    visibilityAtDay: 40
+    visibilityAtDark: 40
+    spriteSheet: IMPSIDETURRET.PCK
+    spriteInv: CTANK
+    scripts:
+      selectUnitSprite:
+        var int temp;
+
+        unit.isCollapsing temp;
+
+        if eq temp 0;
+
+          unit.getDirection sprite_offset;
+          set sprite_index 0;
+
+          unit.isAiming temp;
+
+          if neq temp 0;
+
+            set sprite_index 8;
+
+          end;
+
+        end;
+
+        add sprite_index sprite_offset;
+
+        return sprite_index;
+    allowInv: false
+    allowsMoving: false
+    zombiImmune: true
+    bleedImmune: true
+    fearImmune: true
+    painImmune: true
+    corpseBattle:
+      - STR_PREDATORSIDE_CORPSE
+    frontArmor: 50
+    sideArmor: 50
+    rearArmor: 50
+    underArmor: 50
+    drawingRoutine: 19
+    constantAnimation: false
+    damageModifier: #VEICULE ARMOR
+      - 1.0 #none
+      - 1.0 #AP
+      - 0.8 #FLAMES
+      - 1.0 #HE
+      - 1.4 #LASCANON
+      - 1.0 #PLASMA
+      - 0.0 #STUN
+      - 0.8 #MELEE
+      - 1.0 #ACID
+      - 0.0 #SMOKE
+      - 1.0 #IMPACT
+      - 1.2 #MELTA
+    loftempsSet: [3]
