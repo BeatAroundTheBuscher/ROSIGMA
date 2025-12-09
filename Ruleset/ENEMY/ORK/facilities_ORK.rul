@@ -255,6 +255,7 @@ facilities:
     monthlyCost: 25000
     canBeBuiltOver: true
     workshops: 50 # Mek shop and Hangar
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK_LARGE
     mapName: XBASE_ORK01
     verticalLevels:
       - type: ground
@@ -395,7 +396,7 @@ facilities:
     spriteShape: {mod: 40k, index: 0}
     spriteFacility: {mod: 40k, index: 633}
     connectorsDisabled: true
-    buildCost: 10000 # little bit of cost to dig tunnels
+    buildCost: 0 # free
     buildTime: 0
     monthlyCost: 0
     canBeBuiltOver: true
@@ -410,6 +411,30 @@ facilities:
         terrain: XBASE_ORK
         blocks: [4] # 4 because it is the 5th entry
         size: [1, 1, 3] # if the craft is going on z = 1, the height here needs to be 1
+
+  - type: STR_CORRIDOR_OUTPOST_ORK_LARGE # 2x2 tunnels, mostly to keep base connection if 2x2 facilties get destroyed
+    requires:
+      - STR_GREENEST_ORKZ
+    requiresBaseFunc: [ORKZ]
+    placeSound: {mod: 40k, index: 99}
+    spriteShape: 2134
+    connectorsDisabled: true
+    size: 2
+    buildCost: 0 # free
+    buildTime: 0
+    monthlyCost: 0
+    canBeBuiltOver: true
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK_LARGE # functionally indestructable, but can still soak up UFO attacks.
+    mapName: XBASE_ORK04
+    verticalLevels:
+      - type: ground
+        terrain: baseTerrain
+        size: [2, 2, 0]
+        blocks: [12] # 2x2 with hole cut out for ramp
+      - type: ceiling
+        terrain: XBASE_ORK
+        blocks: [9]
+        size: [2, 2, 3] # if the craft is going on z = 1, the height here needs to be 1
 
   - type: STR_ORK_SHRINE
     placeSound: {mod: 40k, index: 98}
@@ -491,6 +516,7 @@ facilities:
     personnel: 50
     aliens: 10
     labs: 25 # Meks can come up with stuff here
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK_LARGE
     mapName: XBASE_ORK06
     verticalLevels:
       - type: ground
@@ -567,6 +593,7 @@ facilities:
     maxAllowedPerBase: 1
     personnel: 75
     labs: 75
+    destroyedFacility: STR_CORRIDOR_OUTPOST_ORK_LARGE
     mapName: XBASE_ORK07
     verticalLevels:
       - type: ground
