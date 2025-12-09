@@ -13634,6 +13634,36 @@ alienMissions:
         trajectory: P6
         timer: 5000
 
+  - type: STR_SALAMANDER_BASE
+    points: 50
+    objective: 2
+    spawnZone: 4  # Mission zone for alien bases
+    siteType: STR_SLMIMPERIALBASE_ASSAULTV1
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER0: 100
+      2:
+        STR_SLMOPFOR_TIER0: 100
+      3:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      4:
+        STR_SLMOPFOR_TIER1: 100
+      9:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: P5
+        timer: 10000
+      - ufo: STR_SLMABDUCTOR
+        count: 2
+        trajectory: P5
+        timer: 5000
+      - ufo: STR_SLMBATTLESHIP
+        count: 1
+        trajectory: P6
+        timer: 5000
+
   # ai imperial base late hard mission
 
   - type: STR_ULTRAMARINE_BASEV2
@@ -13736,6 +13766,32 @@ alienMissions:
         trajectory: P5
         timer: 5000
       - ufo: STR_SMBATTLESHIP
+        count: 1
+        trajectory: P6
+        timer: 5000
+
+  - type: STR_SALAMANDER_BASEV2
+    points: 50
+    objective: 2
+    spawnZone: 4  # Mission zone for alien bases
+    siteType: STR_SLMIMPERIALBASE_ASSAULTV2
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      1:
+        STR_SLMOPFOR_TIER1: 100
+      4:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: P5
+        timer: 10000
+      - ufo: STR_SLMABDUCTOR
+        count: 2
+        trajectory: P5
+        timer: 5000
+      - ufo: STR_SLMBATTLESHIP
         count: 1
         trajectory: P6
         timer: 5000
@@ -14137,6 +14193,144 @@ alienMissions:
         escort: true
         objective: false                # can become a HK/escort
 
+  # salamander enemy mission
+
+  - type: STR_SLMIMPERIAL_TERROR
+    points: 10
+    objective: 3
+    spawnZone: 3  # Mission zone for terror missions
+    siteType: STR_IMPERIALTERROR_MISSION
+    raceWeights:
+      0:
+        STR_IGOPFOR_TIER1: 50
+        STR_IGOPFOR_TIER2: 50
+      3:
+        STR_SLMOPFOR_TIER0: 100
+      5:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      7:
+        STR_SLMOPFOR_TIER1: 100
+      12:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMMEDIUM_SCOUT_DOUBLE
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: P0
+        timer: 6000
+
+  - type: STR_SLMIMPERIAL_TERROR_HARD
+    points: 10
+    objective: 3
+    spawnZone: 3  # Mission zone for terror missions
+    siteType: STR_IMPERIALTERROR_MISSION_HARD
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER0: 100
+      2:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      4:
+        STR_SLMOPFOR_TIER1: 100
+      9:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_SLMABDUCTOR
+        count: 1
+        trajectory: P3
+        timer: 3000
+      - ufo: STR_SLMBATTLESHIP
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+
+  - type: STR_SLMIMPERIALS_RETALIATION
+    points: 0
+    objective: 4
+    spawnUfo: STR_SLMBATTLESHIP  # Spawned for the final retaliation run
+    raceWeights:  # In the case of a shootdown, race comes from the UFO that triggered the mission.
+      0:
+        STR_IGOPFOR_TIER1: 50
+        STR_IGOPFOR_TIER2: 50
+      3:
+        STR_SLMOPFOR_TIER0: 100
+      5:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      7:
+        STR_SLMOPFOR_TIER1: 100
+      12:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: P3
+        timer: 5000
+      - ufo: STR_SLMABDUCTOR
+        count: 1
+        trajectory: P3
+        timer: 3000
+      - ufo: STR_SLMBATTLESHIP
+        count: 1
+        trajectory: P7
+        timer: 6000
+        objective: true
+
+  - type: STR_SLMIMPERIALS_PATROL
+    operationType: 6    # hunt mission
+    points: 0
+    raceWeights: # Doesn't matter, race comes from base. Fallthrough, just in case.
+      0:
+        STR_IGOPFOR_TIER1: 50
+        STR_IGOPFOR_TIER2: 50
+      3:
+        STR_SLMOPFOR_TIER0: 100
+      5:
+        STR_SLMOPFOR_TIER0PLUS: 100
+      7:
+        STR_SLMOPFOR_TIER1: 100
+      12:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: STR_SLMMEDIUM_SCOUT_DOUBLE
+        count: 1
+        trajectory: D0
+        timer: 9000
+        hunterKillerPercentage: 100
+        huntMode: 0
+        huntBehavior: 0
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 1
+        trajectory: D0
+        timer: 10
+        hunterKillerPercentage: 100
+        huntMode: 0
+        huntBehavior: 0
+
+  - type: STR_SLMIMPERIALS_SUPPLY # WITH HK/escort
+    points: 0
+    objective: 5
+    raceWeights: {} #Special case, race comes from base.
+    waves:
+      - ufo: STR_SLMMEDIUM_SCOUT_DOUBLE
+        count: 1
+        trajectory: P9
+        timer: 0
+        objective: true                 # cannot become a HK/escort
+      - ufo: STR_SLMLARGE_SCOUT
+        count: 2
+        trajectory: P9
+        timer: 0
+        hunterKillerPercentage: 100
+        escort: true
+        objective: false                # can become a HK/escort
+
   # ported from 40k
 
   - type: STR_SUPPORT_PDF_ASSAULT
@@ -14351,6 +14545,166 @@ alienMissions:
     objective: 3
     spawnZone: 0
     siteType: STR_SLAANESHMARINE_ASSAULT_SITE
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0: 10
+        STR_BTOPFOR_TIER0: 10
+        STR_SWOPFOR_TIER0: 10
+        STR_CFOPFOR_TIER0: 10
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 33
+        STR_SWOPFOR_TIER0PLUS: 33
+        STR_CFOPFOR_TIER0PLUS: 33
+        STR_SMOPFOR_TIER1: 5
+        STR_BTOPFOR_TIER1: 5
+        STR_SWOPFOR_TIER1: 5
+        STR_CFOPFOR_TIER1: 5
+      2:
+        STR_SMOPFOR_TIER0PLUS: 5
+        STR_BTOPFOR_TIER0PLUS: 5
+        STR_SWOPFOR_TIER0PLUS: 5
+        STR_CFOPFOR_TIER0PLUS: 5
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 33
+        STR_SWOPFOR_TIER1: 33
+        STR_CFOPFOR_TIER1: 33
+      4:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 33
+        STR_SWOPFOR_TIER2: 33
+        STR_CFOPFOR_TIER2: 33
+    waves:
+      - ufo: SGOTOWORK  # ufo does not exist so direct mission
+        count: 1
+        trajectory: DIRECT_TO_MISSION_SITE_TRAJECTORY
+        timer: 0
+        objective: true
+
+  - type: STR_SUPPORT_NIGHTLORDCHAOSMARINE_ASSAULT
+    points: 10
+    objective: 3
+    spawnZone: 0
+    siteType: STR_NIGHTLORDMARINE_ASSAULT_SITE
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0: 10
+        STR_BTOPFOR_TIER0: 10
+        STR_SWOPFOR_TIER0: 10
+        STR_CFOPFOR_TIER0: 10
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 33
+        STR_SWOPFOR_TIER0PLUS: 33
+        STR_CFOPFOR_TIER0PLUS: 33
+        STR_SMOPFOR_TIER1: 5
+        STR_BTOPFOR_TIER1: 5
+        STR_SWOPFOR_TIER1: 5
+        STR_CFOPFOR_TIER1: 5
+      2:
+        STR_SMOPFOR_TIER0PLUS: 5
+        STR_BTOPFOR_TIER0PLUS: 5
+        STR_SWOPFOR_TIER0PLUS: 5
+        STR_CFOPFOR_TIER0PLUS: 5
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 33
+        STR_SWOPFOR_TIER1: 33
+        STR_CFOPFOR_TIER1: 33
+      4:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 33
+        STR_SWOPFOR_TIER2: 33
+        STR_CFOPFOR_TIER2: 33
+    waves:
+      - ufo: SGOTOWORK  # ufo does not exist so direct mission
+        count: 1
+        trajectory: DIRECT_TO_MISSION_SITE_TRAJECTORY
+        timer: 0
+        objective: true
+
+  - type: STR_SUPPORT_IRONWARRIORCHAOSMARINE_ASSAULT
+    points: 10
+    objective: 3
+    spawnZone: 0
+    siteType: STR_IRONWARRIORMARINE_ASSAULT_SITE
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0: 10
+        STR_BTOPFOR_TIER0: 10
+        STR_SWOPFOR_TIER0: 10
+        STR_CFOPFOR_TIER0: 10
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 33
+        STR_SWOPFOR_TIER0PLUS: 33
+        STR_CFOPFOR_TIER0PLUS: 33
+        STR_SMOPFOR_TIER1: 5
+        STR_BTOPFOR_TIER1: 5
+        STR_SWOPFOR_TIER1: 5
+        STR_CFOPFOR_TIER1: 5
+      2:
+        STR_SMOPFOR_TIER0PLUS: 5
+        STR_BTOPFOR_TIER0PLUS: 5
+        STR_SWOPFOR_TIER0PLUS: 5
+        STR_CFOPFOR_TIER0PLUS: 5
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 33
+        STR_SWOPFOR_TIER1: 33
+        STR_CFOPFOR_TIER1: 33
+      4:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 33
+        STR_SWOPFOR_TIER2: 33
+        STR_CFOPFOR_TIER2: 33
+    waves:
+      - ufo: SGOTOWORK  # ufo does not exist so direct mission
+        count: 1
+        trajectory: DIRECT_TO_MISSION_SITE_TRAJECTORY
+        timer: 0
+        objective: true
+
+  - type: STR_SUPPORT_BLACKLEGIONCHAOSMARINE_ASSAULT
+    points: 10
+    objective: 3
+    spawnZone: 0
+    siteType: STR_BLACKLEGIONMARINE_ASSAULT_SITE
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0: 10
+        STR_BTOPFOR_TIER0: 10
+        STR_SWOPFOR_TIER0: 10
+        STR_CFOPFOR_TIER0: 10
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 33
+        STR_SWOPFOR_TIER0PLUS: 33
+        STR_CFOPFOR_TIER0PLUS: 33
+        STR_SMOPFOR_TIER1: 5
+        STR_BTOPFOR_TIER1: 5
+        STR_SWOPFOR_TIER1: 5
+        STR_CFOPFOR_TIER1: 5
+      2:
+        STR_SMOPFOR_TIER0PLUS: 5
+        STR_BTOPFOR_TIER0PLUS: 5
+        STR_SWOPFOR_TIER0PLUS: 5
+        STR_CFOPFOR_TIER0PLUS: 5
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 33
+        STR_SWOPFOR_TIER1: 33
+        STR_CFOPFOR_TIER1: 33
+      4:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 33
+        STR_SWOPFOR_TIER2: 33
+        STR_CFOPFOR_TIER2: 33
+    waves:
+      - ufo: SGOTOWORK  # ufo does not exist so direct mission
+        count: 1
+        trajectory: DIRECT_TO_MISSION_SITE_TRAJECTORY
+        timer: 0
+        objective: true
+
+  - type: STR_SUPPORT_ALPHALEGIONCHAOSMARINE_ASSAULT
+    points: 10
+    objective: 3
+    spawnZone: 0
+    siteType: STR_ALPHALEGIONMARINE_ASSAULT_SITE
     raceWeights:
       0:
         STR_SMOPFOR_TIER0: 10
@@ -16188,13 +16542,29 @@ alienMissions:
     retaliationOdds: 0
     raceWeights:
       0:
-        STR_ANTICHAOSCULT_FINAL_HARD: 100
+        STR_ANTIWB_FINAL_ULTRAMARINE: 100
     points: 0
-    siteType: STR_CCULTMARS_CYDONIA_LANDING
+    siteType: STR_WBMARS_CYDONIA_LANDING
     spawnZone: 0
     objective: 2
     waves:
-      - ufo: STR_CCULTMARS_CYDONIA_LANDING
+      - ufo: STR_WBMARS_CYDONIA_LANDING
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_FINAL_MISSION_WBKOR
+    retaliationOdds: 0
+    raceWeights:
+      0:
+        STR_ANTIWB_FINAL_SALAMANDER: 100
+    points: 0
+    siteType: STR_WBMARS_CYDONIA_LANDINGKOR
+    spawnZone: 0
+    objective: 2
+    waves:
+      - ufo: STR_WBMARS_CYDONIA_LANDINGKOR
         count: 1
         trajectory: P10
         timer: 0
@@ -16233,3 +16603,394 @@ alienMissions:
         timer: 0
         objective: true
         trajectory: DIRECT_TO_NEW_BASE_TRAJECTORY
+
+  - type: STR_NEWIMPERIALSALAMANDER_BASE
+    retaliationOdds: 0
+    raceWeights: {}
+    operationType: 1
+    operationBaseType: STR_SLMIMPERIALBASE_ASSAULTV1
+    objective: 2
+    spawnZone: 4
+    siteType: STR_SLMIMPERIALBASE_ASSAULTV1
+    points: 0
+    waves:
+      - ufo: STR_SLMIMPERIALBASE_ASSAULTV1
+        count: 1
+        timer: 0
+        objective: true
+        trajectory: DIRECT_TO_NEW_BASE_TRAJECTORY
+
+
+  - type: STR_NEWSALAMANDER_BASE
+    retaliationOdds: 0
+    raceWeights: {}
+    operationType: 1
+    operationBaseType: STR_SLMIMPERIALBASE_ASSAULTV2
+    objective: 2
+    spawnZone: 4
+    siteType: STR_SLMIMPERIALBASE_ASSAULTV2
+    points: 0
+    waves:
+      - ufo: STR_SLMIMPERIALBASE_ASSAULTV2
+        count: 1
+        timer: 0
+        objective: true
+        trajectory: DIRECT_TO_NEW_BASE_TRAJECTORY
+
+  # word bearers campaign
+  # erebus
+
+  - type: STR_M_1MISSIONWB  # wb mission 1
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_TRAIN_MISSIONWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_TARGETH: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 15000
+
+  - type: STR_M_2MISSIONWB  # wb mission 2
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CHOUTWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_IGOPFOR_TIER1: 50
+        STR_IGOPFOR_TIER2: 70
+      3:
+        STR_SMOPFOR_TIER0: 33
+        STR_BTOPFOR_TIER0: 13
+        STR_SWOPFOR_TIER0: 13
+        STR_CFOPFOR_TIER0: 13
+      5:
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 2
+        trajectory: P10
+        timer: 5000
+
+  - type: STR_M_3MISSIONWB  # wb mission 3
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_OUTPOST_DEFENSEWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+      1:
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 13
+        STR_SWOPFOR_TIER1: 13
+        STR_CFOPFOR_TIER1: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_4MISSIONWB  # wb mission 4
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CATWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+      3:
+        STR_SMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 13
+        STR_SWOPFOR_TIER1: 13
+        STR_CFOPFOR_TIER1: 13
+      5:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 13
+        STR_SWOPFOR_TIER2: 13
+        STR_CFOPFOR_TIER2: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 2
+        trajectory: P10
+        timer: 5000
+
+  - type: STR_M_5MISSIONWB  # wb mission 5
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CHAOSOUTWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_M5: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_6MISSIONWB  # wb mission 6
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_TANKHUNTWB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 13
+        STR_SWOPFOR_TIER2: 13
+        STR_CFOPFOR_TIER2: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_7MISSIONWB  # wb mission 7
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M7WB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_M7: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_8MISSIONWB  # wb mission 8
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M8WB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER2: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_9MISSIONWB  # wb mission 9
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M9WB
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SMOPFOR_TIER2: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  # word bearers campaign
+  # kor phaeron
+
+  - type: STR_M_1MISSIONWBK  # wb mission 1
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_TRAIN_MISSIONWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_TARGETH: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 15000
+
+  - type: STR_M_2MISSIONWBK  # wb mission 2
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CHOUTWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_IGOPFOR_TIER1: 50
+        STR_IGOPFOR_TIER2: 70
+      3:
+        STR_SLMOPFOR_TIER0: 33
+        STR_BTOPFOR_TIER0: 13
+        STR_SWOPFOR_TIER0: 13
+        STR_CFOPFOR_TIER0: 13
+      5:
+        STR_SLMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 2
+        trajectory: P10
+        timer: 5000
+
+  - type: STR_M_3MISSIONWBK  # wb mission 3
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_OUTPOST_DEFENSEWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+      1:
+        STR_SLMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 13
+        STR_SWOPFOR_TIER1: 13
+        STR_CFOPFOR_TIER1: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_4MISSIONWBK  # wb mission 4
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CATWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER0PLUS: 33
+        STR_BTOPFOR_TIER0PLUS: 13
+        STR_SWOPFOR_TIER0PLUS: 13
+        STR_CFOPFOR_TIER0PLUS: 13
+      3:
+        STR_SLMOPFOR_TIER1: 33
+        STR_BTOPFOR_TIER1: 13
+        STR_SWOPFOR_TIER1: 13
+        STR_CFOPFOR_TIER1: 13
+      5:
+        STR_SLMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 13
+        STR_SWOPFOR_TIER2: 13
+        STR_CFOPFOR_TIER2: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 2
+        trajectory: P10
+        timer: 5000
+
+  - type: STR_M_5MISSIONWBK  # wb mission 5
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_CHAOSOUTWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_M5: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_6MISSIONWBK  # wb mission 6
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_TANKHUNTWBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER2: 33
+        STR_BTOPFOR_TIER2: 13
+        STR_SWOPFOR_TIER2: 13
+        STR_CFOPFOR_TIER2: 13
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_7MISSIONWBK  # wb mission 7
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M7WBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_M7: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_8MISSIONWBK  # wb mission 8
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M8WBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true
+
+  - type: STR_M_9MISSIONWBK  # wb mission 9
+    points: 10
+    objective: 2
+    spawnZone: 0
+    siteType: STR_SPACESHIP_M9WBK
+    showAlienBase: true
+    raceWeights:
+      0:
+        STR_SLMOPFOR_TIER2: 100
+    waves:
+      - ufo: DOES_NOT_EXIST
+        count: 1
+        trajectory: P10
+        timer: 0
+        objective: true

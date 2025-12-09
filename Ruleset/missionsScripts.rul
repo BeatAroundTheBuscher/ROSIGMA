@@ -100,11 +100,12 @@ adhocScripts:
 
 missionScripts:
 ### Game Start Scripts
-  # game start scripts have been depreciated, their function has been move to adhoc scripts (see above).
+  # game start scripts have been depreciated, their function has been moved to adhoc scripts (see above).
   - delete: gameStart
   - delete: gameStartHard
 
 ### Bases #BASE#
+  # Default Loyalist
   - type: newTraditionalBasesEarly
     missionWeights:
       0:
@@ -119,8 +120,6 @@ missionScripts:
     executionOdds: 70
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
-      STR_NOT_WORDBEARERS: true
-      STR_NOT_CHAOSCULT: true
 
   - type: newTraditionalBasesLater
     missionWeights:
@@ -136,8 +135,6 @@ missionScripts:
     executionOdds: 100
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
-      STR_NOT_WORDBEARERS: true
-      STR_NOT_CHAOSCULT: true
 
   - type: newTraditionalBasesExtra
     missionWeights:
@@ -154,10 +151,8 @@ missionScripts:
     researchTriggers:
       STR_DEFAULT_CAMPAIGN: true
       STR_NOT_WORDBEARERS: true
-      STR_NOT_CHAOSCULT: true
 
   # chaos version
-
   - type: newTraditionalBasesEarlyCHAOS
     missionWeights:
       0:
@@ -171,7 +166,6 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
@@ -187,7 +181,6 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 100
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
@@ -204,12 +197,10 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
       STR_CHAPTER_PURITY: false
       STR_NOT_WORDBEARERS: true
 
   # word bearers version
-
   - type: newTraditionalBasesEarlyWB
     missionWeights:
       0:
@@ -223,11 +214,9 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
-      STR_CHAPTER_PURITY: false
       STR_WORDBEARERS_STRATEGY: true
 
-  - type: newTraditionalBasesLaterWB
+  - type: newTraditionalBasesLaterWBEREBUS
     missionWeights:
       0:
         STR_CULTIST_BASE: 23
@@ -239,27 +228,64 @@ missionScripts:
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 100
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
-      STR_CHAPTER_PURITY: false
       STR_WORDBEARERS_STRATEGY: true
 
-  - type: newTraditionalBasesExtraWB
+  - type: newTraditionalBasesExtraWBEREBUS
     missionWeights:
       0:
         STR_CULTIST_BASE: 13
         STR_TRAITOR_GUARD_BASE: 13
-        STR_ULTRAMARINE_BASE: 63
+        STR_ULTRAMARINE_BASEV2: 63
         STR_NECRON_BASE: 50
     firstMonth: 6
     startDelay: 120
     randomDelay: 20160 # Up to 2 weeks random delay
     executionOdds: 70
     researchTriggers:
-      STR_DEFAULT_CAMPAIGN: true
-      STR_CHAPTER_PURITY: false
+      STR_WORDBEARERS_STRATEGY: true
+
+  - type: newTraditionalBasesLaterWBKOR
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 23
+        STR_TRAITOR_GUARD_BASE: 23
+        STR_SALAMANDER_BASE: 43
+        STR_ORK_BASE: 5
+    firstMonth: 3
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 100
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+
+  - type: newTraditionalBasesExtraWBKOR
+    missionWeights:
+      0:
+        STR_CULTIST_BASE: 13
+        STR_TRAITOR_GUARD_BASE: 13
+        STR_SALAMANDER_BASEV2: 63
+        STR_NECRON_BASE: 50
+    firstMonth: 6
+    startDelay: 120
+    randomDelay: 20160 # Up to 2 weeks random delay
+    executionOdds: 70
+    researchTriggers:
       STR_WORDBEARERS_STRATEGY: true
 
   # Genestealers
+  - type: GSC_GENE_HIVE_BASE_GEN  # Generates the underground GSC Genestealer hive base
+    missionWeights:
+      0:
+        STR_GENE_BASE: 100  # from 40k, generates a hive if there isn't one
+    firstMonth: 1  # can show up after month 1, with 4 weeks random delay
+    lastMonth: 6
+    startDelay: 120
+    randomDelay: 40160  # Up to 4 weeks random delay
+    executionOdds: 25  # 25% chance of firing every month until month 7
+    researchTriggers:
+      STR_GENESTEALERS_ACTIVE: true
+      STR_GENESTEALERS_INACTIVE: false
+
   - type: GeneBASES
     missionWeights:
       0:
@@ -604,6 +630,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 25
         STR_SPACEWOLVES_BASE: 25
         STR_CRIMSONFIST_BASE: 25
+        STR_SALAMANDER_BASE: 25
       4:  # equal distribution for now
         STR_ALIEN_RESEARCH: 25
         STR_ALIEN_RESEARCH_TZEENTCH: 50
@@ -625,12 +652,12 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 25
         STR_SPACEWOLVES_BASE: 25
         STR_CRIMSONFIST_BASE: 25
+        STR_SALAMANDER_BASE: 25
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
       STR_HARDER_MISSIONS: false
       STR_CHAPTER_PURITY: false
-      STR_NOT_CHAOSCULT: true
-      STR_NOT_WORDBEARERS: true
+      STR_DEFAULT_CAMPAIGN: true
   - type: warpStormBuildingCHAOS
     refNode: *STR_NORMAL_CHAOSMISSION_TABLE
     firstMonth: 3
@@ -664,6 +691,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 25
         STR_SPACEWOLVES_BASE: 25
         STR_CRIMSONFIST_BASE: 25
+        STR_SALAMANDER_BASE: 25
       4:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 25
         STR_NURGLE_RESEARCH_HARD: 20
@@ -685,14 +713,14 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 25
         STR_SPACEWOLVES_BASEV2: 25
         STR_CRIMSONFIST_BASEV2: 25
+        STR_SALAMANDER_BASEV2: 25
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     firstMonth: 1
     useTable: true
     researchTriggers:
       STR_HARDER_MISSIONS: true
       STR_CHAPTER_PURITY: false
-      STR_NOT_CHAOSCULT: true
-      STR_NOT_WORDBEARERS: true
+      STR_DEFAULT_CAMPAIGN: true
   - type: warpStormBuildingHardCHAOS
     refNode: *STR_HARD_CHAOSMISSION_TABLE
     firstMonth: 3
@@ -747,6 +775,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 50
         STR_SPACEWOLVES_BASE: 50
         STR_CRIMSONFIST_BASE: 50
+        STR_SALAMANDER_BASE: 50
       5:  # equal distribution for now
         STR_ALIEN_RESEARCH: 10
         STR_ALIEN_RESEARCH_TZEENTCH: 10
@@ -768,6 +797,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 50
         STR_SPACEWOLVES_BASE: 50
         STR_CRIMSONFIST_BASE: 50
+        STR_SALAMANDER_BASE: 50
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
       7:  # equal distribution for now
         STR_ALIEN_RESEARCH: 5
@@ -790,10 +820,10 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 70
         STR_SPACEWOLVES_BASE: 70
         STR_CRIMSONFIST_BASE: 70
+        STR_SALAMANDER_BASE: 70
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
       STR_HARDER_MISSIONS: false
-      STR_CHAPTER_PURITY: false
       STR_NOT_CHAOSCULT: false
   - type: warpStormBuildingCHAOSCCULT
     refNode: *STR_NORMAL_CHAOSMISSION_TABLECCULT
@@ -828,6 +858,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 40
         STR_SPACEWOLVES_BASEV2: 40
         STR_CRIMSONFIST_BASEV2: 40
+        STR_SALAMANDER_BASEV2: 40
       3:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 10
         STR_NURGLE_RESEARCH_HARD: 10
@@ -849,6 +880,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 50
         STR_SPACEWOLVES_BASEV2: 50
         STR_CRIMSONFIST_BASEV2: 50
+        STR_SALAMANDER_BASEV2: 50
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
       6:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 5
@@ -871,12 +903,12 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 70
         STR_SPACEWOLVES_BASEV2: 70
         STR_CRIMSONFIST_BASEV2: 70
+        STR_SALAMANDER_BASEV2: 70
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     firstMonth: 1
     useTable: true
     researchTriggers:
       STR_HARDER_MISSIONS: true
-      STR_CHAPTER_PURITY: false
       STR_NOT_CHAOSCULT: false
   - type: warpStormBuildingHardCHAOSCCULT
     refNode: *STR_HARD_CHAOSMISSION_TABLECCULT
@@ -932,6 +964,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 50
         STR_SPACEWOLVES_BASE: 50
         STR_CRIMSONFIST_BASE: 50
+        STR_SALAMANDER_BASE: 50
       5:  # equal distribution for now
         STR_ALIEN_RESEARCH: 10
         STR_ALIEN_RESEARCH_TZEENTCH: 10
@@ -953,6 +986,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 50
         STR_SPACEWOLVES_BASE: 50
         STR_CRIMSONFIST_BASE: 50
+        STR_SALAMANDER_BASE: 50
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
       7:  # equal distribution for now
         STR_ALIEN_RESEARCH: 5
@@ -975,6 +1009,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASE: 70
         STR_SPACEWOLVES_BASE: 70
         STR_CRIMSONFIST_BASE: 70
+        STR_SALAMANDER_BASE: 70
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     researchTriggers:
       STR_HARDER_MISSIONS: false
@@ -1013,6 +1048,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 40
         STR_SPACEWOLVES_BASEV2: 40
         STR_CRIMSONFIST_BASEV2: 40
+        STR_SALAMANDER_BASEV2: 40
       3:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 10
         STR_NURGLE_RESEARCH_HARD: 10
@@ -1034,6 +1070,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 50
         STR_SPACEWOLVES_BASEV2: 50
         STR_CRIMSONFIST_BASEV2: 50
+        STR_SALAMANDER_BASEV2: 50
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
       6:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 5
@@ -1056,6 +1093,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 70
         STR_SPACEWOLVES_BASEV2: 70
         STR_CRIMSONFIST_BASEV2: 70
+        STR_SALAMANDER_BASEV2: 70
         STR_TAU_ORCAEXPEDITION: 10 #delayed onset
     firstMonth: 1
     useTable: true
@@ -1101,6 +1139,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 30
         STR_SPACEWOLVES_BASEV2: 30
         STR_CRIMSONFIST_BASEV2: 30
+        STR_SALAMANDER_BASEV2: 30
       2:  # equal distribution for now
         STR_ALIEN_RESEARCH_HARD: 33
         STR_NURGLE_RESEARCH_HARD: 11
@@ -1126,6 +1165,7 @@ missionScripts:
         STR_BLACKTEMPLAR_BASEV2: 50
         STR_SPACEWOLVES_BASEV2: 50
         STR_CRIMSONFIST_BASEV2: 50
+        STR_SALAMANDER_BASEV2: 50
     firstMonth: 0
     useTable: true
     researchTriggers:
@@ -1395,12 +1435,7 @@ missionScripts:
     executionOdds: 100
     researchTriggers:
       STR_CHAPTER_PURITY: true
-      STR_NOT_CHAOSCULT: true
-      STR_NOT_WORDBEARERS: true
-      STR_NOT_TAU_EMPIRE_GV: true
-      STR_NOT_TAU_GUEVESA_GV: true
-      STR_NOT_TAU_AUXILIARY_GV: true
-      STR_NOT_DEBUG_TAU_EMPIRE_GV: true
+      STR_DEFAULT_CAMPAIGN: true
 
   - type: gameStartOrkSL
     # Orkz as starting enemy for SL
@@ -1569,16 +1604,6 @@ missionScripts:
         STR_CIVILIAN_TERROR_GSC: 100  # could make late game ones have NPCs with death grenades that spawn disguised hybrids
     useTable: false
     firstMonth: 1
-
-  - type: GSC_GENE_HIVE_BASE_GEN  # Generates the underground GSC Genestealer hive base
-    missionWeights:
-      0:
-        STR_GENE_BASE: 100  # from 40k, generates a hive if there isn't one
-    firstMonth: 1  # can show up after month 1, with 4 weeks random delay
-    lastMonth: 6
-    startDelay: 120
-    randomDelay: 40160  # Up to 4 weeks random delay
-    executionOdds: 25  # 25% chance of firing every month until month 7
 
   # Steel Legion Campaign
   - type: firstMonthOrkTerror  # for Steel Legion
@@ -1969,7 +1994,7 @@ missionScripts:
       STR_NOT_CHAOSCULT: false
 
   # Word Bearers
-  - type: MMWBPath
+  - type: MMWBPathEREBUS
     missionWeights:
       0:
         STR_WBRESCUE_PDF_VALKYRIE: 10  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
@@ -2002,6 +2027,43 @@ missionScripts:
     startDelay: 15000  # 10k = 7 days
     researchTriggers:
       STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_RITUAL_FAVOURS: true
+
+  - type: MMWBPathKORPHAERON
+    missionWeights:
+      0:
+        STR_WBRESCUE_PDF_VALKYRIE: 10  # grounded valkyrie appears on radar, go to support to get some free troops, maybe include an officer?
+      1:
+        STR_WBRESCUE_PDF_VALKYRIE: 20
+        STR_SUPPORT_NIGHTLORDCHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_IRONWARRIORCHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_BLACKLEGIONCHAOSMARINE_ASSAULT: 5
+        STR_SUPPORT_ALPHALEGIONCHAOSMARINE_ASSAULT: 5
+      3:
+        STR_WBRESCUE_PDF_VALKYRIE: 10
+        STR_SUPPORT_NIGHTLORDCHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_IRONWARRIORCHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_BLACKLEGIONCHAOSMARINE_ASSAULT: 15
+        STR_SUPPORT_ALPHALEGIONCHAOSMARINE_ASSAULT: 15
+      7:
+        STR_WBRESCUE_PDF_VALKYRIE: 5
+        STR_SUPPORT_NIGHTLORDCHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_IRONWARRIORCHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_BLACKLEGIONCHAOSMARINE_ASSAULT: 25
+        STR_SUPPORT_ALPHALEGIONCHAOSMARINE_ASSAULT: 25
+        STR_ALIEN_ARTIFACT: 10
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    # varName: hulk
+    useTable: false
+    firstMonth: 0
+    executionOdds: 70
+    startDelay: 15000  # 10k = 7 days
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
       STR_RITUAL_FAVOURS: true
 
   # Da Emprah's Greenest
@@ -2120,7 +2182,6 @@ missionScripts:
     targetBaseOdds: 100
     useTable: false
     startDelay: 150
-    label: 1
 
   - type: lateRetaliation
     # After the 12th month, you get a chance for retaliations every month.
@@ -2143,7 +2204,6 @@ missionScripts:
       0:
         REGION_HULK_SITES: 100
     researchTriggers:
-      STR_MARINES_STRATEGY: true
       STR_WARPED_VAULT: true
       STR_NOT_TAU_EMPIRE_GV: true
     firstMonth: 0
@@ -3334,11 +3394,29 @@ missionScripts:
     researchTriggers:
       STR_CYDONIA_OR_BUST: true
       STR_WORDBEARERS_STRATEGY: true
-      STR_NOT_CHAOSCULT: false
       STR_RITUAL_BETRAYAL: true
+      STR_WBMISSION9DONE: true
+      STR_BOOK_EREBUS: true
     useTable: false
     maxRuns: 1
     varName: finalMissionWB
+
+  - type: finalMissionWBKOR
+    missionWeights:
+      0:
+        STR_FINAL_MISSION_WBKOR: 100
+    regionWeights:
+      0:
+        REGION_FINAL_MISSION: 100
+    researchTriggers:
+      STR_CYDONIA_OR_BUST: true
+      STR_WORDBEARERS_STRATEGY: true
+      STR_RITUAL_BETRAYAL: true
+      STR_WBMISSION9DONE: true
+      STR_BOOK_KORPHAERON: true
+    useTable: false
+    maxRuns: 1
+    varName: finalMissionWBKOR
 
   # Arbites
   - type: Sabotage
@@ -3376,3 +3454,350 @@ missionScripts:
     executionOdds: 30
     startDelay: 4320  # 3 days
     randomDelay: 4320  # additional random 0 to 3 days
+
+  # word bearers campaign
+  # erebus
+
+  - type: Mission1WB
+    missionWeights:
+      0:
+        STR_M_1MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 2 # 2 months after the triggering that happens in january so mission should happen in march
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission1E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION1DONE: false
+
+  - type: Mission2WB
+    missionWeights:
+      0:
+        STR_M_2MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission2E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION1DONE: true
+      STR_WBMISSION2DONE: false
+
+  - type: Mission3WB
+    missionWeights:
+      0:
+        STR_M_3MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission3E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION2DONE: true
+      STR_WBMISSION3DONE: false
+
+  - type: Mission4WB
+    missionWeights:
+      0:
+        STR_M_4MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission4E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION3DONE: true
+      STR_WBMISSION4DONE: false
+
+  - type: Mission5WB
+    missionWeights:
+      0:
+        STR_M_5MISSIONWB: 100
+    regionWeights:
+      0:
+        M5_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission5E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION4DONE: true
+      STR_WBMISSION5DONE: false
+
+  - type: Mission6WB
+    missionWeights:
+      0:
+        STR_M_6MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission6E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION5DONE: true
+      STR_WBMISSION6DONE: false
+
+  - type: Mission7WB
+    missionWeights:
+      0:
+        STR_M_7MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission7E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION6DONE: true
+      STR_WBMISSION7DONE: false
+
+  - type: Mission8WB
+    missionWeights:
+      0:
+        STR_M_8MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission8E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION7DONE: true
+      STR_WBMISSION8DONE: false
+
+  - type: Mission9WB
+    missionWeights:
+      0:
+        STR_M_9MISSIONWB: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission9E
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_EREBUS: true
+      STR_WBMISSION8DONE: true
+      STR_WBMISSION9DONE: false
+
+  # word bearers campaign
+  # kor phaeron
+
+
+  - type: Mission1WBK
+    missionWeights:
+      0:
+        STR_M_1MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission1K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION1DONE: false
+
+  - type: Mission2WBK
+    missionWeights:
+      0:
+        STR_M_2MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission2K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION1DONE: true
+      STR_WBMISSION2DONE: false
+
+  - type: Mission3WBK
+    missionWeights:
+      0:
+        STR_M_3MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission3K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION2DONE: true
+      STR_WBMISSION3DONE: false
+
+  - type: Mission4WBK
+    missionWeights:
+      0:
+        STR_M_4MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission4K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION3DONE: true
+      STR_WBMISSION4DONE: false
+
+  - type: Mission5WBK
+    missionWeights:
+      0:
+        STR_M_5MISSIONWBK: 100
+    regionWeights:
+      0:
+        M5_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission5K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION4DONE: true
+      STR_WBMISSION5DONE: false
+
+  - type: Mission6WBK
+    missionWeights:
+      0:
+        STR_M_6MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 10
+    maxRuns: 1
+    varName: WBmission6K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION5DONE: true
+      STR_WBMISSION6DONE: false
+
+  - type: Mission7WBK
+    missionWeights:
+      0:
+        STR_M_7MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission7K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION6DONE: true
+      STR_WBMISSION7DONE: false
+
+  - type: Mission8WBK
+    missionWeights:
+      0:
+        STR_M_8MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission8K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION7DONE: true
+      STR_WBMISSION8DONE: false
+
+  - type: Mission9WBK
+    missionWeights:
+      0:
+        STR_M_9MISSIONWBK: 100
+    regionWeights:
+      0:
+        REGION_HULK_SITES: 100
+    useTable: false
+    firstMonth: 0
+    executionOdds: 100
+    startDelay: 100
+    maxRuns: 1
+    varName: WBmission9K
+    researchTriggers:
+      STR_WORDBEARERS_STRATEGY: true
+      STR_BOOK_KORPHAERON: true
+      STR_WBMISSION8DONE: true
+      STR_WBMISSION9DONE: false
