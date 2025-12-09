@@ -58,6 +58,7 @@
 # #IG.ABHUMAN#        Abhuman Strategy
 # #IG.STEEL#          Steel Legion Strategy
 # #IG.KRIEG#          Krieg Strategy
+# #IG.VALHALLA#       Valhallan Strategy
 #
 # Foe Factions:
 # (Entries within chaos subsections should be presented in the order of affiliation: Undivided, Khorne, Nurgle, Slaanesh, Tzeentch)
@@ -1036,6 +1037,7 @@ research:
   - name: STR_NOT_ABHUMAN_STRATEGY  # (Not Abhuman Strategy)
   - name: STR_NOT_STEEL_LEGION_STRATEGY  # (Not Steel Legion)
   - name: STR_NOT_KRIEG_STRATEGY  # (Not Death Korps of Krieg)
+  - name: STR_NOT_VALHALLAN_STRATEGY # (Not Valhallan Ice Warriors)
 
 ## World Progression Events
   - name: STR_SPACEHULK_TYRANID  # Spacehulk
@@ -1262,6 +1264,11 @@ research:
       - STR_THE_EMPEROR_PROTECTS_RESEARCH
       - STR_ADV_DROPPODS
 
+# important to prevent some marine stuff into word bearer pre choice
+  - name: STR_MARINESCHOICEDONE
+    dependencies:
+      - STR_GENERALLOCK
+
 ### Assault Strategy #STRATEGY.SM.ASS#
   - delete: STR_ASSAULT
   - name: STR_ASSAULT  # Assault Strategy
@@ -1284,6 +1291,7 @@ research:
       - STR_HAND_FLAMETHROWER_REQUISITION
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_ASSAULT
       - STR_PRIMARIS
@@ -1317,6 +1325,7 @@ research:
       - STR_CRATED_RHINO
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_DEVASTATOR
       - STR_PRIMARIS
@@ -1348,6 +1357,7 @@ research:
       - STR_PRIMARIS_AND_DEATHWATCH
       - STR_PRIMARIS_AND_ADEPTAS
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_PRIMARIS
       - STR_PERSONAL_ARMOR
@@ -1381,6 +1391,7 @@ research:
       - STR_CRATED_LANDSPEEDER
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_SCOUT
       - STR_PRIMARIS
@@ -1415,6 +1426,7 @@ research:
       - STR_CRATED_RHINO
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_TACTICAL
       - STR_PRIMARIS
@@ -1456,6 +1468,7 @@ research:
       - STR_MARINE_BOLTERS
       - STR_HARDER_MISSIONS_SW
       - STR_HARDER_MISSIONS
+      - STR_MARINESCHOICEDONE
     disables:
       - STR_NOT_SPACEWOLVES
       - STR_PRIMARIS
@@ -1599,6 +1612,54 @@ research:
       - STR_WORDBEARERS_STRATEGY
       - STR_GENERALLOCK
     spawnedEvent: STR_WBLIGHTNING_ARRIVING
+
+  # word bearers campaign
+
+  - name: STR_WBMISSION1DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION2DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION3DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION4DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION5DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION6DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION7DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION8DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+
+  - name: STR_WBMISSION9DONE
+    dependencies:
+      - STR_WORDBEARERS_STRATEGY
+      - STR_GENERALLOCK
+    spawnedEvent: STR_WORDBEARERS_REWARD
 
   - name: STR_RITUAL_CONTACT  # Ritual of Contact
     cost: 200
@@ -2080,7 +2141,7 @@ research:
       - STR_NORMAL_STRATEGY_ADEPTAS
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_SMOKE
-    spawnedEvent: STR_RECRUITS_REPENTIA_SUPERIOR_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_REPENTIA_STRATEGY_ADEPTAS
 
 ### Novice Strategy #STRATEGY.SOB.NOV#
   - name: STR_NOVICE_STRATEGY_ADEPTAS  # Novice Strategy
@@ -2112,7 +2173,7 @@ research:
       - STR_ELITE_STRATEGY_ADEPTAS
       - STR_REPENTIA_STRATEGY_ADEPTAS
       - STR_NORMAL_STRATEGY_ADEPTAS
-    spawnedEvent: STR_RECRUITS_NOVITIATE_SUPERIOR_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_NOVICE_STRATEGY_ADEPTAS
 
 ### Battle Sister Strategy #STRATEGY.SOB.BAT#
   - name: STR_NORMAL_STRATEGY_ADEPTAS  # Battle Sister Strategy
@@ -2199,7 +2260,7 @@ research:
       - STR_REPENTIA_STRATEGY_ADEPTAS
       - STR_NOVICE_STRATEGY_ADEPTAS
       - STR_NORMAL_STRATEGY_ADEPTAS
-    spawnedEvent: STR_RECRUITS_ELITE_SUPERIOR_STRATEGY_ADEPTAS
+    spawnedEvent: STR_RECRUITS_ELITE_STRATEGY_ADEPTAS
 
 ## Imperial Guard #STRATEGY.IG#
   - delete: STR_IMPERIAL_GUARD_OPERATIONS
@@ -2410,6 +2471,43 @@ research:
       - STR_NORMAL_STRATEGY_IG
       - STR_STEEL_LEGION_STRATEGY
     spawnedEvent: STR_RECRUITS_KRIEG_STRATEGY_IG
+
+### Valhallan Strategy #STRATEGY.IG.VALHALLAN#
+  - name: STR_VALHALLAN_STRATEGY  # ValhallanStrategy
+    points: 0
+    cost: 5
+    dependencies:
+      - STR_GENERALLOCK
+    # lookup: STR_CHOSEN_VALHALLA # Commented out until there is a 'pedia page, will crash otherwise
+    unlocks:
+      - STR_DEFAULT_CAMPAIGN
+      - STR_KRIEG_GUARDSMEN #Already Exists
+      - STR_MOTION_SCANNER
+      - STR_LASER_WEAPONS
+      - STR_SMOKE
+      - STR_HEAVY_WEAPONS_IG
+      - STR_LIGHT_BOLTERS_LOWTIER
+      # STR_VALHALLAN_WEAPONS #Needs to be created + Midtier version?
+      - STR_GUARD_BARRACKS
+      - STR_REGIMENT_OFFICERS
+      - STR_PENITENT_GUARD
+      - STR_SCIENTISTS_AND_ENGINEERS_AVAILABLE
+      - STR_CHIMERASL #REPLACE WITH VALHALLAN BASIC TRANSPORT, TRUCKS? WHITE CAMO CHIMERA?
+      - STR_IMPERIAL_GUARD_BASIC_TRAINING
+      - STR_PILOT_GUARDSMEN #Replace these later with Valhallan version?
+      - STR_NOT_ELITE_STRATEGY
+      - STR_NOT_ABHUMAN_STRATEGY
+      - STR_NOT_NORMAL_STRATEGY
+      - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_NOT_KRIEG_STRATEGY
+    disables:
+      - STR_NOT_VALHALLAN_STRATEGY
+      - STR_KRIEG_STRATEGY
+      - STR_ELITE_STRATEGY_IG
+      - STR_ABHUMAN_STRATEGY_IG
+      - STR_NORMAL_STRATEGY_IG
+      - STR_STEEL_LEGION_STRATEGY
+    #spawnedEvent: STR_RECRUITS_VALHALLAN_STRATEGY_IG #Create
 
 ####################################
 #PROGRESSION# Progression Research Section
@@ -3190,6 +3288,7 @@ research:
       - STR_MIDTIER_PREREQ
       - STR_MARINES_AND_ADEPTAS
       - STR_GENERALLOCK
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_TATICALTRAININFO  # skip training mission
 
@@ -7194,6 +7293,7 @@ research:
     dependencies:
       - STR_WORDBEARERS_STRATEGY
       - STR_CHAPTERARMYR
+      - STR_WBMISSION9DONE
       - STR_HIGHTIER_PREREQ
 
 ### Eldar Alliance
