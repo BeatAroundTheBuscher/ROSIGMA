@@ -226,6 +226,10 @@ research:
       - STR_LIBRARY
       - STR_IMPERIAL_WEAPONS
 
+  - name: STR_BLOCKIT # Block IT
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_UNSANCTIONED_REQUISITIONS  # Unsanctioned Requisitions
     dependencies:
       - STR_GENERALLOCK
@@ -2001,6 +2005,10 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
+  - name: STR_NOTDONEBEFORE  # this will be to avoid making more great sacrifice and trigger chaos bowl multiple times
+    dependencies:
+      - STR_GENERALLOCK
+
   - name: STR_CHAOS_STRATEGY_ARBITES  # Chaos Cult Strategy
     cost: 5
     points: 0
@@ -2033,6 +2041,7 @@ research:
       - STR_NOT_ELITE_STRATEGY
       - STR_NOT_ABHUMAN_STRATEGY
       - STR_NOT_STEEL_LEGION_STRATEGY
+      - STR_NOTDONEBEFORE
     reenables:
       - STR_CYDONIA_OR_BUST
     spawnedEvent: STR_RECRUITS_CHAOS_STRATEGY_ARBITES
@@ -2846,6 +2855,7 @@ research:
       - STR_LOSE_500
     unlocks:
       - STR_ALIENS_ONLY
+      - STR_NOTDONEBEFORE
     disables:
       - STR_PSYKER_REQUISITION
       - STR_IMPERIAL_GUARD_MISSIONS
@@ -4778,31 +4788,75 @@ research:
     dependencies:
       - STR_GENERALLOCK
 
-  - name: STR_SACRIFICE_TO_CHAOS  # Sacrifice to Chaos Chaos Cult version
+#######
+####### those 2 researches are only kept to avoid people crashing with their save before this change
+####### they're now blocked to either appear
+#######
+  - name: STR_SACRIFICE_TO_CHAOS  # Sacrifice to Chaos Chaos Cult version cant be done anymore
     cost: 100
     points: 30
     dependencies:
+      - STR_BLOCKIT  # added to block this research without deleting it and possibly crash save
       - STR_CHAOS_STRATEGY
       - STR_CHAOS_PATH
       - STR_IMPERIALBASEDEAD
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_CHAOSLORD_PRELOCK
     neededItem: STR_GREAT_SACRIFICE
     destroyItem: true
     spawnedEvent: STR_CHAOSBOWL_STARTER
 
-  - name: STR_SACRIFICE_TO_CHAOSPC  # Sacrifice to Chaos  Player Chaos version
+  - name: STR_SACRIFICE_TO_CHAOSPC  # Sacrifice to Chaos  Player Chaos version cant be done anymore
+    cost: 100
+    points: 30
+    dependencies:
+      - STR_BLOCKIT  # added to block this research without deleting it and possibly crash save
+      - STR_NOT_CHAOSCULT
+      - STR_CHAOS_PATH
+      - STR_IMPERIALBASEDEAD
+      - STR_NOT_WORDBEARERS
+    unlocks:
+      - STR_CHAOSLORD_PRELOCK
+    neededItem: STR_GREAT_SACRIFICE
+    destroyItem: true
+    spawnedEvent: STR_CHAOSBOWL_STARTERPC
+
+###########
+###########
+
+
+  - name: STR_GREAT_SACRIFICE  # The Great Sacrifice Chaos Cult version
+    cost: 100
+    points: 30
+    dependencies:
+      - STR_CHAOS_STRATEGY
+      - STR_CHAOS_PATH
+      - STR_IMPERIALBASEDEAD
+      - STR_NOT_WORDBEARERS
+    unlocks:
+      - STR_CHAOSLORD_PRELOCK
+    needItem: true
+    destroyItem: true
+    spawnedEvent: STR_CHAOSBOWL_STARTER
+    disables:
+      - STR_NOTDONEBEFORE
+
+  - name: STR_GREAT_SACRIFICEPC  # The Great Sacrifice Player Chaos version
     cost: 100
     points: 30
     dependencies:
       - STR_NOT_CHAOSCULT
       - STR_CHAOS_PATH
       - STR_IMPERIALBASEDEAD
+      - STR_NOT_WORDBEARERS
     unlocks:
       - STR_CHAOSLORD_PRELOCK
-    neededItem: STR_GREAT_SACRIFICE
+    needItem: true
     destroyItem: true
     spawnedEvent: STR_CHAOSBOWL_STARTERPC
+    disables:
+      - STR_NOTDONEBEFORE
 
   - name: STR_SECRET_OF_CULT  # Secrets of the Cult
     spawnedEvent: STR_RECRUITS_CHAOS_SLIMEHELP
