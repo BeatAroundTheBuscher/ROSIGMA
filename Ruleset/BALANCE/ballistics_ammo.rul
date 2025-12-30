@@ -385,6 +385,9 @@ items:
     shotgunPellets: 6
 
   - type: STR_REDEEMER_SHELLS_KRAK  #                        10610
+    categories: [STR_CAT_SHOTGUN, STR_CAT_ADEPTAS]
+    requiresBuy:
+      - STR_ADEPTAS
     shotgunBehavior: 1   # *** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 15  # fewer pellets, but less spread
     power: 40
@@ -400,6 +403,9 @@ items:
 
   - type: STR_REDEEMER_SHELLS_INC  #                       10612
     refNode: *STR_BOLTER_AMMO_INCENDIARY
+    categories: [STR_CAT_SHOTGUN, STR_CAT_ADEPTAS]
+    requiresBuy:
+      - STR_ADEPTAS
     shotgunBehavior: 1   # *** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
     shotgunPellets: 6
@@ -413,6 +419,9 @@ items:
       FixRadius: 2
 
   - type: STR_REDEEMER_PENITENCE_SHELLS  #                        10613
+    categories: [STR_CAT_SHOTGUN, STR_CAT_ADEPTAS]
+    requiresBuy:
+      - STR_ADEPTAS
     shotgunBehavior: 1   # *** makes the shotgun a bit more useful at range bit tightening the spread ***
     shotgunSpread: 25
     power: 40
@@ -452,13 +461,22 @@ items:
     clipSize: 32
 
   - type: STR_SHOTGUN_SHELLS_AP
+    requiresBuy: !remove
+      - STR_ARBITES
+    requiresBuyBaseFunc: [TRADE]
+    listOrder: 10600
 
   - type: STR_SHOTGUN_SHELLS_MC
     refNode: *STR_SHOTGUN_AMMO_TEMPLATE
     power: 60
 
   - type: STR_SHOTGUN_SHELLS_INC
-    refNode: *STR_BOLTER_AMMO_INCENDIARY
+    # remove buy research reqs but require TRADE, similar to the drum
+    # requires MC shotgun to use
+    requiresBuy: !remove
+      - STR_ARBITES
+    requiresBuyBaseFunc: [TRADE]
+    refNode: *STR_SHOTGUN_AMMO_TEMPLATE
     shotgunBehavior: 1
     shotgunSpread: 25
     shotgunPellets: 6
