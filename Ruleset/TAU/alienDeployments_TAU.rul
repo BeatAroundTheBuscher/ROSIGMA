@@ -4,6 +4,7 @@ alienDeployments:
 
 ### redemptionist_intro starter missions
 ### these set the scene for the player w/r/t the redemptionist threat
+### convoy escort missions
   - type: STR_EVE_OF_DESTRUCTION_GV
     script: CONVOY_ESCORT_GV
     forcePercentageOutsideUfo: true
@@ -56,21 +57,36 @@ alienDeployments:
     length: 80
     height: 9
     duration: [168, 168]
+    despawnPenalty: 500
     alert: STR_EVE_OF_DESTRUCTION_GV_ALERT
     alertDescription: STR_EVE_OF_DESTRUCTION_GV_ALERT_DESCRIPTION
     alertBackground: GovernorBG.SCR
+    objectiveComplete: [STR_CULTIST_BASE_DESTROYED, 200]
+    objectiveFailed: [STR_CULTIST_BASE_NOT_DESTROYED, -100]
+    abortPenalty: 100
     briefing:
       showCraft: false
       showTarget: false
 
-### small redemptionist church
-### also used as an intro mission
+### small redemptionist church used as an intro mission
   - type: STR_REDEMPTIONISTBASE_L1_GV
     terrains:
       - IMP_MUNDAINDUSTRIALURBANDIO
     script: REDEMPTIONIST_BASE_LEVEL_1
     randomRace: [STR_REDEMPTIONIST_START_GV]
     data: &cultistBaseLevel1
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 2
+        highQty: 2
+        dQty: 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
       - alienRank: 2
         lowQty: 3  # 2
         highQty: 3  # 4
@@ -90,15 +106,15 @@ alienDeployments:
         percentageOutsideUfo: 0
         itemSets: *emptyItemSets
       - alienRank: 5
-        lowQty: 9  # 6
-        highQty: 9  # 12
+        lowQty: 12  # 6
+        highQty: 12  # 12
         dQty: 5
         percentageOutsideUfo: 0
         itemSets: *emptyItemSets
-    genMissionFreq: 2  # 4
     width: 60
     length: 60
     height: 9
+    despawnPenalty: 500
     # alienBaseUpgrades:
     #   0:
     #     STR_CULTIST_BASE_LEVEL_1: 100
@@ -112,6 +128,10 @@ alienDeployments:
     objectiveComplete: [STR_CULTIST_BASE_DESTROYED, 200]
     objectiveFailed: [STR_CULTIST_BASE_NOT_DESTROYED, -100]
     abortPenalty: 100
+    briefing:
+      showCraft: false
+      showTarget: false
+
 
   - type: STR_REDEMPTIONISTBASE_L2_GV
     #refNode: *STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
@@ -129,12 +149,18 @@ alienDeployments:
     #   STR_CLOAKED_WOMAN_ORANGE: 4
     #   STR_CIVILIAN_M1: 2
     data:
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 1
+        percentageOutsideUfo: 100
+        itemSets: [[], [], []]
       - alienRank: 1
         lowQty: 2
         highQty: 2
         dQty: 2
         percentageOutsideUfo: 100
-        itemSets: &emptyItemSets [[], [], []]
+        itemSets: [[], [], []]
       - alienRank: 2
         lowQty: 2
         highQty: 2 #3
@@ -154,8 +180,8 @@ alienDeployments:
         percentageOutsideUfo: 100
         itemSets: [[], [], []]
       - alienRank: 5
-        lowQty: 4
-        highQty: 4 #3
+        lowQty: 5
+        highQty: 5 #3
         dQty: 2 #1
         percentageOutsideUfo: 100
         itemSets: [[], [], []]
@@ -174,20 +200,91 @@ alienDeployments:
     width: 60
     length: 60
     height: 10
-    genMissionFreq: 2  # 4
-    # alienBaseUpgrades:
-    #   0:
-    #     STR_CULTIST_BASE_LEVEL_1: 100
-    #   1:
-    #     STR_CULTIST_BASE_LEVEL_1: 100
-    #   2:
-    #     STR_CULTIST_BASE_LEVEL_1: 50
-    #     STR_CULTIST_BASE_LEVEL_2: 50
-    #   3:
-    #     STR_CULTIST_BASE_LEVEL_2: 100
     objectiveComplete: [STR_CULTIST_BASE_DESTROYED, 200]
     objectiveFailed: [STR_CULTIST_BASE_NOT_DESTROYED, -100]
     abortPenalty: 100
+    briefing:
+      showCraft: false
+      showTarget: false
+
+  - type: STR_REDEMPTIONIST_HIVE_TERROR_GV
+    randomRace: [STR_REDEMPTIONIST_START_GV]
+    data:
+      - alienRank: 0
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 1
+        lowQty: 1
+        highQty: 1
+        dQty: 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 2
+        lowQty: 1
+        highQty: 1
+        dQty: 1  # 0
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 3
+        lowQty: 2
+        highQty: 2  # 3
+        dQty: 2  # 1
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 4
+        lowQty: 2
+        highQty: 2  # 3
+        dQty: 1  # 2
+        percentageOutsideUfo: 20
+        itemSets: *emptyItemSets
+      - alienRank: 5
+        lowQty: 9  # 8
+        highQty: 9  # 10
+        dQty: 3  # 2
+        percentageOutsideUfo: 0
+        itemSets: *emptyItemSets
+      - alienRank: 6
+        lowQty: 2  # 1
+        highQty: 2
+        dQty: 2  # 3
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+      - alienRank: 7
+        lowQty: 2  # 1
+        highQty: 2
+        dQty: 2  # 3
+        percentageOutsideUfo: 50
+        itemSets: *emptyItemSets
+    points: 5
+    width: 60
+    length: 40
+    height: 4
+    civiliansByType:
+      STR_CIVILIAN_M0ARMED: 2
+      STR_CIVILIAN_M1ARMED: 2
+      STR_CIVILIAN_F0ARMED: 2
+      STR_CIVILIAN_F1ARMED: 2
+      STR_GANGERBASE_SOLDIERF0_AI: 3
+      STR_GANGERBASE_SOLDIERF1_AI: 3
+      STR_GANGERBASE_SOLDIERM0_AI: 3
+      STR_GANGERBASE_SOLDIERM1_AI: 3
+    terrains:
+      - HIVE
+    script: HALEA_HIVE_SCRIPT
+    objectiveComplete: [STR_CULTIST_BASE_DESTROYED, 200]
+    objectiveFailed: [STR_CULTIST_BASE_NOT_DESTROYED, -100]
+    despawnPenalty: 500
+    abortPenalty: 100
+    shade: 7
+    markerName: STR_ALIEN_BASE
+    enviroEffects: STR_INSIDE_ENVIRO
+    briefing:
+      showCraft: false
+      showTarget: false
+
 
   # - type: STR_FREE_TRADE_GV
   #   refNode: *STR_DEPLOYMENT_TEMPLATE_NORMAL_GV
